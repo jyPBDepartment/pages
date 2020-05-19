@@ -93,6 +93,7 @@ import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 
 export default {
+  inject:['reload'],
   data() {
     return {
       nshow: true, //switch开启
@@ -164,23 +165,31 @@ export default {
         page: parameter.page,
         size: parameter.limit
       };
-      api.testAxiosGet(ApiPath.url.findAdminByName, params).then(res => {
-        let code = res.status;
-        if (code == "0") {
-          this.$message.success(res.message);
-          this.loading = false;
-          this.listData = res.data.content;
-          this.pageparm.currentPage = res.data.number + 1;
-          this.pageparm.pageSize = res.data.size;
-          this.pageparm.total = res.data.totalElements;
+      api
+        .testAxiosGet(ApiPath.url.findAdminByName, params)
+        .then(res => {
+          let code = res.status;
+          if (code == "0") {
 
-          // this.total = res.content.tagInfoList.totalElements;
-          // this.tableData = res.content.tagInfoList.content;
-        } else {
-          // alert(res.message);
-          this.$message.error(res.message);
-        }
-      });
+            // this.reload();
+            this.$message.success(res.message);
+            this.loading = false;
+            this.listData = res.data.content;
+            this.pageparm.currentPage = res.data.number + 1;
+            this.pageparm.pageSize = res.data.size;
+            this.pageparm.total = res.data.totalElements;
+
+            // this.total = res.content.tagInfoList.totalElements;
+            // this.tableData = res.content.tagInfoList.content;
+          } else {
+            // alert(res.message);
+            this.$message.error(res.message);
+          }
+        })
+        .catch(err => {
+          // this.loading = false;
+          this.$message.error(err.data);
+        });
 
       // 模拟数据开始
       let res = {
