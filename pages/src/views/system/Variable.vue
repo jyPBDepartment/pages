@@ -10,11 +10,10 @@
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" :model="formInline" class="user-search">
-
       <el-form-item label="搜索：">
         <el-input size="small" v-model="formInline.varLable" placeholder="输入变量描述"></el-input>
       </el-form-item>
-      <el-form-item label="">
+      <el-form-item label>
         <el-input size="small" v-model="formInline.varName" placeholder="输入变量名称"></el-input>
       </el-form-item>
       <el-form-item>
@@ -23,22 +22,25 @@
       </el-form-item>
     </el-form>
     <!--列表-->
-    <el-table size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
-      <el-table-column align="center" type="selection" width="60">
-      </el-table-column>
-      <el-table-column sortable prop="varLable" label="变量描述" width="200">
-      </el-table-column>
-      <el-table-column sortable prop="varName" label="变量名称" width="200">
-      </el-table-column>
-      <el-table-column sortable prop="varValue" label="变量名称" width="300">
-      </el-table-column>
+    <el-table
+      size="small"
+      :data="listData"
+      highlight-current-row
+      v-loading="loading"
+      border
+      element-loading-text="拼命加载中"
+      style="width: 100%;"
+    >
+      <el-table-column align="center" type="selection" width="60"></el-table-column>
+      <el-table-column sortable prop="varLable" label="变量描述" width="200"></el-table-column>
+      <el-table-column sortable prop="varName" label="变量名称" width="200"></el-table-column>
+      <el-table-column sortable prop="varValue" label="变量名称" width="300"></el-table-column>
       <el-table-column sortable prop="editTime" label="修改时间" width="200">
         <template slot-scope="scope">
           <div>{{scope.row.editTime|timestampToTime}}</div>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="editUser" label="修改人" width="200">
-      </el-table-column>
+      <el-table-column sortable prop="editUser" label="修改人" width="200"></el-table-column>
       <el-table-column align="center" label="操作" min-width="300">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -63,15 +65,21 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="closeDialog">取消</el-button>
-        <el-button size="small" type="primary" :loading="loading" class="title" @click="submitForm('editForm')">保存</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          :loading="loading"
+          class="title"
+          @click="submitForm('editForm')"
+        >保存</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { variableList, variableSave, variableDelete } from '../../api/userMG'
-import Pagination from '../../components/Pagination'
+import { variableList, variableSave, variableDelete } from "../../api/userMG";
+import Pagination from "../../components/Pagination";
 export default {
   data() {
     return {
@@ -79,37 +87,37 @@ export default {
       fshow: false, //switch关闭
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
-      title: '添加',
+      title: "添加",
       editForm: {
-        varId: '',
-        varLable: '',
-        varName: '',
-        varValue: '',
-        token: localStorage.getItem('logintoken')
+        varId: "",
+        varLable: "",
+        varName: "",
+        varValue: "",
+        token: localStorage.getItem("logintoken")
       },
       // rules表单验证
       rules: {
         varLable: [
-          { required: true, message: '请输入变量描述', trigger: 'blur' }
+          { required: true, message: "请输入变量描述", trigger: "blur" }
         ],
         varName: [
-          { required: true, message: '请输入变量名称', trigger: 'blur' }
+          { required: true, message: "请输入变量名称", trigger: "blur" }
         ],
         varValue: [
-          { required: true, message: '请输入变量名称', trigger: 'blur' }
+          { required: true, message: "请输入变量名称", trigger: "blur" }
         ]
       },
       formInline: {
         page: 1,
         limit: 10,
-        varLable: '',
-        varName: '',
-        token: localStorage.getItem('logintoken')
+        varLable: "",
+        varName: "",
+        token: localStorage.getItem("logintoken")
       },
       // 删除
       seletedata: {
-        ids: '',
-        token: localStorage.getItem('logintoken')
+        ids: "",
+        token: localStorage.getItem("logintoken")
       },
       userparm: [], //搜索权限
       listData: [], //用户数据
@@ -119,7 +127,7 @@ export default {
         pageSize: 10,
         total: 10
       }
-    }
+    };
   },
   // 注册组件
   components: {
@@ -136,7 +144,7 @@ export default {
    */
 
   created() {
-    this.getdata(this.formInline)
+    this.getdata(this.formInline);
   },
 
   /**
@@ -146,7 +154,7 @@ export default {
   methods: {
     // 获取数据方法
     getdata(parameter) {
-      this.loading = true
+      this.loading = true;
       // 模拟数据
       let res = {
         code: 0,
@@ -154,37 +162,37 @@ export default {
         count: 6,
         data: [
           {
-            addUser: 'root',
-            editUser: 'root',
+            addUser: "root",
+            editUser: "root",
             addTime: 1519385529000,
             editTime: 1520619747000,
             varId: 190,
             deptId: 1,
-            varLable: '支付访问域名',
-            varName: 'domainName',
-            varValue: 'http://127.0.0.1:8080/iot-service-pay'
+            varLable: "支付访问域名",
+            varName: "domainName",
+            varValue: "http://127.0.0.1:8080/iot-service-pay"
           },
           {
-            addUser: 'root',
-            editUser: 'root',
+            addUser: "root",
+            editUser: "root",
             addTime: 1519451541000,
             editTime: 1519451547000,
             varId: 191,
             deptId: 1,
-            varLable: '商品图片地址',
-            varName: 'productImgURL',
-            varValue: 'http://ymwlw.com/pic'
+            varLable: "商品图片地址",
+            varName: "productImgURL",
+            varValue: "http://ymwlw.com/pic"
           },
           {
-            addUser: 'root',
-            editUser: 'root',
+            addUser: "root",
+            editUser: "root",
             addTime: 1519452658000,
             editTime: 1519452661000,
             varId: 192,
             deptId: 1,
-            varLable: '手机支付广告地址',
-            varName: 'groupDomain',
-            varValue: 'http://ymwlwl.com'
+            varLable: "手机支付广告地址",
+            varName: "groupDomain",
+            varValue: "http://ymwlwl.com"
           },
           {
             addUser: null,
@@ -193,9 +201,9 @@ export default {
             editTime: 1519879628000,
             varId: 193,
             deptId: 1,
-            varLable: '下单接口测试模式',
-            varName: 'envType',
-            varValue: 'false'
+            varLable: "下单接口测试模式",
+            varName: "envType",
+            varValue: "false"
           },
           {
             addUser: null,
@@ -204,9 +212,9 @@ export default {
             editTime: 1526374031000,
             varId: 198,
             deptId: null,
-            varLable: 'sgh',
-            varName: 'jhjj',
-            varValue: 'jhjhgs'
+            varLable: "sgh",
+            varName: "jhjj",
+            varValue: "jhjhgs"
           },
           {
             addUser: null,
@@ -215,18 +223,18 @@ export default {
             editTime: 1526453243000,
             varId: 199,
             deptId: null,
-            varLable: 'v',
-            varName: 'v',
-            varValue: 'v'
+            varLable: "v",
+            varName: "v",
+            varValue: "v"
           }
         ]
-      }
-      this.loading = false
-      this.listData = res.data
+      };
+      this.loading = false;
+      this.listData = res.data;
       // 分页赋值
-      this.pageparm.currentPage = this.formInline.page
-      this.pageparm.pageSize = this.formInline.limit
-      this.pageparm.total = res.count
+      this.pageparm.currentPage = this.formInline.page;
+      this.pageparm.pageSize = this.formInline.limit;
+      this.pageparm.total = res.count;
       // 模拟数据结束
 
       /***
@@ -256,29 +264,29 @@ export default {
     },
     // 分页插件事件
     callFather(parm) {
-      this.formInline.page = parm.currentPage
-      this.formInline.limit = parm.pageSize
-      this.getdata(this.formInline)
+      this.formInline.page = parm.currentPage;
+      this.formInline.limit = parm.pageSize;
+      this.getdata(this.formInline);
     },
     // 搜索事件
     search() {
-      this.getdata(this.formInline)
+      this.getdata(this.formInline);
     },
     //显示编辑界面
     handleEdit: function(index, row) {
-      this.editFormVisible = true
-      if (row != undefined && row != 'undefined') {
-        this.title = '修改'
-        this.editForm.varId = row.varId
-        this.editForm.varLable = row.varLable
-        this.editForm.varName = row.varName
-        this.editForm.varValue = row.varValue
+      this.editFormVisible = true;
+      if (row != undefined && row != "undefined") {
+        this.title = "修改";
+        this.editForm.varId = row.varId;
+        this.editForm.varLable = row.varLable;
+        this.editForm.varName = row.varName;
+        this.editForm.varValue = row.varValue;
       } else {
-        this.title = '添加'
-        this.editForm.varId = ''
-        this.editForm.varLable = ''
-        this.editForm.varName = ''
-        this.editForm.varValue = ''
+        this.title = "添加";
+        this.editForm.varId = "";
+        this.editForm.varLable = "";
+        this.editForm.varName = "";
+        this.editForm.varValue = "";
       }
     },
     // 编辑、增加页面保存方法
@@ -287,72 +295,72 @@ export default {
         if (valid) {
           variableSave(this.editForm)
             .then(res => {
-              this.editFormVisible = false
-              this.loading = false
+              this.editFormVisible = false;
+              this.loading = false;
               if (res.success) {
-                this.getdata(this.formInline)
+                this.getdata(this.formInline);
                 this.$message({
-                  type: 'success',
-                  message: '系统环境变量保存成功！'
-                })
+                  type: "success",
+                  message: "系统环境变量保存成功！"
+                });
               } else {
                 this.$message({
-                  type: 'info',
+                  type: "info",
                   message: res.msg
-                })
+                });
               }
             })
             .catch(err => {
-              this.editFormVisible = false
-              this.loading = false
-              this.$message.error('系统环境变量保存失败，请稍后再试！')
-            })
+              this.editFormVisible = false;
+              this.loading = false;
+              this.$message.error("系统环境变量保存失败，请稍后再试！");
+            });
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     // 删除权限
     deleteUser(index, row) {
-      this.$confirm('确定要删除吗?', '信息', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
+      this.$confirm("确定要删除吗?", "信息", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
       })
         .then(() => {
           variableDelete(row.varId)
             .then(res => {
               if (res.success) {
                 this.$message({
-                  type: 'success',
-                  message: '系统环境变量已删除'
-                })
-                this.getdata(this.formInline)
+                  type: "success",
+                  message: "系统环境变量已删除"
+                });
+                this.getdata(this.formInline);
               } else {
                 this.$message({
-                  type: 'info',
+                  type: "info",
                   message: res.msg
-                })
+                });
               }
             })
             .catch(err => {
-              this.loading = false
-              this.$message.error('系统环境变量删除失败，请稍后再试！')
-            })
+              this.loading = false;
+              this.$message.error("系统环境变量删除失败，请稍后再试！");
+            });
         })
         .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
     // 关闭编辑、增加弹出框
     closeDialog() {
-      this.editFormVisible = false
+      this.editFormVisible = false;
     }
   }
-}
+};
 </script>
 
 <style scoped>

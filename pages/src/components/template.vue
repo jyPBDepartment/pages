@@ -3,9 +3,7 @@
 **/ 
 
 <template>
-    <div>
-        
-    </div>
+  <div></div>
 </template>
 
 <script>
@@ -17,7 +15,7 @@ export default {
   name: "template",
   // 模块数据
   data() {
-    //数据  
+    //数据
     return {};
   },
   // 注册组件

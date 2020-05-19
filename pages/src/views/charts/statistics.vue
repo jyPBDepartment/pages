@@ -81,24 +81,26 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import Chart from 'echarts'
+import Chart from "echarts";
 export default {
   name: "welcome",
   data() {
     return {
-      machineNo: '',
-      type: 'day',
-      //  销售总笔数 
+      machineNo: "",
+      type: "day",
+      //  销售总笔数
       SCEoption: {
         tooltip: {
-          trigger: 'item',
+          trigger: "item",
           formatter: "{a} <br/>{b}月 : {c}"
         },
         legend: {
-          data: [{
-            name: '销售总笔数',
-            icon: 'rect'
-          }],
+          data: [
+            {
+              name: "销售总笔数",
+              icon: "rect"
+            }
+          ],
           top: 1,
           left: 1,
           itemGap: 10,
@@ -117,8 +119,8 @@ export default {
           borderWidth: 1
         },
         xAxis: {
-          type: 'category',
-          data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+          type: "category",
+          data: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
           axisLine: {
             lineStyle: {
               color: "#999999",
@@ -136,7 +138,7 @@ export default {
           }
         },
         yAxis: {
-          type: 'value',
+          type: "value",
           axisLine: {
             lineStyle: {
               color: "#999999",
@@ -151,47 +153,58 @@ export default {
             }
           }
         },
-        series: [{
-          name: '销售总笔数',
-          type: 'bar',
-          barGap: 0,
-          data: [50000, 70000, 80000, 40000, 50000, 30000, 40000, 60000, 50000, 40000, 60000, 40000],
-          barWidth: 10,
-          itemStyle: {
-            normal: {
-              color: new Chart.graphic.LinearGradient(
-                0, 0, 0, 1,
-                [
-                  { offset: 0, color: '#83bff6' },
-                  { offset: 0.5, color: '#188df0' },
-                  { offset: 1, color: '#188df0' }
-                ]
-              )
-            },
-            emphasis: {
-              color: new Chart.graphic.LinearGradient(
-                0, 0, 0, 1,
-                [
-                  { offset: 0, color: '#2378f7' },
-                  { offset: 0.7, color: '#2378f7' },
-                  { offset: 1, color: '#83bff6' }
-                ]
-              )
+        series: [
+          {
+            name: "销售总笔数",
+            type: "bar",
+            barGap: 0,
+            data: [
+              50000,
+              70000,
+              80000,
+              40000,
+              50000,
+              30000,
+              40000,
+              60000,
+              50000,
+              40000,
+              60000,
+              40000
+            ],
+            barWidth: 10,
+            itemStyle: {
+              normal: {
+                color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: "#83bff6" },
+                  { offset: 0.5, color: "#188df0" },
+                  { offset: 1, color: "#188df0" }
+                ])
+              },
+              emphasis: {
+                color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: "#2378f7" },
+                  { offset: 0.7, color: "#2378f7" },
+                  { offset: 1, color: "#83bff6" }
+                ])
+              }
             }
           }
-        }]
+        ]
       },
-      //  销售总金额 
+      //  销售总金额
       SUMoption: {
         tooltip: {
-          trigger: 'item',
+          trigger: "item",
           formatter: "{a} <br/>{b}月 : {c}"
         },
         legend: {
-          data: [{
-            name: '销售总金额',
-            icon: 'rect'
-          }],
+          data: [
+            {
+              name: "销售总金额",
+              icon: "rect"
+            }
+          ],
           top: 1,
           left: 1,
           itemGap: 10,
@@ -210,8 +223,8 @@ export default {
           borderWidth: 1
         },
         xAxis: {
-          type: 'category',
-          data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+          type: "category",
+          data: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
           axisLine: {
             lineStyle: {
               color: "#999999",
@@ -229,7 +242,7 @@ export default {
           }
         },
         yAxis: {
-          type: 'value',
+          type: "value",
           axisLine: {
             lineStyle: {
               color: "#999999",
@@ -244,29 +257,46 @@ export default {
             }
           }
         },
-        series: [{
-          name: '销售总金额',
-          //   type: 'bar',
-          type: 'line',
-          barGap: 0,
-          data: [50000, 70000, 80000, 40000, 50000, 30000, 40000, 60000, 50000, 40000, 60000, 40000],
-          barWidth: 10,
-          itemStyle: {
-            color: "#108ff9"
+        series: [
+          {
+            name: "销售总金额",
+            //   type: 'bar',
+            type: "line",
+            barGap: 0,
+            data: [
+              50000,
+              70000,
+              80000,
+              40000,
+              50000,
+              30000,
+              40000,
+              60000,
+              50000,
+              40000,
+              60000,
+              40000
+            ],
+            barWidth: 10,
+            itemStyle: {
+              color: "#108ff9"
+            }
           }
-        }]
+        ]
       },
       //  总点击量
       Clickoption: {
         tooltip: {
-          trigger: 'item',
+          trigger: "item",
           formatter: "{a} <br/>{b}月 : {c}"
         },
         legend: {
-          data: [{
-            name: '总点击量',
-            icon: 'rect'
-          }],
+          data: [
+            {
+              name: "总点击量",
+              icon: "rect"
+            }
+          ],
           top: 1,
           left: 1,
           itemGap: 10,
@@ -285,8 +315,8 @@ export default {
           borderWidth: 1
         },
         xAxis: {
-          type: 'category',
-          data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+          type: "category",
+          data: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
           axisLine: {
             lineStyle: {
               color: "#999999",
@@ -304,7 +334,7 @@ export default {
           }
         },
         yAxis: {
-          type: 'value',
+          type: "value",
           axisLine: {
             lineStyle: {
               color: "#999999",
@@ -319,32 +349,47 @@ export default {
             }
           }
         },
-        series: [{
-          name: '总点击量',
-          type: 'bar',
-          barGap: 0,
-          data: [50000, 10000, 80000, 30000, 50000, 60000, 40000, 80000, 50000, 20000, 60000, 40000],
-          barWidth: 10,
-          itemStyle: {
-            color: "#48cefd"
+        series: [
+          {
+            name: "总点击量",
+            type: "bar",
+            barGap: 0,
+            data: [
+              50000,
+              10000,
+              80000,
+              30000,
+              50000,
+              60000,
+              40000,
+              80000,
+              50000,
+              20000,
+              60000,
+              40000
+            ],
+            barWidth: 10,
+            itemStyle: {
+              color: "#48cefd"
+            }
           }
-        }]
+        ]
       },
       //  支付方式统计
       payoption: {
-        backgroundColor: '#2c343c',
+        backgroundColor: "#2c343c",
         title: {
-          text: '支付方式统计(金额)',
+          text: "支付方式统计(金额)",
           left: 10,
           top: 5,
           textStyle: {
             fontSize: 12,
-            color: '#ccc'
+            color: "#ccc"
           }
         },
 
         tooltip: {
-          trigger: 'item',
+          trigger: "item",
           formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
 
@@ -358,29 +403,31 @@ export default {
         },
         series: [
           {
-            name: '支付方式统计(金额)',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '50%'],
+            name: "支付方式统计(金额)",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "50%"],
             data: [
-              { value: 335, name: '支付宝' },
-              { value: 310, name: '银商二维码' },
-              { value: 274, name: '会员' },
-              { value: 235, name: '微信支付' },
-              { value: 100, name: 'Pos通' }
-            ].sort(function (a, b) { return a.value - b.value; }),
-            roseType: 'radius',
+              { value: 335, name: "支付宝" },
+              { value: 310, name: "银商二维码" },
+              { value: 274, name: "会员" },
+              { value: 235, name: "微信支付" },
+              { value: 100, name: "Pos通" }
+            ].sort(function(a, b) {
+              return a.value - b.value;
+            }),
+            roseType: "radius",
             label: {
               normal: {
                 textStyle: {
-                  color: 'rgba(255, 255, 255, 0.3)'
+                  color: "rgba(255, 255, 255, 0.3)"
                 }
               }
             },
             labelLine: {
               normal: {
                 lineStyle: {
-                  color: 'rgba(255, 255, 255, 0.3)'
+                  color: "rgba(255, 255, 255, 0.3)"
                 },
                 smooth: 0.2,
                 length: 10,
@@ -389,34 +436,34 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: '#c23531',
+                color: "#c23531",
                 shadowBlur: 200,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                shadowColor: "rgba(0, 0, 0, 0.5)"
               }
             },
 
-            animationType: 'scale',
-            animationEasing: 'elasticOut',
-            animationDelay: function (idx) {
+            animationType: "scale",
+            animationEasing: "elasticOut",
+            animationDelay: function(idx) {
               return Math.random() * 200;
             }
           }
         ]
       },
       payNumoption: {
-        backgroundColor: '#2c343c',
+        backgroundColor: "#2c343c",
         title: {
-          text: '支付方式统计(笔数)',
+          text: "支付方式统计(笔数)",
           left: 10,
           top: 5,
           textStyle: {
             fontSize: 12,
-            color: '#ccc'
+            color: "#ccc"
           }
         },
 
         tooltip: {
-          trigger: 'item',
+          trigger: "item",
           formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
 
@@ -430,29 +477,31 @@ export default {
         },
         series: [
           {
-            name: '支付方式统计(笔数)',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '50%'],
+            name: "支付方式统计(笔数)",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "50%"],
             data: [
-              { value: 335, name: '支付宝' },
-              { value: 310, name: '银商二维码' },
-              { value: 274, name: '会员' },
-              { value: 235, name: '微信支付' },
-              { value: 100, name: 'Pos通' }
-            ].sort(function (a, b) { return a.value - b.value; }),
-            roseType: 'radius',
+              { value: 335, name: "支付宝" },
+              { value: 310, name: "银商二维码" },
+              { value: 274, name: "会员" },
+              { value: 235, name: "微信支付" },
+              { value: 100, name: "Pos通" }
+            ].sort(function(a, b) {
+              return a.value - b.value;
+            }),
+            roseType: "radius",
             label: {
               normal: {
                 textStyle: {
-                  color: 'rgba(255, 255, 255, 0.3)'
+                  color: "rgba(255, 255, 255, 0.3)"
                 }
               }
             },
             labelLine: {
               normal: {
                 lineStyle: {
-                  color: 'rgba(255, 255, 255, 0.3)'
+                  color: "rgba(255, 255, 255, 0.3)"
                 },
                 smooth: 0.2,
                 length: 10,
@@ -461,64 +510,63 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: '#c23531',
+                color: "#c23531",
                 shadowBlur: 200,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                shadowColor: "rgba(0, 0, 0, 0.5)"
               }
             },
 
-            animationType: 'scale',
-            animationEasing: 'elasticOut',
-            animationDelay: function (idx) {
+            animationType: "scale",
+            animationEasing: "elasticOut",
+            animationDelay: function(idx) {
               return Math.random() * 200;
             }
           }
         ]
-      },
-    }
+      }
+    };
   },
   // 导入组件
   components: {
     // 点聚合组件
   },
   // 创建完毕状态(里面是操作)
-  created() { },
+  created() {},
   // 挂载结束状态(里面是操作)
   mounted() {
-    this.getSCE()
-    this.getSUM()
-    this.getClick()
-    this.getpay()
-    this.getpayNum()
+    this.getSCE();
+    this.getSUM();
+    this.getClick();
+    this.getpay();
+    this.getpayNum();
   },
   // 里面的函数只有调用才会执行
   methods: {
     // 交易总笔数
     getSCE() {
-      this.chart = Chart.init(this.$refs.SCEchart)
-      this.chart.setOption(this.SCEoption)
+      this.chart = Chart.init(this.$refs.SCEchart);
+      this.chart.setOption(this.SCEoption);
     },
     // 交易总金额
     getSUM() {
-      this.chart = Chart.init(this.$refs.SUMEchart)
-      this.chart.setOption(this.SUMoption)
+      this.chart = Chart.init(this.$refs.SUMEchart);
+      this.chart.setOption(this.SUMoption);
     },
     // 总点击量
     getClick() {
-      this.chart = Chart.init(this.$refs.ClickEchart)
-      this.chart.setOption(this.Clickoption)
+      this.chart = Chart.init(this.$refs.ClickEchart);
+      this.chart.setOption(this.Clickoption);
     },
     // 支付方式统计
     getpay() {
-      this.chart = Chart.init(this.$refs.payEchart)
-      this.chart.setOption(this.payoption)
+      this.chart = Chart.init(this.$refs.payEchart);
+      this.chart.setOption(this.payoption);
     },
     // 支付方式统计
     getpayNum() {
-      this.chart = Chart.init(this.$refs.payNumEchart)
-      this.chart.setOption(this.payNumoption)
+      this.chart = Chart.init(this.$refs.payNumEchart);
+      this.chart.setOption(this.payNumoption);
     }
-
   }
 };
 </script>

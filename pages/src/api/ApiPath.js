@@ -14,6 +14,9 @@ const url = {
 
   //登录
   login:URLHost + '/admin/login',
+
+  //分页查询
+  findAdminByName:URLHost + '/admin/findByName',
   //商品列表
   findAllCommodity: URLHost + '/commodity/findAll',
   //新增商品

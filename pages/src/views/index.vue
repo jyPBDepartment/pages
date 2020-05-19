@@ -13,7 +13,7 @@
         </el-main>
       </el-container>
     </el-container>
-  </el-container> -->
+  </el-container>-->
 
   <el-container class="index-con">
     <el-aside :class="showclass">
@@ -31,15 +31,15 @@
 </template>
 <script>
 // 导入组件
-import navcon from '../components/navcon.vue'
-import leftnav from '../components/leftnav.vue'
+import navcon from "../components/navcon.vue";
+import leftnav from "../components/leftnav.vue";
 export default {
-  name: 'index',
+  name: "index",
   data() {
     return {
-      showclass: 'asideshow',
+      showclass: "asideshow",
       showtype: false
-    }
+    };
   },
   // 注册组件
   components: {
@@ -49,26 +49,26 @@ export default {
   methods: {},
   created() {
     // 监听
-    this.$root.Bus.$on('toggle', value => {
+    this.$root.Bus.$on("toggle", value => {
       if (value) {
-        this.showclass = 'asideshow'
+        this.showclass = "asideshow";
       } else {
         setTimeout(() => {
-          this.showclass = 'aside'
-        }, 300)
+          this.showclass = "aside";
+        }, 300);
       }
-    })
+    });
   },
   beforeUpdate() {},
   // 挂载前状态(里面是操作)
   beforeMount() {
     // 弹出登录成功
     this.$message({
-      message: '登录成功',
-      type: 'success'
-    })
+      message: "登录成功",
+      type: "success"
+    });
   }
-}
+};
 </script>
 <style >
 .index-con {
