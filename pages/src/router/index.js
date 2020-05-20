@@ -34,6 +34,11 @@ import Dept from '@/views/system/Dept';
 import Variable from '@/views/system/Variable';
 // 权限管理
 import Permission from '@/views/system/Permission';
+//机构管理
+import Organ from '@/views/system/Organ';
+//业务员管理
+import Sales from '@/views/system/sales';
+
 /**
  * 支付管理
  */
@@ -146,7 +151,23 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        }, {
+        },{
+            path:'/system/Organ',
+            name:'机构管理',
+            component:Organ,
+            meta:{
+                requireAuth:true
+            }
+        },
+       {
+        path:'/system/sales',
+        name:'业务员管理',
+        component:Sales,
+        meta:{
+            requireAuth:true
+        }
+       },
+        {
             path: '/machine/MachineConfig',
             name: '支付配置信息',
             component: MachineConfig,

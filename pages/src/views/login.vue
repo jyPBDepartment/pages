@@ -103,59 +103,58 @@ export default {
           this.logining = true;
           // 测试通道，不为空直接登录
           setTimeout(() => {
-            // this.logining = false;
-            // this.$store.commit("login", "true");
-            // this.$router.push({ path: "/goods/Goods" });
+            this.logining = false;
+            this.$store.commit("login", "true");
+            this.$router.push({ path: "/goods/Goods" });
           }, 1000);
 
           let params = {
-            loginName:this.ruleForm.username,
-            password:this.ruleForm.password
-
+            loginName: this.ruleForm.username,
+            password: this.ruleForm.password
           };
-          api.testAxiosGet(ApiPath.url.login, params).then(res => {
-            let code = res.status;
-            if (code == "0") {
-              this.$message.success(res.message)
+          // api.testAxiosGet(ApiPath.url.login, params).then(res => {
+          //   let code = res.status;
+          //   if (code == "0") {
+          //     this.$message.success(res.message)
 
-              // console.log(res.data);
+          //     // console.log(res.data);
 
-              // this.total = res.content.tagInfoList.totalElements;
-              // this.tableData = res.content.tagInfoList.content;
+          //     // this.total = res.content.tagInfoList.totalElements;
+          //     // this.tableData = res.content.tagInfoList.content;
+          //   } else {
+          //     // alert(res.message);
+          //     this.$message.error(res.message)
+
+          //   }
+          // });
+          // 注释
+          login(this.ruleForm).then(res => {
+            if (res.success) {
+              if (this.rememberpwd) {
+                //保存帐号到cookie，有效期7天
+                setCookie("user", this.ruleForm.username, 7);
+                //保存密码到cookie，有效期7天
+                setCookie("pwd", this.ruleForm.password, 7);
+              } else {
+                delCookie("user");
+                delCookie("pwd");
+              }
+              //如果请求成功就让他2秒跳转路由
+              setTimeout(() => {
+                this.logining = false;
+                // 缓存token
+                localStorage.setItem("logintoken", res.data.token);
+                // 缓存用户个人信息
+                localStorage.setItem("userdata", JSON.stringify(res.data));
+                this.$store.commit("login", "true");
+                this.$router.push({ path: "/goods/Goods" });
+              }, 1000);
             } else {
-              // alert(res.message);
-              this.$message.error(res.message)
-
+              this.$message.error(res.msg);
+              this.logining = false;
+              return false;
             }
           });
-          // 注释
-          // login(this.ruleForm).then(res => {
-          //   if (res.success) {
-          //     if (this.rememberpwd) {
-          //       //保存帐号到cookie，有效期7天
-          //       setCookie('user', this.ruleForm.username, 7)
-          //       //保存密码到cookie，有效期7天
-          //       setCookie('pwd', this.ruleForm.password, 7)
-          //     } else {
-          //       delCookie('user')
-          //       delCookie('pwd')
-          //     }
-          //     //如果请求成功就让他2秒跳转路由
-          //     setTimeout(() => {
-          //       this.logining = false
-          //       // 缓存token
-          //       localStorage.setItem('logintoken', res.data.token)
-          //       // 缓存用户个人信息
-          //       localStorage.setItem('userdata', JSON.stringify(res.data))
-          //       this.$store.commit('login', 'true')
-          //       this.$router.push({ path: '/goods/Goods' })
-          //     }, 1000)
-          //   } else {
-          //     this.$message.error(res.msg)
-          //     this.logining = false
-          //     return false
-          //   }
-          // })
         } else {
           // 获取图形验证码
           this.getcode();

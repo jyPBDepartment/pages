@@ -1,9 +1,11 @@
 import axios from 'axios'
-import vue from 'vue'
+// import vue from 'vue'
 
 axios.defaults.headers.post['Content-Type'] =
   'application/x-www-form-urlencoded;charset=UTF-8'
 axios.defaults.withCredentials = false
+
+// axios.defaults.timeout = 1000;
 
 // 请求拦截器
 axios.interceptors.request.use(

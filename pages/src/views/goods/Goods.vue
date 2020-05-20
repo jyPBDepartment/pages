@@ -13,7 +13,7 @@
       <el-form-item label="搜索：">
         <el-input size="small" v-model="formInline.deptName" placeholder="输入部门名称"></el-input>
       </el-form-item>
-      <el-form-item label="">
+      <el-form-item label>
         <el-input size="small" v-model="formInline.deptNo" placeholder="输入部门代码"></el-input>
       </el-form-item>
       <el-form-item>
@@ -22,20 +22,24 @@
       </el-form-item>
     </el-form>
     <!--列表-->
-    <el-table size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
-      <el-table-column align="center" type="selection" width="60">
-      </el-table-column>
-      <el-table-column sortable prop="deptName" label="部门名称" width="300">
-      </el-table-column>
-      <el-table-column sortable prop="deptNo" label="部门代码" width="300">
-      </el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" width="300">
-        <template slot-scope="scope">
+    <el-table
+      size="small"
+      :data="listData"
+      highlight-current-row
+      v-loading="loading"
+      border
+      element-loading-text="拼命加载中"
+      style="width: 100%;"
+    >
+      <el-table-column align="center" type="selection" width="60"></el-table-column>
+      <el-table-column sortable prop="adminIDCard" label="部门名称" width="300"></el-table-column>
+      <el-table-column sortable prop="adminId" label="部门代码" width="300"></el-table-column>
+      <el-table-column sortable prop="adminLoginName" label="修改时间" width="300">
+        <!-- <template slot-scope="scope">
           <div>{{scope.row.editTime|timestampToTime}}</div>
-        </template>
+        </template>-->
       </el-table-column>
-      <el-table-column sortable prop="editUser" label="修改人" width="300">
-      </el-table-column>
+      <el-table-column sortable prop="adminName" label="修改人" width="300"></el-table-column>
       <el-table-column align="center" label="操作" min-width="300">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -49,55 +53,78 @@
     <el-dialog :title="title" :visible.sync="editFormVisible" width="30%" @click="closeDialog">
       <el-form label-width="120px" :model="editForm" :rules="rules" ref="editForm">
         <el-form-item label="部门名称" prop="deptName">
-          <el-input size="small" v-model="editForm.deptName" auto-complete="off" placeholder="请输入部门名称"></el-input>
+          <el-input
+            size="small"
+            v-model="editForm.deptName"
+            auto-complete="off"
+            placeholder="请输入部门名称"
+          ></el-input>
         </el-form-item>
         <el-form-item label="部门代码" prop="deptNo">
-          <el-input size="small" v-model="editForm.deptNo" auto-complete="off" placeholder="请输入部门代码"></el-input>
+          <el-input
+            size="small"
+            v-model="editForm.deptNo"
+            auto-complete="off"
+            placeholder="请输入部门代码"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="closeDialog">取消</el-button>
-        <el-button size="small" type="primary" :loading="loading" class="title" @click="submitForm('editForm')">保存</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          :loading="loading"
+          class="title"
+          @click="submitForm('editForm')"
+        >保存</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { deptList, deptSave, deptDelete } from '../../api/userMG'
-import Pagination from '../../components/Pagination'
+import { deptList, deptSave, deptDelete } from "../../api/userMG";
+import Pagination from "../../components/Pagination";
+
+//后台路径引用
+import ApiPath from "@/api/ApiPath.js";
+//数据请求交互引用
+import api from "@/axios/api.js";
+
 export default {
+  inject:['reload'],
   data() {
     return {
       nshow: true, //switch开启
       fshow: false, //switch关闭
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
-      title: '添加',
+      title: "添加",
       editForm: {
-        deptId: '',
-        deptName: '',
-        deptNo: '',
-        token: localStorage.getItem('logintoken')
+        deptId: "",
+        deptName: "",
+        deptNo: "",
+        token: localStorage.getItem("logintoken")
       },
       // rules表单验证
       rules: {
         deptName: [
-          { required: true, message: '请输入部门名称', trigger: 'blur' }
+          { required: true, message: "请输入部门名称", trigger: "blur" }
         ],
-        deptNo: [{ required: true, message: '请输入部门代码', trigger: 'blur' }]
+        deptNo: [{ required: true, message: "请输入部门代码", trigger: "blur" }]
       },
       formInline: {
         page: 1,
         limit: 10,
-        varLable: '',
-        varName: '',
-        token: localStorage.getItem('logintoken')
+        varLable: "",
+        varName: "",
+        token: localStorage.getItem("logintoken")
       },
       // 删除部门
       seletedata: {
-        ids: '',
-        token: localStorage.getItem('logintoken')
+        ids: "",
+        token: localStorage.getItem("logintoken")
       },
       userparm: [], //搜索权限
       listData: [], //用户数据
@@ -107,7 +134,7 @@ export default {
         pageSize: 10,
         total: 10
       }
-    }
+    };
   },
   // 注册组件
   components: {
@@ -121,7 +148,7 @@ export default {
    * 创建完毕
    */
   created() {
-    this.getdata(this.formInline)
+    this.getdata(this.formInline);
   },
 
   /**
@@ -130,7 +157,40 @@ export default {
   methods: {
     // 获取公司列表
     getdata(parameter) {
-      this.loading = true
+      this.loading = true;
+      let params = {
+        adminName: "",
+        adminPhone: "",
+        adminStatic: "",
+        page: parameter.page,
+        size: parameter.limit
+      };
+      api
+        .testAxiosGet(ApiPath.url.findAdminByName, params)
+        .then(res => {
+          let code = res.status;
+          if (code == "0") {
+
+            // this.reload();
+            this.$message.success(res.message);
+            this.loading = false;
+            this.listData = res.data.content;
+            this.pageparm.currentPage = res.data.number + 1;
+            this.pageparm.pageSize = res.data.size;
+            this.pageparm.total = res.data.totalElements;
+
+            // this.total = res.content.tagInfoList.totalElements;
+            // this.tableData = res.content.tagInfoList.content;
+          } else {
+            // alert(res.message);
+            this.$message.error(res.message);
+          }
+        })
+        .catch(err => {
+          // this.loading = false;
+          this.$message.error(err.data);
+        });
+
       // 模拟数据开始
       let res = {
         code: 0,
@@ -143,8 +203,8 @@ export default {
             addTime: 1521062371000,
             editTime: 1526700200000,
             deptId: 2,
-            deptName: 'XX分公司',
-            deptNo: '1',
+            deptName: "XX分公司",
+            deptNo: "1",
             parentId: 1
           },
           {
@@ -153,8 +213,8 @@ export default {
             addTime: 1521063247000,
             editTime: 1526652291000,
             deptId: 3,
-            deptName: '上海测试',
-            deptNo: '02',
+            deptName: "上海测试",
+            deptNo: "02",
             parentId: 1
           },
           {
@@ -163,8 +223,8 @@ export default {
             addTime: 1526349555000,
             editTime: 1526349565000,
             deptId: 12,
-            deptName: '1',
-            deptNo: '11',
+            deptName: "1",
+            deptNo: "11",
             parentId: 1
           },
           {
@@ -173,8 +233,8 @@ export default {
             addTime: 1526373178000,
             editTime: 1526373178000,
             deptId: 13,
-            deptName: '5',
-            deptNo: '5',
+            deptName: "5",
+            deptNo: "5",
             parentId: 1
           },
           {
@@ -183,17 +243,17 @@ export default {
             addTime: 1526453107000,
             editTime: 1526453107000,
             deptId: 17,
-            deptName: 'v',
-            deptNo: 'v',
+            deptName: "v",
+            deptNo: "v",
             parentId: 1
           }
         ]
-      }
-      this.loading = false
-      this.listData = res.data
-      this.pageparm.currentPage = this.formInline.page
-      this.pageparm.pageSize = this.formInline.limit
-      this.pageparm.total = res.count
+      };
+      // this.loading = false;
+      // this.listData = res.data;
+      // this.pageparm.currentPage = this.formInline.page;
+      // this.pageparm.pageSize = this.formInline.limit;
+      // this.pageparm.total = res.count;
       // 模拟数据结束
 
       /***
@@ -222,27 +282,27 @@ export default {
     },
     // 分页插件事件
     callFather(parm) {
-      this.formInline.page = parm.currentPage
-      this.formInline.limit = parm.pageSize
-      this.getdata(this.formInline)
+      this.formInline.page = parm.currentPage;
+      this.formInline.limit = parm.pageSize;
+      this.getdata(this.formInline);
     },
     // 搜索事件
     search() {
-      this.getdata(this.formInline)
+      this.getdata(this.formInline);
     },
     //显示编辑界面
     handleEdit: function(index, row) {
-      this.editFormVisible = true
-      if (row != undefined && row != 'undefined') {
-        this.title = '修改'
-        this.editForm.deptId = row.deptId
-        this.editForm.deptName = row.deptName
-        this.editForm.deptNo = row.deptNo
+      this.editFormVisible = true;
+      if (row != undefined && row != "undefined") {
+        this.title = "修改";
+        this.editForm.deptId = row.deptId;
+        this.editForm.deptName = row.deptName;
+        this.editForm.deptNo = row.deptNo;
       } else {
-        this.title = '添加'
-        this.editForm.deptId = ''
-        this.editForm.deptName = ''
-        this.editForm.deptNo = ''
+        this.title = "添加";
+        this.editForm.deptId = "";
+        this.editForm.deptName = "";
+        this.editForm.deptNo = "";
       }
     },
     // 编辑、增加页面保存方法
@@ -251,72 +311,72 @@ export default {
         if (valid) {
           deptSave(this.editForm)
             .then(res => {
-              this.editFormVisible = false
-              this.loading = false
+              this.editFormVisible = false;
+              this.loading = false;
               if (res.success) {
-                this.getdata(this.formInline)
+                this.getdata(this.formInline);
                 this.$message({
-                  type: 'success',
-                  message: '公司保存成功！'
-                })
+                  type: "success",
+                  message: "公司保存成功！"
+                });
               } else {
                 this.$message({
-                  type: 'info',
+                  type: "info",
                   message: res.msg
-                })
+                });
               }
             })
             .catch(err => {
-              this.editFormVisible = false
-              this.loading = false
-              this.$message.error('公司保存失败，请稍后再试！')
-            })
+              this.editFormVisible = false;
+              this.loading = false;
+              this.$message.error("公司保存失败，请稍后再试！");
+            });
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     // 删除公司
     deleteUser(index, row) {
-      this.$confirm('确定要删除吗?', '信息', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
+      this.$confirm("确定要删除吗?", "信息", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
       })
         .then(() => {
           deptDelete(row.deptId)
             .then(res => {
               if (res.success) {
                 this.$message({
-                  type: 'success',
-                  message: '公司已删除!'
-                })
-                this.getdata(this.formInline)
+                  type: "success",
+                  message: "公司已删除!"
+                });
+                this.getdata(this.formInline);
               } else {
                 this.$message({
-                  type: 'info',
+                  type: "info",
                   message: res.msg
-                })
+                });
               }
             })
             .catch(err => {
-              this.loading = false
-              this.$message.error('公司删除失败，请稍后再试！')
-            })
+              this.loading = false;
+              this.$message.error("公司删除失败，请稍后再试！");
+            });
         })
         .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
     // 关闭编辑、增加弹出框
     closeDialog() {
-      this.editFormVisible = false
+      this.editFormVisible = false;
     }
   }
-}
+};
 </script>
 
 <style scoped>
