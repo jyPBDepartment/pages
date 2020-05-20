@@ -124,7 +124,23 @@ export default {
               hasThird: 'N',
               url: 'system/Permission',
               menus: null
-            }
+            },
+             {
+              menuid: 77,
+              icon: 'icon-cms-manage',
+              menuname: '机构管理',
+              hasThird: 'N',
+              url: 'system/Organ',
+              menus: null
+            },
+              {
+              menuid: 78,
+              icon: 'icon-cms-manage',
+              menuname: '业务员管理',
+              hasThird: 'N',
+              url: 'system/sales',
+              menus: null
+            },
           ]
         },
         {
