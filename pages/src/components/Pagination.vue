@@ -45,4 +45,4 @@ export default {
 .page-box {
   margin: 10px auto;
 }
-</style>
+</style> 

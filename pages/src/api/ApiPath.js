@@ -27,7 +27,40 @@ const url = {
    //删除商品信息
    deleteCommodity: URLHost + '/commodity/delete',
    //上架/下架
-   openShelf: URLHost + '/commodity/opensulf'
+   openShelf: URLHost + '/commodity/opensulf',
+   
+  // //角色管理
+  // //角色按编号、名称查询
+  findAllRoles: URLHost + '/role/findAll',
+  roleSearch: URLHost + '/role/findByName',
+  addRoles: URLHost + '/role/add',
+  //findById
+  findRolesId: URLHost + '/role/findById',
+  //修改信息
+  updateRoles: URLHost + '/role/update',
+  //删除角色
+  deleteRoles: URLHost + '/role/delete',
+  //启用/禁用
+  rolesEnable: URLHost + '/role/enable',
+  //权限查询
+  jurisdictionSearch: URLHost + '/jurisdiction/findByName',
+  findAllJurisdiction: URLHost + '/jurisdiction/findAll',
+  //权限添加
+  addJurisdiction: URLHost + '/jurisdiction/add',
+  //权限删除
+  deleteJurisdiction: URLHost + '/jurisdiction/delete',
+  //启用禁用
+  jurisdictionEnable: URLHost + '/jurisdiction/enable',
+  //权限修改
+  findJurisdictionById: URLHost + '/jurisdiction/findById',
+  updateJurisdiction: URLHost + '/jurisdiction/update',
+  // //角色新增
+  // //角色编辑
+  // getRoleByCode: URLHost + '/getRoleByCode',
+  // saveRole: URLHost + '/saveRole',
+  // //角色删除
+  // delRole: URLHost + '/delRole',
+  // //角色菜单保存
   //用户登录
   // login: URLHost + '/admin/login',
   // //用户注册
@@ -130,17 +163,6 @@ const url = {
 
   // //菜单删除
 
-  // //角色管理
-  // //角色按编号、名称查询
-  // getRoleList: URLHost + '/getRoleList',
-
-  // //角色新增
-  // //角色编辑
-  // getRoleByCode: URLHost + '/getRoleByCode',
-  // saveRole: URLHost + '/saveRole',
-  // //角色删除
-  // delRole: URLHost + '/delRole',
-  // //角色菜单保存
 
   // //用户
   // //用户查询
