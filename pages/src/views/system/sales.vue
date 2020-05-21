@@ -40,6 +40,8 @@
         </template>
       </el-table-column>
     </el-table>
+     <!-- 分页组件 -->
+    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
    
@@ -64,9 +66,11 @@ import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddSales from "./addSales.vue";
 import UpdateSales from './updateSales.vue'
+import Pagination from "../../components/Pagination";
 
 
 export default {
+  inject:['reload'],
   props: {
     show: {
       type: Boolean,
@@ -93,7 +97,19 @@ export default {
       addSalesFlag: false,
       updateRuleTag: false,
       mainBodyCode: "",
-      tableData: []
+      tableData: [],
+      formInline: {
+        page: 1,
+        limit: 10,
+       varLable: "",
+        varName: "",
+        token: localStorage.getItem("logintoken")
+      },
+       pageparm: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 10
+      }
     };
   },
   watch: {
@@ -102,29 +118,44 @@ export default {
     }
   },
   created() {
+    this.search(this.formInline);
     // this.setTagList();
-    let params = {};
-    api.testAxiosGet(ApiPath.url.findAllSales, params).then(res => {
-      let code = res.status;
-      if (code == "0") {
-        this.tableData = res.data;
-        console.log(res.data);
-      } else {
-      }
-    });
+    // let params = {};
+    // api.testAxiosGet(ApiPath.url.findAllSales, params).then(res => {
+    //   let code = res.status;
+    //   if (code == "0") {
+    //     this.tableData = res.data;
+    //     console.log(res.data);
+    //   } else {
+    //   }
+    // });
   },
   methods: {
+     //分页赋值
+     callFather(parm) {
+      this.formInline.page = parm.currentPage;
+      this.formInline.limit = parm.pageSize;
+      this.search(this.formInline);
+    },
+     
     //查询方法
-    search: function() {
+    search: function(parameter) {
       let params = {
         name: this.name,
-        phone: this.phone
+        phone: this.phone,
+         page: this.formInline.page,
+        size:  this.formInline.limit
       };
       api.testAxiosGet(ApiPath.url.searchSales, params).then(res => {
         let code = res.status;
         if (code == "0") {
-          this.tableData = res.data;
-          console.log(res.data);
+        
+          this.tableData = res.data.content;
+           this.pageparm.currentPage = res.data.number + 1;
+            this.pageparm.pageSize = res.data.size;
+            this.pageparm.total = res.data.totalElements;
+        
+          
         } else {
         }
       });
@@ -161,7 +192,8 @@ export default {
         });
          
         if (code == "0") {
-          this.$message.success(res.message);
+          this.reload();
+          
         } else {
           this.$message.success(res.message);
         }
@@ -241,7 +273,8 @@ export default {
   },
   components: {
     AddSales,
-    UpdateSales
+    UpdateSales,
+      Pagination
   }
 };
 </script>

@@ -48,6 +48,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
+   inject:['reload'],
   props: {
     show: {
       type: Boolean,
@@ -150,9 +151,10 @@ export default {
           api.testAxiosGet(ApiPath.url.saveOrgan,params).then(res =>{
       
         this.$message.success(res.message);
+        this.reload();
         this.close();
       });
-        location.reload();
+        
       }
       
     },

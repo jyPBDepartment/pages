@@ -21,9 +21,7 @@
         <el-form-item label="上级机构编号">
           <el-input type="text" v-model="OrganForm.superId" placeholder="请输入上级机构编号"></el-input>
         </el-form-item>
-         <el-form-item label="机构等级">
-          <el-input type="text" v-model="OrganForm.organLevel" placeholder="请输入机构等级"></el-input>
-        </el-form-item>
+        
        
         <el-form-item label="备注">
           <el-input type="text" v-model="OrganForm.context" placeholder="请输入备注"></el-input>
@@ -46,6 +44,7 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
+   inject:['reload'],
   props: {
     show: {
       type: Boolean,
@@ -66,7 +65,6 @@ export default {
 
         name:"",
         superId:"",
-        organLevel:"",
       
         context:"",
         state:"",
@@ -105,9 +103,9 @@ export default {
        this.$message.success(res.message);
         // this.OrganForm = res.data;
         this.close();
-      
+      this.reload();
       });
-        location.reload();
+       
     },
     close: function() {
       this.$emit("close");

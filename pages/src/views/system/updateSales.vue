@@ -46,6 +46,7 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
+  inject:['reload'],
   props: {
     show: {
       type: Boolean,
@@ -103,11 +104,11 @@ export default {
       //修改用户信息
       api.testAxiosGet(ApiPath.url.updateSales, params).then(res => {
         this.$message.success(res.message);
-        // this.adminForm = res.data;
+        this.reload();
         this.close();
 
       });
-        location.reload();
+     
     },
     close: function() {
       this.$emit("close");

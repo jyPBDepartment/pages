@@ -31,58 +31,31 @@ const url = {
    deleteCommodity: URLHost + '/commodity/delete',
    //上架/下架
    openShelf: URLHost + '/commodity/opensulf',
-   
-  // //角色管理
-  // //角色按编号、名称查询
-  findAllRoles: URLHost + '/role/findAll',
-  roleSearch: URLHost + '/role/findByName',
-  addRoles: URLHost + '/role/add',
-  //findById
-  findRolesId: URLHost + '/role/findById',
-  //修改信息
-  updateRoles: URLHost + '/role/update',
-  //删除角色
-  deleteRoles: URLHost + '/role/delete',
-  //启用/禁用
-  rolesEnable: URLHost + '/role/enable',
-  //权限查询
-  jurisdictionSearch: URLHost + '/jurisdiction/findByName',
-  findAllJurisdiction: URLHost + '/jurisdiction/findAll',
-  //权限添加
-  addJurisdiction: URLHost + '/jurisdiction/add',
-  //权限删除
-  deleteJurisdiction: URLHost + '/jurisdiction/delete',
-  //启用禁用
-  jurisdictionEnable: URLHost + '/jurisdiction/enable',
-  //权限修改
-  findJurisdictionById: URLHost + '/jurisdiction/findById',
-  updateJurisdiction: URLHost + '/jurisdiction/update',
-
    //查询机构详情
-  //  findAllOrgan:URLHost+'/organ/findAll',
-  //  //添加机构
-  //  saveOrgan:URLHost + '/organ/save',
-  //  //修改机构
-  //  organFindById:URLHost + '/organ/findById',
-  //  updateOrgan:URLHost + '/organ/update',
-  //  //模糊查询
-  //  searchOrgan:URLHost +'/organ/findByName',
-  //  //删除
-  //  deleteOrgan:URLHost + '/organ/delete',
-  // //禁用
-  //  organEnable:URLHost +'/organ/enable',
-  //  //业务员详情查看
-  //  findAllSales:URLHost +'/sales/findAll',
-  //  //业务员添加
-  //  saveSales:URLHost + '/sales/save',
-  //  //业务员修改
-  //  salesFindById : URLHost + '/sales/findById',
-  //  updateSales : URLHost + '/sales/update',
-  //  //业务员删除
-  //  deleteSales :URLHost +'/sales/delete',
-  //  //业务员模糊查询
-  //  searchSales : URLHost + '/sales/findByName',
-  // //用户登录
+   findAllOrgan:URLHost+'/organ/findAll',
+   //添加机构
+   saveOrgan:URLHost + '/organ/save',
+   //修改机构
+   organFindById:URLHost + '/organ/findById',
+   updateOrgan:URLHost + '/organ/update',
+   //模糊查询
+   searchOrgan:URLHost +'/organ/findByName',
+   //删除
+   deleteOrgan:URLHost + '/organ/delete',
+   //禁用
+   organEnable:URLHost +'/organ/enable',
+   //业务员详情查看
+   findAllSales:URLHost +'/sales/findAll',
+   //业务员添加
+   saveSales:URLHost + '/sales/save',
+   //业务员修改
+   salesFindById : URLHost + '/sales/findById',
+   updateSales : URLHost + '/sales/update',
+   //业务员删除
+   deleteSales :URLHost +'/sales/delete',
+   //业务员模糊查询
+   searchSales : URLHost + '/sales/findByName',
+  //用户登录
   // login: URLHost + '/admin/login',
   // //用户注册
   // regedit: URLHost + '/admin/save',
@@ -184,6 +157,17 @@ const url = {
 
   // //菜单删除
 
+  // //角色管理
+  // //角色按编号、名称查询
+  // getRoleList: URLHost + '/getRoleList',
+
+  // //角色新增
+  // //角色编辑
+  // getRoleByCode: URLHost + '/getRoleByCode',
+  // saveRole: URLHost + '/saveRole',
+  // //角色删除
+  // delRole: URLHost + '/delRole',
+  // //角色菜单保存
 
   // //用户
   // //用户查询

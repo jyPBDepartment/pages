@@ -36,7 +36,7 @@
         <template slot-scope="scope">
           <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px">修改</el-button>
           <el-button @click="deleteOrgan(scope)" type="text" size="medium" style="width:50px;background-color:#F56C6C;border-color:#F56C6C;color:white;font-size:12px">删除</el-button>
-            <el-button @click="organEnable(scope)" type="text"  size="medium" style="width:50px;background-color:#85ce61;border-color:#85ce61;color:white;font-size:12px">
+            <el-button @click="organEnable(scope)" type="text"  style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px">
               {{scope.row.state == 0 ? "禁用" : scope.row.state == 1 ? "启用" : "解锁"}}
             </el-button>
          
@@ -44,7 +44,8 @@
 
       </el-table-column>
     </el-table>
-   
+    <!-- 分页组件 -->
+    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
        
@@ -66,10 +67,11 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddOrgan from "./addOrgan.vue";
-import UpdateOrgan from './updateOrgan.vue'
-
+import UpdateOrgan from "./updateOrgan.vue";
+import Pagination from "../../components/Pagination";
 
 export default {
+ inject:['reload'],
   props: {
     show: {
       type: Boolean,
@@ -97,107 +99,119 @@ export default {
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
-      pageparm:{
-        currentPage:1,
-        pageSize:10,
-        total:10
+      formInline: {
+        page: 1,
+        limit: 10,
+        varLable: "",
+        varName: "",
+        token: localStorage.getItem("logintoken")
+      },
+      pageparm: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 10
       }
     };
   },
-  
+
   watch: {
     show(val) {
       this.localShow = val;
     }
   },
   created() {
-    // this.setTagList();
-    let params = {};
-    api.testAxiosGet(ApiPath.url.findAllOrgan, params).then(res => {
-      let code = res.status;
-      if (code == "0") {
-        this.tableData = res.data;
-        console.log(res.data);
-      } else {
-      }
-    });
+    this.search(this.formInline);
   },
   methods: {
     //分页赋值
-    callFather(parm){
-      this.formInline.currentPage = parm.currentPage;
-      this.formInline.pageSize = parm.pageSize;
+    callFather(parm) {
+      this.formInline.page = parm.currentPage;
+      this.formInline.limit = parm.pageSize;
+      this.search(this.formInline);
     },
-     
+
     //查询方法
-    search: function() {
+    search: function(parameter) {
       let params = {
         name: this.name,
-        superId: this.superId
+        superId: this.superId,
+        page: this.formInline.page,
+        size: this.formInline.limit
       };
-      api.testAxiosGet(ApiPath.url.searchOrgan, params).then(res => {
-        let code = res.status;
-        if (code == "0") {
-          this.tableData = res.data;
-          console.log(res.data);
-        } else {
-        }
-      });
+      api
+        .testAxiosGet(ApiPath.url.searchOrgan, params)
+        .then(res => {
+          let code = res.status;
+          if (code == "0") {
+          
+
+            this.tableData = res.data.content;
+            this.pageparm.currentPage = res.data.number + 1;
+            this.pageparm.pageSize = res.data.size;
+            this.pageparm.total = res.data.totalElements;
+             
+          } else {
+          }
+        })
+        .catch(function(error) {
+          //加上catch
+          console.log(error);
+        });
     },
     closeUpdateOrganDialog: function() {
       this.updateOrganFlag = false;
     },
-    updateOrgan: function() {
-      
-    },
-      organEnable:function(scope) {
+    updateOrgan: function() {},
+    organEnable: function(scope) {
       let params = {
         id: scope.row.id,
         state: scope.row.state
       };
-       api.testAxiosGet(ApiPath.url.organEnable, params).then(res => {
+      api.testAxiosGet(ApiPath.url.organEnable, params).then(res => {
         let code = res.status;
-       
-        if (code == "0") {
-          this.$message.success(res.message);
-        } else {
-          this.$message.success(res.message);
-        }
-        
-      });
-        location.reload();
-      },
-    deleteOrgan: function(scope) {
-      let params = {
-        id: scope.row.id
-      };
-
-      api.testAxiosGet(ApiPath.url.deleteOrgan, params).then(res => {
-        let code = res.status;
-          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-         location.reload();
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
 
         if (code == "0") {
           this.$message.success(res.message);
+          this.reload();
         } else {
           this.$message.success(res.message);
         }
       });
       
+    },
+    deleteOrgan: function(scope) {
+      let params = {
+        id: scope.row.id
+      };
+    this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+            
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
+            
+          });
+      api.testAxiosGet(ApiPath.url.deleteOrgan, params).then(res => {
+        let code = res.status;
+        
+        if (code == "0") {
+          // this.$message.success(res.message);
+          this.reload();
+        } else {
+          this.$message.success(res.message);
+        }
+      });
     },
     onSubmit: function() {
       let params = {
@@ -206,7 +220,6 @@ export default {
         // mainPartCode: this.mainPartCode,
         generateType: "gz"
       };
-      
     },
     openUpdateDialog(scope) {
       console.log(scope);
@@ -272,23 +285,22 @@ export default {
   },
   components: {
     AddOrgan,
-    UpdateOrgan
-   
+    UpdateOrgan,
+    Pagination
   }
 };
 </script>
 
 <style scoped>
-
-.el-form-item{
+.el-form-item {
   font-size: 14px;
 }
-.template{
+.template {
   size: medium;
   color: rgb(17, 17, 17);
   background-color: rgb(199, 215, 231);
   border-color: rgb(121, 212, 59);
-  border-radius:3px;
+  border-radius: 3px;
 }
 </style>
 
