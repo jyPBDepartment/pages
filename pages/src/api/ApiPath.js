@@ -42,7 +42,11 @@ const url = {
    searchOrgan:URLHost +'/organ/findByName',
    //删除
    deleteOrgan:URLHost + '/organ/delete',
+<<<<<<< HEAD
    //禁用
+=======
+  //禁用
+>>>>>>> 8bacd578dcd8157dfacc605cbe0a0cc5906365b3
    organEnable:URLHost +'/organ/enable',
    //业务员详情查看
    findAllSales:URLHost +'/sales/findAll',

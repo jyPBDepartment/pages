@@ -28,7 +28,7 @@
           <el-option selected label="请选择" value="0"></el-option>
           <el-option v-for="parm in userparm" :key="parm.roleId" :label="parm.roleName" :value="parm.roleId"></el-option>
         </el-select>
-      </el-form-item> -->
+      </el-form-item>-->
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
         <el-button
@@ -44,7 +44,6 @@
     <!--列表-->
     <el-table
       size="small"
-      @selection-change="selectChange"
       :data="listData"
       highlight-current-row
       v-loading="loading"
@@ -52,24 +51,25 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
+      <el-table-column align="center" type="selection" width="60"></el-table-column>
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column prop="id" label="ID" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="权限名称" align="center"></el-table-column>
-      <el-table-column sortable prop="type" label="权限类型" align="center">
+      <el-table-column prop="id" label="ID" align="center" width="300"></el-table-column>
+      <el-table-column sortable prop="name" label="权限名称" align="center" width="150"></el-table-column>
+      <el-table-column sortable prop="type" label="权限类型" align="center" width="200">
         <template slot-scope="scope">
           <span v-if="scope.row.type== 0">超级</span>
           <span v-if="scope.row.type== 1">高级</span>
           <span v-if="scope.row.type== 2">普通</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="path" label="权限路径" align="center"></el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" align="center">
+      <el-table-column sortable prop="path" label="权限路径" align="center" width="200"></el-table-column>
+      <el-table-column sortable prop="editTime" label="修改时间" align="center" width="200">
         <template slot-scope="scope">
           <div>{{scope.row.editTime|timestampToTime}}</div>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="editUser" label="修改人" align="center"></el-table-column>
-      <el-table-column align="center" label="操作" >
+      <el-table-column sortable prop="editUser" label="修改人" align="center" width="150"></el-table-column>
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button size="mini" type="primary" @click="openupdateJurisdiction(scope)">编辑</el-button>
           <el-button size="mini" type="danger" @click="deleteUser(scope)">删除</el-button>
@@ -117,16 +117,18 @@ import AddJurisdiction from "./addJurisdiction";
 import UpdateJurisdiction from "./UpdateJurisdiction";
 
 export default {
+  inject: ["reload"],
   data() {
     return {
       name: "",
       type: "",
       typeOptions: [
+        { value: "-1", label: "请选择" },
         { value: "0", label: "超级" },
         { value: "1", label: "高级" },
         { value: "2", label: "普通" }
       ],
-      roleId:"",
+      //roleId:"",
       nshow: true, //switch开启
       fshow: false, //switch关闭
       loading: false, //是显示加载
@@ -135,11 +137,10 @@ export default {
       updatejurFlag: false,
       transJurisdictionId: "",
       formInline: {
-        page: "",
+        page: 1,
         limit: 10,
-        name: "",
-        jurisdiction: "",
-        roleId: "0",
+        varLable: "",
+        varName: "",
         token: localStorage.getItem("logintoken")
       },
       // 删除
@@ -153,9 +154,9 @@ export default {
       listData: [], //用户数据
       // 分页参数
       pageparm: {
-        currentPage: 0,
-        pageSize: 5,
-        total: 8
+        currentPage: 1,
+        pageSize: 10,
+        total: 10
       }
     };
   },
@@ -176,16 +177,7 @@ export default {
    */
 
   created() {
-    let params = {};
-    api.testAxiosGet(ApiPath.url.findAllJurisdiction, params).then(res => {
-      let code = res.status;
-      if (code == "0") {
-        this.listData = res.data;
-        console.log(res.data);
-      } else {
-        alert(res.message);
-      }
-    });
+    this.search(this.formInline);
   },
 
   /**
@@ -193,35 +185,42 @@ export default {
    */
 
   methods: {
+    // 分页插件事件
+    callFather(parm) {
+      this.formInline.page = parm.currentPage;
+      this.formInline.limit = parm.pageSize;
+      this.search(this.formInline);
+    },
     // 获取数据方法
-    getdata(parameter) {
-      // this.loading = true;
-      /***
-       * 调用接口，注释上面模拟数据 取消下面注释
-       */
-      获取权限列表
-      permissionList(parameter)
+    search: function(parameter) {
+      let params = {
+        name: this.name,
+        path: this.path,
+        type: this.type,
+        page: this.formInline.page,
+        size: this.formInline.limit
+      };
+      api
+        .testAxiosGet(ApiPath.url.jurisdictionSearch, params)
         .then(res => {
-          this.loading = false;
-          if (res.success == false) {
-            this.$message({
-              type: "info",
-              message: res.msg
-            });
+          let code = res.status;
+          if (code == "0") {
+            this.$message.success(res.message);
+            this.loading = false;
+            this.listData = res.data.content;
+            this.pageparm.currentPage = res.data.number + 1;
+            this.pageparm.pageSize = res.data.size;
+            this.pageparm.total = res.data.totalElements;
+            // this.search(this.formInline);
           } else {
-            this.listData = res.data;
-            // 分页赋值
-            this.pageparm.currentPage = this.formInline.page;
-            this.pageparm.pageSize = this.formInline.limit;
-            this.pageparm.total = res.count;
+            this.$message.error(res.message);
           }
         })
         .catch(err => {
-          this.loading = false;
-          this.$message.error("权限管理列表获取失败，请稍后再试！");
+          this.$message.error(err.data);
         });
     },
-    // 获取权限
+    //获取权限
     getAccsee() {
       roleDropDown()
         .then(res => {
@@ -238,40 +237,10 @@ export default {
           this.$message.error("权限获取失败，请稍后再试！");
         });
     },
-    // 分页插件事件
-    callFather(parm) {
-      this.formInline.page = parm.currentPage;
-      this.formInline.limit = parm.pageSize;
-      this.getdata(this.formInline);
-    },
-    resetForm(search) {
-      // this.$refs[search].resetFields();
-      let params = {
-        name: "",
-        type: "",
-        typeOptions: [
-          { value: "0", label: "" },
-          { value: "1", label: "" },
-          { value: "2", label: "" }
-        ]
-      };
-      location.reload();
 
-    },
-    // 搜索事件
-    search() {
-       let params = {
-        name: this.name,
-        type: this.type
-      };
-      api.testAxiosGet(ApiPath.url.jurisdictionSearch, params).then(res => {
-        let code = res.status;
-        if (code == "0") {
-          this.listData = res.data;
-          console.log(res.data);
-        } else {
-        }
-      });
+    resetForm(search) {
+      this.name = "";
+      this.type = "-1";
     },
     addJurisdiction() {
       this.addJusisdic = true;
@@ -301,7 +270,7 @@ export default {
         } else {
           this.$message.success(res.message);
         }
-        location.reload();
+        this.reload();
       });
     },
     //显示编辑界面
@@ -319,7 +288,7 @@ export default {
               this.editFormVisible = false;
               this.loading = false;
               if (res.success) {
-                this.getdata(this.formInline);
+                this.search(this.formInline);
                 this.$message({
                   type: "success",
                   message: "权限管理保存成功！"
@@ -355,7 +324,7 @@ export default {
           let code = res.status;
           if (code == "0") {
             this.$message.success(res.message);
-            location.reload();
+            this.reload();
           } else {
             this.$message.console.error();
           }
@@ -395,7 +364,7 @@ export default {
               type: "success",
               message: "配置权限成功！"
             });
-            this.getdata(this.formInline);
+            this.search(this.formInline);
           } else {
             this.$message({
               type: "info",

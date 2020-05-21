@@ -20,16 +20,6 @@
         </el-form-item>
         <el-form-item label="角色分类">
           <el-input type="text" v-model="rolesForm.roleType"></el-input>
-          <!-- <el-select v-model="rolesForm.roleType">
-       
-            <el-option
-              v-for="item in rolesTypeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-        </el-option>
-          </el-select> -->
         </el-form-item>
       </el-form>
     </slot>
@@ -44,6 +34,7 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
+  inject:['reload'],
   props: {
     show: {
       type: Boolean,
@@ -64,11 +55,6 @@ export default {
         id: "",
         roleName: "",
         roleType: "",
-        // rolesTypeOptions: [
-        //   { value: "0", label: "超级管理员" },
-        //   { value: "1", label: "高级管理员" },
-        //   { value: "2", label: "普通管理员" }
-        // ]
       }
     };
   },
@@ -97,7 +83,7 @@ export default {
       api.testAxiosGet(ApiPath.url.updateRoles, params).then(res => {
         this.$message.success(res.message);
         this.close();
-        location.reload();
+        this.reload();
       });
     },
     close: function() {
