@@ -10,10 +10,10 @@
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
-      <el-form-item label="搜索：">
-        <el-input size="small" v-model="roleName" placeholder="输入角色名称"></el-input>
+      <el-form-item label="角色名称：">
+        <el-input size="small"  v-model="roleName" placeholder="输入角色名称"></el-input>
       </el-form-item>
-      <el-form-item label="类型">
+      <el-form-item label="类型" size="small">
         <el-select v-model="roleType">
           <el-option
             v-for="item in rolesTypeOptions"
@@ -25,7 +25,12 @@
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-        <el-button size="small" type="primary" icon="el-icon-remove-outline" @click="resetForm('search')">重置</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          icon="el-icon-remove-outline"
+          @click="resetForm('search')"
+        >重置</el-button>
         <el-button size="small" type="primary" icon="el-icon-plus" @click="addRoles()">添加</el-button>
       </el-form-item>
     </el-form>
@@ -41,26 +46,27 @@
     >
       <el-table-column align="center" type="selection" width="60"></el-table-column>
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column prop="id" label="ID" align="center"></el-table-column>
-      <el-table-column sortable prop="roleName" label="角色名称" align="center"></el-table-column>
-      <el-table-column sortable prop="roleType" label="角色分类" align="center">
+      <el-table-column prop="id" label="ID" align="center" width="300"></el-table-column>
+      <el-table-column sortable prop="roleName" label="角色名称" align="center" width="200"></el-table-column>
+      <el-table-column sortable prop="roleType" label="角色分类" align="center" width="200">
         <template slot-scope="scope">
           <span v-if="scope.row.roleType== 0">超级管理员</span>
           <span v-if="scope.row.roleType== 1">高级管理员</span>
           <span v-if="scope.row.roleType== 2">普通管理员</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" align="center">
+      <el-table-column sortable prop="editTime" label="修改时间" align="center" width="200">
         <template slot-scope="scope">
           <div>{{scope.row.editTime|timestampToTime}}</div>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="editUser" label="修改人" align="center"></el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column sortable prop="editUser" label="修改人" align="center" width="120"></el-table-column>
+      <el-table-column align="center" label="操作" >
         <template slot-scope="scope">
           <el-button size="mini" type="primary" @click="openupdateRole(scope)">编辑</el-button>
           <el-button size="mini" type="danger" @click="deleteUser(scope)">删除</el-button>
-          <el-button size="mini" 
+          <el-button
+            size="mini"
             @click="rolesEnable(scope)"
             type="primary"
           >{{scope.row.state == 0 ? "禁用" : scope.row.state == 1 ? "启用" : "解锁"}}</el-button>
@@ -99,11 +105,13 @@ import api from "@/axios/api.js";
 import AddRoles from "./addRoles.vue";
 import UpdateRoles from "./updateRoles.vue";
 export default {
+  inject:['reload'],
   data() {
     return {
       roleName: "",
       roleType: "",
       rolesTypeOptions: [
+        { value: "-1", label: "请选择" },
         { value: "0", label: "超级管理员" },
         { value: "1", label: "高级管理员" },
         { value: "2", label: "普通管理员" }
@@ -142,12 +150,11 @@ export default {
       saveroleId: "",
       // 分页参数
       pageparm: {
-        currentPage: 0,
-        pageSize: 0,
-        total: 0
+        currentPage: 1,
+        pageSize: 10,
+        total: 10
       }
     };
-    
   },
   // 注册组件
   components: {
@@ -166,70 +173,43 @@ export default {
    */
 
   created() {
-    let params = {};
-    api.testAxiosGet(ApiPath.url.findAllRoles, params).then(res => {
-      let code = res.status;
-      if (code == "0") {
-        this.listData = res.data;
-        console.log(res.data);
-      } else {
-        alert(res.message);
-      }
-    });
+    this.search(this.formInline);
   },
-
   /**
    * 里面的方法只有被调用才会执行
    */
 
   methods: {
-    // 获取角色列表
-    getdata(parameter) {
-      /***
-       * 调用接口，注释上面模拟数据 取消下面注释
-       */
-      roleList(parameter)
-        .then(res => {
-          this.loading = false
-          if (res.success == false) {
-            this.$message({
-              type: 'info',
-              message: res.msg
-            })
-          } else {
-            this.listData = res.data
-            // 分页赋值
-            this.pageparm.currentPage = this.formInline.page
-            this.pageparm.pageSize = this.formInline.limit
-            this.pageparm.total = res.count
-          }
-        })
-        .catch(err => {
-          this.loading = false
-          this.$message.error('获取角色列表失败，请稍后再试！')
-        })
-    },
     // 分页插件事件
     callFather(parm) {
       this.formInline.page = parm.currentPage;
       this.formInline.limit = parm.pageSize;
-      this.getdata(this.formInline);
+      this.search(this.formInline);
     },
-    // 搜索事件
-    search: function() {
+   // 获取角色列表
+    search:function(parameter) {
       let params = {
         roleName: this.roleName,
-        roleType: this.roleType
+        roleType: this.roleType,
+        page: this.formInline.page,
+        size: this.formInline.limit
       };
       api.testAxiosGet(ApiPath.url.roleSearch, params).then(res => {
-        let code = res.status;
-        if (code == "0") {
-          this.listData = res.data;
-          console.log(res.data);
-        } else {
-        }
-      });
+          let code = res.status;
+          if (code == "0") {
+            this.loading = false;
+            this.listData = res.data.content;
+            this.pageparm.currentPage = res.data.number + 1;
+            this.pageparm.pageSize = res.data.size;
+            this.pageparm.total = res.data.totalElements;
+          } else {
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.data);
+        });
     },
+     
     saveRoles() {
       this.addRole = false;
     },
@@ -257,7 +237,7 @@ export default {
         } else {
           this.$message.success(res.message);
         }
-        location.reload();
+        this.reload();
       });
     },
     //显示编辑界面
@@ -267,47 +247,39 @@ export default {
       this.updateRolesFlag = true;
     },
     resetForm(search) {
-      let params = {
-        roleName: "",
-        roleType: "",
-        rolesTypeOptions: [
-          { value: "0", label: "" },
-          { value: "1", label: "" },
-          { value: "2", label: "" }
-        ]
-      };
-      location.reload();
+        this.roleName= "";
+        this.roleType= "-1";
     },
-   
+
     submitForm(editData) {
       this.$refs[editData].validate(valid => {
         if (valid) {
           roleSave(this.editForm)
             .then(res => {
-              this.editFormVisible = false
-              this.loading = false
+              this.editFormVisible = false;
+              this.loading = false;
               if (res.success) {
-                this.getdata(this.formInline)
+                this.search(this.formInline);
                 this.$message({
-                  type: 'success',
-                  message: '角色保存成功！'
-                })
+                  type: "success",
+                  message: "角色保存成功！"
+                });
               } else {
                 this.$message({
-                  type: 'info',
+                  type: "info",
                   message: res.msg
-                })
+                });
               }
             })
             .catch(err => {
-              this.editFormVisible = false
-              this.loading = false
-              this.$message.error('角色保存失败，请稍后再试！')
-            })
+              this.editFormVisible = false;
+              this.loading = false;
+              this.$message.error("角色保存失败，请稍后再试！");
+            });
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     // 删除角色
     deleteUser(scope) {
@@ -323,12 +295,11 @@ export default {
           let code = res.status;
           if (code == "0") {
             this.$message.success(res.message);
-            location.reload();
+            this.reload();
           } else {
             this.$message.console.error();
           }
         });
-       
       });
     },
     // 数据权限
@@ -429,7 +400,7 @@ export default {
               message: "权限保存成功"
             });
             this.menuAccessshow = false;
-            this.getdata(this.formInline);
+            this.search(this.formInline);
           } else {
             this.$message({
               type: "info",
@@ -450,7 +421,7 @@ export default {
         this.menuAccessshow = false;
       }
     }
-  },
+  }
 };
 </script>
 
@@ -460,10 +431,7 @@ export default {
 }
 .userRole {
   width: 100%;
-  
-  
 }
-
 </style>
 
  

@@ -59,30 +59,30 @@ const url = {
   updateJurisdiction: URLHost + '/jurisdiction/update',
 
    //查询机构详情
-  //  findAllOrgan:URLHost+'/organ/findAll',
-  //  //添加机构
-  //  saveOrgan:URLHost + '/organ/save',
-  //  //修改机构
-  //  organFindById:URLHost + '/organ/findById',
-  //  updateOrgan:URLHost + '/organ/update',
-  //  //模糊查询
-  //  searchOrgan:URLHost +'/organ/findByName',
-  //  //删除
-  //  deleteOrgan:URLHost + '/organ/delete',
-  // //禁用
-  //  organEnable:URLHost +'/organ/enable',
-  //  //业务员详情查看
-  //  findAllSales:URLHost +'/sales/findAll',
-  //  //业务员添加
-  //  saveSales:URLHost + '/sales/save',
-  //  //业务员修改
-  //  salesFindById : URLHost + '/sales/findById',
-  //  updateSales : URLHost + '/sales/update',
-  //  //业务员删除
-  //  deleteSales :URLHost +'/sales/delete',
-  //  //业务员模糊查询
-  //  searchSales : URLHost + '/sales/findByName',
-  // //用户登录
+   findAllOrgan:URLHost+'/organ/findAll',
+   //添加机构
+   saveOrgan:URLHost + '/organ/save',
+   //修改机构
+   organFindById:URLHost + '/organ/findById',
+   updateOrgan:URLHost + '/organ/update',
+   //模糊查询
+   searchOrgan:URLHost +'/organ/findByName',
+   //删除
+   deleteOrgan:URLHost + '/organ/delete',
+  //禁用
+   organEnable:URLHost +'/organ/enable',
+   //业务员详情查看
+   findAllSales:URLHost +'/sales/findAll',
+   //业务员添加
+   saveSales:URLHost + '/sales/save',
+   //业务员修改
+   salesFindById : URLHost + '/sales/findById',
+   updateSales : URLHost + '/sales/update',
+   //业务员删除
+   deleteSales :URLHost +'/sales/delete',
+   //业务员模糊查询
+   searchSales : URLHost + '/sales/findByName',
+  //用户登录
   // login: URLHost + '/admin/login',
   // //用户注册
   // regedit: URLHost + '/admin/save',

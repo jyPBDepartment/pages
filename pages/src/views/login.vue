@@ -128,33 +128,33 @@ export default {
           //   }
           // });
           // 注释
-          login(this.ruleForm).then(res => {
-            if (res.success) {
-              if (this.rememberpwd) {
-                //保存帐号到cookie，有效期7天
-                setCookie("user", this.ruleForm.username, 7);
-                //保存密码到cookie，有效期7天
-                setCookie("pwd", this.ruleForm.password, 7);
-              } else {
-                delCookie("user");
-                delCookie("pwd");
-              }
-              //如果请求成功就让他2秒跳转路由
-              setTimeout(() => {
-                this.logining = false;
-                // 缓存token
-                localStorage.setItem("logintoken", res.data.token);
-                // 缓存用户个人信息
-                localStorage.setItem("userdata", JSON.stringify(res.data));
-                this.$store.commit("login", "true");
-                this.$router.push({ path: "/goods/Goods" });
-              }, 1000);
-            } else {
-              this.$message.error(res.msg);
-              this.logining = false;
-              return false;
-            }
-          });
+          // login(this.ruleForm).then(res => {
+          //   if (res.success) {
+          //     if (this.rememberpwd) {
+          //       //保存帐号到cookie，有效期7天
+          //       setCookie("user", this.ruleForm.username, 7);
+          //       //保存密码到cookie，有效期7天
+          //       setCookie("pwd", this.ruleForm.password, 7);
+          //     } else {
+          //       delCookie("user");
+          //       delCookie("pwd");
+          //     }
+          //     //如果请求成功就让他2秒跳转路由
+          //     setTimeout(() => {
+          //       this.logining = false;
+          //       // 缓存token
+          //       localStorage.setItem("logintoken", res.data.token);
+          //       // 缓存用户个人信息
+          //       localStorage.setItem("userdata", JSON.stringify(res.data));
+          //       this.$store.commit("login", "true");
+          //       this.$router.push({ path: "/goods/Goods" });
+          //     }, 1000);
+          //   } else {
+          //     this.$message.error(res.msg);
+          //     this.logining = false;
+          //     return false;
+          //   }
+          // });
         } else {
           // 获取图形验证码
           this.getcode();

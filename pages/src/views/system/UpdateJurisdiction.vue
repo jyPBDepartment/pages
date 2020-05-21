@@ -37,6 +37,7 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
+  inject: ["reload"],
   props: {
     show: {
       type: Boolean,
@@ -82,11 +83,11 @@ export default {
         jurisdictionEntity: this.jurForm
       };
       //修改用户信息
-        api.testAxiosGet(ApiPath.url.updateJurisdiction, params).then(res => {
-          this.$message.success(res.message);
-          this.close();
-          location.reload();
-        });
+      api.testAxiosGet(ApiPath.url.updateJurisdiction, params).then(res => {
+        this.$message.success(res.message);
+        this.close();
+        this.reload();
+      });
     },
     close: function() {
       this.$emit("close");
