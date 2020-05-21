@@ -38,15 +38,11 @@ const url = {
    //修改机构
    organFindById:URLHost + '/organ/findById',
    updateOrgan:URLHost + '/organ/update',
-   //模糊查询
+   //机构模糊查询
    searchOrgan:URLHost +'/organ/findByName',
-   //删除
+   //机构删除
    deleteOrgan:URLHost + '/organ/delete',
-<<<<<<< HEAD
-   //禁用
-=======
-  //禁用
->>>>>>> 8bacd578dcd8157dfacc605cbe0a0cc5906365b3
+   //机构禁用
    organEnable:URLHost +'/organ/enable',
    //业务员详情查看
    findAllSales:URLHost +'/sales/findAll',
