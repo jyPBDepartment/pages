@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="60%"
+    width="45%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -13,21 +13,21 @@
     <slot>
       <el-form :rules="rules">
        
-        <el-form-item label="姓名" prop="name">
-          <el-input type="text" v-model="name"  placeholder="请输入姓名"></el-input>
+        <el-form-item label="姓名　　　" prop="name">
+          <el-input type="text" v-model="name"  placeholder="请输入姓名 　" style=" width:60%;"></el-input>
         </el-form-item>
-        <el-form-item label="手机号码" prop="phone">
-          <el-input type="text" v-model="phone" placeholder="请输入手机号码"></el-input>
+        <el-form-item label="手机号码　" prop="phone">
+          <el-input type="text" v-model="phone" placeholder="请输入手机号码 " style=" width:60%;"></el-input>
         </el-form-item>
          <el-form-item label="所属机构ID" prop="organId">
-          <el-input type="text" v-model="organId" placeholder="请输入所属机构ID"></el-input>
+          <el-input type="text" v-model="organId" placeholder="请输入所属机构ID" style=" width:60%;"></el-input>
         </el-form-item>
        
-        <el-form-item label="备注" prop="context">
-          <el-input type="text" v-model="context" placeholder="请输入备注"></el-input>
+        <el-form-item label="备注　　　" prop="context">
+          <el-input type="text" v-model="context" placeholder="请输入备注" style=" width:60%;"></el-input>
         </el-form-item>
-        <el-form-item label="状态" prop="state">
-          <el-input type="text" v-model="state" placeholder="请输入状态"></el-input>
+        <el-form-item label="状态　　　" prop="state">
+          <el-input type="text" v-model="state" placeholder="请输入状态　" style=" width:60%;"></el-input>
         </el-form-item>
        
         
@@ -168,5 +168,7 @@ export default {
 </script>
 
 <style scoped>
-
+.el-form{
+  padding-left: 100px;
+}
 </style>

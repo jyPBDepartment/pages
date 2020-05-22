@@ -48,7 +48,7 @@
    
 
     
-<add-sales :show="addSalesFlag" title="添加" @close="closeRuleTagDialog" @save="saveRuleTag"></add-sales>
+<add-sales :show="addSalesFlag" title="添加业务员信息" @close="closeRuleTagDialog" @save="saveRuleTag"></add-sales>
  <update-sales
       :show="updateSalesFlag"
       :transSalesId="transSalesId"

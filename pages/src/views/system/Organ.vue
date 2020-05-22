@@ -50,7 +50,7 @@
     <br />
     <br />
        
-<add-organ :show="addOrganFlag" title="添加" @close="closeRuleTagDialog" @save="saveRuleTag"></add-organ>
+<add-organ :show="addOrganFlag" title="添加机构信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-organ>
  <update-organ
       :show="updateOrganFlag"
       :transOrganId="transOrganId"

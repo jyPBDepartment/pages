@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="60%"
+    width="45%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -13,21 +13,21 @@
     <slot>
       <el-form :rules="rules">
        
-        <el-form-item label="机构名称" prop="name">
-          <el-input type="text" v-model="name" placeholder="请输入机构名称"></el-input>
+        <el-form-item label="机构名称　　" prop="name">
+          <el-input type="text" v-model="name" placeholder="请输入机构名称"  style=" width:60%;"  ></el-input>
         </el-form-item>
         <el-form-item label="上级机构编号" prop="superId">
-          <el-input type="text" v-model="superId" placeholder="请输入上级机构编号"></el-input>
+          <el-input type="text" v-model="superId" placeholder="请输入上级机构编号"  style=" width:60%;" ></el-input>
         </el-form-item>
-         <el-form-item label="机构等级" prop="organLevel">
-          <el-input type="text" v-model="organLevel" placeholder="请输入机构等级"></el-input>
-        </el-form-item>
+         <!-- <el-form-item label="机构等级　　" prop="organLevel">
+          <el-input type="text" v-model="organLevel" placeholder="请输入机构等级"  style=" width:60%;" ></el-input>
+        </el-form-item> -->
        
-        <el-form-item label="备注" prop="context">
-          <el-input type="text" v-model="context" placeholder="请输入备注"></el-input>
+        <el-form-item label="备注　　　　" prop="context">
+          <el-input type="text" v-model="context" placeholder="请输入备注"  style=" width:60%;" ></el-input>
         </el-form-item>
-        <el-form-item label="状态" prop="state">
-          <el-input type="text" v-model="state" placeholder="请输入状态"></el-input>
+        <el-form-item label="状态　　　　" prop="state">
+          <el-input type="text" v-model="state" placeholder="请输入状态"  style=" width:60%;" ></el-input>
         </el-form-item>
        
         
@@ -65,7 +65,7 @@ export default {
         
         name:"",
         superId:"",
-        organLevel:"",
+        // organLevel:"",
        
         context:"",
         state:"",
@@ -129,13 +129,15 @@ export default {
         
           type: "warning"
 });
-      }else if(this.organLevel ==""){
-         this.$confirm("机构等级不能为空！", "添加", {
-          confirmButtonText: "确定",
-        
-          type: "warning"
-});
-      }else if(this.context ==""){
+      }
+//       else if(this.organLevel ==""){
+//          this.$confirm("机构等级不能为空！", "添加", {
+//           confirmButtonText: "确定",
+//         
+//           type: "warning"
+// });
+//       }
+      else if(this.context ==""){
          this.$confirm("备注不能为空！", "添加", {
           confirmButtonText: "确定",
         
@@ -170,5 +172,8 @@ export default {
 </script>
 
 <style scoped>
-
+.el-form{
+  padding-left: 100px;
+ 
+}
 </style>
