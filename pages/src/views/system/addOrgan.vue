@@ -72,26 +72,26 @@ export default {
        
        localShow: this.show,
        // rules表单验证
-      rules: {
-        name: [
-          { required: true, message: '请输入机构名称', trigger: 'blur' }
-        ],
-        superId: [
-          { required: true, message: '请输入上级机构编号', trigger: 'blur' }
-        ],
-        organLevel: [
-          { required: true, message: '请输入机构等级', trigger: 'blur' }
-        ],
-        superId: [
-          { required: true, message: '请输入上级机构编号', trigger: 'blur' }
-        ],
-        context: [
-          { required: true, message: '请输入备注', trigger: 'blur' }
-        ],
-        state: [
-          { required: true, message: '请输入状态', trigger: 'blur' }
-        ]
-      },
+      // rules: {
+      //   name: [
+      //     { required: true, message: '请输入机构名称', trigger: 'blur' }
+      //   ],
+      //   superId: [
+      //     { required: true, message: '请输入上级机构编号', trigger: 'blur' }
+      //   ],
+      //   organLevel: [
+      //     { required: true, message: '请输入机构等级', trigger: 'blur' }
+      //   ],
+      //   superId: [
+      //     { required: true, message: '请输入上级机构编号', trigger: 'blur' }
+      //   ],
+      //   context: [
+      //     { required: true, message: '请输入备注', trigger: 'blur' }
+      //   ],
+      //   state: [
+      //     { required: true, message: '请输入状态', trigger: 'blur' }
+      //   ]
+      // },
     };
   },
   watch: {

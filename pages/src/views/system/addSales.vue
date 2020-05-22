@@ -72,23 +72,23 @@ export default {
        
        localShow: this.show,
             // rules表单验证
-      rules: {
-        name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
-        ],
-        phone: [
-          { required: true, message: '请输入手机号', trigger: 'blur' }
-        ],
-        organId: [
-          { required: true, message: '请输入所属机构ID', trigger: 'blur' }
-        ],
-        context: [
-          { required: true, message: '请输入备注', trigger: 'blur' }
-        ],
-        state: [
-          { required: true, message: '请输入状态', trigger: 'blur' }
-        ]
-      },
+      // rules: {
+      //   name: [
+      //     { required: true, message: '请输入姓名', trigger: 'blur' }
+      //   ],
+      //   phone: [
+      //     { required: true, message: '请输入手机号', trigger: 'blur' }
+      //   ],
+      //   organId: [
+      //     { required: true, message: '请输入所属机构ID', trigger: 'blur' }
+      //   ],
+      //   context: [
+      //     { required: true, message: '请输入备注', trigger: 'blur' }
+      //   ],
+      //   state: [
+      //     { required: true, message: '请输入状态', trigger: 'blur' }
+      //   ]
+      // },
 
     };
   },
