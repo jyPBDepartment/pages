@@ -19,6 +19,7 @@
   
       <el-button type="info" plain @click="search" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px" icon="el-icon-search" >查询</el-button>
        <el-button type="info" plain @click="openRuleTag"  size="medium" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px" icon="el-icon-plus">新增</el-button>
+         <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px" icon="el-icon-delete">重置</el-button>
     </el-form>
    
     
@@ -235,6 +236,11 @@ export default {
     openRuleTag() {
       this.addOrganFlag = true;
     },
+    
+    resetRuleTag(search) {
+      this.name = "";
+      this.superId="";
+    },
     closeRuleTagDialog() {
       this.addOrganFlag = false;
     },
