@@ -5,7 +5,8 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="60%"
+    align="center"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -13,11 +14,11 @@
     <slot>
       <el-form>
         <el-form-item label="权限名称">
-          <el-input type="text" v-model="name">
+          <el-input type="text" v-model="name" style="width:50%" size="small"  placeholder="请输入权限名称">
           </el-input>
         </el-form-item>
-        <el-form-item label="权限类型">
-          <el-select v-model="type">
+        <el-form-item label="权限类型" >
+          <el-select v-model="type" style="width:50%" size="small">
             <el-option
               v-for="item in typeOptions"
               :key="item.value"
@@ -27,7 +28,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="权限路径">
-          <el-input type="text" v-model="path"></el-input>
+          <el-input type="text" v-model="path" style="width:50%" size="small"></el-input>
         </el-form-item>
       </el-form>
     </slot>

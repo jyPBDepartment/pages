@@ -5,21 +5,22 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="30%"
+    width="25%"
+    align="center"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
       <el-form>
-        <el-form-item label="编号">
-          <el-input type="text" v-model="rolesForm.id" readonly></el-input>
+        <el-form-item label="角色编号">
+          <el-input type="text" v-model="rolesForm.id" style="width:45%" size="small" readonly></el-input>
         </el-form-item>
         <el-form-item label="角色名称">
-          <el-input type="text" v-model="rolesForm.roleName"></el-input>
+          <el-input type="text" v-model="rolesForm.roleName" style="width:45%" size="small"></el-input>
         </el-form-item>
         <el-form-item label="角色分类">
-          <el-input type="text" v-model="rolesForm.roleType"></el-input>
+          <el-input type="text" v-model="rolesForm.roleType" style="width:45%" size="small"></el-input>
         </el-form-item>
       </el-form>
     </slot>

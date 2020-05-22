@@ -5,7 +5,8 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="60%"
+    align="center"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -13,10 +14,10 @@
     <slot>
       <el-form>
         <el-form-item label="角色名称">
-          <el-input type="text" v-model="roleName"></el-input>
+          <el-input type="text" v-model="roleName"  size="small" placeholder="请输入角色名称" style="width:45%"></el-input>
         </el-form-item>
         <el-form-item label="角色分类">
-          <el-select v-model="roleType">
+          <el-select v-model="roleType" style="width:45%" size="small" >
             <el-option
               v-for="item in rolesTypeOptions"
               :key="item.value"

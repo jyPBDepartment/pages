@@ -206,7 +206,7 @@ export default {
           }
         })
         .catch(err => {
-          this.$message.error(err.data);
+         // this.$message.error(err.data);
         });
     },
      

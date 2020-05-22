@@ -76,7 +76,7 @@
           <el-button
             @click="jurisdictionEnable(scope)"
             type="primary"
-            size="small"
+            size="mini"
           >{{scope.row.state == 0 ? "禁用" : scope.row.state == 1 ? "启用" : "解锁"}}</el-button>
         </template>
       </el-table-column>
@@ -205,7 +205,6 @@ export default {
         .then(res => {
           let code = res.status;
           if (code == "0") {
-            this.$message.success(res.message);
             this.loading = false;
             this.listData = res.data.content;
             this.pageparm.currentPage = res.data.number + 1;

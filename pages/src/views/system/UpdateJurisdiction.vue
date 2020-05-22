@@ -5,6 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
+    align="center"
     width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -12,17 +13,17 @@
     <!-- 插槽区 -->
     <slot>
       <el-form>
-        <el-form-item label="编号">
-          <el-input type="text" v-model="jurForm.id" readonly></el-input>
+        <el-form-item label="权限编号">
+          <el-input type="text" v-model="jurForm.id" style="width:45%" size="small" readonly></el-input>
         </el-form-item>
         <el-form-item label="权限名称">
-          <el-input type="text" v-model="jurForm.name"></el-input>
+          <el-input type="text" v-model="jurForm.name" style="width:45%" size="small"></el-input>
         </el-form-item>
         <el-form-item label="权限路径">
-          <el-input type="text" v-model="jurForm.path"></el-input>
+          <el-input type="text" v-model="jurForm.path" style="width:45%" size="small"></el-input>
         </el-form-item>
         <el-form-item label="权限类型">
-          <el-input type="text" v-model="jurForm.type"></el-input>
+          <el-input type="text" v-model="jurForm.type" style="width:45%" size="small"></el-input>
         </el-form-item>
       </el-form>
     </slot>
