@@ -31,6 +31,7 @@
   </el-menu>
 </template>
 <script>
+
 import { menu } from "../api/userMG";
 export default {
   name: "leftnav",
@@ -40,7 +41,7 @@ export default {
       allmenu: []
     };
   },
-  
+
   // 创建完毕状态(里面是操作)
   created() {
     // 获取图形验证码
@@ -200,7 +201,6 @@ export default {
       msg: "success"
     };
     this.allmenu = res.data;
-
     // menu(localStorage.getItem('logintoken'))
     //   .then(res => {
     //     console.log(JSON.stringify(res))
@@ -221,6 +221,7 @@ export default {
   }
 };
 </script>
+
 <style>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 240px;

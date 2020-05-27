@@ -75,6 +75,7 @@ export default {
       default: "对话框"
     }
   },
+
   data() {
     return {
       labelPosition: "right",
@@ -96,6 +97,7 @@ export default {
       }
     };
   },
+  
   watch: {
     show(val) {
       this.localShow = val;

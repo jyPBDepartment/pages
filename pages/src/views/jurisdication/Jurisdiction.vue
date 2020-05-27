@@ -232,7 +232,6 @@ export default {
     upjurisdiction(scope) {
       this.updatejurFlag = false;
     },
-
     //启用/禁用
     jurisdictionEnable(scope) {
       let params = {
@@ -249,13 +248,13 @@ export default {
         this.reload();
       });
     },
+
     //显示编辑界面
     openupdateJurisdiction(scope) {
       console.log(scope);
       this.transJurisdictionId = scope.row.id;
       this.updatejurFlag = true;
     },
-    
     // 删除权限
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {

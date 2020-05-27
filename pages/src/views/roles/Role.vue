@@ -183,7 +183,6 @@ export default {
       this.formInline.limit = parm.pageSize;
       this.search(this.formInline);
     },
-    
     // 获取角色列表
     search: function(parameter) {
       let params = {
@@ -211,6 +210,7 @@ export default {
     saveRoles() {
       this.addRole = false;
     },
+    
     closeRolesDialog() {
       this.addRole = false;
     },
