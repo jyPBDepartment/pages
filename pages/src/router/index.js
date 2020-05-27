@@ -35,9 +35,9 @@ import Variable from '@/views/system/Variable';
 // 权限管理
 import Permission from '@/views/system/Permission';
 //机构管理
-import Organ from '@/views/system/Organ';
+import Organ from '@/views/organ/Organ';
 //业务员管理
-import Sales from '@/views/system/sales';
+import Sales from '@/views/sales/sales';
 
 /**
  * 支付管理

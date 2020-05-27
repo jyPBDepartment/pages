@@ -61,14 +61,11 @@ export default {
   data() {
     return {
       localShow: this.show,
-     OrganForm: {
-
+     OrganForm: {        
         name:"",
-        superId:"",
-      
+        superId:"",  
         context:"",
-        state:"",
-      
+        state:""
       }
     };
   },

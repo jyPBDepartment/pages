@@ -24,14 +24,10 @@
          <el-form-item label="所属机构ID">
           <el-input type="text" v-model="SalesForm.organId" placeholder="请输入所属机构ID"></el-input>
         </el-form-item>
-        
         <el-form-item label="备注">
           <el-input type="text" v-model="SalesForm.context" placeholder="请输入备注"></el-input>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-input type="text" v-model="SalesForm.state" placeholder="请输入状态"></el-input>
-        </el-form-item>
-        
+       
         
       </el-form>
     </slot>
@@ -64,13 +60,11 @@ export default {
     return {
       localShow: this.show,
         SalesForm: {
-
         name:"",
         phone:"",
         organId:"",
-       
         context:"",
-        state:"",
+      
       
       }
     };

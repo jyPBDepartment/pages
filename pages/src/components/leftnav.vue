@@ -137,7 +137,7 @@ export default {
             },
              {
               menuid: 77,
-              icon: 'icon-cms-manage',
+              icon: 'el-icon-phone',
               menuname: '机构管理',
               hasThird: 'N',
               url: 'system/Organ',
@@ -145,7 +145,7 @@ export default {
             },
               {
               menuid: 78,
-              icon: 'icon-cms-manage',
+              icon: 'el-icon-phone',
               menuname: '业务员管理',
               hasThird: 'N',
               url: 'system/sales',
