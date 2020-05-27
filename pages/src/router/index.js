@@ -27,13 +27,13 @@ import user from '@/views/system/user';
 // 菜单管理
 import Module from '@/views/system/Module';
 // 角色管理
-import Role from '@/views/system/Role';
+import Role from '@/views/roles/Role';
 // 公司管理
 import Dept from '@/views/system/Dept';
 // 系统环境变量
 import Variable from '@/views/system/Variable';
 // 权限管理
-import Permission from '@/views/system/Permission';
+import jurisdiction from '@/views/jurisdication/Jurisdiction';
 //机构管理
 import Organ from '@/views/system/Organ';
 //业务员管理
@@ -124,7 +124,7 @@ export default new Router({
                 requireAuth: true
             }
         }, {
-            path: '/system/Role',
+            path: '/views/roles/Role',
             name: '角色管理',
             component: Role,
             meta: {
@@ -145,9 +145,9 @@ export default new Router({
                 requireAuth: true
             }
         }, {
-            path: '/system/Permission',
+            path: '/views/jurisdiction/Jurisdiction',
             name: '权限管理',
-            component: Permission,
+            component: jurisdiction,
             meta: {
                 requireAuth: true
             }

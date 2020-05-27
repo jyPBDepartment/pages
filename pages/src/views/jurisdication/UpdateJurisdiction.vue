@@ -5,7 +5,6 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    align="center"
     width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -14,23 +13,23 @@
     <slot>
       <el-form>
         <el-form-item label="权限编号">
-          <el-input type="text" v-model="jurForm.id" style="width:45%" size="small" readonly></el-input>
+          <el-input type="text" v-model="jurForm.id" style="width:75%" size="small" readonly></el-input>
         </el-form-item>
         <el-form-item label="权限名称">
-          <el-input type="text" v-model="jurForm.name" style="width:45%" size="small"></el-input>
+          <el-input type="text" v-model="jurForm.name" style="width:75%" size="small"></el-input>
         </el-form-item>
         <el-form-item label="权限路径">
-          <el-input type="text" v-model="jurForm.path" style="width:45%" size="small"></el-input>
+          <el-input type="text" v-model="jurForm.path" style="width:75%" size="small"></el-input>
         </el-form-item>
         <el-form-item label="权限类型">
-          <el-input type="text" v-model="jurForm.type" style="width:45%" size="small"></el-input>
+          <el-input type="text" v-model="jurForm.type" style="width:75%" size="small"></el-input>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="success" icon="el-icon-check" @click="updateJurisdiction">保存</el-button>
-      <el-button type="danger" icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="updateJurisdiction">保存</el-button>
     </span>
   </el-dialog>
 </template>
@@ -100,5 +99,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.el-form{
+padding-left: 100px;
+}
 </style>

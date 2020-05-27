@@ -108,7 +108,7 @@ export default {
               icon: "icon-news-manage",
               menuname: "角色管理",
               hasThird: "N",
-              url: "system/Role",
+              url: "views/roles/Role",
               menus: null
             },
             {
@@ -132,7 +132,7 @@ export default {
               icon: "icon-cms-manage",
               menuname: "权限管理",
               hasThird: "N",
-              url: "system/Permission",
+              url: "views/jurisdiction/Jurisdiction",
               menus: null
             },
              {
