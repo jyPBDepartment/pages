@@ -102,7 +102,6 @@ export default {
         this.close();
       this.reload();
       });
-       
     },
     close: function() {
       this.$emit("close");

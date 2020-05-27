@@ -27,8 +27,6 @@
         <el-form-item label="备注">
           <el-input type="text" v-model="SalesForm.context" placeholder="请输入备注"></el-input>
         </el-form-item>
-       
-        
       </el-form>
     </slot>
     <!-- 按钮区 -->

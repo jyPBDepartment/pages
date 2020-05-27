@@ -145,7 +145,7 @@ export default {
             },
               {
               menuid: 78,
-              icon: 'el-icon-phone',
+              icon: 'icon-cms-manage',
               menuname: '业务员管理',
               hasThird: 'N',
               url: 'system/sales',
