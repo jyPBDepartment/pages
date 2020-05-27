@@ -8,7 +8,6 @@
     width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
-    
   >
     <!-- 插槽区 -->
     <slot>

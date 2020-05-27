@@ -255,6 +255,7 @@ export default {
       this.transJurisdictionId = scope.row.id;
       this.updatejurFlag = true;
     },
+    
     // 删除权限
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {

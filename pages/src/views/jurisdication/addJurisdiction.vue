@@ -58,7 +58,6 @@
     </span>
   </el-dialog>
 </template>
-
 <script>
 import qs from "qs";
 import Vue from "vue";

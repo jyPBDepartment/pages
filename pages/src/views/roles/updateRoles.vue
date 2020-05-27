@@ -89,6 +89,7 @@ export default {
     close: function() {
       this.$emit("close");
     },
+    
     beforeClose: function() {
       this.close();
     }

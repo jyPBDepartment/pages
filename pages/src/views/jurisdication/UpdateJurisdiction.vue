@@ -51,6 +51,7 @@ export default {
       type: String
     }
   },
+  
   data() {
     return {
       localShow: this.show,
