@@ -52,7 +52,6 @@ export default {
     }
   },
   data() {
-    
     return {
       localShow: this.show,
       jurForm: {
@@ -63,6 +62,7 @@ export default {
       }
     };
   },
+
   watch: {
     show(val) {
       this.localShow = val;
@@ -78,6 +78,7 @@ export default {
       });
     }
   },
+  
   methods: {
     updateJurisdiction: function() {
       let params = {

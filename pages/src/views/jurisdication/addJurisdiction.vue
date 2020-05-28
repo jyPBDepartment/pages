@@ -89,6 +89,7 @@ export default {
         { value: "1", label: "高级" },
         { value: "2", label: "普通" }
       ],
+      
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入权限名称", trigger: "blur" }],

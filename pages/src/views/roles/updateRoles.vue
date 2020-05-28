@@ -94,8 +94,8 @@ export default {
     }
   }
 };
-</script>
 
+</script>
 <style scoped>
 .el-form{
 padding-left: 100px;

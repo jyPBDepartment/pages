@@ -83,10 +83,10 @@ export default {
     }
   },
   methods: {
+    
     beforeClose() {
       this.close();
     },
-
     close() {
       this.$emit("close");
     },

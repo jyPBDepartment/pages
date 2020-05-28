@@ -206,7 +206,6 @@ export default {
         })
         .catch(err => {});
     },
-
     saveRoles() {
       this.addRole = false;
     },

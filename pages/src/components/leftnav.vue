@@ -40,7 +40,6 @@ export default {
       allmenu: []
     };
   },
-  
   // 创建完毕状态(里面是操作)
   created() {
     // 获取图形验证码

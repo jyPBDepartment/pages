@@ -9,7 +9,6 @@ const URLHost = 'http://localhost:8080'
 const dictCodeData = {
   mainPartCode: 'A0001' //主体码值
 }
-
 const url = {
 
   //登录
