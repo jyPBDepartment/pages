@@ -6,37 +6,39 @@
       <el-breadcrumb-item>业务员管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
        <el-form-item label="搜索："></el-form-item>
       <el-form-item label="姓名">
-        <el-input v-model="name" type="text" placeholder="请输入姓名" ></el-input>
+        <el-input v-model="name" type="text" placeholder="请输入姓名" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
       <el-form-item label="手机号码">
-        <el-input v-model="phone" type="text" placeholder="请输入手机号码"></el-input>
+        <el-input v-model="phone" type="text" placeholder="请输入手机号码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
   
-      <el-button type="info" plain @click="search" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px" icon="el-icon-search" >查询</el-button>
-       <el-button type="info" plain @click="openRuleTag"  size="medium" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px" icon="el-icon-plus">新增</el-button>
-       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px" icon="el-icon-delete">重置</el-button>
+      <el-button type="info" plain @click="search" size="medium"  class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-search" >查询</el-button>
+       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium"  class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-close">重置</el-button>
+      
+      <el-row :gutter="10">
+        <el-button type="info" plain @click="openRuleTag"  size="medium"  class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:-7px;margin-bottom: 14px;" icon="el-icon-plus">新增</el-button>
+      </el-row>
     </el-form>
    
     
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column prop="id" label="编号" align="center"></el-table-column>
-      <el-table-column prop="name" label="姓名" align="center"></el-table-column>
-      <el-table-column prop="phone" label="手机号码" align="center"></el-table-column>
-      <el-table-column prop="organId" label="所属机构ID" align="center"></el-table-column>
-      <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column>
-      <el-table-column prop="updateTime" label="修改时间" align="center"></el-table-column>
-      <el-table-column prop="context" label="备注" align="center"></el-table-column>
-      <el-table-column prop="state" label="状态" align="center"></el-table-column>      
-      <el-table-column fixed="right" label="操作" width="150" align="center">
+    
+      <el-table-column sortable prop="name" label="姓名" align="center"></el-table-column>
+      <el-table-column sortable prop="phone" label="手机号码" align="center"></el-table-column>
+      <el-table-column sortable prop="organId" label="所属机构ID" align="center"></el-table-column>
+      <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="updateTime" label="修改时间" align="center"></el-table-column>
+      <el-table-column sortable prop="context" label="备注" width="100px" align="center"></el-table-column>
+       
+      <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-          <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px">修改</el-button>
-          <el-button @click="deleteSales(scope)" type="text" size="medium" style="width:50px;background-color:#F56C6C;border-color:#F56C6C;color:white;font-size:12px">删除</el-button>
+          <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px">编辑</el-button>
+          <el-button @click="deleteSales(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px">删除</el-button>
          
         </template>
       </el-table-column>
@@ -120,16 +122,6 @@ export default {
   },
   created() {
     this.search(this.formInline);
-    // this.setTagList();
-    // let params = {};
-    // api.testAxiosGet(ApiPath.url.findAllSales, params).then(res => {
-    //   let code = res.status;
-    //   if (code == "0") {
-    //     this.tableData = res.data;
-    //     console.log(res.data);
-    //   } else {
-    //   }
-    // });
   },
   methods: {
      //分页赋值
@@ -144,19 +136,16 @@ export default {
       let params = {
         name: this.name,
         phone: this.phone,
-         page: this.formInline.page,
+        page: this.formInline.page,
         size:  this.formInline.limit
       };
       api.testAxiosGet(ApiPath.url.searchSales, params).then(res => {
         let code = res.status;
         if (code == "0") {
-        
           this.tableData = res.data.content;
-           this.pageparm.currentPage = res.data.number + 1;
-            this.pageparm.pageSize = res.data.size;
-            this.pageparm.total = res.data.totalElements;
-        
-          
+          this.pageparm.currentPage = res.data.number + 1;
+          this.pageparm.pageSize = res.data.size;
+          this.pageparm.total = res.data.totalElements;
         } else {
         }
       });
@@ -167,45 +156,38 @@ export default {
     updateSales: function() {
       
     },
-  
     deleteSales: function(scope) {
-      let params = {
-        id: scope.row.id
-      };
-
-      api.testAxiosGet(ApiPath.url.deleteSales, params).then(res => {
-        let code = res.status;
-          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+             let params = {
+        id: scope.row.id
+      };
+        api.testAxiosGet(ApiPath.url.deleteSales, params).then(res => {
+        let code = res.status; 
+        if (code == "0") {
           this.$message({
-            type: 'success',
-            message: '删除成功!'
+          type: 'success',
+          message: '删除成功!'
           });
-           location.reload();
+          this.reload();
+        } else {
+          this.$message.success(res.message);
+        }
+      });
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
           });          
         });
-         
-        if (code == "0") {
-          this.reload();
-          
-        } else {
-          this.$message.success(res.message);
-        }
-      });
-       
     },
     onSubmit: function() {
       let params = {
         tagCode: this.tagCode,
         chName: this.tagName,
-        // mainPartCode: this.mainPartCode,
         generateType: "gz"
       };
       
@@ -243,10 +225,7 @@ export default {
     save() {
       this.$emit("save", this.transData);
     },
-    // handleCurrentChange(val) {
-    //   this.transData = val.tableName;
-    //   this.currentRow = val;
-    // },
+    
     deleteRuleTag(scope) {
       let tagCode = scope.row.tagCode;
       let params = {
@@ -279,7 +258,7 @@ export default {
   components: {
     AddSales,
     UpdateSales,
-      Pagination
+    Pagination
   }
 };
 </script>

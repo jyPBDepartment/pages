@@ -35,10 +35,9 @@ import Variable from '@/views/system/Variable';
 // 权限管理
 import jurisdiction from '@/views/jurisdication/Jurisdiction';
 //机构管理
-import Organ from '@/views/system/Organ';
+import Organ from '@/views/organ/Organ';
 //业务员管理
-import Sales from '@/views/system/sales';
-
+import Sales from '@/views/sales/sales';
 /**
  * 支付管理
  */
@@ -152,7 +151,7 @@ export default new Router({
                 requireAuth: true
             }
         },{
-            path:'/system/Organ',
+            path:'/views/organ',
             name:'机构管理',
             component:Organ,
             meta:{
@@ -160,7 +159,7 @@ export default new Router({
             }
         },
        {
-        path:'/system/sales',
+        path:'/views/sales',
         name:'业务员管理',
         component:Sales,
         meta:{

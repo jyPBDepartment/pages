@@ -13,29 +13,25 @@
      <slot>
       <el-form>
        <el-form-item label="用户编号">
-           <el-input v-model="OrganForm.id" readonly></el-input>
+           <el-input v-model="SalesForm.id" readonly></el-input>
        </el-form-item>
-        <el-form-item label="机构名称">
-          <el-input type="text" v-model="OrganForm.name" placeholder="请输入机构名称"></el-input>
+        <el-form-item label="姓名">
+          <el-input type="text" v-model="SalesForm.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <el-form-item label="上级机构编号">
-          <el-input type="text" v-model="OrganForm.superId" placeholder="请输入上级机构编号"></el-input>
+        <el-form-item label="手机号码">
+          <el-input type="text" v-model="SalesForm.phone" placeholder="请输入手机号码"></el-input>
         </el-form-item>
-        
-       
+         <el-form-item label="所属机构ID">
+          <el-input type="text" v-model="SalesForm.organId" placeholder="请输入所属机构ID"></el-input>
+        </el-form-item>
         <el-form-item label="备注">
-          <el-input type="text" v-model="OrganForm.context" placeholder="请输入备注"></el-input>
+          <el-input type="text" v-model="SalesForm.context" placeholder="请输入备注"></el-input>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-input type="text" v-model="OrganForm.state" placeholder="请输入状态"></el-input>
-        </el-form-item>
-        
-        
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="success" icon="el-icon-check" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px" @click="updateOrgan()">保存</el-button>
+      <el-button type="success" icon="el-icon-check" @click="updateSales()" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
       <el-button type="danger" icon="el-icon-close" @click="close"  size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
     </span>
   </el-dialog>
@@ -44,7 +40,7 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
-   inject:['reload'],
+  inject:['reload'],
   props: {
     show: {
       type: Boolean,
@@ -54,20 +50,19 @@ export default {
       type: String,
       default: "对话框"
     },
-    transOrganId: {
+    transSalesId: {
       type: String
     }
   },
   data() {
     return {
       localShow: this.show,
-     OrganForm: {
-
+        SalesForm: {
         name:"",
-        superId:"",
-      
+        phone:"",
+        organId:"",
         context:"",
-        state:"",
+      
       
       }
     };
@@ -76,7 +71,7 @@ export default {
     show(val) {
       this.localShow = val;
     },
-    transOrganId(val) {
+    transSalesId(val) {
         console.log("打印"+val)
       // alert(val)
       // let adminId = val;
@@ -85,27 +80,27 @@ export default {
       };
 
       //根据Id查询用户信息
-      api.testAxiosGet(ApiPath.url.organFindById, params).then(res => {
+      api.testAxiosGet(ApiPath.url.salesFindById, params).then(res => {
         console.log(res.data);
-        this.OrganForm = res.data;
+        this.SalesForm = res.data;
       });
     }
   },
   
   methods: {
-    updateOrgan: function() {
+    updateSales: function() {
       
         let params={
-            organEntity:this.OrganForm
+            salesEntity:this.SalesForm
         }
       //修改用户信息
-      api.testAxiosGet(ApiPath.url.updateOrgan, params).then(res => {
-       this.$message.success(res.message);
-        // this.OrganForm = res.data;
+      api.testAxiosGet(ApiPath.url.updateSales, params).then(res => {
+        this.$message.success(res.message);
+        this.reload();
         this.close();
-      this.reload();
+
       });
-       
+     
     },
     close: function() {
       this.$emit("close");
