@@ -99,7 +99,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .el-form{
 padding-left: 100px;

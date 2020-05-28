@@ -210,7 +210,6 @@ export default {
     saveRoles() {
       this.addRole = false;
     },
-    
     closeRolesDialog() {
       this.addRole = false;
     },

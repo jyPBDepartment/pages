@@ -232,6 +232,7 @@ export default {
     upjurisdiction(scope) {
       this.updatejurFlag = false;
     },
+    
     //启用/禁用
     jurisdictionEnable(scope) {
       let params = {

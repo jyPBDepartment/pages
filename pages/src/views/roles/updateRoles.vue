@@ -86,7 +86,6 @@ export default {
         this.reload();
       });
     },
-    
     close: function() {
       this.$emit("close");
     },

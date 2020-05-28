@@ -83,7 +83,6 @@ const url = {
    //业务员模糊查询
    searchSales : URLHost + '/sales/findByName',
   //用户登录
-  
   // login: URLHost + '/admin/login',
   // //用户注册
   // regedit: URLHost + '/admin/save',
