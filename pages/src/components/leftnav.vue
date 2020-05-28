@@ -140,7 +140,7 @@ export default {
               icon: 'el-icon-phone',
               menuname: '机构管理',
               hasThird: 'N',
-              url: 'system/Organ',
+              url: 'views/organ',
               menus: null
             },
               {
@@ -148,7 +148,7 @@ export default {
               icon: 'icon-cms-manage',
               menuname: '业务员管理',
               hasThird: 'N',
-              url: 'system/sales',
+              url: 'views/sales',
               menus: null
             },
           ]

@@ -151,7 +151,7 @@ export default new Router({
                 requireAuth: true
             }
         },{
-            path:'/system/Organ',
+            path:'/views/organ',
             name:'机构管理',
             component:Organ,
             meta:{
@@ -159,7 +159,7 @@ export default new Router({
             }
         },
        {
-        path:'/system/sales',
+        path:'/views/sales',
         name:'业务员管理',
         component:Sales,
         meta:{
