@@ -36,6 +36,7 @@
         </el-form-item>
       </el-form>
     </slot>
+    
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button  icon="el-icon-close" @click="close">关闭</el-button>

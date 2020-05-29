@@ -40,16 +40,6 @@
         <el-form-item label="权限路径" prop="path">
           <el-input type="text" v-model="editForm.path" style="width:80%" size="small"></el-input>
         </el-form-item>
-       <!-- <el-form-item label="角色名称" prop="limitId" >
-          <el-select v-model="editForm.roleId" style="width:80%" size="small" >
-            <el-option
-              v-for="item in limitIdOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item> -->
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -90,12 +80,6 @@ export default {
         { value: "1", label: "高级" },
         { value: "2", label: "普通" }
       ],
-      // limitIdOptions: [
-      //   { value: "一号管理员", label: "一号管理员" },
-      //   { value: "二号管理员", label: "二号管理员" },
-      //   { value: "三号管理员", label: "三号管理员" }
-      // ],
-
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入权限名称", trigger: "blur" }],
@@ -123,7 +107,6 @@ export default {
         name: this.editForm.name,
         path: this.editForm.path,
         type: this.editForm.type,
-        // roleId: this.editForm.roleId
       };
       api.testAxiosGet(ApiPath.url.addJurisdiction, params).then(res => {
         this.$message.success(res.message);

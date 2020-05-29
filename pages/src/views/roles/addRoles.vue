@@ -52,6 +52,7 @@
         </el-form-item>
       </el-form>
     </slot>
+
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button icon="el-icon-close" @click="close">关闭</el-button>
@@ -91,6 +92,7 @@ export default {
       ],
       limitIdOptions: [],
       localShow: this.show,
+      
       rules: {
         roleName: [
           { required: true, message: "请输入角色名称", trigger: "blur" }

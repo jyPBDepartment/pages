@@ -170,7 +170,6 @@ export default {
     UpdateJurisdiction,
     Pagination
   },
-
   watch: {},
 
   created() {
@@ -249,7 +248,6 @@ export default {
 
     //显示编辑界面
     openupdateJurisdiction(scope) {
-      console.log(scope);
       this.transJurisdictionId = scope.row.id;
       this.updatejurFlag = true;
     },
@@ -274,7 +272,6 @@ export default {
         });
       });
     }
-
   }
 };
 </script>
