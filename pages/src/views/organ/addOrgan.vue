@@ -26,8 +26,6 @@
         <el-form-item label="状态" prop="state">
           <el-input type="text" v-model="editForm.state" placeholder="请输入状态"  style=" width:60%;" ></el-input>
         </el-form-item>
-       
-        
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -41,7 +39,6 @@
 <script>
 import qs from "qs";
 import Vue from "vue";
-
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
@@ -107,7 +104,6 @@ export default {
         context:this.editForm.context,
         state:this.editForm.state
       }
-    
         api.testAxiosGet(ApiPath.url.saveOrgan,params).then(res =>{
         this.$message.success(res.message);
         this.reload();

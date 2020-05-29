@@ -72,9 +72,6 @@ export default {
       this.localShow = val;
     },
     transSalesId(val) {
-        console.log("打印"+val)
-      // alert(val)
-      // let adminId = val;
       let params = {
         id: val
       };

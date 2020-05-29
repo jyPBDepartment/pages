@@ -72,6 +72,7 @@ const url = {
    organEnable:URLHost +'/organ/enable',
    //业务员详情查看
    findAllSales:URLHost +'/sales/findAll',
+
    //业务员添加
    saveSales:URLHost + '/sales/save',
    //业务员修改
@@ -81,6 +82,8 @@ const url = {
    deleteSales :URLHost +'/sales/delete',
    //业务员模糊查询
    searchSales : URLHost + '/sales/findByName',
+
+   
   //用户登录
   // login: URLHost + '/admin/login',
   // //用户注册

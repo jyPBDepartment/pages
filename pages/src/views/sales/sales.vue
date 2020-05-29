@@ -15,31 +15,24 @@
       <el-form-item label="手机号码">
         <el-input v-model="phone" type="text" placeholder="请输入手机号码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-  
       <el-button type="info" plain @click="search" size="medium"  class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-search" >查询</el-button>
        <el-button type="info" plain @click="resetRuleTag(search)"  size="medium"  class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-close">重置</el-button>
-      
       <el-row :gutter="10">
         <el-button type="info" plain @click="openRuleTag"  size="medium"  class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:-7px;margin-bottom: 14px;" icon="el-icon-plus">新增</el-button>
       </el-row>
     </el-form>
-   
-    
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-    
       <el-table-column sortable prop="name" label="姓名" align="center"></el-table-column>
       <el-table-column sortable prop="phone" label="手机号码" align="center"></el-table-column>
       <el-table-column sortable prop="organId" label="所属机构ID" align="center"></el-table-column>
       <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
       <el-table-column sortable prop="updateTime" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="context" label="备注" width="100px" align="center"></el-table-column>
-       
+      <el-table-column :show-overflow-tooltip="true"  prop="context" label="备注" width="100px" align="center"></el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
           <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px">编辑</el-button>
           <el-button @click="deleteSales(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px">删除</el-button>
-         
         </template>
       </el-table-column>
     </el-table>
@@ -47,10 +40,7 @@
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
-   
-
-    
-<add-sales :show="addSalesFlag" title="添加业务员信息" @close="closeRuleTagDialog" @save="saveRuleTag"></add-sales>
+<add-sales :show="addSalesFlag"  title="添加业务员信息" @close="closeRuleTagDialog" @save="saveRuleTag "></add-sales>
  <update-sales
       :show="updateSalesFlag"
       :transSalesId="transSalesId"
@@ -59,9 +49,7 @@
       @save="updateSales"
     ></update-sales>
     </div>
-    
 </template>
-
 <script>
 import qs from "qs";
 import Vue from "vue";
@@ -70,8 +58,6 @@ import api from "@/axios/api";
 import AddSales from "./addSales.vue";
 import UpdateSales from './updateSales.vue'
 import Pagination from "../../components/Pagination";
-
-
 export default {
   inject:['reload'],
   props: {
@@ -89,13 +75,10 @@ export default {
       name: "",
       phone: "",
       updateSalesFlag: false,
-
       transSalesId: "",
-
       transTagCode: "",
       tagCode: "",
       tagName: "",
-
       localShow: this.show,
       addSalesFlag: false,
       updateRuleTag: false,
@@ -199,6 +182,7 @@ export default {
     },
     saveRuleTag() {
       this.addSalesFlag = false;
+     
     },
     modifyRuleTag() {
       this.updateRuleTag = false;
@@ -262,9 +246,7 @@ export default {
   }
 };
 </script>
-
 <style scoped>
-
 .el-form-item{
   font-size: 14px;
 }

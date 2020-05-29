@@ -74,9 +74,8 @@ export default {
       this.localShow = val;
     },
     transOrganId(val) {
-        console.log("打印"+val)
-      // alert(val)
-      // let adminId = val;
+       
+     
       let params = {
         id: val
       };
@@ -98,7 +97,7 @@ export default {
       //修改用户信息
       api.testAxiosGet(ApiPath.url.updateOrgan, params).then(res => {
        this.$message.success(res.message);
-        // this.OrganForm = res.data;
+       
         this.close();
       this.reload();
       });

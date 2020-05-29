@@ -34,7 +34,7 @@
       
       <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
       <el-table-column sortable prop="updateTime" label="修改时间" align="center"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" sortable prop="context" label="备注" align="center" ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="context" label="备注" align="center" ></el-table-column>
       <!--switch开关（表单）-->
        <el-table-column align="center"  label="状态" min-width="50">
         <template slot-scope="scope">
@@ -232,8 +232,6 @@ export default {
             });
             
           });
-     
-  
     },
     onSubmit: function() {
       let params = {
