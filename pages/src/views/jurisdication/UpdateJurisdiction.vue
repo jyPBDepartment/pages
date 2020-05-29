@@ -58,7 +58,7 @@ export default {
         id: "",
         name: "",
         path: "",
-        type: ""
+        type: "",
       }
     };
   },
@@ -73,7 +73,6 @@ export default {
       };
       //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.findJurisdictionById, params).then(res => {
-        console.log(res.data);
         this.jurForm = res.data;
       });
     }

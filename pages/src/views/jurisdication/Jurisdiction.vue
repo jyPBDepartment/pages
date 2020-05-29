@@ -67,7 +67,6 @@
         </template>
       </el-table-column>
       <el-table-column sortable prop="editUser" label="修改人" align="center" ></el-table-column>
-      <!-- <el-table-column sortable prop="roleId" label="角色ID" align="center"></el-table-column> -->
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
           <el-switch
@@ -190,7 +189,6 @@ export default {
         name: this.name,
         path: this.path,
         type: this.type,
-        // roleId:this.roleId,
         page: this.formInline.page,
         size: this.formInline.limit
       };
