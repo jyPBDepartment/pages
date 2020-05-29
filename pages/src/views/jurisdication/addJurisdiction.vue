@@ -40,15 +40,6 @@
         <el-form-item label="权限路径" prop="path">
           <el-input type="text" v-model="editForm.path" style="width:80%" size="small"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="角色ID" prop="roleId">
-          <el-input
-            type="text"
-            v-model="editForm.roleId"
-            style="width:80%"
-            size="small"
-            placeholder="请输入"
-          ></el-input>
-        </el-form-item> -->
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -89,7 +80,6 @@ export default {
         { value: "1", label: "高级" },
         { value: "2", label: "普通" }
       ],
-      
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入权限名称", trigger: "blur" }],
@@ -116,8 +106,7 @@ export default {
       let params = {
         name: this.editForm.name,
         path: this.editForm.path,
-        type: this.editForm.type
-        // roleId: this.editForm.roleId
+        type: this.editForm.type,
       };
       api.testAxiosGet(ApiPath.url.addJurisdiction, params).then(res => {
         this.$message.success(res.message);

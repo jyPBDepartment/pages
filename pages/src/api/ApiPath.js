@@ -36,6 +36,8 @@ const url = {
   findAllRoles: URLHost + '/role/findAll',
   roleSearch: URLHost + '/role/findByName',
   addRoles: URLHost + '/role/add',
+  //角色下拉列表
+  findJurisdiction: URLHost + '/jurisdiction/findAll',
   //角色findById
   findRolesId: URLHost + '/role/findById',
   //修改角色信息

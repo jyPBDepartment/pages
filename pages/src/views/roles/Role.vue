@@ -31,7 +31,6 @@
           icon="el-icon-remove-outline"
           @click="resetForm('search')"
         >重置</el-button>
-        
       </el-form-item>
       <br>
       <el-button size="small" type="primary" icon="el-icon-plus" @click="addRoles()">添加</el-button>
@@ -66,7 +65,7 @@
         </template>
       </el-table-column>
       <el-table-column sortable prop="editUser" label="修改人" align="center"></el-table-column>
-      <!-- <el-table-column sortable prop="limitId" label="权限ID" align="center"></el-table-column> -->
+      <el-table-column sortable prop="limitId" label="权限名称" align="center"></el-table-column>
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
           <el-switch
@@ -188,7 +187,7 @@ export default {
       let params = {
         roleName: this.roleName,
         roleType: this.roleType,
-        // limitId:this.limitId,
+        limitId:this.limitId,
         page: this.formInline.page,
         size: this.formInline.limit
       };
@@ -258,7 +257,8 @@ export default {
         type: "warning"
       }).then(() => {
         let params = {
-          id: scope.row.id
+          id: scope.row.id,
+          relationId:scope.row.relationId
         };
         api.testAxiosGet(ApiPath.url.deleteRoles, params).then(res => {
           let code = res.status;
@@ -283,5 +283,3 @@ export default {
   width: 100%;
 }
 </style>
-
- 

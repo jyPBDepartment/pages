@@ -26,6 +26,7 @@
         </el-form-item>
       </el-form>
     </slot>
+    
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button icon="el-icon-close" @click="close">关闭</el-button>
@@ -58,7 +59,7 @@ export default {
         id: "",
         name: "",
         path: "",
-        type: ""
+        type: "",
       }
     };
   },
@@ -73,7 +74,6 @@ export default {
       };
       //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.findJurisdictionById, params).then(res => {
-        console.log(res.data);
         this.jurForm = res.data;
       });
     }
