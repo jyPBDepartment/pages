@@ -76,7 +76,13 @@ export default {
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         phone: [
-          { required: true, message: "建议输入11位手机号码", trigger: "blur" }
+          { required: true, message: "建议输入11位手机号码", trigger: "blur" },
+          {
+            pattern:/^1[3456789]\d{9}$/,
+            required: true,
+            message: "请输入正确的手机号",
+            trigger: "blur"
+          }
         ],
         organId: [
           { required: true, message: "请输入所属机构ID", trigger: "blur" }
