@@ -11,17 +11,14 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form>
-        <el-form-item label="权限编号">
-          <el-input type="text" v-model="jurForm.id" style="width:75%" size="small" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="权限名称">
+      <el-form :model="jurForm" :rules="rules" ref="jurForm" :label-position="labelPosition">
+        <el-form-item label="权限名称" prop="name">
           <el-input type="text" v-model="jurForm.name" style="width:75%" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="权限路径">
+        <el-form-item label="权限路径" prop="path">
           <el-input type="text" v-model="jurForm.path" style="width:75%" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="权限类型">
+        <el-form-item label="权限类型" prop="type">
           <el-input type="text" v-model="jurForm.type" style="width:75%" size="small"></el-input>
         </el-form-item>
       </el-form>
@@ -29,8 +26,8 @@
     
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
       <el-button type="primary" icon="el-icon-check" @click="updateJurisdiction">保存</el-button>
+      <el-button icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -60,6 +57,11 @@ export default {
         name: "",
         path: "",
         type: "",
+      },
+       rules: {
+        name: [{ required: true, message: "请输入权限名称", trigger: "blur" }],
+        type: [{ required: true, message: "请选择权限类型", trigger: "blur" }],
+        path: [{ required: true, message: "请输入权限路径", trigger: "blur" }]
       }
     };
   },

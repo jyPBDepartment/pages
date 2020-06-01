@@ -32,7 +32,7 @@
           @click="resetForm('search')"
         >重置</el-button>
       </el-form-item>
-      <br>
+      <br />
       <el-button size="small" type="primary" icon="el-icon-plus" @click="addRoles()">添加</el-button>
     </el-form>
     <!--列表-->
@@ -65,7 +65,7 @@
         </template>
       </el-table-column>
       <el-table-column sortable prop="editUser" label="修改人" align="center"></el-table-column>
-      <el-table-column sortable prop="limitId" label="权限名称" align="center"></el-table-column>
+      <el-table-column sortable prop="limitName" label="权限名称" align="center"></el-table-column>
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
           <el-switch
@@ -87,7 +87,11 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="openUpdateRole(scope)">编辑</el-button>
-          <el-button size="mini" style="background-color:#84C1FF;border-color:#84C1FF; " @click="deleteUser(scope)">删除</el-button>
+          <el-button
+            size="mini"
+            style="background-color:#84C1FF;border-color:#84C1FF; "
+            @click="deleteUser(scope)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -170,7 +174,20 @@ export default {
   },
 
   watch: {},
-
+ mounted(){
+    let params = {
+        limitName: this.limitName,
+        id:this.id
+      };
+      api.testAxiosGet(ApiPath.url.findJurisdiction, params).then(res => {
+        let code = res.status;
+        if (code=="0") {
+         for(let i=0;i<res.data.length;i++){
+           this.limitIdOptions.push({value:res.data[i]["name"],label:res.data[i]["name"]});
+         }  
+        }
+      });
+  },
   created() {
     this.search(this.formInline);
   },
@@ -187,23 +204,19 @@ export default {
       let params = {
         roleName: this.roleName,
         roleType: this.roleType,
-        limitId:this.limitId,
         page: this.formInline.page,
         size: this.formInline.limit
       };
-      api
-        .testAxiosGet(ApiPath.url.roleSearch, params)
-        .then(res => {
-          let code = res.status;
-          if (code == "0") {
-            this.loading = false;
-            this.listData = res.data.content;
-            this.formInline.currentPage = res.data.number + 1;
-            this.formInline.pageSize = res.data.size;
-            this.formInline.total = res.data.totalElements;
-          } 
-        })
-        .catch(err => {});
+      api.testAxiosGet(ApiPath.url.roleSearch, params).then(res => {
+        let code = res.status;
+        if (code == "0") {
+          this.loading = false;
+          this.listData = res.data.content;
+          this.formInline.currentPage = res.data.number + 1;
+          this.formInline.pageSize = res.data.size;
+          this.formInline.total = res.data.totalElements;
+        }
+      });
     },
     saveRoles() {
       this.addRole = false;
@@ -224,7 +237,7 @@ export default {
     rolesEnable(scope) {
       let params = {
         id: scope.row.id,
-        state: scope.row.state,
+        state: scope.row.state
       };
       api.testAxiosGet(ApiPath.url.rolesEnable, params).then(res => {
         let code = res.status;
@@ -233,7 +246,7 @@ export default {
         } else {
           this.$message.success(res.message);
         }
-       this.reload();
+        this.reload();
       });
     },
 
@@ -258,7 +271,7 @@ export default {
       }).then(() => {
         let params = {
           id: scope.row.id,
-          relationId:scope.row.relationId
+          limitId: scope.row.limitId
         };
         api.testAxiosGet(ApiPath.url.deleteRoles, params).then(res => {
           let code = res.status;

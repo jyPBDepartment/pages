@@ -55,8 +55,8 @@
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
       <el-button type="primary" icon="el-icon-check" @click="saveRoles()">保存</el-button>
+      <el-button icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -83,6 +83,8 @@ export default {
       editForm: {
         roleName: "",
         roleType: "",
+        roleId:"",
+        id:"",
         limitId: ""
       },
       rolesTypeOptions: [
@@ -113,13 +115,14 @@ export default {
   },
   mounted(){
     let params = {
-        limitId: this.editForm.limitId
+        limitId: this.editForm.limitId,
+        id:this.editForm.id
       };
       api.testAxiosGet(ApiPath.url.findJurisdiction, params).then(res => {
         let code = res.status;
         if (code=="0") {
          for(let i=0;i<res.data.length;i++){
-           this.limitIdOptions.push({value:res.data[i]["name"],label:res.data[i]["name"]});
+           this.limitIdOptions.push({value:res.data[i]["id"],label:res.data[i]["name"]});
          }  
         }
       });
@@ -138,9 +141,7 @@ export default {
     //新增保存
     saveRoles: function() {
       let params = {
-        roleName: this.editForm.roleName,
-        roleType: this.editForm.roleType,
-        limitId: this.editForm.limitId
+        roleEntity: this.editForm
       };
       api.testAxiosGet(ApiPath.url.addRoles, params).then(res => {
         this.$message.success(res.message);

@@ -11,23 +11,17 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form>
-        <el-form-item label="角色编号">
-          <el-input type="text" v-model="rolesForm.id" style="width:75%" size="small" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="角色名称">
+      <el-form :model="rolesForm" :rules="rules" ref="rolesForm" :label-position="labelPosition">
+        <el-form-item label="角色名称" prop="roleName">
           <el-input type="text" v-model="rolesForm.roleName" style="width:75%" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="角色分类">
+        <el-form-item label="角色分类" prop="roleType">
           <el-input type="text" v-model="rolesForm.roleType" style="width:75%" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="权限名称">
-          <el-select 
-              v-model="rolesForm.limitId" 
-              style="width:80%" 
-              size="small"  >
+        <el-form-item label="权限名称" prop="limitId">
+          <el-select v-model="rolesForm.limitId" style="width:80%" size="small">
             <el-option
-               v-for="item in limitIdOptions"
+              v-for="item in limitIdOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -36,11 +30,10 @@
         </el-form-item>
       </el-form>
     </slot>
-    
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button  icon="el-icon-close" @click="close">关闭</el-button>
       <el-button type="primary" icon="el-icon-check" @click="updateRoles">保存</el-button>
+      <el-button icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -48,7 +41,7 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
-  inject:['reload'],
+  inject: ["reload"],
   props: {
     show: {
       type: Boolean,
@@ -64,15 +57,27 @@ export default {
   },
   data() {
     return {
+      labelPosition: "right",
       localShow: this.show,
       rolesForm: {
         id: "",
         roleName: "",
         roleType: "",
-        roleId:"",
-        limitId:"",
+        roleId: "",
+        limitId: ""
       },
-      limitIdOptions:[],
+      limitIdOptions: [],
+      rules: {
+        roleName: [
+          { required: true, message: "请输入角色名称", trigger: "blur" }
+        ],
+        roleType: [
+          { required: true, message: "请选择角色类型", trigger: "blur" }
+        ],
+        limitId: [
+          { required: true, message: "请选择权限名称", trigger: "blur" }
+        ]
+      }
     };
   },
   watch: {
@@ -89,26 +94,27 @@ export default {
       });
     }
   },
-  mounted(){
+  mounted() {
     let params = {
-        limitId: this.rolesForm.limitId
-      };
-      api.testAxiosGet(ApiPath.url.findJurisdiction, params).then(res => {
-        let code = res.status;
-        if (code=="0") {
-         for(let i=0;i<res.data.length;i++){
-           this.limitIdOptions.push({value:res.data[i]["name"],label:res.data[i]["name"]});
-         }  
+      limitId: this.rolesForm.limitId
+    };
+    api.testAxiosGet(ApiPath.url.findJurisdiction, params).then(res => {
+      let code = res.status;
+      if (code == "0") {
+        for (let i = 0; i < res.data.length; i++) {
+          this.limitIdOptions.push({
+            value: res.data[i]["id"],
+            label: res.data[i]["name"]
+          });
         }
-      });
+      }
+    });
   },
-  created(){
-
-  },
+  created() {},
   methods: {
     updateRoles: function() {
       let params = {
-        rolesEntity: this.rolesForm,
+        rolesEntity: this.rolesForm
       };
       //修改用户信息
       api.testAxiosGet(ApiPath.url.updateRoles, params).then(res => {
@@ -125,10 +131,9 @@ export default {
     }
   }
 };
-
 </script>
 <style scoped>
-.el-form{
-padding-left: 100px;
+.el-form {
+  padding-left: 100px;
 }
 </style>

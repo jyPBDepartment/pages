@@ -44,8 +44,8 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
       <el-button type="primary" icon="el-icon-check" @click="saveJurisdiction()">保存</el-button>
+      <el-button icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
