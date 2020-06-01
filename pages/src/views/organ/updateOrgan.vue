@@ -5,29 +5,37 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="30%"
+    width="45%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
      <slot>
-      <el-form>
-       <el-form-item label="用户编号">
-           <el-input v-model="OrganForm.id" readonly></el-input>
-       </el-form-item>
-        <el-form-item label="机构名称">
-          <el-input type="text" v-model="OrganForm.name" placeholder="请输入机构名称"></el-input>
+      <el-form :rules="rules" ref="OrganForm" :model="OrganForm" label-width="120px">
+      
+        <el-form-item label="机构名称" prop="name">
+          <el-input type="text" v-model="OrganForm.name" placeholder="请输入机构名称" style=" width:60%;" ></el-input>
         </el-form-item>
-        <el-form-item label="上级机构编号">
-          <el-input type="text" v-model="OrganForm.superId" placeholder="请输入上级机构编号"></el-input>
-        </el-form-item>
+        <!-- <el-form-item label="上级机构编号" prop="superId">
+          <el-input type="text" v-model="OrganForm.superId" placeholder="请输入上级机构编号" style=" width:60%;" ></el-input>
+        </el-form-item> -->
+         <el-form-item label="上级机构编号" prop="superId" >
+            <el-select v-model="OrganForm.superId" placeholder="请输入上级机构编号" style=" width:60%;" id="test" >
+              <el-option
+                v-for="item in organOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
         
+        </el-form-item>
        
         <el-form-item label="备注">
-          <el-input type="text" v-model="OrganForm.context" placeholder="请输入备注"></el-input>
+          <el-input type="textarea" v-model="OrganForm.context" placeholder="请输入备注" style=" width:60%;" ></el-input>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-input type="text" v-model="OrganForm.state" placeholder="请输入状态"></el-input>
+        <el-form-item label="状态" prop="state">
+          <el-input type="text" v-model="OrganForm.state" placeholder="请输入状态" style=" width:60%;" ></el-input>
         </el-form-item>
         
         
@@ -66,7 +74,26 @@ export default {
         superId:"",  
         context:"",
         state:""
-      }
+      },
+      organOptions:[
+          {value:"5",label:"5"},
+          {value:"4",label:"4"},
+          {value:"3",label:"3"},
+          {value:"2",label:"2"},
+          {value:"1",label:"1"}
+        ],
+       //rules表单验证
+      rules: {
+        name: [
+          { required: true, message: '请输入机构名称', trigger: 'blur' }
+        ],
+        superId: [
+          { required: true, message: '请输入上级机构编号', trigger: 'blur' }
+        ],
+        state: [
+          { required: true, message: '请输入状态', trigger: 'blur' }
+        ]
+      },
     };
   },
   watch: {
@@ -112,5 +139,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.el-form{
+    padding-left: 100px;
+}
+
 </style>

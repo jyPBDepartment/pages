@@ -16,11 +16,20 @@
         <el-form-item label="机构名称" prop="name">
           <el-input type="text" v-model="editForm.name" placeholder="请输入机构名称"  style=" width:60%;"  ></el-input>
         </el-form-item>
-        <el-form-item label="上级机构编号" prop="superId">
-          <el-input type="text" v-model="editForm.superId" placeholder="请输入上级机构编号"  style=" width:60%;" ></el-input>
+      
+         <el-form-item label="上级机构编号" prop="superId" >
+            <el-select v-model="editForm.superId" placeholder="请输入上级机构编号" style=" width:60%;" id="test" >
+              <el-option
+                v-for="item in organOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
+        
         </el-form-item>
       
-        <el-form-item label="备注" prop="context">
+        <el-form-item label="备注">
           <el-input type="textarea" v-model="editForm.context" placeholder="请输入备注"  style=" width:60%;" ></el-input>
         </el-form-item>
         <el-form-item label="状态" prop="state">
@@ -30,8 +39,9 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="danger" icon="el-icon-close" @click="close" size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
+     
       <el-button type="success" icon="el-icon-check" @click="saveOrgan()" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
+       <el-button type="danger" icon="el-icon-close" @click="close" size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -56,14 +66,21 @@ export default {
   data() {
    
     return {
+      test:'3',
       labelPosition:'right',
        editForm:{
          name:"",
-        superId:"",
         context:"",
-        state:""
+        state:"",
+        superId:"5"
        } ,
-      
+      organOptions:[
+          {value:"5",label:"5"},
+          {value:"4",label:"4"},
+          {value:"3",label:"3"},
+          {value:"2",label:"2"},
+          {value:"1",label:"1"}
+        ],
        
        localShow: this.show,
        //rules表单验证
@@ -73,9 +90,6 @@ export default {
         ],
         superId: [
           { required: true, message: '请输入上级机构编号', trigger: 'blur' }
-        ],
-       context: [
-          { required: true, message: '请输入备注', trigger: 'blur' }
         ],
         state: [
           { required: true, message: '请输入状态', trigger: 'blur' }
@@ -124,7 +138,7 @@ export default {
 
 <style scoped>
 .el-form{
-  padding-left: 100px;
+  padding-left: 150px;
  
 }
 </style>

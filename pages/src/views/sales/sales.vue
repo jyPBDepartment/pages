@@ -25,7 +25,7 @@
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="姓名" align="center"></el-table-column>
       <el-table-column sortable prop="phone" label="手机号码" align="center"></el-table-column>
-      <el-table-column sortable prop="organId" label="所属机构ID" align="center"></el-table-column>
+      <el-table-column sortable prop="organName" label="所属机构ID" align="center"></el-table-column>
       <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
       <el-table-column sortable prop="updateTime" label="修改时间" align="center"></el-table-column>
       <el-table-column :show-overflow-tooltip="true"  prop="context" label="备注" width="100px" align="center"></el-table-column>
@@ -139,8 +139,9 @@ export default {
     updateSales: function() {
       
     },
+    //删除业务员信息
     deleteSales: function(scope) {
-       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+       this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

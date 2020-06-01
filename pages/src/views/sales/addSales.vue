@@ -14,13 +14,13 @@
       <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="100px">
        
         <el-form-item label="姓名" prop="name">
-          <el-input type="text" v-model="editForm.name"  placeholder="请输入姓名" style=" width:60%;"></el-input>
+          <el-input type="text" v-model="editForm.name"  placeholder="请输入姓名" style="width:60%;"></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
-          <el-input type="text" v-model="editForm.phone" placeholder="请输入手机号码 " style=" width:60%;"></el-input>
+          <el-input type="text" v-model="editForm.phone" placeholder="请输入手机号码 " style="width:60%;"></el-input>
         </el-form-item>
          <el-form-item label="所属机构ID" prop="organId" >
-            <el-select v-model="editForm.organId" placeholder="请输入所属机构ID" style=" width:60%;">
+            <el-select v-model="editForm.organId" placeholder="请输入所属机构ID" style="width:60%;">
               <el-option
                 v-for="item in organOptions"
                 :key="item.value"
@@ -30,15 +30,15 @@
             </el-select>
         
         </el-form-item>
-        <el-form-item label="备注" prop="context">
-          <el-input  type="textarea" v-model="editForm.context" placeholder="请输入备注" style=" width:60%;"></el-input>
+        <el-form-item label="备注" >
+          <el-input  type="textarea" v-model="editForm.context" placeholder="请输入备注" style="width:60%;"></el-input>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="danger" icon="el-icon-close" @click="close" size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
         <el-button type="success" icon="el-icon-check" @click="saveSales()" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
+         <el-button type="danger" icon="el-icon-close" @click="close" size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -77,6 +77,7 @@ export default {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         phone: [
           { required: true, message: "建议输入11位手机号码", trigger: "blur" },
+
           {
             pattern:/^1[3456789]\d{9}$/,
             required: true,
@@ -86,8 +87,8 @@ export default {
         ],
         organId: [
           { required: true, message: "请输入所属机构ID", trigger: "blur" }
-        ],
-        context: [{ required: true, message: "请输入备注", trigger: "blur" }]
+        ]
+      
       }
     };
   },
@@ -101,7 +102,7 @@ export default {
     this.findContext();
   },
   methods: {
-    //联表查询
+    //下拉列表显示
     findContext: function() {
       let params = {
         
@@ -113,7 +114,7 @@ export default {
             
             for (let i = 0; i < res.data.length; i++) {
               this.organOptions.push({
-                value: res.data[i]["name"],
+                value: res.data[i]["id"],
                 label: res.data[i]["name"]
               });
             }
@@ -126,12 +127,9 @@ export default {
 
     //添加业务员方法
     saveSales: function() {
-      let params = {
-        name: this.editForm.name,
-        phone: this.editForm.phone,
-        organId: this.editForm.organId,
-        context: this.editForm.context
-      };
+      let params={
+            salesEntity:this.editForm
+        }
       api.testAxiosGet(ApiPath.url.saveSales, params).then(res => {
         this.$message.success(res.message);
         this.reload();
@@ -150,6 +148,7 @@ export default {
 
 <style scoped>
 .el-form {
-  padding-left: 100px;
+  padding-left: 150px;
 }
+
 </style>

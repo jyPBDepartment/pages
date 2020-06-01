@@ -5,27 +5,33 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="30%"
+    width="45%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
      <slot>
-      <el-form>
-       <el-form-item label="用户编号">
-           <el-input v-model="SalesForm.id" readonly></el-input>
-       </el-form-item>
-        <el-form-item label="姓名">
-          <el-input type="text" v-model="SalesForm.name" placeholder="请输入姓名"></el-input>
+      <el-form :rules="rules" ref="SalesForm" :model="SalesForm" label-width="100px">
+       
+        <el-form-item label="姓名" prop="name">
+          <el-input type="text" v-model="SalesForm.name" placeholder="请输入姓名" style=" width:60%;"></el-input>
         </el-form-item>
-        <el-form-item label="手机号码">
-          <el-input type="text" v-model="SalesForm.phone" placeholder="请输入手机号码"></el-input>
+        <el-form-item label="手机号码" prop="phone">
+          <el-input type="text" v-model="SalesForm.phone" placeholder="请输入手机号码" style=" width:60%;"></el-input>
         </el-form-item>
-         <el-form-item label="所属机构ID">
-          <el-input type="text" v-model="SalesForm.organId" placeholder="请输入所属机构ID"></el-input>
+           <el-form-item label="所属机构ID" prop="organId" >
+            <el-select v-model="SalesForm.organId" placeholder="请输入所属机构ID" style=" width:60%;">
+              <el-option
+                v-for="item in organOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
+        
         </el-form-item>
         <el-form-item label="备注">
-          <el-input type="text" v-model="SalesForm.context" placeholder="请输入备注"></el-input>
+          <el-input type="textarea" v-model="SalesForm.context" placeholder="请输入备注" style=" width:60%;"></el-input>
         </el-form-item>
       </el-form>
     </slot>
@@ -62,7 +68,17 @@ export default {
         phone:"",
         organId:"",
         context:"",
-      
+      },
+      organOptions: [],
+      // rules表单验证
+      rules: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        phone: [
+          { required: true, message: "建议输入11位手机号码", trigger: "blur" }
+        ],
+        organId: [
+          { required: true, message: "请输入所属机构ID", trigger: "blur" }
+        ]
       
       }
     };
@@ -83,14 +99,40 @@ export default {
       });
     }
   },
-  
+   mounted() {
+    this.findContext();
+  },
   methods: {
+      //联表查询
+    findContext: function() {
+      let params = {
+      organId  :this.SalesForm.organId
+      };
+      api
+        .testAxiosGet(ApiPath.url.findAllOrgan, params)
+        .then(res => {
+          if (res.status == "0") {
+            
+            for (let i = 0; i < res.data.length; i++) {
+              this.organOptions.push({
+                value: res.data[i]["id"],
+                label: res.data[i]["name"]
+              });
+            }
+          }
+        })
+        .catch(function(error) {
+         
+        });
+    },
+
+//修改用户信息
     updateSales: function() {
       
         let params={
             salesEntity:this.SalesForm
         }
-      //修改用户信息
+      
       api.testAxiosGet(ApiPath.url.updateSales, params).then(res => {
         this.$message.success(res.message);
         this.reload();
@@ -109,5 +151,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.el-form{
+   padding-left: 150px;
+}
+
 </style>
