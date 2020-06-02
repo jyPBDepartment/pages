@@ -66,20 +66,15 @@
       </el-table-column>
       <el-table-column sortable prop="editUser" label="修改人" align="center"></el-table-column>
       <el-table-column sortable prop="limitName" label="权限名称" align="center"></el-table-column>
-      <el-table-column align="center" label="状态">
+      <el-table-column align="center" prop="state" label="状态">
         <template slot-scope="scope">
+          {{scope.row.state}}
           <el-switch
-            v-if="scope.row.state==0"
-            v-model="nshow"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
-            @change="rolesEnable(scope)"
-          ></el-switch>
-          <el-switch
-            v-else
-            v-model="fshow"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
+            v-model="scope.row.state"
+            active-value="0"
+            inactive-value="1"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
             @change="rolesEnable(scope)"
           ></el-switch>
         </template>
@@ -175,18 +170,18 @@ export default {
 
   watch: {},
  mounted(){
-    let params = {
-        limitName: this.limitName,
-        id:this.id
-      };
-      api.testAxiosGet(ApiPath.url.findJurisdiction, params).then(res => {
-        let code = res.status;
-        if (code=="0") {
-         for(let i=0;i<res.data.length;i++){
-           this.limitIdOptions.push({value:res.data[i]["name"],label:res.data[i]["name"]});
-         }  
-        }
-      });
+    // let params = {
+    //     limitName: this.limitName,
+    //     id:this.id
+    //   };
+    //   api.testAxiosGet(ApiPath.url.findJurisdiction, params).then(res => {
+    //     let code = res.status;
+    //     if (code=="0") {
+    //      for(let i=0;i<res.data.length;i++){
+    //        this.limitIdOptions.push({value:res.data[i]["name"],label:res.data[i]["name"]});
+    //      }  
+    //     }
+    //   });
   },
   created() {
     this.search(this.formInline);
@@ -212,6 +207,8 @@ export default {
         if (code == "0") {
           this.loading = false;
           this.listData = res.data.content;
+
+          console.log(res.data.content)
           this.formInline.currentPage = res.data.number + 1;
           this.formInline.pageSize = res.data.size;
           this.formInline.total = res.data.totalElements;
@@ -246,7 +243,7 @@ export default {
         } else {
           this.$message.success(res.message);
         }
-        this.reload();
+        // this.reload();
       });
     },
 
