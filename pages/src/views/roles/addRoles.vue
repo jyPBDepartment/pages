@@ -50,6 +50,16 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="角色状态" prop="roleType">
+          <el-select v-model="editForm.state" style="width:80%" size="small">
+            <el-option
+              v-for="item in stateOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
     </slot>
 
@@ -65,6 +75,7 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import JurisdictionVue from '../jurisdication/Jurisdiction.vue';
 export default {
   inject: ["reload"],
   props: {
@@ -79,6 +90,7 @@ export default {
   },
   data() {
     return {
+      
       labelPosition: "right",
       editForm: {
         roleName: "",
@@ -92,19 +104,18 @@ export default {
         { value: "1", label: "高级管理员" },
         { value: "2", label: "普通管理员" }
       ],
+      stateOptions: [
+        { value: "0", label: "启用" },
+        { value: "1", label: "禁用" }
+      ],
       limitIdOptions: [],
       localShow: this.show,
       
       rules: {
-        roleName: [
-          { required: true, message: "请输入角色名称", trigger: "blur" }
-        ],
-        roleType: [
-          { required: true, message: "请选择角色类型", trigger: "blur" }
-        ],
-        limitId: [
-          { required: true, message: "请选择权限名称", trigger: "blur" }
-        ]
+        roleName: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
+        roleType: [{ required: true, message: "请选择角色类型", trigger: "blur" }],
+        limitId:  [{ required: true, message: "请选择权限名称", trigger: "blur" }],
+        state:    [{ required: true, message: "请选择角色状态", trigger: "blur" }]
       }
     };
   },
@@ -116,8 +127,7 @@ export default {
   mounted(){
     let params = {
         limitId: this.editForm.limitId,
-        id:this.editForm.id
-      };
+        id:this.editForm.id      };
       api.testAxiosGet(ApiPath.url.findJurisdiction, params).then(res => {
         let code = res.status;
         if (code=="0") {
@@ -125,6 +135,7 @@ export default {
            this.limitIdOptions.push({value:res.data[i]["id"],label:res.data[i]["name"]});
          }  
         }
+        
       });
   },
   created(){

@@ -19,7 +19,7 @@
           <el-input type="text" v-model="rolesForm.roleType" style="width:75%" size="small"></el-input>
         </el-form-item>
         <el-form-item label="权限名称" prop="limitId">
-          <el-select v-model="rolesForm.limitId" style="width:80%" size="small">
+          <el-select v-model="rolesForm.limitId" style="width:75%" size="small">
             <el-option
               v-for="item in limitIdOptions"
               :key="item.value"
@@ -56,6 +56,7 @@ export default {
     }
   },
   data() {
+    
     return {
       labelPosition: "right",
       localShow: this.show,

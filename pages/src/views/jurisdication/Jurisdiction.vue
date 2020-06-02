@@ -69,18 +69,11 @@
       <el-table-column sortable prop="editUser" label="修改人" align="center" ></el-table-column>
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
+          
           <el-switch
-            v-if="scope.row.state==0"
-            v-model="nshow"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
-            @change="jurisdictionEnable(scope)"
-          ></el-switch>
-          <el-switch
-            v-else
-            v-model="fshow"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
+            v-model="scope.row.state==0"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
             @change="jurisdictionEnable(scope)"
           ></el-switch>
         </template>
@@ -284,5 +277,3 @@ export default {
   width: 100%;
 }
 </style>
-
- 

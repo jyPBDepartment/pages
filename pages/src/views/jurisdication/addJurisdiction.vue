@@ -9,6 +9,7 @@
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
+  
     <!-- 插槽区 -->
     <slot>
       <el-form
@@ -39,6 +40,16 @@
         </el-form-item>
         <el-form-item label="权限路径" prop="path">
           <el-input type="text" v-model="editForm.path" style="width:80%" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="权限状态" prop="roleType">
+          <el-select v-model="editForm.state" style="width:80%" size="small">
+            <el-option
+              v-for="item in stateOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
     </slot>
@@ -80,11 +91,16 @@ export default {
         { value: "1", label: "高级" },
         { value: "2", label: "普通" }
       ],
+      stateOptions: [
+        { value: "0", label: "启用" },
+        { value: "1", label: "禁用" }
+      ],
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入权限名称", trigger: "blur" }],
         type: [{ required: true, message: "请选择权限类型", trigger: "blur" }],
-        path: [{ required: true, message: "请输入权限路径", trigger: "blur" }]
+        path: [{ required: true, message: "请输入权限路径", trigger: "blur" }],
+        state:[{ required: true, message: "请选择权限状态", trigger: "blur" }]
       }
     };
   },
@@ -107,6 +123,7 @@ export default {
         name: this.editForm.name,
         path: this.editForm.path,
         type: this.editForm.type,
+        state: this.editForm.state,
       };
       api.testAxiosGet(ApiPath.url.addJurisdiction, params).then(res => {
         this.$message.success(res.message);
