@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="45%"
+    width="40%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -14,13 +14,13 @@
       <el-form :rules="rules" ref="SalesForm" :model="SalesForm" label-width="100px">
        
         <el-form-item label="姓名" prop="name">
-          <el-input type="text" v-model="SalesForm.name" placeholder="请输入姓名" style=" width:60%;"></el-input>
+          <el-input type="text" v-model="SalesForm.name" placeholder="请输入姓名" style=" width:70%;"></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
-          <el-input type="text" v-model="SalesForm.phone" placeholder="请输入手机号码" style=" width:60%;"></el-input>
+          <el-input type="text" v-model="SalesForm.phone" placeholder="请输入手机号码" style=" width:70%;"></el-input>
         </el-form-item>
            <el-form-item label="所属机构ID" prop="organId" >
-            <el-select v-model="SalesForm.organId" placeholder="请输入所属机构ID" style=" width:60%;">
+            <el-select v-model="SalesForm.organId" placeholder="请输入所属机构ID" style=" width:70%;">
               <el-option
                 v-for="item in organOptions"
                 :key="item.value"
@@ -31,7 +31,7 @@
         
         </el-form-item>
         <el-form-item label="备注">
-          <el-input type="textarea" v-model="SalesForm.context" placeholder="请输入备注" style=" width:60%;"></el-input>
+          <el-input type="textarea" v-model="SalesForm.context" placeholder="请输入备注" style=" width:70%;"></el-input>
         </el-form-item>
       </el-form>
     </slot>
@@ -153,7 +153,7 @@ export default {
 
 <style scoped>
 .el-form{
-   padding-left: 150px;
+   padding-left: 115px;
 }
 
 </style>

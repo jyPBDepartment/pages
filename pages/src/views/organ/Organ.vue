@@ -6,7 +6,6 @@
       <el-breadcrumb-item>机构管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
        <el-form-item label="搜索："></el-form-item>
@@ -16,27 +15,29 @@
       <el-form-item label="上级机构">
         <el-input v-model="superId" type="text" placeholder="请输入上级机构" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-  
       <el-button type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-search" >查询</el-button>
        <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-close">重置</el-button>
-      
         <el-row>
            <el-button type="info" plain @click="openRuleTag"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:-7px;margin-bottom: 14px;" icon="el-icon-plus">新增</el-button>
         </el-row>
     </el-form>
-   
-    
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="tableData" border style="width: 100%" highlight-current-row="true">
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      
       <el-table-column sortable prop="name" label="机构名称" align="center"></el-table-column>
       <el-table-column sortable prop="superId" label="上级机构" align="center"></el-table-column>
-      
-      <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updateTime" label="修改时间" align="center"></el-table-column>
+      <el-table-column sortable prop="createTime" label="创建时间" align="center">
+        <template slot-scope="scope">
+          <div>{{scope.row.createTime|timestampToTime}}</div>
+        </template>
+      </el-table-column>
+       <el-table-column sortable prop="updateTime" label="修改时间" align="center">
+        <template slot-scope="scope">
+          <div>{{scope.row.updateTime|timestampToTime}}</div>
+        </template>
+      </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="context" label="备注" align="center" ></el-table-column>
       <!--switch开关（表单）-->
-       <el-table-column align="center"  label="状态" min-width="50">
+       <el-table-column align="center"  label="状态" min-width="50" >
         <template slot-scope="scope">
           <el-switch
             v-if="scope.row.state==0"
@@ -56,8 +57,8 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-          <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px">编辑</el-button>
-          <el-button @click="deleteOrgan(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px">删除</el-button>
+          <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px" icon="el-icon-edit">编辑</el-button>
+          <el-button @click="deleteOrgan(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px" icon="el-icon-delete">删除</el-button>
        </template>
    </el-table-column>
     </el-table>
@@ -97,6 +98,7 @@ export default {
       default: "对话框"
     }
   },
+  
   data() {
     return {
       nshow: true, //switch开启
@@ -172,8 +174,6 @@ export default {
           }
         })
         .catch(function(error) {
-         
-         
         });
     },
     closeUpdateOrganDialog: function() {
@@ -313,7 +313,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped >
 .el-form-item {
   font-size: 14px;
 }
@@ -328,6 +328,24 @@ export default {
   border-color: rgb(121, 212, 59);
   border-radius: 3px;
 }
+.el-button{
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;   
+  outline: none;
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px #999;
+}
+.el-button:active {
+  
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+
 </style>
+
+
 
 

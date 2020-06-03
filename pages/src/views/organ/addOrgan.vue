@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="45%"
+    width="40%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -14,11 +14,11 @@
       <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="120px">
        
         <el-form-item label="机构名称" prop="name">
-          <el-input type="text" v-model="editForm.name" placeholder="请输入机构名称"  style=" width:60%;"  ></el-input>
+          <el-input type="text" v-model="editForm.name" placeholder="请输入机构名称"  style=" width:70%;"  ></el-input>
         </el-form-item>
       
          <el-form-item label="上级机构编号" prop="superId" >
-            <el-select v-model="editForm.superId" placeholder="请输入上级机构编号" style=" width:60%;" id="test" >
+            <el-select v-model="editForm.superId" placeholder="请输入上级机构编号" style=" width:70%;" id="test" >
               <el-option
                 v-for="item in organOptions"
                 :key="item.value"
@@ -30,10 +30,10 @@
         </el-form-item>
       
         <el-form-item label="备注">
-          <el-input type="textarea" v-model="editForm.context" placeholder="请输入备注"  style=" width:60%;" ></el-input>
+          <el-input type="textarea" v-model="editForm.context" placeholder="请输入备注"  style=" width:70%;" ></el-input>
         </el-form-item>
         <el-form-item label="状态" prop="state">
-          <el-input type="text" v-model="editForm.state" placeholder="请输入状态"  style=" width:60%;" ></el-input>
+          <el-input type="text" v-model="editForm.state" placeholder="请输入状态"  style=" width:70%;" ></el-input>
         </el-form-item>
       </el-form>
     </slot>
@@ -138,7 +138,7 @@ export default {
 
 <style scoped>
 .el-form{
-  padding-left: 150px;
+  padding-left: 115px;
  
 }
 </style>

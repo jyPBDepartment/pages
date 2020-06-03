@@ -21,18 +21,28 @@
         <el-button type="info" plain @click="openRuleTag"  size="medium"  class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:-7px;margin-bottom: 14px;" icon="el-icon-plus">新增</el-button>
       </el-row>
     </el-form>
-    <el-table :data="tableData" border style="width: 100%" highlight-current-row>
+    <el-table :data="tableData" border style="width: 100%"  highlight-current-row="true">
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="姓名" align="center"></el-table-column>
       <el-table-column sortable prop="phone" label="手机号码" align="center"></el-table-column>
       <el-table-column sortable prop="organName" label="所属机构ID" align="center"></el-table-column>
-      <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updateTime" label="修改时间" align="center"></el-table-column>
+  
+      <el-table-column sortable prop="createTime" label="创建时间" align="center">
+        <template slot-scope="scope">
+          <div>{{scope.row.createTime|timestampToTime}}</div>
+        </template>
+      </el-table-column>v
+      
+       <el-table-column sortable prop="updateTime" label="修改时间" align="center">
+        <template slot-scope="scope">
+          <div>{{scope.row.updateTime|timestampToTime}}</div>
+        </template>
+      </el-table-column>
       <el-table-column :show-overflow-tooltip="true"  prop="context" label="备注" width="100px" align="center"></el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-          <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px">编辑</el-button>
-          <el-button @click="deleteSales(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px">删除</el-button>
+          <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px;" icon="el-icon-edit">编辑</el-button>
+          <el-button @click="deleteSales(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -257,6 +267,23 @@ export default {
   background-color: rgb(199, 215, 231);
   border-color: rgb(121, 212, 59);
   border-radius:3px;
+}
+.el-button{
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;   
+  outline: none;
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px #999;
+}
+.el-button:hover {
+  background-color: #3e8e41;
+}
+.el-button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 </style>
 
