@@ -46,6 +46,8 @@ const url = {
   findAllNavChildren:URLHost+'/navigation/findAll',
   //导航下拉列表修改显示
   findAllNc:URLHost+'/navigation/findAll',
+  //查询上级导航列表
+  findSubNavList:URLHost+'/navigation/findSubNavList',
     //网站信息
   updateWebsiteInfoEntity: URLHost + '/websiteInfo/update',
   findWebsiteInfoFormnById: URLHost + '/websiteInfo/findById',
