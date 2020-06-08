@@ -26,6 +26,27 @@ const url = {
 
   //图片上传地址
   uploadImg: URLHost + '/upload/uploadImg',
+  //导航搜索
+  searchNavigation:URLHost + '/navigation/findByName',
+  //导航状态禁用启用
+  navigationEnable:URLHost+'/navigation/enable',
+  //导航删除
+  deleteNavigation:URLHost+'/navigation/delete',
+  //导航添加
+  saveNavigation:URLHost+'/navigation/save',
+  //导航子菜单添加
+  saveNavChildren:URLHost+'/navigation/save',
+  //导航修改
+  navigationFindById:URLHost+'/navigation/findById',  
+  updateNavigation:URLHost+'/navigation/update',
+  //导航子菜单修改
+  navChildrenFindById:URLHost+'/navigation/findById',
+  updateNavChildren:URLHost+'/navigation/update',
+  //导航下拉列表添加显示
+  findAllNavChildren:URLHost+'/navigation/findAll',
+  //导航下拉列表修改显示
+  findAllNc:URLHost+'/navigation/findAll',
+ 
 }
 export default {
   url

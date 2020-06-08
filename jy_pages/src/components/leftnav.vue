@@ -46,6 +46,7 @@ export default {
     let res = {
       success: true,
       data: [
+        
         {
           menuid: 1,
           icon: "li-icon-xiangmuguanli",
@@ -79,6 +80,24 @@ export default {
             }
           ]
         },
+        {
+          menuid: 2,
+          icon: "li-icon-xiangmuguanli",
+          menuname: "基础管理",
+          hasThird: null,
+          url: null,
+            menus: [
+            {
+              menuid: 2-1,
+              icon: "el-icon-phone",
+              menuname: "导航管理",
+              hasThird: "N",
+              url: "navigation/navigation",
+              menus: null
+            },
+            
+            ]
+        }
         // {
         //   menuid: 33,
         //   icon: "li-icon-dingdanguanli",

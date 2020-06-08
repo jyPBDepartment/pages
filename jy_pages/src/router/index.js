@@ -6,12 +6,17 @@ import login from '@/views/login';
 // 首页
 import index from '@/views/index';
 
+
 /**
  * 门户菜单
  */
 // Banner图管理
 import Banner from '@/views/gateway/Banner';
-
+/**
+ * 设置
+ */
+//导航管理
+import Navigation from '@/views/navigation/navigation';
 /**
  * 基础菜单
  */
@@ -45,6 +50,7 @@ import Permission from '@/views/system/Permission';
 import Organ from '@/views/system/Organ';
 //业务员管理
 import Sales from '@/views/system/sales';
+
 
 /**
  * 支付管理
@@ -174,6 +180,16 @@ export default new Router({
     //         requireAuth:true
     //     }
        },
+       {
+        path: '/navigation/navigation',
+        name: '导航管理',
+        component: Navigation,
+        meta: {
+            requireAuth: true
+       }
+      
+       
+    }, 
         {
             path: '/machine/MachineConfig',
             name: '支付配置信息',
