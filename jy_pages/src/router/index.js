@@ -50,7 +50,8 @@ import Permission from '@/views/system/Permission';
 import Organ from '@/views/system/Organ';
 //业务员管理
 import Sales from '@/views/system/sales';
-
+//网站信息
+import updateWebsiteInfo from '@/views/websiteInfo/updateWebsiteInfo';
 
 /**
  * 支付管理
@@ -187,9 +188,14 @@ export default new Router({
         meta: {
             requireAuth: true
        }
-      
-       
-    }, 
+    },  {
+            path: '/websiteInfo/updateWebsiteInfo',
+            name: '网站信息',
+            component: updateWebsiteInfo,
+            meta: {
+                requireAuth: true
+            }
+        },
         {
             path: '/machine/MachineConfig',
             name: '支付配置信息',

@@ -46,6 +46,18 @@ const url = {
   findAllNavChildren:URLHost+'/navigation/findAll',
   //导航下拉列表修改显示
   findAllNc:URLHost+'/navigation/findAll',
+    //网站信息
+  updateWebsiteInfoEntity: URLHost + '/websiteInfo/update',
+  findWebsiteInfoFormnById: URLHost + '/websiteInfo/findById',
+  //友情链接
+  //查询分页
+  linkAddressSearch: URLHost + '/linkAddress/findByName',
+  //链接新增
+  addLinkAddress: URLHost + '/linkAddress/add',
+  findLinkAddressId:URLHost + '/linkAddress/findById',
+  updateLinkAddress:URLHost + '/linkAddress/update',
+  //链接删除
+  deleteLinkAddress:URLHost + '/linkAddress/delete',
  
 }
 export default {

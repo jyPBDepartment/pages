@@ -94,7 +94,17 @@ export default {
               hasThird: "N",
               url: "navigation/navigation",
               menus: null
-            },
+            }, 
+           
+             {
+              menuid: 2-2,
+              icon: "el-icon-eleme",
+              menuname: "网站信息",
+              hasThird: "N",
+              url: "websiteInfo/updateWebsiteInfo",
+              menus: null
+            }
+          
             
             ]
         }
