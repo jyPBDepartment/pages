@@ -1,11 +1,15 @@
 <template>
   <div class="Home">
-    <img class="top_img" src="../assets/introduce_banner_jyzg.jpg" :style="{height:`${bannerHeight}px`}" />
-    <FixedNav @chage="navMove($event)"></FixedNav>
-    <Fast :class=" marginTOP ? 'move':'move2' " title="应用场景" :allScreen="true">
+    <img
+      class="top_img"
+      src="../assets/introduce_banner_jyzg.jpg"
+      :style="{height:`${bannerHeight}px`}"
+    />
+    <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav>
+    <Fast :class=" marginTOP ? 'move':'move2' " :title="modelName[0].title" :id="modelName[0].id" :allScreen="true">
       <Tabs :tabPane="tabPane" :tabList="tabList" :tabIndex="tabIndex" :type="false" />
     </Fast>
-    <Fast title="核心优势" sTitle="农资销售随即搞定、销售数据尽在掌握、团队管理轻松实现">
+    <Fast :title="modelName[1].title" :id="modelName[1].id" sTitle="农资销售随即搞定、销售数据尽在掌握、团队管理轻松实现">
       <el-row class="h_1">
         <el-col class="h_2" :span="8" v-for="(item, index) in advantageList" :key="index">
           <img :src="item.src" alt />
@@ -13,7 +17,7 @@
         </el-col>
       </el-row>
     </Fast>
-    <Fast title="产品功能" background="rgb(246, 247, 252)">
+    <Fast :title="modelName[2].title" :id="modelName[2].id" background="rgb(246, 247, 252)">
       <el-row class="b" type="flex" justify="center">
         <el-col class="b_f" :span="12" v-for="(item, index) in bottonList" :key="index">
           <el-col class="icon" :span="8">
@@ -34,7 +38,6 @@
 
 <script>
 import Fast from "../components/Fast/Fast";
-// import Rotation from "../components/Rotation/Rotation";
 import Tabs from "../components/Tabs/Tabs";
 import FixedNav from "../components/FixedNav/FixedNav";
 import Callcontact from "../components/Callcontact/Callcontact";
@@ -49,6 +52,11 @@ export default {
   data() {
     return {
       bannerHeight: document.body.clientWidth / 3.31,
+      modelName:[
+        {title:'应用场景',id:'1'},
+        {title:'核心优势',id:'2'},
+        {title:'产品功能',id:'3'}
+      ],
       marginTOP: false,
       bottonList:[{
         src:require('../assets/icon/4-1dlddtx.png'),
@@ -112,8 +120,8 @@ export default {
     };
   },
   methods: {
-    aaaaa(index) {
-      this.tabIndex = index;
+    specifyElement(id){
+      document.getElementById(id).scrollIntoView();
     },
     navMove(e) {
       this.marginTOP = e;

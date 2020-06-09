@@ -3,9 +3,12 @@
   <div ref="circleBox">
     <div class="f_nav" v-show="navBarFixed" :class=" navBarFixed && 'navBarWrap'">
       <el-row type="flex" justify="center" class="box">
-        <el-col class="n_b">产品功能</el-col>
-        <el-col class="n_b">核心优势</el-col>
-        <el-col class="n_b">场景演示</el-col>
+        <el-col
+          class="n_b"
+          @click.native="chage(item.id)"
+          v-for="(item, index) in modelName"
+          :key="index"
+        >{{item.title}}</el-col>
       </el-row>
     </div>
   </div>
@@ -23,6 +26,12 @@ export default {
     background: {
       type: String,
       default: "#fff"
+    },
+    modelName: {
+      type: Array,
+      default: function() {
+        return [];
+      }
     }
   },
   data() {
@@ -32,15 +41,18 @@ export default {
   },
   watch: {
     navBarFixed(newValue) {
-        this.$emit('chage', newValue)
+      this.$emit("chage", newValue);
     }
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
+    chage(id) {
+      this.$emit("jump", id);
+    },
     handleScroll() {
-      let info = this.$refs.circleBox.getBoundingClientRect()
+      let info = this.$refs.circleBox.getBoundingClientRect();
       let top = info.top;
       if (top < 1) this.navBarFixed = true;
       else this.navBarFixed = false;

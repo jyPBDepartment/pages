@@ -1,13 +1,13 @@
 <template>
   <div class="Home">
     <img class="top_img" src="../assets/introduce_banner_nzgysjjfa.jpg" :style="{height:`${bannerHeight}px`}" />
-    <FixedNav @chage="navMove($event)"></FixedNav>
-    <Fast :class=" marginTOP ? 'move':'move2' " title="行业痛点">
+    <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav>
+    <Fast :class=" marginTOP ? 'move':'move2' " :title="modelName[0].title" :id="modelName[0].id">
       <Tabs :type="true" :img="true" :tabList="tabList" :tabIndex="tabIndex" :tabPane="tabPane"></Tabs>
     </Fast>
     <Fast
       style="color:#fff!important;"
-      title="方案简介"
+     :title="modelName[1].title" :id="modelName[1].id"
       sTitle="实现采购、销统一的农资流转大平台；打通各环节中的各参与者、各终端，实现互联互通，促进商品信息的充分流动。"
       background="#242B44"
       color="#fff"
@@ -15,10 +15,10 @@
     >
       <img src="../assets/7-fajj.gif" alt class="top_img" />
     </Fast>
-    <Fast title="适配场景">
+    <Fast :title="modelName[2].title" :id="modelName[2].id">
       <Tabs :type="true" :img="false" :tabList="tabList1" :tabIndex="tabIndex1" :tabPane="tabPane1"></Tabs>
     </Fast>
-    <Fast title="特色优势" background="rgb(246, 247, 252) ">
+    <Fast :title="modelName[3].title" :id="modelName[3].id" background="rgb(246, 247, 252) ">
       <el-row class="b_icon">
         <el-col class="box" v-for="(item, index) in bIcon" :key="index">
           <img class="_img" :src="item.src" alt />
@@ -27,7 +27,7 @@
         </el-col>
       </el-row>
     </Fast>
-    <Fast title="方案价值">
+    <Fast :title="modelName[4].title" :id="modelName[4].id">
       <el-row class="sdys">
         <el-col class="title" :span="9">
           <div class="s_c">
@@ -76,6 +76,13 @@ export default {
     return {
       bannerHeight: document.body.clientWidth / 3.31,
       marginTOP: false,
+      modelName:[
+        {title:'行业痛点',id:'1'},
+        {title:'方案简介',id:'2'},
+        {title:'适配场景',id:'3'},
+        {title:'特色优势',id:'4'},
+        {title:'方案价值',id:'5'}
+      ],
       tabList: ["库存之痛", "市场之痛", "经营之痛", "求变之痛"],
       tabList1: ["产品发布", "产品销售", "数据分析", "资金管理"],
       tabPane: [
@@ -150,7 +157,10 @@ export default {
   methods: {
     navMove(e) {
       this.marginTOP = e;
-    }
+    },
+    specifyElement(id){
+      document.getElementById(id).scrollIntoView();
+    },
   }
 };
 </script>

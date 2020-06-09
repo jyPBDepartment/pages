@@ -1,11 +1,11 @@
 <template>
   <div class="Home">
     <img class="top_img" src="../assets/introduce_banner_gysdp.jpg" :style="{height:`${bannerHeight}px`}" />
-    <FixedNav @chage="navMove($event)"></FixedNav>
-    <Fast :class=" marginTOP ? 'move':'move2' " :img="true" title="应用场景" :allScreen="true">
+    <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav>
+    <Fast :class=" marginTOP ? 'move':'move2' " :img="true" :title="modelName[0].title" :id="modelName[0].id" :allScreen="true">
       <Rotation style="margin-top:30px" :banner="banner" :height="bannerHeight" />
     </Fast>
-    <Fast title="核心优势" background="rgb(246, 247, 252)">
+    <Fast :title="modelName[1].title" :id="modelName[1].id" background="rgb(246, 247, 252)">
       <el-row class="h_y">
         <el-col :span="12" class="text">
           <p>线上货品展示，不受人脉限制，轻松取得更多销量</p>
@@ -18,7 +18,7 @@
         </el-col>
       </el-row>
     </Fast>
-    <Fast title="产品功能">
+    <Fast :title="modelName[2].title" :id="modelName[2].id">
       <el-row class="b" type="flex" justify="center">
         <el-col class="b_f" :span="12" v-for="(item, index) in bottonList" :key="index">
           <el-col class="icon" :span="6">
@@ -54,6 +54,11 @@ export default {
       bannerHeight: document.body.clientWidth / 3.31,
       marginTOP: false,
       banner: [{ src: require("../assets/jjfa-1.jpg") }],
+      modelName:[
+        {title:'应用场景',id:'1'},
+        {title:'核心优势',id:'2'},
+        {title:'产品功能',id:'3'}
+      ],
       bottonList: [
         {
           src: require("../assets/icon/4-1dlddtx.png"),
@@ -81,6 +86,9 @@ export default {
   methods: {
     navMove(e) {
       this.marginTOP = e;
+    },
+    specifyElement(id){
+      document.getElementById(id).scrollIntoView();
     }
   }
 };

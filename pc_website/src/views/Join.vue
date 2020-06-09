@@ -9,7 +9,7 @@
             {{ item.title }}
             <span class="important" v-show="item.mandatory">*</span>
           </div>
-          <div class="answer" v-if="item.num != '08' && item.num != '09'">
+          <div class="answer" v-if="item.num != '09' && item.num != '10'">
             <el-checkbox-group
               v-model="item.checkedCities"
               :min="item.min"
@@ -150,6 +150,19 @@ export default {
         },
         {
           num: "03",
+          title: "您的经营模式",
+          min: 0,
+          max: 1,
+          mandatory: true,
+          answer: [
+            "主营批发，少量零售",
+            "主营零售",
+            "其他"
+          ],
+          checkedCities: []
+        },
+        {
+          num: "04",
           title: "您是否已经准备好商品或有货源渠道",
           min: 0,
           max: 1,
@@ -161,7 +174,7 @@ export default {
           checkedCities: []
         },
         {
-          num: "04",
+          num: "05",
           title: "您的企业/店铺类型是怎样的",
           min: 0,
           max: 1,
@@ -181,7 +194,7 @@ export default {
           checkedCities: []
         },
         {
-          num: "05",
+          num: "06",
           title: "您的销售覆盖区域",
           min: 0,
           max: 1,
@@ -190,7 +203,7 @@ export default {
           checkedCities: []
         },
         {
-          num: "06",
+          num: "07",
           title: "您计划经营什么类别",
           min: 0,
           max: 1,
@@ -208,7 +221,7 @@ export default {
           checkedCities: []
         },
         {
-          num: "07",
+          num: "08",
           title: "您希望平台给您什么帮助（限选3）",
           min: 0,
           max: 3,
@@ -225,7 +238,7 @@ export default {
           checkedCities: []
         },
         {
-          num: "08",
+          num: "09",
           title: "(选填)您的每年的销量",
           min: 0,
           max: 1,
@@ -268,7 +281,7 @@ export default {
           checkedCities: []
         },
         {
-          num: "09",
+          num: "10",
           title: "(选填)您每年的采购量",
           min: 0,
           max: 1,
@@ -311,7 +324,7 @@ export default {
           checkedCities: []
         },
         {
-          num: "10",
+          num: "11",
           title: "(选填)您的种植面积",
           min: 0,
           max: 1,
@@ -340,7 +353,7 @@ export default {
   text-align: left;
   .topic {
     padding-bottom: 20px;
-    &:nth-child(4) {
+    &:nth-child(5) {
       .answer {
         .el-radio {
           width: 40% !important;

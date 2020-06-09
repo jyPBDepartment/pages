@@ -1,8 +1,8 @@
 <template>
   <div class="Home">
     <img class="top_img" src="../assets/introduce_banner_jxsdp.jpg" :style="{height:`${bannerHeight}px`}" />
-    <FixedNav @chage="navMove($event)"></FixedNav>
-    <Fast  :class=" marginTOP ? 'move':'move2' " title="多样化的店铺功能  全面满足农资经销商需求">
+    <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav>
+    <Fast  :class=" marginTOP ? 'move':'move2' " :id="modelName[0].id" title="多样化的店铺功能  全面满足农资经销商需求">
       <el-row class="f_b">
         <el-col class="f_b_d" v-for="(item, index) in bottonList" :key="index">
           <img :src="item.src" alt />
@@ -11,7 +11,7 @@
       </el-row>
     </Fast>
     <Rotation :banner="bannerBottom" :height="bannerBottomHeight" />
-    <Fast title="四大核心优势">
+    <Fast title="四大核心优势" :id="modelName[1].id">
       <el-row class="sdys">
         <el-col class="title" :span="9">
           <div class="s_c">
@@ -60,6 +60,10 @@ export default {
       bannerHeight: document.body.clientWidth / 3.31,
       bannerBottomHeight: document.body.clientWidth / 3.31,
       marginTOP: false,
+      modelName:[
+        {title:'店铺功能',id:'1'},
+        {title:'核心优势',id:'2'},
+      ],
       bannerBottom: [
         { src: require("../assets/3-gn.jpg") },
         { src: require("../assets/3-gn-bai.jpg") }
@@ -111,7 +115,10 @@ export default {
   methods: {
     navMove(e) {
       this.marginTOP = e;
-    }
+    },
+    specifyElement(id){
+      document.getElementById(id).scrollIntoView();
+    },
   }
 };
 </script>

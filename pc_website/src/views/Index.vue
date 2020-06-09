@@ -24,7 +24,7 @@
                   <el-menu-item index="/introduce">
                     <span class="pd">吉易惠农</span>
                   </el-menu-item>
-                  <el-submenu index="/dealer_shop">
+                  <el-submenu index="/dealer_shop" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
                       <span class="pd" style="font-size:15px">产品</span>
                     </template>
@@ -37,14 +37,14 @@
                     <el-menu-item index="/dealer_manager">经销商掌柜</el-menu-item>
                     <el-menu-item index="/supplier_shops">供应商店铺</el-menu-item>
                   </el-submenu>
-                  <el-submenu index="4">
+                  <el-submenu index="4" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
                       <span class="pd" style="font-size:15px">解决方案</span>
                     </template>
                     <el-menu-item index="/dealer_program">农资经销商解决方案</el-menu-item>
                     <el-menu-item index="/supplier_program">农资供应商解决方案</el-menu-item>
                   </el-submenu>
-                  <el-submenu index="5">
+                  <el-submenu index="5" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
                       <span class="pd" style="font-size:15px">合作伙伴</span>
                     </template>
@@ -58,12 +58,8 @@
         </div>
       </el-header>
       <el-main style="padding:0;">
-        <router-view />
-        <div class="fixedNav">
-          <el-row class="box">
-            <img src="../assets/icon/dianhua.png" alt="">
-          </el-row>
-        </div>
+        <router-view id="boxFixed" />
+        <FixedNavRight @backtop="backtop" :isFixed="isFixed" />
       </el-main>
       <el-footer style="padding:0;">
         <div class="footer">
@@ -175,15 +171,29 @@
 </template>
 
 <script>
+import FixedNavRight from "../components/FixedNavRight/FixedNavRight";
 export default {
   name: "Index",
+  components: {
+    FixedNavRight
+  },
   data() {
     return {
-      activeIndex: "/"
+      activeIndex: "/",
+      isFixed: false,
+      offsetTop: 640
     };
   },
   created() {
     this.activeIndex = `/${window.location.href.split("/", 4)[3]}`;
+  },
+  mounted() {
+    window.addEventListener("scroll", this.initTop);
+    // this.$nextTick(() => {
+    //   //获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置
+    //   let a = document.querySelector("#boxFixed").offsetTop
+    //   this.offsetTop = a + 580;
+    // });
   },
   watch: {
     $route(to) {
@@ -202,11 +212,21 @@ export default {
         if (osTop === 0) {
           clearInterval(timer);
         }
-      }, 20);
+      }, 5);
+    },
+    initTop() {
+      // 设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离 (被卷曲的高度)
+      var scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      //如果被卷曲的高度大于吸顶元素到顶端位置 的距离
+      this.isFixed = scrollTop > this.offsetTop ? true : false;
     }
-    // handleSelect(key, keyPath) {
-    //   console.log(key, keyPath);
-    // }
+  },
+  //回调中移除监听
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
 };
 </script>
@@ -226,6 +246,17 @@ export default {
     }
   }
 }
+.el-menu--horizontal {
+  background: #197afc;
+  .el-menu .el-menu-item,
+  .el-menu .el-submenu__title {
+    background: #fff !important;
+    color: #0e1021 !important;
+  }
+}
+.el-menu--popup {
+  background: #fff !important;
+}
 [class*=" el-icon-"],
 [class^="el-icon-"] {
   //删除了导航菜单上的小箭头
@@ -244,17 +275,7 @@ export default {
 .el-menu--horizontal > .el-submenu .el-submenu__title {
   font-size: 15px !important;
 }
-.fixedNav{
-  .box{
-    width: 60px;
-    height: 60px;
-    background: rgba(47, 118, 227, 0.77);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
+
 .footer {
   width: 100%;
   background: #191919;
