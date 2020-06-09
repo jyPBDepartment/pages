@@ -17,6 +17,8 @@ import Banner from '@/views/gateway/Banner';
  */
 //导航管理
 import Navigation from '@/views/navigation/navigation';
+// 管理员管理
+import Admin from '@/views/Admin/admin';
 /**
  * 基础菜单
  */
@@ -209,6 +211,13 @@ export default new Router({
             path: '/limit/limitRole',
             name: '权限管理',
             component: LimitRole,
+            meta: {
+                requireAuth: true
+            }
+        },{
+            path: '/Admin/admin',
+            name: '管理员信息',
+            component: Admin,
             meta: {
                 requireAuth: true
             }

@@ -1,19 +1,19 @@
 /**
- * 门户菜单 导航管理
+ * 门户菜单 管理员管理
  */
 <template>
-    <div class="navigationFunction">
+    <div class="adminFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>导航管理</el-breadcrumb-item>
+      <el-breadcrumb-item>管理员管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
        <el-form-item label="搜索："></el-form-item>
-      <el-form-item label="导航名称" >
-        <el-input v-model="name" type="text" placeholder="请输入导航名称" class="el-input el-input--small" clearable ></el-input>
+      <el-form-item label="登录名称" >
+        <el-input v-model="loginName" type="text" placeholder="请输入登录名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
       <el-button type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-search" >查询</el-button>
        <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-close">重置</el-button>
@@ -25,37 +25,10 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border style="width: 100%;"  highlight-current-row>
       <el-table-column type="index" label="序号"  align="center" style="width:40px;"></el-table-column>
-      <el-table-column label="一级菜单" align="center">
-      <el-table-column sortable prop="name" label="导航名称" align="center" style="width:40px;"></el-table-column>
-        <!--switch开关（表单）-->
-       <el-table-column align="center" sortable prop="status"  label="状态" min-width="50" >
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.status"
-            active-value="1"
-            inactive-value="0"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
-            @change="navigationEnable(scope)"
-          ></el-switch>
-        </template>
-      </el-table-column>
-      </el-table-column>
-      <el-table-column label="二级菜单" align="center">
-      <el-table-column sortable prop="subId" label="上级导航" align="center" style="width:40px;"></el-table-column>
-      
-    
-    
-      <el-table-column sortable prop="dropDownEnName" label="下拉英文内容" align="center"></el-table-column>
-    
-       <el-table-column sortable prop="url" label="图片地址" min-width="50">
-        <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
-        </template>
-      </el-table-column>
-      <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
-      </el-table-column>
-        <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
+      <el-table-column sortable prop="loginName" label="登录名称" align="center" style="width:40px;"></el-table-column>
+      <el-table-column sortable prop="password" label="密码" align="center"></el-table-column>
+      <el-table-column sortable prop="roleName" label="角色" align="center"></el-table-column>
+      <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
         <template slot-scope="scope">
           <div>{{scope.row.createDateTime|timestampToTime}}</div>
         </template>
@@ -65,28 +38,27 @@
           <div>{{scope.row.updateTime|timestampToTime}}</div>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="220px" align="center">
+     <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
            <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px" icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteNavigation(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px" icon="el-icon-delete">删除</el-button>
+          <el-button @click="deleteAdmin(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px" icon="el-icon-delete">删除</el-button>
          
        </template>
    </el-table-column>
-    </el-table>
+  </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
-<add-navigation :show="addNavigationFlag" title="添加导航信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
+<add-admin :show="addAdminFlag" title="添加管理员信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-admin> 
 
- <update-navigation
-      :show="updateNavigationFlag"
-      :transNavigationId="transNavigationId"
+ <update-admin
+      :show="updateAdminFlag"
+      :transAdminId="transAdminId"
       title="修改"
-      @close="closeUpdateNavigationDialog"
-      @save="updateNavigation"
-    ></update-navigation>
-    
+      @close="closeUpdateAdminDialog"
+      @save="updateAdmin"
+    ></update-admin>
     
     </div>
     
@@ -97,54 +69,9 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-import AddNavigation from "./addNavigation.vue";
-import UpdateNavigation from "./updateNavigation.vue";
+import AddAdmin from "./addAdmin.vue";
+import UpdateAdmin from "./updateAdmin.vue";
 import Pagination from "../../components/Pagination";
-
- !function () {
-    function n(n, e, t) {
-        return n.getAttribute(e) || t
-    }
- 
-    function e(n) {
-        return document.getElementsByTagName(n)
-    }
- 
-    function t() {
-        var t = e("script"), o = t.length, i = t[o - 1];
-        return {l: o, z: n(i, "zIndex", -1), o: n(i, "opacity", .9,), c: n(i, "color", "79, 136, 241 "), n: n(i, "count", 99)}
-    }
- 
-    function o() {
-        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-    }
- 
-    function i() {
-        r.clearRect(0, 0, a, c);
-        var n, e, t, o, m, l;
-        s.forEach(function (i, x) {
-            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e], null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
-        }), x(i)
-    }
- 
-    var a, c, u, m = document.createElement("canvas"), d = t(), l = "c_n" + d.l, r = m.getContext("2d"),
-        x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (n) {
-            window.setTimeout(n, 1e3 / 45)
-        }, w = Math.random, y = {x: null, y: null, max: 2e4};
-    m.id = l, m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o, e("body")[0].appendChild(m), o(), window.onresize = o, window.onmousemove = function (n) {
-        n = n || window.event, y.x = n.clientX, y.y = n.clientY
-    }, window.onmouseout = function () {
-        y.x = null, y.y = null
-    };
-    for (var s = [], f = 0; d.n > f; f++) {
-        var h = w() * a, g = w() * c, v = 2 * w() - 1, p = 2 * w() - 1;
-        s.push({x: h, y: g, xa: v, ya: p, max: 6e3})
-    }
-    u = s.concat([y]), setTimeout(function () {
-        i()
-    }, 100)
-}();
-
 
 export default {
   inject: ["reload"],
@@ -161,17 +88,17 @@ export default {
 
   data() {
     return {
-      name: "",
+      loginName: "",
       
-      updateNavigationFlag: false,
+      updateAdminFlag: false,
       
-      transNavigationId: "",
+      transAdminId: "",
       
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
-      addNavigationFlag: false,
+      addAdminFlag: false,
      
       updateRuleTag: false,
       mainBodyCode: "",
@@ -209,16 +136,18 @@ export default {
 //查询方法
     search: function(parameter) {
       let params = {
-        name: this.name,
+        loginName: this.loginName,
        
         page: this.formInline.page,
         size: this.formInline.limit
       };
       api
-        .testAxiosGet(ApiPath.url.searchNavigation, params)
+        .testAxiosGet(ApiPath.url.searchAdmin, params)
         .then(res => {
           let code = res.status;
           if (code == "0") {
+
+              console.log(res.data.content)
            this.tableData = res.data.content;
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
@@ -232,30 +161,12 @@ export default {
     },
     
 
-    closeUpdateNavigationDialog: function() {
-      this.updateNavigationFlag = false;
+    closeUpdateAdminDialog: function() {
+      this.updateAdminFlag = false;
     },
-    updateNavigation: function() {},
-    //switch开关
-    navigationEnable: function(scope) {
-      let params = {
-        id: scope.row.id,
-        status: scope.row.status
-      };
-      api
-        .testAxiosGet(ApiPath.url.navigationEnable, params)
-        .then(res => {
-          let code = res.state;
-          if (code == "0") {
-            this.$message.success(res.message);
-          } else {
-            this.$message.success(res.message);
-          }
-          // this.reload();
-        })
-        .catch(function(error) {});
-    },
-    deleteNavigation: function(scope) {
+    updateAdmin: function() {},
+    
+    deleteAdmin: function(scope) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -265,7 +176,7 @@ export default {
           let params = {
             id: scope.row.id
           };
-          api.testAxiosGet(ApiPath.url.deleteNavigation, params).then(res => {
+          api.testAxiosGet(ApiPath.url.deleteAdmin, params).then(res => {
             let code = res.status;
 
             if (code == "0") {
@@ -295,27 +206,26 @@ export default {
       };
     },
     openUpdateDialog(scope) {
-      console.log(scope);
-      this.transNavigationId = scope.row.id;
-      this.updateNavigationFlag = true;
+      this.transAdminId = scope.row.id;
+      this.updateAdminFlag = true;
     },
     saveRuleTag() {
-      this.addNavigationFlag = false;
+      this.addAdminFlag = false;
     },
     
     modifyRuleTag() {
       this.updateRuleTag = false;
     },
     openRuleTag() {
-      this.addNavigationFlag = true;
+      this.addAdminFlag = true;
     },
     
     resetRuleTag(search) {
-      this.name = "";
+      this.loginName = "";
      
     },
     closeRuleTagDialog() {
-      this.addNavigationFlag = false;
+      this.addAdminFlag = false;
     },
     
     closeModifyRuleTagDialog() {
@@ -361,8 +271,8 @@ export default {
     }
   },
   components: {
-    AddNavigation,
-    UpdateNavigation,
+    AddAdmin,
+    UpdateAdmin,
     
     Pagination
   }

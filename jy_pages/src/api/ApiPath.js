@@ -52,7 +52,6 @@ const url = {
   //角色管理
   roleSearch: URLHost + '/role/findByName',
   addRole: URLHost + '/role/add',
-  updateRole: URLHost + '/role/update',
   deleteRole: URLHost + '/role/delete',
   roleEnable: URLHost + '/role/enable',
   findRoleId: URLHost + '/role/findById',
@@ -64,6 +63,20 @@ const url = {
   findLimitById: URLHost + '/limit/findById',
   updateLimit: URLHost + '/limit/update',
   findLimit: URLHost + '/limit/findAll',
+  //管理员添加
+  saveAdmin:URLHost+'/admin/save',
+  //管理员修改前查询
+  adminFindById:URLHost+'/admin/findById',
+  //管理员修改
+  updateAdmin:URLHost+'/admin/update',
+  //管理员查询
+  searchAdmin:URLHost+'/admin/findByName',
+  //管理员删除
+  deleteAdmin:URLHost+'/admin/delete',
+  //管理员连表查询（添加）
+  findAllAdmin:URLHost+'/role/findAll',
+  //管理员联表查询（修改）
+  findAllUpdate:URLHost+'/role/findAll',
 
 }
 export default {

@@ -104,6 +104,14 @@ export default {
               url: "websiteInfo/updateWebsiteInfo",
               menus: null
             }, 
+              {
+              menuid: 2-3,
+              icon: "el-icon-eleme",
+              menuname: "管理员管理",
+              hasThird: "N",
+              url: "Admin/admin",
+              menus: null
+            },
              {
               menuid: 2-4,
               icon: "el-icon-eleme",
