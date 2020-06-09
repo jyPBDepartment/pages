@@ -173,6 +173,7 @@ export default {
       padding: 50px 0;
       img {
         max-width: 60px;
+        max-height: 60px;
       }
     }
     .content {

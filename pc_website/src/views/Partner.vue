@@ -1,6 +1,10 @@
 <template>
   <div class="Home">
-    <img class="top_img" src="../assets/introduce_banner_hzhb.jpg" :style="{height:`${bannerHeight}px`}" />
+    <img
+      class="top_img"
+      src="../assets/introduce_banner_hzhb.jpg"
+      :style="{height:`${bannerHeight}px`}"
+    />
     <Fast title="为合作伙伴提供全方位的合作与支持">
       <el-row class="model" type="flex" justify="space-around">
         <el-col class="box" v-for="(item, index) in bModel" :key="index">
@@ -78,6 +82,17 @@ export default {
   },
   methods: {
     join() {
+      var timer = setInterval(function() {
+        let osTop =
+          document.documentElement.scrollTop || document.body.scrollTop;
+        let ispeed = Math.floor(-osTop / 5);
+        document.documentElement.scrollTop = document.body.scrollTop =
+          osTop + ispeed;
+        this.isTop = true;
+        if (osTop === 0) {
+          clearInterval(timer);
+        }
+      }, 5);
       this.$router.push({ name: "join" });
     }
   }
