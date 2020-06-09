@@ -52,6 +52,7 @@ const url = {
   //角色管理
   roleSearch: URLHost + '/role/findByName',
   addRole: URLHost + '/role/add',
+  updateRole: URLHost + '/role/update',
   deleteRole: URLHost + '/role/delete',
   roleEnable: URLHost + '/role/enable',
   findRoleId: URLHost + '/role/findById',

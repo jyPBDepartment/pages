@@ -108,7 +108,7 @@ export default {
         roleEntity: this.roleForm
       };
       //修改用户信息
-      api.testAxiosGet(ApiPath.url.addRole, params).then(res => {
+      api.testAxiosGet(ApiPath.url.updateRole, params).then(res => {
         this.$message.success(res.message);
         this.close();
         this.reload();
