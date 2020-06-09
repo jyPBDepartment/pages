@@ -95,18 +95,34 @@ export default {
               url: "navigation/navigation",
               menus: null
             }, 
-           
-             {
+
+{
               menuid: 2-2,
               icon: "el-icon-eleme",
               menuname: "网站信息",
               hasThird: "N",
               url: "websiteInfo/updateWebsiteInfo",
               menus: null
+            }, 
+             {
+              menuid: 2-4,
+              icon: "el-icon-eleme",
+              menuname: "角色管理",
+              hasThird: "N",
+              url: "role/roleShow",
+              menus: null
+            }, 
+             {
+              menuid: 2-5,
+              icon: "el-icon-eleme",
+              menuname: "权限管理",
+              hasThird: "N",
+              url: "limit/limitRole",
+              menus: null
             }
-          
             
-            ]
+
+]
         }
         // {
         //   menuid: 33,

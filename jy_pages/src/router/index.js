@@ -38,8 +38,7 @@ import Order from '@/views/pay/Order';
 import user from '@/views/system/user';
 // 菜单管理
 import Module from '@/views/system/Module';
-// 角色管理
-import Role from '@/views/system/Role';
+
 // 公司管理
 import Dept from '@/views/system/Dept';
 // 系统环境变量
@@ -52,6 +51,10 @@ import Organ from '@/views/system/Organ';
 import Sales from '@/views/system/sales';
 //网站信息
 import updateWebsiteInfo from '@/views/websiteInfo/updateWebsiteInfo';
+//角色管理
+import Role from '@/views/role/roleShow';
+//权限管理
+import LimitRole from '@/views/limit/limitRole';
 
 /**
  * 支付管理
@@ -192,6 +195,20 @@ export default new Router({
             path: '/websiteInfo/updateWebsiteInfo',
             name: '网站信息',
             component: updateWebsiteInfo,
+            meta: {
+                requireAuth: true
+            }
+        },{
+            path: '/role/roleShow',
+            name: '角色管理',
+            component: Role,
+            meta: {
+                requireAuth: true
+            }
+        },{
+            path: '/limit/limitRole',
+            name: '权限管理',
+            component: LimitRole,
             meta: {
                 requireAuth: true
             }

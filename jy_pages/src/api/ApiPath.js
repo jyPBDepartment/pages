@@ -46,21 +46,24 @@ const url = {
   findAllNavChildren:URLHost+'/navigation/findAll',
   //导航下拉列表修改显示
   findAllNc:URLHost+'/navigation/findAll',
-  //查询上级导航列表
-  findSubNavList:URLHost+'/navigation/findSubNavList',
-    //网站信息
+  //网站信息
   updateWebsiteInfoEntity: URLHost + '/websiteInfo/update',
   findWebsiteInfoFormnById: URLHost + '/websiteInfo/findById',
-  //友情链接
-  //查询分页
-  linkAddressSearch: URLHost + '/linkAddress/findByName',
-  //链接新增
-  addLinkAddress: URLHost + '/linkAddress/add',
-  findLinkAddressId:URLHost + '/linkAddress/findById',
-  updateLinkAddress:URLHost + '/linkAddress/update',
-  //链接删除
-  deleteLinkAddress:URLHost + '/linkAddress/delete',
- 
+  //角色管理
+  roleSearch: URLHost + '/role/findByName',
+  addRole: URLHost + '/role/add',
+  deleteRole: URLHost + '/role/delete',
+  roleEnable: URLHost + '/role/enable',
+  findRoleId: URLHost + '/role/findById',
+  //权限管理
+  limitSearch: URLHost + '/limit/findByName',
+  limitEnable: URLHost + '/limit/enable',
+  deleteLimit: URLHost + '/limit/delete',
+  addLimit: URLHost + '/limit/add',
+  findLimitById: URLHost + '/limit/findById',
+  updateLimit: URLHost + '/limit/update',
+  findLimit: URLHost + '/limit/findAll',
+
 }
 export default {
   url
