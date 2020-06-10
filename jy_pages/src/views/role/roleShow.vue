@@ -23,7 +23,9 @@
         >重置</el-button>
       </el-form-item>
       <br/>
+      <el-row>
       <el-button size="small" type="primary" icon="el-icon-plus" @click="addRoles()">添加</el-button>
+      </el-row>
       <br>
     </el-form>
     <!--列表-->

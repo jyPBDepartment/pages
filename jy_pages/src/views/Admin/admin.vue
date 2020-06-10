@@ -64,7 +64,7 @@
     
 </template>
 
-<script>
+<script  >
 import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
