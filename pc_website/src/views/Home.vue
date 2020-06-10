@@ -3,22 +3,18 @@
     <Rotation :banner="banner" :height="bannerHeight" />
     <Fast title="农资行业全场景的互联网解决方案" sTitle="解决农资行业痛点，打通农资信息通道，助力商户充分挖掘、整合行业隐形资源，构建内外服务生态圈。">
       <el-row class="h1">
-        <el-col :span="9" :offset="3">
+        <el-col :span="8" :offset="1">
           <div class="h1_1" v-for="(item, index) in title" :key="index">
             <h2>{{item.h2}}</h2>
             <p>{{item.p}}</p>
           </div>
         </el-col>
-        <el-col :span="9">
+        <el-col :span="14">
           <img class="h1_i_1" src="../assets/tu1.png" alt />
         </el-col>
       </el-row>
     </Fast>
-    <Fast
-      title="我们的云服务产品"
-      sTitle="我们的云服务产品解决农资行业痛点，打通农资信息通道，助力商户充分挖掘、整合行业隐形资源，构建内外服务生态圈。"
-      background="#f6f7fc"
-    >
+    <Fast title="我们的云服务产品" sTitle="提升多种农资经营能力 全面满足业务需求">
       <el-row class="h2">
         <el-col class="h2_1" v-for="(item, index) in botton" :key="index">
           <img :src="item.src" alt />
@@ -131,26 +127,44 @@ h2 {
   font-weight: normal;
 }
 .h1 {
-  margin-top: 30px;
+  margin-top: 62px;
   .h1_i_1 {
     max-width: 100%;
   }
   .h1_1 {
     text-align: left;
+    margin-top: 48px;
+    h2{
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 24px;
+    }
     p {
+      font-size: 18px;
+      margin-bottom: 0;
+      margin-top: 0;
       color: #938a8a;
     }
   }
 }
 .h2 {
-  padding: 0 10%;
+  padding: 0 2%;
   .h2_1 {
     width: 25%;
-    padding: 0 4%;
+    padding: 0 5% 34px 5%;
     border-bottom: 1px solid #d4d6e2;
     border-right: 1px solid #d4d6e2;
+    h2{
+      margin-top: 33px;
+      margin-bottom: 24px;
+    }p{
+      color:#938A8A;
+      line-height: 27px;
+
+    }
+
     img {
-      margin-top: 30px;
+      margin-top: 60px;
       max-width: 56px;
     }
     &:nth-child(4) {

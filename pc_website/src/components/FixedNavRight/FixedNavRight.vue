@@ -2,8 +2,15 @@
 <template>
   <div class="FixedNavRight">
     <div class="fixedNav">
-      <el-popover placement="left" width="100" trigger="hover">
-        <p class="title">暂未开通</p>
+      <el-popover placement="left" width="200" trigger="hover">
+        <div>
+          <h2 class="title">微信咨询（XXXXXXXX）</h2>
+          <div class="sBatton">
+            <span>>功能和特性</span>
+            <span>>价格和优惠</span>
+            <span>>获取内部资料</span>
+          </div>
+        </div>
         <el-row slot="reference" class="box">
           <img src="../../assets/icon/wechat.png" alt />
         </el-row>
@@ -57,7 +64,15 @@ export default {
   text-align: center;
   padding: 0;
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 40px;
+  color: rgb(35, 142, 250);
+  border-bottom: 1px solid #999;
+}
+.sBatton{
+  span{
+    width: 50%;
+  }
 }
 .erweima {
   width: 150px;

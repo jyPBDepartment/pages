@@ -2,13 +2,13 @@
   <div class="Index">
     <el-container>
       <el-header style="padding:0;">
-        <div class="nav">
+        <div class="nav" >
           <div class="w">
-            <el-row type="flex" align="middle">
-              <el-col :span="3">
+            <el-row type="flex"  align="middle">
+              <el-col :span="3" :xs="12">
                 <img class="logo" src="../assets/logo.png" alt />
               </el-col>
-              <el-col :span="13" :offset="9">
+              <el-col :span="13" class=" hidden-xs-only" :offset="9">
                 <el-menu
                   :default-active="activeIndex"
                   class="el-menu-demo"
@@ -22,7 +22,7 @@
                     <span class="pd">首页</span>
                   </el-menu-item>
                   <el-menu-item index="/introduce">
-                    <span class="pd">吉易惠农</span>
+                    <span class="pd">吉易慧农</span>
                   </el-menu-item>
                   <el-submenu index="/dealer_shop" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
@@ -235,7 +235,8 @@ export default {
 <style lang="scss">
 .nav {
   width: 100%;
-  background: #000930;
+  height: 60px;
+  background: #000930; 
   .logo {
     max-width: 80%;
   }

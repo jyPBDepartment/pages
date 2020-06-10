@@ -1,10 +1,11 @@
 
 <template>
   <div ref="circleBox">
-    <div class="f_nav" v-show="navBarFixed" :class=" navBarFixed && 'navBarWrap'">
+    <div class="f_nav" :class=" navBarFixed && 'navBarWrap'">
       <el-row type="flex" justify="center" class="box">
         <el-col
           class="n_b"
+          :class="index !== 0 && ' left_style'"
           @click.native="chage(item.id)"
           v-for="(item, index) in modelName"
           :key="index"
@@ -66,10 +67,13 @@ export default {
   position: fixed;
   top: 0;
   z-index: 999;
+  box-shadow: 0 3px 7px rgba($color: #000000, $alpha: 0.09);
+  background: #fff !important;
 }
 .f_nav {
   width: 100%;
-  background: #fff;
+  background: #f0eeed;
+  margin-top: -4px;
   .n_b {
     width: 147px;
     text-align: center;
@@ -78,17 +82,13 @@ export default {
     color: #555;
 
     cursor: pointer;
-    &:nth-child(2),
-    &:nth-child(3) {
-      background: url("../../assets/bian_2.png") no-repeat left center;
-    }
     &:hover {
       background: #343434;
       color: #fff;
     }
   }
-  .box {
-    box-shadow: 0 3px 7px rgba($color: #000000, $alpha: 0.09);
+  .left_style {
+    background: url("../../assets/bian_2.png") no-repeat left center;
   }
 }
 </style>

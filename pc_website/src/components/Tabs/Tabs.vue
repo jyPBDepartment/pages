@@ -125,11 +125,8 @@ export default {
       text-align: center;
       font-size: 20px;
       border: 1px solid #bbb;
-      margin: 0 5px;
     }
     .tabs_hover {
-      color: #3366cc;
-      font-weight: 800;
       border: 2px solid #3366cc;
     }
   }
@@ -141,10 +138,12 @@ export default {
       margin: 0 30px;
     }
     img {
-      width: 60%;
+      width: 50px;
+      height: 50px;
     }
     h2 {
-      font-weight: bold;
+      font-size: 20px;
+      margin-top: 0;
     }
     .tabs_hover {
       color: #3366cc;
@@ -153,25 +152,35 @@ export default {
   .tab_pane {
     width: 100%;
     overflow: hidden;
-    margin-top: 60px;
+    margin-top: 5px;
     .tab_content {
+      margin-top: 60px;
       img {
         max-width: 100%;
       }
     }
   }
 }
-.list{
-  padding:  0 15%;
-  .img{
-    max-width: 47%!important;
+.list {
+  padding: 0 15%;
+  margin-top: 78px;
+  height: 247px;
+  .img {
+    max-width: 350 !important;
+    max-height: 247px;
   }
-  ul>li{
+  ul{
+    height: 247px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    li {
     text-align: left;
-        margin-bottom: 30px;
+    margin-bottom: 30px;
     list-style-type: disc;
     color: #101010;
     font-size: 20px;
+  }
   }
 }
 </style>

@@ -1,8 +1,12 @@
 <template>
   <div class="Home">
-    <img class="top_img" src="../assets/introduce_banner_jxsdp.jpg" :style="{height:`${bannerHeight}px`}" />
+    <img
+      class="top_img"
+      src="../assets/introduce_banner_jxsdp.jpg"
+      :style="{height:`${bannerHeight}px`}"
+    />
     <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav>
-    <Fast  :class=" marginTOP ? 'move':'move2' " :id="modelName[0].id" title="多样化的店铺功能  全面满足农资经销商需求">
+    <Fast :class=" marginTOP ? 'move':'move2' " :id="modelName[0].id" title="多样化的店铺功能  全面满足农资经销商需求">
       <el-row class="f_b">
         <el-col class="f_b_d" v-for="(item, index) in bottonList" :key="index">
           <img :src="item.src" alt />
@@ -38,7 +42,10 @@
         </el-col>
       </el-row>
     </Fast>
-    <img class="top_img" src="../assets/5-1.jpg" :style="{height:`${bannerBottomHeight}px`}" />
+    <Fast :id="modelName[2].id" :title="modelName[2].title" :allScreen="true">
+      <img class="top_img top" src="../assets/5-1.jpg" :style="{height:`${bannerBottomHeight}px`}" />
+    </Fast>
+
     <Callcontact />
   </div>
 </template>
@@ -60,9 +67,10 @@ export default {
       bannerHeight: document.body.clientWidth / 3.31,
       bannerBottomHeight: document.body.clientWidth / 3.31,
       marginTOP: false,
-      modelName:[
-        {title:'店铺功能',id:'1'},
-        {title:'核心优势',id:'2'},
+      modelName: [
+        { title: "产品功能", id: "1" },
+        { title: "核心优势", id: "2" },
+        { title: "场景展示", id: "3" }
       ],
       bannerBottom: [
         { src: require("../assets/3-gn.jpg") },
@@ -116,9 +124,9 @@ export default {
     navMove(e) {
       this.marginTOP = e;
     },
-    specifyElement(id){
+    specifyElement(id) {
       document.getElementById(id).scrollIntoView();
-    },
+    }
   }
 };
 </script>
@@ -134,6 +142,9 @@ export default {
 }
 .move2 {
   transition-duration: 0.5s;
+}
+.top{
+  margin-top: 90px;
 }
 .f_b {
   margin-top: 50px !important;
@@ -158,14 +169,14 @@ export default {
       color: slategray;
     }
   }
-  .b{
-      margin-top: 90px;
+  .b {
+    margin-top: 90px;
   }
-  .sdys_img{
-      width: 100%;
+  .sdys_img {
+    width: 100%;
   }
-  .title{
-      padding-top: 30px;
+  .title {
+    padding-top: 30px;
   }
 }
 </style>

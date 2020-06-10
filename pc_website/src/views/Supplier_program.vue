@@ -194,12 +194,23 @@ export default {
 }
 .b_icon {
   margin-top: 30px;
-  padding: 0 20%;
+  padding: 0 2%;
   .box {
     width: 33.33%;
-    padding:30px 4%;
+    padding: 60px 7% 20px 7%;
     border-right: 1px solid #bbb;
+    display: block !important;
     border-bottom: 1px solid #bbb;
+    h2{
+      margin-top: 31px;
+      font-size: 28px;
+      margin-bottom: 13px;
+    }
+    p{
+      margin: 0;
+      color: #938A8A;
+      font-size: 20px;
+    }
     &:nth-child(3),&:nth-child(6){
       border-right: 0;
     }
@@ -213,6 +224,7 @@ export default {
   }
 }
 .sdys {
+  margin-top: 78px;
   .s_c {
     h2 {
       font-size: 30px;
@@ -223,13 +235,16 @@ export default {
     }
   }
   .b{
-      margin-top: 90px;
+      margin-top: 75px;
   }
   .sdys_img{
       width: 100%;
   }
   .title{
-      padding-top: 30px;
+      height: 347px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
   }
 }
 </style>

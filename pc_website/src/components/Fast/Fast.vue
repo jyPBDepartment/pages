@@ -60,7 +60,7 @@ export default {
     line-height: 34px;
   }
   .fast_s_title {
-    margin: 12px auto 40px;
+    margin: 22px auto 40px;
     font-size: 16px;
     line-height: 16px;
     color: #999;
