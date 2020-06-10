@@ -13,16 +13,7 @@
       <el-form-item label="权限名称">
         <el-input size="small" v-model="name" placeholder="输入权限名称"></el-input>
       </el-form-item>
-      <!-- <el-form-item label="权限类型">
-        <el-select v-model="type" size="small">
-          <el-option
-            v-for="item in typeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-form-item> -->
+      
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
         <el-button
@@ -31,10 +22,11 @@
           icon="el-icon-remove-outline"
           @click="resetForm('search')"
         >重置</el-button>
-        
       </el-form-item>
-      <br>
-      <el-button size="small" type="primary" icon="el-icon-plus" @click="addLimit()">添加</el-button>
+      <el-row>
+        <el-button size="small" type="primary" icon="el-icon-plus" @click="addLimit()">添加</el-button>
+      </el-row>
+      <br />
     </el-form>
     <!--列表-->
     <el-table
@@ -47,25 +39,18 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="权限名称" align="center" ></el-table-column>
-      <!-- <el-table-column sortable prop="type" label="权限类型" align="center" >
-        <template slot-scope="scope">
-          <span v-if="scope.row.type== 0">超级</span>
-          <span v-if="scope.row.type== 1">高级</span>
-          <span v-if="scope.row.type== 2">普通</span>
-        </template>
-      </el-table-column> -->
-      <el-table-column sortable prop="path" label="权限路径" align="center" ></el-table-column>
-       <el-table-column sortable prop="createTime" label="创建时间" align="center">
+      <el-table-column sortable prop="name" label="权限名称" align="center"></el-table-column>
+      <el-table-column sortable prop="path" label="权限路径" align="center"></el-table-column>
+      <el-table-column sortable prop="createTime" label="创建时间" align="center">
         <template slot-scope="scope">
           <div>{{scope.row.createTime|timestampToTime}}</div>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" align="center" >
+      <el-table-column sortable prop="editTime" label="修改时间" align="center">
         <template slot-scope="scope">
           <div>{{scope.row.editTime|timestampToTime}}</div>
         </template>
-      </el-table-column>      
+      </el-table-column>
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
           <el-switch
@@ -80,19 +65,24 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="openupdateLimit(scope)" style="background-color:white;border-color:#DCDFE6;color:black;" icon="el-icon-edit">编辑</el-button>
-          <el-button size="mini" style="background-color:#84C1FF;border-color:#84C1FF; " icon="el-icon-delete" @click="deleteUser(scope)">删除</el-button>
+          <el-button
+            size="mini"
+            @click="openupdateLimit(scope)"
+            style="background-color:white;border-color:#DCDFE6;color:black;"
+            icon="el-icon-edit"
+          >编辑</el-button>
+          <el-button
+            size="mini"
+            style="background-color:#84C1FF;border-color:#84C1FF; "
+            icon="el-icon-delete"
+            @click="deleteUser(scope)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
-    <add-limit
-      :show="addJusisdic"
-      title="添加"
-      @close="closeLimitDialog"
-      @save="saveLimit"
-    ></add-limit>
+    <add-limit :show="addJusisdic" title="添加" @close="closeLimitDialog" @save="saveLimit"></add-limit>
     <update-limit
       :show="updatejurFlag"
       :transLimitId="transLimitId"
@@ -104,31 +94,18 @@
 </template>
 
 <script>
-import {
-  permissionList,
-  ermissionSave,
-  ermissionDelete,
-  roleDropDown,
-  RolePermission
-} from "../../api/userMG";
 import Pagination from "../../components/Pagination";
 //后台路径引用
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
-import AddLimit from  "./addLimit";
-import  UpdateLimit from "./UpdateLimit";
+import AddLimit from "./addLimit";
+import UpdateLimit from "./UpdateLimit";
 export default {
   inject: ["reload"],
   data() {
     return {
       name: "",
-      // type: "",
-      // typeOptions: [
-      //   { value: "0", label: "超级" },
-      //   { value: "1", label: "高级" },
-      //   { value: "2", label: "普通" }
-      // ],
       nshow: true, //switch开启
       fshow: false, //switch关闭
       loading: false, //是显示加载
@@ -154,7 +131,7 @@ export default {
       // 选择数据
       selectdata: [],
       userparm: [], //搜索权限
-      listData: [], //用户数据
+      listData: [] //用户数据
     };
   },
   // 注册组件
@@ -164,7 +141,6 @@ export default {
     Pagination
   },
   watch: {},
-
   created() {
     this.search(this.formInline);
   },
@@ -175,12 +151,11 @@ export default {
       this.formInline.limit = parm.pageSize;
       this.search(this.formInline);
     },
-    // 获取数据方法
+    // 分页查询
     search: function(parameter) {
       let params = {
         name: this.name,
         path: this.path,
-        // type: this.type,
         page: this.formInline.page,
         size: this.formInline.limit
       };
@@ -204,7 +179,6 @@ export default {
     },
     resetForm(search) {
       this.name = "";
-      // this.type = "";
       location.reload();
     },
     addLimit() {
@@ -235,7 +209,6 @@ export default {
         } else {
           this.$message.success(res.message);
         }
-        this.reload();
       });
     },
 
