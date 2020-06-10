@@ -22,25 +22,14 @@
         </el-form-item>
         <el-button type="success"  @click="handle"  style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px">编辑二级菜单</el-button>
        <el-button type="success"  @click="cancal" style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px">收起二级菜单</el-button>
-         <!-- <el-form-item label="上级导航" prop="subId" v-if="isShow">
-            <el-select v-model="navigationForm.subId" placeholder="请输入上级导航" style=" width:70%;"  >
-              <el-option
-                v-for="item in navigationOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-                </el-option>
-            </el-select>
-        
-        </el-form-item>
-         -->
+       
           <el-form-item label="上级导航" prop="subId" v-if="isShow">
           <el-input type="text" v-model="navigationForm.subId" placeholder="请输入上级导航"  style=" width:70%;" ></el-input>
         </el-form-item>
         <el-form-item label="下拉英文内容" prop="dropDownEnName" v-if="isShow">
-          <el-input type="text" v-model="navigationForm.dropDownEnName" placeholder="下拉英文内容"  style=" width:70%;" ></el-input>
+          <el-input type="text" v-model="navigationForm.dropDownEnName" placeholder="下拉内容"  style=" width:70%;" ></el-input>
         </el-form-item>
-        
+<!--         
           <el-form-item label="图片地址" prop="imgUrl" v-if="isShow">
           <el-upload
             class="upload-demo"
@@ -56,9 +45,11 @@
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
-        </el-form-item>
+        </el-form-item> -->
          <el-form-item label="导航路径"  prop="path" v-if="isShow">
-          <el-input type="textarea" v-model="navigationForm.path" placeholder="请输入导航路径"  style=" width:70%;" ></el-input>
+          <el-input type="text" v-model="navigationForm.path" placeholder="请输入导航路径" :autosize="{ minRows: 1, maxRows: 4}"  style=" width:70%;" >
+            <template slot="prepend">Http://</template>
+          </el-input>
         </el-form-item>
       </el-form>
     </slot>

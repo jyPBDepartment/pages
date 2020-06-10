@@ -22,7 +22,7 @@
        
        
            <el-form-item label="角色" prop="roleId" >
-            <el-select v-model="AdminForm.roleId" placeholder="请输入角色" style=" width:70%;">
+            <el-select v-model="AdminForm.roleId" placeholder="请输入角色" clearable style=" width:70%;">
               <el-option
                 v-for="item in AdminOptions"
                 :key="item.value"

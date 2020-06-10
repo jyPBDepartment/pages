@@ -44,15 +44,13 @@
       <el-table-column label="二级菜单" align="center">
       <el-table-column sortable prop="subId" label="上级导航" align="center" style="width:40px;"></el-table-column>
       
+      <el-table-column sortable prop="dropDownEnName" label="下拉内容" align="center"></el-table-column>
     
-    
-      <el-table-column sortable prop="dropDownEnName" label="下拉英文内容" align="center"></el-table-column>
-    
-       <el-table-column sortable prop="url" label="图片地址" min-width="50">
+       <!-- <el-table-column sortable prop="url" label="图片地址" min-width="50">
         <template slot-scope="scope">
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
       </el-table-column>
         <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
@@ -87,7 +85,6 @@
       @save="updateNavigation"
     ></update-navigation>
     
-    
     </div>
     
 </template>
@@ -112,7 +109,7 @@ import Pagination from "../../components/Pagination";
  
     function t() {
         var t = e("script"), o = t.length, i = t[o - 1];
-        return {l: o, z: n(i, "zIndex", -1), o: n(i, "opacity", .9,), c: n(i, "color", "79, 136, 241 "), n: n(i, "count", 99)}
+        return {l: o, z: n(i, "zIndex", -1), o: n(i, "opacity", 1.0,), c: n(i, "color", "64, 158, 255"), n: n(i, "count", 99)}
     }
  
     function o() {
@@ -162,17 +159,13 @@ export default {
   data() {
     return {
       name: "",
-      
       updateNavigationFlag: false,
-      
       transNavigationId: "",
-      
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
       addNavigationFlag: false,
-     
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
@@ -190,7 +183,6 @@ export default {
       }
     };
   },
-
   watch: {
     show(val) {
       this.localShow = val;
@@ -210,7 +202,6 @@ export default {
     search: function(parameter) {
       let params = {
         name: this.name,
-       
         page: this.formInline.page,
         size: this.formInline.limit
       };
@@ -230,8 +221,6 @@ export default {
         .catch(function(error) {
         });
     },
-    
-
     closeUpdateNavigationDialog: function() {
       this.updateNavigationFlag = false;
     },
@@ -290,7 +279,6 @@ export default {
       let params = {
         tagCode: this.tagCode,
         chName: this.tagName,
-
         generateType: "gz"
       };
     },
@@ -309,10 +297,8 @@ export default {
     openRuleTag() {
       this.addNavigationFlag = true;
     },
-    
     resetRuleTag(search) {
       this.name = "";
-     
     },
     closeRuleTagDialog() {
       this.addNavigationFlag = false;
@@ -330,7 +316,6 @@ export default {
     save() {
       this.$emit("save", this.transData);
     },
-
     deleteRuleTag(scope) {
       let tagCode = scope.row.tagCode;
       let params = {
@@ -363,7 +348,6 @@ export default {
   components: {
     AddNavigation,
     UpdateNavigation,
-    
     Pagination
   }
 };
@@ -388,7 +372,7 @@ export default {
   size: medium;
   color: rgb(17, 17, 17);
   background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
+  border-color: rgb(111, 207, 47);
   border-radius: 3px;
 }
 .el-button {
