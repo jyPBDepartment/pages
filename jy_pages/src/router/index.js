@@ -19,38 +19,6 @@ import Banner from '@/views/gateway/Banner';
 import Navigation from '@/views/navigation/navigation';
 // 管理员管理
 import Admin from '@/views/Admin/admin';
-/**
- * 基础菜单
- */
-// 商品管理
-import Goods from '@/views/goods/Goods';
-// 机器信息管理
-import Machine from '@/views/machine/Machine';
-// 货道信息管理
-import MachineAisle from '@/views/machine/MachineAisle';
-/**
- * 订单管理
- */
-// 交易订单
-import Order from '@/views/pay/Order';
-/**
- * 系统管理
- */
-// 用户管理
-import user from '@/views/system/user';
-// 菜单管理
-import Module from '@/views/system/Module';
-
-// 公司管理
-import Dept from '@/views/system/Dept';
-// 系统环境变量
-import Variable from '@/views/system/Variable';
-// 权限管理
-import Permission from '@/views/system/Permission';
-//机构管理
-import Organ from '@/views/system/Organ';
-//业务员管理
-import Sales from '@/views/system/sales';
 //网站信息
 import updateWebsiteInfo from '@/views/websiteInfo/updateWebsiteInfo';
 //角色管理
@@ -59,6 +27,8 @@ import Role from '@/views/role/roleShow';
 import LimitRole from '@/views/limit/limitRole';
 //预约讲解
 import Appointment from '@/views/appointment/appointmentShow';
+//菜单管理
+import Menu from '@/views/menu/menuIndex';
 /**
  * 支付管理
  */
@@ -108,124 +78,53 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-    //     }, {
-    //         path: '/machine/Machine',
-    //         name: '机器信息管理',
-    //         component: Machine,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     }, {
-    //         path: '/machine/MachineAisle',
-    //         name: '货道信息管理',
-    //         component: MachineAisle,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     }, {
-    //         path: '/pay/Order',
-    //         name: '交易订单',
-    //         component: Order,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     }, {
-    //         path: '/system/user',
-    //         name: '用户管理',
-    //         component: user,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     }, {
-    //         path: '/system/Module',
-    //         name: '菜单管理',
-    //         component: Module,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     }, {
-    //         path: '/system/Role',
-    //         name: '角色管理',
-    //         component: Role,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     }, {
-    //         path: '/system/Dept',
-    //         name: '公司管理',
-    //         component: Dept,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     }, {
-    //         path: '/system/Variable',
-    //         name: '系统环境变量',
-    //         component: Variable,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     }, {
-    //         path: '/system/Permission',
-    //         name: '权限管理',
-    //         component: Permission,
-    //         meta: {
-    //             requireAuth: true
-    //         }
-    //     },{
-    //         path:'/system/Organ',
-    //         name:'机构管理',
-    //         component:Organ,
-    //         meta:{
-    //             requireAuth:true
-    //         }
-    //     },
-    //    {
-    //     path:'/system/sales',
-    //     name:'业务员管理',
-    //     component:Sales,
-    //     meta:{
-    //         requireAuth:true
-    //     }
-       },
-       {
-        path: '/navigation/navigation',
-        name: '导航管理',
-        component: Navigation,
-        meta: {
-            requireAuth: true
-       }
-    },  {
+        },
+        {
+            path: '/navigation/navigation',
+            name: '导航管理',
+            component: Navigation,
+            meta: {
+                requireAuth: true
+            }
+        }, {
             path: '/websiteInfo/updateWebsiteInfo',
             name: '网站信息',
             component: updateWebsiteInfo,
             meta: {
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/role/roleShow',
             name: '角色管理',
             component: Role,
             meta: {
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/limit/limitRole',
             name: '权限管理',
             component: LimitRole,
             meta: {
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/Admin/admin',
             name: '管理员信息',
             component: Admin,
             meta: {
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/appointment/appointmentShow',
             name: '预约讲解',
             component: Appointment,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/menu/menuIndex',
+            name: '菜单管理',
+            component: Menu,
             meta: {
                 requireAuth: true
             }

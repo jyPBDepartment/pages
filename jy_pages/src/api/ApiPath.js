@@ -46,6 +46,8 @@ const url = {
   findAllNavChildren:URLHost+'/navigation/findAll',
   //导航下拉列表修改显示
   findAllNc:URLHost+'/navigation/findAll',
+  //查询上级导航列表
+  findSubNavList:URLHost+'/navigation/findSubNavList',
   //网站信息
   updateWebsiteInfoEntity: URLHost + '/websiteInfo/update',
   findWebsiteInfoFormnById: URLHost + '/websiteInfo/findById',
@@ -80,6 +82,13 @@ const url = {
   //预约讲解
   appSearch:URLHost+'/appointment/findByName',
   addexplanstionEntity:URLHost+'/appointment/add',
+
+
+  //菜单管理
+  //新增菜单
+  addMenu:URLHost+'/menu/add',
+  //分页查询菜单
+  findMenuByName:URLHost+'/menu/findByName'
 
 }
 export default {
