@@ -57,7 +57,8 @@ import updateWebsiteInfo from '@/views/websiteInfo/updateWebsiteInfo';
 import Role from '@/views/role/roleShow';
 //权限管理
 import LimitRole from '@/views/limit/limitRole';
-
+//预约讲解
+import Appointment from '@/views/appointment/appointmentShow';
 /**
  * 支付管理
  */
@@ -218,6 +219,13 @@ export default new Router({
             path: '/Admin/admin',
             name: '管理员信息',
             component: Admin,
+            meta: {
+                requireAuth: true
+            }
+        },{
+            path: '/appointment/appointmentShow',
+            name: '预约讲解',
+            component: Appointment,
             meta: {
                 requireAuth: true
             }

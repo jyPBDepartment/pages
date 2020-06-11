@@ -77,6 +77,9 @@ const url = {
   findAllAdmin:URLHost+'/role/findAll',
   //管理员联表查询（修改）
   findAllUpdate:URLHost+'/role/findAll',
+  //预约讲解
+  appSearch:URLHost+'/appointment/findByName',
+  addexplanstionEntity:URLHost+'/appointment/add',
 
 }
 export default {

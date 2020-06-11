@@ -127,6 +127,14 @@ export default {
               hasThird: "N",
               url: "limit/limitRole",
               menus: null
+            }, 
+             {
+              menuid: 2-6,
+              icon: "el-icon-eleme",
+              menuname: "预约讲解",
+              hasThird: "N",
+              url: "appointment/appointmentShow",
+              menus: null
             }
             
 
