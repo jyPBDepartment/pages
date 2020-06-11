@@ -39,7 +39,7 @@
           <span v-else>农资供应商解决方案用</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="addess" label="所在地区" align="center"></el-table-column>
+      <el-table-column sortable prop="address" label="所在地区" align="center"></el-table-column>
       <el-table-column sortable prop="createDate" label="创建时间" align="center">
         <template slot-scope="scope">
           <div>{{scope.row.createDate|timestampToTime}}</div>
