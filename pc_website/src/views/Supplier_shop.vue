@@ -83,12 +83,21 @@ export default {
       ]
     };
   },
+  mounted() {
+    window.addEventListener("resize", () => this.screenChanges(), false);
+  },
+  created() {
+    this.screenChanges();
+  },
   methods: {
     navMove(e) {
       this.marginTOP = e;
     },
     specifyElement(id){
       document.getElementById(id).scrollIntoView();
+    },
+    screenChanges() {
+      this.bannerHeight = document.documentElement.clientHeight - 100;
     }
   }
 };

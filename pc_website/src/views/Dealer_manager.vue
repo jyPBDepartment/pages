@@ -119,12 +119,21 @@ export default {
       ]
     };
   },
+  mounted() {
+    window.addEventListener("resize", () => this.screenChanges(), false);
+  },
+  created() {
+    this.screenChanges();
+  },
   methods: {
     specifyElement(id){
       document.getElementById(id).scrollIntoView();
     },
     navMove(e) {
       this.marginTOP = e;
+    },
+    screenChanges() {
+      this.bannerHeight = document.documentElement.clientHeight - 100;
     }
   }
 };

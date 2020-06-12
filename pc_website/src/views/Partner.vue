@@ -80,6 +80,12 @@ export default {
       ]
     };
   },
+  mounted() {
+    window.addEventListener("resize", () => this.screenChanges(), false);
+  },
+  created() {
+    this.screenChanges();
+  },
   methods: {
     join() {
       var timer = setInterval(function() {
@@ -94,7 +100,11 @@ export default {
         }
       }, 5);
       this.$router.push({ name: "join" });
+    },
+    screenChanges() {
+      this.bannerHeight = document.documentElement.clientHeight - 100;
     }
+    
   }
 };
 </script>

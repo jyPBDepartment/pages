@@ -161,6 +161,12 @@ export default {
       tabIndex1: 0
     };
   },
+  mounted() {
+    window.addEventListener("resize", () => this.screenChanges(), false);
+  },
+  created() {
+    this.screenChanges();
+  },
   methods: {
     navMove(e) {
       this.marginTOP = e;
@@ -168,6 +174,9 @@ export default {
     specifyElement(id){
       document.getElementById(id).scrollIntoView();
     },
+    screenChanges() {
+      this.bannerHeight = document.documentElement.clientHeight - 100;
+    }
   }
 };
 </script>
