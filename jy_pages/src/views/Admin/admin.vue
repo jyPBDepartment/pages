@@ -29,14 +29,10 @@
       <el-table-column sortable prop="password" label="密码" align="center"></el-table-column>
       <el-table-column sortable prop="roleName" label="角色" align="center"></el-table-column>
       <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.createDateTime|timestampToTime}}</div>
-        </template>
+       
       </el-table-column>
        <el-table-column sortable prop="updateTime" label="修改时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.updateTime|timestampToTime}}</div>
-        </template>
+       
       </el-table-column>
      <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">

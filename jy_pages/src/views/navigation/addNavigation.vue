@@ -147,7 +147,7 @@ export default {
         dropDownEnName: "",
         url: "",
         path: "",
-        status: "0"
+        status: "1"
       },
       navigationOptions: [],
       localShow: this.show,

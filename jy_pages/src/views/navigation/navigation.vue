@@ -70,8 +70,8 @@
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
-              active-value="1"
-              inactive-value="0"
+              active-value="0"
+              inactive-value="1"
               active-color="#0080FF"
               inactive-color="#84C1FF"
               @change="navigationEnable(scope)"
