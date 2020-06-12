@@ -15,7 +15,12 @@
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-        <el-button size="small" type="primary" icon="el-icon-remove-outline" @click="resetForm('search')">重置</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          icon="el-icon-remove-outline"
+          @click="resetForm('search')"
+        >重置</el-button>
       </el-form-item>
     </el-form>
     <!--列表-->
@@ -34,7 +39,7 @@
       <el-table-column sortable prop="companyName" label="公司地址" align="center"></el-table-column>
       <el-table-column sortable prop="email" label="邮箱" align="center"></el-table-column>
       <el-table-column sortable prop="solution" label="意向解决方案" align="center">
-          <template slot-scope="scope">
+        <template slot-scope="scope">
           <span v-if="scope.row.solution == 1">农资经销商解决方案用</span>
           <span v-else>农资供应商解决方案用</span>
         </template>
@@ -62,7 +67,7 @@ export default {
   data() {
     return {
       name: "",
-      phoneNum:"",
+      phoneNum: "",
       loading: false, //是显示加载
       formInline: {
         page: 1,
@@ -123,9 +128,9 @@ export default {
     },
     resetForm(search) {
       this.name = "";
-      this.phoneNum="";
+      this.phoneNum = "";
       location.reload();
-    },
+    }
   }
 };
 </script>

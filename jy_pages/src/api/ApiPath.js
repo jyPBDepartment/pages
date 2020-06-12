@@ -57,6 +57,7 @@ const url = {
   deleteRole: URLHost + '/role/delete',
   roleEnable: URLHost + '/role/enable',
   findRoleId: URLHost + '/role/findById',
+  updateRole: URLHost + '/role/update',
   //权限管理
   limitSearch: URLHost + '/limit/findByName',
   limitEnable: URLHost + '/limit/enable',

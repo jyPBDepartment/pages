@@ -42,14 +42,8 @@
       <el-table-column sortable prop="name" label="权限名称" align="center"></el-table-column>
       <el-table-column sortable prop="path" label="权限路径" align="center"></el-table-column>
       <el-table-column sortable prop="createTime" label="创建时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.createTime|timestampToTime}}</div>
-        </template>
       </el-table-column>
       <el-table-column sortable prop="editTime" label="修改时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.editTime|timestampToTime}}</div>
-        </template>
       </el-table-column>
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">

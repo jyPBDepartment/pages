@@ -40,16 +40,8 @@
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="角色名称" align="center"></el-table-column>
-      <el-table-column sortable prop="createTime" label="创建时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.createTime|timestampToTime}}</div>
-        </template>
-      </el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.editTime|timestampToTime}}</div>
-        </template>
-      </el-table-column>
+      <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="editTime" label="修改时间" align="center"></el-table-column>
       <el-table-column sortable prop="limitName" label="角色权限" align="center"></el-table-column>
       <el-table-column align="center" label="状态" prop="state">
         <template slot-scope="scope">
