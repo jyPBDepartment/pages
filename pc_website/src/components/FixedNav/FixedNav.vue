@@ -62,7 +62,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .navBarWrap {
   position: fixed;
   top: 0;

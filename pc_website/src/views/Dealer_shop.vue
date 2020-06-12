@@ -14,7 +14,11 @@
         </el-col>
       </el-row>
     </Fast>
-    <Rotation :banner="bannerBottom" :height="bannerBottomHeight" />
+    <div style="background:#242b44">
+      <div class="w">
+        <Rotation :banner="bannerBottom" :height="854" />
+      </div>
+    </div>
     <Fast title="四大核心优势" :id="modelName[1].id">
       <el-row class="sdys">
         <el-col class="title" :span="9">
@@ -42,8 +46,8 @@
         </el-col>
       </el-row>
     </Fast>
-    <Fast :id="modelName[2].id" :title="modelName[2].title" :allScreen="true">
-      <img class="top_img top" src="../assets/5-1.jpg" :style="{height:`${bannerBottomHeight}px`}" />
+    <Fast :id="modelName[2].id" :title="modelName[2].title" :allScreen="true" background="#f0f0f0 ">
+      <img class="top_img top" src="../assets/3cxgj.jpg" :style="{height:`${854}px`}" />
     </Fast>
 
     <Callcontact />
@@ -143,7 +147,7 @@ export default {
 .move2 {
   transition-duration: 0.5s;
 }
-.top{
+.top {
   margin-top: 90px;
 }
 .f_b {
@@ -174,6 +178,7 @@ export default {
   }
   .sdys_img {
     width: 100%;
+    
   }
   .title {
     padding-top: 30px;

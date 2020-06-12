@@ -30,7 +30,8 @@
       sTitle="三条渠道齐发力，连接你的经营网络，发挥渠道聚合效能"
       background="rgb(246, 247, 252)"
     >
-      <el-row>
+    <img src="../assets/jjfa-1.jpg" alt class="top_img" />
+      <!-- <el-row>
         <el-col :span="8">
           <h2>线上电商</h2>
           <img src="../assets/6-ssds.png" alt />
@@ -43,7 +44,7 @@
           <h2>店外销售</h2>
           <img src="../assets/6-dwxs.png" alt />
         </el-col>
-      </el-row>
+      </el-row> -->
     </Fast>
     <Fast
       title="轻松管理经营数据"

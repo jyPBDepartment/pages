@@ -25,7 +25,7 @@
         </el-col>
         <div class="Dividing"></div>
       </el-row>
-      <div class="join_botton" @click="join()">加入我们</div>
+      <div class="join_botton" v-if="false" @click="join()">加入我们</div>
     </Fast>
     <Callcontact />
   </div>
@@ -109,6 +109,8 @@ export default {
   .box {
     width: 290px;
     margin-top: 50px;
+
+    display: block;
     padding: 40px 2%;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
     img {

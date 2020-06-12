@@ -1,16 +1,18 @@
 <template>
   <div class="Index">
+    <div class="record_info" v-if="false">asdas</div>
     <el-container>
-      <el-header style="padding:0;">
-        <div class="nav" >
+      <el-header style="height:100px;background-color: rgb(0, 9, 48);">
+        <div class="nav">
           <div class="w">
-            <el-row type="flex"  align="middle">
+            <el-row type="flex" align="middle">
               <el-col :span="3" :xs="12">
                 <img class="logo" src="../assets/logo.png" alt />
               </el-col>
-              <el-col :span="13" class=" hidden-xs-only" :offset="9">
+              <el-col :span="14" class="hidden-xs-only" :offset="7">
                 <el-menu
                   :default-active="activeIndex"
+                  style="height:100px"
                   class="el-menu-demo"
                   mode="horizontal"
                   text-color="#fff"
@@ -26,7 +28,7 @@
                   </el-menu-item>
                   <el-submenu index="/dealer_shop" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
-                      <span class="pd" style="font-size:15px">产品</span>
+                      <span class="pd" style="font-size:20px">产品</span>
                     </template>
                     <el-menu-item index="/dealer_shop">
                       <div>
@@ -39,17 +41,17 @@
                   </el-submenu>
                   <el-submenu index="4" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
-                      <span class="pd" style="font-size:15px">解决方案</span>
+                      <span class="pd" style="font-size: 20px;">解决方案</span>
                     </template>
                     <el-menu-item index="/dealer_program">农资经销商解决方案</el-menu-item>
                     <el-menu-item index="/supplier_program">农资供应商解决方案</el-menu-item>
                   </el-submenu>
                   <el-submenu index="5" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
-                      <span class="pd" style="font-size:15px">合作伙伴</span>
+                      <span class="pd" style="font-size:20px">合作伙伴</span>
                     </template>
                     <el-menu-item index="/partner">合作伙伴</el-menu-item>
-                    <el-menu-item index="/join">加入我们</el-menu-item>
+                    <el-menu-item v-if="false" index="/join">加入我们</el-menu-item>
                   </el-submenu>
                 </el-menu>
               </el-col>
@@ -108,7 +110,7 @@
               </el-col>
               <el-col :span="8">
                 <div class="f_1">
-                  <h2>平台咨询</h2>
+                  <h2>平台资讯</h2>
                   <h4>/ PLATFORM CONSULTING</h4>
                 </div>
                 <div class="f_2">
@@ -233,19 +235,36 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.record_info {
+  width: 940px;
+  height: 570px;
+  background: #fff;
+  border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  margin-left: -470px;
+  top: 50%;
+  margin-top: -285px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+  z-index: 999999999;
+}
 .nav {
   width: 100%;
-  height: 60px;
-  background: #000930; 
+  height: 100px;
+  background: #000930;
   .logo {
     max-width: 80%;
   }
   .pd {
-    padding: 0 20px;
+    padding: 0 30px;
+    font-size: 20px;
     .c_1 {
       font-size: 18px;
     }
   }
+}
+.el-menu--horizontal > .el-submenu {
+  height: 100px;
 }
 .el-menu--horizontal {
   background: #197afc;
@@ -257,6 +276,10 @@ export default {
 }
 .el-menu--popup {
   background: #fff !important;
+}
+.el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
+  line-height: 100px;
+  height: 100px;
 }
 [class*=" el-icon-"],
 [class^="el-icon-"] {
@@ -272,9 +295,12 @@ export default {
 .el-menu--horizontal > .el-menu-item {
   border-bottom: none;
   font-size: 15px;
+  line-height: 100px;
 }
 .el-menu--horizontal > .el-submenu .el-submenu__title {
   font-size: 15px !important;
+  line-height: 100px;
+  height: 100px;
 }
 
 .footer {

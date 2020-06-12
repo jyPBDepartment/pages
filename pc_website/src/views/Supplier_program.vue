@@ -12,8 +12,15 @@
       background="#242B44"
       color="#fff"
       sColor="#fff"
+      :allScreen="true"
     >
-      <img src="../assets/7-fajj.gif" alt class="top_img" />
+    <video
+        class="video"
+        src="../assets/gysjjfa.mp4"
+        muted="muted"
+        autoplay="autoplay"
+        loop="loop"
+      ></video>
     </Fast>
     <Fast :title="modelName[2].title" :id="modelName[2].id">
       <Tabs :type="true" :img="false" :tabList="tabList1" :tabIndex="tabIndex1" :tabPane="tabPane1"></Tabs>
@@ -177,6 +184,9 @@ export default {
 .move2 {
   transition-duration: 0.5s;
 }
+.video{
+  height: 713px;
+}
 .i {
   justify-content: space-around;
   padding: 0 4%;
@@ -245,6 +255,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding: 0;
   }
 }
 </style>

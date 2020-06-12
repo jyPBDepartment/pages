@@ -51,9 +51,9 @@ export default {
   },
   data() {
     return {
-      bannerHeight: document.body.clientWidth / 3.31,
+      bannerHeight: document.body.clientWidth / 1.77,
       marginTOP: false,
-      banner: [{ src: require("../assets/jjfa-1.jpg") }],
+      banner: [{ src: require("../assets/gys.jpg") }],
       modelName:[
         {title:'应用场景',id:'1'},
         {title:'核心优势',id:'2'},
@@ -112,7 +112,7 @@ export default {
     text-align: left;
     font-size: 20px;
     color: #101010;
-    padding-top: 40px;
+    padding-top: 75px;
     p {
       margin-bottom: 40px;
     }
