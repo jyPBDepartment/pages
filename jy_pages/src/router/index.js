@@ -31,8 +31,13 @@ import Appointment from '@/views/appointment/appointmentShow';
 import Menu from '@/views/menu/menuIndex';
 //分类信息
 import Classification from '@/views/Classification/classification';
+
 //问卷调查
 import Question from '@/views/Question/question';
+
+//文章管理
+import Article from '@/views/article/article'
+
 /**
  * 支付管理
  */
@@ -137,6 +142,13 @@ export default new Router({
             path: '/Classification/classification',
             name: '分类信息',
             component: Classification,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/article/article',
+            name: '文章管理',
+            component: Article,
             meta: {
                 requireAuth: true
             }

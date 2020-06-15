@@ -144,6 +144,14 @@ export default {
               menus: null
             },
             {
+              menuid: 2 - 8,
+              icon: "li-icon-xiangmuguanli",
+              menuname: "文章管理",
+              hasThird: "N",
+              url: "article/article",
+              menus: null
+            },
+            {
               menuid: 2 - 9,
               icon: "el-icon-eleme",
               menuname: "分类管理",

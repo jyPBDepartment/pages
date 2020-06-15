@@ -105,6 +105,7 @@ const url = {
   findAllClass:URLHost+'/w_classification_info/findAll',
   updateClass:URLHost+'/w_classification_info/findAll',
   //分类信息添加前过滤重复字段
+
   // classiFindByWord:URLHost+'/w_classification_info/findByWord',
   //问卷信息分页及查询
   searchQuestion:URLHost+'/w_questionnaire/findByName',
@@ -116,6 +117,21 @@ const url = {
   questionFindById:URLHost+'/w_questionnaire/findById',
   //问卷调查修改
   updateQuestion:URLHost+'/w_questionnaire/update',
+
+  classiFindByWord:URLHost+'/w_classification_info/findByWord',
+
+    //文章管理
+  articleSearch:URLHost+'/article/findByName',
+  addArticle:URLHost+'/article/add',
+  deleteArticle:URLHost+'/article/delete',
+  findArticleById:URLHost+'/article/findById',
+  updateArticle:URLHost+'/article/update',
+  articleEnable:URLHost+'/article/enable',
+  isRelease:URLHost+'/article/release',
+  isRecommend:URLHost+'/article/recommend',
+  findClassification:URLHost+'/w_classification_info/findAll',
+  isTopping:URLHost+'/article/topping',
+
 }
 export default {
   url
