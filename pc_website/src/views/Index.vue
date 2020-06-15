@@ -1,6 +1,6 @@
 <template>
   <div class="Index">
-    <div class="record_info" v-if="false">asdas</div>
+    <Float></Float> 
     <el-container>
       <el-header style="height:100px;background-color: rgb(0, 9, 48);">
         <div class="nav">
@@ -172,10 +172,12 @@
 
 <script>
 import FixedNavRight from "../components/FixedNavRight/FixedNavRight";
+import Float from "../components/Float/Float";
 export default {
   name: "Index",
   components: {
-    FixedNavRight
+    FixedNavRight,
+    Float
   },
   data() {
     return {
@@ -233,19 +235,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.record_info {
-  width: 940px;
-  height: 570px;
-  background: #fff;
-  border-radius: 10px;
-  position: absolute;
-  left: 50%;
-  margin-left: -470px;
-  top: 50%;
-  margin-top: -285px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
-  z-index: 999999999;
-}
 .nav {
   width: 100%;
   height: 100px;

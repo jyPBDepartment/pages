@@ -23,8 +23,8 @@
             <div class="call">&nbsp;> 获取内部资料</div>
             <div class="call">&nbsp;> 价格和优惠</div>
           </div>
-          <p class="z_1" v-if="false" >你也可以留下联系方式，我们会主动和你联系！</p>
-          <div class="y_w"  v-if="false" @click="userInfo()">与我联系</div>
+          <p class="z_1">你也可以留下联系方式，我们会主动和你联系！</p>
+          <div class="y_w" @click="userInfo()">与我联系</div>
         </div>
         <el-row slot="reference" class="box">
           <img src="../../assets/icon/dianhua.png" alt />

@@ -8,6 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "area-data": "^5.0.6",
+    "area-data-vue": "^1.0.9",
+    "area-linkage-vue": "^5.1.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "file-loader": "^6.0.0",

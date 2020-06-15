@@ -25,7 +25,7 @@
         </el-col>
         <div class="Dividing"></div>
       </el-row>
-      <div class="join_botton" v-if="false" @click="join()">加入我们</div>
+      <div class="join_botton" @click="join()">加入我们</div>
     </Fast>
     <Callcontact />
   </div>
