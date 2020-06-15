@@ -52,7 +52,7 @@
       sTitle="提成轻松算、业绩随时看、为每个经营决策提高数据指导"
       :allScreen="true"
     >
-      <img src="../assets/jjfa-x.jpg" alt class="top_img" />
+      <img src="../assets/jjfa-x.jpg" alt style="max-width:100%;" />
     </Fast>
     <Callcontact />
   </div>
