@@ -106,6 +106,18 @@ const url = {
   updateClass:URLHost+'/w_classification_info/findAll',
   //分类信息添加前过滤重复字段
   classiFindByWord:URLHost+'/w_classification_info/findByWord',
+
+    //文章管理
+  articleSearch:URLHost+'/article/findByName',
+  addArticle:URLHost+'/article/add',
+  deleteArticle:URLHost+'/article/delete',
+  findArticleById:URLHost+'/article/findById',
+  updateArticle:URLHost+'/article/update',
+  articleEnable:URLHost+'/article/enable',
+  isRelease:URLHost+'/article/release',
+  isRecommend:URLHost+'/article/recommend',
+  findClassification:URLHost+'/w_classification_info/findAll',
+  isTopping:URLHost+'/article/topping',
 }
 export default {
   url
