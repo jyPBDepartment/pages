@@ -79,7 +79,7 @@ export default {
   },
   data() {
     return {
-      bannerHeight: document.body.clientWidth / 3.31,
+      bannerHeight: 0,
       Input: [
         {
           title: "联系人姓名",
@@ -335,14 +335,21 @@ export default {
       ]
     };
   },
-  methods: {}
+   mounted() {
+    window.addEventListener("resize", () => this.screenChanges(), false);
+  },
+  methods: {
+    screenChanges(){
+      
+    }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 .top_img {
-  max-width: 100%;
+  width: 100%;
 }
 
 .questionnaire {

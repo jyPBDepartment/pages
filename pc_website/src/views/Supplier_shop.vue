@@ -51,7 +51,7 @@ export default {
   },
   data() {
     return {
-      bannerHeight: document.body.clientWidth / 1.77,
+      bannerHeight: 0,
       marginTOP: false,
       banner: [{ src: require("../assets/gys.jpg") }],
       modelName:[
@@ -106,7 +106,7 @@ export default {
 
 <style lang="scss">
 .top_img {
-  max-width: 100%;
+  width: 100%;
 }
 .move {
   margin-top: 120px;

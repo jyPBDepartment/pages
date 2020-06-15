@@ -2,7 +2,7 @@
   <div class="Home">
     <img class="top_img" src="../assets/introduce_banner.jpg" :style="{height:`${bannerHeight}px`}" />
     <Fast title="吉易慧农概述">
-      <el-row>
+      <el-row class="text">
         <el-col class="left_image" :span="8">
           <el-image :src="leftImage" fit="cover"></el-image>
         </el-col>
@@ -15,12 +15,7 @@
       <el-row>
         <p
           class="i_p top"
-        >吉易慧农平台提供的互联网技术服务和农业科技服务，稳固建立现代农业经理人、会员、商户、科研机构的合作伙伴关系，为每一位愿意凭籍吉易慧农实现人生目标的合作者提供持续的发展助力。</p>
-      </el-row>
-      <el-row>
-        <p
-          class="i_p"
-        >吉易慧农坚持科技兴农、智慧兴农，以促进农户和现代农业发展有机衔接、提升农业生态为导向，以线上网络平台和线下培育新型职业农民服务体系为载体，以投身国家乡村振兴战略、维护国家粮食安全为终极目标。</p>
+        >吉易慧农平台提供的互联网技术服务和农业科技服务，稳固建立现代农业经理人、会员、商户、科研机构的合作伙伴关系，为每一位愿意凭籍吉易慧农实现人生目标的合作者提供持续的发展助力。吉易慧农坚持科技兴农、智慧兴农，以促进农户和现代农业发展有机衔接、提升农业生态为导向，以线上网络平台和线下培育新型职业农民服务体系为载体，以投身国家乡村振兴战略、维护国家粮食安全为终极目标。</p>
       </el-row>
     </Fast>
     <div class="box v">
@@ -69,12 +64,16 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 .i_p {
-  font-size: 28px;
+  font-size: 18px;
   color: #101010;
-  line-height: 60px;
-  font-weight: 300;
+  line-height: 30px;
   text-align: left;
   text-indent: 2em;
+}
+.text {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
 }
 .top {
   margin-top: 60px;
@@ -86,7 +85,7 @@ export default {
   padding-left: 40px;
 }
 .i_c {
-  padding: 0 40px;
+  // padding: 0 40px;
 }
 .box {
   display: flex;

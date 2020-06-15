@@ -16,7 +16,15 @@
     </Fast>
     <Fast title="我们的云服务产品" sTitle="提升多种农资经营能力 全面满足业务需求">
       <el-row class="h2">
-        <el-col class="h2_1" v-for="(item, index) in botton" :key="index">
+        <el-col
+          class="h2_1"
+          :class=" hover == index && 'hover'"
+          @mouseover.native="mouseover(index)"
+          @mouseout.native="mouseout()"
+          @click.native="jump(index)"
+          v-for="(item, index) in botton"
+          :key="index"
+        >
           <img :src="item.src" alt />
           <h2>{{item.h2}}</h2>
           <p>{{item.p}}</p>
@@ -44,6 +52,7 @@ export default {
     return {
       bannerHeight: 200,
       bannerBottomHeight: 480,
+      hover: null,
       // 页面数据: "/"
       banner: [
         {
@@ -51,21 +60,21 @@ export default {
           title: "农资经销商解决方案",
           content: "全面助力经销商升级经营能力 实现跨越式发展",
           botton: "了解详情",
-          router:'dealer_program'
+          router: "dealer_program"
         },
         {
           src: require("../assets/banner2.jpg"),
           title: "农资供应商解决方案",
           content: "有效降低供应商销售成本 大数据辅助科学决策",
           botton: "了解详情",
-          router:'supplier_program'
+          router: "supplier_program"
         },
         {
           src: require("../assets/banner3.jpg"),
           title: "亿元订单 强强联合",
           content: "吉易慧农上线合作伙伴计划",
           botton: "加 入",
-          router:'partner'
+          router: "partner"
         }
       ],
       bannerBottom: [
@@ -144,6 +153,33 @@ export default {
   methods: {
     screenChanges() {
       this.bannerHeight = document.documentElement.clientHeight - 100;
+    },
+    mouseover(index) {
+      console.log(index);
+      if (index < 3) {
+        this.hover = index;
+      }
+    },
+    mouseout() {
+      this.hover = null;
+    },
+    jump(index) {
+      if (index < 3) {
+        var timer = setInterval(function() {
+          let osTop =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          let ispeed = Math.floor(-osTop / 5);
+          document.documentElement.scrollTop = document.body.scrollTop =
+            osTop + ispeed;
+          this.isTop = true;
+          if (osTop === 0) {
+            clearInterval(timer);
+          }
+        }, 5);
+        if (index == 0) this.$router.push({ name: "dealer_shop" });
+        if (index == 1) this.$router.push({ name: "dealer_manager" });
+        if (index == 2) this.$router.push({ name: "supplier_shops" });
+      }
     }
   }
 };
@@ -182,6 +218,9 @@ h2 {
     padding: 0 5% 34px 5%;
     border-bottom: 1px solid #d4d6e2;
     border-right: 1px solid #d4d6e2;
+    background: #fff;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s; /* Safari */
     h2 {
       margin-top: 33px;
       margin-bottom: 24px;
@@ -207,6 +246,16 @@ h2 {
       border-right: 0;
       border-bottom: 0;
     }
+  }
+  .hover {
+    border: 0;
+    cursor: pointer;
+    transform: scale(1.1);
+    -ms-transform: scale(1.1); /* IE 9 */
+    -moz-transform: scale(1.1); /* Firefox */
+    -webkit-transform: scale(1.1); /* Safari 和 Chrome */
+    -o-transform: scale(1.1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
   }
 }
 </style>

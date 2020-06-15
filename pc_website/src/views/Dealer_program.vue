@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      bannerHeight: document.body.clientWidth / 3.31,
+      bannerHeight: 0,
       marginTOP: false,
       modelName: [
         { title: "移动端", id: "1" },
@@ -131,7 +131,7 @@ export default {
 
 <style lang="scss">
 .top_img {
-  max-width: 100%;
+  width: 100%;
 }
 .move {
   margin-top: 120px;

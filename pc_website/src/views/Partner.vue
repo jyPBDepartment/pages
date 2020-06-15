@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      bannerHeight: document.body.clientWidth / 3.31,
+      bannerHeight: 0,
       bModel: [
         {
           src: require("../assets/icon/10chanpin.png"),
@@ -112,7 +112,7 @@ export default {
 
 <style lang="scss">
 .top_img {
-  max-width: 100%;
+  width: 100%;
 }
 .model {
   padding: 0 7%;
