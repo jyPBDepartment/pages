@@ -1,6 +1,10 @@
 <template>
   <div class="Home">
-    <img class="top_img" src="../assets/introduce_banner_jrwm.jpg" :style="{height:`${bannerHeight}px`}" />
+    <img
+      class="top_img"
+      src="../assets/introduce_banner_jrwm.jpg"
+      :style="{height:`${bannerHeight}px`}"
+    />
     <Fast title="申请加入吉易慧农合作伙伴" background="#F0EEED">
       <div class="questionnaire">
         <div class="topic" v-for="(item, index) in topicList" :key="index">
@@ -16,25 +20,27 @@
               :max="item.max"
               v-if="item.max !== 1"
             >
-              <el-checkbox
-                v-for="(option, index1) in item.answer"
-                :label="option"
-                :key="index1"
-              >{{option}}</el-checkbox>
+              <div v-for="(option, index1) in item.answer" :key="index1">
+                <el-checkbox :label="option.id" :key="index1">{{option.name}}</el-checkbox>
+              </div>
             </el-checkbox-group>
             <el-radio-group v-model="item.checkedCities" :min="item.min" :max="item.max" v-else>
-              <el-radio v-for="option in item.answer" :label="option" :key="option">{{option}}</el-radio>
+              <el-radio
+                v-for="(option, index4) in item.answer"
+                :label="option.id"
+                :key="index4"
+              >{{option.name}}</el-radio>
             </el-radio-group>
           </div>
           <div class="answers" v-else>
-            <div class="box" v-for="(item, index2) in item.answers" :key="index2">
-              <div class="type">{{ item.title }}</div>
-              <el-radio-group v-model="item.checkedCities">
+            <div class="box" v-for="(items, index2) in item.answers" :key="index2">
+              <div class="type">{{ items.title }}</div>
+              <el-radio-group v-model="items.checkedCities">
                 <el-radio
-                  v-for="(option, index3) in item.list"
+                  v-for="(option, index3) in items.list"
                   :key="index3"
-                  :label="option"
-                >{{ option }}</el-radio>
+                  :label="option.id"
+                >{{ option.name }}</el-radio>
               </el-radio-group>
             </div>
           </div>
@@ -59,7 +65,7 @@
           </el-row>
           <el-row>
             <el-col :span="8" :offset="10">
-              <el-button type="primary">提交申请</el-button>
+              <el-button type="primary" @click="save">提交申请</el-button>
             </el-col>
           </el-row>
         </div>
@@ -125,9 +131,9 @@ export default {
           max: 2,
           mandatory: true,
           answer: [
-            "有其他网店经营经验",
-            "有实体门店经营经验",
-            "没有任何开店经验"
+            { id: "A", name: "有其他网店经营经验" },
+            { id: "B", name: "有实体门店经营经验" },
+            { id: "C", name: "没有任何开店经验" }
           ],
           checkedCities: []
         },
@@ -138,13 +144,13 @@ export default {
           max: 2,
           mandatory: true,
           answer: [
-            "农资类商品生产者/代理者/经营者",
-            "种植大户/农机大户/养殖大户",
-            "家庭农场主/农业合作社管理者",
-            "农技推广人员/农技服务人员",
-            "村屯里有职称的人（村书记、大队书记等）",
-            "具有一定组织/领头能力的农民",
-            "其他"
+            { id: "A", name: "农资类商品生产者/代理者/经营者" },
+            { id: "B", name: "种植大户/农机大户/养殖大户" },
+            { id: "C", name: "家庭农场主/农业合作社管理者" },
+            { id: "D", name: "农技推广人员/农技服务人员" },
+            { id: "E", name: "村屯里有职称的人（村书记、大队书记等）" },
+            { id: "F", name: "具有一定组织/领头能力的农民" },
+            { id: "G", name: "其他" }
           ],
           checkedCities: []
         },
@@ -155,9 +161,9 @@ export default {
           max: 1,
           mandatory: true,
           answer: [
-            "主营批发，少量零售",
-            "主营零售",
-            "其他"
+            { id: "A", name: "主营批发，少量零售" },
+            { id: "B", name: "主营零售" },
+            { id: "C", name: "其他" }
           ],
           checkedCities: []
         },
@@ -168,8 +174,8 @@ export default {
           max: 1,
           mandatory: false,
           answer: [
-            "农资类商品生产者/代理者/经营者",
-            "种植大户/农机大户/养殖大户"
+            { id: "A", name: "农资类商品生产者/代理者/经营者" },
+            { id: "B", name: "种植大户/农机大户/养殖大户" }
           ],
           checkedCities: []
         },
@@ -180,16 +186,16 @@ export default {
           max: 1,
           mandatory: false,
           answer: [
-            "合资",
-            "国有",
-            "集体所有制",
-            "股份制",
-            "有限责任",
-            "全民所有制",
-            "独资",
-            "私营",
-            "个体户",
-            "其他"
+            { id: "A", name: "合资" },
+            { id: "B", name: "国有" },
+            { id: "C", name: "集体所有制" },
+            { id: "D", name: "股份制" },
+            { id: "E", name: "有限责任" },
+            { id: "F", name: "全民所有制" },
+            { id: "G", name: "独资" },
+            { id: "H", name: "私营" },
+            { id: "I", name: "个体户" },
+            { id: "J", name: "其他" }
           ],
           checkedCities: []
         },
@@ -199,7 +205,12 @@ export default {
           min: 0,
           max: 1,
           mandatory: false,
-          answer: ["省级及以下", "市级及以下", "县级及以下", "村屯级"],
+          answer: [
+            { id: "A", name: "省级及以下" },
+            { id: "B", name: "市级及以下" },
+            { id: "C", name: "县级及以下" },
+            { id: "D", name: "村屯级" }
+          ],
           checkedCities: []
         },
         {
@@ -209,14 +220,14 @@ export default {
           max: 1,
           mandatory: false,
           answer: [
-            "种子/化肥/农药",
-            "农机/农具",
-            "种苗/花卉/菜籽",
-            "蔬菜/瓜果",
-            "牛/羊/猪/禽类",
-            "土地托管",
-            "粮食收/储/销售",
-            "私营"
+            { id: "A", name: "种子/化肥/农药" },
+            { id: "B", name: "农机/农具" },
+            { id: "C", name: "种苗/花卉/菜籽" },
+            { id: "D", name: "蔬菜/瓜果" },
+            { id: "E", name: "牛/羊/猪/禽类" },
+            { id: "F", name: "土地托管" },
+            { id: "G", name: "粮食收/储/销售" },
+            { id: "H", name: "私营" }
           ],
           checkedCities: []
         },
@@ -227,13 +238,13 @@ export default {
           max: 3,
           mandatory: false,
           answer: [
-            "需要平台帮助找更好的货源",
-            "需要推广店铺",
-            "获得更多的商机",
-            "运营技巧的培训",
-            "了解平台入驻规则",
-            "线上、线下服务指导",
-            "提供农技服务支持"
+            { id: "A", name: "需要平台帮助找更好的货源" },
+            { id: "B", name: "需要推广店铺" },
+            { id: "C", name: "获得更多的商机" },
+            { id: "D", name: "运营技巧的培训" },
+            { id: "E", name: "了解平台入驻规则" },
+            { id: "F", name: "线上、线下服务指导" },
+            { id: "G", name: "提供农技服务支持" }
           ],
           checkedCities: []
         },
@@ -248,33 +259,33 @@ export default {
               title: "种子",
               checkedCities: [],
               list: [
-                "100万袋",
-                "10万袋以上",
-                "5—10万袋",
-                "1-5万袋",
-                "1万袋以下"
+                { id: "A", name: "100万袋" },
+                { id: "B", name: "10万袋以上" },
+                { id: "C", name: "5—10万袋" },
+                { id: "D", name: "1-5万袋" },
+                { id: "E", name: "1万袋以下" }
               ]
             },
             {
               title: "农药",
               checkedCities: [],
               list: [
-                "1万垧以上",
-                "5000—1万垧地",
-                "2000—3000垧地",
-                "1000—2000垧地",
-                "1000垧地以下"
+                { id: "A", name: "1万垧以上" },
+                { id: "B", name: "5000—1万垧地" },
+                { id: "C", name: "2000—3000垧地" },
+                { id: "D", name: "1000—2000垧地" },
+                { id: "E", name: "1000垧地以下" }
               ]
             },
             {
               title: "化肥",
               checkedCities: [],
               list: [
-                "10万吨以上",
-                "5—10万吨",
-                "1-5万吨",
-                "5000—1万吨",
-                "5000吨以下"
+                { id: "A", name: "10万吨以上" },
+                { id: "B", name: "5—10万吨" },
+                { id: "C", name: "1-5万吨" },
+                { id: "D", name: "5000—1万吨" },
+                { id: "E", name: "5000吨以下" }
               ]
             }
           ],
@@ -291,33 +302,33 @@ export default {
               title: "种子",
               checkedCities: [],
               list: [
-                "100万袋",
-                "10万袋以上",
-                "5—10万袋",
-                "1-5万袋",
-                "1万袋以下"
+                { id: "A", name: "100万袋" },
+                { id: "B", name: "10万袋以上" },
+                { id: "C", name: "5—10万袋" },
+                { id: "D", name: "1-5万袋" },
+                { id: "E", name: "1万袋以下" }
               ]
             },
             {
               title: "农药",
               checkedCities: [],
               list: [
-                "1万垧以上",
-                "5000—1万垧地",
-                "2000—3000垧地",
-                "1000—2000垧地",
-                "1000垧地以下"
+                { id: "A", name: "1万垧以上" },
+                { id: "B", name: "5000—1万垧地" },
+                { id: "C", name: "2000—3000垧地" },
+                { id: "D", name: "1000—2000垧地" },
+                { id: "E", name: "1000垧地以下" }
               ]
             },
             {
               title: "化肥",
               checkedCities: [],
               list: [
-                "10万吨以上",
-                "5—10万吨",
-                "1-5万吨",
-                "5000—1万吨",
-                "5000吨以下"
+                { id: "A", name: "10万吨以上" },
+                { id: "B", name: "5—10万吨" },
+                { id: "C", name: "1-5万吨" },
+                { id: "D", name: "5000—1万吨" },
+                { id: "E", name: "5000吨以下" }
               ]
             }
           ],
@@ -329,18 +340,30 @@ export default {
           min: 0,
           max: 1,
           mandatory: false,
-          answer: ["501垧以上", "101-500垧", "11-100垧", "1-10垧", "1垧地以下"],
+          answer: [
+            { id: "A", name: "501垧以上" },
+            { id: "B", name: "101-500垧" },
+            { id: "C", name: "11-100垧" },
+            { id: "D", name: "1-10垧" },
+            { id: "E", name: "1垧地以下" }
+          ],
           checkedCities: []
         }
       ]
     };
   },
-   mounted() {
+  mounted() {
     window.addEventListener("resize", () => this.screenChanges(), false);
   },
   methods: {
-    screenChanges(){
-      
+    screenChanges() {},
+    save: function() {
+      alert("第一题选项：" + this.topicList[8]["answers"][0]["checkedCities"]);
+      alert("第二题选项：" + this.topicList[9]["answers"][0]["checkedCities"]);
+      console.log(11);
+      // for (let i = 0; i < this.topicList.length; i++) {
+
+      // }
     }
   }
 };

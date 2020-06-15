@@ -51,7 +51,7 @@
                       <span class="pd" style="font-size:20px">合作伙伴</span>
                     </template>
                     <el-menu-item index="/partner">合作伙伴</el-menu-item>
-                    <el-menu-item v-if="false" index="/join">加入我们</el-menu-item>
+                    <el-menu-item index="/join">加入我们</el-menu-item>
                   </el-submenu>
                 </el-menu>
               </el-col>
