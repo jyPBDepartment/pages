@@ -34,6 +34,9 @@
          <el-form-item label="推荐人" prop="recommended">
           <el-input type="text" v-model="editForm.recommended"  placeholder="请输入推荐人" style="width:70%;"></el-input>
         </el-form-item>
+         <el-form-item label="问卷得分" prop="questionAnswer">
+          <el-input type="text" v-model="editForm.questionAnswer"  placeholder="请输入问卷答案" style="width:70%;"></el-input>
+        </el-form-item>
         <el-form-item label="问卷得分" prop="questionScore">
           <el-input type="text" v-model="editForm.questionScore"  placeholder="请输入问卷得分" style="width:70%;"></el-input>
         </el-form-item>
@@ -76,6 +79,7 @@ export default {
         email: "",
         expectaion: "",
         recommended: "",
+        questionAnswer:"",
         questionScore: ""
       },
 
@@ -117,7 +121,7 @@ export default {
     
 
     //添加管理员方法
-    saveAdmin: function() {
+    saveQuestion: function() {
       let params = {
         questionEntity: this.editForm
       };

@@ -35,7 +35,8 @@
       <el-table-column sortable prop="email" label="邮箱" align="center"></el-table-column>
       <el-table-column sortable prop="expectaion" label="合作期望" align="center"></el-table-column>
       <el-table-column sortable prop="recommended" label="推荐人" align="center"></el-table-column>
-      <el-table-column sortable prop="questionScore" label="问卷得分" align="center"></el-table-column>
+       <el-table-column sortable prop="questionScore" label="问卷得分" align="center"></el-table-column>
+      <el-table-column sortable prop="questionAnswer" label="问卷答案" align="center"></el-table-column>
       <el-table-column  prop="createDate" label="创建时间" align="center">
       </el-table-column>
       
