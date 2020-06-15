@@ -68,12 +68,9 @@ export default {
     title: {
       type: String,
       default: "对话框"
-    },
-    transClassiId: {
-      type: String,
-      default: "对话框"
     }
-  },
+    
+     },
   data() {
     return {
       labelPosition: "right",
@@ -106,19 +103,7 @@ export default {
     show(val) {
       this.localShow = val;
     },
-        transClassiId(val) {
-     
-      let params = {
-        name: val
-      };
-
-      //根据Id查询用户信息
-      api.testAxiosGet(ApiPath.url.classiFindByWord, params).then(res => {
-        if (res.state == 0) {
-          this.editForm = res.data;
-        }
-      });
-    }
+  
   },
   created() {},
   mounted() {
