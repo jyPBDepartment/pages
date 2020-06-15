@@ -358,12 +358,63 @@ export default {
   methods: {
     screenChanges() {},
     save: function() {
-      alert("第一题选项：" + this.topicList[8]["answers"][0]["checkedCities"]);
-      alert("第二题选项：" + this.topicList[9]["answers"][0]["checkedCities"]);
-      console.log(11);
-      // for (let i = 0; i < this.topicList.length; i++) {
+      //1.验证
+      if (
+        this.topicList[0]["checkedCities"].length > 0 &&
+        this.topicList[1]["checkedCities"].length > 0 &&
+        this.topicList[2]["checkedCities"].length > 0
+      ) {
+        //2.整合数据
+        //params  **Entity
+        let paramList = [];
+        for (let i = 0; i < this.topicList.length; i++) {
+          if (typeof this.topicList[i]["answers"] != "undefined") {
+            for (let j = 0; j < this.topicList[i]["answers"].length; j++) {
+              if (i == 8) {
+                if (j == 0) {
+                  paramList.push({
+                    num: i + 1,
+                    value: this.topicList[i]["answers"][j]["checkedCities"]
+                  });
+                }
+              }
+              if (i == 9) {
+                if (j == 1) {
+                  paramList.push({
+                    num: i + 1,
+                    value: this.topicList[i]["answers"][j]["checkedCities"]
+                  });
+                }
+              }
+            }
+          } else {
+            if (i == 10) {
+              paramList.push({
+                num: i + 1,
+                value: this.topicList[i]["checkedCities"]
+              });
+            } else {
+              paramList.push({
+                num: i + 1,
+                value: this.topicList[i]["checkedCities"]
+              });
+            }
+          }
+        }
+        console.log(JSON.stringify(paramList));
 
-      // }
+        //评分+表单数据
+
+        //editForm
+
+        //["A,B","AC","D"]
+
+        //api.ajaxios()
+
+        alert("执行保存方法");
+      } else {
+        alert("选项不能为空");
+      }
     }
   }
 };
