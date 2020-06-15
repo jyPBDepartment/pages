@@ -63,111 +63,109 @@
         <router-view id="boxFixed" />
         <FixedNavRight @backtop="backtop" :isFixed="isFixed" />
       </el-main>
-      <el-footer style="padding:0;">
-        <div class="footer">
-          <div class="w" style="color:#fff">
-            <el-row :gutter="20">
-              <el-col :span="5">
-                <div class="f_1">
-                  <h2>产品</h2>
-                  <h4>/ PRODUCT</h4>
-                </div>
-                <div class="f_2">
-                  <el-row>
-                    <router-link to="/dealer_shop" class="f_3">
-                      <span @click="backtop">经销商店铺</span>
-                    </router-link>
-                  </el-row>
-                  <el-row>
-                    <router-link to="/dealer_manager" class="f_3">
-                      <span @click="backtop">经销商掌柜</span>
-                    </router-link>
-                  </el-row>
-                  <el-row>
-                    <router-link to="/supplier_shops" class="f_3">
-                      <span @click="backtop">供应商店铺</span>
-                    </router-link>
-                  </el-row>
-                </div>
-              </el-col>
-              <el-col :span="5">
-                <div class="f_1">
-                  <h2>解决方案</h2>
-                  <h4>/ SOLUTION</h4>
-                </div>
-                <div class="f_2">
-                  <el-row>
-                    <router-link to="/dealer_program" class="f_3">
-                      <span @click="backtop">农资经销商解决方案</span>
-                    </router-link>
-                  </el-row>
-                  <el-row>
-                    <router-link to="/supplier_program" class="f_3">
-                      <span @click="backtop">农资供应商解决方案</span>
-                    </router-link>
-                  </el-row>
-                </div>
-              </el-col>
-              <el-col :span="8">
-                <div class="f_1">
-                  <h2>平台资讯</h2>
-                  <h4>/ PLATFORM CONSULTING</h4>
-                </div>
-                <div class="f_2">
-                  <el-row>
-                    <a
-                      href="http://www.jiyinongye.cn/portal/article/index/id/17/cid/1.html"
-                      target="view_window"
-                      class="f_3"
-                    >吉林省现代农业企业协会参观考察</a>
-                  </el-row>
-                  <el-row>
-                    <a
-                      href="http://www.jiyinongye.cn/portal/article/index/id/19/cid/1.html"
-                      target="view_window"
-                      class="f_3"
-                    >何为平台经济？平台经济健康发展又为何要做好政策加减法</a>
-                  </el-row>
-                  <el-row>
-                    <a
-                      href="http://www.jiyinongye.cn/portal/article/index/id/51/cid/1.html"
-                      target="view_window"
-                      class="f_3"
-                    >获中央电视台关注，上央视CCTV-2频道《经济信息联播》</a>
-                  </el-row>
-                  <el-row>
-                    <a
-                      href="http://www.jiyinongye.cn/portal/article/index/id/52/cid/1.html"
-                      target="view_window"
-                      class="f_3"
-                    >【吉易·云备耕】再次被关注，上《吉林新闻联播》啦</a>
-                  </el-row>
-                </div>
-              </el-col>
-              <el-col :span="5">
-                <div class="f_1">
-                  <h2>联系我们</h2>
-                  <h4>/ Contact US</h4>
-                </div>
-                <div class="f_2">
-                  <el-row class="f_3">合作咨询：400-684-0008</el-row>
-                  <el-row class="f_3">投诉反馈：jiyinongye@126.com</el-row>
-                  <el-row class="f_3">地址：长春市人力资源服务产业园 C座12层</el-row>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
+      <div class="footer">
+        <div class="w" style="color:#fff">
+          <el-row :gutter="20">
+            <el-col :span="5">
+              <div class="f_1">
+                <h2>产品</h2>
+                <h4>/ PRODUCT</h4>
+              </div>
+              <div class="f_2">
+                <el-row>
+                  <router-link to="/dealer_shop" class="f_3">
+                    <span @click="backtop">经销商店铺</span>
+                  </router-link>
+                </el-row>
+                <el-row>
+                  <router-link to="/dealer_manager" class="f_3">
+                    <span @click="backtop">经销商掌柜</span>
+                  </router-link>
+                </el-row>
+                <el-row>
+                  <router-link to="/supplier_shops" class="f_3">
+                    <span @click="backtop">供应商店铺</span>
+                  </router-link>
+                </el-row>
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <div class="f_1">
+                <h2>解决方案</h2>
+                <h4>/ SOLUTION</h4>
+              </div>
+              <div class="f_2">
+                <el-row>
+                  <router-link to="/dealer_program" class="f_3">
+                    <span @click="backtop">农资经销商解决方案</span>
+                  </router-link>
+                </el-row>
+                <el-row>
+                  <router-link to="/supplier_program" class="f_3">
+                    <span @click="backtop">农资供应商解决方案</span>
+                  </router-link>
+                </el-row>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="f_1">
+                <h2>平台资讯</h2>
+                <h4>/ PLATFORM CONSULTING</h4>
+              </div>
+              <div class="f_2">
+                <el-row>
+                  <a
+                    href="http://www.jiyinongye.cn/portal/article/index/id/17/cid/1.html"
+                    target="view_window"
+                    class="f_3"
+                  >吉林省现代农业企业协会参观考察</a>
+                </el-row>
+                <el-row>
+                  <a
+                    href="http://www.jiyinongye.cn/portal/article/index/id/19/cid/1.html"
+                    target="view_window"
+                    class="f_3"
+                  >何为平台经济？平台经济健康发展又为何要做好政策加减法</a>
+                </el-row>
+                <el-row>
+                  <a
+                    href="http://www.jiyinongye.cn/portal/article/index/id/51/cid/1.html"
+                    target="view_window"
+                    class="f_3"
+                  >获中央电视台关注，上央视CCTV-2频道《经济信息联播》</a>
+                </el-row>
+                <el-row>
+                  <a
+                    href="http://www.jiyinongye.cn/portal/article/index/id/52/cid/1.html"
+                    target="view_window"
+                    class="f_3"
+                  >【吉易·云备耕】再次被关注，上《吉林新闻联播》啦</a>
+                </el-row>
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <div class="f_1">
+                <h2>联系我们</h2>
+                <h4>/ Contact US</h4>
+              </div>
+              <div class="f_2">
+                <el-row class="f_3">合作咨询：400-684-0008</el-row>
+                <el-row class="f_3">投诉反馈：jiyinongye@126.com</el-row>
+                <el-row class="f_3">地址：长春市人力资源服务产业园 C座12层</el-row>
+              </div>
+            </el-col>
+          </el-row>
         </div>
-        <div class="footer_2">
-          <div class="w">
-            <p class="f2_1">Copyright © 2012-2018 All Rights Reserved. 备案号：吉ICP备19004431号 网站地图</p>
-            <p class="f2_1">
-              友情链接：
-              <a href="https://www.jlau.edu.cn/" target="view_window">吉林农业大学</a>
-            </p>
-          </div>
+      </div>
+      <div class="footer_2">
+        <div class="w">
+          <p class="f2_1">Copyright © 2012-2018 All Rights Reserved. 备案号：吉ICP备19004431号 网站地图</p>
+          <p class="f2_1">
+            友情链接：
+            <a href="https://www.jlau.edu.cn/" target="view_window">吉林农业大学</a>
+          </p>
         </div>
-      </el-footer>
+      </div>
     </el-container>
   </div>
 </template>
@@ -307,7 +305,6 @@ export default {
   width: 100%;
   background: #191919;
   padding: 55px 0 59px 0;
-  border-bottom: solid 1px #212121;
   .f_1 {
     display: flex;
     align-items: center;

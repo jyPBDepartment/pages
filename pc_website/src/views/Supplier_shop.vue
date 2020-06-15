@@ -1,8 +1,18 @@
 <template>
   <div class="Home">
-    <img class="top_img" src="../assets/introduce_banner_gysdp.jpg" :style="{height:`${bannerHeight}px`}" />
+    <img
+      class="top_img"
+      src="../assets/introduce_banner_gysdp.jpg"
+      :style="{height:`${bannerHeight}px`}"
+    />
     <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav>
-    <Fast :class=" marginTOP ? 'move':'move2' " :img="true" :title="modelName[0].title" :id="modelName[0].id" :allScreen="true">
+    <Fast
+      :class=" marginTOP ? 'move':'move2' "
+      :img="true"
+      :title="modelName[0].title"
+      :id="modelName[0].id"
+      :allScreen="true"
+    >
       <Rotation style="margin-top:30px" :banner="banner" :height="bannerHeight" />
     </Fast>
     <Fast :title="modelName[1].title" :id="modelName[1].id" background="rgb(246, 247, 252)">
@@ -21,10 +31,10 @@
     <Fast :title="modelName[2].title" :id="modelName[2].id">
       <el-row class="b" type="flex" justify="center">
         <el-col class="b_f" :span="12" v-for="(item, index) in bottonList" :key="index">
-          <el-col class="icon" :span="6">
+          <el-col class="icon" :span="10">
             <img :src="item.src" alt />
           </el-col>
-          <el-col class="content" :span="18">
+          <el-col class="content" :span="14">
             <h2>{{item.title}}</h2>
             <ul>
               <li v-for="liContent in item.li" :key="liContent">{{liContent}}</li>
@@ -54,10 +64,10 @@ export default {
       bannerHeight: 0,
       marginTOP: false,
       banner: [{ src: require("../assets/gys.jpg") }],
-      modelName:[
-        {title:'应用场景',id:'1'},
-        {title:'核心优势',id:'2'},
-        {title:'产品功能',id:'3'}
+      modelName: [
+        { title: "应用场景", id: "1" },
+        { title: "核心优势", id: "2" },
+        { title: "产品功能", id: "3" }
       ],
       bottonList: [
         {
@@ -79,7 +89,7 @@ export default {
           src: require("../assets/icon/4-4zgfx.png"),
           title: "报表管理",
           li: ["经营状况、数据统计、报表分析"]
-        },
+        }
       ]
     };
   },
@@ -93,7 +103,7 @@ export default {
     navMove(e) {
       this.marginTOP = e;
     },
-    specifyElement(id){
+    specifyElement(id) {
       document.getElementById(id).scrollIntoView();
     },
     screenChanges() {
@@ -141,19 +151,26 @@ export default {
     .icon {
       display: flex;
       justify-content: center;
-      padding: 50px 0;
+      padding: 21px 0;
       img {
-        max-width: 60px;
+        max-width: 70px;
+        max-height: 70px;
       }
     }
     .content {
       font-size: 20px;
       color: #101010;
+      h2 {
+        font-size: 18px;
+        font-weight: 400;
+        margin-bottom: 20px;
+      }
       ul {
         padding-left: 0;
         li {
-          font-size: 18px;
-          color: #938a8a;
+          list-style-type: disc;
+          color: #92909b;
+          font-size: 14px;
         }
       }
     }
