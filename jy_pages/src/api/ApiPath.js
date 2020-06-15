@@ -105,7 +105,17 @@ const url = {
   findAllClass:URLHost+'/w_classification_info/findAll',
   updateClass:URLHost+'/w_classification_info/findAll',
   //分类信息添加前过滤重复字段
-  classiFindByWord:URLHost+'/w_classification_info/findByWord',
+  // classiFindByWord:URLHost+'/w_classification_info/findByWord',
+  //问卷信息分页及查询
+  searchQuestion:URLHost+'/w_questionnaire/findByName',
+  //问卷调查删除
+  deleteQuestion:URLHost+'/w_questionnaire/delete',
+  //问卷调查添加
+  saveQuestion:URLHost+'/w_questionnaire/save',
+  //问卷调查修改前查询
+  questionFindById:URLHost+'/w_questionnaire/findById',
+  //问卷调查修改
+  updateQuestion:URLHost+'/w_questionnaire/update',
 }
 export default {
   url

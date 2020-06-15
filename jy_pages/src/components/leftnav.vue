@@ -151,6 +151,14 @@ export default {
               url: "Classification/classification",
               menus: null
             },
+             {
+              menuid: 2 - 10,
+              icon: "el-icon-eleme",
+              menuname: "问卷调查",
+              hasThird: "N",
+              url: "Question/question",
+              menus: null
+            },
           ]
         }
       ],

@@ -31,6 +31,8 @@ import Appointment from '@/views/appointment/appointmentShow';
 import Menu from '@/views/menu/menuIndex';
 //分类信息
 import Classification from '@/views/Classification/classification';
+//问卷调查
+import Question from '@/views/Question/question';
 /**
  * 支付管理
  */
@@ -139,7 +141,14 @@ export default new Router({
                 requireAuth: true
             }
         }, 
-          
+        {
+            path: '/Question/question',
+            name: '问卷调查',
+            component: Question,
+            meta: {
+                requireAuth: true
+            }
+        }, 
         {
             path: '/machine/MachineConfig',
             name: '支付配置信息',
