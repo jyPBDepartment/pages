@@ -89,8 +89,23 @@ const url = {
   //新增菜单
   addMenu:URLHost+'/menu/add',
   //分页查询菜单
-  findMenuByName:URLHost+'/menu/findByName'
-
+  findMenuByName:URLHost+'/menu/findByName',
+  //分类信息查询
+  searchClassification:URLHost+'/w_classification_info/findByName',
+  //分类信息删除
+  deleteClassification:URLHost+'/w_classification_info/delete',
+  //分类信息禁用
+  classiEnable:URLHost+'/w_classification_info/enable',
+  //分类信息添加
+  saveClassification:URLHost+'/w_classification_info/save',
+  //分类信息修改
+  classificationFindById:URLHost+'/w_classification_info/findById',
+  updateClassification:URLHost+'/w_classification_info/update',
+  //分类信息下拉查询(添加)
+  findAllClass:URLHost+'/w_classification_info/findAll',
+  updateClass:URLHost+'/w_classification_info/findAll',
+  //分类信息添加前过滤重复字段
+  classiFindByWord:URLHost+'/w_classification_info/findByWord',
 }
 export default {
   url

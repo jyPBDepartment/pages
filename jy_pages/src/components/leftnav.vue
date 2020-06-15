@@ -142,7 +142,15 @@ export default {
               hasThird: "N",
               url: "menu/menuIndex",
               menus: null
-            }
+            },
+            {
+              menuid: 2 - 9,
+              icon: "el-icon-eleme",
+              menuname: "分类管理",
+              hasThird: "N",
+              url: "Classification/classification",
+              menus: null
+            },
           ]
         }
       ],

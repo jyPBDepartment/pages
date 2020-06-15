@@ -29,6 +29,8 @@ import LimitRole from '@/views/limit/limitRole';
 import Appointment from '@/views/appointment/appointmentShow';
 //菜单管理
 import Menu from '@/views/menu/menuIndex';
+//分类信息
+import Classification from '@/views/Classification/classification';
 /**
  * 支付管理
  */
@@ -129,6 +131,15 @@ export default new Router({
                 requireAuth: true
             }
         },
+        {
+            path: '/Classification/classification',
+            name: '分类信息',
+            component: Classification,
+            meta: {
+                requireAuth: true
+            }
+        }, 
+          
         {
             path: '/machine/MachineConfig',
             name: '支付配置信息',
