@@ -10,7 +10,8 @@ const url = {
 
   //问卷调查添加
   saveQuestion:URLHost+'/questionnaire/save',
- 
+  //预约添加
+  saveFloat:URLHost+'/appointment/add',
 
   
 
