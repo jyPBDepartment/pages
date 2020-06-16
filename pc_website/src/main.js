@@ -8,6 +8,10 @@ import store from './store'
 import { pcaa } from 'area-data-vue';
 import './util/area.css';
 import AreaLinkageVue from 'area-linkage-vue';
+
+import axios from 'axios';
+Vue.prototype.$axios = axios;
+
 Vue.prototype.$pcaa = pcaa;
 
 Vue.use(AreaLinkageVue)
