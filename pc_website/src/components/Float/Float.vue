@@ -1,51 +1,58 @@
 <template>
-  <div class="record_info">
-    <h2>预约讲解</h2>
-    <el-row class="r_i_box">
-      <el-col class="r_i_input" :span="12">
-        <el-input v-model="info.name" placeholder="姓名（必填）"></el-input>
-      </el-col>
-      <el-col class="r_i_input" :span="12">
-        <el-input v-model="info.phone" placeholder="手机号码（必填）"></el-input>
-      </el-col>
-    </el-row>
-    <el-row class="r_i_box">
-      <el-col class="r_i_input" :span="12">
-        <el-input v-model="info.company" placeholder="公司名称（选填）"></el-input>
-      </el-col>
-      <el-col class="r_i_input" :span="12">
-        <el-input v-model="info.email" placeholder="邮箱（选填）"></el-input>
-      </el-col>
-    </el-row>
-    <el-row class="r_i_box">
-      <el-col class="r_i_input" :span="12">
-        <el-select v-model="info.programme" clearable placeholder="意向解决方案（选填）">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-col>
-      <el-col class="r_i_input" :span="12"></el-col>
-    </el-row>
-    <el-row class="r_i_box">
-      <el-col class="r_i_input" :span="24">
-        <area-cascader placeholder="所在地区（选填）" v-model="info.selected" :data="$pcaa" :level="2"></area-cascader>
-      </el-col>
-    </el-row>
-    <el-row class="r_i_box">
-      <div class="botton">提交</div>
-    </el-row>
-  </div>
+  <transition name="el-fade-in">
+    <div v-show="ejectMenus" class="transition-box record_info">
+      <h2>预约讲解</h2>
+      <img class="close" @click="closeMenu" src="../../assets/icon/close.png" alt="">
+      <el-row class="r_i_box">
+        <el-col class="r_i_input" :span="12">
+          <el-input v-model="info.name" placeholder="姓名（必填）"></el-input>
+        </el-col>
+        <el-col class="r_i_input" :span="12">
+          <el-input v-model="info.phone" placeholder="手机号码（必填）"></el-input>
+        </el-col>
+      </el-row>
+      <el-row class="r_i_box">
+        <el-col class="r_i_input" :span="12">
+          <el-input v-model="info.company" placeholder="公司名称（选填）"></el-input>
+        </el-col>
+        <el-col class="r_i_input" :span="12">
+          <el-input v-model="info.email" placeholder="邮箱（选填）"></el-input>
+        </el-col>
+      </el-row>
+      <el-row class="r_i_box">
+        <el-col class="r_i_input" :span="12">
+          <el-select v-model="info.programme" clearable placeholder="意向解决方案（选填）">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-col>
+        <el-col class="r_i_input" :span="12"></el-col>
+      </el-row>
+      <el-row class="r_i_box">
+        <el-col class="r_i_input" :span="24">
+          <area-cascader placeholder="所在地区（选填）" v-model="info.selected" :data="$pcaa" :level="2"></area-cascader>
+        </el-col>
+      </el-row>
+      <el-row class="r_i_box">
+        <div class="botton">提交</div>
+      </el-row>
+    </div>
+  </transition>
 </template>
 
 <script>
 export default {
   name: "Tabs",
-  props: {},
-  created() {},
+  props: {
+    ejectMenus: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       info: {
@@ -68,7 +75,11 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    closeMenu(){
+      this.$emit('closeMenu',false)
+    }
+  }
 };
 </script>
 
@@ -76,7 +87,7 @@ export default {
 .record_info {
   width: 940px;
   background: #fff;
-  position: absolute;
+  position: fixed;
   left: 50%;
   margin-left: -470px;
   top: 50%;
@@ -84,6 +95,14 @@ export default {
   margin-top: -285px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
   z-index: 1999;
+  .close{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+  }
   .area-cascader-wrap {
     .area-select {
       .large {

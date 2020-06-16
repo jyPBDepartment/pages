@@ -53,22 +53,25 @@ export default {
     isFixed: {
       type: Boolean,
       default: false
+    },
+    isShow: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      info:false
+      info: false
     };
   },
-  watch: {},
   mounted() {},
   methods: {
     backtop() {
       this.$emit("backtop");
     },
-    userInfo(){
-      if(!this.info){
-        this.info = true
+    userInfo() {
+      if (!this.isShow) {
+        this.$emit("chickCallMe", true);
       }
     }
   }
@@ -76,7 +79,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.record_info{
+.record_info {
   width: 940px;
   height: 569px;
   background: #fff;
@@ -119,7 +122,7 @@ export default {
   .z_1 {
     text-align: center;
   }
-  .y_w{
+  .y_w {
     margin: 20px auto;
     width: 165px;
     font-size: 18px;

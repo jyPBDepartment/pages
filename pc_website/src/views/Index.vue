@@ -1,6 +1,6 @@
 <template>
   <div class="Index">
-    <Float></Float> 
+    <Float :ejectMenus="ejectMenus" @closeMenu="ejectMenu($event)"></Float>
     <el-container>
       <el-header style="height:100px;background-color: rgb(0, 9, 48);">
         <div class="nav">
@@ -61,7 +61,12 @@
       </el-header>
       <el-main style="padding:0;">
         <router-view id="boxFixed" />
-        <FixedNavRight @backtop="backtop" :isFixed="isFixed" />
+        <FixedNavRight
+          @backtop="backtop"
+          :isFixed="isFixed"
+          :isShow="fixedShow"
+          @chickCallMe="ejectMenu($event)"
+        />
       </el-main>
       <div class="footer">
         <div class="w" style="color:#fff">
@@ -183,7 +188,9 @@ export default {
     return {
       activeIndex: "/",
       isFixed: false,
-      offsetTop: 640
+      fixedShow: false,
+      offsetTop: 640,
+      ejectMenus: false
     };
   },
   created() {
@@ -224,7 +231,11 @@ export default {
         document.body.scrollTop;
       //如果被卷曲的高度大于吸顶元素到顶端位置 的距离
       this.isFixed = scrollTop > this.offsetTop ? true : false;
-    }
+    },
+    ejectMenu(e) {
+      this.ejectMenus = e;
+      this.fixedShow = e;
+    },
   },
   //回调中移除监听
   destroyed() {
