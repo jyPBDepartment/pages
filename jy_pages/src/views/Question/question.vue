@@ -20,9 +20,9 @@
       </el-form-item>
       <el-button type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-search" >查询</el-button>
        <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-close">重置</el-button>
-        <el-row>
+        <!-- <el-row>
            <el-button type="info" plain @click="openRuleTag"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;" icon="el-icon-plus">新增</el-button>
-        </el-row>
+        </el-row> -->
     </el-form>
 
     <!-- 展示的表单 -->
@@ -52,7 +52,7 @@
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
-<add-question :show="addQuestionFlag" title="添加问卷调查信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-question> 
+<!-- <add-question :show="addQuestionFlag" title="添加问卷调查信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-question>  -->
 
  <update-question
       :show="updateQuestionFlag"
@@ -71,7 +71,7 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-import AddQuestion from "./addQuestion.vue";
+// import AddQuestion from "./addQuestion.vue";
 import UpdateQuestion from "./updateQuestion.vue";
 import Pagination from "../../components/Pagination";
 
@@ -272,7 +272,7 @@ export default {
     }
   },
   components: {
-    AddQuestion,
+    // AddQuestion,
     UpdateQuestion,
     
     Pagination

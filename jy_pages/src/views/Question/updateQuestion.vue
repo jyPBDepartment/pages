@@ -105,7 +105,7 @@ export default {
           { required: true, message: "请输入推荐人", trigger: "blur" }
         ],
         questionScore: [
-          { required: true, message: "请输入手机号码", trigger: "blur" }
+          { required: true, message: "请输入分数", trigger: "blur" }
         ]
       }
       
