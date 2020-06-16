@@ -9,7 +9,7 @@
               <el-col :span="3" :xs="12">
                 <img class="logo" src="../assets/logo.png" alt />
               </el-col>
-              <el-col :span="14" class="hidden-xs-only" :offset="7">
+              <el-col :span="15" class="hidden-xs-only" :offset="6">
                 <el-menu
                   :default-active="activeIndex"
                   style="height:100px"
@@ -71,7 +71,7 @@
       <div class="footer">
         <div class="w" style="color:#fff">
           <el-row :gutter="20">
-            <el-col :span="5">
+            <el-col :span="4" :offset="2">
               <div class="f_1">
                 <h2>产品</h2>
                 <h4>/ PRODUCT</h4>
@@ -94,7 +94,7 @@
                 </el-row>
               </div>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="4">
               <div class="f_1">
                 <h2>解决方案</h2>
                 <h4>/ SOLUTION</h4>
@@ -112,7 +112,7 @@
                 </el-row>
               </div>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="7">
               <div class="f_1">
                 <h2>平台资讯</h2>
                 <h4>/ PLATFORM CONSULTING</h4>
@@ -148,7 +148,7 @@
                 </el-row>
               </div>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="4">
               <div class="f_1">
                 <h2>联系我们</h2>
                 <h4>/ Contact US</h4>
@@ -164,11 +164,15 @@
       </div>
       <div class="footer_2">
         <div class="w">
-          <p class="f2_1">Copyright © 2012-2018 All Rights Reserved. 备案号：吉ICP备19004431号 网站地图</p>
-          <p class="f2_1">
-            友情链接：
-            <a href="https://www.jlau.edu.cn/" target="view_window">吉林农业大学</a>
-          </p>
+          <el-row>
+            <el-col :span="20" :offset="2">
+              <p class="f2_1">Copyright © 2012-2018 All Rights Reserved. 备案号：吉ICP备19004431号 网站地图</p>
+              <p class="f2_1">
+                友情链接：
+                <a href="https://www.jlau.edu.cn/" target="view_window">吉林农业大学</a>
+              </p>
+            </el-col>
+          </el-row>
         </div>
       </div>
     </el-container>
@@ -235,7 +239,7 @@ export default {
     ejectMenu(e) {
       this.ejectMenus = e;
       this.fixedShow = e;
-    },
+    }
   },
   //回调中移除监听
   destroyed() {
@@ -294,6 +298,7 @@ export default {
   border-bottom: none;
   font-size: 15px;
   line-height: 100px;
+  padding: 0 10px;
 }
 .el-menu--horizontal > .el-submenu .el-submenu__title {
   font-size: 15px !important;

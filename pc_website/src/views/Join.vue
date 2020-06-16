@@ -352,11 +352,16 @@ export default {
       ]
     };
   },
-  mounted() {
+   mounted() {
     window.addEventListener("resize", () => this.screenChanges(), false);
   },
+  created() {
+    this.screenChanges();
+  },
   methods: {
-    screenChanges() {},
+    screenChanges() {
+      this.bannerHeight = document.documentElement.clientHeight - 100;
+    },
     save: function() {
       //1.验证
       if (
@@ -472,6 +477,7 @@ export default {
       justify-content: center;
       .box {
         flex: 1;
+        display: block;
         .type {
           text-align: left;
           font-size: 18px;

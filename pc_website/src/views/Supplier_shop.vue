@@ -17,7 +17,7 @@
     </Fast>
     <Fast :title="modelName[1].title" :id="modelName[1].id" background="rgb(246, 247, 252)">
       <el-row class="h_y">
-        <el-col :span="12" class="text">
+        <el-col :span="12" class="text1">
           <p>线上货品展示，不受人脉限制，轻松取得更多销量</p>
           <p>仅需网店运营人员，节省销售成本，提高利润率</p>
           <p>大数据支撑决策，不再盲目生产</p>
@@ -127,7 +127,7 @@ export default {
 }
 .h_y {
   padding: 0 10%;
-  .text {
+  .text1 {
     text-align: left;
     font-size: 20px;
     color: #101010;
