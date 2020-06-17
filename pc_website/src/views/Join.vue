@@ -120,7 +120,7 @@ export default {
   },
   data() {
     return {
-      isShow:true,
+      isShow:false,
      editForm: {
         name: "",
         post: "",
