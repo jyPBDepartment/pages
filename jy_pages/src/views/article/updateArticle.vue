@@ -56,6 +56,7 @@
 <script>
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import aes from "@/utils/aes.js";
 import { quillEditor } from "vue-quill-editor";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
@@ -132,6 +133,13 @@ export default {
   },
   methods: {
     updateLimit: function() {
+      console.log("文本内容" + aes.encrypt(this.jurForm.content));
+
+      // this.editForm.content = aes.encrypt(this.editForm.content);
+
+      console.log(
+        "解析文本内容" + aes.decrypt("mE159nppZ+CY/ZV40m8UUA==")
+      );
       let params = {
         articleEntity: this.jurForm
       };

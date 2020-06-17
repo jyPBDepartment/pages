@@ -11,9 +11,21 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px">
+      <el-form
+        :model="editForm"
+        :rules="rules"
+        ref="editForm"
+        :label-position="labelPosition"
+        label-width="100px"
+      >
         <el-form-item label="文章名称" prop="name">
-          <el-input type="text" v-model="editForm.name" style="width:85%" size="small" placeholder="请输入文章名称"></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.name"
+            style="width:85%"
+            size="small"
+            placeholder="请输入文章名称"
+          ></el-input>
         </el-form-item>
         <el-form-item label="标题" prop="title">
           <el-input type="text" v-model="editForm.title" style="width:85%" size="small"></el-input>
@@ -32,7 +44,9 @@
           <el-input type="text" v-model="editForm.author" style="width:85%" size="small"></el-input>
         </el-form-item>
         <el-form-item label="文章内容" prop="content">
-          <div>
+          <div class="edit_container">
+            <!-- <span>仅限772个汉字</span> -->
+            <div slot="tip" class="el-upload__tip">仅限772个汉字</div>
             <el-card style="height: 610px;width:85%">
               <quill-editor
                 v-model="editForm.content"
@@ -55,12 +69,14 @@
 <script>
 import qs from "qs";
 import Vue from "vue";
+// import aes from "@/utils/aes.js"
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import { quillEditor } from "vue-quill-editor";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
+import aes from "@/utils/aes.js";
 export default {
   inject: ["reload"],
   props: {
@@ -79,19 +95,24 @@ export default {
       labelPosition: "right",
       editForm: {
         name: "",
-        path: ""
+        content: "",
+        title: "",
+        classificationId: "",
+        author: ""
       },
       classificationIdeOptions: [],
       localShow: this.show,
       rules: {
-        name: [{required: true, message: "请输入名称", trigger: "blur"}],
-        content: [{required: true, message: "请输入n内容", trigger: "blur"}],
-        title: [{required: true, message: "请输入标题", trigger: "blur"}],
-        classificationId: [{required: true, message: "选择分类", trigger: "blur"}],
-        author: [{ required: true, message: "请输入作者", trigger: "blur"}]
+        name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+        content: [{ required: true, message: "请输入n内容", trigger: "blur" }],
+        title: [{ required: true, message: "请输入标题", trigger: "blur" }],
+        classificationId: [
+          { required: true, message: "选择分类", trigger: "blur" }
+        ],
+        author: [{ required: true, message: "请输入作者", trigger: "blur" }]
       },
       content: null,
-      editorOption: []
+      editorOption: {}
     };
   },
   components: {
@@ -129,6 +150,14 @@ export default {
     },
 
     saveArticle: function() {
+      console.log("文本内容" + aes.encrypt(this.editForm.content));
+
+      // this.editForm.content = aes.encrypt(this.editForm.content);
+
+      console.log(
+        "解析文本内容" + aes.decrypt("mE159nppZ+CY/ZV40m8UUA==")
+      );
+      // console.log(aes.decrypt(aes.encrypt(JSON.stringify(paramList))))/
       let params = {
         articleEntity: this.editForm
       };
@@ -145,5 +174,12 @@ export default {
 <style scoped>
 .el-form {
   padding-left: 100px;
+}
+.el-upload__tip {
+  font-size: 14px;
+  font-family: "微软雅黑";
+  font-style: oblique;
+  color: rgb(248, 90, 90);
+  font-weight: bold;
 }
 </style>
