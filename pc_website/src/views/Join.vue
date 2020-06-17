@@ -62,47 +62,15 @@
                 :placeholder="index == 5 ? '500字以内' : item.title"
               ></el-input>
             </el-col>
-          </el-row>
+          </el-row> -->
+          <el-form>
+            <el-form-item></el-form-item>
+          </el-form>
           <el-row>
             <el-col :span="8" :offset="10">
               <el-button type="primary" @click="save">提交申请</el-button>
             </el-col>
-          </el-row> -->
-           <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="100px">
-        <el-form-item label="姓名" prop="name">
-          <el-input type="text" v-model="editForm.name"  placeholder="请输入姓名" style="width:70%;"></el-input>
-        </el-form-item>
-        <el-form-item label="职务" prop="post" >
-          <el-input type="text" v-model="editForm.post" placeholder="请输入职务 " style="width:70%;" 
-         ></el-input>
-        </el-form-item>
-         <el-form-item label="手机号码" prop="phoneNum">
-          <el-input type="text" v-model="editForm.phoneNum"  placeholder="请输入手机号码" style="width:70%;"></el-input>
-        </el-form-item>
-         <el-form-item label="公司名称" prop="companyName">
-          <el-input type="text" v-model="editForm.companyName"  placeholder="请输入公司名称" style="width:70%;"></el-input>
-        </el-form-item>
-         <el-form-item label="邮箱" prop="email">
-          <el-input type="text" v-model="editForm.email"  placeholder="请输入邮箱" style="width:70%;"></el-input>
-        </el-form-item>
-         <el-form-item label="合作期望" prop="expectaion">
-          <el-input type="textarea" v-model="editForm.expectaion"  placeholder="请输入合作期望" style="width:70%;"></el-input>
-        </el-form-item>
-         <el-form-item label="推荐人" prop="recommended">
-          <el-input type="text" v-model="editForm.recommended"  placeholder="请输入推荐人" style="width:70%;"></el-input>
-        </el-form-item>
-         <el-form-item label="问卷得分" prop="questionAnswer">
-          <el-input type="text" v-model="editForm.questionAnswer"  placeholder="请输入问卷答案" style="width:70%;"></el-input>
-        </el-form-item>
-        <el-form-item label="问卷得分" prop="questionScore">
-          <el-input type="text" v-model="editForm.questionScore"  placeholder="请输入问卷得分" style="width:70%;"></el-input>
-        </el-form-item>
-      </el-form>
-       <!-- 按钮区 -->
-    
-        <el-button type="success" icon="el-icon-check" @click="save" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
-        
-    
+          </el-row>
         </div>
       </div>
     </Fast>
@@ -113,8 +81,9 @@
 <script>
 import Fast from "../components/Fast/Fast";
 import Callcontact from "../components/Callcontact/Callcontact";
-import ApiPath from '@/api/ApiPath'
-import api from '@/axios/api'
+import aes from "@/util/aes";
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
 export default {
   components: {
     Fast,
@@ -122,76 +91,47 @@ export default {
   },
   data() {
     return {
+      editForm: {
+        questionAnswer: ""
+      },
       bannerHeight: 0,
-       editForm: {
-        name: "",
-        post: "",
-        phoneNum: "",
-        companyName: "",
-        email: "",
-        expectaion: "",
-        recommended: "",
-        questionAnswer:"",
-        questionScore: ""
-      },
-      // Input: [
-      //   {
-      //     title: "联系人姓名",
-      //     content: "",
-      //     mandatory: true
-      //   },
-      //   {
-      //     title: "联系人职务详情",
-      //     content: "",
-      //     mandatory: true
-      //   },
-      //   {
-      //     title: "联系人手机",
-      //     content: "",
-      //     mandatory: true
-      //   },
-      //   {
-      //     title: "联系人邮箱",
-      //     content: "",
-      //     mandatory: true
-      //   },
-      //   {
-      //     title: "公司名称",
-      //     content: "",
-      //     mandatory: false
-      //   },
-      //   {
-      //     title: "合作期望",
-      //     content: "",
-      //     mandatory: false
-      //   },
-      //   {
-      //     title: "推荐人姓名",
-      //     content: "",
-      //     mandatory: false
-      //   }
-      // ],
-       // rules表单验证
-      rules: {
-        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        post: [{ required: true, message: "请输入您的职务", trigger: "blur" }],
-        phoneNum: [
-          { required: true, message: "请输入手机号码", trigger: "blur" }
-        ],
-        companyName: [
-          { required: true, message: "请输入公司名称", trigger: "blur" }
-        ],
-        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
-        expectaion: [
-          { required: true, message: "请输入合作期望", trigger: "blur" }
-        ],
-        recommended: [
-          { required: true, message: "请输入推荐人", trigger: "blur" }
-        ],
-        questionScore: [
-          { required: true, message: "请输入手机号码", trigger: "blur" }
-        ]
-      },
+      Input: [
+        {
+          title: "联系人姓名",
+          content: "",
+          mandatory: true
+        },
+        {
+          title: "联系人职务详情",
+          content: "",
+          mandatory: true
+        },
+        {
+          title: "联系人手机",
+          content: "",
+          mandatory: true
+        },
+        {
+          title: "联系人邮箱",
+          content: "",
+          mandatory: true
+        },
+        {
+          title: "公司名称",
+          content: "",
+          mandatory: false
+        },
+        {
+          title: "合作期望",
+          content: "",
+          mandatory: false
+        },
+        {
+          title: "推荐人姓名",
+          content: "",
+          mandatory: false
+        }
+      ],
       topicList: [
         {
           num: "01",
@@ -421,7 +361,7 @@ export default {
       ]
     };
   },
-   mounted() {
+  mounted() {
     window.addEventListener("resize", () => this.screenChanges(), false);
   },
   created() {
@@ -448,7 +388,7 @@ export default {
                 if (j == 0) {
                   paramList.push({
                     num: i + 1,
-                    value: this.topicList[i]["answers"][j]["checkedCities"]
+                    value: "[{"+this.topicList[i]["answers"][j]["checkedCities"]+"}]"
                   });
                 }
               }
@@ -456,7 +396,7 @@ export default {
                 if (j == 1) {
                   paramList.push({
                     num: i + 1,
-                    value: this.topicList[i]["answers"][j]["checkedCities"]
+                    value: "[{"+this.topicList[i]["answers"][j]["checkedCities"]+"}]"
                   });
                 }
               }
@@ -465,49 +405,41 @@ export default {
             if (i == 10) {
               paramList.push({
                 num: i + 1,
-                value: this.topicList[i]["checkedCities"]
+                value: "[{"+this.topicList[i]["checkedCities"]+"}]"
               });
             } else {
               paramList.push({
                 num: i + 1,
-                value: this.topicList[i]["checkedCities"]
+                value: "[{"+this.topicList[i]["checkedCities"]+"}]"
               });
             }
           }
         }
-        console.log(JSON.stringify(paramList));
+        this.editForm.questionAnswer = aes.encrypt(JSON.stringify(paramList));
 
+        console.log(aes.decrypt(aes.encrypt(JSON.stringify(paramList))))
         //评分+表单数据
-
-        //editForm
-
-        //["A,B","AC","D"]
-
-        //api.ajaxios()
-         this.editForm.questionAnswer=JSON.stringify(paramList);
         let params = {
-        questionEntity: this.editForm
-        }; 
-         api.testAxiosGet(ApiPath.url.saveQuestion, params).then(res => {
-         let code = res.status;
-          if (code == "0") {
-          
-            this.$message.success(res.tips);
-          } 
-          if (code == "1") {
-          
+          questionEntity: this.editForm
+        };
+        api
+          .testAxiosGet(ApiPath.url.saveQuestion, params)
+          .then(res => {
+            if (res.status == "0") {
               this.$message.success(res.tips);
-          }
-           if (code == "2") {
-           
+            }
+            if (res.status == "1") {
               this.$message.success(res.tips);
-          }
-        this.$message.success(res.message);
-        this.reload();
-        this.close();
-      })
+            }
+            if (res.status == "2") {
+              this.$message.success(res.tips);
+            }
+          })
+          .catch(function(error) {
 
-        alert("执行保存方法");
+            console.log(error)
+          });
+        //editForm
       } else {
         alert("选项不能为空");
       }
