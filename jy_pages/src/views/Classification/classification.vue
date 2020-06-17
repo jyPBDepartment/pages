@@ -312,7 +312,7 @@ export default {
 }
 .el-row {
   margin-top: 2px;
-  margin-bottom: 6px;
+  margin-bottom: 15px;
 }
 .el-form-item {
   font-size: 14px;
