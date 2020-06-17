@@ -108,17 +108,17 @@ const url = {
 
   // classiFindByWord:URLHost+'/w_classification_info/findByWord',
   //问卷信息分页及查询
-  searchQuestion:URLHost+'/w_questionnaire/findByName',
+  searchQuestion:URLHost+'/questionnaire/findByName',
   //问卷调查删除
-  deleteQuestion:URLHost+'/w_questionnaire/delete',
+  deleteQuestion:URLHost+'/questionnaire/delete',
   //问卷调查添加
-  saveQuestion:URLHost+'/w_questionnaire/save',
+  saveQuestion:URLHost+'/questionnaire/save',
   //问卷调查修改前查询
-  questionFindById:URLHost+'/w_questionnaire/findById',
+  questionFindById:URLHost+'/questionnaire/findById',
   //问卷调查修改
-  updateQuestion:URLHost+'/w_questionnaire/update',
+  updateQuestion:URLHost+'/questionnaire/update',
 
-  classiFindByWord:URLHost+'/w_classification_info/findByWord',
+  // classiFindByWord:URLHost+'/w_classification_info/findByWord',
 
     //文章管理
   articleSearch:URLHost+'/article/findByName',

@@ -16,7 +16,7 @@
           <el-input type="text" v-model="QuestionForm.name"  placeholder="请输入姓名" style="width:70%;"></el-input>
         </el-form-item>
         <el-form-item label="职务" prop="post" >
-          <el-input type="text" v-model="QuestionForm.post" placeholder="请输入职务 " style="width:70%;" show-password maxlength="16" 
+          <el-input type="text" v-model="QuestionForm.post" placeholder="请输入职务 " style="width:70%;" 
          ></el-input>
         </el-form-item>
          <el-form-item label="手机号码" prop="phoneNum">
@@ -34,11 +34,11 @@
          <el-form-item label="推荐人" prop="recommended">
           <el-input type="text" v-model="QuestionForm.recommended"  placeholder="请输入推荐人" style="width:70%;"></el-input>
         </el-form-item>
-        <el-form-item label="问卷答案" prop="questionAnswer">
+        <el-form-item label="问卷答案" prop="questionAnswer"  v-if="isShow">
           <el-input type="text" v-model="QuestionForm.questionAnswer"  placeholder="请输入问卷答案" style="width:70%;"></el-input>
         </el-form-item>
         <el-form-item label="问卷得分" prop="questionScore">
-          <el-input type="text" v-model="QuestionForm.questionScore"  placeholder="请输入问卷得分" style="width:70%;"></el-input>
+          <el-input type="text" v-model="QuestionForm.questionScore"  placeholder="请输入问卷得分" style="width:70%;" readonly></el-input>
         </el-form-item>
        
          
@@ -55,7 +55,7 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
-   
+   isShow:false,
   inject: ["reload"],
   props: {
     show: {
@@ -131,31 +131,9 @@ export default {
   },
  
   mounted() {
-    // this.findContext();
+   
   },
   methods: {
-    
-    //联表查询
-    // findContext: function() {
-    //     let params = {
-    //     roleId  :this.AdminForm.roleId
-    //     };
-    //     api
-    //       .testAxiosGet(ApiPath.url.findAllUpdate, params)
-    //       .then(res => {
-    //         if (res.status == "0") {
-    //           for (let i = 0; i < res.data.length; i++) {
-    //             this.AdminOptions.push({
-    //               value: res.data[i]["id"],
-    //               label: res.data[i]["name"]
-    //             });
-    //           }
-    //         }
-    //       })
-    //       .catch(function(error) {
-    //       });
-    // },
-
     //修改用户信息
     updateQuestion: function() {
       let params = {

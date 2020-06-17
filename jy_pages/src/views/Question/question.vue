@@ -20,9 +20,7 @@
       </el-form-item>
       <el-button type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-search" >查询</el-button>
        <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-close">重置</el-button>
-        <!-- <el-row>
-           <el-button type="info" plain @click="openRuleTag"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;" icon="el-icon-plus">新增</el-button>
-        </el-row> -->
+        
     </el-form>
 
     <!-- 展示的表单 -->
@@ -36,7 +34,7 @@
       <el-table-column sortable prop="expectaion" label="合作期望" align="center"></el-table-column>
       <el-table-column sortable prop="recommended" label="推荐人" align="center"></el-table-column>
        <el-table-column sortable prop="questionScore" label="问卷得分" align="center"></el-table-column>
-      <el-table-column sortable prop="questionAnswer" label="问卷答案" align="center"></el-table-column>
+      <el-table-column sortable prop="questionAnswer" label="问卷答案" align="center" v-if="isShow"></el-table-column>
       <el-table-column  prop="createDate" label="创建时间" align="center">
       </el-table-column>
       
@@ -52,7 +50,6 @@
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
-<!-- <add-question :show="addQuestionFlag" title="添加问卷调查信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-question>  -->
 
  <update-question
       :show="updateQuestionFlag"
@@ -76,6 +73,7 @@ import UpdateQuestion from "./updateQuestion.vue";
 import Pagination from "../../components/Pagination";
 
 export default {
+  isShow:false,
   inject: ["reload"],
   props: {
     show: {
