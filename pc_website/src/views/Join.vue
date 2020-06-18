@@ -47,7 +47,7 @@
         </div>
 
         <div class="info">
-          <el-row class="box" v-for="(item, index) in Input" :key="index">
+          <!-- <el-row class="box" v-for="(item, index) in Input" :key="index">
             <el-col class="title" :span="8" :offset="1">
               {{ item.title }}
               <div>
@@ -62,7 +62,39 @@
                 :placeholder="index == 5 ? '500字以内' : item.title"
               ></el-input>
             </el-col>
-          </el-row>
+          </el-row> -->
+
+          <!-- 连接后端方法的表单 -->
+        <el-form :rules="rules" ref="editForm" :model="editForm" >
+        <el-form-item label="联系人姓名" prop="name">
+          <el-input type="text" v-model="editForm.name"  placeholder="请输入联系人姓名" @change="name" ></el-input>
+        </el-form-item>
+        <el-form-item label="联系人职务" prop="post" >
+          <el-input type="text" v-model="editForm.post" placeholder="请输入联系人职务 " @change="post"
+         ></el-input>
+        </el-form-item>
+         <el-form-item label="联系人手机" prop="phoneNum">
+          <el-input type="text" v-model="editForm.phoneNum"  placeholder="请输入联系人手机" @change="tel"></el-input>
+        </el-form-item>
+          <el-form-item label="联系人邮箱" prop="email">
+          <el-input type="text" v-model="editForm.email"  placeholder="请输入联系人邮箱" @change="email"></el-input>
+        </el-form-item>
+         <el-form-item label="公司名称">
+          <el-input type="text" v-model="editForm.companyName"  placeholder="请输入公司名称"></el-input>
+        </el-form-item>
+         <el-form-item label="合作期望">
+          <el-input type="textarea" v-model="editForm.expectaion"  placeholder="请输入合作期望,500字以内。" style=" width: 33%; margin-left: 20px;"></el-input>
+        </el-form-item>
+         <el-form-item label="推荐人姓名">
+          <el-input type="text" v-model="editForm.recommended"  placeholder="请输入推荐人姓名"></el-input>
+        </el-form-item>
+         <el-form-item label="问卷答案" v-if="isShow">
+          <el-input type="text" v-model="editForm.questionAnswer"  placeholder="请输入问卷答案"></el-input>
+        </el-form-item>
+        <el-form-item label="问卷得分"  v-if="isShow">
+          <el-input type="text" v-model="editForm.questionScore"  placeholder="请输入问卷得分"></el-input>
+        </el-form-item>
+      </el-form>
           <el-row>
             <el-col :span="8" :offset="10">
               <el-button type="primary" @click="save">提交申请</el-button>
@@ -78,6 +110,9 @@
 <script>
 import Fast from "../components/Fast/Fast";
 import Callcontact from "../components/Callcontact/Callcontact";
+import aes from "@/util/aes";
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
 export default {
   components: {
     Fast,
@@ -85,44 +120,66 @@ export default {
   },
   data() {
     return {
+      isShow:false,
+     editForm: {
+        name: "",
+        post: "",
+        phoneNum: "",
+        companyName: "",
+        email: "",
+        expectaion: "",
+        recommended: "",
+        questionAnswer:"",
+        questionScore: ""
+      },
+        // rules表单验证
+       rules: {
+        name: [{ required: true, message: "请输入您的姓名，只能为字母或汉字。", trigger: "blur" }],
+        post: [{ required: true, message: "请输入您的职务，只能为字母或汉字。", trigger: "blur" }],
+        phoneNum: [
+          { required: true, message: "请输入手机号码", trigger: "blur" }
+        ],
+        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }
+        ],
+      },
       bannerHeight: 0,
-      Input: [
-        {
-          title: "联系人姓名",
-          content: "",
-          mandatory: true
-        },
-        {
-          title: "联系人职务详情",
-          content: "",
-          mandatory: true
-        },
-        {
-          title: "联系人手机",
-          content: "",
-          mandatory: true
-        },
-        {
-          title: "联系人邮箱",
-          content: "",
-          mandatory: true
-        },
-        {
-          title: "公司名称",
-          content: "",
-          mandatory: false
-        },
-        {
-          title: "合作期望",
-          content: "",
-          mandatory: false
-        },
-        {
-          title: "推荐人姓名",
-          content: "",
-          mandatory: false
-        }
-      ],
+      // Input: [
+      //   {
+      //     title: "联系人姓名",
+      //     content: "",
+      //     mandatory: true
+      //   },
+      //   {
+      //     title: "联系人职务详情",
+      //     content: "",
+      //     mandatory: true
+      //   },
+      //   {
+      //     title: "联系人手机",
+      //     content: "",
+      //     mandatory: true
+      //   },
+      //   {
+      //     title: "联系人邮箱",
+      //     content: "",
+      //     mandatory: true
+      //   },
+      //   {
+      //     title: "公司名称",
+      //     content: "",
+      //     mandatory: false
+      //   },
+      //   {
+      //     title: "合作期望",
+      //     content: "",
+      //     mandatory: false
+      //   },
+      //   {
+      //     title: "推荐人姓名",
+      //     content: "",
+      //     mandatory: false
+      //   }
+      // ],
       topicList: [
         {
           num: "01",
@@ -172,7 +229,7 @@ export default {
           title: "您是否已经准备好商品或有货源渠道",
           min: 0,
           max: 1,
-          mandatory: false,
+          mandatory: true,
           answer: [
             { id: "A", name: "农资类商品生产者/代理者/经营者" },
             { id: "B", name: "种植大户/农机大户/养殖大户" }
@@ -184,7 +241,7 @@ export default {
           title: "您的企业/店铺类型是怎样的",
           min: 0,
           max: 1,
-          mandatory: false,
+          mandatory: true,
           answer: [
             { id: "A", name: "合资" },
             { id: "B", name: "国有" },
@@ -204,7 +261,7 @@ export default {
           title: "您的销售覆盖区域",
           min: 0,
           max: 1,
-          mandatory: false,
+          mandatory: true,
           answer: [
             { id: "A", name: "省级及以下" },
             { id: "B", name: "市级及以下" },
@@ -352,13 +409,57 @@ export default {
       ]
     };
   },
-   mounted() {
+  mounted() {
     window.addEventListener("resize", () => this.screenChanges(), false);
   },
   created() {
     this.screenChanges();
   },
   methods: {
+    // 输入姓名正则验证
+    name: function() {
+      var name =  /^[a-zA-Z\u4E00-\uFA29]*$/;
+      if (!name.test(this.editForm.name)) {
+       this.$alert('请输入正确的姓名，只能为字母或汉字！', '提示', {
+          confirmButtonText: '确定',
+        });
+        this.editForm.name = "";
+       
+      }
+    },
+    // 输入职务正则验证
+     post: function() {
+      var post =  /^[a-zA-Z\u4E00-\uFA29]*$/;
+      if (!post.test(this.editForm.post)) {
+       this.$alert('请输入正确的姓名，只能为字母或汉字！', '提示', {
+          confirmButtonText: '确定',
+        });
+        this.editForm.post = "";
+       
+      }
+    },
+   // 输入邮箱正则验证
+    email: function() {
+      var email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+      if (!email.test(this.editForm.email)) {
+       this.$alert('请输入正确的邮箱！', '提示', {
+          confirmButtonText: '确定',
+        });
+        this.editForm.email = "";
+       
+      }
+    },
+    // 输入手机号码正则验证
+    tel: function() {
+      if (!/^1[345789]\d{9}$/.test(this.editForm.phoneNum)) {
+         this.$alert('请输入正确的手机号！', '提示', {
+          confirmButtonText: '确定',
+        });
+       
+        this.editForm.phoneNum = "";
+       
+      }
+    },
     screenChanges() {
       this.bannerHeight = document.documentElement.clientHeight - 100;
     },
@@ -367,7 +468,10 @@ export default {
       if (
         this.topicList[0]["checkedCities"].length > 0 &&
         this.topicList[1]["checkedCities"].length > 0 &&
-        this.topicList[2]["checkedCities"].length > 0
+        this.topicList[2]["checkedCities"].length > 0 &&
+        this.topicList[3]["checkedCities"].length > 0 &&
+        this.topicList[4]["checkedCities"].length > 0 &&
+        this.topicList[5]["checkedCities"].length > 0 
       ) {
         //2.整合数据
         //params  **Entity
@@ -379,7 +483,7 @@ export default {
                 if (j == 0) {
                   paramList.push({
                     num: i + 1,
-                    value: this.topicList[i]["answers"][j]["checkedCities"]
+                    value: "[{"+this.topicList[i]["answers"][j]["checkedCities"]+"}]"
                   });
                 }
               }
@@ -387,7 +491,7 @@ export default {
                 if (j == 1) {
                   paramList.push({
                     num: i + 1,
-                    value: this.topicList[i]["answers"][j]["checkedCities"]
+                    value: "[{"+this.topicList[i]["answers"][j]["checkedCities"]+"}]"
                   });
                 }
               }
@@ -396,29 +500,46 @@ export default {
             if (i == 10) {
               paramList.push({
                 num: i + 1,
-                value: this.topicList[i]["checkedCities"]
+                value: "[{"+this.topicList[i]["checkedCities"]+"}]"
               });
             } else {
               paramList.push({
                 num: i + 1,
-                value: this.topicList[i]["checkedCities"]
+                value: "[{"+this.topicList[i]["checkedCities"]+"}]"
               });
             }
           }
         }
-        console.log(JSON.stringify(paramList));
+        this.editForm.questionAnswer = aes.encrypt(JSON.stringify(paramList));
 
+        // console.log(aes.decrypt(aes.encrypt(JSON.stringify(paramList))))
         //评分+表单数据
+        let params = {
+          questionEntity: this.editForm
+        };
+        api
+          .testAxiosGet(ApiPath.url.saveQuestion, params)
+          .then(res => {
+        //  判断身份
+         if (res.status == "0") {
+              this.$message.success(res.tips);
+            }
+            if (res.status == "1") {
+              this.$message.success(res.tips);
+            }
+            if (res.status == "2") {
+              this.$message.success(res.tips);
+            }
+          })
+          .catch(function(error) {
 
+            console.log(error)
+          });
         //editForm
-
-        //["A,B","AC","D"]
-
-        //api.ajaxios()
-
-        alert("执行保存方法");
       } else {
-        alert("选项不能为空");
+            this.$alert('选项不能为空！', '提示', {
+          confirmButtonText: '确定',
+        });
       }
     }
   }
@@ -499,27 +620,51 @@ export default {
     }
   }
 }
+// .info {
+//   .box {
+//     margin: 20px 0;
+//     .title {
+//       text-align: right;
+//       line-height: 40px;
+//       font-size: 16px;
+//       div {
+//         float: right;
+//         width: 20px;
+//         height: 40px;
+//         span {
+//           color: #dd2232;
+//           font-weight: bolder;
+//           margin: 0 5px;
+//         }
+//       }
+//     }
+//   }
+//   .el-button--primary {
+//     width: 100%;
+//   }
+// }
 .info {
-  .box {
-    margin: 20px 0;
-    .title {
-      text-align: right;
-      line-height: 40px;
-      font-size: 16px;
-      div {
-        float: right;
-        width: 20px;
-        height: 40px;
-        span {
-          color: #dd2232;
-          font-weight: bolder;
-          margin: 0 5px;
-        }
-      }
+  margin: 20px 0;
+  .el-form-item__label {
+    width: 289px;
+    font-size: 16px;
+  }
+  .el-form-item__error {
+    margin-left: 314px;
+  }
+  .el-input {
+    margin-left: 20px;
+    width: 33%;
+  }
+  .el-col {
+    margin-left: 38%;
+    .el-button--primary {
+      width: 102%;
     }
   }
-  .el-button--primary {
-    width: 100%;
-  }
+}
+.el-message-box {
+  width: 272px;
+  text-align: center;
 }
 </style>

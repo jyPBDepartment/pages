@@ -27,7 +27,11 @@
     <el-table size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="名称" align="center" width="80"></el-table-column>
-      <el-table-column sortable prop="content" :show-overflow-tooltip="true" label="内容" align="center" width="90"></el-table-column>
+      <el-table-column sortable prop="content" :show-overflow-tooltip="true" label="内容" align="center" width="200">
+         <template slot-scope="scope">
+           <p  v-html="scope.row.content">{{scope.row.content}}</p>
+         </template>
+      </el-table-column>
       <el-table-column sortable prop="title" label="标题" align="center" width="85"></el-table-column>
       <el-table-column sortable prop="classificationName" label="分类名称" align="center" width="110"></el-table-column>
       <el-table-column sortable prop="author" label="作者" align="center" width="90"></el-table-column>
@@ -40,8 +44,8 @@
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            active-value="0"
-            inactive-value="1"
+            active-value="1"
+            inactive-value="0"
             active-color="#0080FF"
             inactive-color="#84C1FF"
             @change="articleEnable(scope)"
@@ -133,7 +137,7 @@ export default {
       ArticleRightProps: {
         children: "children",
         label: "name"
-      }
+      },
     };
   },
   // 注册组件
@@ -172,6 +176,19 @@ export default {
           this.formInline.total = res.data.totalElements;
         }
       });
+
+
+    //   api.testAxiosGet(ApiPath.url.findClassification, param).then(res => {
+    //   let code = res.status;
+    //   if (code == "0") {
+    //     for (let i = 0; i < res.data.length; i++) {
+    //       this.classificationId.push({
+    //         value: res.data[i]["id"],
+    //         label: res.data[i]["name"]
+    //       });
+    //     }
+    //   }
+    // });
     },
     saveArticle() {
       this.addArt = false;
@@ -231,10 +248,12 @@ export default {
       };
       api.testAxiosGet(ApiPath.url.isTopping, params).then(res => {
         let code = res.state;
-        if (code == "0") {
+        if (code == "1") {
           this.$message.success(res.message);
-        } else {
+        } else if(code == "0"){
           this.$message.success(res.message);
+        }else{
+          this.$message.error(res.message);
         }
         this.reload();
       });
@@ -297,6 +316,10 @@ export default {
 <style scoped>
 .user-search {
   margin-top: 20px;
+}
+.el-tooltip__popper{
+  font-size: 14px; 
+  max-width:100px;
 }
 .el-button {
   display: inline-block;

@@ -8,12 +8,12 @@
           <el-input v-model="info.name" placeholder="姓名（必填）"></el-input>
         </el-col>
         <el-col class="r_i_input" :span="12">
-          <el-input v-model="info.phone" placeholder="手机号码（必填）"></el-input>
+          <el-input v-model="info.phoneNum" placeholder="手机号码（必填）"></el-input>
         </el-col>
       </el-row>
       <el-row class="r_i_box">
         <el-col class="r_i_input" :span="12">
-          <el-input v-model="info.company" placeholder="公司名称（选填）"></el-input>
+          <el-input v-model="info.companyName" placeholder="公司名称（选填）"></el-input>
         </el-col>
         <el-col class="r_i_input" :span="12">
           <el-input v-model="info.email" placeholder="邮箱（选填）"></el-input>
@@ -21,7 +21,7 @@
       </el-row>
       <el-row class="r_i_box">
         <el-col class="r_i_input" :span="12">
-          <el-select v-model="info.programme" clearable placeholder="意向解决方案（选填）">
+          <el-select v-model="info.solution" clearable placeholder="意向解决方案（选填）">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -34,17 +34,19 @@
       </el-row>
       <el-row class="r_i_box">
         <el-col class="r_i_input" :span="24">
-          <area-cascader placeholder="所在地区（选填）" type="text" v-model="info.selected" :data="$pcaa" :level="2"></area-cascader>
+          <area-cascader type="text" placeholder="所在地区（选填）" v-model="address" :data="$pcaa" :level="2"></area-cascader>
         </el-col>
       </el-row>
       <el-row class="r_i_box">
-        <div class="botton">提交</div>
+        <div class="botton" @click="submit()" >提交</div>
       </el-row>
     </div>
   </transition>
 </template>
 
 <script>
+import ApiPath from '@/api/ApiPath'
+import api from '@/axios/api'
 export default {
   name: "Tabs",
   props: {
@@ -55,13 +57,14 @@ export default {
   },
   data() {
     return {
+      address:"",
       info: {
         name: "",
-        phone: null,
+        phone: "",
         company: "",
         email: "",
         programme: "",
-        selected: []
+        address:"",
       },
       options: [
         {
@@ -78,6 +81,26 @@ export default {
   methods: {
     closeMenu(){
       this.$emit('closeMenu',false)
+    },
+    submit:function(){
+     
+      let pa = "";
+      for(let i=0;i<this.address.length;i++){
+       pa=pa+","+this.address[i];
+     
+      }
+
+    this.info.address = pa;
+     let params = {
+     
+       explanstionEntity:this.info
+
+     }
+      api.testAxiosGet(ApiPath.url.saveFloat, params).then(res => {
+        this.$message.success(res.message);
+        this.$emit("closeMenu");
+       
+      });
     }
   }
 };
