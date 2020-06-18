@@ -64,17 +64,17 @@
         </div>
       </el-header>
       <el-main style="padding:0;">
-        <div class="m_menu">
+        <div class="m_menu hidden-md-and-up">
           <div v-for="(item, index) in mMenus" :key="index">
-            <div class="m_menu_item">
+            <div class="m_menu_item" @click="isOpen(index)">
               <div>{{item.name}}</div>
-              <div>
-                <i class="el-icon-arrow-down" />
+              <div v-show="item.secondLevel">
+                <i :class="!item.state?'el-icon-arrow-down' : 'el-icon-arrow-up'" />
               </div>
             </div>
             <div
               class="m_second_level m_menu_item"
-              v-show="item.secondLevel"
+              v-show="item.state"
               v-for="(item1 ,index1) in item.secondLevel"
               :key="index1"
             >{{item1.name}}</div>
@@ -238,14 +238,17 @@ export default {
       mMenus: [
         {
           name: "首页",
-          secondLevel: []
+          state: false
         },
         {
           name: "吉易惠农",
-          secondLevel: []
+
+          state: false
         },
         {
           name: "产品",
+
+          state: false,
           secondLevel: [
             {
               name: "经销商店铺"
@@ -260,6 +263,8 @@ export default {
         },
         {
           name: "解决方案",
+
+          state: false,
           secondLevel: [
             {
               name: "农资经销商解决方案"
@@ -271,6 +276,8 @@ export default {
         },
         {
           name: "合作伙伴",
+
+          state: false,
           secondLevel: [
             {
               name: "合作伙伴"
@@ -325,6 +332,11 @@ export default {
     ejectMenu(e) {
       this.ejectMenus = e;
       this.fixedShow = e;
+    },
+    isOpen(index) {
+      if (this.mMenus[index].secondLevel !== []) {
+        this.mMenus[index].state = !this.mMenus[index].state;
+      }
     },
     isMenus() {}
   },
