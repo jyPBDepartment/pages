@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: '首页',
@@ -54,6 +54,16 @@ Vue.use(VueRouter)
     path: '/join',
     name: 'join',
     component: () => import('../views/Join.vue')
+  },
+  {
+    path: '/real_time_info',
+    name: 'real_time_info',
+    component: () => import('../views/Real_time_info.vue')
+  },
+  {
+    path: '/article',
+    name: 'article',
+    component: () => import('../views/Article.vue')
   }
 ]
 

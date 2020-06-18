@@ -2,14 +2,14 @@
   <div class="Index">
     <Float :ejectMenus="ejectMenus" @closeMenu="ejectMenu($event)"></Float>
     <el-container>
-      <el-header style="height:100px;background-color: rgb(0, 9, 48);">
+      <el-header class="header">
         <div class="nav">
           <div class="w">
             <el-row type="flex" align="middle">
-              <el-col :span="3" :xs="12">
+              <el-col class="m_logo" :span="3" :offset="2" :xs="{span: 10, offset: 0}">
                 <img class="logo" src="../assets/logo.png" alt />
               </el-col>
-              <el-col :span="15" class="hidden-xs-only" :offset="6">
+              <el-col :span="15" class="hidden-md-and-down" :offset="4">
                 <el-menu
                   :default-active="activeIndex"
                   style="height:100px"
@@ -55,6 +55,10 @@
                   </el-submenu>
                 </el-menu>
               </el-col>
+              <el-col class="hidden-md-and-up m_header_btn" :xs="{span:14}">
+                <img src="../assets/mobile/dianhua.png" alt />
+                <img src="../assets/mobile/caidan.png" alt />
+              </el-col>
             </el-row>
           </div>
         </div>
@@ -68,7 +72,7 @@
           @chickCallMe="ejectMenu($event)"
         />
       </el-main>
-      <div class="footer">
+      <div class="footer hidden-md-and-down">
         <div class="w" style="color:#fff">
           <el-row :gutter="20">
             <el-col :span="4" :offset="2">
@@ -162,7 +166,7 @@
           </el-row>
         </div>
       </div>
-      <div class="footer_2">
+      <div class="footer_2 hidden-xs-only">
         <div class="w">
           <el-row>
             <el-col :span="20" :offset="2">
@@ -174,6 +178,25 @@
             </el-col>
           </el-row>
         </div>
+      </div>
+      <div class="m_footer hidden-md-and-up">
+        <el-row class="m_f_nav">
+          <el-col class="m_f_1" :span="6">首页</el-col>
+          <el-col class="m_f_1" :span="6">首页</el-col>
+          <el-col class="m_f_1" :span="6">首页</el-col>
+          <el-col class="m_f_1" :span="6">首页</el-col>
+          <el-col class="m_f_1" :span="6">首页</el-col>
+          <el-col class="m_f_1" :span="6">农资经销商 解决方案</el-col>
+          <el-col class="m_f_1" :span="6">首页</el-col>
+          <el-col class="m_f_1" :span="6">首页</el-col>
+        </el-row>
+        <el-row class="m_f_i">
+          <p>合作咨询：400-684-0008</p>
+          <p>投诉反馈：jiyinongye@126.com</p>
+          <p>地址：长春市人力资源服务产业园C座12层</p>
+          <p>Copyright © 2012-2018 All Rights Reserved.</p>
+          <p>备案号：吉ICP备19004431号</p>
+        </el-row>
       </div>
     </el-container>
   </div>
@@ -250,6 +273,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.header {
+  height: 100px !important;
+  background-color: rgb(0, 9, 48);
+}
+.el-submenu__title i {
+  color: rgba(0, 0, 0, 0);
+}
 .nav {
   width: 100%;
   height: 100px;
@@ -340,6 +370,78 @@ export default {
     a {
       color: #888;
       text-decoration: none;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .header {
+    height: 50px !important;
+    background-color: rgb(0, 9, 48);
+  }
+  .nav {
+    height: 50px;
+  }
+  .m_logo {
+    height: 50px;
+    display: flex;
+    align-content: center;
+    padding: 10px 0;
+    .logo {
+      width: 102px;
+      height: 30px;
+    }
+  }
+  .m_header_btn {
+    height: 50px;
+    text-align: right;
+    padding: 10px 0;
+    img {
+      width: 30px;
+      height: 30px;
+      margin: 0 10px;
+    }
+  }
+  .m_footer {
+    background: #212129;
+    padding-bottom: 30px;
+    .m_f_nav {
+      .m_f_1 {
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 14px;
+        color: #fff;
+        padding:0 5px;
+        border-right: 1px solid #ffffff;
+        border-bottom: 1px solid #ffffff;
+        &:nth-child(4),
+        &:nth-child(8) {
+          border-right: 0;
+        }
+        &:nth-child(5),
+        &:nth-child(6),
+        &:nth-child(7),
+        &:nth-child(8) {
+          border-bottom: 0;
+        }
+      }
+    }
+    .m_f_i{
+      padding-left: 20px;
+      p{
+        color: #808080;
+        font-size: 12px;
+        margin-top: 0;
+        margin-bottom: 10px;
+        &:nth-child(1){
+          margin-top: 20px;
+        }
+        &:nth-child(3){
+          margin-bottom: 30px;
+        }
+      }
     }
   }
 }

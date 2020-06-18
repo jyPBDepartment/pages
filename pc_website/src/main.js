@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui';
+import Vant from 'vant';
+import 'vant/lib/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue'
@@ -12,7 +14,7 @@ Vue.prototype.$pcaa = pcaa;
 
 Vue.use(AreaLinkageVue)
 
-
+Vue.use(Vant);
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 

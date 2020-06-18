@@ -34,7 +34,7 @@
       </el-row>
       <el-row class="r_i_box">
         <el-col class="r_i_input" :span="24">
-          <area-cascader placeholder="所在地区（选填）" v-model="info.selected" :data="$pcaa" :level="2"></area-cascader>
+          <area-cascader placeholder="所在地区（选填）" type="text" v-model="info.selected" :data="$pcaa" :level="2"></area-cascader>
         </el-col>
       </el-row>
       <el-row class="r_i_box">

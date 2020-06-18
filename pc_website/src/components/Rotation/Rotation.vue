@@ -1,6 +1,6 @@
 <template>
   <div class="Rotation">
-    <el-carousel :height="`${height}px`" arrow="hover" :interval="2000">
+    <el-carousel  class="hidden-md-and-down"  :height="`${height}px`" arrow="hover" :interval="2000">
       <el-carousel-item v-for="(item, index) in banner" :key="index">
         <div class="content" v-if="item.title !== ''">
           <h2 :class="index == 2?'title1':'title'">{{item.title}}</h2>
@@ -10,6 +10,12 @@
         <img class="b_1" :src="item.src" :style="{height:`${height}px`}" alt />
       </el-carousel-item>
     </el-carousel>
+    <van-swipe  class="my-swipe hidden-md-and-up" :autoplay="3000" indicator-color="white">
+      <van-swipe-item>1</van-swipe-item>
+      <van-swipe-item>2</van-swipe-item>
+      <van-swipe-item>3</van-swipe-item>
+      <van-swipe-item>4</van-swipe-item>
+    </van-swipe>
   </div>
 </template>
 
@@ -43,6 +49,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+ .my-swipe .van-swipe-item {
+    color: #fff;
+    font-size: 20px;
+    line-height: 150px;
+    text-align: center;
+    background-color: #39a9ed;
+  }
 .content {
   position: absolute;
   color: #fff;

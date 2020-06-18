@@ -11,9 +11,8 @@
       title="更适合农资行业的移动端"
       :id="modelName[0].id"
       sTitle="每一屏都是为农资行业专属设计开发，助力经销商领跑行业"
-      :allScreen="true"
     >
-      <Rotation style="margin-top:112px" :banner="banner" :height="bannerHeight" />
+      <Rotation style="margin-top:112px" :banner="banner" :height="780" />
     </Fast>
     <Fast title="丰富的营销拓客工具" :id="modelName[1].id" sTitle="多种营销玩法帮助你助你更好地拓、锁、留、升客">
       <el-row class="i" type="flex">
@@ -73,6 +72,7 @@ export default {
   data() {
     return {
       bannerHeight: 0,
+      bannerHeight1:document.body.clientWidth / 1.66,
       marginTOP: false,
       modelName: [
         { title: "移动端", id: "1" },

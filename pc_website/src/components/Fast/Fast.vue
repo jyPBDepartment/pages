@@ -4,7 +4,7 @@
     <div class="fast" :style="{background:background}">
       <div class="w" :style="allScreen && 'max-width:100%'">
         <div class="fast_title" :class="!sTitle && 'm_b'" :style="{color:color}">{{ title }}</div>
-        <div v-show="sTitle" class="fast_s_title" :style="{color:sColor}">{{ sTitle }}</div>
+        <div v-show="sTitle" class="fast_s_title hidden-md-and-down" :style="{color:sColor}">{{ sTitle }}</div>
         <slot></slot>
       </div>
     </div>
@@ -64,6 +64,16 @@ export default {
     font-size: 16px;
     line-height: 16px;
     color: #999;
+  }
+}
+@media screen and (max-width: 768px) {
+  .fast {
+    padding:30px 0 27px 0;
+    .fast_title {
+      font-size: 21px;
+      color: #000014;
+      font-weight: 500;
+    }
   }
 }
 </style>

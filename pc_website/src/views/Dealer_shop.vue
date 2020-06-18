@@ -47,7 +47,9 @@
       </el-row>
     </Fast>
     <Fast :id="modelName[2].id" :title="modelName[2].title" :allScreen="true" background="#f0f0f0 ">
-      <img class="top_img top" src="../assets/3cxgj.jpg" :style="{height:`${854}px`}" />
+      <div class="w">
+        <img class="top_img top" src="../assets/3cxgj.png" :style="{height:`${541}px`}" />
+      </div>
     </Fast>
 
     <Callcontact />
@@ -187,7 +189,6 @@ export default {
   }
   .sdys_img {
     width: 100%;
-    
   }
   .title {
     padding-top: 30px;

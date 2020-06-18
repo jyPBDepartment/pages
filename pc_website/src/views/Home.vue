@@ -2,7 +2,7 @@
   <div class="Home">
     <Rotation :banner="banner" :height="bannerHeight" :type="1" />
     <Fast title="农资行业全场景的互联网解决方案" sTitle="解决农资行业痛点，打通农资信息通道，助力商户充分挖掘、整合行业隐形资源，构建内外服务生态圈。">
-      <el-row class="h1">
+      <el-row class="h1 hidden-md-and-down">
         <el-col :span="8" :offset="1">
           <div class="h1_1" v-for="(item, index) in title" :key="index">
             <h2>{{item.h2}}</h2>
@@ -12,6 +12,14 @@
         <el-col :span="14">
           <img class="h1_i_1" src="../assets/tu1.png" alt />
         </el-col>
+      </el-row>
+      <el-row class="hidden-md-and-u m_w">
+        <div class="m_l_box">
+          <img src="../assets/tu1.png" alt />
+          <ul>
+            <li v-for="(item, index) in title" :key="index">{{item.p}}</li>
+          </ul>
+        </div>
       </el-row>
     </Fast>
     <Fast title="我们的云服务产品" sTitle="提升多种农资经营能力 全面满足业务需求">
@@ -256,6 +264,24 @@ h2 {
     -webkit-transform: scale(1.1); /* Safari 和 Chrome */
     -o-transform: scale(1.1);
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+@media screen and (max-width: 768px) {
+  .m_l_box {
+    padding: 30px 20px;
+    margin-top: 26px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+    img {
+      width: 100%;
+    }
+    ul {
+      li {
+        color: #000014;
+        text-align: left;
+        font-size: 12px;
+      }
+    }
   }
 }
 </style>
