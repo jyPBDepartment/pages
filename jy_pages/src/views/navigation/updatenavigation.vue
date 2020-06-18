@@ -164,7 +164,7 @@ export default {
     //下拉列表显示
     findContext: function() {
       let params = {
-        navigationEntity: this.navigationForm
+         subId :this.navigationForm.subId
       };
       api
         .testAxiosGet(ApiPath.url.findAllNc, params)

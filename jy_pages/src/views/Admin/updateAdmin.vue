@@ -14,10 +14,10 @@
       <el-form :rules="rules" ref="AdminForm" :model="AdminForm" label-width="100px">
        
         <el-form-item label="登录名称" prop="loginName">
-          <el-input type="text" v-model="AdminForm.loginName" placeholder="请输入姓名" style=" width:70%;"></el-input>
+          <el-input type="text" v-model="AdminForm.loginName" placeholder="请输入姓名" style=" width:70%;" @change="name"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="AdminForm.password" placeholder="请输入密码" style=" width:70%;" show-password></el-input>
+          <el-input type="password" v-model="AdminForm.password" placeholder="请输入密码" style=" width:70%;" show-password  @change="password"></el-input>
         </el-form-item>
        
        
@@ -108,7 +108,28 @@ export default {
     this.findContext();
   },
   methods: {
-    
+     // 输入姓名正则验证
+    name: function() {
+      var name =  /^[a-zA-Z\u4E00-\uFA29]*$/;
+      if (!name.test(this.editForm.loginName)) {
+       this.$alert('请输入正确的姓名，只能为字母或汉字！', '提示', {
+          confirmButtonText: '确定',
+        });
+        this.editForm.loginName= "";
+       
+      }
+    },
+    // 输入密码正则验证
+    password: function() {
+      var password =  /^[0-9A-Za-z]{6,16}$/;
+      if (!password.test(this.editForm.password)) {
+       this.$alert('请输入正确的密码，只能为6-16位的字母或数字！', '提示', {
+          confirmButtonText: '确定',
+        });
+        this.editForm.password= "";
+       
+      }
+    },
     //联表查询
     findContext: function() {
         let params = {

@@ -27,17 +27,6 @@
             style=" width:70%;"
           ></el-input>
         </el-form-item>
-
-        <!-- <el-button
-          type="success"
-          @click="handle"
-          style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px"
-        >添加二级菜单</el-button>
-        <el-button
-          type="success"
-          @click="cancal"
-          style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px"
-        >收起二级菜单</el-button>-->
         <el-form-item label="上级导航" prop="subId" >
           <el-select v-model="editForm.subId" @change="navigationChange()" placeholder="请输入上级导航" style=" width:70%;" id="test">
             <el-option
@@ -228,6 +217,7 @@ export default {
       this.$emit("close");
     },
     saveNavigation: function() {
+       if (this.editForm.name != "") {
       this.editForm.url = this.imgUrl;
       let params = { navigationEntity: this.editForm };
       api.testAxiosGet(ApiPath.url.saveNavChildren, params).then(res => {
@@ -235,7 +225,11 @@ export default {
         this.reload();
         this.close();
       });
-    },
+    }else {
+            this.$alert('导航名称不能为空！', '提示', {
+          confirmButtonText: '确定',
+        });
+        }},
     close: function() {
       this.$emit("close");
     },

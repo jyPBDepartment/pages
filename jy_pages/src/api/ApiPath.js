@@ -45,7 +45,7 @@ const url = {
   //导航下拉列表添加显示
   findAllNavChildren:URLHost+'/navigation/findAll',
   //导航下拉列表修改显示
-  findAllNc:URLHost+'/navigation/findAll',
+  findAllNc:URLHost+'/navigation/findSubNavList',
   //查询上级导航列表
   findSubNavList:URLHost+'/navigation/findSubNavList',
   //网站信息
@@ -91,19 +91,19 @@ const url = {
   //分页查询菜单
   findMenuByName:URLHost+'/menu/findByName',
   //分类信息查询
-  searchClassification:URLHost+'/w_classification_info/findByName',
+  searchClassification:URLHost+'/classification_info/findByName',
   //分类信息删除
-  deleteClassification:URLHost+'/w_classification_info/delete',
+  deleteClassification:URLHost+'/classification_info/delete',
   //分类信息禁用
-  classiEnable:URLHost+'/w_classification_info/enable',
+  classiEnable:URLHost+'/classification_info/enable',
   //分类信息添加
-  saveClassification:URLHost+'/w_classification_info/save',
+  saveClassification:URLHost+'/classification_info/save',
   //分类信息修改
-  classificationFindById:URLHost+'/w_classification_info/findById',
-  updateClassification:URLHost+'/w_classification_info/update',
+  classificationFindById:URLHost+'/classification_info/findById',
+  updateClassification:URLHost+'/classification_info/update',
   //分类信息下拉查询(添加)
-  findAllClass:URLHost+'/w_classification_info/findAll',
-  updateClass:URLHost+'/w_classification_info/findAll',
+  findAllClass:URLHost+'/classification_info/findSubList',
+  updateClass:URLHost+'/classification_info/findSubList',
   //分类信息添加前过滤重复字段
 
   // classiFindByWord:URLHost+'/w_classification_info/findByWord',

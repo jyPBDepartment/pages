@@ -63,7 +63,7 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <!-- <el-table-column type="index" label="序号" align="center" style="width:40px;"></el-table-column> -->
-      <el-table-column label="一级菜单" align="center">
+     
         <el-table-column sortable prop="name" label="导航名称" align="center" style="width:40px;"></el-table-column>
         <!--switch开关（表单）-->
         <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
@@ -78,9 +78,9 @@
             ></el-switch>
           </template>
         </el-table-column>
-      </el-table-column>
-      <el-table-column label="二级菜单" align="center">
-        <el-table-column sortable prop="subId" label="上级导航" align="center" style="width:40px;"></el-table-column>
+     
+     
+        <!-- <el-table-column sortable prop="subId" label="上级导航" align="center" style="width:40px;"></el-table-column> -->
         <el-table-column sortable prop="dropDownEnName" label="下拉英文内容" align="center"></el-table-column>
         <el-table-column sortable prop="url" label="图片地址" min-width="50">
           <template slot-scope="scope">
@@ -90,16 +90,12 @@
           </template>
         </el-table-column>
         <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
-      </el-table-column>
+     
       <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.createDateTime|timestampToTime}}</div>
-        </template>
+       
       </el-table-column>
       <el-table-column sortable prop="updateTime" label="修改时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.updateTime|timestampToTime}}</div>
-        </template>
+        
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
