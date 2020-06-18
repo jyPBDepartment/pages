@@ -1,8 +1,8 @@
 /**
- * 门户菜单 管理员管理
+ * 门户菜单 分类管理
  */
 <template>
-    <div class="adminFunction">
+    <div class="ClassiFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -23,10 +23,14 @@
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row>
-      <el-table-column type="index" label="序号"  align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="name" label="分类名称" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="subId" label="下级分类" align="center"></el-table-column>
+    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row   row-key="id"
+      default-expand-all
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+    
+        <el-table-column sortable prop="name" label="分类名称" align="center" style="width:40px;"></el-table-column>
+       <!-- <el-table-column sortable prop="subId" label="上级分类" align="center"></el-table-column> -->
+    
+     <el-table-column sortable :show-overflow-tooltip="true" prop="classDescribe" label="分类描述" align="center"></el-table-column>
       <!--switch开关（表单）-->
         <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
           <template slot-scope="scope">
@@ -40,13 +44,11 @@
             ></el-switch>
           </template>
         </el-table-column>
+         
       <el-table-column  prop="createDate" label="创建时间" align="center">
-       
       </el-table-column>
        <el-table-column  prop="updateDate" label="修改时间" align="center">
-       
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="classDescribe" label="分类描述" align="center"></el-table-column>
      <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
            <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px" icon="el-icon-edit">编辑</el-button>
@@ -162,7 +164,7 @@ export default {
       this.search(this.formInline);
     },
 //查询方法
-    search: function(parameter) {
+      search: function(parameter) {
       let params = {
         name: this.name,
         page: this.formInline.page,
@@ -173,9 +175,33 @@ export default {
         .then(res => {
           let code = res.state;
           if (code == "0") {
+            let parent = [];
+            let children = [];
+            for (let i = 0; i < res.data.content.length; i++) {
+              if (res.data.content[i]["subId"] == "") {
+                parent.push(res.data.content[i]);
+               
+              } else {
+                children.push(res.data.content[i]);
+               
+              }
+            }
+           let child = [];
+           for (let j = 0; j < parent.length; j++) {
+          
+              for (let k = 0; k < children.length; k++) {
+              
+                if (parent[j]["id"] == children[k]["subId"]) {
+                   child.push(children[k]);
+                   
+                }
+                parent[j]["children"] = child;
+                  
+              }
+              child = [];
+            }
 
-              console.log(res.data.content)
-           this.tableData = res.data.content;
+            this.tableData = parent;
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
             this.pageparm.total = res.data.totalElements;
@@ -186,7 +212,6 @@ export default {
         .catch(function(error) {
         });
     },
-    
 
     closeUpdateClassificationDialog: function() {
       this.updateClassificationFlag = false;
@@ -274,7 +299,7 @@ export default {
         tagcode: tagCode
       };
       api.testAxiosPost(ApiPath.url.deleteRuleTag, params).then(res => {
-        console.log(res);
+        
         let code = res.code;
         if (code == "success") {
           alert("删除成功");
@@ -287,13 +312,13 @@ export default {
     updateRuleTagStatus(scope) {
       let tagcode = scope.row.tagCode;
       api.testAxiosPost(ApiPath.url.updateRuleTagStatus, tagCode).then(res => {
-        console.log(res);
+       
       });
     },
     maunalRun(scope) {
       let tagcode = scope.row.tagCode;
       api.testAxiosPost(ApiPath.url.maunalRun, tagCode).then(res => {
-        console.log(res);
+      
       });
     }
   },

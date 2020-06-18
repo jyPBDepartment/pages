@@ -12,14 +12,10 @@
     <!-- 插槽区 -->
      <slot>
       <el-form :rules="rules" ref="classiForm" :model="classiForm" label-width="100px">
-       
         <el-form-item label="分类名称" prop="name">
           <el-input type="text" v-model="classiForm.name" placeholder="请输入分类名称" style=" width:70%;"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="下级分类" prop="subId">
-          <el-input type="text" v-model="classiForm.subId" placeholder="请输入下级分类" style=" width:70%;" ></el-input>
-        </el-form-item> -->
-         <el-form-item label="下级分类" prop="subId" >
+        <el-form-item label="下级分类" prop="subId" >
           <el-select type="text" v-model="classiForm.subId" placeholder="请输入下级分类" style=" width:70%;" >
             <el-option
               v-for="item in classiOptions"
@@ -29,10 +25,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-          <el-form-item label="状态" prop="status">
-          <el-input type="text" v-model="classiForm.status" placeholder="请输入状态" style=" width:70%;"></el-input>
-        </el-form-item>
-          <el-form-item label="分类描述" prop="classDescribe" >
+       
+        <el-form-item label="分类描述" prop="classDescribe" >
           <el-input
             type="textarea"
             v-model="classiForm.classDescribe"
@@ -41,7 +35,10 @@
             :autosize="{ minRows: 1, maxRows: 4}"
           ></el-input>
         </el-form-item>
-       
+          <el-form-item label="状态" prop="status">
+          <el-input type="text" v-model="classiForm.status" placeholder="请输入状态" style=" width:70%;"></el-input>
+        </el-form-item>
+         
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -87,10 +84,10 @@ export default {
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
          subId: [
-        { required: true, message: "请输入密码", trigger: "blur" },
+        { required: true, message: "请输入上级分类", trigger: "blur" },
         
         ],
-        status: [{ required: true, message: "请输入角色", trigger: "blur" }],
+        status: [{ required: true, message: "请输入状态", trigger: "blur" }],
         classDescribe:[{ required: true, message: "请输入分类描述", trigger: "blur" }],
       }
     };
@@ -100,7 +97,7 @@ export default {
       this.localShow = val;
     },
     transClassificationId(val) {
-      console.log(val);
+     
       let params = {
         id: val
       };
@@ -122,7 +119,7 @@ export default {
     //联表查询
     findContext: function() {
         let params = {
-        subId  :this.classiForm.subId
+        subId :this.classiForm.subId
         };
         api
           .testAxiosGet(ApiPath.url.updateClass, params)
@@ -130,7 +127,7 @@ export default {
             if (res.status == "0") {
               for (let i = 0; i < res.data.length; i++) {
                 this.classiOptions.push({
-                  value: res.data[i]["name"],
+                  value: res.data[i]["id"],
                   label: res.data[i]["name"]
                 });
               }
@@ -150,7 +147,9 @@ export default {
         this.$message.success(res.message);
         this.reload();
         this.close();
-      });
+      }) .catch(err => {
+                this.$message.error(err.data);
+              });
     },
     close: function() {
       this.$emit("close");
