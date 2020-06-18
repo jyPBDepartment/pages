@@ -13,7 +13,7 @@
           <img class="h1_i_1" src="../assets/tu1.png" alt />
         </el-col>
       </el-row>
-      <el-row class="hidden-md-and-u m_w">
+      <el-row class="hidden-md-and-up m_w">
         <div class="m_l_box">
           <img src="../assets/tu1.png" alt />
           <ul>
