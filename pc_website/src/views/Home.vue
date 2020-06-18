@@ -14,7 +14,7 @@
         </el-col>
       </el-row>
       <el-row class="hidden-md-and-up m_w">
-        <div class="m_l_box">
+        <div class="m_l_box m_l_box_t">
           <img src="../assets/tu1.png" alt />
           <ul>
             <li v-for="(item, index) in title" :key="index">{{item.p}}</li>
@@ -23,7 +23,7 @@
       </el-row>
     </Fast>
     <Fast title="我们的云服务产品" sTitle="提升多种农资经营能力 全面满足业务需求">
-      <el-row class="h2">
+      <el-row class="h2 hidden-md-and-down">
         <el-col
           class="h2_1"
           :class=" hover == index && 'hover'"
@@ -38,11 +38,26 @@
           <p>{{item.p}}</p>
         </el-col>
       </el-row>
+      <el-row class="hidden-md-and-up m_w m_f_b">
+        <div class="m_f_b_s" v-for="(item, index) in botton" :key="index">
+          <img :src="item.src" alt />
+          <h2>{{item.h2}}</h2>
+          <p>{{item.p}}</p>
+        </div>
+      </el-row>
     </Fast>
-    <div class="w">
+    <el-row class="hidden-md-and-up m_w">
+      <div class="m_l_box m_l_box_b">
+        <img src="../assets/tu1.png" alt />
+        <ul>
+          <li v-for="(item, index) in title" :key="index">{{item.p}}</li>
+        </ul>
+      </div>
+    </el-row>
+    <div class="w hidden-md-and-down">
       <Rotation :banner="bannerBottom" :height="bannerBottomHeight" />
     </div>
-    <Callcontact />
+    <Callcontact class="hidden-md-and-down" />
   </div>
 </template>
 
@@ -269,17 +284,63 @@ h2 {
 @media screen and (max-width: 768px) {
   .m_l_box {
     padding: 30px 20px;
-    margin-top: 26px;
     border-radius: 10px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
     img {
       width: 100%;
     }
     ul {
+      margin-top: 33px;
+      padding-left: 10px;
       li {
         color: #000014;
         text-align: left;
         font-size: 12px;
+        margin-bottom: 11px;
+        list-style-type: disc;
+      }
+    }
+  }
+  .m_l_box_t {
+    margin-top: 26px;
+  }
+  .m_l_box_b {
+    margin-bottom: 30px;
+  }
+  .m_f_b {
+    padding-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    .m_f_b_s {
+      width: calc(50% - 70px);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+      margin-bottom: 10px;
+      padding: 0 32px;
+      &:nth-child(1),
+      &:nth-child(3),
+      &:nth-child(5),
+      &:nth-child(7) {
+        margin-right: 5px;
+      }
+      &:nth-child(2),
+      &:nth-child(4),
+      &:nth-child(6),
+      &:nth-child(8) {
+        margin-left: 5px;
+      }
+      img {
+        width: 44px;
+        margin: 21px 0 20px 0;
+      }
+      h2 {
+        margin: 0 0 9px 0;
+        font-size: 14px;
+        color: #000014;
+      }
+      p {
+        font-size: 12px;
+        color: #9a9ca0;
       }
     }
   }

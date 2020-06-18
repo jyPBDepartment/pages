@@ -57,15 +57,32 @@
               </el-col>
               <el-col class="hidden-md-and-up m_header_btn" :xs="{span:14}">
                 <img src="../assets/mobile/dianhua.png" alt />
-                <img src="../assets/mobile/caidan.png" alt />
+                <img @click="isMenus" src="../assets/mobile/caidan.png" alt />
               </el-col>
             </el-row>
           </div>
         </div>
       </el-header>
       <el-main style="padding:0;">
+        <div class="m_menu">
+          <div v-for="(item, index) in mMenus" :key="index">
+            <div class="m_menu_item">
+              <div>{{item.name}}</div>
+              <div>
+                <i class="el-icon-arrow-down" />
+              </div>
+            </div>
+            <div
+              class="m_second_level m_menu_item"
+              v-show="item.secondLevel"
+              v-for="(item1 ,index1) in item.secondLevel"
+              :key="index1"
+            >{{item1.name}}</div>
+          </div>
+        </div>
         <router-view id="boxFixed" />
         <FixedNavRight
+          class="hidden-md-and-down"
           @backtop="backtop"
           :isFixed="isFixed"
           :isShow="fixedShow"
@@ -217,7 +234,53 @@ export default {
       isFixed: false,
       fixedShow: false,
       offsetTop: 640,
-      ejectMenus: false
+      ejectMenus: false,
+      mMenus: [
+        {
+          name: "首页",
+          secondLevel: []
+        },
+        {
+          name: "吉易惠农",
+          secondLevel: []
+        },
+        {
+          name: "产品",
+          secondLevel: [
+            {
+              name: "经销商店铺"
+            },
+            {
+              name: "经销商掌柜"
+            },
+            {
+              name: "供应商店铺"
+            }
+          ]
+        },
+        {
+          name: "解决方案",
+          secondLevel: [
+            {
+              name: "农资经销商解决方案"
+            },
+            {
+              name: "农资供应商解决方案"
+            }
+          ]
+        },
+        {
+          name: "合作伙伴",
+          secondLevel: [
+            {
+              name: "合作伙伴"
+            },
+            {
+              name: "加入我们"
+            }
+          ]
+        }
+      ]
     };
   },
   created() {
@@ -262,7 +325,8 @@ export default {
     ejectMenu(e) {
       this.ejectMenus = e;
       this.fixedShow = e;
-    }
+    },
+    isMenus() {}
   },
   //回调中移除监听
   destroyed() {
@@ -374,6 +438,31 @@ export default {
   }
 }
 @media screen and (max-width: 768px) {
+  .m_menu {
+    width: calc(100% - 2rem);
+    height: calc(100vh - 50px);
+    background-color: #212129;
+    color: #fff;
+    padding: 0 1rem 0.5rem;
+    .m_menu_item {
+      font-size: 1rem;
+      width: 100%;
+      color: #fff;
+      display: inline-block;
+      padding: 0.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 0.02rem solid #444451;
+      i {
+        font-size: 1.4rem;
+        float: right;
+      }
+    }
+    .m_second_level {
+      padding-left: 1rem;
+      color: #777;
+    }
+  }
   .header {
     height: 50px !important;
     background-color: rgb(0, 9, 48);
@@ -413,7 +502,7 @@ export default {
         text-align: center;
         font-size: 14px;
         color: #fff;
-        padding:0 5px;
+        padding: 0 5px;
         border-right: 1px solid #ffffff;
         border-bottom: 1px solid #ffffff;
         &:nth-child(4),
@@ -428,17 +517,17 @@ export default {
         }
       }
     }
-    .m_f_i{
+    .m_f_i {
       padding-left: 20px;
-      p{
+      p {
         color: #808080;
         font-size: 12px;
         margin-top: 0;
         margin-bottom: 10px;
-        &:nth-child(1){
+        &:nth-child(1) {
           margin-top: 20px;
         }
-        &:nth-child(3){
+        &:nth-child(3) {
           margin-bottom: 30px;
         }
       }

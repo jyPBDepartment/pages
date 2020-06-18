@@ -32,7 +32,15 @@
 
               <el-row class="content">
                 <div class="text">
-                    
+                  <div class="article_header">为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动</div>
+                  <div class="article_source">
+                    <i class="el-icon-time" />2020-04-25 03:35:05
+                    <i class="el-icon-view" /> 99
+                    <i class="el-icon-edit" />中通天鸿,呼叫中心,运营安全
+                  </div>
+                  <div
+                    class="article_content"
+                  >作为呼叫中心运营的核心指标之一“安全”，一直都是企业所关注的重点，物理环境是否安全？网络环境是否安全？业务系统是否安全？是否具备完善的安全管理机制？这些直接决定着呼叫中心系统是否可以稳定运行，客户的业务是否可以正常开展，中通天鸿一直投入大量人力财力重点建设。</div>
                 </div>
                 <div class="option">
                   <p>
@@ -169,6 +177,29 @@ export default {
     padding: 20px;
     width: 100%;
     background: #fff;
+    .text {
+      .article_header {
+        font-size: 32px;
+        color: #333;
+        font-weight: normal;
+        margin-bottom: 15px;
+      }
+      .article_source {
+        display: flex;
+        color: #bbb;
+        font-size: 14px;
+        align-items: center;
+        margin-bottom: 30px;
+        i {
+          font-size: 20px;
+          margin-right: 10px;
+          &:nth-child(2),
+          &:nth-child(3) {
+            margin-left: 30px;
+          }
+        }
+      }
+    }
     .option {
       margin-top: 20px;
       border-top: 1px solid #eee;

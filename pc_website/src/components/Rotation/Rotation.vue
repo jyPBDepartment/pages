@@ -1,6 +1,6 @@
 <template>
   <div class="Rotation">
-    <el-carousel  class="hidden-md-and-down"  :height="`${height}px`" arrow="hover" :interval="2000">
+    <el-carousel class="hidden-md-and-down" :height="`${height}px`" arrow="hover" :interval="2000">
       <el-carousel-item v-for="(item, index) in banner" :key="index">
         <div class="content" v-if="item.title !== ''">
           <h2 :class="index == 2?'title1':'title'">{{item.title}}</h2>
@@ -10,11 +10,19 @@
         <img class="b_1" :src="item.src" :style="{height:`${height}px`}" alt />
       </el-carousel-item>
     </el-carousel>
-    <van-swipe  class="my-swipe hidden-md-and-up" :autoplay="3000" indicator-color="white">
-      <van-swipe-item>1</van-swipe-item>
-      <van-swipe-item>2</van-swipe-item>
-      <van-swipe-item>3</van-swipe-item>
-      <van-swipe-item>4</van-swipe-item>
+    <van-swipe class="my-swipe hidden-md-and-up" :autoplay="3000" indicator-color="white">
+      <van-swipe-item>
+        <img class="img" src="../../assets/mobile/banner1.jpg" alt />
+        <h2>农资经销商解决方案</h2>
+      </van-swipe-item>
+      <van-swipe-item>
+        <img class="img" src="../../assets/mobile/banner2.jpg" alt />
+        <h2>农资经销商解决方案</h2>
+      </van-swipe-item>
+      <van-swipe-item>
+        <img class="img" src="../../assets/mobile/banner3.jpg" alt />
+        <h2>吉易慧农上线合作伙伴计划</h2>
+      </van-swipe-item>
     </van-swipe>
   </div>
 </template>
@@ -24,7 +32,7 @@ export default {
   name: "Rotation",
   props: {
     banner: Array,
-    height: Number,
+    height: Number
   },
   data() {
     return {};
@@ -49,13 +57,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
- .my-swipe .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    line-height: 150px;
-    text-align: center;
-    background-color: #39a9ed;
-  }
 .content {
   position: absolute;
   color: #fff;
@@ -104,5 +105,23 @@ export default {
 }
 .b_1 {
   width: 100%;
+}
+.van-swipe-item{
+  display: flex;
+  justify-content: center;
+}
+.my-swipe {
+  
+  .img {
+    width: 100%;
+    max-height: 390px !important;
+  }
+  h2{
+    font-size: 21px;
+    color: #fff;
+    position: absolute;
+    bottom: 55px;
+    z-index: 9999;
+  }
 }
 </style>
