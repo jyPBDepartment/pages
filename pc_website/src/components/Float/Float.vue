@@ -1,13 +1,13 @@
 <template>
   <transition name="el-fade-in">
-    <div v-show="ejectMenus" class="transition-box record_info" :rules="rules" >
+    <div v-show="ejectMenus" class="transition-box record_info"  >
       <h2>预约讲解</h2>
       <img class="close" @click="closeMenu" src="../../assets/icon/close.png" alt="">
-      <el-row class="r_i_box" prop="name">
+      <el-row class="r_i_box">
         <el-col class="r_i_input" :span="12">
           <el-input v-model="info.name" placeholder="姓名（必填）" @change="name"></el-input>
         </el-col>
-        <el-col class="r_i_input" :span="12" prop="phoneNum">
+        <el-col class="r_i_input" :span="12" >
           <el-input v-model="info.phoneNum" placeholder="手机号码（必填）" @change="tel"></el-input>
         </el-col>
       </el-row>
@@ -78,16 +78,7 @@ export default {
       ]
     };
   },
-   // rules表单验证
-       rules: {
-        name: [{ required: true, message: "请输入您的姓名，只能为字母或汉字。", trigger: "blur" }],
-       
-        phoneNum: [
-          { required: true, message: "请输入手机号码", trigger: "blur" }
-        ],
-        
-      },
- 
+  
   methods: {
     // 输入姓名正则验证
     name: function() {
@@ -116,8 +107,7 @@ export default {
     },
     submit:function(){
      if (
-        this.info.name.length > 0 &&
-        this.info.phoneNum.length > 0   
+        this.info.name !=null&&this.info.phoneNum !=null   
       ) {
       let pa = "";
       for(let i=0;i<this.address.length;i++){
