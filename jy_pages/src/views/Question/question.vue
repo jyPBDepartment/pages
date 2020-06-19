@@ -34,7 +34,7 @@
       <el-table-column sortable prop="expectaion" label="合作期望" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column sortable prop="recommended" label="推荐人" align="center" ></el-table-column>
       <el-table-column sortable prop="questionScore" label="问卷得分" align="center"></el-table-column>
-      <!-- <el-table-column sortable prop="questionAnswer" label="问卷答案" align="center" v-if="isShow"></el-table-column> -->
+     
       <el-table-column  prop="createDate" label="创建时间" align="center">
       </el-table-column>
       
@@ -73,7 +73,7 @@ import UpdateQuestion from "./updateQuestion.vue";
 import Pagination from "../../components/Pagination";
 
 export default {
-  // isShow:false,
+ 
   inject: ["reload"],
   props: {
     show: {

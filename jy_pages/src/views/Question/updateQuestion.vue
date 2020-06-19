@@ -34,9 +34,7 @@
          <el-form-item label="推荐人" prop="recommended">
           <el-input type="text" v-model="QuestionForm.recommended"  placeholder="请输入推荐人" style="width:70%;"></el-input>
         </el-form-item>
-        <el-form-item label="问卷答案" prop="questionAnswer"  v-if="isShow">
-          <el-input type="text" v-model="QuestionForm.questionAnswer"  placeholder="请输入问卷答案" style="width:70%;"></el-input>
-        </el-form-item>
+      
         <el-form-item label="问卷得分" prop="questionScore">
           <el-input type="text" v-model="QuestionForm.questionScore"  placeholder="请输入问卷得分" style="width:70%;" readonly></el-input>
         </el-form-item>
@@ -55,7 +53,7 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
-   isShow:false,
+  
   inject: ["reload"],
   props: {
     show: {
