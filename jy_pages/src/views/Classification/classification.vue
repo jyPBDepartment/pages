@@ -153,7 +153,7 @@ export default {
           } else {
             this.$message.success(res.message);
           }
-          // this.reload();
+           this.reload();
         })
         .catch(function(error) {});
     },
