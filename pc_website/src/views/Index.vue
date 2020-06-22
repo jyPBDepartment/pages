@@ -142,27 +142,6 @@
                 <el-row v-for="item in articleList" :key="item.id">
                   <a @click="link(item.id)" target="view_window" class="f_2">{{item.title}}</a>
                 </el-row>
-                <!-- <el-row>
-                  <a
-                    href="http://www.jiyinongye.cn/portal/article/index/id/19/cid/1.html"
-                    target="view_window"
-                    class="f_3"
-                  >何为平台经济？平台经济健康发展又为何要做好政策加减法</a>
-                </el-row>
-                <el-row>
-                  <a
-                    href="http://www.jiyinongye.cn/portal/article/index/id/51/cid/1.html"
-                    target="view_window"
-                    class="f_3"
-                  >获中央电视台关注，上央视CCTV-2频道《经济信息联播》</a>
-                </el-row>
-                <el-row>
-                  <a
-                    href="http://www.jiyinongye.cn/portal/article/index/id/52/cid/1.html"
-                    target="view_window"
-                    class="f_3"
-                  >【吉易·云备耕】再次被关注，上《吉林新闻联播》啦</a>
-                </el-row>-->
               </div>
             </el-col>
             <el-col :span="4">
@@ -315,20 +294,30 @@ export default {
     }
   },
   methods: {
-    reload() {
+    
+    // reload() {
+    //   // location. reload();
 
-      alert("刷新")
+    //   //  alert("刷新")
+    //   // this.isRouterAlive = false;
+    //   // this.$nextTick(function() {
+    //   //   this.isRouterAlive = true;
+    //   // });
+    // },
+    link(item) {
+      this.$router.push({ name: "article", query: { id: item } });
       this.isRouterAlive = false;
       this.$nextTick(function() {
         this.isRouterAlive = true;
       });
-    },
-    link(item) {
-      this.$router.push({ name: "article", query: { id: item } });
+
+
       // if (this.$route.path == "/") {
       //   this.$router.push({ name: "article", query: { id: item } });
+      //   // location. reload();
       // } else {
       //   localStorage.setItem("artcleId",item)
+      //   location. reload();
       // }
     },
     initArticle() {
@@ -338,6 +327,7 @@ export default {
         if (code == 0) {
           this.articleList = res.data;
         }
+        
       });
     },
 

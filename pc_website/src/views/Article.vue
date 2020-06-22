@@ -59,19 +59,21 @@
             </el-col>
             <el-col :span="6" class="right_float">
               <el-row class="R_row_area">
+                <div>
                 <el-row>
                   <h4>热门文章</h4>
-                  <el-row class="hot" v-for="item in freshList" :key="item.id">
-                    <a @click="link(item.id)" target="view_window" class="f_3">{{item.title}}</a>
+                  <el-row  v-for="item in freshList" :key="item.id">
+                    <a @click="link(item.id)" target="view_window">{{item.title}}</a>
                   </el-row>
                 </el-row>
 
                 <el-row>
                   <h4>最新发布</h4>
-                  <el-row class="hot" v-for="item in contentList" :key="item.id">
-                    <a @click="link(item.id)" target="view_window" class="f_3">{{item.title}}</a>
+                  <el-row  v-for="item in contentList" :key="item.id">
+                    <a @click="link(item.id)" target="view_window">{{item.title}}</a>
                   </el-row>
                 </el-row>
+                </div>
               </el-row>
               <!-- <el-row class="R_row_area">
                 <el-row class="hot" v-for="(item, index2) in freshList" :key="index2">
@@ -91,7 +93,6 @@
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
-  inject: ["reload"],
   components: {},
   props: {
     airIds: {
@@ -130,16 +131,14 @@ export default {
       console.log(from);
       let params = {
         id: to.query.id
-      };
-      this.reload();
-      
+      };      
       api.testAxiosGet(ApiPath.url.findByIdArticle, params).then(res => {
         this.airTitle = "";
         this.airReleaseDate = "";
         this.airHits = "";
         this.airAuthor = "";
         this.ariContent = "";
-        alert(111);
+        // alert(111);
         let code = res.state;
         if (code == 0) {
 
@@ -165,10 +164,15 @@ export default {
   mounted() {},
   created() {
     this.transJurisdictionId(this.airId);
-    // this.initArticle();
-    // this.initArticl();
+    this.initArticle();
+    this.initArticl();
   },
   methods: {
+    link(item) {
+      this.$router.push({ name: "article", query: { id: item } });
+      location. reload();
+    },
+
     //查询文章基础信息
     transJurisdictionId(val) {
       let params = {
@@ -201,18 +205,12 @@ export default {
       });
     },
 
-    link(item) {
-      // console.log("id"+item)
-      this.$router.push({ name: "article", params: { id: item } });
-    },
-
     initArticle() {
       let params = {};
       api.testAxiosGet(ApiPath.url.articleFindTop, params).then(res => {
         let code = res.state;
         if (code == 0) {
           this.freshList = res.data;
-          this.reload();
         }
       });
     },
@@ -223,7 +221,6 @@ export default {
         let code = res.state;
         if (code == 0) {
           this.contentList = res.data;
-          this.reload();
         }
       });
     }
