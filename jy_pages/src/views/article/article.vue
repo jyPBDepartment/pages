@@ -35,9 +35,9 @@
       <el-table-column sortable prop="title" label="标题" align="center" width="85"></el-table-column>
       <el-table-column sortable prop="classificationName" label="分类名称" align="center" width="110"></el-table-column>
       <el-table-column sortable prop="author" label="作者" align="center" width="90"></el-table-column>
-      <el-table-column sortable prop="releaseDate" label="发布时间" align="center" width="130"></el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="130"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="130"></el-table-column>
+      <el-table-column sortable prop="releaseDate" label="发布时间" align="center" width="140"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="140"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="140"></el-table-column>
       <el-table-column sortable prop="hits" label="点击量" align="center" width="85"></el-table-column>
       <el-table-column sortable prop="comments" label="评论量" align="center" width="85"></el-table-column>
       <el-table-column align="center" label="状态" prop="status" width="70">
@@ -176,19 +176,6 @@ export default {
           this.formInline.total = res.data.totalElements;
         }
       });
-
-
-    //   api.testAxiosGet(ApiPath.url.findClassification, param).then(res => {
-    //   let code = res.status;
-    //   if (code == "0") {
-    //     for (let i = 0; i < res.data.length; i++) {
-    //       this.classificationId.push({
-    //         value: res.data[i]["id"],
-    //         label: res.data[i]["name"]
-    //       });
-    //     }
-    //   }
-    // });
     },
     saveArticle() {
       this.addArt = false;
@@ -231,10 +218,12 @@ export default {
       };
       api.testAxiosGet(ApiPath.url.isRelease, params).then(res => {
         let code = res.state;
-        if (code == "0") {
+         if (code == "1") {
           this.$message.success(res.message);
-        } else {
+        } else if(code == "0"){
           this.$message.success(res.message);
+        }else{
+          this.$message.error(res.message);
         }
         this.reload();
       });
@@ -267,10 +256,12 @@ export default {
       };
       api.testAxiosGet(ApiPath.url.isRecommend, params).then(res => {
         let code = res.state;
-        if (code == "0") {
+       if (code == "1") {
           this.$message.success(res.message);
-        } else {
+        } else if(code == "0"){
           this.$message.success(res.message);
+        }else{
+          this.$message.error(res.message);
         }
         this.reload();
       });

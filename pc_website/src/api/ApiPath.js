@@ -12,8 +12,12 @@ const url = {
   saveQuestion:URLHost+'/questionnaire/save',
   //预约添加
   saveFloat:URLHost+'/appointment/add',
+  //文章管理
+  articleFindTop:URLHost+'/article/findTop',
 
-  
+  findByIdArticle:URLHost+'/article/findById',
+  findIsRelease:URLHost+'/article/findIsRelease',
+  findIsRecommend:URLHost+'/article/findIsRecommend',
 
 }
 export default {

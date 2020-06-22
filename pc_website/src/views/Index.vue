@@ -80,7 +80,7 @@
             >{{item1.name}}</div>
           </div>
         </div>
-        <router-view id="boxFixed" />
+        <router-view id="boxFixed" v-if="isRouterAlive"/>
         <FixedNavRight
           class="hidden-md-and-down"
           @backtop="backtop"
@@ -139,14 +139,10 @@
                 <h4>/ PLATFORM CONSULTING</h4>
               </div>
               <div class="f_2">
-                <el-row>
-                  <a
-                    href="http://www.jiyinongye.cn/portal/article/index/id/17/cid/1.html"
-                    target="view_window"
-                    class="f_3"
-                  >吉林省现代农业企业协会参观考察</a>
+                <el-row v-for="item in articleList" :key="item.id">
+                  <a @click="link(item.id)" target="view_window" class="f_2">{{item.title}}</a>
                 </el-row>
-                <el-row>
+                <!-- <el-row>
                   <a
                     href="http://www.jiyinongye.cn/portal/article/index/id/19/cid/1.html"
                     target="view_window"
@@ -166,7 +162,7 @@
                     target="view_window"
                     class="f_3"
                   >【吉易·云备耕】再次被关注，上《吉林新闻联播》啦</a>
-                </el-row>
+                </el-row>-->
               </div>
             </el-col>
             <el-col :span="4">
@@ -222,14 +218,24 @@
 <script>
 import FixedNavRight from "../components/FixedNavRight/FixedNavRight";
 import Float from "../components/Float/Float";
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
 export default {
   name: "Index",
   components: {
     FixedNavRight,
     Float
   },
+  provide() {
+    return {
+      reload: this.reload
+    };
+  },
   data() {
     return {
+      isRouterAlive: true,
+      id:"",
+      articleList: [],
       activeIndex: "/",
       isFixed: false,
       fixedShow: false,
@@ -292,6 +298,8 @@ export default {
   },
   created() {
     this.activeIndex = `/${window.location.href.split("/", 4)[3]}`;
+
+    this.initArticle();
   },
   mounted() {
     window.addEventListener("scroll", this.initTop);
@@ -307,6 +315,32 @@ export default {
     }
   },
   methods: {
+    reload() {
+
+      alert("刷新")
+      this.isRouterAlive = false;
+      this.$nextTick(function() {
+        this.isRouterAlive = true;
+      });
+    },
+    link(item) {
+      this.$router.push({ name: "article", query: { id: item } });
+      // if (this.$route.path == "/") {
+      //   this.$router.push({ name: "article", query: { id: item } });
+      // } else {
+      //   localStorage.setItem("artcleId",item)
+      // }
+    },
+    initArticle() {
+      let params = {};
+      api.testAxiosGet(ApiPath.url.findIsRelease, params).then(res => {
+        let code = res.state;
+        if (code == 0) {
+          this.articleList = res.data;
+        }
+      });
+    },
+
     backtop() {
       var timer = setInterval(function() {
         let osTop =

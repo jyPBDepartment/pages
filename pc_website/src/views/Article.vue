@@ -4,11 +4,11 @@
       <el-row class="R_row">
         <el-col :span="20" :offset="2">
           <el-row class="label_nav">
+            <!-- <div class="label">最新发布</div>
             <div class="label">最新发布</div>
             <div class="label">最新发布</div>
             <div class="label">最新发布</div>
-            <div class="label">最新发布</div>
-            <div class="label">最新发布</div>
+            <div class="label">最新发布</div>-->
           </el-row>
 
           <el-row>
@@ -32,35 +32,53 @@
 
               <el-row class="content">
                 <div class="text">
-                  <div class="article_header">为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动</div>
+                  <div class="article_header">{{airTitle}}</div>
                   <div class="article_source">
-                    <i class="el-icon-time" />2020-04-25 03:35:05
-                    <i class="el-icon-view" /> 99
-                    <i class="el-icon-edit" />中通天鸿,呼叫中心,运营安全
+                    <i class="el-icon-time" />
+                    {{airReleaseDate}}
+                    <i class="el-icon-view" />
+                    {{airHits}}
+                    <i class="el-icon-edit" />
+                    {{airAuthor}}
                   </div>
-                  <div
-                    class="article_content"
-                  >作为呼叫中心运营的核心指标之一“安全”，一直都是企业所关注的重点，物理环境是否安全？网络环境是否安全？业务系统是否安全？是否具备完善的安全管理机制？这些直接决定着呼叫中心系统是否可以稳定运行，客户的业务是否可以正常开展，中通天鸿一直投入大量人力财力重点建设。</div>
+                  <div class="article_content">
+                    <p v-html="ariContent">{{ariContent}}</p>
+                  </div>
                 </div>
                 <div class="option">
                   <p>
                     <i class="el-icon-arrow-right" /> 下一篇：
-                    <span>共抗疫情 中通天鸿呼叫中心系统助力生鲜平台保障居民菜篮子</span>
+                    <span>{{airTitle}}</span>
                   </p>
                   <p>
                     <i class="el-icon-arrow-right" /> 上一篇：
-                    <span>共抗疫情 中通天鸿呼叫中心系统助力生鲜平台保障居民菜篮子</span>
+                    <span>{{airTitle}}</span>
                   </p>
                 </div>
               </el-row>
             </el-col>
             <el-col :span="6" class="right_float">
               <el-row class="R_row_area">
+                <el-row>
+                  <h4>热门文章</h4>
+                  <el-row class="hot" v-for="item in freshList" :key="item.id">
+                    <a @click="link(item.id)" target="view_window" class="f_3">{{item.title}}</a>
+                  </el-row>
+                </el-row>
+
+                <el-row>
+                  <h4>最新发布</h4>
+                  <el-row class="hot" v-for="item in contentList" :key="item.id">
+                    <a @click="link(item.id)" target="view_window" class="f_3">{{item.title}}</a>
+                  </el-row>
+                </el-row>
+              </el-row>
+              <!-- <el-row class="R_row_area">
                 <el-row class="hot" v-for="(item, index2) in freshList" :key="index2">
                   <h4>{{item.title}}</h4>
                   <p v-for="(item, index3) in item.contentList" :key="index3">{{item}}</p>
                 </el-row>
-              </el-row>
+              </el-row>-->
             </el-col>
           </el-row>
         </el-col>
@@ -70,31 +88,29 @@
 </template>
 
 <script>
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
 export default {
+  inject: ["reload"],
   components: {},
+  props: {
+    airIds: {
+      type: String,
+      default: localStorage.getItem("artcleId")
+    }
+  },
   data() {
     return {
-      freshList: [
-        {
-          title: "热门文章",
-          contentList: [
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动",
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动",
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动",
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动",
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动",
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动"
-          ]
-        },
-        {
-          title: "最新发布",
-          contentList: [
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动",
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动",
-            "为呼叫中心运营安全护航 中通天鸿发起第二届“运营安全日”活动"
-          ]
-        }
-      ],
+      //文章基础信息
+      // airIds:localStorage.getItem("artcleId"),
+      airTitle: "",
+      airReleaseDate: "",
+      airHits: "",
+      airAuthor: "",
+      ariContent: "",
+      airId: this.$route.query.id,
+      freshList: [],
+      contentList: [],
       selectLabel: "最新发布",
       tabsLabel: [
         {
@@ -109,13 +125,106 @@ export default {
       ]
     };
   },
+  watch: {
+    $route: (to, from) => {
+      console.log(from);
+      let params = {
+        id: to.query.id
+      };
+      this.reload();
+      
+      api.testAxiosGet(ApiPath.url.findByIdArticle, params).then(res => {
+        this.airTitle = "";
+        this.airReleaseDate = "";
+        this.airHits = "";
+        this.airAuthor = "";
+        this.ariContent = "";
+        alert(111);
+        let code = res.state;
+        if (code == 0) {
+
+          console.log("标题："+res.data.title)
+          this.airTitle = res.data.title;
+          this.airReleaseDate = res.data.releaseDate;
+          this.airHits = res.data.hits;
+          this.airAuthor = res.data.author;
+          this.ariContent = res.data.content;
+          
+          //   if (window.localStorage.getItem("data") ) {
+          //     this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(window.localStorage.getItem("data"))))
+          //   }
+
+          //   window.addEventListener("beforeunload",()=>{
+          //   window.localStorage.setItem("list",JSON.stringify(this.$store.state))
+          // })
+          // console.log("文章基础信息："+JSON.stringify(res.data))
+        }
+      });
+    }
+  },
   mounted() {},
-  created() {},
+  created() {
+    this.transJurisdictionId(this.airId);
+    // this.initArticle();
+    // this.initArticl();
+  },
   methods: {
+    //查询文章基础信息
+    transJurisdictionId(val) {
+      let params = {
+        id: val
+      };
+      api.testAxiosGet(ApiPath.url.findByIdArticle, params).then(res => {
+        let code = res.state;
+        if (code == 0) {
+          this.airTitle = res.data.title;
+          this.airReleaseDate = res.data.releaseDate;
+          this.airHits = res.data.hits;
+          this.airAuthor = res.data.author;
+          this.ariContent = res.data.content;
+          //   if (window.localStorage.getItem("data") ) {
+          //     this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(window.localStorage.getItem("data"))))
+          //   }
+
+          //   window.addEventListener("beforeunload",()=>{
+          //   window.localStorage.setItem("list",JSON.stringify(this.$store.state))
+          // })
+          // console.log("文章基础信息："+JSON.stringify(res.data))
+        }
+      });
+    },
+
     handleClick(tab) {
       this.$router.push({
         name: "real_time_info",
         params: { label: tab.$options.propsData.label }
+      });
+    },
+
+    link(item) {
+      // console.log("id"+item)
+      this.$router.push({ name: "article", params: { id: item } });
+    },
+
+    initArticle() {
+      let params = {};
+      api.testAxiosGet(ApiPath.url.articleFindTop, params).then(res => {
+        let code = res.state;
+        if (code == 0) {
+          this.freshList = res.data;
+          this.reload();
+        }
+      });
+    },
+
+    initArticl() {
+      let params = {};
+      api.testAxiosGet(ApiPath.url.findIsRecommend, params).then(res => {
+        let code = res.state;
+        if (code == 0) {
+          this.contentList = res.data;
+          this.reload();
+        }
       });
     }
   }

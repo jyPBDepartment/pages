@@ -45,8 +45,6 @@
         </el-form-item>
         <el-form-item label="文章内容" prop="content">
           <div class="edit_container">
-            <!-- <span>仅限772个汉字</span> -->
-            <div slot="tip" class="el-upload__tip">仅限772个汉字</div>
             <el-card style="height: 610px;width:85%">
               <quill-editor
                 v-model="editForm.content"
@@ -69,7 +67,6 @@
 <script>
 import qs from "qs";
 import Vue from "vue";
-// import aes from "@/utils/aes.js"
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import { quillEditor } from "vue-quill-editor";
@@ -150,22 +147,23 @@ export default {
     },
 
     saveArticle: function() {
-      console.log("文本内容" + aes.encrypt(this.editForm.content));
-
-      // this.editForm.content = aes.encrypt(this.editForm.content);
-
-      console.log(
-        "解析文本内容" + aes.decrypt("mE159nppZ+CY/ZV40m8UUA==")
-      );
-      // console.log(aes.decrypt(aes.encrypt(JSON.stringify(paramList))))/
+      if(this.editForm.name!=""&&this.editForm.title!=""&&this.editForm.author!=""&&this.editForm.content!=""&&this.editForm.classificationId!=""){
       let params = {
         articleEntity: this.editForm
       };
-      api.testAxiosGet(ApiPath.url.addArticle, params).then(res => {
-        this.$message.success(res.message);
-        this.close();
-        this.reload();
-      });
+      
+        api.testAxiosGet(ApiPath.url.addArticle, params).then(res => {
+          let code = res.state;
+          if (code == "0") {
+            this.$message.success(res.message);
+            this.loading = false;
+          } 
+           this.close();
+          this.reload();
+        });
+      }else{
+        this.$alert('文章名称，文章标题，分类，作者，文章内容不能为空！', '提示', {confirmButtonText: '确定',});
+      }
     }
   }
 };

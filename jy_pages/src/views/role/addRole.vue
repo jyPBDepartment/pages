@@ -27,16 +27,6 @@
             style="width:80%"
           ></el-input>
         </el-form-item>
-        <el-form-item label="角色状态" prop="state">
-          <el-select v-model="editForm.state" style="width:80%" size="small">
-            <el-option
-              v-for="item in stateOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="权限名称" prop="limitId">
           <el-select v-model="editForm.limitId" style="width:80%" size="small">
             <el-option
@@ -48,6 +38,17 @@
           </el-select>
         </el-form-item>
       </el-form>
+        <el-form-item label="角色状态" prop="state">
+          <el-select v-model="editForm.state" style="width:80%" size="small">
+            <el-option
+              v-for="item in stateOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        
     </slot>
 
     <!-- 按钮区 -->
@@ -91,7 +92,7 @@ export default {
       
       rules: {
         name: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
-         state:[{ required: true, message: "请选择角色状态", trigger: "blur" }]
+        limitId:[{ required: true, message: "请选择权限类型", trigger: "blur" }]
       }
     };
   },
@@ -105,6 +106,7 @@ export default {
         limitId: this.editForm.limitId,
         id:this.editForm.id 
     };
+    if(editForm.name!=""){}
       api.testAxiosGet(ApiPath.url.findLimit, params).then(res => {
         let code = res.status;
         if (code=="0") {
