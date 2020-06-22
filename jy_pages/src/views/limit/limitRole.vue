@@ -60,17 +60,20 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            @click="openupdateLimit(scope)"
-            style="background-color:white;border-color:#DCDFE6;color:black;"
+           @click="openupdateLimit(scope)"
+            type="text"
+            size="medium"
+            style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px"
             icon="el-icon-edit"
           >编辑</el-button>
-          <el-button
-            size="mini"
-            style="background-color:#84C1FF;border-color:#84C1FF; "
+         <el-button
+          @click="deleteUser(scope)"
+            type="text"
+            size="medium"
+            style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px"
             icon="el-icon-delete"
-            @click="deleteUser(scope)"
           >删除</el-button>
+         
         </template>
       </el-table-column>
     </el-table>

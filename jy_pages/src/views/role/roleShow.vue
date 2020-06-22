@@ -57,11 +57,18 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button style="background-color:white;border-color:#DCDFE6;color:black;" size="mini" @click="openUpdateRole(scope)" icon="el-icon-edit">编辑</el-button>
-          <el-button
-            size="mini"
-            style="background-color:#84C1FF;border-color:#84C1FF; "
-            @click="deleteUser(scope)"
+           <el-button
+           @click="openUpdateRole(scope)"
+            type="text"
+            size="medium"
+            style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px"
+            icon="el-icon-edit"
+          >编辑</el-button>
+           <el-button
+           @click="deleteUser(scope)"
+            type="text"
+            size="medium"
+            style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px"
             icon="el-icon-delete"
           >删除</el-button>
         </template>

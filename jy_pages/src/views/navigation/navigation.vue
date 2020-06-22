@@ -79,10 +79,10 @@
           </template>
         </el-table-column>
      
-     
-        <!-- <el-table-column sortable prop="subId" label="上级导航" align="center" style="width:40px;"></el-table-column> -->
         <el-table-column sortable prop="dropDownEnName" label="下拉英文内容" align="center"></el-table-column>
-        <el-table-column sortable prop="url" label="图片地址" min-width="50">
+        <el-table-column 
+         
+        sortable prop="url" label="图片地址" min-width="50" >
           <template slot-scope="scope">
             <span v-if="scope.row.url!=''">
               <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
@@ -143,7 +143,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddNavigation from "./addNavigation.vue";
-import UpdateNavigation from "./updateNavigation.vue";
+import UpdateNavigation from "./updatenavigation";
 import Pagination from "../../components/Pagination";
 !(function() {
   function n(n, e, t) {
