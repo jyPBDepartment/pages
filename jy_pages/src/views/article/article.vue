@@ -24,7 +24,7 @@
       <br />
     </el-form>
     <!--列表-->
-    <el-table size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
+    <el-table  size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="名称" align="center" width="80"></el-table-column>
       <el-table-column sortable prop="content" :show-overflow-tooltip="true" label="内容" align="center" width="200">

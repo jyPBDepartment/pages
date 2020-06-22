@@ -46,14 +46,16 @@
                   </div>
                 </div>
                 <div class="option">
-                  <p>
-                    <i class="el-icon-arrow-right" /> 下一篇：
-                    <span>{{airTitle}}</span>
-                  </p>
-                  <p>
-                    <i class="el-icon-arrow-right" /> 上一篇：
-                    <span>{{airTitle}}</span>
-                  </p>
+                <el-row>
+                  <h5>上一篇：</h5>
+                  <el-row  v-for="item in articleOn" :key="item.id">
+                    <a @click="link(item.id)" target="view_window">{{item.title}}</a>
+                  </el-row>
+                  <h5>下一篇：</h5>
+                  <el-row  v-for="item in articleUp" :key="item.id">
+                    <a @click="link(item.id)" target="view_window">{{airTitle}}</a>
+                  </el-row>
+                </el-row>
                 </div>
               </el-row>
             </el-col>
@@ -112,6 +114,7 @@ export default {
       airId: this.$route.query.id,
       freshList: [],
       contentList: [],
+      articleOn:[],
       selectLabel: "最新发布",
       tabsLabel: [
         {
@@ -166,6 +169,8 @@ export default {
     this.transJurisdictionId(this.airId);
     this.initArticle();
     this.initArticl();
+    // this.findOn(this.airId);
+     this.initFindOn();
   },
   methods: {
     link(item) {
@@ -221,6 +226,18 @@ export default {
         let code = res.state;
         if (code == 0) {
           this.contentList = res.data;
+        }
+      });
+    },
+
+    initFindOn() {
+      let params = {
+        // id:val
+      };
+      api.testAxiosGet(ApiPath.url.findOn, params).then(res => {
+        let code = res.state;
+        if (code == 0) {
+          this.articleOn = res.data;
         }
       });
     }

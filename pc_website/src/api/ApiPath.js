@@ -18,6 +18,7 @@ const url = {
   findByIdArticle:URLHost+'/article/findById',
   findIsRelease:URLHost+'/article/findIsRelease',
   findIsRecommend:URLHost+'/article/findIsRecommend',
+  findOn:URLHost+'/article/findOn',
 
 }
 export default {
