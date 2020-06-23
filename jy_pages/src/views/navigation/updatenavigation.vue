@@ -38,8 +38,9 @@
           <el-input type="text" v-model="navigationForm.dropDownEnName" placeholder="下拉内容"  style=" width:70%;" ></el-input>
         </el-form-item>
         
-          <el-form-item label="图片地址" prop="imgUrl" v-if="isShow">
+          <el-form-item   label="图片地址" prop="imgUrl" v-if="isShow"  >
           <el-upload
+        
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -92,7 +93,7 @@ export default {
     return {
       localShow: this.show,
       isShow:false,
-      isShowImg:false,
+     
       limit: 1,
       imgUrl: "",
       upload: ApiPath.url.uploadImg,
