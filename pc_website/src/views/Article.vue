@@ -48,7 +48,7 @@
                 <div class="option">
                 <el-row>
                   <h5>上一篇：</h5>
-                  <el-row  v-for="item in articleOn" :key="item.id">
+                  <el-row  v-for="item in onList" :key="item.id">
                     <a @click="link(item.id)" target="view_window">{{item.title}}</a>
                   </el-row>
                   <h5>下一篇：</h5>
@@ -114,7 +114,7 @@ export default {
       airId: this.$route.query.id,
       freshList: [],
       contentList: [],
-      articleOn:[],
+      onList:[],
       selectLabel: "最新发布",
       tabsLabel: [
         {
@@ -169,8 +169,8 @@ export default {
     this.transJurisdictionId(this.airId);
     this.initArticle();
     this.initArticl();
-    // this.findOn(this.airId);
-     this.initFindOn();
+    this.initFindOn(this.airId);
+    //  this.initFindOn();
   },
   methods: {
     link(item) {
@@ -230,14 +230,15 @@ export default {
       });
     },
 
-    initFindOn() {
+    initFindOn(val) {
       let params = {
-        // id:val
+        id:val
       };
       api.testAxiosGet(ApiPath.url.findOn, params).then(res => {
         let code = res.state;
         if (code == 0) {
-          this.articleOn = res.data;
+          this.onList = res.data;
+          console.log(this.onList);
         }
       });
     }

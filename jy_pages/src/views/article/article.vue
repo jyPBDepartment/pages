@@ -10,6 +10,7 @@
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
+      <el-form-item label="搜索："></el-form-item>
       <el-form-item label="文章名称">
         <el-input size="small" v-model="name" placeholder="输入文章名称"></el-input>
       </el-form-item>
