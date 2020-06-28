@@ -5,6 +5,16 @@
 </template>
 
 <script>
+window.onload = function() {
+  document.addEventListener("touchstart", function(event) {
+    if (event.touches.length > 1) {
+      event.preventDefault();
+    }
+  });
+  document.addEventListener("gesturestart", function(event) {
+    event.preventDefault();
+  });
+};
 import Index from "./views/Index";
 export default {
   components: {
@@ -28,9 +38,7 @@ export default {
     //   let flag = navigator.userAgent.match(
     //     /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
     //   ); // localStorage.setItem('isiphone',flag)
-
     //   localStorage.setItem("ismobile", flag ? 1 : 0);
-
     //   return flag;
     // }
   }
@@ -44,7 +52,7 @@ export default {
   display: block !important;
 }
 @media screen and (max-width: 768px) {
-  .m_w{
+  .m_w {
     width: calc(100% - 40px);
     margin: 0 auto;
   }

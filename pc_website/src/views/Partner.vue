@@ -1,9 +1,15 @@
 <template>
   <div class="Home">
     <img
-      class="top_img"
+      class="top_img hidden-md-and-down"
       src="../assets/introduce_banner_hzhb.jpg"
       :style="{height:`${bannerHeight}px`}"
+    />
+    <MobileBanner
+      class="hidden-md-and-up"
+      m_content=""
+      m_title="为合作伙伴提供全方位合作"
+      :m_banner="require('../assets/mobile/introduce_banner_hzhb.jpg')"
     />
     <Fast title="为合作伙伴提供全方位的合作与支持">
       <el-row class="model" type="flex" justify="space-around">
@@ -27,17 +33,19 @@
       </el-row>
       <div class="join_botton" @click="join()">加入我们</div>
     </Fast>
-    <Callcontact />
+    <Callcontact class=" hidden-md-and-down" />
   </div>
 </template>
 
 <script>
 import Fast from "../components/Fast/Fast";
 import Callcontact from "../components/Callcontact/Callcontact";
+import MobileBanner from "../components/MobileBanner/MobileBanner";
 export default {
   components: {
     Fast,
-    Callcontact
+    Callcontact,
+    MobileBanner
   },
   data() {
     return {
@@ -180,6 +188,47 @@ export default {
     width: 100%;
     height: 1px;
     border-bottom: 1px dotted #bbb;
+  }
+}
+@media screen and (max-width: 768px) {
+  .join .box .circular{
+    width: 70px;
+    height: 70px;
+  }
+  .join .Dividing{
+    top: 140px;
+  }
+  .join .box h2{
+    font-size: 14px;
+    padding: 0 20px;
+  }
+  .model{
+    padding: 0 10px;
+    display: flex;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    .box{
+      width: calc(50% - 20px);
+      margin: 0 10px;
+      margin-bottom: 20px;
+      padding: 0;
+      img{
+        width: 50px;
+        height: 50px;
+        margin: 20px 0;
+      }
+      h2{
+        font-size: 14px;
+        color: #000013;
+        margin-top: 0;
+        margin-bottom: 9px;
+      }
+      p{
+        color: #999B9F;
+        font-size: 12px;
+        padding: 0 20px;
+      }
+    }
   }
 }
 </style>

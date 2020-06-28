@@ -9,7 +9,7 @@
               <el-col class="m_logo" :span="3" :offset="2" :xs="{span: 10, offset: 0}">
                 <img class="logo" src="../assets/logo.png" alt />
               </el-col>
-              <el-col :span="15" class="hidden-md-and-down" :offset="4">
+              <el-col :span="17" class="hidden-md-and-down" :offset="2">
                 <el-menu
                   :default-active="activeIndex"
                   style="height:100px"
@@ -46,6 +46,9 @@
                     <el-menu-item index="/dealer_program">农资经销商解决方案</el-menu-item>
                     <el-menu-item index="/supplier_program">农资供应商解决方案</el-menu-item>
                   </el-submenu>
+                  <el-menu-item index="/guarantee">
+                    <span class="pd">服务保障</span>
+                  </el-menu-item>
                   <el-submenu index="5" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
                       <span class="pd" style="font-size:20px">合作伙伴</span>
@@ -56,17 +59,21 @@
                 </el-menu>
               </el-col>
               <el-col class="hidden-md-and-up m_header_btn" :xs="{span:14}">
-                <img src="../assets/mobile/dianhua.png" alt />
-                <img @click="isMenus" src="../assets/mobile/caidan.png" alt />
+                <a :href="'tel:17704301395'">
+                  <img src="../assets/mobile/dianhua.png" alt />
+                </a>
+
+                <img v-show="!isMenu" @click="isMenus" src="../assets/mobile/caidan.png" alt />
+                <img v-show="isMenu" @click="isMenus" src="../assets/mobile/close.png" alt />
               </el-col>
             </el-row>
           </div>
         </div>
       </el-header>
       <el-main style="padding:0;">
-        <div class="m_menu hidden-md-and-up">
+        <div class="m_menu hidden-md-and-up" @touchmove.prevent v-show="isMenu">
           <div v-for="(item, index) in mMenus" :key="index">
-            <div class="m_menu_item" @click="isOpen(index)">
+            <div class="m_menu_item" @click="isOpen(index, item)">
               <div>{{item.name}}</div>
               <div v-show="item.secondLevel">
                 <i :class="!item.state?'el-icon-arrow-down' : 'el-icon-arrow-up'" />
@@ -76,6 +83,7 @@
               class="m_second_level m_menu_item"
               v-show="item.state"
               v-for="(item1 ,index1) in item.secondLevel"
+              @click="routerJump(item1)"
               :key="index1"
             >{{item1.name}}</div>
           </div>
@@ -198,14 +206,13 @@
       </div>
       <div class="m_footer hidden-md-and-up">
         <el-row class="m_f_nav">
-          <el-col class="m_f_1" :span="6">首页</el-col>
-          <el-col class="m_f_1" :span="6">首页</el-col>
-          <el-col class="m_f_1" :span="6">首页</el-col>
-          <el-col class="m_f_1" :span="6">首页</el-col>
-          <el-col class="m_f_1" :span="6">首页</el-col>
-          <el-col class="m_f_1" :span="6">农资经销商 解决方案</el-col>
-          <el-col class="m_f_1" :span="6">首页</el-col>
-          <el-col class="m_f_1" :span="6">首页</el-col>
+          <el-col
+            class="m_f_1"
+            @click.native="routerJump(item)"
+            :span="6"
+            v-for="(item, index) in m_fotterList"
+            :key="index"
+          >{{item.name}}</el-col>
         </el-row>
         <el-row class="m_f_i">
           <p>合作咨询：400-684-0008</p>
@@ -235,55 +242,98 @@ export default {
       fixedShow: false,
       offsetTop: 640,
       ejectMenus: false,
+      isMenu: false,
+      m_fotterList: [
+        {
+          name: "首页",
+          routerPath: ""
+        },
+        {
+          name: "吉易慧农",
+          routerPath: "introduce"
+        },
+        {
+          name: "经销商店铺",
+          routerPath: "dealer_shop"
+        },
+        {
+          name: "经销商掌柜",
+          routerPath: "dealer_manager"
+        },
+        {
+          name: "供应商店铺",
+          routerPath: "supplier_shops"
+        },
+
+        {
+          name: "农资经销商解决方案",
+          routerPath: "dealer_program"
+        },
+        {
+          name: "农资供应商解决方案",
+          routerPath: "supplier_program"
+        },
+        {
+          name: "加入我们",
+          routerPath: "join"
+        }
+      ],
       mMenus: [
         {
           name: "首页",
-          state: false
+          routerPath: ""
         },
         {
           name: "吉易惠农",
-
-          state: false
+          routerPath: "introduce"
         },
         {
           name: "产品",
-
           state: false,
           secondLevel: [
             {
-              name: "经销商店铺"
+              name: "经销商店铺",
+              routerPath: "dealer_shop"
             },
             {
-              name: "经销商掌柜"
+              name: "经销商掌柜",
+              routerPath: "dealer_manager"
             },
             {
-              name: "供应商店铺"
+              name: "供应商店铺",
+              routerPath: "supplier_shops"
             }
           ]
         },
         {
           name: "解决方案",
-
           state: false,
           secondLevel: [
             {
-              name: "农资经销商解决方案"
+              name: "农资经销商解决方案",
+              routerPath: "dealer_program"
             },
             {
-              name: "农资供应商解决方案"
+              name: "农资供应商解决方案",
+              routerPath: "supplier_program"
             }
           ]
         },
         {
+          name: "服务保障",
+          routerPath: "guarantee"
+        },
+        {
           name: "合作伙伴",
-
           state: false,
           secondLevel: [
             {
-              name: "合作伙伴"
+              name: "合作伙伴",
+              routerPath: "partner"
             },
             {
-              name: "加入我们"
+              name: "加入我们",
+              routerPath: "join"
             }
           ]
         }
@@ -333,12 +383,27 @@ export default {
       this.ejectMenus = e;
       this.fixedShow = e;
     },
-    isOpen(index) {
-      if (this.mMenus[index].secondLevel !== []) {
+    isOpen(index, item) {
+      if (this.mMenus[index].secondLevel !== undefined) {
         this.mMenus[index].state = !this.mMenus[index].state;
+      } else {
+        this.routerJump(item);
       }
     },
-    isMenus() {}
+    routerJump(item) {
+      this.$router.push({ path: `/${item.routerPath}` });
+      let arr = [];
+      this.mMenus.forEach(value => {
+        value.state = false;
+        arr.push(value);
+      });
+      this.mMenus = arr;
+      this.isMenu = false;
+      this.backtop();
+    },
+    isMenus() {
+      this.isMenu = !this.isMenu;
+    }
   },
   //回调中移除监听
   destroyed() {
@@ -453,6 +518,9 @@ export default {
   .m_menu {
     width: calc(100% - 2rem);
     height: calc(100vh - 50px);
+    position: absolute;
+    top: 50px;
+    z-index: 999;
     background-color: #212129;
     color: #fff;
     padding: 0 1rem 0.5rem;

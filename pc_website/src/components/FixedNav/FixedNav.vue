@@ -53,10 +53,12 @@ export default {
       this.$emit("jump", id);
     },
     handleScroll() {
-      let info = this.$refs.circleBox.getBoundingClientRect();
-      let top = info.top;
-      if (top < 1) this.navBarFixed = true;
-      else this.navBarFixed = false;
+      if (this.$refs.circleBox) {
+        let info = this.$refs.circleBox.getBoundingClientRect();
+        let top = info.top;
+        if (top < 1) this.navBarFixed = true;
+        else this.navBarFixed = false;
+      }
     }
   }
 };

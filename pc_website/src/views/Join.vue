@@ -1,11 +1,15 @@
 <template>
   <div class="Home">
     <img
-      class="top_img"
+      class="top_img hidden-md-and-down"
       src="../assets/introduce_banner_jrwm.jpg"
       :style="{height:`${bannerHeight}px`}"
     />
-    <Fast title="申请加入吉易慧农合作伙伴" background="#F0EEED">
+    <MobileBanner
+      class="hidden-md-and-up"
+      :m_banner="require('../assets/mobile/introduce_banner_jrwm.jpg')"
+    />
+    <Fast class="hidden-md-and-down" title="申请加入吉易慧农合作伙伴" background="#F0EEED">
       <div class="questionnaire">
         <div class="topic" v-for="(item, index) in topicList" :key="index">
           <div class="title">
@@ -62,39 +66,48 @@
                 :placeholder="index == 5 ? '500字以内' : item.title"
               ></el-input>
             </el-col>
-          </el-row> -->
+          </el-row>-->
 
           <!-- 连接后端方法的表单 -->
-        <el-form :rules="rules" ref="editForm" :model="editForm" >
-        <el-form-item label="联系人姓名" prop="name">
-          <el-input type="text" v-model="editForm.name"  placeholder="请输入联系人姓名" @change="name" ></el-input>
-        </el-form-item>
-        <el-form-item label="联系人职务" prop="post" >
-          <el-input type="text" v-model="editForm.post" placeholder="请输入联系人职务 " @change="post"
-         ></el-input>
-        </el-form-item>
-         <el-form-item label="联系人手机" prop="phoneNum">
-          <el-input type="text" v-model="editForm.phoneNum"  placeholder="请输入联系人手机" @change="tel"></el-input>
-        </el-form-item>
-          <el-form-item label="联系人邮箱" prop="email">
-          <el-input type="text" v-model="editForm.email"  placeholder="请输入联系人邮箱" @change="email"></el-input>
-        </el-form-item>
-         <el-form-item label="公司名称">
-          <el-input type="text" v-model="editForm.companyName"  placeholder="请输入公司名称"></el-input>
-        </el-form-item>
-         <el-form-item label="合作期望">
-          <el-input type="textarea" v-model="editForm.expectaion"  placeholder="请输入合作期望,500字以内。" style=" width: 33%; margin-left: 20px;"></el-input>
-        </el-form-item>
-         <el-form-item label="推荐人姓名">
-          <el-input type="text" v-model="editForm.recommended"  placeholder="请输入推荐人姓名"></el-input>
-        </el-form-item>
-         <el-form-item label="问卷答案" v-if="isShow">
-          <el-input type="text" v-model="editForm.questionAnswer"  placeholder="请输入问卷答案"></el-input>
-        </el-form-item>
-        <el-form-item label="问卷得分"  v-if="isShow">
-          <el-input type="text" v-model="editForm.questionScore"  placeholder="请输入问卷得分"></el-input>
-        </el-form-item>
-      </el-form>
+          <el-form :rules="rules" ref="editForm" :model="editForm">
+            <el-form-item label="联系人姓名" prop="name">
+              <el-input type="text" v-model="editForm.name" placeholder="请输入联系人姓名" @change="name"></el-input>
+            </el-form-item>
+            <el-form-item label="联系人职务" prop="post">
+              <el-input type="text" v-model="editForm.post" placeholder="请输入联系人职务 " @change="post"></el-input>
+            </el-form-item>
+            <el-form-item label="联系人手机" prop="phoneNum">
+              <el-input
+                type="text"
+                v-model="editForm.phoneNum"
+                placeholder="请输入联系人手机"
+                @change="tel"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人邮箱" prop="email">
+              <el-input type="text" v-model="editForm.email" placeholder="请输入联系人邮箱" @change="email"></el-input>
+            </el-form-item>
+            <el-form-item label="公司名称">
+              <el-input type="text" v-model="editForm.companyName" placeholder="请输入公司名称"></el-input>
+            </el-form-item>
+            <el-form-item label="合作期望">
+              <el-input
+                type="textarea"
+                v-model="editForm.expectaion"
+                placeholder="请输入合作期望,500字以内。"
+                style=" width: 33%; margin-left: 20px;"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="推荐人姓名">
+              <el-input type="text" v-model="editForm.recommended" placeholder="请输入推荐人姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="问卷答案" v-if="isShow">
+              <el-input type="text" v-model="editForm.questionAnswer" placeholder="请输入问卷答案"></el-input>
+            </el-form-item>
+            <el-form-item label="问卷得分" v-if="isShow">
+              <el-input type="text" v-model="editForm.questionScore" placeholder="请输入问卷得分"></el-input>
+            </el-form-item>
+          </el-form>
           <el-row>
             <el-col :span="8" :offset="10">
               <el-button type="primary" @click="save">提交申请</el-button>
@@ -103,25 +116,134 @@
         </div>
       </div>
     </Fast>
-    <Callcontact />
+    <div class="m_answer hidden-md-and-up">
+      <div class="questionnaire">
+        <div class="topic" v-for="(item, index) in topicList" :key="index">
+          <div class="title">
+            <span class="number">{{ item.num }}</span>
+            {{ item.title }}
+            <span class="important" v-show="item.mandatory">*</span>
+          </div>
+          <div class="answer" v-if="item.num != '09' && item.num != '10'">
+            <el-checkbox-group
+              v-model="item.checkedCities"
+              :min="item.min"
+              :max="item.max"
+              v-if="item.max !== 1"
+            >
+              <div v-for="(option, index1) in item.answer" :key="index1">
+                <el-checkbox :label="option.id" :key="index1">{{option.name}}</el-checkbox>
+              </div>
+            </el-checkbox-group>
+            <el-radio-group v-model="item.checkedCities" :min="item.min" :max="item.max" v-else>
+              <el-radio
+                v-for="(option, index4) in item.answer"
+                :label="option.id"
+                :key="index4"
+              >{{option.name}}</el-radio>
+            </el-radio-group>
+          </div>
+          <div class="answers" v-else>
+            <div class="box" v-for="(items, index2) in item.answers" :key="index2">
+              <div class="type">{{ items.title }}</div>
+              <el-radio-group v-model="items.checkedCities">
+                <el-radio
+                  v-for="(option, index3) in items.list"
+                  :key="index3"
+                  :label="option.id"
+                >{{ option.name }}</el-radio>
+              </el-radio-group>
+            </div>
+          </div>
+        </div>
+
+        <div class="info">
+          <!-- <el-row class="box" v-for="(item, index) in Input" :key="index">
+            <el-col class="title" :span="8" :offset="1">
+              {{ item.title }}
+              <div>
+                <span v-show="item.mandatory">*</span>
+              </div>
+            </el-col>
+            <el-col :span="8" :offset="1">
+              <el-input
+                :type=" index == 5 ? 'textarea' : ''"
+                :rows=" index == 5 && 5"
+                v-model="item.content"
+                :placeholder="index == 5 ? '500字以内' : item.title"
+              ></el-input>
+            </el-col>
+          </el-row>-->
+
+          <!-- 连接后端方法的表单 -->
+          <el-form :rules="rules" ref="editForm" :model="editForm">
+            <el-form-item label="联系人姓名" prop="name">
+              <el-input type="text" v-model="editForm.name" placeholder="请输入联系人姓名" @change="name"></el-input>
+            </el-form-item>
+            <el-form-item label="联系人职务" prop="post">
+              <el-input type="text" v-model="editForm.post" placeholder="请输入联系人职务 " @change="post"></el-input>
+            </el-form-item>
+            <el-form-item label="联系人手机" prop="phoneNum">
+              <el-input
+                type="text"
+                v-model="editForm.phoneNum"
+                placeholder="请输入联系人手机"
+                @change="tel"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人邮箱" prop="email">
+              <el-input type="text" v-model="editForm.email" placeholder="请输入联系人邮箱" @change="email"></el-input>
+            </el-form-item>
+            <el-form-item label="公司名称">
+              <el-input type="text" v-model="editForm.companyName" placeholder="请输入公司名称"></el-input>
+            </el-form-item>
+            <el-form-item label="合作期望">
+              <el-input
+                type="textarea"
+                v-model="editForm.expectaion"
+                placeholder="请输入合作期望,500字以内。"
+                style=" width: 33%; margin-left: 20px;"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="推荐人姓名">
+              <el-input type="text" v-model="editForm.recommended" placeholder="请输入推荐人姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="问卷答案" v-if="isShow">
+              <el-input type="text" v-model="editForm.questionAnswer" placeholder="请输入问卷答案"></el-input>
+            </el-form-item>
+            <el-form-item label="问卷得分" v-if="isShow">
+              <el-input type="text" v-model="editForm.questionScore" placeholder="请输入问卷得分"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-row type="flex" justify="center">
+            <el-col :span="8" :offset="10">
+              <el-button type="primary" @click="save">提交申请</el-button>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+    </div>
+    <Callcontact class="hidden-md-and-down" />
   </div>
 </template>
 
 <script>
 import Fast from "../components/Fast/Fast";
 import Callcontact from "../components/Callcontact/Callcontact";
+import MobileBanner from "../components/MobileBanner/MobileBanner";
 import aes from "@/util/aes";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
   components: {
     Fast,
-    Callcontact
+    Callcontact,
+    MobileBanner
   },
   data() {
     return {
-      isShow:false,
-     editForm: {
+      isShow: false,
+      editForm: {
         name: "",
         post: "",
         phoneNum: "",
@@ -129,18 +251,29 @@ export default {
         email: "",
         expectaion: "",
         recommended: "",
-        questionAnswer:"",
+        questionAnswer: "",
         questionScore: ""
       },
-        // rules表单验证
-       rules: {
-        name: [{ required: true, message: "请输入您的姓名，只能为字母或汉字。", trigger: "blur" }],
-        post: [{ required: true, message: "请输入您的职务，只能为字母或汉字。", trigger: "blur" }],
+      // rules表单验证
+      rules: {
+        name: [
+          {
+            required: true,
+            message: "请输入您的姓名，只能为字母或汉字。",
+            trigger: "blur"
+          }
+        ],
+        post: [
+          {
+            required: true,
+            message: "请输入您的职务，只能为字母或汉字。",
+            trigger: "blur"
+          }
+        ],
         phoneNum: [
           { required: true, message: "请输入手机号码", trigger: "blur" }
         ],
-        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }
-        ],
+        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }]
       },
       bannerHeight: 0,
       // Input: [
@@ -418,46 +551,42 @@ export default {
   methods: {
     // 输入姓名正则验证
     name: function() {
-      var name =  /^[a-zA-Z\u4E00-\uFA29]*$/;
+      var name = /^[a-zA-Z\u4E00-\uFA29]*$/;
       if (!name.test(this.editForm.name)) {
-       this.$alert('请输入正确的姓名，只能为字母或汉字！', '提示', {
-          confirmButtonText: '确定',
+        this.$alert("请输入正确的姓名，只能为字母或汉字！", "提示", {
+          confirmButtonText: "确定"
         });
         this.editForm.name = "";
-       
       }
     },
     // 输入职务正则验证
-     post: function() {
-      var post =  /^[a-zA-Z\u4E00-\uFA29]*$/;
+    post: function() {
+      var post = /^[a-zA-Z\u4E00-\uFA29]*$/;
       if (!post.test(this.editForm.post)) {
-       this.$alert('请输入正确的姓名，只能为字母或汉字！', '提示', {
-          confirmButtonText: '确定',
+        this.$alert("请输入正确的姓名，只能为字母或汉字！", "提示", {
+          confirmButtonText: "确定"
         });
         this.editForm.post = "";
-       
       }
     },
-   // 输入邮箱正则验证
+    // 输入邮箱正则验证
     email: function() {
       var email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
       if (!email.test(this.editForm.email)) {
-       this.$alert('请输入正确的邮箱！', '提示', {
-          confirmButtonText: '确定',
+        this.$alert("请输入正确的邮箱！", "提示", {
+          confirmButtonText: "确定"
         });
         this.editForm.email = "";
-       
       }
     },
     // 输入手机号码正则验证
     tel: function() {
       if (!/^1[345789]\d{9}$/.test(this.editForm.phoneNum)) {
-         this.$alert('请输入正确的手机号！', '提示', {
-          confirmButtonText: '确定',
+        this.$alert("请输入正确的手机号！", "提示", {
+          confirmButtonText: "确定"
         });
-       
+
         this.editForm.phoneNum = "";
-       
       }
     },
     screenChanges() {
@@ -471,7 +600,7 @@ export default {
         this.topicList[2]["checkedCities"].length > 0 &&
         this.topicList[3]["checkedCities"].length > 0 &&
         this.topicList[4]["checkedCities"].length > 0 &&
-        this.topicList[5]["checkedCities"].length > 0 
+        this.topicList[5]["checkedCities"].length > 0
       ) {
         //2.整合数据
         //params  **Entity
@@ -483,7 +612,10 @@ export default {
                 if (j == 0) {
                   paramList.push({
                     num: i + 1,
-                    value: "[{"+this.topicList[i]["answers"][j]["checkedCities"]+"}]"
+                    value:
+                      "[{" +
+                      this.topicList[i]["answers"][j]["checkedCities"] +
+                      "}]"
                   });
                 }
               }
@@ -491,7 +623,10 @@ export default {
                 if (j == 1) {
                   paramList.push({
                     num: i + 1,
-                    value: "[{"+this.topicList[i]["answers"][j]["checkedCities"]+"}]"
+                    value:
+                      "[{" +
+                      this.topicList[i]["answers"][j]["checkedCities"] +
+                      "}]"
                   });
                 }
               }
@@ -500,12 +635,12 @@ export default {
             if (i == 10) {
               paramList.push({
                 num: i + 1,
-                value: "[{"+this.topicList[i]["checkedCities"]+"}]"
+                value: "[{" + this.topicList[i]["checkedCities"] + "}]"
               });
             } else {
               paramList.push({
                 num: i + 1,
-                value: "[{"+this.topicList[i]["checkedCities"]+"}]"
+                value: "[{" + this.topicList[i]["checkedCities"] + "}]"
               });
             }
           }
@@ -520,8 +655,8 @@ export default {
         api
           .testAxiosGet(ApiPath.url.saveQuestion, params)
           .then(res => {
-        //  判断身份
-         if (res.status == "0") {
+            //  判断身份
+            if (res.status == "0") {
               this.$message.success(res.tips);
             }
             if (res.status == "1") {
@@ -532,13 +667,12 @@ export default {
             }
           })
           .catch(function(error) {
-
-            console.log(error)
+            console.log(error);
           });
         //editForm
       } else {
-            this.$alert('选项不能为空！', '提示', {
-          confirmButtonText: '确定',
+        this.$alert("选项不能为空！", "提示", {
+          confirmButtonText: "确定"
         });
       }
     }
@@ -666,5 +800,60 @@ export default {
 .el-message-box {
   width: 272px;
   text-align: center;
+}
+@media screen and (max-width: 768px) {
+  .Home{
+    width: 100%;
+    overflow: hidden;
+  }
+  .questionnaire {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    .el-textarea{
+      width: 45% !important;
+    }
+    .info .el-col .el-button--primary{
+      width: 100%;
+    }
+    .info .el-col{
+      margin: 0;
+    }
+    .info .el-form-item__label{
+      width: 38%;
+    }
+    .info .el-input{
+      width: 45%;
+    }
+    .topic{
+      border-bottom: 9px solid #f2f2f2;
+      .title{
+        font-size: 16px;
+        margin-top: 20px;
+        padding-left: 20px;
+        .number{
+          font-size: 16px;
+        }
+      }
+    }
+    .answers{
+      flex-wrap: wrap;
+    }
+  }
+  .questionnaire .topic .answer .el-checkbox .el-checkbox__label{
+    font-size: 14px;
+  }
+  .questionnaire .topic:nth-child(5) .answer .el-radio{
+    width: 42% !important;
+  }
+  .el-radio{
+    margin: 0;
+  }
+  .questionnaire .el-radio .el-radio__label{
+    font-size: 14px;
+  }
+  .info .el-form-item__error{
+    margin-left: 43%;
+  }
 }
 </style>

@@ -4,10 +4,15 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
+
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const routes = [
   {
     path: '/',
-    name: '首页',
+    name: '',
     component: Home
   },
   {
@@ -49,6 +54,11 @@ const routes = [
     path: '/partner',
     name: 'partner',
     component: () => import('../views/Partner.vue')
+  },
+  {
+    path: '/guarantee',
+    name: 'guarantee',
+    component: () => import('../views/Guarantee.vue')
   },
   {
     path: '/join',

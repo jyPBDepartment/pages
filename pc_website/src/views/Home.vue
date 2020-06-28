@@ -48,9 +48,9 @@
     </Fast>
     <el-row class="hidden-md-and-up m_w">
       <div class="m_l_box m_l_box_b">
-        <img src="../assets/tu1.png" alt />
+        <img src="../assets/mobile/2.jpg" alt />
         <ul>
-          <li v-for="(item, index) in title" :key="index">{{item.p}}</li>
+          <li v-for="(item, index) in m_b_text" :key="index">{{item}}</li>
         </ul>
       </div>
     </el-row>
@@ -77,6 +77,11 @@ export default {
       bannerBottomHeight: 480,
       hover: null,
       // 页面数据: "/"
+      m_b_text:[
+        '技术团队安全保障系统稳定、安全、流畅',
+        '360°客户顾问全程保障专属客户顾问、1v1咨询',
+        '农技团队专业守护服务农户、在线圈地、科学种植',
+      ],
       banner: [
         {
           src: require("../assets/banner1.jpg"),

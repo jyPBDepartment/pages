@@ -71,7 +71,7 @@ export default {
     padding:30px 0 27px 0;
     .fast_title {
       font-size: 21px;
-      color: #000014;
+      color: #000014 !important;
       font-weight: 500;
     }
   }
