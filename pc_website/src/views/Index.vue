@@ -170,7 +170,7 @@
         <div class="w">
           <el-row>
             <el-col :span="20" :offset="2">
-              <p class="f2_1">Copyright © 2012-2018 All Rights Reserved. 备案号：吉ICP备19004431号 网站地图</p>
+              <p class="f2_1">Copyright © 2012-2018 All Rights Reserved. 备案号：吉ICP备19004431号</p>
               <p class="f2_1">
                 友情链接：
                 <a href="https://www.jlau.edu.cn/" target="view_window">吉林农业大学</a>
