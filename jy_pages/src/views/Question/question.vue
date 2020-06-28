@@ -18,8 +18,8 @@
       <el-form-item label="手机号码" >
         <el-input v-model="phoneNum" type="text" placeholder="请输入手机号码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-search" >查询</el-button>
-       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-close">重置</el-button>
+      <el-button  type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small"  icon="el-icon-search" >查询</el-button>
+       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small"  icon="el-icon-close">重置</el-button>
         
     </el-form>
 
@@ -34,14 +34,14 @@
       <el-table-column sortable prop="expectaion" label="合作期望" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column sortable prop="recommended" label="推荐人" align="center" ></el-table-column>
       <el-table-column sortable prop="questionScore" label="问卷得分" align="center"></el-table-column>
-      <!-- <el-table-column sortable prop="questionAnswer" label="问卷答案" align="center" v-if="isShow"></el-table-column> -->
+     
       <el-table-column  prop="createDate" label="创建时间" align="center">
       </el-table-column>
       
      <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px" icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteQuestion(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px" icon="el-icon-delete">删除</el-button>
+           <el-button @click="openUpdateDialog(scope)" class="up" type="text" size="medium"  icon="el-icon-edit">编辑</el-button>
+          <el-button @click="deleteQuestion(scope)" class="del" type="text" size="medium"  icon="el-icon-delete">删除</el-button>
          
        </template>
    </el-table-column>
@@ -68,12 +68,11 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-// import AddQuestion from "./addQuestion.vue";
 import UpdateQuestion from "./updateQuestion.vue";
 import Pagination from "../../components/Pagination";
 
 export default {
-  // isShow:false,
+ 
   inject: ["reload"],
   props: {
     show: {
@@ -91,15 +90,12 @@ export default {
      name: "",
      phoneNum:"",
       updateQuestionFlag: false,
-      
       transQuestionId: "",
-      
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
       addQuestionFlag: false,
-     
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
@@ -117,7 +113,6 @@ export default {
       }
     };
   },
-
   watch: {
     show(val) {
       this.localShow = val;
@@ -270,7 +265,7 @@ export default {
     }
   },
   components: {
-    // AddQuestion,
+   
     UpdateQuestion,
     
     Pagination
@@ -289,15 +284,12 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-.el-tooltip__popper {
-  font-size: 14px;
-  max-width: 150px;
-}
+
 .template {
   size: medium;
   color: rgb(17, 17, 17);
   background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
+  
   border-radius: 3px;
 }
 .el-button {
@@ -313,17 +305,45 @@ export default {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
-.el-tooltip__popper{
-  font-size: 14px; 
-  width:210px;
-  
+.el-button.el-button--small{
+    background-color:#409EFF;
+    border-color:#409EFF;
+    color:#FFF;
+    font-size:12px;
+    margin-top:4px;
+}
+.el-button.up{
+  margin-right: 20px;
+  width:50px;
+  background-color:white;
+  border-color:#DCDFE6;
+  color:black;
+  font-size:12px;
+}
+.el-button.del{
+  width:50px;
+  background-color:#84C1FF;
+  border-color:#84C1FF;
+  color:white;
+  font-size:12px;
 }
 
-.el-tooltip__popper_is-dark{
-background: #84c1ff ;
-}
 </style>
+<style>
+.el-tooltip__popper {
+  max-width: 300px;
+  font-size: 14px;
+   background: #84c1ff !important;
+}
+.el-tooltip__popper[x-placement^="top"] .popper__arrow {
+  border-top-color: #84c1ff;
+}
+.el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
+  border-top-color: pink;
+}
 
+
+</style>
 
 
 

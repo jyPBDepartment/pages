@@ -142,12 +142,24 @@ export default {
 
     //添加管理员方法
     saveAdmin: function() {
-       if (this.editForm.loginName != "" && this.editForm.password != "" && this.editForm.roleId != "" ) {
+       if (this.editForm.loginName != "" && this.editForm.password != "" && this.editForm.roleId != "") {
       let params = {
         adminEntity: this.editForm
       };
+     
       api.testAxiosGet(ApiPath.url.saveAdmin, params).then(res => {
-        this.$message.success(res.message);
+       let code = res.status;
+        if (code == "0") {
+           this.$message.success(res.message);
+          
+        } else {
+          this.$alert('"'+this.editForm.loginName+'"' +'名字不能重复,添加失败！', '提示', {
+          confirmButtonText: '确定',
+        });
+        }
+         
+        
+       
         this.reload();
         this.close();
       });
@@ -156,6 +168,7 @@ export default {
           confirmButtonText: '确定',
         });
         }
+        
     },
     close: function() {
       this.$emit("close");

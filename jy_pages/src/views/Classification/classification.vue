@@ -15,10 +15,10 @@
       <el-form-item label="分类名称" >
         <el-input v-model="name" type="text" placeholder="请输入分类名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-search" >查询</el-button>
-       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;" icon="el-icon-close">重置</el-button>
+      <el-button type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small"  icon="el-icon-search" >查询</el-button>
+       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small" icon="el-icon-close">重置</el-button>
         <el-row>
-           <el-button type="info" plain @click="openRuleTag"  size="medium" class="el-button el-button--primary el-button--small" style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;" icon="el-icon-plus">新增</el-button>
+           <el-button type="info" plain @click="openRuleTag"  size="medium" class="el-button el-button--primary el-button--small"  icon="el-icon-plus">新增</el-button>
         </el-row>
     </el-form>
 
@@ -51,8 +51,8 @@
       </el-table-column>
      <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)" type="text" size="medium" style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px" icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteClassification(scope)" type="text" size="medium" style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px" icon="el-icon-delete">删除</el-button>
+           <el-button @click="openUpdateDialog(scope)" class="up" type="text" size="medium" icon="el-icon-edit">编辑</el-button>
+          <el-button @click="deleteClassification(scope)" class="del" type="text" size="medium" icon="el-icon-delete">删除</el-button>
          
        </template>
    </el-table-column>
@@ -153,7 +153,7 @@ export default {
           } else {
             this.$message.success(res.message);
           }
-          // this.reload();
+           this.reload();
         })
         .catch(function(error) {});
     },
@@ -366,8 +366,30 @@ export default {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
-.el-tooltip__popper{
-    font-size: 14px; max-width:50% }
+.el-button.el-button--small{
+    background-color:#409EFF;
+    border-color:#409EFF;
+    color:#FFF;
+    font-size:12px;
+    margin-top:4px;
+}
+.el-button.up{
+  margin-right: 20px;
+  width:50px;
+  background-color:white;
+  border-color:#DCDFE6;
+  color:black;
+  font-size:12px;
+}
+.el-button.del{
+  width:50px;
+  background-color:#84C1FF;
+  border-color:#84C1FF;
+  color:white;
+  font-size:12px;
+}
+
+
 </style>
 
 

@@ -129,7 +129,7 @@ const url = {
   articleEnable:URLHost+'/article/enable',
   isRelease:URLHost+'/article/release',
   isRecommend:URLHost+'/article/recommend',
-  findClassification:URLHost+'/w_classification_info/findAll',
+  findClassification:URLHost+'/classification_info/findSubList',
   isTopping:URLHost+'/article/topping',
 
 }

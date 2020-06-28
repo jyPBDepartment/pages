@@ -27,7 +27,7 @@
         @click="search"
         size="medium"
         class="el-button el-button--primary el-button--small"
-        style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;"
+   
         icon="el-icon-search"
       >查询</el-button>
       <el-button
@@ -36,7 +36,7 @@
         @click="resetRuleTag(search)"
         size="medium"
         class="el-button el-button--primary el-button--small"
-        style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;margin-top:4px;"
+      
         icon="el-icon-close"
       >重置</el-button>
       <el-row>
@@ -46,7 +46,7 @@
           @click="openRuleTag"
           size="medium"
           class="el-button el-button--primary el-button--small"
-          style="background-color:#409EFF;border-color:#409EFF;color:#FFF;font-size:12px;"
+         
           icon="el-icon-plus"
         >新增</el-button>
       </el-row>
@@ -66,7 +66,20 @@
      
         <el-table-column sortable prop="name" label="导航名称" align="center" style="width:40px;"></el-table-column>
         <!--switch开关（表单）-->
-        <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
+       
+     
+        <el-table-column sortable prop="dropDownEnName" label="下拉英文内容" align="center"></el-table-column>
+        <el-table-column 
+         
+        sortable prop="url" label="图片地址" min-width="50" >
+          <template slot-scope="scope">
+            <span v-if="scope.row.url!=''">
+              <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
+         <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
@@ -78,18 +91,6 @@
             ></el-switch>
           </template>
         </el-table-column>
-     
-     
-        <!-- <el-table-column sortable prop="subId" label="上级导航" align="center" style="width:40px;"></el-table-column> -->
-        <el-table-column sortable prop="dropDownEnName" label="下拉英文内容" align="center"></el-table-column>
-        <el-table-column sortable prop="url" label="图片地址" min-width="50">
-          <template slot-scope="scope">
-            <span v-if="scope.row.url!=''">
-              <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
      
       <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
        
@@ -103,14 +104,14 @@
             @click="openUpdateDialog(scope)"
             type="text"
             size="medium"
-            style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px"
+            class="up"
             icon="el-icon-edit"
           >编辑</el-button>
           <el-button
             @click="deleteNavigation(scope)"
             type="text"
             size="medium"
-            style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px"
+           class="del"
             icon="el-icon-delete"
           >删除</el-button>
         </template>
@@ -143,7 +144,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddNavigation from "./addNavigation.vue";
-import UpdateNavigation from "./updateNavigation.vue";
+import UpdateNavigation from "./updatenavigation";
 import Pagination from "../../components/Pagination";
 !(function() {
   function n(n, e, t) {
@@ -363,7 +364,7 @@ export default {
           } else {
             this.$message.success(res.message);
           }
-          // this.reload();
+          this.reload();
         })
         .catch(function(error) {});
     },
@@ -507,5 +508,27 @@ export default {
 .el-button:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+.el-button.el-button--small{
+    background-color:#409EFF;
+    border-color:#409EFF;
+    color:#FFF;
+    font-size:12px;
+    margin-top:4px;
+}
+.el-button.up{
+  margin-right: 20px;
+  width:50px;
+  background-color:white;
+  border-color:#DCDFE6;
+  color:black;
+  font-size:12px;
+}
+.el-button.del{
+  width:50px;
+  background-color:#84C1FF;
+  border-color:#84C1FF;
+  color:white;
+  font-size:12px;
 }
 </style>

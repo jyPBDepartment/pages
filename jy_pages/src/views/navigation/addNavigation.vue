@@ -73,11 +73,14 @@
         </el-form-item>
         <el-form-item label="导航路径" prop="path" v-if="isShow">
           <el-input
-            type="textarea"
+            type="text"
             v-model="editForm.path"
             placeholder="请输入导航路径"
             style=" width:70%;"
-          ></el-input>
+            :autosize="{ minRows: 1, maxRows: 4}" 
+          >
+           <template slot="prepend">Http://</template>
+          </el-input>
         </el-form-item>
       </el-form>
     </slot>

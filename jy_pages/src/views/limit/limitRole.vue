@@ -10,6 +10,7 @@
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
+      <el-form-item label="搜索："></el-form-item>
       <el-form-item label="权限名称">
         <el-input size="small" v-model="name" placeholder="输入权限名称"></el-input>
       </el-form-item>
@@ -60,17 +61,20 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            @click="openupdateLimit(scope)"
-            style="background-color:white;border-color:#DCDFE6;color:black;"
+           @click="openupdateLimit(scope)"
+            type="text"
+            size="medium"
+            style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px;margin-right: 20px;"
             icon="el-icon-edit"
           >编辑</el-button>
-          <el-button
-            size="mini"
-            style="background-color:#84C1FF;border-color:#84C1FF; "
+         <el-button
+          @click="deleteUser(scope)"
+            type="text"
+            size="medium"
+            style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px;"
             icon="el-icon-delete"
-            @click="deleteUser(scope)"
           >删除</el-button>
+         
         </template>
       </el-table-column>
     </el-table>
