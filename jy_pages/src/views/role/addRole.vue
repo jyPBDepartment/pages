@@ -106,7 +106,7 @@ export default {
         limitId: this.editForm.limitId,
         id:this.editForm.id 
     };
-    if(editForm.name!=""){}
+    // if(editForm.name!=""){}
       api.testAxiosGet(ApiPath.url.findLimit, params).then(res => {
         let code = res.status;
         if (code=="0") {
