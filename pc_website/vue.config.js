@@ -5,5 +5,6 @@ module.exports = {
   outputDir: 'website',
   devServer:{
     port:8090,
-  }
+  },
+  productionSourceMap:false
 }
