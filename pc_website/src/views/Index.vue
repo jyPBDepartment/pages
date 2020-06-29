@@ -62,7 +62,6 @@
                 <a :href="'tel:4006840008'">
                   <img src="../assets/mobile/dianhua.png" alt />
                 </a>
-
                 <img v-show="!isMenu" @click="isMenus" src="../assets/mobile/caidan.png" alt />
                 <img v-show="isMenu" @click="isMenus" src="../assets/mobile/close.png" alt />
               </el-col>

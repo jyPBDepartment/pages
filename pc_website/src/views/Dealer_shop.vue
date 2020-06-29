@@ -41,6 +41,7 @@
     <div style="background:#242b44" class="hidden-md-and-down">
       <div class="w">
         <Rotation :banner="bannerBottom" :height="854" />
+        <!-- <FullFunctionality class="wz_btn" :isMobile="false" :functionList="functionList"/> -->
       </div>
     </div>
     <Fast class="hidden-md-and-down" title="四大核心优势" :id="modelName[1].id">
@@ -178,9 +179,10 @@ export default {
         { src: require("../assets/3-gn-bai.jpg") }
       ],
       m_b_text: [
-        "技术团队安全保障系统稳定、安全、流畅",
-        "360°客户顾问全程保障专属客户顾问、1v1咨询",
-        "农技团队专业守护服务农户、在线圈地、科学种植"
+        "针对农资行业特有属性进行设计开发",
+        "数据辅助决策，更有效管理客户与订单",
+        "全部经营，线上搞定",
+        "让更多的人帮你卖货和维护客户"
       ],
       bottonList: [
         {
@@ -248,6 +250,9 @@ export default {
 
 
 <style lang="scss">
+.wz_btn{
+  padding-bottom: 20px;
+}
 .home {
   max-width: 100%;
   overflow: hidden;

@@ -12,6 +12,12 @@
           <img :src="item.src" alt />
           <h2>{{item.title}}</h2>
         </div>
+        <div v-if="category == 'bottons'" class="bottons">
+          <img :src="item.src" alt />
+          <h2>{{item.title}}</h2>
+          <p v-for="(item1, index1) in item.li" :key="index1">{{item1}}</p>
+          <p></p>
+        </div>
         <div v-if="category == 'tool'" class="tool">
           <img :src="item.src" alt />
           <h2>{{item.title}}</h2>
@@ -126,6 +132,27 @@ export default {
         }
         h2 {
           margin-bottom: 30px;
+        }
+      }
+      .custom {
+        img {
+          width: 100%;
+        }
+        h2 {
+          margin: 30px 0;
+        }
+      }
+      .bottons {
+        img {
+          width: 80px;
+          height: 80px;
+          margin-top: 30px;
+        }
+        h2 {
+          margin-bottom: 30px;
+        }
+        p{
+          font-size: 14px;
         }
       }
       .custom {
