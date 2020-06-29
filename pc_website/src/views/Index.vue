@@ -59,7 +59,7 @@
                 </el-menu>
               </el-col>
               <el-col class="hidden-md-and-up m_header_btn" :xs="{span:14}">
-                <a :href="'tel:17704301395'">
+                <a :href="'tel:4006840008'">
                   <img src="../assets/mobile/dianhua.png" alt />
                 </a>
 

@@ -18,62 +18,62 @@ const routes = [
   {
     path: '/introduce',
     name: 'introduce',
-    component: () => import('../views/Introduce.vue')
+    component: resolve => require(['../views/Introduce.vue'],resolve)
   },
   {
     path: '/dealer_shop',
     name: 'dealer_shop',
-    component: () => import('../views/Dealer_shop.vue')
+    component: resolve => require(['../views/Dealer_shop.vue'],resolve)
   },
   {
     path: '/dealer_shop',
     name: 'dealer_shop',
-    component: () => import('../views/Dealer_shop.vue')
+    component: resolve => require(['../views/Dealer_shop.vue'],resolve)
   },
   {
     path: '/dealer_manager',
     name: 'dealer_manager',
-    component: () => import('../views/Dealer_manager.vue')
+    component: resolve => require(['../views/Dealer_manager.vue'],resolve)
   },
   {
     path: '/supplier_shops',
     name: 'supplier_shops',
-    component: () => import('../views/Supplier_shop.vue')
+    component: resolve => require(['../views/Supplier_shop.vue'],resolve)
   },
   {
     path: '/dealer_program',
     name: 'dealer_program',
-    component: () => import('../views/Dealer_program.vue')
+    component: resolve => require(['../views/Dealer_program.vue'],resolve)
   },
   {
     path: '/supplier_program',
     name: 'supplier_program',
-    component: () => import('../views/Supplier_program.vue')
+    component: resolve => require(['../views/Supplier_program.vue'],resolve)
   },
   {
     path: '/partner',
     name: 'partner',
-    component: () => import('../views/Partner.vue')
+    component: resolve => require(['../views/Partner.vue'],resolve)
   },
   {
     path: '/guarantee',
     name: 'guarantee',
-    component: () => import('../views/Guarantee.vue')
+    component: resolve => require(['../views/Guarantee.vue'],resolve)
   },
   {
     path: '/join',
     name: 'join',
-    component: () => import('../views/Join.vue')
+    component: resolve => require(['../views/Join.vue'],resolve)
   },
   {
     path: '/real_time_info',
     name: 'real_time_info',
-    component: () => import('../views/Real_time_info.vue')
+    component: resolve => require(['../views/Real_time_info.vue'],resolve)
   },
   {
     path: '/article',
     name: 'article',
-    component: () => import('../views/Article.vue')
+    component: resolve => require(['../views/Article.vue'],resolve)
   }
 ]
 
