@@ -7,7 +7,7 @@
           <div class="w">
             <el-row type="flex" align="middle">
               <el-col class="m_logo" :span="3" :offset="2" :xs="{span: 10, offset: 0}">
-                <img class="logo" src="../assets/logo.png" alt />
+                <img class="logo" @click="jumpHome" src="../assets/logo.png" alt />
               </el-col>
               <el-col :span="17" class="hidden-md-and-down" :offset="2">
                 <el-menu
@@ -325,7 +325,7 @@ export default {
     };
   },
   created() {
-    this.activeIndex = `/${window.location.href.split("/", 4)[3]}`;
+    // this.activeIndex = `/${window.location.href.split("/", 4)[3]}`;
 
     this.initArticle();
   },
@@ -343,7 +343,9 @@ export default {
     }
   },
   methods: {
-    
+    jumpHome(){
+      this.$router.push({path:'/'})
+    },
     // reload() {
     //   // location. reload();
 
@@ -450,6 +452,7 @@ export default {
   background: #000930;
   .logo {
     max-width: 80%;
+    cursor: pointer;
   }
   .pd {
     padding: 0 30px;

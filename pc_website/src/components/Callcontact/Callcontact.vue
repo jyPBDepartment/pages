@@ -1,24 +1,32 @@
 <template>
   <div class="Callcontatct">
+    <Float :ejectMenus="ejectMenus" @closeMenu="ejectMenu($event)"></Float>
     <div class="callcontact_us">
       想了解更多，欢迎拨打热线：
       <span>400 - 684 - 0008</span> ，你也可以留下联系方式，我们会主动和你联系！
-      <!-- <el-button style="btn" type="primary">与我联系</el-button> -->
-      <div class="botton">
-        与我联系
-      </div>
+      <div class="botton" @click="ejectMenu(true)">与我联系</div>
     </div>
   </div>
 </template>
 
 <script>
+import Float from "../Float/Float";
 export default {
   name: "Callcontatct",
+  components: {
+    Float
+  },
   props: {},
   data() {
-    return {};
+    return {
+      ejectMenus: false
+    };
   },
-  methods: {}
+  methods: {
+    ejectMenu(e) {
+      this.ejectMenus = e;
+    },
+  }
 };
 </script>
 
@@ -43,7 +51,7 @@ export default {
     background: rgb(99, 149, 224);
     border-color: rgb(99, 149, 224);
   }
-  .botton{
+  .botton {
     margin-left: 111px;
     font-size: 16px;
     background: #2f76e3;
@@ -52,6 +60,7 @@ export default {
     text-align: center;
     line-height: 40px;
     padding: 0 20px;
+    cursor: pointer;
   }
 }
 </style>

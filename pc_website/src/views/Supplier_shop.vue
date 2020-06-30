@@ -32,7 +32,9 @@
       :id="modelName[0].id"
       :allScreen="true"
     >
-      <Rotation style="margin-top:30px" :banner="banner" :height="648" />
+      <div class="w">
+        <Rotation style="margin-top:30px" :banner="banner" :height="648" />
+      </div>
     </Fast>
     <Fast
       class="hidden-md-and-down"
