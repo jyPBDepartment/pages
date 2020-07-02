@@ -156,7 +156,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
     <Callcontact class="hidden-md-and-down" />
@@ -170,12 +169,14 @@ import MobileBanner from "../components/MobileBanner/MobileBanner";
 import aes from "@/util/aes";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+
 export default {
   components: {
     Fast,
     Callcontact,
     MobileBanner
   },
+
   data() {
     return {
       isShow: false,
@@ -478,6 +479,7 @@ export default {
       ]
     };
   },
+
   mounted() {
     window.addEventListener("resize", () => this.screenChanges(), false);
   },
@@ -537,8 +539,10 @@ export default {
         this.topicList[3]["checkedCities"].length > 0 &&
         this.topicList[4]["checkedCities"].length > 0 &&
         this.topicList[5]["checkedCities"].length > 0 &&
-        this.editForm.name.length>0 && this.editForm.post.length>0 && 
-        this.editForm.phoneNum.length>0 && this.editForm.email.length>0
+        this.editForm.name.length > 0 &&
+        this.editForm.post.length > 0 &&
+        this.editForm.phoneNum.length > 0 &&
+        this.editForm.email.length > 0
       ) {
         //2.整合数据
         //params  **Entity
@@ -587,6 +591,8 @@ export default {
 
         // console.log(aes.decrypt(aes.encrypt(JSON.stringify(paramList))))
         //评分+表单数据
+       
+
         let params = {
           questionEntity: this.editForm
         };
@@ -596,18 +602,24 @@ export default {
             //  判断身份
             if (res.status == "0") {
               this.$message.success(res.tips);
+              
+              // alert("您的身份为供应商");
             }
             if (res.status == "1") {
               this.$message.success(res.tips);
+               
+              // alert("您的身份为经销商");
             }
             if (res.status == "2") {
               this.$message.success(res.tips);
+             
+              // alert("您的身份为农业经理人");
             }
+            // location.reload();
           })
           .catch(function(error) {
             console.log(error);
           });
-        //editForm
       } else {
         this.$alert("选项或必填输入项不能为空！", "提示", {
           confirmButtonText: "确定"
@@ -740,7 +752,7 @@ export default {
   text-align: center;
 }
 @media screen and (max-width: 768px) {
-  .Home{
+  .Home {
     width: 100%;
     overflow: hidden;
   }
@@ -748,50 +760,51 @@ export default {
     width: 100%;
     padding: 0;
     margin: 0;
-    .el-textarea{
+    .el-textarea {
       width: 45% !important;
     }
-    .info .el-col .el-button--primary{
+    .info .el-col .el-button--primary {
       width: 100%;
     }
-    .info .el-col{
+    .info .el-col {
       margin: 0;
     }
-    .info .el-form-item__label{
+    .info .el-form-item__label {
       width: 38%;
     }
-    .info .el-input{
+    .info .el-input {
       width: 45%;
     }
-    .topic{
+    .topic {
       border-bottom: 9px solid #f2f2f2;
-      .title{
+      .title {
         font-size: 16px;
         margin-top: 20px;
         padding-left: 20px;
-        .number{
+        .number {
           font-size: 16px;
         }
       }
     }
-    .answers{
+    .answers {
       flex-wrap: wrap;
     }
   }
-  .questionnaire .topic .answer .el-checkbox .el-checkbox__label{
+  .questionnaire .topic .answer .el-checkbox .el-checkbox__label {
     font-size: 14px;
   }
-  .questionnaire .topic:nth-child(5) .answer .el-radio{
+  .questionnaire .topic:nth-child(5) .answer .el-radio {
     width: 42% !important;
   }
-  .el-radio{
+  .el-radio {
     margin: 0;
   }
-  .questionnaire .el-radio .el-radio__label{
+  .questionnaire .el-radio .el-radio__label {
     font-size: 14px;
   }
-  .info .el-form-item__error{
+  .info .el-form-item__error {
     margin-left: 43%;
   }
 }
+
 </style>
