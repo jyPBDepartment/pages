@@ -102,14 +102,18 @@ export default {
     },
 
     saveLimit: function() {
-      let params = {
-        limitEntity:this.editForm
-      };
-      api.testAxiosGet(ApiPath.url.addLimit, params).then(res => {
-        this.$message.success(res.message);
-        this.close();
-        this.reload();
-      });
+      if(this.editForm.name!=""&&this.editForm.path!=""){
+        let params = {
+          limitEntity:this.editForm
+        };
+        api.testAxiosGet(ApiPath.url.addLimit, params).then(res => {
+          this.$message.success(res.message);
+          this.close();
+          this.reload();
+        });
+       }else{
+        this.$alert('权限名称、权限路径不能为空！', '提示', {confirmButtonText: '确定',});
+      }
     }
   }
 };

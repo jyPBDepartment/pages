@@ -126,14 +126,19 @@ export default {
     },
     //新增保存
     saveRoles: function() {
-      let params = {
-        roleEntity: this.editForm
-      };
-      api.testAxiosGet(ApiPath.url.addRole, params).then(res => {
-        this.$message.success(res.message);
-        this.close();
-        this.reload();
-      });
+      if(this.editForm.name!=""){
+        let params = {
+          roleEntity: this.editForm
+        };
+        api.testAxiosGet(ApiPath.url.addRole, params).then(res => {
+          this.$message.success(res.message);
+          this.close();
+          this.reload();
+        });
+     }else{
+       this.$alert('角色名称、权限名称不能为空！', '提示', {confirmButtonText: '确定',});
+     }
+
     },
   }
 };
