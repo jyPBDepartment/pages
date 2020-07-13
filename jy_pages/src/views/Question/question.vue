@@ -38,26 +38,27 @@
       <el-table-column  prop="createDate" label="创建时间" align="center">
       </el-table-column>
       
-     <el-table-column fixed="right" label="操作" width="220px" align="center">
+     <!-- <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
            <el-button @click="openUpdateDialog(scope)" class="up" type="text" size="medium"  icon="el-icon-edit">编辑</el-button>
           <el-button @click="deleteQuestion(scope)" class="del" type="text" size="medium"  icon="el-icon-delete">删除</el-button>
          
        </template>
-   </el-table-column>
+   </el-table-column> -->
+
   </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
 
- <update-question
+ <!-- <update-question
       :show="updateQuestionFlag"
       :transQuestionId="transQuestionId"
       title="修改"
       @close="closeUpdateQuestionDialog"
       @save="updateQuestion"
-    ></update-question>
+    ></update-question> -->
     
     </div>
     
