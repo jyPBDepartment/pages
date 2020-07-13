@@ -18,12 +18,12 @@
     </div>
     <el-submenu v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
       <template slot="title">
-        <i class="iconfont" :class="menu.icon"></i>
+        <i :class="menu.icon"></i>
         <span>{{menu.menuname}}</span>
       </template>
       <el-menu-item-group>
         <el-menu-item v-for="chmenu in menu.menus" :index="'/'+chmenu.url" :key="chmenu.menuid">
-          <i class="iconfont" :class="chmenu.icon"></i>
+          <i :class="chmenu.icon"></i>
           <span>{{chmenu.menuname}}</span>
         </el-menu-item>
       </el-menu-item-group>
@@ -48,14 +48,14 @@ export default {
       data: [
         {
           menuid: 1,
-          icon: "li-icon-xiangmuguanli",
+          icon: "el-icon-s-home",
           menuname: "门户管理",
           hasThird: null,
           url: null,
           menus: [
             {
               menuid: 1 - 1,
-              icon: "icon-cat-skuQuery",
+              icon: "el-icon-picture-outline-round",
               menuname: "Banner图管理",
               hasThird: "N",
               url: "gateway/Banner",
@@ -63,7 +63,7 @@ export default {
             },
             {
               menuid: 1 - 2,
-              icon: "icon-cat-skuQuery",
+              icon: "el-icon-connection",
               menuname: "分类管理",
               hasThird: "N",
               url: "goods/Goods1",
@@ -71,7 +71,7 @@ export default {
             },
             {
               menuid: 1 - 3,
-              icon: "icon-cat-skuQuery",
+              icon: "el-icon-s-comment",
               menuname: "资讯管理",
               hasThird: "N",
               url: "goods/Goods2",
@@ -81,14 +81,14 @@ export default {
         },
         {
           menuid: 2,
-          icon: "li-icon-xiangmuguanli",
+          icon: "el-icon-menu",
           menuname: "基础管理",
           hasThird: null,
           url: null,
           menus: [
             {
               menuid: 2 - 1,
-              icon: "el-icon-phone",
+              icon: "el-icon-discount",
               menuname: "导航管理",
               hasThird: "N",
               url: "navigation/navigation",
@@ -105,7 +105,7 @@ export default {
             },
             {
               menuid: 2 - 3,
-              icon: "el-icon-eleme",
+              icon: "el-icon-s-custom",
               menuname: "管理员管理",
               hasThird: "N",
               url: "Admin/admin",
@@ -113,7 +113,7 @@ export default {
             },
             {
               menuid: 2 - 4,
-              icon: "el-icon-eleme",
+              icon: "el-icon-user",
               menuname: "角色管理",
               hasThird: "N",
               url: "role/roleShow",
@@ -121,7 +121,7 @@ export default {
             },
             {
               menuid: 2 - 5,
-              icon: "el-icon-eleme",
+              icon: "el-icon-coin",
               menuname: "权限管理",
               hasThird: "N",
               url: "limit/limitRole",
@@ -129,7 +129,7 @@ export default {
             },
             {
               menuid: 2 - 6,
-              icon: "el-icon-eleme",
+              icon: "el-icon-notebook-1",
               menuname: "预约讲解",
               hasThird: "N",
               url: "appointment/appointmentShow",
@@ -137,7 +137,7 @@ export default {
             },
             {
               menuid: 2 - 7,
-              icon: "li-icon-xiangmuguanli",
+              icon: "el-icon-s-grid",
               menuname: "菜单管理",
               hasThird: "N",
               url: "menu/menuIndex",
@@ -145,7 +145,7 @@ export default {
             },
             {
               menuid: 2 - 8,
-              icon: "li-icon-xiangmuguanli",
+              icon: "el-icon-reading",
               menuname: "文章管理",
               hasThird: "N",
               url: "article/article",
@@ -153,7 +153,7 @@ export default {
             },
             {
               menuid: 2 - 9,
-              icon: "el-icon-eleme",
+              icon: "el-icon-connection",
               menuname: "分类管理",
               hasThird: "N",
               url: "Classification/classification",
@@ -161,7 +161,7 @@ export default {
             },
              {
               menuid: 2 - 10,
-              icon: "el-icon-eleme",
+              icon: "el-icon-mobile-phone",
               menuname: "问卷调查",
               hasThird: "N",
               url: "Question/question",
