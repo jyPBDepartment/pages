@@ -55,7 +55,8 @@
       </div>
     </el-row>
     <div class="w hidden-md-and-down">
-      <Rotation :banner="bannerBottom" :height="bannerBottomHeight" />
+      <!-- <Rotation :banner="bannerBottom" :height="bannerBottomHeight" /> -->
+      <BottomLunbo/>
     </div>
     <Callcontact class="hidden-md-and-down" />
   </div>
@@ -63,12 +64,14 @@
 
 <script>
 import Rotation from "../components/Rotation/Rotation";
+import BottomLunbo from "../components/BottomLunbo/BottomLunbo";
 import Fast from "../components/Fast/Fast";
 import Callcontact from "../components/Callcontact/Callcontact";
 export default {
   components: {
     Rotation,
     Fast,
+    BottomLunbo,
     Callcontact
   },
   data() {
@@ -104,11 +107,6 @@ export default {
           botton: "加 入",
           router: "partner"
         }
-      ],
-      bannerBottom: [
-        { src: require("../assets/index1.jpg") },
-        { src: require("../assets/index2.jpg") },
-        { src: require("../assets/index3.jpg") }
       ],
       title: [
         {
