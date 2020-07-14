@@ -27,6 +27,8 @@ const url = {
   showName:URLHost + '/websiteInfo/findById',
   //网站热线电话
   showPhone:URLHost + '/websiteInfo/findById',
+  //首页轮播图
+  findRotation:URLHost + '/banner/findAll',
 }
 export default {
   url
