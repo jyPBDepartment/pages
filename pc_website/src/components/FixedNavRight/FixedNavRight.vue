@@ -31,7 +31,8 @@
         </el-row>
       </el-popover>
       <el-popover placement="left" width="150" trigger="hover">
-        <img class="erweima" src="../../assets/6365912487915482991329897.png" alt />
+       
+       <img class="erweima" :src="url" alt />
         <p class="title">扫码关注吉易慧云</p>
         <el-row slot="reference" class="box">
           <img src="../../assets/icon/antOutline-qrcode.png" alt />
@@ -47,6 +48,8 @@
 </template>
 
 <script>
+import ApiPath from '@/api/ApiPath'
+import api from '@/axios/api'
 export default {
   name: "FixedNavRight",
   props: {
@@ -61,11 +64,17 @@ export default {
   },
   data() {
     return {
-      info: false
+      info: false,
+      url:"",
+    
     };
   },
   mounted() {},
+  created(){
+    this.transJurisdictionId();
+  },
   methods: {
+   
     backtop() {
       this.$emit("backtop");
     },
@@ -73,7 +82,21 @@ export default {
       if (!this.isShow) {
         this.$emit("chickCallMe", true);
       }
-    }
+    },
+     
+     //显示公众号
+    transJurisdictionId(val) {
+      let params = {
+        id: val
+      };
+      api.testAxiosGet(ApiPath.url.findAll, params).then(res => {
+        let code = res.status;
+        if (code == 0) {
+         this.url = res.data.url;
+        }
+      });
+    },
+ 
   }
 };
 </script>

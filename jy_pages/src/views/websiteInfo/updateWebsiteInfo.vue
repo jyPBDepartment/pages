@@ -89,10 +89,24 @@
         </el-col>
       </el-row>
 
-      <el-row>
+      <!-- <el-row>
         <el-col :span="19">
           <el-form-item label="网站地图：" prop="mapUrl">
             <el-input size="small" type="text" v-model="websiteInfoForm.mapUrl" style="width:86.8%;"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row> -->
+       <el-row>
+        <el-col :span="19">
+          <el-form-item label="友情链接：" prop="linkAddress">
+            <el-input size="small" type="text" v-model="websiteInfoForm.linkAddress" style="width:86.8%;"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+         <el-row>
+        <el-col :span="19">
+          <el-form-item label="链接名称：" prop="linkName">
+            <el-input size="small" type="text" v-model="websiteInfoForm.linkName" style="width:86.8%;"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -148,7 +162,8 @@ export default {
         email: "",
         address: "",
         mapUrl: "",
-        linkAddress: ""
+        linkAddress: "",
+        linkName:""
       },
       fileList: [],
       fileListUrl: [],
@@ -172,7 +187,8 @@ export default {
         address: [
           { required: true, message: "请输入公司地址", trigger: "blur" }
         ],
-        mapUrl: [{ required: true, message: "请输入网站地图", trigger: "blur" }]
+        linkAddress: [{ required: true, message: "请输入友情链接", trigger: "blur" }],
+         linkName: [{ required: true, message: "请输入链接名称", trigger: "blur" }]
       }
     };
   },
@@ -199,7 +215,8 @@ export default {
         email: parameter.email,
         address: parameter.address,
         mapUrl: parameter.mapUrl,
-        linkAddress: parameter.linkAddress
+        linkAddress: parameter.linkAddress,
+        linkName:parameter.linkName
       };
 
       //根据Id查询信息

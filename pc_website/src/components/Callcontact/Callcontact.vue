@@ -3,7 +3,7 @@
     <Float :ejectMenus="ejectMenus" @closeMenu="ejectMenu($event)"></Float>
     <div class="callcontact_us">
       想了解更多，欢迎拨打热线：
-      <span>400 - 684 - 0008</span> ，你也可以留下联系方式，我们会主动和你联系！
+      <span>{{hotline}}</span> ，你也可以留下联系方式，我们会主动和你联系！
       <div class="botton" @click="ejectMenu(true)">与我联系</div>
     </div>
   </div>
@@ -11,6 +11,8 @@
 
 <script>
 import Float from "../Float/Float";
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
 export default {
   name: "Callcontatct",
   components: {
@@ -19,12 +21,30 @@ export default {
   props: {},
   data() {
     return {
-      ejectMenus: false
+      ejectMenus: false,
+      hotline:"",
     };
+  },
+  created() {
+   
+   this.transJurisdictionId();
   },
   methods: {
     ejectMenu(e) {
       this.ejectMenus = e;
+    },
+      //显示热线电话
+    transJurisdictionId(val) {
+      let params = {
+        id: val
+      };
+      api.testAxiosGet(ApiPath.url.showPhone, params).then(res => {
+        let code = res.status;
+        if (code == 0) {
+          this.hotline = res.data.hotline;
+         
+        }
+      });
     },
   }
 };
