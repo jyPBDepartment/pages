@@ -50,7 +50,10 @@ export default {
           clearInterval(timer);
         }
       }, 5);
-      this.$router.push({ name: item.router });
+      // this.$router.push({ name: item.router });
+       if (item == this.banner[0]) this.$router.push({ name: "supplier_program" });
+       if (item == this.banner[1]) this.$router.push({ name: "dealer_program" });
+       if (item == this.banner[2]) this.$router.push({ name: "partner" });
     }
   }
 };

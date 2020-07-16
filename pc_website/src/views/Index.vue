@@ -6,8 +6,10 @@
         <div class="nav">
           <div class="w">
             <el-row type="flex" align="middle">
+
               <el-col class="m_logo" :span="3" :offset="1" :xs="{span: 10, offset: 0}">
-                <img class="logo" @click="jumpHome" src="../assets/logo.png" alt />
+                <img class="logo" @click="jumpHome" :src="logoUrl" alt />
+
               </el-col>
               <el-col :span="20" style="display:flex;justify-content:flex-end" class="hidden-md-and-down" >
                 <el-menu
@@ -156,11 +158,16 @@
                 <h2>联系我们</h2>
                 <h4>/ Contact US</h4>
               </div>
-              <div class="f_2">
-                <el-row class="f_3">合作咨询：400-684-0008</el-row>
-                <el-row class="f_3">投诉反馈：jiyinongye@126.com</el-row>
-                <el-row class="f_3">地址：长春市人力资源服务产业园 C座12层</el-row>
-              </div>
+               <div class="f_2">
+                  <div class="f_3">
+                   合作咨询:{{hotline}}<br>
+                   投诉反馈:{{email}}<br>
+                   地址：{{address}}
+                  </div>
+                  <div class="article_content">
+                    <p v-html="ariContent">{{ariContent}}</p>
+                  </div>
+                </div>
             </el-col>
           </el-row>
         </div>
@@ -169,16 +176,16 @@
         <div class="w">
           <el-row>
             <el-col :span="20" :offset="2">
-              <p class="f2_1">Copyright © 2012-2018 All Rights Reserved. 备案号：吉ICP备19004431号</p>
+              <p class="f2_1">Copyright © {{copyRight}}. 备案号：{{recordNo}}</p>
               <p class="f2_1">
                 友情链接：
-                <a href="https://www.jlau.edu.cn/" target="view_window">吉林农业大学</a>
+                <a :href="linkAddress" target="view_window">{{linkName}}</a>
               </p>
             </el-col>
           </el-row>
         </div>
       </div>
-      <div class="m_footer hidden-md-and-up">
+      <!-- <div class="m_footer hidden-md-and-up">
         <el-row class="m_f_nav">
           <el-col
             class="m_f_1"
@@ -195,7 +202,7 @@
           <p>Copyright © 2012-2018 All Rights Reserved.</p>
           <p>备案号：吉ICP备19004431号</p>
         </el-row>
-      </div>
+      </div> -->
     </el-container>
   </div>
 </template>
@@ -218,6 +225,16 @@ export default {
   },
   data() {
     return {
+      hotline:"",
+      email:"",
+      address:"",
+      copyRight:"",
+      recordNo:"",
+      logoUrl:"",
+      linkAddressL:"",
+      linkAddress:"",
+      linkName:"",
+      ariContent:"",
       isRouterAlive: true,
       id:"",
       articleList: [],
@@ -227,6 +244,7 @@ export default {
       offsetTop: 640,
       ejectMenus: false,
       isMenu: false,
+      contentList:[],
       m_fotterList: [
         {
           name: "首页",
@@ -328,6 +346,7 @@ export default {
     // this.activeIndex = `/${window.location.href.split("/", 4)[3]}`;
 
     this.initArticle();
+   this.transJurisdictionId();
   },
   mounted() {
     window.addEventListener("scroll", this.initTop);
@@ -341,8 +360,29 @@ export default {
     $route(to) {
       this.activeIndex = to.path;
     }
+    
   },
   methods: {
+    
+     //显示网站基础信息
+    transJurisdictionId(val) {
+      let params = {
+        id: val
+      };
+      api.testAxiosGet(ApiPath.url.info, params).then(res => {
+        let code = res.status;
+        if (code == 0) {
+          this.hotline = res.data.hotline;
+          this.email = res.data.email;
+          this.address = res.data.address;
+          this.copyRight = res.data.copyRight;
+          this.recordNo = res.data.recordNo;
+          this.logoUrl = res.data.logoUrl;
+          this.linkAddress = res.data.linkAddress;
+          this.linkName = res.data.linkName;
+        }
+      });
+    },
     jumpHome(){
       this.$router.push({path:'/'})
     },

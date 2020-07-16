@@ -19,7 +19,16 @@ const url = {
   findIsRelease:URLHost+'/article/findIsRelease',
   findIsRecommend:URLHost+'/article/findIsRecommend',
   findOn:URLHost+'/article/findOn',
-
+  //公众号图片
+  findAll:URLHost + '/websiteInfo/findById',
+  //logo图片
+  info:URLHost + '/websiteInfo/findById',
+  //网站名称
+  showName:URLHost + '/websiteInfo/findById',
+  //网站热线电话
+  showPhone:URLHost + '/websiteInfo/findById',
+  //首页轮播图
+  findRotation:URLHost + '/banner/findAll',
 }
 export default {
   url

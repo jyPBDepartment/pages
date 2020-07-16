@@ -67,6 +67,9 @@ import Rotation from "../components/Rotation/Rotation";
 import BottomLunbo from "../components/BottomLunbo/BottomLunbo";
 import Fast from "../components/Fast/Fast";
 import Callcontact from "../components/Callcontact/Callcontact";
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
+
 export default {
   components: {
     Rotation,
@@ -85,29 +88,7 @@ export default {
         '360°客户顾问全程保障专属客户顾问、1v1咨询',
         '农技团队专业守护服务农户、在线圈地、科学种植',
       ],
-      banner: [
-        {
-          src: require("../assets/banner1.jpg"),
-          title: "农资经销商解决方案",
-          content: "全面助力经销商升级经营能力 实现跨越式发展",
-          botton: "了解详情",
-          router: "dealer_program"
-        },
-        {
-          src: require("../assets/banner2.jpg"),
-          title: "农资供应商解决方案",
-          content: "有效降低供应商销售成本 大数据辅助科学决策",
-          botton: "了解详情",
-          router: "supplier_program"
-        },
-        {
-          src: require("../assets/banner3.jpg"),
-          title: "亿元订单 强强联合",
-          content: "吉易慧农上线合作伙伴计划",
-          botton: "加 入",
-          router: "partner"
-        }
-      ],
+      banner: [],
       title: [
         {
           h2: "农资批发场景",
@@ -175,6 +156,7 @@ export default {
   },
   created() {
     this.screenChanges();
+    this.initRotation();
   },
   methods: {
     screenChanges() {
@@ -206,7 +188,27 @@ export default {
         if (index == 1) this.$router.push({ name: "dealer_manager" });
         if (index == 2) this.$router.push({ name: "supplier_shops" });
       }
-    }
+    },
+     initRotation() {
+      let params = {};
+      api.testAxiosGet(ApiPath.url.findRotation, params).then(res => {
+        let code = res.status;
+        if (code == 0) {
+          let resp=[];
+          for(var i=0;i<res.data.length;i++){
+            resp.push({
+              'src':res.data[i].url,
+              'title':res.data[i].title,
+              'content':res.data[i].subTitle,
+              'botton':res.data[i].buttonTitle
+            })
+          }
+          console.log(this.banner);
+          this.banner=resp;
+        }
+        
+      });
+    },
   }
 };
 </script>
