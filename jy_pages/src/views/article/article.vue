@@ -27,51 +27,77 @@
     <!--列表-->
     <el-table  size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="名称" align="center" width="80"></el-table-column>
-      <el-table-column sortable prop="content" :show-overflow-tooltip="true" label="内容" align="center" width="200">
+      <el-table-column sortable prop="name" label="名称" align="center" width="100"></el-table-column>
+      <el-table-column  label="内容" align="center" width="200">
          <template slot-scope="scope">
-           <p  v-html="scope.row.content">{{scope.row.content}}</p>
+            <el-button
+            type="primary"
+            size="mini"
+            @click="contentShow(scope.row.content)"
+          >内容详情</el-button>
+           <!-- <el-button type="primary" @click="contentShow(scope.row.content)">内容详情</el-button> -->
          </template>
       </el-table-column>
-      <el-table-column sortable prop="title" label="标题" align="center" width="85"></el-table-column>
-      <el-table-column sortable prop="classificationName" label="分类名称" align="center" width="110"></el-table-column>
-      <el-table-column sortable prop="author" label="作者" align="center" width="90"></el-table-column>
-      <el-table-column sortable prop="releaseDate" label="发布时间" align="center" width="140"></el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="140"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="140"></el-table-column>
-      <el-table-column sortable prop="hits" label="点击量" align="center" width="85"></el-table-column>
-      <el-table-column sortable prop="comments" label="评论量" align="center" width="85"></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" width="70">
+      <el-table-column sortable prop="title" label="标题" align="center" width="100"></el-table-column>
+      <el-table-column sortable prop="classificationName" label="分类名称" align="center" width="120"></el-table-column>
+      <el-table-column sortable prop="author" label="作者" align="center" width="100"></el-table-column>
+      <el-table-column sortable prop="releaseDate" label="发布时间" align="center" width="150"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
+      <el-table-column sortable prop="hits" label="点击量" align="center" width="90"></el-table-column>
+      <el-table-column sortable prop="comments" label="评论量" align="center" width="90"></el-table-column>
+      <el-table-column align="center" label="状态" prop="status" width="100">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
             active-value="1"
             inactive-value="0"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
             @change="articleEnable(scope)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="是否发布" prop="status" width="100">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isRelease"
+            active-value="0"
+            inactive-value="1"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="release(scope)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="是否置顶" prop="status" width="100">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isTopping"
+            active-value="0"
+            inactive-value="1"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="toTop(scope)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="是否推荐" prop="status" width="100">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isRecommend"
+            active-value="0"
+            inactive-value="1"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="recommend(scope)"
           ></el-switch>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button
-            @click="release(scope)"
-            type="text"
-            size="small"
-            style="background-color:white;border-color:#DCDFE6;color:black;  width:50px"
-          >{{scope.row.isRelease == 1 ? "发布" : scope.row.isRelease == 0 ? "撤销发布" : "解锁"}}</el-button>
-          <el-button 
-          @click="toTop(scope)" 
-          style="background-color:white;border-color:#DCDFE6;color:black; width:50px" 
-          type="text" size="small" >
-          {{scope.row.isTopping == 0 ? "取消置顶" : scope.row.isTopping == 1 ? "置顶" : "解锁"}}</el-button>
-          <el-button
-            @click="recommend(scope)"
-            style="background-color:white;border-color:#DCDFE6;color:black;  width:50px"
-            type="text"
-            size="small"
-          >{{scope.row.isRecommend == 1 ? "推荐" : scope.row.isRecommend == 0 ? "取消推荐" : "解锁"}}</el-button>
           <el-button
             style="background-color:white;border-color:#DCDFE6;color:black; width:50px"
             size="mini"
@@ -97,6 +123,12 @@
       @close="closeUpdateArticleDialog"
       @save="upArticle"
     ></update-article>
+    <content-show  
+      :show="contentShowFlag"
+      :contentShowId="contentShowId"
+      title="内容详情"
+      @close="closeUpdatecontentShowDialog"
+      ></content-show>
   </div>
 </template>
 
@@ -108,6 +140,7 @@ import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import AddArticle from "./addArticle";
 import UpdateArticle from "./updateArticle";
+import ContentShow from "./content"
 export default {
   inject: ["reload"],
   data() {
@@ -120,7 +153,9 @@ export default {
       menuAccessshow: false, //控制数据权限显示与隐藏
       addArt: false,
       updateArticleFlag: false,
+      contentShowFlag:false,
       transArticleId: "",
+      contentShowId:"",
       formInline: {
         page: 1,
         limit: 10,
@@ -145,7 +180,8 @@ export default {
   components: {
     AddArticle,
     UpdateArticle,
-    Pagination
+    Pagination,
+    ContentShow
   },
 
   watch: {},
@@ -189,6 +225,9 @@ export default {
     },
     closeUpdateArticleDialog() {
       this.updateArticleFlag = false;
+    },
+    closeUpdatecontentShowDialog(){
+      this.contentShowFlag = false;
     },
     upArticle() {
       this.updateArticleFlag = false;
@@ -300,7 +339,11 @@ export default {
           }
         });
       });
-    }
+    },
+    contentShow(scope){
+      this.contentShowFlag=true;
+      this.contentShowId=scope;
+    },
   }
 };
 </script>

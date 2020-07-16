@@ -38,7 +38,7 @@
                 v-model="jurForm.content"
                 ref="myQuillEditor"
                 style="height: 500px;width:100%"
-                :options="editorOption"
+                
               ></quill-editor>
             </el-card>
           </div>
