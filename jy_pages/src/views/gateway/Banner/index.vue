@@ -17,9 +17,13 @@
         <el-input size="small" v-model="formInline.deptNo" placeholder="输入部门代码"></el-input>
       </el-form-item>-->
       <el-form-item>
-        <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-        <el-button size="small" type="primary" icon="el-icon-plus" @click="handleEdit()">添加</el-button>
+        <el-button size="small" type="primary" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="small"  icon="el-icon-close">重置</el-button>
+        
       </el-form-item>
+      <el-row>
+       <el-button size="small" type="primary" icon="el-icon-plus" @click="handleEdit()" class="insert">添加</el-button>
+      </el-row>
     </el-form>
     <!--列表-->
     <el-table
@@ -61,8 +65,8 @@
       <el-table-column sortable prop="updateDate" label="修改时间" min-width="13"></el-table-column>
       <el-table-column align="center" label="操作" min-width="20">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="deleteUser(scope.$index, scope.row)">删除</el-button>
+          <el-button size="medium" type="text" @click="handleEdit(scope.$index, scope.row)" class="up"  icon="el-icon-edit">编辑</el-button>
+          <el-button size="medium" type="text" @click="deleteUser(scope.$index, scope.row)" class="del" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -207,6 +211,9 @@ export default {
    * 里面的方法只有被调用才会执行
    */
   methods: {
+    resetRuleTag(search) {
+      this.formInline.name = "";
+    },
     changeStatus(scope) {
 
       let params = { id: scope.row.id, status: scope.row.status };
@@ -395,6 +402,65 @@ export default {
 }
 .userRole {
   width: 100%;
+}
+.template {
+  size: medium;
+  color: rgb(17, 17, 17);
+  background-color: rgb(199, 215, 231);
+  border-color: rgb(121, 212, 59);
+  border-radius: 3px;
+}
+.el-button {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px #999;
+}
+.el-button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.find {
+  width: 82px;
+  background-color:#e6a23c;
+  color: #fff;
+  border-color: #e6a23c;
+  font-size: 12px;
+}
+.small {
+  width: 82px;
+  background-color: #909399;
+  border-color: #909399;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.insert{
+  width: 82px;
+  background-color: #67c23a;
+  border-color: #67c23a;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 15px;
+}
+.el-button.up {
+  margin-right: 20px;
+  width: 50px;
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
+}
+.el-button.del {
+  width: 50px;
+  background-color: #f56c6c;
+  border-color: #f56c6c;
+  color: white;
+  font-size: 12px;
 }
 </style>
 

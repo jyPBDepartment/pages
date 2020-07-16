@@ -14,18 +14,25 @@
       <el-form-item label="权限名称">
         <el-input size="small" v-model="name" placeholder="输入权限名称"></el-input>
       </el-form-item>
-      
+
       <el-form-item>
-        <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+        <el-button size="small" type="primary" icon="el-icon-search" @click="search" class="find">查询</el-button>
         <el-button
           size="small"
           type="primary"
-          icon="el-icon-remove-outline"
+          icon="el-icon-close"
           @click="resetForm('search')"
+          class="small"
         >重置</el-button>
       </el-form-item>
       <el-row>
-        <el-button size="small" type="primary" icon="el-icon-plus" @click="addLimit()">添加</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          icon="el-icon-plus"
+          @click="addLimit()"
+          class="insert"
+        >添加</el-button>
       </el-row>
       <br />
     </el-form>
@@ -42,18 +49,16 @@
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="权限名称" align="center"></el-table-column>
       <el-table-column sortable prop="path" label="权限路径" align="center"></el-table-column>
-      <el-table-column sortable prop="createTime" label="创建时间" align="center">
-      </el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" align="center">
-      </el-table-column>
+      <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="editTime" label="修改时间" align="center"></el-table-column>
       <el-table-column align="center" label="状态">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.state"
             active-value="0"
             inactive-value="1"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
+            active-color="rgb(19, 206, 102)"
+            inactive-color="rgb(255, 73, 73)"
             @change="limitEnable(scope)"
           ></el-switch>
         </template>
@@ -61,20 +66,19 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button
-           @click="openupdateLimit(scope)"
+            @click="openupdateLimit(scope)"
             type="text"
             size="medium"
-            style="width:50px;background-color:white;border-color:#DCDFE6;color:black;font-size:12px;margin-right: 20px;"
+            class="up"
             icon="el-icon-edit"
           >编辑</el-button>
-         <el-button
-          @click="deleteUser(scope)"
+          <el-button
+            @click="deleteUser(scope)"
             type="text"
             size="medium"
-            style="width:50px;background-color:#84C1FF;border-color:#84C1FF;color:white;font-size:12px;"
+            class="del"
             icon="el-icon-delete"
           >删除</el-button>
-         
         </template>
       </el-table-column>
     </el-table>
@@ -263,5 +267,43 @@ export default {
   background-color: #8cb2eb;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+.find {
+  width: 82px;
+  background-color: #e6a23c;
+  color: #fff;
+  border-color: #e6a23c;
+  font-size: 12px;
+}
+.small {
+  width: 82px;
+  background-color: #909399;
+  border-color: #909399;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.insert {
+  width: 82px;
+  background-color: #67c23a;
+  border-color: #67c23a;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.el-button.up {
+  margin-right: 20px;
+  width: 50px;
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
+}
+.el-button.del {
+  width: 50px;
+  background-color: #f56c6c;
+  border-color: #f56c6c;
+  color: white;
+  font-size: 12px;
 }
 </style>

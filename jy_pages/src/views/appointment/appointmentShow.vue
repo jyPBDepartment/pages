@@ -15,12 +15,13 @@
         <el-input size="small" v-model="phoneNum" placeholder="输入电话"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+        <el-button size="small" type="primary" icon="el-icon-search" @click="search" class="find">查询</el-button>
         <el-button
           size="small"
           type="primary"
-          icon="el-icon-remove-outline"
+           icon="el-icon-close"
           @click="resetForm('search')"
+          class="small"
         >重置</el-button>
       </el-form-item>
     </el-form>
@@ -159,4 +160,21 @@ export default {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+.find {
+  width: 82px;
+  background-color:#e6a23c;
+  color: #fff;
+  border-color: #e6a23c;
+  font-size: 12px;
+}
+.small {
+  width: 82px;
+  background-color: #909399;
+  border-color: #909399;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+
 </style>

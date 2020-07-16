@@ -18,8 +18,8 @@
       <el-form-item label="手机号码" >
         <el-input v-model="phoneNum" type="text" placeholder="请输入手机号码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button  type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small"  icon="el-icon-search" >查询</el-button>
-       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small"  icon="el-icon-close">重置</el-button>
+      <el-button  type="info" plain @click="search" size="medium" class="find"  icon="el-icon-search" >查询</el-button>
+       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="small"  icon="el-icon-close">重置</el-button>
         
     </el-form>
 
@@ -327,6 +327,21 @@ export default {
   border-color:#84C1FF;
   color:white;
   font-size:12px;
+}
+.find {
+  width: 82px;
+  background-color:#e6a23c;
+  color: #fff;
+  border-color: #e6a23c;
+  font-size: 12px;
+}
+.small {
+  width: 82px;
+  background-color: #909399;
+  border-color: #909399;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 </style>

@@ -22,33 +22,27 @@
         ></el-input>
       </el-form-item>
       <el-button
-        type="info"
-        plain
+        type="text"
         @click="search"
         size="medium"
-        class="el-button el-button--primary el-button--small"
-   
+        class="find"
         icon="el-icon-search"
       >查询</el-button>
       <el-button
         type="info"
-        plain
         @click="resetRuleTag(search)"
         size="medium"
-        class="el-button el-button--primary el-button--small"
-      
+        class="small"
         icon="el-icon-close"
       >重置</el-button>
       <el-row>
         <el-button
           type="info"
-          plain
           @click="openRuleTag"
           size="medium"
-          class="el-button el-button--primary el-button--small"
-         
+          class="insert"
           icon="el-icon-plus"
-        >新增</el-button>
+        >添加</el-button>
       </el-row>
     </el-form>
 
@@ -63,41 +57,34 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <!-- <el-table-column type="index" label="序号" align="center" style="width:40px;"></el-table-column> -->
-     
-        <el-table-column sortable prop="name" label="导航名称" align="center" style="width:40px;"></el-table-column>
-        <!--switch开关（表单）-->
-       
-     
-        <el-table-column sortable prop="dropDownEnName" label="下拉英文内容" align="center"></el-table-column>
-        <el-table-column 
-         
-        sortable prop="url" label="图片地址" min-width="50" >
-          <template slot-scope="scope">
-            <span v-if="scope.row.url!=''">
-              <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
-         <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
-          <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.status"
-              active-value="0"
-              inactive-value="1"
-              active-color="#0080FF"
-              inactive-color="#84C1FF"
-              @change="navigationEnable(scope)"
-            ></el-switch>
-          </template>
-        </el-table-column>
-     
-      <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
-       
+
+      <el-table-column sortable prop="name" label="导航名称" align="center" style="width:40px;"></el-table-column>
+      <!--switch开关（表单）-->
+
+      <el-table-column sortable prop="dropDownEnName" label="下拉英文内容" align="center"></el-table-column>
+      <el-table-column sortable prop="url" label="图片地址" min-width="50">
+        <template slot-scope="scope">
+          <span v-if="scope.row.url!=''">
+            <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
+          </span>
+        </template>
       </el-table-column>
-      <el-table-column sortable prop="updateTime" label="修改时间" align="center">
-        
+      <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
+      <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="0"
+            inactive-value="1"
+            active-color="rgb(19, 206, 102)"
+            inactive-color="rgb(255, 73, 73)"
+            @change="navigationEnable(scope)"
+          ></el-switch>
+        </template>
       </el-table-column>
+
+      <el-table-column sortable prop="createDateTime" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="updateTime" label="修改时间" align="center"></el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
           <el-button
@@ -111,7 +98,7 @@
             @click="deleteNavigation(scope)"
             type="text"
             size="medium"
-           class="del"
+            class="del"
             icon="el-icon-delete"
           >删除</el-button>
         </template>
@@ -509,26 +496,52 @@ export default {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
-.el-button.el-button--small{
-    background-color:#409EFF;
-    border-color:#409EFF;
-    color:#FFF;
-    font-size:12px;
-    margin-top:4px;
+.el-button.el-button--small {
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
 }
-.el-button.up{
+
+.find {
+  width: 82px;
+  background-color:#e6a23c;
+  color: #fff;
+  border-color: #e6a23c;
+  font-size: 12px;
+}
+.small {
+  width: 82px;
+  background-color: #909399;
+  border-color: #909399;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.insert{
+  width: 82px;
+  background-color: #67c23a;
+  border-color: #67c23a;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.el-button.up {
   margin-right: 20px;
-  width:50px;
-  background-color:white;
-  border-color:#DCDFE6;
-  color:black;
-  font-size:12px;
+  width: 50px;
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
 }
-.el-button.del{
-  width:50px;
-  background-color:#84C1FF;
-  border-color:#84C1FF;
-  color:white;
-  font-size:12px;
+.el-button.del {
+  width: 50px;
+  background-color: #f56c6c;
+  border-color: #f56c6c;
+  color: white;
+  font-size: 12px;
 }
+
+
 </style>

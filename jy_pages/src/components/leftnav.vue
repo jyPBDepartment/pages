@@ -53,8 +53,25 @@ export default {
           hasThird: null,
           url: null,
           menus: [
-            {
+             {
               menuid: 1 - 1,
+              icon: "el-icon-eleme",
+              menuname: "网站信息",
+              hasThird: "N",
+              url: "websiteInfo/updateWebsiteInfo",
+              menus: null
+            },
+              {
+              menuid: 1 - 2,
+              icon: "el-icon-discount",
+              menuname: "导航管理",
+              hasThird: "N",
+              url: "navigation/navigation",
+              menus: null
+            },
+
+            {
+              menuid: 1 - 3,
               icon: "el-icon-picture-outline-round",
               menuname: "Banner图管理",
               hasThird: "N",
@@ -62,7 +79,7 @@ export default {
               menus: null
             },
             {
-              menuid: 1 - 2,
+              menuid: 1 - 4,
               icon: "el-icon-connection",
               menuname: "分类管理",
               hasThird: "N",
@@ -70,7 +87,31 @@ export default {
               menus: null
             },
             {
-              menuid: 1 - 3,
+              menuid: 1 - 5,
+              icon: "el-icon-reading",
+              menuname: "文章管理",
+              hasThird: "N",
+              url: "article/article",
+              menus: null
+            },
+            {
+              menuid: 1 - 6,
+              icon: "el-icon-notebook-1",
+              menuname: "预约讲解",
+              hasThird: "N",
+              url: "appointment/appointmentShow",
+              menus: null
+            },
+            {
+              menuid: 1 - 7,
+              icon: "el-icon-mobile-phone",
+              menuname: "问卷调查",
+              hasThird: "N",
+              url: "Question/question",
+              menus: null
+            },
+            {
+              menuid: 1 - 8,
               icon: "el-icon-s-comment",
               menuname: "资讯管理",
               hasThird: "N",
@@ -86,25 +127,10 @@ export default {
           hasThird: null,
           url: null,
           menus: [
+          
+           
             {
               menuid: 2 - 1,
-              icon: "el-icon-discount",
-              menuname: "导航管理",
-              hasThird: "N",
-              url: "navigation/navigation",
-              menus: null
-            },
-
-            {
-              menuid: 2 - 2,
-              icon: "el-icon-eleme",
-              menuname: "网站信息",
-              hasThird: "N",
-              url: "websiteInfo/updateWebsiteInfo",
-              menus: null
-            },
-            {
-              menuid: 2 - 3,
               icon: "el-icon-s-custom",
               menuname: "管理员管理",
               hasThird: "N",
@@ -112,7 +138,7 @@ export default {
               menus: null
             },
             {
-              menuid: 2 - 4,
+              menuid: 2 - 2,
               icon: "el-icon-user",
               menuname: "角色管理",
               hasThird: "N",
@@ -120,53 +146,32 @@ export default {
               menus: null
             },
             {
-              menuid: 2 - 5,
+              menuid: 2 - 3,
               icon: "el-icon-coin",
               menuname: "权限管理",
               hasThird: "N",
               url: "limit/limitRole",
               menus: null
             },
+            
             {
-              menuid: 2 - 6,
-              icon: "el-icon-notebook-1",
-              menuname: "预约讲解",
-              hasThird: "N",
-              url: "appointment/appointmentShow",
-              menus: null
-            },
-            {
-              menuid: 2 - 7,
+              menuid: 2 - 4,
               icon: "el-icon-s-grid",
               menuname: "菜单管理",
               hasThird: "N",
               url: "menu/menuIndex",
               menus: null
             },
+            
             {
-              menuid: 2 - 8,
-              icon: "el-icon-reading",
-              menuname: "文章管理",
-              hasThird: "N",
-              url: "article/article",
-              menus: null
-            },
-            {
-              menuid: 2 - 9,
+              menuid: 2 - 5,
               icon: "el-icon-connection",
               menuname: "分类管理",
               hasThird: "N",
               url: "Classification/classification",
               menus: null
             },
-             {
-              menuid: 2 - 10,
-              icon: "el-icon-mobile-phone",
-              menuname: "问卷调查",
-              hasThird: "N",
-              url: "Question/question",
-              menus: null
-            },
+             
           ]
         }
       ],

@@ -15,10 +15,10 @@
       <el-form-item label="登录名称" >
         <el-input v-model="loginName" type="text" placeholder="请输入登录名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="info" plain @click="search" size="medium" class="el-button el-button--primary el-button--small" icon="el-icon-search" >查询</el-button>
-       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="el-button el-button--primary el-button--small" icon="el-icon-close">重置</el-button>
+      <el-button type="info" plain @click="search" size="medium" class="find" icon="el-icon-search" >查询</el-button>
+       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
         <el-row>
-           <el-button type="info" plain @click="openRuleTag"  size="medium" class="el-button el-button--primary el-button--small"  icon="el-icon-plus">新增</el-button>
+           <el-button type="info" plain @click="openRuleTag"  size="medium" class="insert"  icon="el-icon-plus">添加</el-button>
         </el-row>
     </el-form>
 
@@ -317,21 +317,46 @@ export default {
     font-size:12px;
     margin-top:4px;
 }
-.el-button.up{
+.find {
+  width: 82px;
+  background-color:#e6a23c;
+  color: #fff;
+  border-color: #e6a23c;
+  font-size: 12px;
+}
+.small {
+  width: 82px;
+  background-color: #909399;
+  border-color: #909399;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.insert{
+  width: 82px;
+  background-color: #67c23a;
+  border-color: #67c23a;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.el-button.up {
   margin-right: 20px;
-  width:50px;
-  background-color:white;
-  border-color:#DCDFE6;
-  color:black;
-  font-size:12px;
+  width: 50px;
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
 }
-.el-button.del{
-  width:50px;
-  background-color:#84C1FF;
-  border-color:#84C1FF;
-  color:white;
-  font-size:12px;
+.el-button.del {
+  width: 50px;
+  background-color: #f56c6c;
+  border-color: #f56c6c;
+  color: white;
+  font-size: 12px;
 }
+
+
 </style>
 
 
