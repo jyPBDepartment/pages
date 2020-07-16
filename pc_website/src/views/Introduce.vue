@@ -11,7 +11,7 @@
       m_title="吉易慧农"
       :m_banner="require('../assets/mobile/introduce_banner.jpg')"
     />
-    <Fast title="吉易慧农概述">
+    <Fast title="吉易慧农平台简介">
       <img class="m_info_img hidden-md-and-up" src="../assets/mobile/590-460.jpg" alt />
       <el-row class="text m_text" style="padding: 0 50px">
         <el-col class="left_image hidden-md-and-down" :span="8">

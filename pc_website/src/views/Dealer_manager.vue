@@ -59,7 +59,7 @@
           </el-col>
         </el-col>
       </el-row>
-      <FullFunctionality class="hidden-md-and-up" :functionList="functionList" />
+      <FullFunctionality class="wz_btn" :isMobile="false" :functionList="functionList"/>
     </Fast>
     <Callcontact class="hidden-md-and-down" />
   </div>
@@ -288,6 +288,7 @@ export default {
 }
 .b {
   padding: 0 10%;
+  margin-bottom: 60px;
   flex-wrap: wrap;
   margin-top: 30px;
   .b_f1 {

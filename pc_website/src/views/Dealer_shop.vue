@@ -41,7 +41,7 @@
     <div style="background:#242b44" class="hidden-md-and-down">
       <div class="w">
         <Rotation :banner="bannerBottom" :height="854" />
-        <!-- <FullFunctionality class="wz_btn" :isMobile="false" :functionList="functionList"/> -->
+        <FullFunctionality class="wz_btn" :isMobile="false" :functionList="functionList"/>
       </div>
     </div>
     <Fast class="hidden-md-and-down" title="四大核心优势" :id="modelName[1].id">

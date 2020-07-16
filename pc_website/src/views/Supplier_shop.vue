@@ -69,7 +69,7 @@
         </el-col>
       </el-row>
 
-      <!-- <FullFunctionality :isMobile="false" class="hidden-md-and-down" :functionList="functionList" /> -->
+      <FullFunctionality class="wz_btn" :isMobile="false" :functionList="functionList"/>
     </Fast>
     <Callcontact class="hidden-md-and-down" />
   </div>

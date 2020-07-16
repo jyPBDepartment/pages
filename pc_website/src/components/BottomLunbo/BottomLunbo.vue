@@ -97,7 +97,7 @@ export default {
   display: flex;
   justify-content: center;
   img{
-      width: 540px;
+      width: 100%;
       height: 460px;
   }
 }

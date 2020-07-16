@@ -6,10 +6,10 @@
         <div class="nav">
           <div class="w">
             <el-row type="flex" align="middle">
-              <el-col class="m_logo" :span="3" :offset="2" :xs="{span: 10, offset: 0}">
+              <el-col class="m_logo" :span="3" :offset="1" :xs="{span: 10, offset: 0}">
                 <img class="logo" @click="jumpHome" src="../assets/logo.png" alt />
               </el-col>
-              <el-col :span="17" class="hidden-md-and-down" :offset="2">
+              <el-col :span="20" style="display:flex;justify-content:flex-end" class="hidden-md-and-down" >
                 <el-menu
                   :default-active="activeIndex"
                   style="height:100px"

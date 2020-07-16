@@ -1,6 +1,7 @@
 <template>
   <div class="main">
-    <div class="m_complete" @click="show(true)">完整功能列表</div>
+    <div class="m_complete" v-if="isMobile" @click="show(true)">完整功能列表</div>
+    <div class="m_complete" v-if="!isMobile" @click="show(true)">功能详情</div>
     <transition v-if="isMobile" name="el-fade-in-linear">
       <div v-if="isShow" class="transition-box">
         <div class="m_popup"></div>
@@ -34,15 +35,14 @@
             <thead>
               <tr>
                 <th colspan="2">服务内容</th>
-                <th>描述</th>
               </tr>
             </thead>
             <tr v-for="(item, index) in functionList" :key="index">
-              <td>asdasd</td>
               <td>{{item.name}}</td>
               <td>{{item.info}}</td>
             </tr>
           </table>
+          <div class="away" @click="show(false)">收起</div>
         </div>
       </div>
     </div>
@@ -117,8 +117,9 @@ export default {
     display: none;
   }
   .away {
-    width: calc(100% - 30px);
-    margin: 20px auto;
+    width: 400px;
+    cursor: pointer;
+    margin: 40px auto;
     line-height: 45px;
     font-size: 22px;
     background: #337eff;
@@ -130,7 +131,7 @@ export default {
 
 table {
   border-collapse: collapse;
-  width: calc(100% - 20px);
+  width: calc(100% - 100px);
   margin: 0 auto;
   text-align: center;
 }
