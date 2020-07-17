@@ -18,8 +18,8 @@
       <el-form-item label="手机号码" >
         <el-input v-model="phoneNum" type="text" placeholder="请输入手机号码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button  type="info" plain @click="search" size="medium" class="find"  icon="el-icon-search" >查询</el-button>
-       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="small"  icon="el-icon-close">重置</el-button>
+      <el-button  type="text" @click="search" size="medium" class="find"  icon="el-icon-search" >查询</el-button>
+       <el-button type="text" @click="resetRuleTag(search)"  size="medium" class="small"  icon="el-icon-close">重置</el-button>
         
     </el-form>
 
@@ -285,12 +285,11 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-
 .template {
   size: medium;
   color: rgb(17, 17, 17);
   background-color: rgb(199, 215, 231);
-  
+  border-color: rgb(121, 212, 59);
   border-radius: 3px;
 }
 .el-button {
@@ -306,13 +305,15 @@ export default {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
-.el-button.el-button--small{
-    background-color:#409EFF;
-    border-color:#409EFF;
-    color:#FFF;
-    font-size:12px;
-    margin-top:4px;
+.el-button.el-button--small {
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
 }
+
+
 .el-button.up{
   margin-right: 20px;
   width:50px;

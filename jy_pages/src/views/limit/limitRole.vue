@@ -16,10 +16,10 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button size="small" type="primary" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button size="redium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
         <el-button
-          size="small"
-          type="primary"
+          size="redium"
+          type="text"
           icon="el-icon-close"
           @click="resetForm('search')"
           class="small"
@@ -27,8 +27,8 @@
       </el-form-item>
       <el-row>
         <el-button
-          size="small"
-          type="primary"
+          size="redium"
+          type="text"
           icon="el-icon-plus"
           @click="addLimit()"
           class="insert"
@@ -251,6 +251,13 @@ export default {
 .userRole {
   width: 100%;
 }
+.template {
+  size: medium;
+  color: rgb(17, 17, 17);
+  background-color: rgb(199, 215, 231);
+  border-color: rgb(121, 212, 59);
+  border-radius: 3px;
+}
 .el-button {
   display: inline-block;
   cursor: pointer;
@@ -260,13 +267,16 @@ export default {
   border-radius: 15px;
   box-shadow: 0 6px #999;
 }
-.el-button:hover {
-  background-color: #8cb2eb;
-}
 .el-button:active {
-  background-color: #8cb2eb;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+.el-button.el-button--small {
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
 }
 .find {
   width: 82px;

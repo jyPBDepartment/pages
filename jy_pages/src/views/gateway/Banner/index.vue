@@ -18,11 +18,23 @@
       </el-form-item>-->
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search" class="find">查询</el-button>
-        <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="small"  icon="el-icon-close">重置</el-button>
-        
+        <el-button
+          type="info"
+          plain
+          @click="resetRuleTag(search)"
+          size="medium"
+          class="small"
+          icon="el-icon-close"
+        >重置</el-button>
       </el-form-item>
       <el-row>
-       <el-button size="small" type="primary" icon="el-icon-plus" @click="handleEdit()" class="insert">添加</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          icon="el-icon-plus"
+          @click="handleEdit()"
+          class="insert"
+        >添加</el-button>
       </el-row>
     </el-form>
     <!--列表-->
@@ -65,8 +77,20 @@
       <el-table-column sortable prop="updateDate" label="修改时间" min-width="13"></el-table-column>
       <el-table-column align="center" label="操作" min-width="20">
         <template slot-scope="scope">
-          <el-button size="medium" type="text" @click="handleEdit(scope.$index, scope.row)" class="up"  icon="el-icon-edit">编辑</el-button>
-          <el-button size="medium" type="text" @click="deleteUser(scope.$index, scope.row)" class="del" icon="el-icon-delete">删除</el-button>
+          <el-button
+            size="medium"
+            type="text"
+            @click="handleEdit(scope.$index, scope.row)"
+            class="up"
+            icon="el-icon-edit"
+          >编辑</el-button>
+          <el-button
+            size="medium"
+            type="text"
+            @click="deleteUser(scope.$index, scope.row)"
+            class="del"
+            icon="el-icon-delete"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -120,14 +144,15 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="closeDialog">取消</el-button>
         <el-button
+          class="icon"
           size="small"
-          type="primary"
+          type="success"
           :loading="loading"
-          class="title"
           @click="submitForm('editForm')"
+          icon="el-icon-check"
         >保存</el-button>
+        <el-button size="small" class="closeIcon" @click="closeDialog" icon="el-icon-close">关闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -215,7 +240,6 @@ export default {
       this.formInline.name = "";
     },
     changeStatus(scope) {
-
       let params = { id: scope.row.id, status: scope.row.status };
       api
         .testAxiosGet(ApiPath.url.changeBannerStatus, params)
@@ -425,7 +449,7 @@ export default {
 }
 .find {
   width: 82px;
-  background-color:#e6a23c;
+  background-color: #e6a23c;
   color: #fff;
   border-color: #e6a23c;
   font-size: 12px;
@@ -438,7 +462,7 @@ export default {
   font-size: 12px;
   margin-top: 4px;
 }
-.insert{
+.insert {
   width: 82px;
   background-color: #67c23a;
   border-color: #67c23a;
@@ -461,6 +485,27 @@ export default {
   border-color: #f56c6c;
   color: white;
   font-size: 12px;
+}
+.icon {
+  size: medium;
+  border-radius: 0px;
+  background-color: #409eff;
+  border-color: #409eff;
+  color: white;
+  font-size: 12px;
+  width: 105px;
+  height: 42px;
+  box-shadow: 0 0px #fff;
+}
+.closeIcon {
+  border-radius: 0px;
+  background-color: white;
+  border-color: #fff;
+  width: 105px;
+  height: 42px;
+  color: black;
+  font-size: 12px;
+  box-shadow: 0 0 #fff;
 }
 </style>
 

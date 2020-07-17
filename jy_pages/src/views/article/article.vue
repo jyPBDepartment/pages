@@ -15,12 +15,13 @@
         <el-input size="small" v-model="name" placeholder="输入文章名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="primary" icon="el-icon-search" @click="search" class="find">查询</el-button>
-        <el-button size="small" type="primary" icon="el-icon-remove-outline" @click="resetForm('search')" class="small">重置</el-button>
+        <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        
+        <el-button size="medium" type="text" icon="el-icon-remove-outline" @click="resetForm('search')" class="small">重置</el-button>
       </el-form-item>
       <br />
       <el-row>
-        <el-button size="small" type="primary" icon="el-icon-plus" @click="addArticle()" class="insert">添加</el-button>
+        <el-button size="medium" type="text" icon="el-icon-plus" @click="addArticle()" class="insert">添加</el-button>
       </el-row>
       <br />
     </el-form>
@@ -28,7 +29,7 @@
     <el-table  size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="名称" align="center" width="100"></el-table-column>
-      <el-table-column  label="内容" align="center" width="200">
+      <el-table-column  label="内容" align="center" width="100">
          <template slot-scope="scope">
             <el-button
             type="primary"
@@ -96,18 +97,22 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
           <el-button
            class="up"
-            size="mini"
+            size="redium"
+            type="text"
             @click="openUpdateArticle(scope)"
+            icon="el-icon-edit"
           >编辑</el-button>
           <el-button
-            size="mini"
+            size="redium"
+            type="text"
            class="del"
             @click="deleteUser(scope)"
             align="left"
+             icon="el-icon-delete"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -356,6 +361,13 @@ export default {
   font-size: 14px; 
   max-width:100px;
 }
+.template {
+  size: medium;
+  color: rgb(17, 17, 17);
+  background-color: rgb(199, 215, 231);
+  border-color: rgb(121, 212, 59);
+  border-radius: 3px;
+}
 .el-button {
   display: inline-block;
   cursor: pointer;
@@ -365,14 +377,19 @@ export default {
   border-radius: 15px;
   box-shadow: 0 6px #999;
 }
-.el-button:hover {
-  background-color: #8cb2eb;
-}
 .el-button:active {
-  background-color: #8cb2eb;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+.el-button.el-button--small {
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+
 .find {
   width: 82px;
   background-color:#e6a23c;

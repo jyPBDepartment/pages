@@ -15,10 +15,10 @@
       <el-form-item label="登录名称" >
         <el-input v-model="loginName" type="text" placeholder="请输入登录名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="info" plain @click="search" size="medium" class="find" icon="el-icon-search" >查询</el-button>
-       <el-button type="info" plain @click="resetRuleTag(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
+      <el-button type="text"  @click="search" size="medium" class="find" icon="el-icon-search" >查询</el-button>
+       <el-button type="text"  @click="resetRuleTag(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
         <el-row>
-           <el-button type="info" plain @click="openRuleTag"  size="medium" class="insert"  icon="el-icon-plus">添加</el-button>
+           <el-button type="text"  @click="openRuleTag"  size="medium" class="insert"  icon="el-icon-plus">添加</el-button>
         </el-row>
     </el-form>
 
@@ -36,7 +36,7 @@
       </el-table-column>
      <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)" class="up" type="text" size="medium"  icon="icon-icon-test">编辑</el-button>
+           <el-button @click="openUpdateDialog(scope)" class="up" type="text" size="medium"  icon="el-icon-edit">编辑</el-button>
           <el-button @click="deleteAdmin(scope)" class="del" type="text" size="medium"  icon="el-icon-delete">删除</el-button>
          
        </template>
@@ -310,12 +310,12 @@ export default {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
-.el-button.el-button--small{
-    background-color:#409EFF;
-    border-color:#409EFF;
-    color:#FFF;
-    font-size:12px;
-    margin-top:4px;
+.el-button.el-button--small {
+  background-color: #409eff;
+  border-color: #409eff;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
 }
 .find {
   width: 82px;

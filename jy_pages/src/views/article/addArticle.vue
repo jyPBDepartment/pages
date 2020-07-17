@@ -180,4 +180,7 @@ export default {
   color: rgb(248, 90, 90);
   font-weight: bold;
 }
+.el-button{
+  border: none;
+}
 </style>

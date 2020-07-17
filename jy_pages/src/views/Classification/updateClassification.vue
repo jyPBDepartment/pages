@@ -43,8 +43,8 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="success" icon="el-icon-check" @click="updateClassification()" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
-      <el-button type="danger" icon="el-icon-close" @click="close"  size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
+      <el-button type="success" icon="el-icon-check" @click="updateClassification()" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px;width:105px;height:42px;">保存</el-button>
+      <el-button type="danger" icon="el-icon-close" @click="close"  size="medium" style="background-color:white;border-color:black;color:black;font-size:12px;width:105px;height:42px;">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -164,5 +164,8 @@ export default {
 <style scoped>
 .el-form {
   padding-left: 115px;
+}
+.el-button{
+  border: none;
 }
 </style>

@@ -148,4 +148,7 @@ export default {
 .el-form {
   padding-left: 100px;
 }
+.el-button{
+  border: none;
+}
 </style>

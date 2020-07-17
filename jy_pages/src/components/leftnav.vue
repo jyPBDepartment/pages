@@ -83,9 +83,10 @@ export default {
               icon: "el-icon-connection",
               menuname: "分类管理",
               hasThird: "N",
-              url: "goods/Goods1",
+              url: "Classification/classification",
               menus: null
             },
+             
             {
               menuid: 1 - 5,
               icon: "el-icon-reading",
@@ -163,15 +164,7 @@ export default {
               menus: null
             },
             
-            {
-              menuid: 2 - 5,
-              icon: "el-icon-connection",
-              menuname: "分类管理",
-              hasThird: "N",
-              url: "Classification/classification",
-              menus: null
-            },
-             
+            
           ]
         }
       ],
