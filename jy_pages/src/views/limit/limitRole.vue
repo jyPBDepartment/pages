@@ -16,9 +16,9 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button size="redium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
         <el-button
-          size="redium"
+          size="medium"
           type="text"
           icon="el-icon-close"
           @click="resetForm('search')"
@@ -27,7 +27,7 @@
       </el-form-item>
       <el-row>
         <el-button
-          size="redium"
+          size="medium"
           type="text"
           icon="el-icon-plus"
           @click="addLimit()"
