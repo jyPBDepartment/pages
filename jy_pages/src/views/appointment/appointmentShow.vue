@@ -11,7 +11,7 @@
       <el-form-item label="姓名">
         <el-input size="small" v-model="name" placeholder="输入姓名"></el-input>
       </el-form-item>
-      <el-form-item label="姓名电话">
+      <el-form-item label="电话">
         <el-input size="small" v-model="phoneNum" placeholder="输入电话"></el-input>
       </el-form-item>
       <el-form-item>

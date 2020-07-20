@@ -231,11 +231,14 @@ export default {
         };
         api.testAxiosGet(ApiPath.url.deleteLimit, params).then(res => {
           let code = res.status;
-          if (code == "0") {
+         if(code == "0") {
             this.$message.success(res.message);
             this.reload();
-          } else {
-            this.$message.console.error();
+          }
+          else{
+            // this.$message.error(res.message);
+            this.$alert('删除失败，请先解除关联关系！', '提示', {confirmButtonText: '确定',});
+            this.reload();
           }
         });
       });
