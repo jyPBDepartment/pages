@@ -36,7 +36,11 @@ import Classification from '@/views/Classification/classification';
 import Question from '@/views/Question/question';
 
 //文章管理
-import Article from '@/views/article/article'
+import Article from '@/views/article/article';
+
+//图片上传FTP
+
+import UploadImages from '@/views/UploadImages/uploadImages';
 
 /**
  * 支付管理
@@ -71,6 +75,14 @@ export default new Router({
         path: '/login',
         name: '登录',
         component: login,
+        hidden: true,
+        meta: {
+            requireAuth: false
+        }
+    },{
+        path: '/upload',
+        name: '上传图片',
+        component: UploadImages,
         hidden: true,
         meta: {
             requireAuth: false

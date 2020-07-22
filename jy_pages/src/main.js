@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
             }
         } else {
             if (Boolean(localStorage.getItem("userInfo"))) { // 判断是否登录
-                if (to.path != "/" && to.path != "/login") { //判断是否要跳到登录界面
+                if (to.path != "/" && to.path != "/login" && to.path != "/upload") { //判断是否要跳到登录界面
                     next();
                 } else {
                     /**
