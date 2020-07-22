@@ -57,6 +57,7 @@ export default {
       return;
     },
     uploadSuccess(response, file, fileList) {
+        console.log(response.url)
       this.flag = true;
       this.imgUrl = response.url;
     },
