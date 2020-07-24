@@ -9,11 +9,45 @@
       class="demo-ruleForm login-container"
     >
       <h3 class="title">用户登录</h3>
-      <el-form-item prop="username">
-        <el-input type="text" v-model="ruleForm.username" auto-complete="off" placeholder="账号"></el-input>
+      <el-form-item prop="name">
+        <label>
+          账号
+          <span>:</span>
+        </label>
+        <el-input
+          type="text"
+          v-model="ruleForm.name"
+          auto-complete="off"
+          placeholder="账号"
+          style="width:80%;"
+        ></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="密码"></el-input>
+        <label>
+          密码
+          <span>:</span>
+        </label>
+        <el-input
+          type="password"
+          v-model="ruleForm.password"
+          auto-complete="off"
+          placeholder="密码"
+          style="width:80%;"
+        ></el-input>
+      </el-form-item>
+      <!-- 验证码 -->
+      <el-form-item prop="verificationCode">
+        <div class="join_formitem">
+          <div class="vi">
+            <label>
+              验证码
+              <span>:</span>
+            </label>
+            <el-input v-on:keyup.13="submit" type="text" class="top" placeholder="请输入验证码" v-model="verificationCode"></el-input>
+          </div>
+          <el-button class="bottom" @click="createCode()" size="mini" >{{checkCode}}</el-button>
+
+        </div>
       </el-form-item>
       <el-form-item style="width:100%;">
         <el-button
@@ -32,6 +66,7 @@ import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
 export default {
+  inject: ["reload"],
   name: "login",
   data() {
     return {
@@ -41,15 +76,18 @@ export default {
       rememberpwd: false,
       ruleForm: {
         //username和password默认为空
-        username: "",
+        name: "",
         password: "",
         code: "",
         randomStr: "",
         codeimg: ""
       },
+      verificationCode: "",
+      checkCode: "",
+      yCode:"",
       //rules前端验证
       rules: {
-        username: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        name: [{ required: true, message: "请输入账号", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
     };
@@ -58,9 +96,11 @@ export default {
   created() {
     //按钮回车键点击事件绑定
     this.keyupEnter();
+    this.createCode();
   },
   // 里面的函数只有调用才会执行
   methods: {
+    
     keyupEnter() {
       document.onkeydown = e => {
         let body = document.getElementsByTagName("body")[0];
@@ -79,29 +119,56 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let params = {
-            username: this.ruleForm.username,
+            name: this.ruleForm.name,
             password: this.ruleForm.password
           };
           api.testAxiosGet(ApiPath.url.login, params).then(res => {
             let code = res.status;
             if (code == "1") {
-              this.$message.success(res.message);
-              // 测试通道，不为空直接登录
-              setTimeout(() => {
-                this.$store.commit("login", "true");
-                this.$router.push({ path: "/gateway/Banner" });
-              }, 1000);
+              if (this.verificationCode == this.checkCode) {
+                this.$message.success(res.message);
+                // 测试通道，不为空直接登录
+                setTimeout(() => {
+                  this.$store.commit("login", this.ruleForm.name);
+                  this.$router.push({ path: "/gateway/Banner" });
+                }, 1000);
+              } else {
+                this.$alert('验证码输入错误请重新输入！', '提示', {confirmButtonText: '确定',});
+              }
             } else {
-              // alert(res.message);
               this.$message.error(res.message);
             }
           });
         } else {
           // 获取图形验证码
-          this.$message.error("请输入用户名密码！");
+          this.$message.error("请输入用户名,密码,验证码！");
           return false;
         }
       });
+    },
+
+    //  验证码
+    createCode() {
+      console.log("进入函数")
+      //先清空验证码的输入
+      this.yCode = "";
+      this.checkCode = "";
+      this.verificationCode = "";
+      //验证码的长度
+      var codeLength = 4;
+      //随机数
+      var random = new Array(
+        0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
+      );
+      for (var i = 0; i < codeLength; i++) {
+        //取得随机数的索引（0~35）
+        var index = Math.floor(Math.random() * 36);
+        //根据索引取得随机数加到code上
+        this.yCode += random[index];
+      }
+  console.log(this.yCode)
+      //把code值赋给验证码
+      this.checkCode = this.yCode;
     }
   }
 };
@@ -142,5 +209,27 @@ export default {
 }
 .codeimg {
   height: 40px;
+}
+.join_formitem {
+  display: flex;
+  flex-direction: row;
+}
+.vi {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+}
+.top {
+  width: 65%;
+}
+.bottom {
+  width: 25%;
+  margin-left: -47px;
+  font-size: 18px;
+  color: rgb(241, 206, 46);
+}
+.captcha {
+  height: 50px;
+  text-align: justify;
 }
 </style>

@@ -56,19 +56,35 @@ export default {
              {
               menuid: 1 - 1,
               icon: "el-icon-eleme",
-              menuname: "网站信息",
+              menuname: "账户管理",
               hasThird: "N",
-              url: "websiteInfo/updateWebsiteInfo",
+              url: "accountIfo/AccountInfo",
               menus: null
             },
-              {
+            {
               menuid: 1 - 2,
-              icon: "el-icon-discount",
-              menuname: "导航管理",
+              icon: "el-icon-eleme",
+              menuname: "模块管理",
               hasThird: "N",
-              url: "navigation/navigation",
+              url: "moduleInfo/ModuleInfo",
               menus: null
             },
+            //  {
+            //   menuid: 1 - 1,
+            //   icon: "el-icon-eleme",
+            //   menuname: "网站信息",
+            //   hasThird: "N",
+            //   url: "websiteInfo/updateWebsiteInfo",
+            //   menus: null
+            // },
+            //   {
+            //   menuid: 1 - 2,
+            //   icon: "el-icon-discount",
+            //   menuname: "导航管理",
+            //   hasThird: "N",
+            //   url: "navigation/navigation",
+            //   menus: null
+            // },
 
             {
               menuid: 1 - 3,

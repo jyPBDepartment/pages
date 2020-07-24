@@ -5,7 +5,10 @@ import Router from 'vue-router';
 import login from '@/views/login';
 // 首页
 import index from '@/views/index';
-
+//账户信息
+import AccountInfo from '@/views/accountIfo/AccountInfo';
+//模块管理
+import ModuleInfo from '@/views/moduleInfo/ModuleInfo'
 
 /**
  * 门户菜单
@@ -189,6 +192,21 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        }]
+        }, {
+            path: '/accountIfo/AccountInfo',
+            name: '账户管理',
+            component: AccountInfo,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/moduleInfo/ModuleInfo',
+            name: '模块管理',
+            component: ModuleInfo,
+            meta: {
+                requireAuth: true
+            }
+        }
+    ]
     }]
 })
