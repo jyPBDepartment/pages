@@ -21,6 +21,8 @@ const url = {
   //账户修改
   findAccountInfoId: URLHost + '/accountInfo/findById',
   updateAccountInfo: URLHost + '/accountInfo/update',
+  //查询权限
+  findCount: URLHost + '/powerInfo/findCount',
   //密码修改
   updatePassword: URLHost + '/accountInfo/updatePassword',
   //模块管理

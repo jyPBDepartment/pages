@@ -66,10 +66,7 @@ export default {
         jurId:"",
         updateUser:"",
       },
-      jurIdOptions: [
-        { value: "0", label: "1" },
-        { value: "1", label: "2" }
-      ],
+      jurIdOptions: [],
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
@@ -93,19 +90,19 @@ export default {
     }
   },
    mounted() {
-    //  let params = {
-    //     jurId: this.accountInfoForm.jurId,
-    //     // id:this.editForm.id 
-    // };
-    //   api.testAxiosGet(ApiPath.url.findLimit, params).then(res => {
-    //     let code = res.status;
-    //     if (code=="0") {
-    //      for(let i=0;i<res.data.length;i++){
-    //        this.jurIdOptions.push({value:res.data[i]["id"],label:res.data[i]["name"]});
-    //      }  
-    //     }
+     let params = {
+        jurId: this.accountInfoForm.jurId,
+        // id:this.editForm.id 
+    };
+      api.testAxiosGet(ApiPath.url.findCount, params).then(res => {
+        let code = res.status;
+        if (code=="0") {
+         for(let i=0;i<res.data.length;i++){
+           this.jurIdOptions.push({value:res.data[i]["id"],label:res.data[i]["jurName"]});
+         }  
+        }
         
-    //   });
+      });
   },
   methods: {
       telPhone: function() {

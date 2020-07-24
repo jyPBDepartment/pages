@@ -78,15 +78,11 @@ export default {
         createUser:localStorage.getItem("userInfo")
       },
       stateOptions: [
-        { value: "0", label: "启用" },
-        { value: "1", label: "禁用" }
+        { value: "0", label: "启用" },
+        { value: "1", label: "禁用" }
       ],
-      jurIdOptions: [
-        { value: "0", label: "1" },
-        { value: "1", label: "2" }
-      ],
+      jurIdOptions: [],
       localShow: this.show,
-      
       rules: {
         name: [{ required: true, message: "请输入账户名称", trigger: "blur" }],
         password:[{ required: true, message: "请输入密码", trigger: "blur" }],
@@ -105,20 +101,19 @@ export default {
     }
   },
   mounted(){
-    // let params = {
-    //     jurId: this.editForm.jurId,
-    //     id:this.editForm.id 
-    // };
-    // // if(editForm.name!=""){}
-    //   api.testAxiosGet(ApiPath.url.findLimit, params).then(res => {
-    //     let code = res.status;
-    //     if (code=="0") {
-    //      for(let i=0;i<res.data.length;i++){
-    //        this.jurIdOptions.push({value:res.data[i]["id"],label:res.data[i]["name"]});
-    //      }  
-    //     }
+    let params = {
+        jurId: this.editForm.jurId,
+        id:this.editForm.id 
+    };
+      api.testAxiosGet(ApiPath.url.findCount, params).then(res => {
+        let code = res.status;
+        if (code=="0") {
+         for(let i=0;i<res.data.length;i++){
+           this.jurIdOptions.push({value:res.data[i]["id"],label:res.data[i]["jurName"]});
+         }  
+        }
         
-    //   });
+      });
   },
   methods: {
     beforeClose() {
