@@ -5,525 +5,235 @@
   <!-- 组件主盒子 -->
   <div class="stbox">
     <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>数据可视化</el-breadcrumb-item>
-    </el-breadcrumb>
+    <el-breadcrumb separator-class="el-icon-arrow-right"></el-breadcrumb>
     <!-- 搜索，切换 -->
-    <el-row :gutter="23">
-      <el-col :span="18">
-        <div class="stbgc">
-          <el-row :gutter="23">
-            <el-col :span="7">
-              <el-input size="small" v-model="machineNo" placeholder="请输入所属公司"></el-input>
-            </el-col>
-            <el-col :span="7">
-              <el-input size="small" v-model="machineNo" placeholder="请输入资产编号"></el-input>
-            </el-col>
-            <el-col :span="7">
-              <el-input size="small" v-model="machineNo" placeholder="请输入"></el-input>
-            </el-col>
-            <el-col :span="3" class="stsearch">
-              <el-button size="small" type="primary">搜索</el-button>
-            </el-col>
-          </el-row>
+    <div class="Big">
+      <div class="first">
+        <div class="left">
+          <!-- <el-image :src="url" class="icon" /> -->
+          <!-- <el-image :src="url"  class="icon"></el-image> -->
+          <img src="../../assets/img/三人.png" class="icon" />
         </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="stbgc">
-          <el-row>
-            <el-col :span="8" class="text-c">
-              <el-radio v-model="type" label="day">日</el-radio>
-            </el-col>
-            <el-col :span="8" class="text-c">
-              <el-radio v-model="type" label="month">月</el-radio>
-            </el-col>
-            <el-col :span="8" class="text-c">
-              <el-radio v-model="type" label="years">年</el-radio>
-            </el-col>
-          </el-row>
+        <div class="right">
+          <span type="text" class="up">用户数量检测</span>
+          <span type="text" class="center">2000</span>
+          <div class="last">
+            <img src="../../assets/img/箭头(1).png" class="iconFront" />
+            <span type="text" class="down">同比昨天3%</span>
+          </div>
         </div>
-      </el-col>
-    </el-row>
+      </div>
+      <div class="first">
+        <div class="left">
+          <img src="../../assets/img/书.png" class="icon" />
+        </div>
+        <div class="right">
+          <span type="text" class="up">发帖数量监测</span>
+          <span type="text" class="center1">{{invationSum}}</span>
+          <div class="last">
+            <img src="../../assets/img/箭头(1).png" class="iconFront" />
+
+            <span type="text" class="down">同比昨天32.32%</span>
+          </div>
+        </div>
+      </div>
+      <div class="first">
+        <div class="left">
+          <img src="../../assets/img/农民.png" class="icon" />
+        </div>
+        <div class="right">
+          <span type="text" class="up1">农活发布数量监测</span>
+          <span type="text" class="center1">{{argicultural}}</span>
+          <div class="last">
+            <img src="../../assets/img/箭头.png" class="iconFront" />
+            <span type="text" class="down">同比昨天10%</span>
+          </div>
+        </div>
+      </div>
+      <div class="first">
+        <div class="left">
+          <img src="../../assets/img/树叶.png" class="icon" />
+        </div>
+        <div class="right">
+          <span type="text" class="up1">农活预约数量监测</span>
+          <span type="text" class="center">{{count}}</span>
+          <div class="last">
+            <img src="../../assets/img/箭头.png" class="iconFront" />
+            <span type="text" class="down">同比昨天10%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 统计图 -->
-    <el-row :gutter="23">
+    <el-row :gutter="23" class="updateStyle">
       <el-col :span="8" class="text-c">
         <div class="st-gbox">
           <div class="cavasbox" ref="SCEchart"></div>
         </div>
       </el-col>
-      <el-col :span="8" class="text-c">
+      <!-- <el-col :span="8" class="text-c">
         <div class="st-gbox">
           <div class="cavasbox" ref="SUMEchart"></div>
         </div>
-      </el-col>
-      <el-col :span="8" class="text-c">
-        <div class="st-gbox">
-          <div class="cavasbox" ref="ClickEchart"></div>
-        </div>
-      </el-col>
+      </el-col>-->
     </el-row>
-    <!-- 统计图 -->
-    <div>
-      <el-row :gutter="23">
-        <el-col :span="12" class="text-c">
-          <div class="paybox">
-            <div class="cavasbox" ref="payEchart"></div>
-          </div>
-        </el-col>
-        <el-col :span="12" class="text-c">
-          <div class="paybox">
-            <div class="cavasbox" ref="payNumEchart"></div>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import Chart from "echarts";
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
 export default {
   name: "welcome",
   data() {
     return {
-      machineNo: "",
-      type: "day",
-      //  销售总笔数
+      count: "",
+     invationSum:"",
+     argicultural:"",
+
+      //  数据总览
       SCEoption: {
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b}月 : {c}"
-        },
-        legend: {
-          data: [
-            {
-              name: "销售总笔数",
-              icon: "rect"
-            }
-          ],
-          top: 1,
-          left: 1,
-          itemGap: 10,
-          itemWidth: 12,
-          itemHeight: 12,
+        title: {
+          text: "数据总览",
+          x: "45%",
           textStyle: {
-            fontSize: 12,
-            color: "#323232"
-          }
+            fontSize: 28,
+            color: "#1C8FE5",
+          },
+        },
+
+        tooltip: {},
+        legend: {
+          data: ["昨日", "今日"],
+          x: "40%",
+          y: "95%",
+          itemWidth: 52,
+          itemHeight: 20,
+          textStyle: {
+            fontSize: 16,
+            color: "#101010",
+          },
         },
         grid: {
-          left: 50,
-          right: 10,
-          top: 30,
-          bottom: 30,
-          borderWidth: 1
+          // left: 50,
+          // right: 10,
+          // top: 30,
+          bottom: 100,
+          borderWidth: 1,
         },
         xAxis: {
           type: "category",
-          data: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+          data: ["用户数量", "发帖数量", "农活发布", "农活预约"],
+
           axisLine: {
             lineStyle: {
-              color: "#999999",
-              width: 1
-            }
+              color: "#BBBBBB",
+              width: 1,
+            },
           },
           axisLabel: {
             margin: 14,
             height: 70,
             interval: 0,
             textStyle: {
-              fontSize: 10,
-              color: "#999999"
-            }
-          }
-        },
-        yAxis: {
-          type: "value",
-          axisLine: {
-            lineStyle: {
-              color: "#999999",
-              width: 1
-            }
+              fontSize: 16,
+              color: "#101010",
+            },
           },
-          axisLabel: {
-            margin: 14,
-            textStyle: {
-              fontSize: 10,
-              color: "#999999"
-            }
-          }
         },
+        yAxis: [
+          {
+            splitLine: { show: false },
+            type: "value",
+
+            min: 0,
+            max: 50,
+            position: "left",
+            axisLine: {
+              lineStyle: {
+                color: "#BBBBBB",
+                width: 1,
+              },
+            },
+            axisLabel: {
+              margin: 14,
+              textStyle: {
+                fontSize: 16,
+                color: "#101010",
+              },
+            },
+          },
+          {
+            splitLine: { show: false },
+            type: "value",
+
+            min: 0,
+            max: 25,
+            scale: "true",
+            position: "right",
+            axisLine: {
+              lineStyle: {
+                color: "#BBBBBB",
+              },
+            },
+            axisLabel: {
+              formatter: "{value}%",
+              margin: 14,
+              textStyle: {
+                fontSize: 16,
+                color: "#101010",
+              },
+            },
+          },
+        ],
         series: [
           {
-            name: "销售总笔数",
+            name: "昨日",
             type: "bar",
-            barGap: 0,
-            data: [
-              50000,
-              70000,
-              80000,
-              40000,
-              50000,
-              30000,
-              40000,
-              60000,
-              50000,
-              40000,
-              60000,
-              40000
-            ],
-            barWidth: 10,
+            data: [10, 50, 60, 10],
+            barWidth: 52,
             itemStyle: {
               normal: {
                 color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: "#83bff6" },
-                  { offset: 0.5, color: "#188df0" },
-                  { offset: 1, color: "#188df0" }
-                ])
+                  { offset: 0, color: "#FCCA00" },
+                  { offset: 0.5, color: "#FCCA00" },
+                  { offset: 1, color: "#FCCA00" },
+                ]),
               },
               emphasis: {
                 color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: "#2378f7" },
-                  { offset: 0.7, color: "#2378f7" },
-                  { offset: 1, color: "#83bff6" }
-                ])
-              }
-            }
-          }
-        ]
-      },
-      //  销售总金额
-      SUMoption: {
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b}月 : {c}"
-        },
-        legend: {
-          data: [
-            {
-              name: "销售总金额",
-              icon: "rect"
-            }
-          ],
-          top: 1,
-          left: 1,
-          itemGap: 10,
-          itemWidth: 12,
-          itemHeight: 12,
-          textStyle: {
-            fontSize: 12,
-            color: "#323232"
-          }
-        },
-        grid: {
-          left: 50,
-          right: 10,
-          top: 30,
-          bottom: 30,
-          borderWidth: 1
-        },
-        xAxis: {
-          type: "category",
-          data: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-          axisLine: {
-            lineStyle: {
-              color: "#999999",
-              width: 1
-            }
+                  { offset: 0, color: "#FCCA00" },
+                  { offset: 0.7, color: "#FCCA00" },
+                  { offset: 1, color: "#FCCA00" },
+                ]),
+              },
+            },
           },
-          axisLabel: {
-            margin: 14,
-            height: 70,
-            interval: 0,
-            textStyle: {
-              fontSize: 10,
-              color: "#999999"
-            }
-          }
-        },
-        yAxis: {
-          type: "value",
-          axisLine: {
-            lineStyle: {
-              color: "#999999",
-              width: 1
-            }
-          },
-          axisLabel: {
-            margin: 14,
-            textStyle: {
-              fontSize: 10,
-              color: "#999999"
-            }
-          }
-        },
-        series: [
           {
-            name: "销售总金额",
-            //   type: 'bar',
-            type: "line",
-            barGap: 0,
-            data: [
-              50000,
-              70000,
-              80000,
-              40000,
-              50000,
-              30000,
-              40000,
-              60000,
-              50000,
-              40000,
-              60000,
-              40000
-            ],
-            barWidth: 10,
-            itemStyle: {
-              color: "#108ff9"
-            }
-          }
-        ]
-      },
-      //  总点击量
-      Clickoption: {
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b}月 : {c}"
-        },
-        legend: {
-          data: [
-            {
-              name: "总点击量",
-              icon: "rect"
-            }
-          ],
-          top: 1,
-          left: 1,
-          itemGap: 10,
-          itemWidth: 12,
-          itemHeight: 12,
-          textStyle: {
-            fontSize: 12,
-            color: "#323232"
-          }
-        },
-        grid: {
-          left: 50,
-          right: 10,
-          top: 30,
-          bottom: 30,
-          borderWidth: 1
-        },
-        xAxis: {
-          type: "category",
-          data: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-          axisLine: {
-            lineStyle: {
-              color: "#999999",
-              width: 1
-            }
-          },
-          axisLabel: {
-            margin: 14,
-            height: 70,
-            interval: 0,
-            textStyle: {
-              fontSize: 10,
-              color: "#999999"
-            }
-          }
-        },
-        yAxis: {
-          type: "value",
-          axisLine: {
-            lineStyle: {
-              color: "#999999",
-              width: 1
-            }
-          },
-          axisLabel: {
-            margin: 14,
-            textStyle: {
-              fontSize: 10,
-              color: "#999999"
-            }
-          }
-        },
-        series: [
-          {
-            name: "总点击量",
+            name: "今日",
             type: "bar",
-            barGap: 0,
-            data: [
-              50000,
-              10000,
-              80000,
-              30000,
-              50000,
-              60000,
-              40000,
-              80000,
-              50000,
-              20000,
-              60000,
-              40000
-            ],
-            barWidth: 10,
+            data: [],
+            barWidth: 52,
             itemStyle: {
-              color: "#48cefd"
-            }
-          }
-        ]
+              normal: {
+                color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: "#27B148" },
+                  { offset: 0.5, color: "#27B148" },
+                  { offset: 1, color: "#27B148" },
+                ]),
+              },
+              emphasis: {
+                color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: "#27B148" },
+                  { offset: 0.7, color: "#27B148" },
+                  { offset: 1, color: "#27B148" },
+                ]),
+              },
+            },
+          },
+        ],
       },
-      //  支付方式统计
-      payoption: {
-        backgroundColor: "#2c343c",
-        title: {
-          text: "支付方式统计(金额)",
-          left: 10,
-          top: 5,
-          textStyle: {
-            fontSize: 12,
-            color: "#ccc"
-          }
-        },
-
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-
-        visualMap: {
-          show: false,
-          min: 80,
-          max: 600,
-          inRange: {
-            colorLightness: [0, 1]
-          }
-        },
-        series: [
-          {
-            name: "支付方式统计(金额)",
-            type: "pie",
-            radius: "55%",
-            center: ["50%", "50%"],
-            data: [
-              { value: 335, name: "支付宝" },
-              { value: 310, name: "银商二维码" },
-              { value: 274, name: "会员" },
-              { value: 235, name: "微信支付" },
-              { value: 100, name: "Pos通" }
-            ].sort(function(a, b) {
-              return a.value - b.value;
-            }),
-            roseType: "radius",
-            label: {
-              normal: {
-                textStyle: {
-                  color: "rgba(255, 255, 255, 0.3)"
-                }
-              }
-            },
-            labelLine: {
-              normal: {
-                lineStyle: {
-                  color: "rgba(255, 255, 255, 0.3)"
-                },
-                smooth: 0.2,
-                length: 10,
-                length2: 20
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "#c23531",
-                shadowBlur: 200,
-                shadowColor: "rgba(0, 0, 0, 0.5)"
-              }
-            },
-
-            animationType: "scale",
-            animationEasing: "elasticOut",
-            animationDelay: function(idx) {
-              return Math.random() * 200;
-            }
-          }
-        ]
-      },
-      payNumoption: {
-        backgroundColor: "#2c343c",
-        title: {
-          text: "支付方式统计(笔数)",
-          left: 10,
-          top: 5,
-          textStyle: {
-            fontSize: 12,
-            color: "#ccc"
-          }
-        },
-
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-
-        visualMap: {
-          show: false,
-          min: 80,
-          max: 600,
-          inRange: {
-            colorLightness: [0, 1]
-          }
-        },
-        series: [
-          {
-            name: "支付方式统计(笔数)",
-            type: "pie",
-            radius: "55%",
-            center: ["50%", "50%"],
-            data: [
-              { value: 335, name: "支付宝" },
-              { value: 310, name: "银商二维码" },
-              { value: 274, name: "会员" },
-              { value: 235, name: "微信支付" },
-              { value: 100, name: "Pos通" }
-            ].sort(function(a, b) {
-              return a.value - b.value;
-            }),
-            roseType: "radius",
-            label: {
-              normal: {
-                textStyle: {
-                  color: "rgba(255, 255, 255, 0.3)"
-                }
-              }
-            },
-            labelLine: {
-              normal: {
-                lineStyle: {
-                  color: "rgba(255, 255, 255, 0.3)"
-                },
-                smooth: 0.2,
-                length: 10,
-                length2: 20
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "#c23531",
-                shadowBlur: 200,
-                shadowColor: "rgba(0, 0, 0, 0.5)"
-              }
-            },
-
-            animationType: "scale",
-            animationEasing: "elasticOut",
-            animationDelay: function(idx) {
-              return Math.random() * 200;
-            }
-          }
-        ]
-      }
     };
   },
   // 导入组件
@@ -531,17 +241,41 @@ export default {
     // 点聚合组件
   },
   // 创建完毕状态(里面是操作)
-  created() {},
+  created() {
+    this.transJurisdictionId();
+  },
   // 挂载结束状态(里面是操作)
   mounted() {
-    this.getSCE();
-    this.getSUM();
-    this.getClick();
-    this.getpay();
-    this.getpayNum();
+    // this.getSCE();
+    // this.getSUM();
+    // this.getClick();
+    // this.getpay();
+    // this.getpayNum();
   },
   // 里面的函数只有调用才会执行
   methods: {
+    //显示信息
+    transJurisdictionId(val) {
+      let params = {
+
+      };
+      api.testAxiosGet(ApiPath.url.initEchart, params).then((res) => {
+        let code = res.state;
+        if (code == 0) {
+          this.count = res.farmwork;
+          this.invationSum = res.invation;
+          this.argicultural = res.agricultural;
+          // this.SCEoption.series.data[2] = res.invation;
+          // this.SCEoption.series.data[3] = res.farmwork;
+          this.SCEoption.series[1].data.push(10,res.agricultural,res.invation,res.farmwork);
+          this.chart = Chart.init(this.$refs.SCEchart);
+          this.chart.setOption(this.SCEoption);
+          // console.log("昨天" +JSON.stringify(this.SCEoption.series[0].data));
+          // console.log("今天" +JSON.stringify(this.SCEoption.series[1].data));
+        }
+      });
+    },
+
     // 交易总笔数
     getSCE() {
       this.chart = Chart.init(this.$refs.SCEchart);
@@ -566,11 +300,81 @@ export default {
     getpayNum() {
       this.chart = Chart.init(this.$refs.payNumEchart);
       this.chart.setOption(this.payNumoption);
-    }
-  }
+    },
+  },
 };
 </script>
-<style>
+<style scoped >
+.Big {
+  display: flex;
+  flex-direction: row;
+  padding: 1% 5% 2% 5%;
+  width: 100%;
+}
+.first {
+  display: flex;
+  flex-direction: row;
+  margin-right: 40px;
+  width: 320px;
+  height: 180px;
+  border: solid 1px #bbbbbb;
+}
+.left {
+  padding-top: 61px;
+  padding-left: 36px;
+
+  padding-bottom: 52px;
+}
+.icon {
+  width: 70px;
+  height: 70px;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  padding-top: 34px;
+}
+.up {
+  padding-left: 50px;
+  padding-bottom: 25px;
+  font-size: 18px;
+  color: #101010;
+  font-weight: 10px;
+}
+.center {
+  padding-left: 70px;
+  padding-bottom: 23px;
+  font-size: 28px;
+  color: #1c8fe5;
+}
+.last {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 34px;
+  padding-left: 15px;
+}
+.iconFront {
+  width: 24px;
+  height: 24px;
+}
+.down {
+  padding-left: 15px;
+  font-size: 16px;
+  color: #999999;
+}
+.center1 {
+  padding-left: 50px;
+  padding-bottom: 23px;
+  font-size: 28px;
+  color: #1c8fe5;
+}
+.up1 {
+  padding-left: 40px;
+  padding-bottom: 25px;
+  font-size: 18px;
+  color: #101010;
+  font-weight: 10px;
+}
 .stbox {
   width: 100%;
   height: 100%;
@@ -586,21 +390,14 @@ export default {
 .stsearch {
   text-align: center;
 }
-.text-c {
-  text-align: center;
-}
-.st-gbox {
-  background-color: #fff;
-  margin-top: 20px;
-  border-radius: 5px;
-  height: 30vh;
-  box-sizing: border-box;
-  padding: 10px;
+.updateStyle {
+  padding-left: 5%;
+  padding-right: 5%;
 }
 .cavasbox {
   box-sizing: border-box;
-  width: 100%;
-  height: 100%;
+  width: 1400px;
+  height: 700px;
 }
 .paybox {
   width: 100%;

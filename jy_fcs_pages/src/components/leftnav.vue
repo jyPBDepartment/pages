@@ -47,6 +47,21 @@ export default {
       success: true,
       data: [
         {
+            menuid: 0,
+              icon: "el-icon-s-comment",
+              menuname: "首页",
+              hasThird: "null",
+              url: "null",
+              menus:[{
+                 menuid:  0 - 1,
+              icon: "el-icon-s-comment",
+              menuname: "首页",
+              hasThird: "N",
+              url: "charts/statistics",
+              menus: null
+              }]
+        },
+        {
           menuid: 1,
           icon: "el-icon-s-home",
           menuname: "门户管理",
@@ -86,12 +101,12 @@ export default {
             //   menus: null
             // },
 
-            {
+               {
               menuid: 1 - 3,
-              icon: "el-icon-picture-outline-round",
-              menuname: "Banner图管理",
+              icon: "el-icon-discount",
+              menuname: "权限管理",
               hasThird: "N",
-              url: "gateway/Banner",
+              url: "powerInfo/powerInfo",
               menus: null
             },
             {

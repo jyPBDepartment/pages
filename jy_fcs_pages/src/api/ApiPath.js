@@ -26,7 +26,25 @@ const url = {
   //模块管理
   moduleInfoSearch: URLHost + '/moduleInfo/findByName',
   //图片上传地址
-  uploadImg: URLHost + '/upload/uploadImg'
+  uploadImg: URLHost + '/upload/uploadImg',
+   //echart图数据显示
+   initEchart:URLHost+'/main/initEchart',
+   //权限查询
+   searchPowerInfo:URLHost+'/powerInfo/findByName',
+   //权限删除
+   deletePowerInfo:URLHost+'/powerInfo/delete',
+   //权限添加
+   savePowerInfo:URLHost+'/powerInfo/save',
+   //权限修改前查询数据
+   powerInfoFindById:URLHost+'/powerInfo/findById',
+   //权限修改
+   updatePowerInfo:URLHost+'/powerInfo/update',
+   //权限启用禁用
+   powerInfoEnable:URLHost+'/powerInfo/enable',
+   //权限添加下拉列表显示
+   findAllPower:URLHost+'/powerInfo/findSubPowerList',
+   //权限修改下拉列表显示
+   updatePower:URLHost+'/powerInfo/findSubPowerList',
 
 }
 export default {

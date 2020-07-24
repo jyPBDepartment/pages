@@ -8,7 +8,9 @@ import index from '@/views/index';
 //账户信息
 import AccountInfo from '@/views/accountIfo/AccountInfo';
 //模块管理
-import ModuleInfo from '@/views/moduleInfo/ModuleInfo'
+import ModuleInfo from '@/views/moduleInfo/ModuleInfo';
+//权限管理
+import PowerInfo from '@/views/powerInfo/powerInfo';
 
 /**
  * 门户菜单
@@ -112,10 +114,10 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        }, {
-            path: '/limit/limitRole',
+        },  {
+            path: '/powerInfo/powerInfo',
             name: '权限管理',
-            component: LimitRole,
+            component: PowerInfo,
             meta: {
                 requireAuth: true
             }
