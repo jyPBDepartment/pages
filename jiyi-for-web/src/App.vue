@@ -8,10 +8,25 @@
 import Index from "./views/Index";
 export default {
   components: {
-    Index
+    Index,
   },
   mounted() {},
-  methods: {}
+  methods: {
+
+  },
+
+  beforeCreate() {
+    let flag = navigator.userAgent.match(
+      /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+    );
+    if (flag) {
+      //移动端
+      window.location.href='http://www.jiyinongye.com/phone/#/';
+    } else {
+      //pc端
+      window.location.href='http://www.jiyinongye.com/web/#/';
+    }
+  },
 };
 </script>
 
@@ -27,13 +42,13 @@ export default {
 }
 .banner-font {
   position: absolute;
-  top:250px;
+  top: 250px;
   width: 100%;
   h2 {
     font-size: 70px;
     text-align: center;
     letter-spacing: 5px;
-    font-style:oblique;
+    font-style: oblique;
   }
   p {
     font-size: 50px;
