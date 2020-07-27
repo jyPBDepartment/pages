@@ -27,13 +27,18 @@ import user from '@/views/system/user';
 // 菜单管理
 import Module from '@/views/system/Module';
 // 角色管理
-import Role from '@/views/system/Role';
+import Role from '@/views/roles/Role';
 // 公司管理
 import Dept from '@/views/system/Dept';
 // 系统环境变量
 import Variable from '@/views/system/Variable';
 // 权限管理
-import Permission from '@/views/system/Permission';
+import jurisdiction from '@/views/jurisdication/Jurisdiction';
+//机构管理
+import Organ from '@/views/organ/Organ';
+//业务员管理
+import Sales from '@/views/sales/sales';
+
 /**
  * 支付管理
  */
@@ -119,7 +124,7 @@ export default new Router({
                 requireAuth: true
             }
         }, {
-            path: '/system/Role',
+            path: '/views/roles/Role',
             name: '角色管理',
             component: Role,
             meta: {
@@ -140,13 +145,29 @@ export default new Router({
                 requireAuth: true
             }
         }, {
-            path: '/system/Permission',
+            path: '/views/jurisdiction/Jurisdiction',
             name: '权限管理',
-            component: Permission,
+            component: jurisdiction,
             meta: {
                 requireAuth: true
             }
-        }, {
+        },{
+            path:'/views/organ',
+            name:'机构管理',
+            component:Organ,
+            meta:{
+                requireAuth:true
+            }
+        },
+       {
+        path:'/views/sales',
+        name:'业务员管理',
+        component:Sales,
+        meta:{
+            requireAuth:true
+        }
+       },
+        {
             path: '/machine/MachineConfig',
             name: '支付配置信息',
             component: MachineConfig,
