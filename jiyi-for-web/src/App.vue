@@ -22,9 +22,6 @@ export default {
     if (flag) {
       //移动端
       window.location.href='http://www.jiyinongye.com/phone/#/';
-    } else {
-      //pc端
-      window.location.href='http://www.jiyinongye.com/web/#/';
     }
   },
 };
