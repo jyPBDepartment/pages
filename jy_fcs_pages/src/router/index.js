@@ -11,6 +11,8 @@ import AccountInfo from '@/views/accountIfo/AccountInfo';
 import ModuleInfo from '@/views/moduleInfo/ModuleInfo';
 //权限管理
 import PowerInfo from '@/views/powerInfo/powerInfo';
+//关键字管理
+import KeyWord from '@/views/keyWord/KeyWord'
 
 /**
  * 门户菜单
@@ -205,6 +207,14 @@ export default new Router({
             path: '/moduleInfo/ModuleInfo',
             name: '模块管理',
             component: ModuleInfo,
+            meta: {
+                requireAuth: true
+            }
+        }
+        , {
+            path: '/keyWord/KeyWord',
+            name: '关键字管理',
+            component: KeyWord,
             meta: {
                 requireAuth: true
             }

@@ -205,6 +205,33 @@ export default {
             
             
           ]
+        },
+        {
+          menuid: 3,
+          icon: "el-icon-menu",
+          menuname: "圈子管理",
+          hasThird: null,
+          url: null,
+          menus: [
+          
+           
+            {
+              menuid: 3 - 1,
+              icon: "el-icon-s-custom",
+              menuname: "圈子管理",
+              hasThird: "N",
+              url: "Admin/admin",
+              menus: null
+            },
+            {
+              menuid: 3 - 2,
+              icon: "el-icon-user",
+              menuname: "关键字",
+              hasThird: "N",
+              url: "keyWord/KeyWord",
+              menus: null
+            }
+          ]
         }
       ],
       msg: "success"
