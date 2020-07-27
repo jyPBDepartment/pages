@@ -74,7 +74,26 @@ const url = {
    findAllPower:URLHost+'/powerInfo/findSubPowerList',
    //权限修改下拉列表显示
    updatePower:URLHost+'/powerInfo/findSubPowerList',
-
+ //分类状态禁用启用
+ classiEnable:URLHost+'/classification/enable',
+ //分类模糊查询
+ searchClassification:URLHost+'/classification/findByName',
+ //分类删除
+ deleteClassification:URLHost+'/classification/delete',
+//分类下拉列表显示添加
+findAllClass:URLHost+'/classification/findSubClassiList',
+ //分类添加
+ saveClassification:URLHost+'/classification/save',
+ //分类修改前查询
+ classificationFindById:URLHost+'/classification/findById',
+ //分类修改下拉列表查询
+ updateClass:URLHost+'/classification/findSubClassiList',
+  //分类修改
+  updateClassification:URLHost+'/classification/update',
+  //农服查询+列表
+  searchAgricultural:URLHost+'/agricultural/findByName',
+  //农服查看详情
+  agriFindById:URLHost+'/agricultural/findById',
 }
 export default {
   url
