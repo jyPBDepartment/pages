@@ -5,8 +5,8 @@
         class="m_s_box"
         v-for="(item,index) in list"
         :key="index"
-        @touchstart="touchstart"
-        @touchmove="touchmove"
+        @touchstart.prevent="touchstart"
+        @touchmove.prevent="touchmove"
       >
         <div v-if="category == 'botton'" class="botton">
           <img :src="item.src" alt />

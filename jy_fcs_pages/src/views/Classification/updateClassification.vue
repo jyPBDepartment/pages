@@ -15,25 +15,19 @@
         <el-form-item label="分类名称" prop="name">
           <el-input type="text" v-model="classiForm.name" placeholder="请输入分类名称" style=" width:70%;"></el-input>
         </el-form-item>
-        <el-form-item label="下级分类" prop="subId" >
-          <el-select type="text" v-model="classiForm.subId" placeholder="请输入下级分类" style=" width:70%;" >
-            <el-option
+         <el-form-item label="分类编码" prop="code">
+          <el-input type="text" v-model="classiForm.code"  placeholder="请输入分类编码" style="width:70%;"></el-input>
+           
+        </el-form-item>
+          <el-form-item label="上级分类编码" prop="parentCode" >
+            <el-select  v-model="classiForm.parentCode"  placeholder="请输入上级分类编码" style="width:70%;">
+             <el-option
               v-for="item in classiOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-       
-        <el-form-item label="分类描述" prop="classDescribe" >
-          <el-input
-            type="textarea"
-            v-model="classiForm.classDescribe"
-            placeholder="请输入分类描述"
-            style=" width:70%;"
-            :autosize="{ minRows: 1, maxRows: 4}"
-          ></el-input>
+              ></el-option>
+           </el-select>
         </el-form-item>
           <el-form-item label="状态" prop="status">
           <el-input type="text" v-model="classiForm.status" placeholder="请输入状态" style=" width:70%;"></el-input>
@@ -74,21 +68,17 @@ export default {
      classiForm: {
         
         name: "",
-        subId: "",
+        code: "",
+        parentCode:"",
         status: "",
-        classDescribe:""
       },
      
      classiOptions:[],
       // rules表单验证
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-         subId: [
-        { required: true, message: "请输入上级分类", trigger: "blur" },
-        
-        ],
-        status: [{ required: true, message: "请输入状态", trigger: "blur" }],
-        classDescribe:[{ required: true, message: "请输入分类描述", trigger: "blur" }],
+        code: [{ required: true, message: "请输入分类编码", trigger: "blur" }],
+         status: [{ required: true, message: "请输入状态", trigger: "blur" }],
       }
     };
   },
@@ -117,26 +107,25 @@ export default {
   methods: {
     
     //联表查询
-    findContext: function() {
-        let params = {
-        subId :this.classiForm.subId
-        };
-        api
-          .testAxiosGet(ApiPath.url.updateClass, params)
-          .then(res => {
-            if (res.status == "0") {
-              for (let i = 0; i < res.data.length; i++) {
-                this.classiOptions.push({
-                  value: res.data[i]["id"],
-                  label: res.data[i]["name"]
-                });
-              }
+   
+ findContext: function() {
+      let params = {};
+      api
+        .testAxiosGet(ApiPath.url.updateClass, params)
+        .then(res => {
+          if (res.state == "0") {
+           
+            for (let i = 0; i < res.data.length; i++) {
+             
+              this.classiOptions.push({
+                value: res.data[i]["id"],
+                label: res.data[i]["code"]
+              });
             }
-          })
-          .catch(function(error) {
-          });
+          }
+        })
+        .catch(function(error) {});
     },
-
     //修改分类信息
     updateClassification: function() {
       let params = {
@@ -147,9 +136,11 @@ export default {
         this.$message.success(res.message);
         this.reload();
         this.close();
+       
       }) .catch(err => {
                 this.$message.error(err.data);
               });
+              this.classiForm.updateUser=localStorage.getItem("userInfo")
     },
     close: function() {
       this.$emit("close");
