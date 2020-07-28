@@ -12,7 +12,7 @@
       </el-row>
     </Fast>
     <Fast title="我们的云服务产品">
-      <el-row class=" m_w m_f_b">
+      <el-row class="m_w m_f_b">
         <div class="m_f_b_s" v-for="(item, index) in botton" :key="index">
           <img :src="item.src" alt />
           <h2>{{item.h2}}</h2>
@@ -46,78 +46,85 @@ export default {
       bannerBottomHeight: 480,
       hover: null,
       // 页面数据: "/"
-      m_b_text:[
-        '技术团队安全保障系统稳定、安全、流畅',
-        '360°客户顾问全程保障专属客户顾问、1v1咨询',
-        '农技团队专业守护服务农户、在线圈地、科学种植',
+      m_b_text: [
+        "技术团队安全保障系统稳定、安全、流畅",
+        "360°客户顾问全程保障专属客户顾问、1v1咨询",
+        "农技团队专业守护服务农户、在线圈地、科学种植",
       ],
       title: [
         {
           h2: "农资批发场景",
-          p: "海量货源、全方位展示、线上谈判、交易"
+          p: "海量货源、全方位展示、线上谈判、交易",
         },
         {
           h2: "农资零售电商场景",
-          p: "经销商网店、多种营销玩法、身临其境的交易体验感"
+          p: "经销商网店、多种营销玩法、身临其境的交易体验感",
         },
         {
           h2: "农资零售移动场景",
-          p: "实现实体店内、店外，掌上下单、收银、统计分析"
+          p: "实现实体店内、店外，掌上下单、收银、统计分析",
         },
         {
           h2: "分销推广场景",
-          p: "客户帮你卖、员工帮你卖、整合资源、轻松分配"
-        }
+          p: "客户帮你卖、员工帮你卖、整合资源、轻松分配",
+        },
       ],
       botton: [
         {
-          src: 'https://yanxuan.nosdn.127.net/713d45781b480937d1462b436bb2b051.png',
+          src:
+            "https://yanxuan.nosdn.127.net/713d45781b480937d1462b436bb2b051.png",
           h2: "经销商店铺",
-          p: "线上交易节省时空系统化管理客户与订单"
+          p: "线上交易节省时空系统化管理客户与订单",
         },
         {
-          src: 'https://yanxuan.nosdn.127.net/47eb3e0ebf0032ae01befaf2f74739ec.png',
+          src:
+            "https://yanxuan.nosdn.127.net/47eb3e0ebf0032ae01befaf2f74739ec.png",
           h2: "经销商掌柜",
-          p: "农资销售随时搞定销售数据尽在掌握"
+          p: "农资销售随时搞定销售数据尽在掌握",
         },
         {
-          src: 'https://yanxuan.nosdn.127.net/9c4800016d4419220fd3d97415669432.png',
+          src:
+            "https://yanxuan.nosdn.127.net/9c4800016d4419220fd3d97415669432.png",
           h2: "供应商店铺",
-          p: "节省销售成本产品大数据可视化"
+          p: "节省销售成本产品大数据可视化",
         },
         {
-          src: "https://yanxuan.nosdn.127.net/4d1ff55de46955ae88e60e1951d5cfdb.png",
+          src:
+            "https://yanxuan.nosdn.127.net/4d1ff55de46955ae88e60e1951d5cfdb.png",
           h2: "销售团队管理",
-          p: "团队资源尽在掌握成员经营状况清晰可见"
+          p: "团队资源尽在掌握成员经营状况清晰可见",
         },
         {
-          src: "https://yanxuan.nosdn.127.net/4441f68975682dbddd400d919687f1d7.png",
+          src:
+            "https://yanxuan.nosdn.127.net/4441f68975682dbddd400d919687f1d7.png",
           h2: "营销活动",
-          p: "多种营销玩法可选促进成交轻松实现"
+          p: "多种营销玩法可选促进成交轻松实现",
         },
         {
-          src: "https://yanxuan.nosdn.127.net/3c892685980af55b9aeb88b247f58d36.png",
+          src:
+            "https://yanxuan.nosdn.127.net/3c892685980af55b9aeb88b247f58d36.png",
           h2: "收银系统",
-          p: "覆盖线上线下多种交易场景大数据挖掘辅助决策"
+          p: "覆盖线上线下多种交易场景大数据挖掘辅助决策",
         },
         {
-          src: "https://yanxuan.nosdn.127.net/3203488b73006bff97d22544367bedac.png",
+          src:
+            "https://yanxuan.nosdn.127.net/3203488b73006bff97d22544367bedac.png",
           h2: "即时通讯",
-          p: "单聊或群聊、语音消息表情、文件、图片传送"
+          p: "单聊或群聊、语音消息表情、文件、图片传送",
         },
         {
-          src: "https://yanxuan.nosdn.127.net/4eca558e32ca5b32ca322b91afb112c9.png",
+          src:
+            "https://yanxuan.nosdn.127.net/4eca558e32ca5b32ca322b91afb112c9.png",
           h2: "消息、资讯推送",
-          p: "即时、定时发布活动、资讯分角色发布多种广告形式"
-        }
-      ]
+          p: "即时、定时发布活动、资讯分角色发布多种广告形式",
+        },
+      ],
     };
   },
   mounted() {
     window.addEventListener("resize", () => this.screenChanges(), false);
   },
-  created() {
-  },
+  created() {},
   methods: {
     screenChanges() {
       this.bannerHeight = document.documentElement.clientHeight - 100;
@@ -133,7 +140,7 @@ export default {
     },
     jump(index) {
       if (index < 3) {
-        var timer = setInterval(function() {
+        var timer = setInterval(function () {
           let osTop =
             document.documentElement.scrollTop || document.body.scrollTop;
           let ispeed = Math.floor(-osTop / 5);
@@ -144,12 +151,12 @@ export default {
             clearInterval(timer);
           }
         }, 5);
-        if (index == 0) this.$router.push({ name: "dealer_shop" });
-        if (index == 1) this.$router.push({ name: "dealer_manager" });
-        if (index == 2) this.$router.push({ name: "supplier_shops" });
+        if (index == 0) this.$router.replace({ name: "dealer_shop" });
+        if (index == 1) this.$router.replace({ name: "dealer_manager" });
+        if (index == 2) this.$router.replace({ name: "supplier_shops" });
       }
     },
-  }
+  },
 };
 </script>
 

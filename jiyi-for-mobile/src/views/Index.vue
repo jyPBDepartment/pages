@@ -210,7 +210,7 @@ export default {
   methods: {
 
     jumpHome(){
-      this.$router.push({path:'/'})
+      this.$router.replace({path:'/'})
     },
     // reload() {
     //   // location. reload();
@@ -222,7 +222,7 @@ export default {
     //   // });
     // },
     link(item) {
-      this.$router.push({ name: "article", query: { id: item } });
+      this.$router.replace({ name: "article", query: { id: item } });
       this.isRouterAlive = false;
       this.$nextTick(function() {
         this.isRouterAlive = true;
@@ -264,7 +264,7 @@ export default {
       }
     },
     routerJump(item) {
-      this.$router.push({ path: `/${item.routerPath}` });
+      this.$router.replace({ path: `/${item.routerPath}` });
       let arr = [];
       this.mMenus.forEach(value => {
         value.state = false;
