@@ -32,10 +32,18 @@ const url = {
   //关键字修改
   findKeyWordId: URLHost + '/keyWord/findById',
   updateKeyWord: URLHost + '/keyWord/update',
-
-
-
-
+  //评论管理
+  commentSearch:URLHost + '/commentInfo/findByName',
+  //评论删除
+  commentDelete:URLHost + '/commentInfo/delete',
+  //评论启用、禁用
+  commentEnable:URLHost + '/commentInfo/enable',
+  //回复管理
+  replySearch:URLHost + '/replyInfo/findByName',
+  //回复删除
+  replyDelete:URLHost + '/replyInfo/delete',
+  //评论启用、禁用
+  replyEnable:URLHost + '/replyInfo/enable',
 
   //查询权限
   findCount: URLHost + '/powerInfo/findCount',

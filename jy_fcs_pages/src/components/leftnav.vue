@@ -230,6 +230,22 @@ export default {
               hasThird: "N",
               url: "keyWord/KeyWord",
               menus: null
+            },
+            {
+              menuid: 3 - 3,
+              icon: "el-icon-edit-outline",
+              menuname: "评论管理",
+              hasThird: "N",
+              url: "comment/comment",
+              menus: null
+            },
+            {
+              menuid: 3 - 4,
+              icon: "el-icon-edit",
+              menuname: "回复管理",
+              hasThird: "N",
+              url: "reply/reply",
+              menus: null
             }
           ]
         }

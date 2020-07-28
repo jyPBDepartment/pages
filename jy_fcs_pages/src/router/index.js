@@ -61,6 +61,12 @@ import druidLogin from '@/views/druid/login1';
 // 图表界面
 import statistics from '@/views/charts/statistics';
 
+//评论管理
+import Reply from '@/views/reply/reply';
+
+//回复管理
+import Comment from '@/views/comment/comment';
+
 // 启用路由
 Vue.use(Router);
 
@@ -215,6 +221,20 @@ export default new Router({
             path: '/keyWord/KeyWord',
             name: '关键字管理',
             component: KeyWord,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/comment/comment',
+            name: '评论管理',
+            component: Comment,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/reply/reply',
+            name: '回复管理',
+            component: Reply,
             meta: {
                 requireAuth: true
             }
