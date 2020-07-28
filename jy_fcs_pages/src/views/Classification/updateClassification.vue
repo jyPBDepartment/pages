@@ -136,10 +136,11 @@ export default {
         this.$message.success(res.message);
         this.reload();
         this.close();
-        updateUser:localStorage.getItem("userInfo")
+       
       }) .catch(err => {
                 this.$message.error(err.data);
               });
+              this.classiForm.updateUser=localStorage.getItem("userInfo")
     },
     close: function() {
       this.$emit("close");
