@@ -26,19 +26,19 @@
           clearable
         ></el-input>
       </el-form-item>
-      <el-button type="text" @click="search" size="medium" class="find" icon="el-icon-search">查询</el-button>
+      <el-button type="warning" size="small"  @click="search" class="find" icon="el-icon-search">查询</el-button>
       <el-button
-        type="text"
+       type="info" size="small" 
         @click="resetRuleTag(search)"
-        size="medium"
+      
         class="small"
         icon="el-icon-close"
       >重置</el-button>
       <el-row>
         <el-button
-          type="text"
+          type="success" size="small" 
           @click="openRuleTag"
-          size="medium"
+         
           class="insert"
           icon="el-icon-plus"
         >新建</el-button>
@@ -100,15 +100,15 @@
           <el-button
             @click="openUpdateDialog(scope)"
             class="up"
-            type="text"
-            size="medium"
+            type="primary" 
+            size="small" 
             icon="el-icon-edit"
           >修改</el-button>
           <el-button
             @click="deletePowerInfo(scope)"
             class="del"
-            type="text"
-            size="medium"
+            type="danger"
+            size="small"
             icon="el-icon-delete"
           >删除</el-button>
         </template>
@@ -390,75 +390,7 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-.el-tooltip__popper {
-  font-size: 14px;
-  max-width: 150px;
-}
-.template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
-}
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.find {
-  width: 82px;
-  background-color: #e6a23c;
-  color: #fff;
-  border-color: #e6a23c;
-  font-size: 12px;
-}
-.small {
-  width: 82px;
-  background-color: #909399;
-  border-color: #909399;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.insert {
-  width: 82px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.up {
-  margin-right: 20px;
-  width: 50px;
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-}
-.el-button.del {
-  width: 50px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
-}
+
 </style>
 
 

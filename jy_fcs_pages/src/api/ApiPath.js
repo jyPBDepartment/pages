@@ -115,8 +115,8 @@ findAllClass:URLHost+'/classification/findSubClassiList',
   searchAgricultural:URLHost+'/agricultural/findByName',
   //农服查看详情
   agriFindById:URLHost+'/agricultural/findById',
-  //农服状态审核
-  updateStatus:URLHost+'/agricultural/update',
+   //农服状态审核
+   updateStatus:URLHost+'/agricultural/passPostInfo',
 }
 export default {
   url

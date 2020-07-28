@@ -18,9 +18,12 @@
        <el-form-item label="分类编码" >
         <el-input v-model="code" type="text" placeholder="请输入分类编码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="warning"  @click="search" size="medium"   icon="el-icon-search" >查询</el-button>
-       <el-button type="info"  @click="resetRuleTag(search)"  size="medium"  icon="el-icon-close">重置</el-button>
-       <el-button type="success"  @click="openRuleTag"  size="medium"  icon="el-icon-plus">添加</el-button>
+      <el-button type="warning" size="small"  @click="search"    icon="el-icon-search" >查询</el-button>
+       <el-button type="info"  @click="resetRuleTag(search)"  size="small"  icon="el-icon-close">重置</el-button>
+       <el-row >
+         <el-button type="success"  @click="openRuleTag"  size="small"  icon="el-icon-plus">新建</el-button>
+       </el-row>
+      
     </el-form>
 
     <!-- 展示的表单 -->
@@ -51,8 +54,8 @@
       <el-table-column sortable prop="updateUser" label="修改人" align="center" style="width:40px;"></el-table-column>
      <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)"  type="primary" size="medium" icon="el-icon-edit">修改</el-button>
-          <el-button @click="deleteClassification(scope)"  type="danger" size="medium" icon="el-icon-delete">删除</el-button>
+           <el-button @click="openUpdateDialog(scope)"  type="primary" size="small" icon="el-icon-edit">修改</el-button>
+          <el-button @click="deleteClassification(scope)"  type="danger" size="small" icon="el-icon-delete">删除</el-button>
          
        </template>
    </el-table-column>
