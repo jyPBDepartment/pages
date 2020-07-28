@@ -40,6 +40,8 @@ import Appointment from '@/views/appointment/appointmentShow';
 import Menu from '@/views/menu/menuIndex';
 //分类信息
 import Classification from '@/views/Classification/classification';
+//圈子管理
+import PostInfo from '@/views/postInfo/PostInfo'
 
 //问卷调查
 import Question from '@/views/Question/question';
@@ -174,6 +176,13 @@ export default new Router({
             path: '/reply/reply',
             name: '回复管理',
             component: Reply,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/postInfo/PostInfo',
+            name: '圈子管理',
+            component: PostInfo,
             meta: {
                 requireAuth: true
             }

@@ -173,7 +173,7 @@ export default {
               icon: "el-icon-s-custom",
               menuname: "圈子管理",
               hasThird: "N",
-              url: "Admin/admin",
+              url: "postInfo/PostInfo",
               menus: null
             },
             {

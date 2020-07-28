@@ -13,15 +13,15 @@
         <el-input size="small" v-model="name" placeholder="输入账户名称"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="status">
-          <el-select v-model="status" style="width:80%" size="small">
-            <el-option
-              v-for="item in statusOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <el-select v-model="status" style="width:80%" size="small">
+          <el-option
+            v-for="item in statusOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
         <el-button
@@ -32,11 +32,17 @@
           class="small"
         >重置</el-button>
       </el-form-item>
-      <br/>
+      <br />
       <el-row>
-      <el-button size="medium" type="text" icon="el-icon-plus" @click="addModuleInfos()" class="insert">添加</el-button>
+        <el-button
+          size="medium"
+          type="text"
+          icon="el-icon-plus"
+          @click="addModuleInfos()"
+          class="insert"
+        >添加</el-button>
       </el-row>
-      <br>
+      <br />
     </el-form>
     <!--列表-->
     <el-table
@@ -50,7 +56,7 @@
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="模块名称" align="center"></el-table-column>
-      <el-table-column sortable prop="url" label="模块图片" >
+      <el-table-column sortable prop="url" label="模块图片">
         <template slot-scope="scope">
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
         </template>
@@ -59,7 +65,7 @@
       <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
       <el-table-column sortable prop="createUser" label="创建人" align="center"></el-table-column>
       <el-table-column sortable prop="updateUser" label="修改人" align="center"></el-table-column>
-      <el-table-column sortable prop="updateUser" label="排序" align="center"></el-table-column>
+      <!-- <el-table-column sortable prop="sort" label="排序" align="center"></el-table-column> -->
       <el-table-column align="center" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
@@ -74,15 +80,15 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-           <el-button
-           @click="openUpdateModuleInfo(scope)"
+          <el-button
+            @click="openUpdateModuleInfo(scope)"
             type="text"
             size="medium"
             icon="el-icon-edit"
             class="up"
           >编辑</el-button>
-           <el-button
-           @click="deleteModuleInfo(scope)"
+          <el-button
+            @click="deleteModuleInfo(scope)"
             type="text"
             size="medium"
             icon="el-icon-delete"
@@ -93,7 +99,12 @@
     </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
-    <add-module-info :show="addModuleInfo" title="添加" @close="closeModuleInfoDialog" @save="saveModuleInfo"></add-module-info>
+    <add-module-info
+      :show="addModuleInfo"
+      title="添加"
+      @close="closeModuleInfoDialog"
+      @save="saveModuleInfo"
+    ></add-module-info>
     <update-moduleInfo
       :show="updateModuleInfoFlag"
       :transModuleInfoId="transModuleInfoId"
@@ -117,8 +128,8 @@ export default {
   data() {
     return {
       name: "",
-      phone:"",
-      status:"",
+      phone: "",
+      status: "",
       nshow: true, //switch开启
       fshow: false, //switch关闭
       loading: false, //是显示加载
@@ -126,9 +137,9 @@ export default {
       menuAccessshow: false, //控制数据权限显示与隐藏
       addModuleInfo: false,
       updateModuleInfoFlag: false,
-      updatePasswordFlag:false,
+      updatePasswordFlag: false,
       transModuleInfoId: "",
-      transPasswordId:"",
+      transPasswordId: "",
       formInline: {
         page: 1,
         limit: 10,
@@ -137,7 +148,7 @@ export default {
         currentPage: 1,
         pageSize: 10,
         total: 10,
-        token: localStorage.getItem("logintoken")
+        token: localStorage.getItem("logintoken"),
       },
       userparm: [], //搜索权限
       listData: [], //用户数据
@@ -145,13 +156,14 @@ export default {
       ModuleInfoRight: [],
       ModuleInfoRightProps: {
         children: "children",
-        label: "name"
+        label: "name",
       },
       //参数moduleInfo
       saveModuleInfoId: "",
       statusOptions: [
+        { value: "", label: "全部" },
         { value: "0", label: "启用" },
-        { value: "1", label: "禁用" }
+        { value: "1", label: "禁用" },
       ],
     };
   },
@@ -159,12 +171,10 @@ export default {
   components: {
     AddModuleInfo,
     UpdateModuleInfo,
-    Pagination
-    },
-
-  watch: {},
-  mounted() {
+    Pagination,
   },
+  watch: {},
+  mounted() {},
   created() {
     this.search(this.formInline);
   },
@@ -177,14 +187,14 @@ export default {
       this.search(this.formInline);
     },
     // 获取角色列表
-    search: function(parameter) {
+    search: function (parameter) {
       let params = {
         name: this.name,
-        status:this.status,
+        status: this.status,
         page: this.formInline.page,
-        size: this.formInline.limit
+        size: this.formInline.limit,
       };
-      api.testAxiosGet(ApiPath.url.moduleInfoSearch, params).then(res => {
+      api.testAxiosGet(ApiPath.url.moduleInfoSearch, params).then((res) => {
         let code = res.state;
         if (code == "0") {
           this.loading = false;
@@ -210,23 +220,25 @@ export default {
     upModuleInfo() {
       this.updateModuleInfoFlag = false;
     },
-    
+
     //启用/禁用
-    moduleInfoEnable: function(scope) {
+    moduleInfoEnable: function (scope) {
       let params = {
         id: scope.row.id,
-        status: scope.row.status
+        status: scope.row.status,
       };
-      api.testAxiosGet(ApiPath.url.moduleInfoEnable, params).then(res => {
-        let code = res.state;
-        if (code == "0") {
-          this.$message.success(res.message);
-        } else {
-          this.$message.success(res.message);
-        }
-        this.reload();
-      }).catch(function(error) {});
-      
+      api
+        .testAxiosGet(ApiPath.url.moduleInfoEnable, params)
+        .then((res) => {
+          let code = res.state;
+          if (code == "0") {
+            this.$message.success(res.message);
+          } else {
+            this.$message.success(res.message);
+          }
+          this.reload();
+        })
+        .catch(function (error) {});
     },
 
     //显示编辑界面
@@ -241,8 +253,7 @@ export default {
     //重置
     resetForm(search) {
       this.name = "";
-      this.status="",
-      location.reload();
+      (this.status = ""), location.reload();
     },
 
     // 删除角色
@@ -250,21 +261,21 @@ export default {
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       }).then(() => {
         let params = {
           id: scope.row.id,
-          };
-        api.testAxiosGet(ApiPath.url.deleteModuleInfo, params).then(res => {
+        };
+        api.testAxiosGet(ApiPath.url.deleteModuleInfo, params).then((res) => {
           let code = res.status;
-          if(code == "0") {
+          if (code == "0") {
             this.$message.success(res.message);
             this.reload();
           }
         });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -304,7 +315,7 @@ export default {
 }
 .find {
   width: 82px;
-  background-color:#e6a23c;
+  background-color: #e6a23c;
   color: #fff;
   border-color: #e6a23c;
   font-size: 12px;
@@ -317,7 +328,7 @@ export default {
   font-size: 12px;
   margin-top: 4px;
 }
-.insert{
+.insert {
   width: 82px;
   background-color: #67c23a;
   border-color: #67c23a;

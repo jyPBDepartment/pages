@@ -11,27 +11,39 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" >
+      <el-form
+        :model="editForm"
+        :rules="rules"
+        ref="editForm"
+        :label-position="labelPosition"
+        label-width="100px"
+      >
         <el-form-item label="模块名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入模块名称" style="width:80%" ></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.name"
+            size="small"
+            placeholder="请输入模块名称"
+            style="width:80%"
+          ></el-input>
         </el-form-item>
-         <el-form-item label="模块图片" prop="imgUrl">
-            <el-upload
-              style="width:81%"
-              class="upload-demo"
-              :action="upload"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :file-list="fileList"
-              list-type="picture"
-              :on-success="uploadSuccess"
-              :limit="limit"
-              :on-exceed="uploadExceed"
-            >
-              <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
-          </el-form-item>
+        <el-form-item label="模块图片" prop="imgUrl">
+          <el-upload
+            style="width:81%"
+            class="upload-demo"
+            :action="upload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            list-type="picture"
+            :on-success="uploadSuccess"
+            :limit="limit"
+            :on-exceed="uploadExceed"
+          >
+            <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+        </el-form-item>
       </el-form>
     </slot>
 
@@ -52,46 +64,44 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
-    }
+      default: "对话框",
+    },
   },
   data() {
     return {
       labelPosition: "right",
-      
+
       editForm: {
         name: "",
-        id:"",
-        url:"",
-        createUser:localStorage.getItem("userInfo")
+        id: "",
+        url: "",
+        createUser: localStorage.getItem("userInfo"),
       },
       stateOptions: [
         { value: "0", label: "启用" },
-        { value: "1", label: "禁用" }
+        { value: "1", label: "禁用" },
       ],
       limit: 1,
       imgUrl: "",
       fileList: [],
       upload: ApiPath.url.uploadImg,
       localShow: this.show,
-      
+
       rules: {
-        name: [{ required: true, message: "请输入账户名称", trigger: "blur" }]
-      }
+        name: [{ required: true, message: "请输入账户名称", trigger: "blur" }],
+      },
     };
   },
   watch: {
     show(val) {
       this.localShow = val;
-    }
+    },
   },
-  mounted(){
-     
-  },
+  mounted() {},
   methods: {
     //logo图片
     uploadExceed(files, fileList) {
@@ -116,18 +126,21 @@ export default {
     //新增保存
     saveModuleInfo(editData) {
       this.$refs[editData].validate((valid) => {
+        if (this.editForm.name == "") {
+          this.$alert("模块名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;
-            let params = { 
-                moduleInfoEntity: this.editForm,
-                
-                };
-                // let array = row.url.split("/");
-                // this.fileList.push({ name: array[array.length - 1], url: row.url });
+            let params = {
+              moduleInfoEntity: this.editForm,
+            };
             api
               .testAxiosGet(ApiPath.url.addModule, params)
-              .then(res => {
+              .then((res) => {
                 let code = res.status;
                 if (code == "0") {
                   this.reload();
@@ -137,8 +150,7 @@ export default {
                   this.$message.error(res.message);
                 }
               })
-              .catch(err => {
-                // this.loading = false;
+              .catch((err) => {
                 this.$message.error(err.data);
               });
           } else {
@@ -149,8 +161,8 @@ export default {
           return false;
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -158,7 +170,7 @@ export default {
 .el-form {
   padding-left: 100px;
 }
-.el-button{
+.el-button {
   border: none;
 }
 </style>

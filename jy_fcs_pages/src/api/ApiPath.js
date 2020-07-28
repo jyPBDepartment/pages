@@ -61,6 +61,19 @@ const url = {
   //模块修改
   moduleFindById: URLHost + '/moduleInfo/findById',
   updateModuleInfo: URLHost + '/moduleInfo/update',
+    //关键词分类
+  findKeyWordList:URLHost+'/classification/findKeyWordList',
+  //圈子管理
+  postInfoSearch: URLHost + '/postInfo/findByName',
+  //圈子状态 
+  postInfoEnable: URLHost + '/postInfo/enable',
+  //圈子查看详情
+  findPostInfoId: URLHost + '/postInfo/findById',
+  //圈子审核通过
+  passPostInfo: URLHost + '/postInfo/passPostInfo',
+  //圈子审核驳回
+  refusePostInfo: URLHost + '/postInfo/refusePostInfo',
+  findAccountId: URLHost + '/accountInfo/findAccountId',
 
   //图片上传地址
   uploadImg: URLHost + '/upload/uploadImg',

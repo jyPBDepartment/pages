@@ -11,22 +11,12 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="accountInfoForm" :rules="rules" ref="accountInfoForm" :label-position="labelPosition">
+      <el-form :model="accountInfoForm" :rules="rules" ref="accountInfoForm" :label-position="labelPosition" label-width="100px">
         <el-form-item label="账户名称" prop="name">
           <el-input type="text" v-model="accountInfoForm.name" size="small" placeholder="请输入账户名称" style="width:80%" ></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
           <el-input type="text" v-model="accountInfoForm.phone" size="small" placeholder="请输入手机号码" style="width:80%" @change="telPhone"></el-input>
-        </el-form-item>
-        <el-form-item label="权限名称" prop="jurId">
-          <el-select v-model="accountInfoForm.jurId" style="width:80%" size="small">
-            <el-option
-              v-for="item in jurIdOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
         </el-form-item>
       </el-form>
     </slot>
@@ -56,7 +46,6 @@ export default {
     }
   },
   data() {
-    
     return {
       labelPosition: "right",
       accountInfoForm: {
@@ -71,7 +60,6 @@ export default {
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
         phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
-        jurId: [{ required: true, message: "请选择权限", trigger: "blur" }]
       }
     };
   },
@@ -90,19 +78,6 @@ export default {
     }
   },
    mounted() {
-     let params = {
-        jurId: this.accountInfoForm.jurId,
-        // id:this.editForm.id 
-    };
-      api.testAxiosGet(ApiPath.url.findCount, params).then(res => {
-        let code = res.status;
-        if (code=="0") {
-         for(let i=0;i<res.data.length;i++){
-           this.jurIdOptions.push({value:res.data[i]["id"],label:res.data[i]["jurName"]});
-         }  
-        }
-        
-      });
   },
   methods: {
       telPhone: function() {
@@ -114,6 +89,15 @@ export default {
       }
     },
     updateAccountInfo: function() {
+      if (this.accountInfoForm.name == "") {
+        this.$alert("账户名称不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+
+      if (this.accountInfoForm.phone == "") {
+        this.$alert("手机号不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
       let params = {
         accountInfoEntity: this.accountInfoForm
       };

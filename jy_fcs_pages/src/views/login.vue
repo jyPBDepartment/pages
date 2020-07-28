@@ -76,6 +76,8 @@ export default {
       rememberpwd: false,
       ruleForm: {
         //username和password默认为空
+        id:"",
+        auditStatus:"",
         name: "",
         password: "",
         code: "",
@@ -119,11 +121,16 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let params = {
+            id:this.ruleForm.id,
+            auditStatus:this.ruleForm.auditStatus,
             name: this.ruleForm.name,
             password: this.ruleForm.password
           };
           api.testAxiosGet(ApiPath.url.login, params).then(res => {
             let code = res.status;
+            // if(code == "2"){
+            //   this.$message.error(res.message);
+            // }
             if (code == "1") {
               if (this.verificationCode == this.checkCode) {
                 this.$message.success(res.message);

@@ -4,13 +4,16 @@
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>关键字管理</el-breadcrumb-item>
+      <el-breadcrumb-item>账户管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="搜索："></el-form-item>
-      <el-form-item label="关键字名称">
-        <el-input size="small" v-model="name" placeholder="输入关键字名称"></el-input>
+      <el-form-item label="名称">
+        <el-input size="small" v-model="name" placeholder="输入账户名称"></el-input>
+      </el-form-item>
+      <el-form-item label="发布人">
+        <el-input size="small" v-model="createUser" placeholder="输入发布人"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
@@ -22,11 +25,6 @@
           class="small"
         >重置</el-button>
       </el-form-item>
-      <br/>
-      <el-row>
-      <el-button size="medium" type="text" icon="el-icon-plus" @click="addKeyWords()" class="insert">添加</el-button>
-      </el-row>
-      <br>
     </el-form>
     <!--列表-->
     <el-table
@@ -39,78 +37,87 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="名称" align="center"></el-table-column>
-      <el-table-column sortable prop="code" label="编码" align="center"></el-table-column>
-      <el-table-column sortable prop="parentName" label="分类编码" align="center"></el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="name" label="标题名称" align="center"></el-table-column>
+      <el-table-column sortable prop="code" label="内容" align="center"></el-table-column>
+      <el-table-column sortable prop="parentCode" label="分类id" align="center"></el-table-column>
+      <el-table-column sortable prop="author" label="作者" align="center"></el-table-column>
+      <el-table-column sortable prop="auditStatus" label="审核状态" align="center">
+        <template slot-scope="scope">
+           <span v-if="scope.row.auditStatus==0">未审核</span>
+           <span v-if="scope.row.auditStatus==1">审核中</span>
+           <span v-if="scope.row.auditStatus==2">审核通过</span>
+           <span v-if="scope.row.auditStatus==3">审核驳回</span>
+          </template>
+      </el-table-column>
+      <el-table-column sortable prop="auditOptinion" label="审核意见" align="center"></el-table-column>
+      <el-table-column sortable prop="createDate" label="发布时间" align="center"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="createUser" label="创建人" align="center"></el-table-column>
-      <el-table-column sortable prop="updateUser" label="修改人" align="center"></el-table-column>
-      <el-table-column align="center" label="状态" prop="auditStatus">
+      <el-table-column sortable prop="createUser" label="发布人" align="center"></el-table-column>
+      <el-table-column sortable prop="auditUser" label="审核人" align="center"></el-table-column>
+      <el-table-column sortable prop="visibility" label="可见程度" align="center">
+        <template slot-scope="scope">
+           <span v-if="scope.row.visibility==0">自己可见</span>
+           <span v-if="scope.row.visibility==1">全部可见</span>
+          </template>
+      </el-table-column>
+      <el-table-column align="center" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
-            v-model="scope.row.auditStatus"
+            v-model="scope.row.status"
             active-value="0"
             inactive-value="1"
             active-color="#13ce66"
             inactive-color="#ff4949"
-            @change="keyWordEnable(scope)"
+            @change="postInfoEnable(scope)"
           ></el-switch>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
            <el-button
-           @click="openUpdateKeyWord(scope)"
+           @click="openUpdatePostInfo(scope)"
             type="text"
             size="medium"
             icon="el-icon-edit"
             class="up"
-          >编辑</el-button>
-           <el-button
-           @click="deleteKeyWord(scope)"
-            type="text"
-            size="medium"
-            icon="el-icon-delete"
-            class="del"
-          >删除</el-button>
+          >查看详情</el-button>
+     
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
-    <add-key-word :show="addKeyWord" title="添加" @close="closeKeyWordDialog" @save="saveKeyWord"></add-key-word>
-    <update-key-word
-      :show="updateKeyWordFlag"
-      :transKeyWordId="transKeyWordId"
-      title="修改"
-      @close="closeUpdateKeyWordDialog"
-      @save="upKeyWord"
-    ></update-key-word>
-   
+    <update-postInfo
+      :show="updatePostInfoFlag"
+      :transPostInfoId="transPostInfoId"
+      title="查看详情"
+      @close="closeUpdatePostInfoDialog"
+      @save="upPostInfo"
+    ></update-postInfo> 
   </div>
 </template>
+
 <script>
 import Pagination from "../../components/Pagination";
+import UpdatePostInfo from "./UpdatePostInfo"
 //后台路径引用
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
-import addKeyWord from "./addKeyWord";
-import UpdateKeyWord from "./updateKeyWord";
 export default {
   inject: ["reload"],
   data() {
     return {
       name: "",
+      createUser:"",
       nshow: true, //switch开启
       fshow: false, //switch关闭
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
       menuAccessshow: false, //控制数据权限显示与隐藏
-      addKeyWord: false,
-      updateKeyWordFlag: false,
-      transKeyWordId: "",
+      addPostInfo: false,
+      updatePostInfoFlag: false,
+      transPostInfoId: "",
       formInline: {
         page: 1,
         limit: 10,
@@ -124,20 +131,19 @@ export default {
       userparm: [], //搜索权限
       listData: [], //用户数据
       // 数据权限
-      KeyWordRight: [],
-      KeyWordRightProps: {
+      PostInfoRight: [],
+      PostInfoRightProps: {
         children: "children",
         label: "name"
       },
-      //参数keyWord
-      saveKeyWordId: "",
+      //参数postInfo
+      savePostInfoId: "",
     };
   },
   // 注册组件
   components: {
-    addKeyWord,
-    UpdateKeyWord,
-    Pagination
+    Pagination,
+    UpdatePostInfo
   },
 
   watch: {},
@@ -158,11 +164,12 @@ export default {
     search: function(parameter) {
       let params = {
         name: this.name,
+        createUser:this.createUser,
         page: this.formInline.page,
         size: this.formInline.limit
       };
-      api.testAxiosGet(ApiPath.url.keyWordSearch, params).then(res => {
-        let code = res.state;
+      api.testAxiosGet(ApiPath.url.postInfoSearch, params).then(res => {
+        let code = res.status;
         if (code == "0") {
           this.loading = false;
           this.listData = res.data.content;
@@ -172,28 +179,29 @@ export default {
         }
       });
     },
-    saveKeyWord() {
-      this.addKeyWord = false;
+    savePostInfo() {
+      this.addPostInfo = false;
     },
-    closeKeyWordDialog() {
-      this.addKeyWord = false;
+    closePostInfoDialog() {
+      this.addPostInfo = false;
     },
-    addKeyWords() {
-      this.addKeyWord = true;
+    addPostInfos() {
+      this.addPostInfo = true;
     },
-    closeUpdateKeyWordDialog() {
-      this.updateKeyWordFlag = false;
+    closeUpdatePostInfoDialog() {
+      this.updatePostInfoFlag = false;
     },
-    upKeyWord() {
-      this.updateKeyWordFlag = false;
+    upPostInfo() {
+      this.updatePostInfoFlag = false;
     },
+    
     //启用/禁用
-    keyWordEnable: function(scope) {
+    postInfoEnable: function(scope) {
       let params = {
         id: scope.row.id,
-        auditStatus: scope.row.auditStatus
+        status: scope.row.status
       };
-      api.testAxiosGet(ApiPath.url.keyWordEnable, params).then(res => {
+      api.testAxiosGet(ApiPath.url.postInfoEnable, params).then(res => {
         let code = res.status;
         if (code == "0") {
           this.$message.success(res.message);
@@ -206,9 +214,9 @@ export default {
     },
 
     //显示编辑界面
-    openUpdateKeyWord(scope) {
-      this.transKeyWordId = scope.row.id;
-      this.updateKeyWordFlag = true;
+    openUpdatePostInfo(scope) {
+      this.transPostInfoId = scope.row.id;
+      this.updatePostInfoFlag = true;
     },
     updatePass(scope) {
       this.transPasswordId = scope.row.id;
@@ -221,28 +229,9 @@ export default {
     //重置
     resetForm(search) {
       this.name = "";
+      this.createUser="";
       location.reload();
     },
-
-    // 删除角色
-    deleteKeyWord(scope) {
-      this.$confirm("确定要删除吗?", "信息", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        let params = {
-          id: scope.row.id,
-          };
-        api.testAxiosGet(ApiPath.url.deleteKeyWord, params).then(res => {
-          let code = res.status;
-          if(code == "0") {
-            this.$message.success(res.message);
-            this.reload();
-          }
-        });
-      });
-    }
   }
 };
 </script>
@@ -251,7 +240,7 @@ export default {
 .user-search {
   margin-top: 20px;
 }
-.userKeyWord {
+.userPostInfo {
   width: 100%;
 }
 .template {
@@ -296,27 +285,13 @@ export default {
   font-size: 12px;
   margin-top: 4px;
 }
-.insert{
-  width: 82px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
 .el-button.up {
+  width: 82px;
+  margin-top: 4px;
   margin-right: 20px;
-  width: 50px;
   background-color: #409eff;
   border-color: #409eff;
   color: #fff;
-  font-size: 12px;
-}
-.el-button.del {
-  width: 50px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
   font-size: 12px;
 }
 </style>

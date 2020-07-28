@@ -10,13 +10,23 @@
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
-     <slot>
-      <el-form :rules="rules" ref="moduleInfoForm" :model="moduleInfoForm" label-width="120px"    :label-position="labelPosition">
-      
+    <slot>
+      <el-form
+        :rules="rules"
+        ref="moduleInfoForm"
+        :model="moduleInfoForm"
+        label-width="120px"
+        :label-position="labelPosition"
+      >
         <el-form-item label="名称" prop="name">
-          <el-input type="text" v-model="moduleInfoForm.name" placeholder="请输入名称" style=" width:70%;" ></el-input>
+          <el-input
+            type="text"
+            v-model="moduleInfoForm.name"
+            placeholder="请输入名称"
+            style=" width:70%;"
+          ></el-input>
         </el-form-item>
-          <el-form-item   label="图片" prop="imgUrl">
+        <el-form-item label="图片" prop="imgUrl">
           <el-upload
             class="upload-demo"
             :action="upload"
@@ -28,7 +38,11 @@
             :limit="limit"
             :on-exceed="uploadExceed"
           >
-            <el-button size="small" type="primary" style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px">点击上传</el-button>
+            <el-button
+              size="small"
+              type="primary"
+              style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px"
+            >点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
@@ -36,8 +50,19 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="success" icon="el-icon-check" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px" @click="updateModule('moduleInfoForm')">保存</el-button>
-      <el-button type="danger" icon="el-icon-close" @click="close"  size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
+      <el-button
+        type="success"
+        icon="el-icon-check"
+        style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px"
+        @click="updateModule('moduleInfoForm')"
+      >保存</el-button>
+      <el-button
+        type="danger"
+        icon="el-icon-close"
+        @click="close"
+        size="medium"
+        style="background-color:white;border-color:black;color:black;font-size:12px"
+      >关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -51,21 +76,21 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
+      default: "对话框",
     },
     transModuleInfoId: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
       localShow: this.show,
-      isShow:false,
-     
+      isShow: false,
+
       limit: 1,
       imgUrl: "",
       upload: ApiPath.url.uploadImg,
@@ -75,12 +100,12 @@ export default {
       moduleInfoForm: {
         name: "",
         status: "",
-        url: ""
+        url: "",
       },
       //rules表单验证
       rules: {
-        name: [{ required: true, message: "请输入名称", trigger: "blur" }]
-      }
+        name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+      },
     };
   },
   watch: {
@@ -89,10 +114,10 @@ export default {
     },
     transModuleInfoId(val) {
       let params = {
-        id: val
+        id: val,
       };
       //根据Id查询用户信息
-      api.testAxiosGet(ApiPath.url.moduleFindById, params).then(res => {
+      api.testAxiosGet(ApiPath.url.moduleFindById, params).then((res) => {
         this.moduleInfoForm = res.data;
         let url = res.data.url;
         let urlArry = url.split("/");
@@ -101,10 +126,9 @@ export default {
 
         this.imgUrl = res.data.url;
       });
-    }
+    },
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     handle() {
       this.isShow = true;
@@ -126,21 +150,27 @@ export default {
       console.log(file);
     },
     updateModule(editData) {
-      this.$refs[editData].validate(valid => {
+      this.$refs[editData].validate((valid) => {
+        if (this.moduleInfoForm.name == "") {
+          this.$alert("模块名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
         if (valid) {
           if (this.imgUrl != "") {
             this.moduleInfoForm.url = this.imgUrl;
             let params = { moduleInfoEntity: this.moduleInfoForm };
             api
               .testAxiosGet(ApiPath.url.updateModuleInfo, params)
-              .then(res => {
-                
+              .then((res) => {
                 this.$message.success(res.message);
                 this.reload();
               })
-              .catch(err => {
+              .catch((err) => {
                 this.$message.error(err.data);
               });
+            this.moduleInfoForm.updateUser = localStorage.getItem("userInfo");
           } else {
             this.$message.error("请上传图片");
             return;
@@ -150,13 +180,13 @@ export default {
         }
       });
     },
-    close: function() {
+    close: function () {
       this.$emit("close");
     },
-    beforeClose: function() {
+    beforeClose: function () {
       this.close();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -164,22 +194,22 @@ export default {
 .el-form {
   padding-left: 115px;
 }
-.el-button{
-    
-    border: none;
-    
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-   
-    margin: 4px 2px;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
+.el-button {
+  border: none;
+
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
 }
 
 .el-button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 </style>

@@ -56,7 +56,6 @@
       <el-table-column sortable prop="phone" label="手机号码" align="center"></el-table-column>
       <el-table-column sortable prop="createDate" label="创建时间" align="center"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="jurId" label="权限" align="center"></el-table-column>
       <el-table-column sortable prop="createUser" label="创建人" align="center"></el-table-column>
       <el-table-column sortable prop="updateUser" label="修改人" align="center"></el-table-column>
       <el-table-column align="center" label="状态" prop="auditStatus">
@@ -71,7 +70,18 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="权限设置">
+        <template slot-scope="scope">
+           <el-button
+           @click="openUpdatePower(scope)"
+            type="text"
+            size="medium"
+            icon="el-icon-edit"
+            class="insert"
+          >权限设置</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作" width="260px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateAccountInfo(scope)"
@@ -114,6 +124,13 @@
       @close="closeUpdatePasswordDialog"
       @save="upPassword"
     ></update-password>
+    <update-power
+      :show="updatePowerFlag"
+      :transPowerId="transPowerId"
+      title="权限设置"
+      @close="closeUpdatePowerDialog"
+      @save="upPower"
+    ></update-power>
   </div>
 </template>
 
@@ -126,6 +143,7 @@ import api from "@/axios/api.js";
 import AddAccountInfo from "./addAccountInfo";
 import UpdateAccountInfo from "./updateAccountInfo";
 import UpdatePassword from "./updatePassword"
+import UpdatePower from "./updatePower"
 export default {
   inject: ["reload"],
   data() {
@@ -133,6 +151,7 @@ export default {
       name: "",
       phone:"",
       auditStatus:"",
+      updateUser:"",
       nshow: true, //switch开启
       fshow: false, //switch关闭
       loading: false, //是显示加载
@@ -143,6 +162,8 @@ export default {
       updatePasswordFlag:false,
       transAccountInfoId: "",
       transPasswordId:"",
+      transPowerId:"",
+      updatePowerFlag:false,
       formInline: {
         page: 1,
         limit: 10,
@@ -164,6 +185,7 @@ export default {
       //参数accountInfo
       saveAccountInfoId: "",
       auditStatusOptions: [
+        { value: "", label: "全部" },
         { value: "0", label: "启用" },
         { value: "1", label: "禁用" }
       ],
@@ -174,7 +196,8 @@ export default {
     AddAccountInfo,
     UpdateAccountInfo,
     Pagination,
-    UpdatePassword
+    UpdatePassword,
+    UpdatePower
   },
 
   watch: {},
@@ -232,12 +255,19 @@ export default {
     upPassword() {
       this.updatePasswordFlag = false;
     },
+    closeUpdatePowerDialog() {
+      this.updatePowerFlag = false;
+    },
+    upPower() {
+      this.updatePowerFlag = false;
+    },
     
     //启用/禁用
     accountInfoEnable: function(scope) {
       let params = {
         id: scope.row.id,
-        auditStatus: scope.row.auditStatus
+        auditStatus: scope.row.auditStatus,
+        updateUser:scope.row.updateUser
       };
       api.testAxiosGet(ApiPath.url.accountInfoEnable, params).then(res => {
         let code = res.status;
@@ -248,6 +278,8 @@ export default {
         }
         this.reload();
       }).catch(function(error) {});
+      console.log(localStorage.getItem("userInfo"));
+      this.updateUser =localStorage.getItem("userInfo");
       
     },
 
@@ -260,6 +292,10 @@ export default {
       this.transPasswordId = scope.row.id;
       this.updatePasswordFlag = true;
     },
+    openUpdatePower(scope) {
+      this.transPowerId = scope.row.id;
+      this.updatePowerFlag = true;
+    },
     //重置
     resetForm(search) {
       this.name = "";
@@ -268,7 +304,7 @@ export default {
       location.reload();
     },
 
-    // 删除角色
+    // 删除
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
@@ -284,11 +320,6 @@ export default {
             this.$message.success(res.message);
             this.reload();
           }
-        //   else{
-        //     this.$message.error(res.message);
-        //     // this.$alert('删除失败，请先解除关联关系！', '提示', {confirmButtonText: '确定',});
-        //     // this.reload();
-        //     }
         });
       });
     }
@@ -354,7 +385,7 @@ export default {
   margin-top: 4px;
 }
 .el-button.up {
-  margin-right: 20px;
+  /* margin-right: 20px; */
   width: 50px;
   background-color: #409eff;
   border-color: #409eff;

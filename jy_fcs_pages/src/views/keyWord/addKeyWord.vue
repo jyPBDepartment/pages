@@ -12,11 +12,11 @@
     <!-- 插槽区 -->
     <slot>
       <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" >
-        <el-form-item label="关键字名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入关键字名称" style="width:80%" ></el-input>
+        <el-form-item label="关键词名称" prop="name">
+          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入关键词名称" style="width:80%" ></el-input>
         </el-form-item>
-        <el-form-item label="关键字编码" prop="code">
-          <el-input type="text" v-model="editForm.code" size="small" placeholder="请输入关键字编码" style="width:80%" ></el-input>
+        <el-form-item label="关键词编码" prop="code">
+          <el-input type="text" v-model="editForm.code" size="small" placeholder="请输入关键词编码" style="width:80%" ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="parentCode">
           <el-select v-model="editForm.parentCode" style="width:80%" size="small">
@@ -62,15 +62,16 @@ export default {
       editForm: {
         name: "",
         id:"",
+        code:"",
+        parentCode:"",
         createUser:localStorage.getItem("userInfo")
       },
-      parentCodedOptions: [
-        { value: "2", label: "2" },
-        { value: "1", label: "1" }
-      ],
+      parentCodedOptions: [],
       localShow: this.show,
       rules: {
-        name: [{ required: true, message: "请输入账户名称", trigger: "blur" }],
+        name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+        code: [{ required: true, message: "请输入编码", trigger: "blur" }],
+        parentCode: [{ required: true, message: "请输入分类编码", trigger: "blur" }]
       }
     };
   },
@@ -80,21 +81,27 @@ export default {
     }
   },
   mounted(){
-    // let params = {
-    //     jurId: this.editForm.jurId,
-    //     id:this.editForm.id 
-    // };
-    //   api.testAxiosGet(ApiPath.url.findCount, params).then(res => {
-    //     let code = res.status;
-    //     if (code=="0") {
-    //      for(let i=0;i<res.data.length;i++){
-    //        this.jurIdOptions.push({value:res.data[i]["id"],label:res.data[i]["jurName"]});
-    //      }  
-    //     }
-        
-    //   });
+    this.findContext();
   },
   methods: {
+    findContext: function() {
+      let params = {};
+      api
+        .testAxiosGet(ApiPath.url.findKeyWordList, params)
+        .then(res => {
+          if (res.state == "0") {
+             this.parentCodedOptions.push({ value: "", label: "请选择" });
+            for (let i = 0; i < res.data.length; i++) {
+             
+              this.parentCodedOptions.push({
+                value: res.data[i]["id"],
+                label: res.data[i]["code"]
+              });
+            }
+          }
+        })
+        .catch(function(error) {});
+    },
     beforeClose() {
       this.close();
     },
@@ -103,7 +110,20 @@ export default {
     },
     //新增保存
     saveKeyWord: function() {
-    //   if(this.editForm.name!="" && thos.editForm.code != ""){
+      if (this.editForm.name == "") {
+        this.$alert("名称不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+
+      if (this.editForm.code == "" ) {
+        this.$alert("关键词编码不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+
+      if (this.editForm.parentCode == "") {
+        this.$alert("分类编码不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
           let params = {
             keyWordEntity: this.editForm
           };
@@ -115,10 +135,6 @@ export default {
                 this.reload();
              }
           });
-    //  }else{
-    //    this.$alert('账户名称、权限名称不能为空！', '提示', {confirmButtonText: '确定',});
-    //  }
-
     },
   }
 };
