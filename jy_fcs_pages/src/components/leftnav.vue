@@ -84,23 +84,6 @@ export default {
               url: "moduleInfo/ModuleInfo",
               menus: null
             },
-            //  {
-            //   menuid: 1 - 1,
-            //   icon: "el-icon-eleme",
-            //   menuname: "网站信息",
-            //   hasThird: "N",
-            //   url: "websiteInfo/updateWebsiteInfo",
-            //   menus: null
-            // },
-            //   {
-            //   menuid: 1 - 2,
-            //   icon: "el-icon-discount",
-            //   menuname: "导航管理",
-            //   hasThird: "N",
-            //   url: "navigation/navigation",
-            //   menus: null
-            // },
-
                {
               menuid: 1 - 3,
               icon: "el-icon-discount",
@@ -117,47 +100,17 @@ export default {
               url: "Classification/classification",
               menus: null
             },
-             
-            {
+               {
               menuid: 1 - 5,
-              icon: "el-icon-reading",
-              menuname: "文章管理",
-              hasThird: "N",
-              url: "article/article",
-              menus: null
-            },
-            {
-              menuid: 1 - 6,
-              icon: "el-icon-notebook-1",
-              menuname: "预约讲解",
-              hasThird: "N",
-              url: "appointment/appointmentShow",
-              menus: null
-            },
-            {
-              menuid: 1 - 7,
               icon: "el-icon-mobile-phone",
-              menuname: "问卷调查",
+              menuname: "农服管理",
               hasThird: "N",
-              url: "Question/question",
+              url: "Agricultural/agricultural",
               menus: null
             },
-            {
-              menuid: 1 - 8,
-              icon: "el-icon-s-comment",
-              menuname: "资讯管理",
-              hasThird: "N",
-              url: "goods/Goods2",
-              menus: null
-            },
-            {
-              menuid: 1 - 9,
-              icon: "el-icon-s-comment",
-              menuname: "图表管理",
-              hasThird: "N",
-              url: "charts/statistics",
-              menus: null
-            }
+           
+           
+         
           ]
         },
         {
@@ -204,6 +157,33 @@ export default {
             },
             
             
+          ]
+        },
+        {
+          menuid: 3,
+          icon: "el-icon-menu",
+          menuname: "圈子管理",
+          hasThird: null,
+          url: null,
+          menus: [
+          
+           
+            {
+              menuid: 3 - 1,
+              icon: "el-icon-s-custom",
+              menuname: "圈子管理",
+              hasThird: "N",
+              url: "Admin/admin",
+              menus: null
+            },
+            {
+              menuid: 3 - 2,
+              icon: "el-icon-user",
+              menuname: "关键字",
+              hasThird: "N",
+              url: "keyWord/KeyWord",
+              menus: null
+            }
           ]
         }
       ],

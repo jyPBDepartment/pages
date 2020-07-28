@@ -11,6 +11,10 @@ import AccountInfo from '@/views/accountIfo/AccountInfo';
 import ModuleInfo from '@/views/moduleInfo/ModuleInfo';
 //权限管理
 import PowerInfo from '@/views/powerInfo/powerInfo';
+//关键字管理
+import KeyWord from '@/views/keyWord/KeyWord'
+//农服管理
+import Agricultural from '@/views/Agricultural/agricultural';
 
 /**
  * 门户菜单
@@ -93,56 +97,14 @@ export default new Router({
                 requireAuth: true
             }
         },
-        {
-            path: '/navigation/navigation',
-            name: '导航管理',
-            component: Navigation,
-            meta: {
-                requireAuth: true
-            }
-        }, {
-            path: '/websiteInfo/updateWebsiteInfo',
-            name: '网站信息',
-            component: updateWebsiteInfo,
-            meta: {
-                requireAuth: true
-            }
-        }, {
-            path: '/role/roleShow',
-            name: '角色管理',
-            component: Role,
-            meta: {
-                requireAuth: true
-            }
-        },  {
+          {
             path: '/powerInfo/powerInfo',
             name: '权限管理',
             component: PowerInfo,
             meta: {
                 requireAuth: true
             }
-        }, {
-            path: '/Admin/admin',
-            name: '管理员信息',
-            component: Admin,
-            meta: {
-                requireAuth: true
-            }
-        }, {
-            path: '/appointment/appointmentShow',
-            name: '预约讲解',
-            component: Appointment,
-            meta: {
-                requireAuth: true
-            }
-        }, {
-            path: '/menu/menuIndex',
-            name: '菜单管理',
-            component: Menu,
-            meta: {
-                requireAuth: true
-            }
-        },
+        },  
         {
             path: '/Classification/classification',
             name: '分类信息',
@@ -151,36 +113,15 @@ export default new Router({
                 requireAuth: true
             }
         }, {
-            path: '/article/article',
-            name: '文章管理',
-            component: Article,
+            path: '/Agricultural/agricultural',
+            name: '农服管理',
+            component: Agricultural,
             meta: {
                 requireAuth: true
             }
-        }, 
-        {
-            path: '/Question/question',
-            name: '问卷调查',
-            component: Question,
-            meta: {
-                requireAuth: true
-            }
-        }, 
-        {
-            path: '/machine/MachineConfig',
-            name: '支付配置信息',
-            component: MachineConfig,
-            meta: {
-                requireAuth: true
-            }
-        }, {
-            path: '/pay/Config',
-            name: '支付配置',
-            component: Config,
-            meta: {
-                requireAuth: true
-            }
-        }, {
+        },
+       
+       {
             path: '/druid/login',
             name: '监控查询',
             component: druidLogin,
@@ -205,6 +146,14 @@ export default new Router({
             path: '/moduleInfo/ModuleInfo',
             name: '模块管理',
             component: ModuleInfo,
+            meta: {
+                requireAuth: true
+            }
+        }
+        , {
+            path: '/keyWord/KeyWord',
+            name: '关键字管理',
+            component: KeyWord,
             meta: {
                 requireAuth: true
             }

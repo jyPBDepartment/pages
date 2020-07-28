@@ -130,7 +130,7 @@ export default {
                 // 测试通道，不为空直接登录
                 setTimeout(() => {
                   this.$store.commit("login", this.ruleForm.name);
-                  this.$router.push({ path: "/gateway/Banner" });
+                  this.$router.push({ path: "/charts/statistics" });
                 }, 1000);
               } else {
                 this.$alert('验证码输入错误请重新输入！', '提示', {confirmButtonText: '确定',});

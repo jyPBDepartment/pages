@@ -16,8 +16,12 @@
           <el-input type="text" v-model="editForm.name"  placeholder="请输入分类名称" style="width:70%;"></el-input>
            
         </el-form-item>
-        <el-form-item label="上级分类" prop="subId" >
-            <el-select  v-model="editForm.subId"  placeholder="请输入上级分类" style="width:70%;">
+        <el-form-item label="分类编码" prop="code">
+          <el-input type="text" v-model="editForm.code"  placeholder="请输入分类编码" style="width:70%;"></el-input>
+           
+        </el-form-item>
+        <el-form-item label="上级分类编码" prop="parentCode" >
+            <el-select  v-model="editForm.parentCode"  placeholder="请输入上级分类编码" style="width:70%;">
              <el-option
               v-for="item in classiOptions"
               :key="item.value"
@@ -26,22 +30,9 @@
               ></el-option>
            </el-select>
         </el-form-item>
-      
-        <el-form-item label="分类描述" prop="classDescribe" >
-          <el-input
-            type="textarea"
-            v-model="editForm.classDescribe "
-            placeholder="请输入分类描述"
-            style=" width:70%;"
-            :autosize="{ minRows: 1, maxRows: 4}"
-          ></el-input>
-        </el-form-item>
-         
          <el-form-item label="状态" prop="status">
           <el-input type="text" v-model="editForm.status" placeholder="请输入状态" style=" width:70%;"></el-input>
         </el-form-item>
-         
-       
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -75,9 +66,10 @@ export default {
       labelPosition: "right",
       editForm: {
         name: "",
-        subId: "",
-        status: "1",
-        classDescribe: ""
+        code:"",
+        parentCode: "",
+        status: "0",
+      createUser:localStorage.getItem("userInfo")
       },
       classiOptions: [],
 
@@ -86,13 +78,8 @@ export default {
       // rules表单验证
       rules: {
         name: [{ required: true, message: "请输入分类名称", trigger: "blur" }],
-        subId: [
-          { required: true, message: "请输入您的上级分类", trigger: "blur" }
-        ],
-        status: [{ required: true, message: "请输入状态", trigger: "blur" }],
-        classDescribe: [
-          { required: true, message: "请输入分类描述", trigger: "blur" }
-        ]
+        code: [{ required: true, message: "请输入分类编码", trigger: "blur" }],
+         status: [{ required: true, message: "请输入状态", trigger: "blur" }],
       }
     };
   },
@@ -111,13 +98,13 @@ export default {
       api
         .testAxiosGet(ApiPath.url.findAllClass, params)
         .then(res => {
-          if (res.status == "0") {
+          if (res.state == "0") {
              this.classiOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
              
               this.classiOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["name"]
+                label: res.data[i]["code"]
               });
             }
           }
@@ -128,7 +115,7 @@ export default {
     //添加分类方法
     saveClassification: function() {
      
-       if (this.editForm.name != "" ) {
+       if (this.editForm.name != "" && this.editForm.code !="") {
       let params = {
         classificationEntity: this.editForm
       };
@@ -143,7 +130,7 @@ export default {
           console.error(error);
         });
     }else {
-            this.$alert('分类名称不能为空！', '提示', {
+            this.$alert('分类名称，分类编码不能为空！', '提示', {
           confirmButtonText: '确定',
         });
         }

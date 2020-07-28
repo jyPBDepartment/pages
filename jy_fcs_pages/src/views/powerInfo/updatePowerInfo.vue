@@ -18,9 +18,7 @@
         <el-form-item label="权限编码" prop="jurCode" >
            <el-input type="text" v-model="powerInfoForm.jurCode" placeholder="请输入权限编码" style=" width:70%;"></el-input>
         </el-form-item>
-       <!-- <el-form-item label="上级权限编码" prop="subJurCode">
-          <el-input type="text" v-model="powerInfoForm.subJurCode" placeholder="请输入上级权限编码" style="width:70%;"></el-input>
-        </el-form-item> -->
+      
          <el-form-item label="上级权限编码" prop="subJurCode" >
           <el-select type="text" v-model="powerInfoForm.subJurCode" placeholder="请输入上级权限编码" style=" width:70%;" >
             <el-option
@@ -73,6 +71,7 @@ export default {
         jurCode:"",
         subJurCode:"",
         auditStatus:"",
+        
       },
      
      powerOptions:[],
@@ -136,13 +135,19 @@ export default {
       };
 
       api.testAxiosGet(ApiPath.url.updatePowerInfo, params).then(res => {
-        this.$message.success(res.message);
+       
+       
+       this.$message.success(res.message);
+        
         this.reload();
+        
         this.close();
-        updateUser:localStorage.getItem("userInfo")
+       
+          
       }) .catch(err => {
                 this.$message.error(err.data);
               });
+             this.powerInfoForm.updateUser=localStorage.getItem("userInfo")
     },
     close: function() {
       this.$emit("close");
