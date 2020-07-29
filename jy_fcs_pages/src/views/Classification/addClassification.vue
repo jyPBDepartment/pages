@@ -115,7 +115,7 @@ export default {
     //添加分类方法
     saveClassification: function() {
      
-       if (this.editForm.name != "" && this.editForm.code !="") {
+       if (this.editForm.name != "" && this.editForm.code !="" && this.editForm.status !="") {
       let params = {
         classificationEntity: this.editForm
       };
@@ -130,7 +130,7 @@ export default {
           console.error(error);
         });
     }else {
-            this.$alert('分类名称，分类编码不能为空！', '提示', {
+            this.$alert('分类名称，分类编码,状态不能为空！', '提示', {
           confirmButtonText: '确定',
         });
         }

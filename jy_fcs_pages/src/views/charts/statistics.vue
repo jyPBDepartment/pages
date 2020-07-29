@@ -25,6 +25,19 @@
       </div>
       <div class="first">
         <div class="left">
+          <img src="../../assets/img/农民.png" class="icon" />
+        </div>
+        <div class="right">
+          <span type="text" class="up1">农活发布数量监测</span>
+          <span type="text" class="center1">{{argicultural}}</span>
+          <div class="last">
+            <img src="../../assets/img/箭头.png" class="iconFront" />
+            <span type="text" class="down">同比昨天10%</span>
+          </div>
+        </div>
+      </div>
+      <div class="first">
+        <div class="left">
           <img src="../../assets/img/书.png" class="icon" />
         </div>
         <div class="right">
@@ -37,19 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="first">
-        <div class="left">
-          <img src="../../assets/img/农民.png" class="icon" />
-        </div>
-        <div class="right">
-          <span type="text" class="up1">农活发布数量监测</span>
-          <span type="text" class="center1">{{argicultural}}</span>
-          <div class="last">
-            <img src="../../assets/img/箭头.png" class="iconFront" />
-            <span type="text" class="down">同比昨天10%</span>
-          </div>
-        </div>
-      </div>
+
       <div class="first">
         <div class="left">
           <img src="../../assets/img/树叶.png" class="icon" />
@@ -89,8 +90,8 @@ export default {
   data() {
     return {
       count: "",
-     invationSum:"",
-     argicultural:"",
+      invationSum: "",
+      argicultural: "",
 
       //  数据总览
       SCEoption: {
@@ -124,7 +125,7 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: ["用户数量", "发帖数量", "农活发布", "农活预约"],
+          data: ["用户数量", "农活发布", "发帖数量", "农活预约"],
 
           axisLine: {
             lineStyle: {
@@ -256,9 +257,7 @@ export default {
   methods: {
     //显示信息
     transJurisdictionId(val) {
-      let params = {
-
-      };
+      let params = {};
       api.testAxiosGet(ApiPath.url.initEchart, params).then((res) => {
         let code = res.state;
         if (code == 0) {
@@ -267,7 +266,12 @@ export default {
           this.argicultural = res.agricultural;
           // this.SCEoption.series.data[2] = res.invation;
           // this.SCEoption.series.data[3] = res.farmwork;
-          this.SCEoption.series[1].data.push(10,res.agricultural,res.invation,res.farmwork);
+          this.SCEoption.series[1].data.push(
+            10,
+            res.agricultural,
+            res.invation,
+            res.farmwork
+          );
           this.chart = Chart.init(this.$refs.SCEchart);
           this.chart.setOption(this.SCEoption);
           // console.log("昨天" +JSON.stringify(this.SCEoption.series[0].data));
