@@ -203,6 +203,13 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
+        }, {
+            path: '/role/roleShow',
+            name: '角色管理',
+            component: Role,
+            meta: {
+                requireAuth: true
+            }
         }
     ]
     }]

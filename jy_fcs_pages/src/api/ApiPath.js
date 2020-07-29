@@ -138,6 +138,8 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     caseFindById:URLHost+'/caseInfo/findById',
     //菜单管理
     findMenuByName:URLHost+'/menu/findByName',
+    //角色管理
+    roleSearch:URLHost+'/role/findByName',
 }
 export default {
   url
