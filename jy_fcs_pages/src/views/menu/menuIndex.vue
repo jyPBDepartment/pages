@@ -1,12 +1,12 @@
 /**
- * 门户菜单 导航管理
+ * 基础管理 菜单管理
  */
 <template>
     <div class="navigationFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>导航管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">基础管理</el-breadcrumb-item>
+      <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
     <!-- 查询条件 -->

@@ -196,6 +196,13 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
+        }, {
+            path: '/menu/menuIndex',
+            name: '菜单管理',
+            component: Menu,
+            meta: {
+                requireAuth: true
+            }
         }
     ]
     }]

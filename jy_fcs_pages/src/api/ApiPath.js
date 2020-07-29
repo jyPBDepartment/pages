@@ -136,6 +136,8 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     updateCaseInfo:URLHost+'/caseInfo/update',
     //看图识病查看详情
     caseFindById:URLHost+'/caseInfo/findById',
+    //菜单管理
+    findMenuByName:URLHost+'/menu/findByName',
 }
 export default {
   url
