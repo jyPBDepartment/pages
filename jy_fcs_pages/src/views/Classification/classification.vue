@@ -18,8 +18,8 @@
        <el-form-item label="分类编码" >
         <el-input v-model="code" type="text" placeholder="请输入分类编码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="warning" size="small"  @click="search"    icon="el-icon-search" >查询</el-button>
-       <el-button type="info"  @click="resetRuleTag(search)"  size="small"  icon="el-icon-close">重置</el-button>
+      <el-button type="warning" size="small"  @click="search"    icon="el-icon-search" class="height">查询</el-button>
+       <el-button type="info"  @click="resetRuleTag(search)"  size="small"  icon="el-icon-close" class="height">重置</el-button>
        <el-row >
          <el-button type="success"  @click="openRuleTag"  size="small"  icon="el-icon-plus">新建</el-button>
        </el-row>
@@ -351,7 +351,9 @@ export default {
   font-size: 14px;
   max-width: 150px;
 }
-
+.height{
+  margin-top: 6px;
+}
 
 </style>
 

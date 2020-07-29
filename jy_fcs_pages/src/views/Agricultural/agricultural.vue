@@ -27,8 +27,8 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-button type="warning" @click="search" size="medium" icon="el-icon-search">查询</el-button>
-      <el-button type="info" @click="resetRuleTag(search)" size="medium" icon="el-icon-close">重置</el-button>
+      <el-button type="warning" @click="search" size="small" icon="el-icon-search" class="hright" >查询</el-button>
+      <el-button type="info" @click="resetRuleTag(search)" size="small" icon="el-icon-close" class="height">重置</el-button>
     </el-form>
 
     <!-- 展示的表单 -->
@@ -105,7 +105,7 @@
       <el-table-column prop="examineReason" label="审核拒绝理由" align="center" style="width:40px;" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column fixed="right" label="操作" align="center" style="width:100%">
         <template slot-scope="scope">
-          <el-button @click="agrContent(scope)" type="text">查看详情</el-button>
+          <el-button @click="agrContent(scope)" type="primary" size="small">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -298,6 +298,9 @@ export default {
 }
 .el-form-item {
   font-size: 14px;
+}
+.height{
+  margin-top: 6px;
 }
 </style>
 

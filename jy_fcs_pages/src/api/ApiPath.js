@@ -117,6 +117,25 @@ findAllClass:URLHost+'/classification/findSubClassiList',
   agriFindById:URLHost+'/agricultural/findById',
    //农服状态审核
    updateStatus:URLHost+'/agricultural/passPostInfo',
+   //看图识病查询
+   searchCaseInfo:URLHost+'/caseInfo/findByName',
+   //看图识病删除
+   deleteCaseInfo:URLHost+'/caseInfo/delete',
+   //看图识病添加
+    findAllCaseInfo:URLHost+'/classification/findSubClassiList',
+    findAllCase:URLHost+'/classification/findDipList',
+    saveCaseInfo:URLHost+'/caseInfo/save',
+    //看图识病状态
+    caseInfoEnable:URLHost+'/caseInfo/enable',
+    //看图识病修改下拉列表
+    findAllUpdateCaseInfo:URLHost+'/classification/findSubClassiList',
+    findAllUpdateCase:URLHost+'/classification/findDipList',
+    //看图识病修改前查询
+    caseInfoFindById:URLHost+'/caseInfo/findById',
+    //看图识病修改
+    updateCaseInfo:URLHost+'/caseInfo/update',
+    //看图识病查看详情
+    caseFindById:URLHost+'/caseInfo/findById',
 }
 export default {
   url

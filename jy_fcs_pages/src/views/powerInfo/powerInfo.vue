@@ -26,12 +26,13 @@
           clearable
         ></el-input>
       </el-form-item>
-      <el-button type="warning" size="small"  @click="search" class="find" icon="el-icon-search">查询</el-button>
+      <el-button type="warning" size="small"  @click="search"  icon="el-icon-search" class="height">查询</el-button>
       <el-button
-       type="info" size="small" 
+       type="info"
+        size="small" 
         @click="resetRuleTag(search)"
-      
-        class="small"
+      class="height"
+        
         icon="el-icon-close"
       >重置</el-button>
       <el-row>
@@ -39,7 +40,6 @@
           type="success" size="small" 
           @click="openRuleTag"
          
-          class="insert"
           icon="el-icon-plus"
         >新建</el-button>
       </el-row>
@@ -390,7 +390,9 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-
+.height{
+  margin-top: 6px;
+}
 </style>
 
 

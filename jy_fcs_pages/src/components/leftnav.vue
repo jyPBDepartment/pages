@@ -108,7 +108,14 @@ export default {
               url: "Agricultural/agricultural",
               menus: null
             },
-           
+            {
+              menuid: 1 - 6,
+              icon: "el-icon-mobile-phone",
+              menuname: "看图识病",
+              hasThird: "N",
+              url: "CaseInfo/caseInfo",
+              menus: null
+            },
            
          
           ]

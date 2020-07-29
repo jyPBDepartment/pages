@@ -15,6 +15,8 @@ import PowerInfo from '@/views/powerInfo/powerInfo';
 import KeyWord from '@/views/keyWord/KeyWord'
 //农服管理
 import Agricultural from '@/views/Agricultural/agricultural';
+//看图识病
+import CaseInfo from '@/views/CaseInfo/caseInfo'
 
 /**
  * 门户菜单
@@ -124,6 +126,14 @@ export default new Router({
             path: '/Agricultural/agricultural',
             name: '农服管理',
             component: Agricultural,
+            meta: {
+                requireAuth: true
+            }
+        },
+        {
+            path: '/CaseInfo/caseInfo',
+            name: '看图识病',
+            component: CaseInfo,
             meta: {
                 requireAuth: true
             }
