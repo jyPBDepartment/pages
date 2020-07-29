@@ -23,53 +23,60 @@
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row>
-      <el-table-column type="index" label="序号"  align="center" style="width:40px;"></el-table-column>
-      <el-table-column label="一级菜单" align="center">
-      <el-table-column sortable prop="name" label="导航名称" align="center" style="width:40px;"></el-table-column>
-        <!--switch开关（表单）-->
-       <el-table-column align="center" sortable prop="status"  label="状态" min-width="50" >
+     <el-table
+      size="small"
+      :data="tableData"
+      highlight-current-row
+      v-loading="loading"
+      border
+      element-loading-text="拼命加载中"
+      style="width: 100%;"
+    >
+      <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
+      <el-table-column sortable prop="name" label="菜单名称" align="center"></el-table-column>
+      <el-table-column sortable prop="icon" label="菜单图标" align="center"></el-table-column>
+      <el-table-column sortable prop="type" label="类型" align="center"></el-table-column>
+      <el-table-column sortable align="center" label="状态" prop="state">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            active-value="1"
-            inactive-value="0"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
-            @change="navigationEnable(scope)"
+            active-value="0"
+            inactive-value="1"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="roleEnable(scope)"
           ></el-switch>
         </template>
       </el-table-column>
-      </el-table-column>
-      <el-table-column label="二级菜单" align="center">
-      <el-table-column sortable prop="subId" label="上级导航" align="center" style="width:40px;"></el-table-column>
-      
-      <el-table-column sortable prop="dropDownEnName" label="下拉内容" align="center"></el-table-column>
-    
-       <!-- <el-table-column sortable prop="url" label="图片地址" min-width="50">
+      <el-table-column sortable align="center" label="排序" prop="sort">
         <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
-        </template>
-      </el-table-column> -->
-      <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
-      </el-table-column>
-        <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.createDateTime|timestampToTime}}</div>
+          <el-input-number v-model="scope.row.sort"  :step=5 step-strictly></el-input-number>
         </template>
       </el-table-column>
-       <el-table-column sortable prop="updateTime" label="修改时间" align="center">
+      <el-table-column sortable prop="url" label="菜单路由" align="center"></el-table-column>
+      <el-table-column sortable prop="perssions" label="权限标识" align="center"></el-table-column>
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <div>{{scope.row.updateTime|timestampToTime}}</div>
+           <el-button
+           @click="openUpdateRole(scope)"
+            type="text"
+            size="medium"
+          
+            icon="el-icon-edit"
+            class="up"
+
+            
+          >编辑</el-button>
+           <el-button
+           @click="deleteUser(scope)"
+            type="text"
+            size="medium"
+           
+            icon="el-icon-delete"
+            class="del"
+          >删除</el-button>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="220px" align="center">
-        <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)" type="text" size="medium" class="up" icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteNavigation(scope)" type="text" size="medium" class="del" icon="el-icon-delete">删除</el-button>
-         
-       </template>
-   </el-table-column>
     </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
@@ -77,13 +84,7 @@
     <br />
 <add-navigation :show="addNavigationFlag" title="添加导航信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
 
- <update-navigation
-      :show="updateNavigationFlag"
-      :transNavigationId="transNavigationId"
-      title="修改"
-      @close="closeUpdateNavigationDialog"
-      @save="updateNavigation"
-    ></update-navigation>
+
     
     </div>
     
@@ -95,7 +96,6 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddNavigation from "./addNavigation.vue";
-import UpdateNavigation from "./updateNavigation.vue";
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -114,7 +114,7 @@ export default {
   data() {
     return {
       name: "",
-      updateNavigationFlag: false,
+      loading:false,
       transNavigationId: "",
       transTagCode: "",
       tagCode: "",
@@ -165,6 +165,7 @@ export default {
         .then(res => {
           let code = res.status;
           if (code == "0") {
+          //  alert(JSON.stringify(res.data.content))
            this.tableData = res.data.content;
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
@@ -176,10 +177,6 @@ export default {
         .catch(function(error) {
         });
     },
-    closeUpdateNavigationDialog: function() {
-      this.updateNavigationFlag = false;
-    },
-    updateNavigation: function() {},
     //switch开关
     navigationEnable: function(scope) {
       let params = {
@@ -240,7 +237,6 @@ export default {
     openUpdateDialog(scope) {
       console.log(scope);
       this.transNavigationId = scope.row.id;
-      this.updateNavigationFlag = true;
     },
     saveRuleTag() {
       this.addNavigationFlag = false;
@@ -302,7 +298,6 @@ export default {
   },
   components: {
     AddNavigation,
-    UpdateNavigation,
     Pagination
   }
 };

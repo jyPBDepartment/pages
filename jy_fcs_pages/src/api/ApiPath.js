@@ -140,6 +140,14 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     findMenuByName:URLHost+'/menu/findByName',
     //角色管理
     roleSearch:URLHost+'/role/findByName',
+    //角色保存
+    saveRole:URLHost+'/role/save',
+    //角色删除
+    deleteRole:URLHost+'/role/delete',
+    //角色启用、禁用
+    enableRole:URLHost+'/role/enable',
+    //根据id查询角色
+    findRoleById:URLHost+'/role/findById',
 }
 export default {
   url

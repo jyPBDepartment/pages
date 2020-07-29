@@ -42,17 +42,17 @@
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="角色名称" align="center"></el-table-column>
-      <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="limitName" label="角色权限" align="center"></el-table-column>
+      <el-table-column show-overflow-tooltip sortable prop="remark" label="角色备注" align="center"></el-table-column>
+      <el-table-column sortable prop="addDate" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="updDate" label="修改时间" align="center"></el-table-column>
       <el-table-column align="center" label="状态" prop="state">
         <template slot-scope="scope">
           <el-switch
-            v-model="scope.row.state"
+            v-model="scope.row.status"
             active-value="0"
             inactive-value="1"
-             active-color="rgb(19, 206, 102)"
-            inactive-color="rgb(255, 73, 73)"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
             @change="roleEnable(scope)"
           ></el-switch>
         </template>
@@ -203,15 +203,11 @@ export default {
     roleEnable: function(scope) {
       let params = {
         id: scope.row.id,
-        state: scope.row.state
+        status: scope.row.status
       };
-      api.testAxiosGet(ApiPath.url.roleEnable, params).then(res => {
+      api.testAxiosGet(ApiPath.url.enableRole, params).then(res => {
         let code = res.status;
-        if (code == "0") {
-          this.$message.success(res.message);
-        } else {
-          this.$message.success(res.message);
-        }
+        this.$message.success(res.message);
         // this.reload();
       }).catch(function(error) {});
     },
@@ -224,7 +220,9 @@ export default {
     //重置
     resetForm(search) {
       this.name = "";
-      location.reload();
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
 
     // 删除角色
