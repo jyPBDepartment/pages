@@ -15,15 +15,17 @@
         :rules="rules"
         ref="caseInfoForm"
         :model="caseInfoForm"
-        label-width="120px"
+        label-width="130px"
         :label-position="labelPosition"
         @submit.native.prevent
       >
         <el-form-item label="名称" prop="name">
           <el-input type="text" v-model="caseInfoForm.name" placeholder="请输入名称" style=" width:70%;"></el-input>
         </el-form-item>
-        <el-form-item label="图片地址" prop="imgUrl">
+        <el-form-item label="图片" prop="imgUrl">
+           <el-text  class="required">*</el-text>
           <el-upload
+           style="width:81%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -37,17 +39,13 @@
             <el-button
               size="small"
               type="primary"
-              style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px"
+            style="width:150%;" icon="el-icon-plus"
             >点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="农作物种类编码" prop="classiCode">
-          <el-select
-            v-model="caseInfoForm.classiCode"
-            placeholder="请输入农作物种类编码"
-            style="width:70%;"
-          >
+          <el-select v-model="caseInfoForm.classiCode" placeholder="请输入农作物种类编码" style="width:70%;">
             <el-option
               v-for="item in cropsOptions"
               :key="item.value"
@@ -57,7 +55,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="病虫害种类编码" prop="classiDipCode">
-          <el-select v-model="caseInfoForm.classiDipCode" placeholder="请输入病虫害种类编码" style="width:70%;">
+          <el-select
+            v-model="caseInfoForm.classiDipCode"
+            placeholder="请输入病虫害种类编码"
+            style="width:70%;"
+          >
             <el-option
               v-for="item in dipOptions"
               :key="item.value"
@@ -136,8 +138,8 @@ export default {
       caseInfoForm: {
         name: "",
         url: "",
-        classiCode:"",
-        classiDipCode:"",
+        classiCode: "",
+        classiDipCode: "",
         auditStatus: "",
       },
       cropsOptions: [],
@@ -145,6 +147,19 @@ export default {
       //rules表单验证
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+        classiCode: [
+          { required: true, message: "请输入农作物种类编码", trigger: "blur" },
+        ],
+        classiDipCode: [
+          {
+            required: true,
+            message: "请输入请输入病虫害种类编码",
+            trigger: "blur",
+          },
+        ],
+        auditStatus: [
+          { required: true, message: "请输入状态", trigger: "blur" },
+        ],
       },
     };
   },
@@ -171,23 +186,19 @@ export default {
     },
   },
   mounted() {
-   this.findContext();
-   this.findContexta();
+    this.findContext();
+    this.findContexta();
   },
   methods: {
-
-    
-
     //下拉列表显示1
     findContext: function () {
       let params = {
-        cropsTypeCode:this.caseInfoForm.cropsTypeCode
+        cropsTypeCode: this.caseInfoForm.cropsTypeCode,
       };
       api
         .testAxiosGet(ApiPath.url.findAllUpdateCaseInfo, params)
         .then((res) => {
           if (res.state == "0") {
-           
             for (let i = 0; i < res.data.length; i++) {
               this.cropsOptions.push({
                 value: res.data[i]["id"],
@@ -201,13 +212,12 @@ export default {
     //下拉列表显示2
     findContexta: function () {
       let params = {
-        dipTypeCode:this.caseInfoForm.dipTypeCode
+        dipTypeCode: this.caseInfoForm.dipTypeCode,
       };
       api
         .testAxiosGet(ApiPath.url.findAllUpdateCase, params)
         .then((res) => {
           if (res.state == "0") {
-           
             for (let i = 0; i < res.data.length; i++) {
               this.dipOptions.push({
                 value: res.data[i]["id"],
@@ -231,13 +241,13 @@ export default {
     handlePreview(file) {
       console.log(file);
     },
-// 修改
+    // 修改
     updateCaseInfo(editData) {
       this.$refs[editData].validate((valid) => {
         if (valid) {
           if (this.imgUrl != "") {
             this.caseInfoForm.url = this.imgUrl;
-            let params = { caseInfoEntity: this.caseInfoForm};
+            let params = { caseInfoEntity: this.caseInfoForm };
             api
               .testAxiosGet(ApiPath.url.updateCaseInfo, params)
               .then((res) => {
@@ -270,5 +280,8 @@ export default {
 .el-form {
   padding-left: 115px;
 }
-
+.required{
+  color: red;
+  margin-left:-52px;
+}
 </style>

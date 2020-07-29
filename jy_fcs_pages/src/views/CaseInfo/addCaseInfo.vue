@@ -16,14 +16,17 @@
         ref="editForm"
         :model="editForm"
         :label-position="labelPosition"
-        label-width="120px"
+        label-width="130px"
       >
         <el-form-item label="名称" prop="name">
           <el-input type="text" v-model="editForm.name" placeholder="请输入名称" style="width:70%;"></el-input>
         </el-form-item>
+      
+       
         <el-form-item label="图片" prop="imgUrl">
+           <el-text  class="required">*</el-text>
           <el-upload
-            style="width:81%"
+            style="width:81%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -34,7 +37,7 @@
             :limit="limit"
             :on-exceed="uploadExceed"
           >
-            <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
+            <el-button size="small" type="primary" style="width:150%;" icon="el-icon-plus">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
@@ -120,8 +123,8 @@ export default {
       editForm: {
         name: "",
         url: "",
-        classiCode:"",
-        classiDipCode:"",
+        classiCode: "",
+        classiDipCode: "",
         auditStatus: "",
         createUser: localStorage.getItem("userInfo"),
       },
@@ -135,7 +138,18 @@ export default {
 
       // rules表单验证
       rules: {
-        name: [{ required: true, message: "请输入分类名称", trigger: "blur" }],
+        name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+       
+        classiCode: [
+          { required: true, message: "请输入农作物种类编码", trigger: "blur" },
+        ],
+        classiDipCode: [
+          {
+            required: true,
+            message: "请输入请输入病虫害种类编码",
+            trigger: "blur",
+          },
+        ],
         auditStatus: [
           { required: true, message: "请输入状态", trigger: "blur" },
         ],
@@ -176,7 +190,7 @@ export default {
             this.cropsOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
               this.cropsOptions.push({
-               value: res.data[i]["id"],
+                value: res.data[i]["id"],
                 label: res.data[i]["code"],
               });
             }
@@ -204,36 +218,10 @@ export default {
     },
 
     //添加分类方法
-    // saveCaseInfo: function() {
-
-    //    if (this.editForm.name != "") {
-    //   let params = {
-    //     caseInfoEntity: this.editForm
-    //   };
-    //   api
-    //     .testAxiosGet(ApiPath.url.saveCaseInfo, params)
-    //     .then(res => {
-    //       this.$message.success(res.message);
-    //       this.reload();
-    //       this.close();
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // }else {
-    //         this.$alert('名称不能为空！', '提示', {
-    //       confirmButtonText: '确定',
-    //     });
-    //     }
-    // },
     saveCaseInfo(editData) {
+      if(this.editForm.name !="" && this.imgUrl != "" && this.editForm.classiDipCode !="" && this.editForm.classiDipCode !="" && this.editForm.auditStatus !=""){
       this.$refs[editData].validate((valid) => {
-        if (this.editForm.name == "") {
-          this.$alert("名称不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
+     
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;
@@ -259,6 +247,12 @@ export default {
           return false;
         }
       });
+      }else {
+            this.$alert('名称，图片，农作物种类编码，病虫害种类编码，状态不能为空！', '提示', {
+          confirmButtonText: '确定',
+        });
+        }
+
     },
     close: function () {
       this.$emit("close");
@@ -301,5 +295,9 @@ export default {
   margin-right: 2px;
   line-height: 20px;
   text-align: center;
+}
+.required{
+  color: red;
+  margin-left:-52px;
 }
 </style>
