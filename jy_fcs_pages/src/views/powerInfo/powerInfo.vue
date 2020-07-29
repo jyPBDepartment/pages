@@ -26,22 +26,16 @@
           clearable
         ></el-input>
       </el-form-item>
-      <el-button type="warning" size="small"  @click="search"  icon="el-icon-search" class="height">查询</el-button>
+      <el-button type="warning" size="small" @click="search" icon="el-icon-search" class="height">查询</el-button>
       <el-button
-       type="info"
-        size="small" 
+        type="info"
+        size="small"
         @click="resetRuleTag(search)"
-      class="height"
-        
+        class="height"
         icon="el-icon-close"
       >重置</el-button>
       <el-row>
-        <el-button
-          type="success" size="small" 
-          @click="openRuleTag"
-         
-          icon="el-icon-plus"
-        >新建</el-button>
+        <el-button type="success" size="small" @click="openRuleTag" icon="el-icon-plus">新建</el-button>
       </el-row>
     </el-form>
 
@@ -58,12 +52,7 @@
       <el-table-column sortable prop="jurName" label="权限名称" align="center" style="width:40px;"></el-table-column>
       <!-- <el-table-column sortable prop="subId" label="上级分类" align="center"></el-table-column> -->
 
-      <el-table-column
-        sortable
-        prop="jurCode"
-        label="权限编码"
-        align="center"
-      ></el-table-column>
+      <el-table-column sortable prop="jurCode" label="权限编码" align="center"></el-table-column>
       <!-- switch开关（表单）
       <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
         <template slot-scope="scope">
@@ -76,8 +65,8 @@
             @change="powerInfoEnable(scope)"
           ></el-switch>
         </template>
-      </el-table-column> -->
-       <!--switch开关（表单）-->
+      </el-table-column>-->
+      <!--switch开关（表单）-->
       <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
         <template slot-scope="scope">
           <el-switch
@@ -93,15 +82,15 @@
 
       <el-table-column prop="createDate" label="创建时间" align="center"></el-table-column>
       <el-table-column prop="updateDate" label="修改时间" align="center"></el-table-column>
-       <el-table-column sortable prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
+      <el-table-column sortable prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
       <el-table-column sortable prop="updateUser" label="修改人" align="center" style="width:40px;"></el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
             class="up"
-            type="primary" 
-            size="small" 
+            type="primary"
+            size="small"
             icon="el-icon-edit"
           >修改</el-button>
           <el-button
@@ -118,7 +107,7 @@
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
-     <add-power-info
+    <add-power-info
       :show="addPowerInfoFlag"
       title="添加权限信息"
       @close="closeRuleTagDialog"
@@ -159,7 +148,7 @@ export default {
 
   data() {
     return {
-       jurName: "",
+      jurName: "",
       jurCode: "",
       updatePowerInfoFlag: false,
       transPowerInfoId: "",
@@ -195,24 +184,24 @@ export default {
     this.search(this.formInline);
   },
   methods: {
-      //switch开关
-    powerInfoEnable: function(scope) {
+    //switch开关
+    powerInfoEnable: function (scope) {
       let params = {
         id: scope.row.id,
-        auditStatus: scope.row.auditStatus
+        auditStatus: scope.row.auditStatus,
       };
       api
         .testAxiosGet(ApiPath.url.powerInfoEnable, params)
-        .then(res => {
+        .then((res) => {
           let code = res.state;
           if (code == "1") {
             this.$message.success(res.message);
           } else {
             this.$message.success(res.message);
           }
-           this.reload();
+          this.reload();
         })
-        .catch(function(error) {});
+        .catch(function (error) {});
     },
     //分页赋值
     callFather(parm) {
@@ -263,43 +252,33 @@ export default {
         .catch(function (error) {});
     },
 
-     closeUpdatePowerInfoDialog: function () {
+    closeUpdatePowerInfoDialog: function () {
       this.updatePowerInfoFlag = false;
     },
     updatePowerInfo: function () {},
-
-    deletePowerInfo: function (scope) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+    //删除
+    deletePowerInfo(scope) {
+      this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
-      })
-        .then(() => {
-          let params = {
-            id: scope.row.id,
-          };
-          api
-            .testAxiosGet(ApiPath.url.deletePowerInfo, params)
-            .then((res) => {
-              let code = res.status;
-
-              if (code == "0") {
-                this.$message({
-                  type: "success",
-                  message: "删除成功!",
-                });
-                this.reload();
-              } else {
-                this.$message.success(res.message);
-              }
+      }).then(() => {
+        let params = {
+          id: scope.row.id,
+        };
+        api.testAxiosGet(ApiPath.url.deletePowerInfo, params).then((res) => {
+          let code = res.status;
+          if (code == "0") {
+            this.$message.success(res.message);
+            this.reload();
+          } else {
+            this.$alert("删除失败，请先解除关联关系！", "提示", {
+              confirmButtonText: "确定",
             });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
+            this.reload();
+          }
         });
+      });
     },
     onSubmit: function () {
       let params = {
@@ -314,7 +293,7 @@ export default {
       this.updatePowerInfoFlag = true;
     },
     saveRuleTag() {
-       this.addPowerInfoFlag = false;
+      this.addPowerInfoFlag = false;
     },
 
     modifyRuleTag() {
@@ -390,7 +369,7 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-.height{
+.height {
   margin-top: 6px;
 }
 </style>
