@@ -193,7 +193,7 @@ export default {
     //下拉列表显示1
     findContext: function () {
       let params = {
-        classiCode: this.caseInfoForm.classiCode
+        cropsTypeCode: this.caseInfoForm.cropsTypeCode
       };
       api
         .testAxiosGet(ApiPath.url.findAllUpdateCaseInfo, params)
@@ -212,7 +212,7 @@ export default {
     //下拉列表显示2
     findContexta: function () {
       let params = {
-        classiDipCode: this.caseInfoForm.classiDipCode
+        dipTypeCode: this.caseInfoForm.dipTypeCode
       };
       api
         .testAxiosGet(ApiPath.url.findAllUpdateCase, params)
