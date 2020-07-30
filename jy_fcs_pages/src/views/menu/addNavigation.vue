@@ -12,7 +12,9 @@
     <!-- 插槽区 -->
     <slot>
       <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="120px" @submit.native.prevent>
-       
+       <el-form-item label="图标" prop="icon">
+       <e-icon-picker v-model="icon"/>
+       </el-form-item>
         <el-form-item label="导航名称" prop="name">
           <el-input type="text" v-model="editForm.name" placeholder="请输入导航名称"  style=" width:70%;"  @change="all()" @keyup.enter.native="toSearch"></el-input>
         </el-form-item>
@@ -29,6 +31,7 @@
         <el-form-item label="下拉内容" prop="dropDownEnName" v-if="isShow">
           <el-input type="text" v-model="editForm.dropDownEnName" placeholder="下拉内容"  style=" width:70%;" ></el-input>
         </el-form-item>
+         
           <!-- <el-form-item label="图片地址" prop="imgUrl"  v-if="isShow">
           <el-upload
             class="upload-demo"
@@ -67,6 +70,11 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import eIconPicker from 'e-icon-picker';
+import 'e-icon-picker/dist/index.css';//基础样式
+import 'e-icon-picker/dist/main.css'; //fontAwesome 图标库样式
+
+Vue.use(eIconPicker, {FontAwesome: false, ElementUI: true});
 export default {
    inject:['reload'],
   props: {
@@ -82,7 +90,7 @@ export default {
   data() {
     
     return {
-   
+      icon:"",
       isShow:false,
       labelPosition:'right',
       trueFlag: true,

@@ -148,6 +148,12 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     enableRole:URLHost+'/role/enable',
     //根据id查询角色
     findRoleById:URLHost+'/role/findById',
+    //修改菜单排序
+    changeMenuSort:URLHost+'/menu/changeSort',
+    //菜单启用、禁用
+    enableMenu:URLHost+'/menu/enable',
+    //菜单删除
+    deleteMenu:URLHost+'/menu/delete',
 }
 export default {
   url

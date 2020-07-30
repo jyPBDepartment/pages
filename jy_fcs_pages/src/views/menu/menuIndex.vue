@@ -12,11 +12,11 @@
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
        <el-form-item label="搜索："></el-form-item>
-      <el-form-item label="导航名称" >
-        <el-input v-model="name" type="text" placeholder="请输入导航名称" class="el-input el-input--small" clearable ></el-input>
+      <el-form-item label="菜单名称" >
+        <el-input v-model="name" type="text" placeholder="请输入菜单名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
       <el-button type="text"  @click="search" size="medium" class="find"  icon="el-icon-search" >查询</el-button>
-       <el-button type="text"  @click="resetRuleTag(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
+       <el-button type="text"  @click="resetForm(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
         <el-row>
            <el-button type="text"  @click="openRuleTag"  size="medium" class="insert"  icon="el-icon-plus">添加</el-button>
         </el-row>
@@ -31,11 +31,19 @@
       border
       element-loading-text="拼命加载中"
       style="width: 100%;"
+      row-key="id"
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="菜单名称" align="center"></el-table-column>
       <el-table-column sortable prop="icon" label="菜单图标" align="center"></el-table-column>
-      <el-table-column sortable prop="type" label="类型" align="center"></el-table-column>
+      <el-table-column sortable label="类型" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.type == 1">目录</el-tag>
+          <el-tag v-if="scope.row.type == 2" type="success">菜单</el-tag>
+          <el-tag v-if="scope.row.type == 3" type="info">按钮</el-tag>
+        </template>
+      </el-table-column>
+      
       <el-table-column sortable align="center" label="状态" prop="state">
         <template slot-scope="scope">
           <el-switch
@@ -44,13 +52,13 @@
             inactive-value="1"
             active-color="#13ce66"
             inactive-color="#ff4949"
-            @change="roleEnable(scope)"
+            @change="enableMenu(scope)"
           ></el-switch>
         </template>
       </el-table-column>
       <el-table-column sortable align="center" label="排序" prop="sort">
         <template slot-scope="scope">
-          <el-input-number v-model="scope.row.sort"  :step=5 step-strictly></el-input-number>
+          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
         </template>
       </el-table-column>
       <el-table-column sortable prop="url" label="菜单路由" align="center"></el-table-column>
@@ -68,7 +76,7 @@
             
           >编辑</el-button>
            <el-button
-           @click="deleteUser(scope)"
+           @click="deleteMenu(scope)"
             type="text"
             size="medium"
            
@@ -79,7 +87,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
+   
     <br />
     <br />
 <add-navigation :show="addNavigationFlag" title="添加导航信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
@@ -96,7 +104,6 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddNavigation from "./addNavigation.vue";
-import Pagination from "../../components/Pagination";
 
 export default {
   inject: ["reload"],
@@ -124,13 +131,6 @@ export default {
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
-      formInline: {
-        page: 1,
-        limit: 10,
-        varLable: "",
-        varName: "",
-        token: localStorage.getItem("logintoken")
-      },
       pageparm: {
         currentPage: 1,
         pageSize: 10,
@@ -144,60 +144,101 @@ export default {
     }
   },
   created() {
-    this.search(this.formInline);
+    this.search();
   },
   methods: {
-    //分页赋值
-    callFather(parm) {
-      this.formInline.page = parm.currentPage;
-      this.formInline.limit = parm.pageSize;
-      this.search(this.formInline);
-    },
 //查询方法
     search: function(parameter) {
       let params = {
-        name: this.name,
-        page: this.formInline.page,
-        size: this.formInline.limit
+        name: this.name
       };
       api
         .testAxiosGet(ApiPath.url.findMenuByName, params)
         .then(res => {
-          let code = res.status;
+          let code = res.status
           if (code == "0") {
-          //  alert(JSON.stringify(res.data.content))
-           this.tableData = res.data.content;
-            this.pageparm.currentPage = res.data.number + 1;
-            this.pageparm.pageSize = res.data.size;
-            this.pageparm.total = res.data.totalElements;
-
-          } else {
-          }
+            let parent = [];
+            let children = [];
+            for (let i = 0; i < res.data.length; i++) {
+              if (res.data[i]["level"] == 0) {
+                parent.push(res.data[i]);      
+              } else {
+                children.push(res.data[i]);
+              }
+            }
+           let child = [];
+           //遍历顶层目录，挂载子菜单
+           for (let j = 0; j < parent.length; j++) {
+          
+              for (let k = 0; k < children.length; k++) {
+              
+                if (parent[j]["id"] == children[k]["parentId"]) {
+                   child.push(children[k]);
+                   
+                }
+                parent[j]["children"] = child;
+                  
+              }
+              child = [];
+            }
+          //遍历children，挂载更次级菜单
+              for (let j = 0; j < children.length; j++) {
+          
+              for (let k = 0; k < children.length; k++) {
+              
+                if (children[j]["id"] == children[k]["parentId"]) {
+                   child.push(children[k]);
+                   
+                }
+                children[j]["children"] = child;
+                  
+              }
+              child = [];
+            }
+            this.tableData = parent;
+            
+          } 
         })
         .catch(function(error) {
         });
     },
+    //重置
+    resetForm(search) {
+      //this.$refs['searchForm'].resetFields()
+      this.name = "";
+      this.search();
+    },
+    //修改菜单排序
+    sortChange: function(scope) {
+      let params = {
+        id: scope.row.id,
+        sort: scope.row.sort
+      };
+      api
+        .testAxiosGet(ApiPath.url.changeMenuSort, params)
+        .then(res => {
+           this.$message.success(res.message);
+          // this.reload();
+        })
+        .catch(function(error) {});
+    },
     //switch开关
-    navigationEnable: function(scope) {
+    enableMenu: function(scope) {
       let params = {
         id: scope.row.id,
         status: scope.row.status
       };
       api
-        .testAxiosGet(ApiPath.url.navigationEnable, params)
+        .testAxiosGet(ApiPath.url.enableMenu, params)
         .then(res => {
-          let code = res.state;
-          if (code == "0") {
             this.$message.success(res.message);
-          } else {
-            this.$message.success(res.message);
-          }
           // this.reload();
         })
         .catch(function(error) {});
     },
-    deleteNavigation: function(scope) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+    //删除菜单
+    deleteMenu: function(scope) {
+      this.$confirm("此操作将永久删除该菜单, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -206,7 +247,7 @@ export default {
           let params = {
             id: scope.row.id
           };
-          api.testAxiosGet(ApiPath.url.deleteNavigation, params).then(res => {
+          api.testAxiosGet(ApiPath.url.deleteMenu, params).then(res => {
             let code = res.status;
 
             if (code == "0") {
@@ -216,7 +257,7 @@ export default {
               });
               this.reload();
             } else {
-              this.$message.success(res.message);
+              this.$message.error(res.message);
             }
           });
         })
@@ -267,22 +308,6 @@ export default {
     save() {
       this.$emit("save", this.transData);
     },
-    deleteRuleTag(scope) {
-      let tagCode = scope.row.tagCode;
-      let params = {
-        tagcode: tagCode
-      };
-      api.testAxiosPost(ApiPath.url.deleteRuleTag, params).then(res => {
-        console.log(res);
-        let code = res.code;
-        if (code == "success") {
-          alert("删除成功");
-          this.$router.push("ruleTag");
-        } else {
-          alert(res.message);
-        }
-      });
-    },
     updateRuleTagStatus(scope) {
       let tagcode = scope.row.tagCode;
       api.testAxiosPost(ApiPath.url.updateRuleTagStatus, tagCode).then(res => {
@@ -297,8 +322,7 @@ export default {
     }
   },
   components: {
-    AddNavigation,
-    Pagination
+    AddNavigation
   }
 };
 </script>
