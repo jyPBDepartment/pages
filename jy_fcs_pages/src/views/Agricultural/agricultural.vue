@@ -27,14 +27,14 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-button type="warning" @click="search" size="small" icon="el-icon-search" class="hright" >查询</el-button>
+      <el-button type="warning" @click="search" size="small" icon="el-icon-search" class="height" >查询</el-button>
       <el-button type="info" @click="resetRuleTag(search)" size="small" icon="el-icon-close" class="height">重置</el-button>
     </el-form>
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border style="width: 100%;" highlight-current-row>
-      <el-table-column type="index" label="序号" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="name" label="标题名称" align="center" style="width:40px;"></el-table-column>
+      <el-table-column type="index" label="序号" align="center" ></el-table-column>
+      <el-table-column sortable prop="name" label="标题名称" align="center"></el-table-column>
       <el-table-column
         sortable
         prop="descrip"
@@ -77,7 +77,7 @@
       <el-table-column sortable prop="sellingArea" label="出售区域" align="center"></el-table-column>
       <el-table-column sortable prop="contactsUser" label="联系人" align="center"></el-table-column>
       <el-table-column sortable prop="contactsPhone" label="联系方式" align="center"></el-table-column>
-      <el-table-column sortable prop="url" label="图片" align="center" style="width:120px">
+      <el-table-column sortable prop="url" label="图片" align="center" style="width:140px">
         <template slot-scope="scope">
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
         </template>

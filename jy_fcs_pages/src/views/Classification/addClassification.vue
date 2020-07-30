@@ -141,8 +141,7 @@ export default {
     beforeClose: function() {
       this.close();
     }
-   }
-    
+   }    
 };
 </script>
 
