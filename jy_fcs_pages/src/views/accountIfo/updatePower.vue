@@ -11,7 +11,7 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :label-position="labelPosition">
+      <el-form :label-position="labelPosition" label-width="100px">
         <template>
           <el-transfer
             v-model="accountInfoForm"
@@ -35,6 +35,7 @@
 <script>
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import aes from "@/util/aes";
 export default {
   inject: ["reload"],
   props: {
@@ -53,12 +54,16 @@ export default {
 
   data() {
     return {
+      // id:"",
       labelPosition: "right",
       accountInfoForm: [],
       // data: [],
       // value: [],
       localShow: this.show,
       jurIdOptions: [],
+      accountId: "",
+      accountInfoOld: [],
+      jurCodel: "",
     };
   },
   watch: {
@@ -66,6 +71,9 @@ export default {
       this.localShow = val;
     },
     transPowerId(val) {
+      this.accountInfoOld = [];
+      this.accountInfoForm = [];
+      this.accountId = val;
       let params = {
         id: val,
       };
@@ -73,6 +81,9 @@ export default {
       api.testAxiosGet(ApiPath.url.findAccountId, params).then((res) => {
         let code = res.status;
         if (code == "0") {
+
+          console.log(res.data1.length)
+          console.log(res.data.length)
           let initAllJurisdiction = [];
           for (let i = 0; i < res.data1.length; i++) {
             initAllJurisdiction.push({
@@ -86,27 +97,67 @@ export default {
             initSelectJurisdiction.push(res.data[i]["jurCodel"]);
           }
           this.accountInfoForm = initSelectJurisdiction;
+
+          this.accountInfoOld = initSelectJurisdiction;
         }
       });
     },
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
-    updateAccountInfo: function () {
-        let params = {
-          accountInfoEntity: this.accountInfoForm
-        };
-        //修改用户信息
-        api.testAxiosGet(ApiPath.url.updatePower, params).then(res => {
-          let code = res.status;
-            if(code == "0") {
-              this.$message.success(res.message);
-              this.close();
-              this.reload();
-            }
-        });
-        // this.accountInfoForm.updateUser =localStorage.getItem("userInfo");
+    updateAccountInfo() {
+      let addItem = [];
+      let deleteItem = [];
+      // 原数据
+      // this.accountInfoOld;
+      // 当前数据
+      // this.accountInfoForm;
+
+      console.log("元数据" + this.accountInfoOld);
+      console.log("结果数据" + this.accountInfoForm);
+      // 1.处理数据
+      let add = []; // 中间容器接收遍历数据
+      let delet = [];
+      for (let i = 0; i <= this.accountInfoForm.length; i++) {
+        for (let j = 0; j <= this.accountInfoOld.length; j++) {
+          // 如果不相等，证明是新增
+          if (this.accountInfoForm[i] != this.accountInfoOld[j]) {
+            add.push(this.accountInfoForm[i]);
+          }
+        }
+      }
+
+      for (let m = 0; m < this.accountInfoOld.length; m++) {
+        for (let n = 0; n < this.accountInfoForm.length; n++) {
+          // 如果不相等，证明是删除
+          if (this.accountInfoOld[m] != this.accountInfoForm[n]) {
+            delet.push(this.accountInfoOld[m]);
+          }
+        }
+      }
+
+      deleteItem = delet;
+      addItem = add;
+      console.log("新增结果：" + addItem);
+      console.log("删除结果：" + deleteItem);
+      let params = {
+        accountId: this.accountId,
+        // jurCodel:aes.encrypt(JSON.stringify(deleteItem.jurCodel)),
+        addItem: aes.encrypt(JSON.stringify(addItem)),
+        deleteItem: aes.encrypt(JSON.stringify(deleteItem)),
+      };
+      // console.log(params),
+      // console.log(this.accountId),
+      // console.log(JSON.stringify(this.accountInfoForm)),
+      //修改用户信息
+      api.testAxiosGet(ApiPath.url.updateAccountPower, params).then((res) => {
+        let code = res.status;
+        if (code == "0") {
+          this.$message.success(res.message);
+          this.close();
+          this.reload();
+        }
+      });
     },
     close: function () {
       this.$emit("close");

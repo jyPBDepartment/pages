@@ -21,6 +21,12 @@ const url = {
   //账户修改
   findAccountInfoId: URLHost + '/accountInfo/findById',
   updateAccountInfo: URLHost + '/accountInfo/update',
+  //关联权限修改
+  updateAccountPower:URLHost+'/accountInfo/updatePower',
+  //关联权限删除
+  deletePower:URLHost+'/accountInfo/deletePower',
+  //查找关联表id
+  findId:URLHost+'/accountInfo/findId',
   //关键字管理
   keyWordSearch: URLHost + '/keyWord/findByName',
   //关键字添加

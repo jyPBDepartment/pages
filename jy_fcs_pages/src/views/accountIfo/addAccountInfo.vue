@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="30%"
+    width="50%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -137,7 +137,6 @@ export default {
         this.$alert("请输入正确的手机号！", "提示", {
           confirmButtonText: "确定",
         });
-
         this.editForm.phone = "";
       }
     },

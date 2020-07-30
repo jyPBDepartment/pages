@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="35%"
+    width="45%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -111,7 +111,6 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
         this.formOld.passWord = this.form.password;
-        console.log(this.formOld)
           let params={ 
              accountInfoEntity: this.formOld,
            }

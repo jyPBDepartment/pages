@@ -3,26 +3,25 @@
   <div>
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>账户管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>圈子管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="搜索："></el-form-item>
       <el-form-item label="名称">
-        <el-input size="small" v-model="name" placeholder="输入账户名称"></el-input>
+        <el-input size="small" v-model="name" placeholder="输入名称"></el-input>
       </el-form-item>
       <el-form-item label="发布人">
         <el-input size="small" v-model="createUser" placeholder="输入发布人"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search">查询</el-button>
         <el-button
-          size="medium"
-          type="text"
+          size="small"
+          type="info"
           icon="el-icon-close"
           @click="resetForm('search')"
-          class="small"
         >重置</el-button>
       </el-form-item>
     </el-form>
@@ -38,7 +37,7 @@
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column sortable prop="name" label="标题名称" align="center"></el-table-column>
-      <el-table-column sortable prop="code" label="内容" align="center"></el-table-column>
+      <el-table-column sortable prop="code" label="内容" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column sortable prop="parentCode" label="分类id" align="center"></el-table-column>
       <el-table-column sortable prop="author" label="作者" align="center"></el-table-column>
       <el-table-column sortable prop="auditStatus" label="审核状态" align="center">
@@ -76,8 +75,8 @@
         <template slot-scope="scope">
            <el-button
            @click="openUpdatePostInfo(scope)"
-            type="text"
-            size="medium"
+            type="success"
+            size="small"
             icon="el-icon-edit"
             class="up"
           >查看详情</el-button>
@@ -243,55 +242,18 @@ export default {
 .userPostInfo {
   width: 100%;
 }
-.template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
+</style>
+
+<style>
+.el-tooltip__popper {
+  max-width: 300px;
+  font-size: 14px;
+  background: #84c1ff !important;
 }
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
+.el-tooltip__popper[x-placement^="top"] .popper__arrow {
+  border-top-color: #84c1ff;
 }
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.find {
-  width: 82px;
-  background-color:#e6a23c;
-  color: #fff;
-  border-color: #e6a23c;
-  font-size: 12px;
-}
-.small {
-  width: 82px;
-  background-color: #909399;
-  border-color: #909399;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.up {
-  width: 82px;
-  margin-top: 4px;
-  margin-right: 20px;
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
+.el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
+  border-top-color: pink;
 }
 </style>
