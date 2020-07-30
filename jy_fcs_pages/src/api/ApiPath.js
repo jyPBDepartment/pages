@@ -21,12 +21,6 @@ const url = {
   //账户修改
   findAccountInfoId: URLHost + '/accountInfo/findById',
   updateAccountInfo: URLHost + '/accountInfo/update',
-  //关联权限修改
-  updateAccountPower:URLHost+'/accountInfo/updatePower',
-  //关联权限删除
-  deletePower:URLHost+'/accountInfo/deletePower',
-  //查找关联表id
-  findId:URLHost+'/accountInfo/findId',
   //关键字管理
   keyWordSearch: URLHost + '/keyWord/findByName',
   //关键字添加
@@ -128,13 +122,13 @@ findAllClass:URLHost+'/classification/findSubClassiList',
    //看图识病删除
    deleteCaseInfo:URLHost+'/caseInfo/delete',
    //看图识病添加
-    findAllCaseInfo:URLHost+'/classification/findSubClassiList',
+    findAllCaseInfo:URLHost+'/classification/findCaseList',
     findAllCase:URLHost+'/classification/findDipList',
     saveCaseInfo:URLHost+'/caseInfo/save',
     //看图识病状态
     caseInfoEnable:URLHost+'/caseInfo/enable',
     //看图识病修改下拉列表
-    findAllUpdateCaseInfo:URLHost+'/classification/findSubClassiList',
+    findAllUpdateCaseInfo:URLHost+'/classification/findCaseList',
     findAllUpdateCase:URLHost+'/classification/findDipList',
     //看图识病修改前查询
     caseInfoFindById:URLHost+'/caseInfo/findById',
@@ -146,14 +140,6 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     findMenuByName:URLHost+'/menu/findByName',
     //角色管理
     roleSearch:URLHost+'/role/findByName',
-    //角色保存
-    saveRole:URLHost+'/role/save',
-    //角色删除
-    deleteRole:URLHost+'/role/delete',
-    //角色启用、禁用
-    enableRole:URLHost+'/role/enable',
-    //根据id查询角色
-    findRoleById:URLHost+'/role/findById',
 }
 export default {
   url
