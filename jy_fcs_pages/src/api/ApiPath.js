@@ -125,9 +125,9 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     findAllCaseInfo:URLHost+'/classification/findSubClassiList',
     findAllCase:URLHost+'/classification/findDipList',
     saveCaseInfo:URLHost+'/caseInfo/save',
-    //看图识病状态
+   //看图识病状态
     caseInfoEnable:URLHost+'/caseInfo/enable',
-    //看图识病修改下拉列表
+   //看图识病修改下拉列表
     findAllUpdateCaseInfo:URLHost+'/classification/findSubClassiList',
     findAllUpdateCase:URLHost+'/classification/findDipList',
     //看图识病修改前查询
