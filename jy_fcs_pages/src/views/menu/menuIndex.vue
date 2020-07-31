@@ -34,17 +34,21 @@
       row-key="id"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column sortable prop="name" label="菜单名称" align="center"></el-table-column>
-      <el-table-column sortable prop="icon" label="菜单图标" align="center"></el-table-column>
-      <el-table-column sortable label="类型" align="center">
+      <el-table-column  prop="name" label="菜单名称" align="center" width="300px"></el-table-column>
+      <el-table-column  prop="icon" label="菜单图标" align="center" width="100px">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.type == 1">目录</el-tag>
-          <el-tag v-if="scope.row.type == 2" type="success">菜单</el-tag>
-          <el-tag v-if="scope.row.type == 3" type="info">按钮</el-tag>
+          <i :class="scope.row.icon"></i>
+        </template>
+      </el-table-column>
+      <el-table-column  label="类型" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.menuType == 1">目录</el-tag>
+          <el-tag v-if="scope.row.menuType == 2" type="success">菜单</el-tag>
+          <el-tag v-if="scope.row.menuType == 3" type="info">按钮</el-tag>
         </template>
       </el-table-column>
       
-      <el-table-column sortable align="center" label="状态" prop="state">
+      <el-table-column  align="center" label="状态" prop="state">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -56,13 +60,13 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" label="排序" prop="sort">
+      <el-table-column  align="center" label="排序" prop="sort">
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="url" label="菜单路由" align="center"></el-table-column>
-      <el-table-column sortable prop="perssions" label="权限标识" align="center"></el-table-column>
+      <el-table-column  prop="url" label="菜单路由" align="center"></el-table-column>
+      <el-table-column  prop="perssions" label="权限标识" align="center"></el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
            <el-button
@@ -90,8 +94,14 @@
    
     <br />
     <br />
-<add-navigation :show="addNavigationFlag" title="添加导航信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
-
+<add-navigation :show="addNavigationFlag" title="添加菜单信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
+<update-menu
+      :show="updateMenuFlag"
+      :transRoleId="transRoleId"
+      title="修改"
+      @close="closeUpdateRoleDialog"
+      @save="upRole"
+    ></update-menu>
 
     
     </div>
@@ -104,7 +114,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddNavigation from "./addNavigation.vue";
-
+import UpdateMenu from "./updateNavigation.vue";
 export default {
   inject: ["reload"],
   props: {
@@ -123,12 +133,13 @@ export default {
       name: "",
       loading:false,
       transNavigationId: "",
+      transRoleId:"",
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
       addNavigationFlag: false,
-      updateRuleTag: false,
+      updateMenuFlag:false,
       mainBodyCode: "",
       tableData: [],
       pageparm: {
@@ -275,16 +286,18 @@ export default {
         generateType: "gz"
       };
     },
-    openUpdateDialog(scope) {
-      console.log(scope);
-      this.transNavigationId = scope.row.id;
+    openUpdateRole(scope) {
+      this.transRoleId = scope.row.id;
+      this.updateMenuFlag = true;
     },
     saveRuleTag() {
       this.addNavigationFlag = false;
     },
-    
+    upRole(){
+      this.updateMenuFlag = false;
+    },
     modifyRuleTag() {
-      this.updateRuleTag = false;
+      this.updateMenuFlag = false;
     },
     openRuleTag() {
       this.addNavigationFlag = true;
@@ -295,9 +308,8 @@ export default {
     closeRuleTagDialog() {
       this.addNavigationFlag = false;
     },
-    
-    closeModifyRuleTagDialog() {
-      this.updateRuleTag = false;
+    closeUpdateRoleDialog(){
+      this.updateMenuFlag = false;
     },
     beforeClose() {
       this.close();
@@ -322,7 +334,8 @@ export default {
     }
   },
   components: {
-    AddNavigation
+    AddNavigation,
+    UpdateMenu
   }
 };
 </script>

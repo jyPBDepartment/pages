@@ -52,6 +52,7 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import aes from "@/utils/aes.js";
 export default {
   inject: ["reload"],
   props: {
@@ -103,7 +104,7 @@ export default {
       this.saveFlag = true;
       if(this.editForm.name!=""){
         let params = {
-          roleEntity: this.editForm
+          roleEntity: aes.encrypt(JSON.stringify(this.editForm) )
         };
         api.testAxiosGet(ApiPath.url.saveRole, params).then(res => {
           this.$message.success(res.message);
