@@ -48,13 +48,13 @@ export default {
       data: [
         {
             menuid: 0,
-              icon: "el-icon-s-comment",
+              icon: "el-icon-reading",
               menuname: "首页",
               hasThird: "null",
               url: "null",
               menus:[{
                  menuid:  0 - 1,
-              icon: "el-icon-s-comment",
+              icon: "el-icon-s-data",
               menuname: "首页",
               hasThird: "N",
               url: "charts/statistics",
@@ -70,7 +70,7 @@ export default {
           menus: [
              {
               menuid: 1 - 1,
-              icon: "el-icon-eleme",
+              icon: "el-icon-user",
               menuname: "账户管理",
               hasThird: "N",
               url: "accountIfo/AccountInfo",
@@ -78,7 +78,7 @@ export default {
             },
             {
               menuid: 1 - 2,
-              icon: "el-icon-eleme",
+              icon: "el-icon-copy-document",
               menuname: "模块管理",
               hasThird: "N",
               url: "moduleInfo/ModuleInfo",
@@ -86,7 +86,7 @@ export default {
             },
                {
               menuid: 1 - 3,
-              icon: "el-icon-discount",
+              icon: "el-icon-s-check",
               menuname: "权限管理",
               hasThird: "N",
               url: "powerInfo/powerInfo",
@@ -94,7 +94,7 @@ export default {
             },
             {
               menuid: 1 - 4,
-              icon: "el-icon-connection",
+              icon: "el-icon-orange",
               menuname: "分类管理",
               hasThird: "N",
               url: "Classification/classification",
@@ -102,7 +102,7 @@ export default {
             },
                {
               menuid: 1 - 5,
-              icon: "el-icon-mobile-phone",
+              icon: "el-icon-moon-night",
               menuname: "农服管理",
               hasThird: "N",
               url: "Agricultural/agricultural",
@@ -110,7 +110,7 @@ export default {
             },
             {
               menuid: 1 - 6,
-              icon: "el-icon-mobile-phone",
+              icon: "el-icon-moon",
               menuname: "看图识病",
               hasThird: "N",
               url: "CaseInfo/caseInfo",
@@ -168,16 +168,14 @@ export default {
         },
         {
           menuid: 3,
-          icon: "el-icon-menu",
+          icon: "el-icon-chat-round",
           menuname: "圈子管理",
           hasThird: null,
           url: null,
           menus: [
-          
-           
             {
               menuid: 3 - 1,
-              icon: "el-icon-s-custom",
+              icon: "el-icon-chat-line-round",
               menuname: "圈子管理",
               hasThird: "N",
               url: "postInfo/PostInfo",
@@ -185,8 +183,8 @@ export default {
             },
             {
               menuid: 3 - 2,
-              icon: "el-icon-user",
-              menuname: "关键字",
+              icon: "el-icon-key",
+              menuname: "关键词",
               hasThird: "N",
               url: "keyWord/KeyWord",
               menus: null

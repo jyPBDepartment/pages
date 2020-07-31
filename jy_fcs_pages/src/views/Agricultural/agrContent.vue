@@ -90,7 +90,6 @@
         <el-form-item label="购买时间">
           <el-date-picker v-model="agrForm.purchaseDate" type="datetime" readonly></el-date-picker>
         </el-form-item>
-
         <el-form-item label="发布时间">
           <el-date-picker v-model="agrForm.createDate" type="datetime" readonly></el-date-picker>
         </el-form-item>
@@ -107,7 +106,10 @@
           <el-input type="text" v-model="agrForm.status"></el-input>
           <el-alert title="注：0.待审核1.审核通过2.审核拒绝3.预约中4.已完成;拒绝需写拒绝理由！" type="warning"></el-alert>
         </el-form-item>-->
-
+         <!-- <el-radio-group v-model="agrForm.status">
+          <el-radio-button label="1">审核通过</el-radio-button>
+          <el-radio-button label="2">审核驳回</el-radio-button>
+        </el-radio-group> -->
         <el-form-item label="审核拒绝理由">
           <el-input type="textarea" v-model="agrForm.examineReason"></el-input>
         </el-form-item>
@@ -115,7 +117,7 @@
     </slot>
     <span slot="footer">
       <el-button type="success" icon="el-icon-check" @click="updateStatus('1')">审核通过</el-button>
-      <el-button type="danger" icon="el-icon-close" @click="updateStatus('2')">拒绝审核</el-button>
+      <el-button type="danger" icon="el-icon-close" @click="updateStatus('2')">审核驳回</el-button>
       <el-button icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
