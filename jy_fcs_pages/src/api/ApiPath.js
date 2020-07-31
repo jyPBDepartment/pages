@@ -156,6 +156,12 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     deleteMenu:URLHost+'/menu/delete',
     //获取菜单树形图
     findMenuTreeByName:URLHost+'/menu/findTree',
+    //菜单保存
+    saveMenu:URLHost+'/menu/save',
+    //根据主键菜单
+    findMenuById:URLHost+'/menu/findById',
+    //删除菜单
+    deleteMenu:URLHost+'/menu/delete',
 }
 export default {
   url
