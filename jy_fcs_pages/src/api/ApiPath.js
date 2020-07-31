@@ -154,6 +154,8 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     enableMenu:URLHost+'/menu/enable',
     //菜单删除
     deleteMenu:URLHost+'/menu/delete',
+    //获取菜单树形图
+    findMenuTreeByName:URLHost+'/menu/findTree',
 }
 export default {
   url
