@@ -29,7 +29,7 @@
         </el-form-item>
         <el-form-item label="模块图片" prop="imgUrl">
           <el-upload
-            style="width:81%"
+            style="width:80%"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -41,7 +41,7 @@
             :on-exceed="uploadExceed"
           >
             <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -92,7 +92,7 @@ export default {
       localShow: this.show,
 
       rules: {
-        name: [{ required: true, message: "请输入账户名称", trigger: "blur" }],
+        name: [{ required: true, message: "请输入模块名称", trigger: "blur" }],
       },
     };
   },

@@ -5,29 +5,19 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="50%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form
-        :rules="rules"
-        ref="moduleInfoForm"
-        :model="moduleInfoForm"
-        label-width="120px"
-        :label-position="labelPosition"
-      >
-        <el-form-item label="名称" prop="name">
-          <el-input
-            type="text"
-            v-model="moduleInfoForm.name"
-            placeholder="请输入名称"
-            style=" width:70%;"
-          ></el-input>
+      <el-form :rules="rules" ref="moduleInfoForm" :model="moduleInfoForm" label-width="100px" :label-position="labelPosition">
+        <el-form-item label="模块名称" prop="name">
+          <el-input size="small" type="text" v-model="moduleInfoForm.name" placeholder="请输入名称" style=" width:75%;"></el-input>
         </el-form-item>
-        <el-form-item label="图片" prop="imgUrl">
+        <el-form-item label="模块图片" prop="imgUrl">
           <el-upload
+            style="width:75%"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -38,12 +28,8 @@
             :limit="limit"
             :on-exceed="uploadExceed"
           >
-            <el-button
-              size="small"
-              type="primary"
-              style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px"
-            >点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
+            <div slot="tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -104,7 +90,7 @@ export default {
       },
       //rules表单验证
       rules: {
-        name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+        name: [{ required: true, message: "请输入模块名称", trigger: "blur" }],
       },
     };
   },
@@ -196,20 +182,5 @@ export default {
 }
 .el-button {
   border: none;
-
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-
-  margin: 4px 2px;
-  cursor: pointer;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-}
-
-.el-button:hover {
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 </style>

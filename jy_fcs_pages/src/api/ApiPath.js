@@ -21,6 +21,12 @@ const url = {
   //账户修改
   findAccountInfoId: URLHost + '/accountInfo/findById',
   updateAccountInfo: URLHost + '/accountInfo/update',
+  //关联权限修改
+  updateAccountPower:URLHost+'/accountInfo/updatePower',
+  //权限设置移除
+  deleteAccountPower:URLHost+'/accountInfo/deletePower',
+  //查找关联表id
+  findId:URLHost+'/accountInfo/findId',
   //关键字管理
   keyWordSearch: URLHost + '/keyWord/findByName',
   //关键字添加
@@ -125,9 +131,9 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     findAllCaseInfo:URLHost+'/classification/findSubClassiList',
     findAllCase:URLHost+'/classification/findDipList',
     saveCaseInfo:URLHost+'/caseInfo/save',
-   //看图识病状态
+    //看图识病状态
     caseInfoEnable:URLHost+'/caseInfo/enable',
-   //看图识病修改下拉列表
+    //看图识病修改下拉列表
     findAllUpdateCaseInfo:URLHost+'/classification/findSubClassiList',
     findAllUpdateCase:URLHost+'/classification/findDipList',
     //看图识病修改前查询
