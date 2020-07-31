@@ -24,7 +24,7 @@
       
        
         <el-form-item label="图片" prop="imgUrl">
-           <el-text  class="required">*</el-text>
+          <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
             style="width:81%;margin-top:-38px;"
             class="upload-demo"
@@ -219,7 +219,7 @@ export default {
 
     //添加分类方法
     saveCaseInfo(editData) {
-      if(this.editForm.name !="" && this.imgUrl != "" && this.editForm.classiDipCode !="" && this.editForm.classiDipCode !="" && this.editForm.auditStatus !=""){
+      if(this.editForm.name !="" && this.imgUrl != "" && this.editForm.classiCode !="" && this.editForm.classiDipCode !="" && this.editForm.auditStatus !=""){
       this.$refs[editData].validate((valid) => {
      
         if (valid) {

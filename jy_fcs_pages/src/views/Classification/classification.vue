@@ -12,9 +12,7 @@
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
        
-      <el-form-item label="分类名称" >
-        <el-input v-model="name" type="text" placeholder="请输入分类名称" class="el-input el-input--small" clearable ></el-input>
-      </el-form-item>
+    
        <el-form-item label="分类编码" >
         <el-input v-model="code" type="text" placeholder="请输入分类编码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
@@ -31,8 +29,9 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
     
+      <el-table-column sortable prop="code" label="分类编码" align="center" style="width:40px;"></el-table-column>
      <el-table-column sortable prop="name" label="分类名称" align="center" style="width:40px;"></el-table-column>
-     <el-table-column sortable prop="code" label="分类编码" align="center" style="width:40px;"></el-table-column>
+   
       <!--switch开关（表单）-->
         <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
           <template slot-scope="scope">
@@ -102,7 +101,7 @@ export default {
 
   data() {
     return {
-      name: "",
+     
       code:"",
       updateClassificationFlag: false,
       
@@ -169,7 +168,7 @@ export default {
 //查询方法
       search: function(parameter) {
       let params = {
-        name: this.name,
+      
         code:this.code,
         page: this.formInline.page,
         size: this.formInline.limit
@@ -221,37 +220,29 @@ export default {
       this.updateClassificationFlag = false;
     },
     updateClassification: function() {},
-    
-    deleteClassification: function(scope) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+    //删除
+    deleteClassification(scope) {
+      this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          let params = {
-            id: scope.row.id
-          };
-          api.testAxiosGet(ApiPath.url.deleteClassification, params).then(res => {
-            let code = res.state;
-
-            if (code == "0") {
-              this.$message({
-                type: "success",
-                message: "删除成功!"
-              });
-              this.reload();
-            } else {
-              this.$message.success(res.message);
-            }
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
+        type: "warning",
+      }).then(() => {
+        let params = {
+          id: scope.row.id,
+        };
+        api.testAxiosGet(ApiPath.url.deleteClassification, params).then((res) => {
+          let code = res.status;
+          if (code == "0") {
+            this.$message.success(res.message);
+            this.reload();
+          } else {
+            this.$alert("删除失败，请先解除关联关系！", "提示", {
+              confirmButtonText: "确定",
+            });
+            this.reload();
+          }
         });
+      });
     },
     onSubmit: function() {
       let params = {
@@ -277,9 +268,9 @@ export default {
     },
     
     resetRuleTag(search) {
-      this.name = "";
+    
       this.code="";
-     
+     location.reload();
     },
     closeRuleTagDialog() {
       this.addClassificationFlag = false;

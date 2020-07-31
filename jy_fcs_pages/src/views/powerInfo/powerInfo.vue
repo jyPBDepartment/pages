@@ -49,23 +49,8 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
+     <el-table-column sortable prop="jurCode" label="权限编码" align="center"></el-table-column>
       <el-table-column sortable prop="jurName" label="权限名称" align="center" style="width:40px;"></el-table-column>
-      <!-- <el-table-column sortable prop="subId" label="上级分类" align="center"></el-table-column> -->
-
-      <el-table-column sortable prop="jurCode" label="权限编码" align="center"></el-table-column>
-      <!-- switch开关（表单）
-      <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.auditStatus"
-            active-value="1"
-            inactive-value="0"
-            active-color="rgb(19, 206, 102)"
-            inactive-color="rgb(255, 73, 73)"
-            @change="powerInfoEnable(scope)"
-          ></el-switch>
-        </template>
-      </el-table-column>-->
       <!--switch开关（表单）-->
       <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
         <template slot-scope="scope">
@@ -306,6 +291,7 @@ export default {
     resetRuleTag(search) {
       this.jurName = "";
       this.jurCode = "";
+      location.reload();
     },
     closeRuleTagDialog() {
       this.addPowerInfoFlag = false;

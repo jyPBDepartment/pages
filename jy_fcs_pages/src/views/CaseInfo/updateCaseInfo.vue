@@ -23,7 +23,7 @@
           <el-input type="text" v-model="caseInfoForm.name" placeholder="请输入名称" style=" width:70%;"></el-input>
         </el-form-item>
         <el-form-item label="图片" prop="imgUrl">
-           <el-text  class="required">*</el-text>
+          <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
            style="width:81%;margin-top:-38px;"
             class="upload-demo"
@@ -193,7 +193,7 @@ export default {
     //下拉列表显示1
     findContext: function () {
       let params = {
-        cropsTypeCode: this.caseInfoForm.cropsTypeCode,
+        classiCode: this.caseInfoForm.classiCode,
       };
       api
         .testAxiosGet(ApiPath.url.findAllUpdateCaseInfo, params)
@@ -212,7 +212,7 @@ export default {
     //下拉列表显示2
     findContexta: function () {
       let params = {
-        dipTypeCode: this.caseInfoForm.dipTypeCode,
+        classiDipCode: this.caseInfoForm.classiDipCode,
       };
       api
         .testAxiosGet(ApiPath.url.findAllUpdateCase, params)
