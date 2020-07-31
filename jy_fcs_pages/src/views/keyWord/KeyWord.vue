@@ -1,30 +1,28 @@
-
 <template>
   <div>
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>关键字管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>关键词管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="搜索："></el-form-item>
-      <el-form-item label="关键字名称">
-        <el-input size="small" v-model="name" placeholder="输入关键字名称"></el-input>
+      <el-form-item label="关键词名称">
+        <el-input size="small" v-model="name" placeholder="输入关键词名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search">查询</el-button>
         <el-button
-          size="medium"
-          type="text"
+          size="small"
+          type="info"
           icon="el-icon-close"
           @click="resetForm('search')"
-          class="small"
         >重置</el-button>
       </el-form-item>
       <br/>
       <el-row>
-      <el-button size="medium" type="text" icon="el-icon-plus" @click="addKeyWords()" class="insert">添加</el-button>
+      <el-button size="small" type="success" icon="el-icon-plus" @click="addKeyWords()">添加</el-button>
       </el-row>
       <br>
     </el-form>
@@ -58,21 +56,19 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" width="200px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateKeyWord(scope)"
-            type="text"
-            size="medium"
+            type="primary"
+            size="small"
             icon="el-icon-edit"
-            class="up"
           >编辑</el-button>
            <el-button
            @click="deleteKeyWord(scope)"
-            type="text"
-            size="medium"
+            type="danger"
+            size="small"
             icon="el-icon-delete"
-            class="del"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -139,14 +135,12 @@ export default {
     UpdateKeyWord,
     Pagination
   },
-
   watch: {},
   mounted() {
   },
   created() {
     this.search(this.formInline);
   },
-
   methods: {
     // 分页插件事件
     callFather(parm) {
@@ -204,7 +198,6 @@ export default {
       }).catch(function(error) {});
       
     },
-
     //显示编辑界面
     openUpdateKeyWord(scope) {
       this.transKeyWordId = scope.row.id;
@@ -223,7 +216,6 @@ export default {
       this.name = "";
       location.reload();
     },
-
     // 删除角色
     deleteKeyWord(scope) {
       this.$confirm("确定要删除吗?", "信息", {
@@ -253,70 +245,5 @@ export default {
 }
 .userKeyWord {
   width: 100%;
-}
-.template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
-}
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.find {
-  width: 82px;
-  background-color:#e6a23c;
-  color: #fff;
-  border-color: #e6a23c;
-  font-size: 12px;
-}
-.small {
-  width: 82px;
-  background-color: #909399;
-  border-color: #909399;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.insert{
-  width: 82px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.up {
-  margin-right: 20px;
-  width: 50px;
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-}
-.el-button.del {
-  width: 50px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
 }
 </style>

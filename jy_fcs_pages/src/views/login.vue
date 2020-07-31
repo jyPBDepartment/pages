@@ -10,52 +10,28 @@
     >
       <h3 class="title">用户登录</h3>
       <el-form-item prop="name">
-        <label>
-          账号
-          <span>:</span>
-        </label>
-        <el-input
-          type="text"
-          v-model="ruleForm.name"
-          auto-complete="off"
-          placeholder="账号"
-          style="width:80%;"
-        ></el-input>
+        <label>账号<span>:</span></label>
+        <el-input type="text" v-model="ruleForm.name" auto-complete="off" placeholder="账号" style="width:80%;"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <label>
-          密码
-          <span>:</span>
-        </label>
-        <el-input
-          type="password"
-          v-model="ruleForm.password"
-          auto-complete="off"
-          placeholder="密码"
-          style="width:80%;"
-        ></el-input>
+        <label>密码<span>:</span></label>
+        <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="密码" style="width:80%;"></el-input>
       </el-form-item>
       <!-- 验证码 -->
       <el-form-item prop="verificationCode">
         <div class="join_formitem">
           <div class="vi">
-            <label>
-              验证码
-              <span>:</span>
-            </label>
+            <label>验证码<span>:</span></label>
             <el-input v-on:keyup.13="submit" type="text" class="top" placeholder="请输入验证码" v-model="verificationCode"></el-input>
           </div>
-          <el-button class="bottom" @click="createCode()" size="mini" >{{checkCode}}</el-button>
-
+          <el-button class="bottom" @click="createCode()" size="mini">{{checkCode}}</el-button>
         </div>
       </el-form-item>
       <el-form-item style="width:100%;">
-        <el-button
-          type="primary"
-          style="width:100%;"
-          @click="submitForm('ruleForm')"
-          @keyup.enter="submitForm('ruleForm')"
-        >登录</el-button>
+        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')" @keyup.enter="submitForm('ruleForm')">登录</el-button>
+      </el-form-item>
+      <el-form-item style="margin-top:-10px;margin-bottom:-5px;" >
+        <el-checkbox v-model="checked" style="color:#a0a0a0;margin-top:-10px;">记住密码</el-checkbox>
       </el-form-item>
     </el-form>
   </div>
@@ -76,22 +52,23 @@ export default {
       rememberpwd: false,
       ruleForm: {
         //username和password默认为空
-        id:"",
-        auditStatus:"",
+        id: "",
+        auditStatus: "",
         name: "",
         password: "",
         code: "",
         randomStr: "",
-        codeimg: ""
+        codeimg: "",
       },
       verificationCode: "",
       checkCode: "",
-      yCode:"",
+      yCode: "",
+      checked: true,
       //rules前端验证
       rules: {
         name: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
-      }
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      },
     };
   },
   // 创建完毕状态(里面是操作)
@@ -100,11 +77,13 @@ export default {
     this.keyupEnter();
     this.createCode();
   },
+  mounted() {
+    this.getCookie();
+  },
   // 里面的函数只有调用才会执行
   methods: {
-    
     keyupEnter() {
-      document.onkeydown = e => {
+      document.onkeydown = (e) => {
         let body = document.getElementsByTagName("body")[0];
         if (
           e.keyCode === 13 &&
@@ -115,23 +94,28 @@ export default {
         }
       };
     },
-
     //登录
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      const self = this;
+      if (self.checked == true) {
+        //传入账号名，密码，和保存天数
+        self.setCookie(self.ruleForm.name, self.ruleForm.password, 7);
+      } else {
+        //清空Cookie
+        self.clearCookie();
+      }
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
-            id:this.ruleForm.id,
-            auditStatus:this.ruleForm.auditStatus,
+            id: this.ruleForm.id,
+            auditStatus: this.ruleForm.auditStatus,
             name: this.ruleForm.name,
-            password: this.ruleForm.password
+            password: this.ruleForm.password,
           };
-          api.testAxiosGet(ApiPath.url.login, params).then(res => {
+          
+          api.testAxiosGet(ApiPath.url.login, params).then((res) => {
             let code = res.status;
-            // if(code == "2"){
-            //   this.$message.error(res.message);
-            // }
-            if (code == "1") {
+            if (code == "0") {
               if (this.verificationCode == this.checkCode) {
                 this.$message.success(res.message);
                 // 测试通道，不为空直接登录
@@ -140,7 +124,9 @@ export default {
                   this.$router.push({ path: "/charts/statistics" });
                 }, 1000);
               } else {
-                this.$alert('验证码输入错误请重新输入！', '提示', {confirmButtonText: '确定',});
+                this.$alert("验证码输入错误请重新输入！", "提示", {
+                  confirmButtonText: "确定",
+                });
               }
             } else {
               this.$message.error(res.message);
@@ -153,10 +139,8 @@ export default {
         }
       });
     },
-
     //  验证码
     createCode() {
-      console.log("进入函数")
       //先清空验证码的输入
       this.yCode = "";
       this.checkCode = "";
@@ -165,7 +149,8 @@ export default {
       var codeLength = 4;
       //随机数
       var random = new Array(
-        0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
+        0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f","g","h","i","j","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+        "k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J"
       );
       for (var i = 0; i < codeLength; i++) {
         //取得随机数的索引（0~35）
@@ -173,11 +158,38 @@ export default {
         //根据索引取得随机数加到code上
         this.yCode += random[index];
       }
-  console.log(this.yCode)
       //把code值赋给验证码
       this.checkCode = this.yCode;
-    }
-  }
+    },
+    // 忘记密码 设置cookie
+    setCookie(c_name, c_pwd, exdays) {
+      var exdate = new Date(); //获取时间
+      exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
+      //字符串拼接cookie
+      window.document.cookie =
+        "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
+      window.document.cookie =
+        "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
+    },
+     getCookie: function() {
+      if (document.cookie.length > 0) {
+        var arr = document.cookie.split("; "); //这里显示的格式需要切割一下自己可输出看下
+        for (var i = 0; i < arr.length; i++) {
+          var arr2 = arr[i].split("="); //再次切割
+          //判断查找相对应的值
+          if (arr2[0] == "userName") {
+            this.ruleForm.name = arr2[1]; //保存到保存数据的地方
+          } else if (arr2[0] == "userPwd") {
+            this.ruleForm.password = arr2[1];
+          }
+        }
+      }
+    },
+     //清除cookie
+    clearCookie: function() {
+      this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
+    },
+  },
 };
 </script>
 
