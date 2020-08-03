@@ -168,6 +168,8 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     findMenuById:URLHost+'/menu/findById',
     //删除菜单
     deleteMenu:URLHost+'/menu/delete',
+    //根据角色ID查询菜单挂载信息
+    findRelaByRoleId:URLHost+'/menu/findRelaByRole',
 }
 export default {
   url
