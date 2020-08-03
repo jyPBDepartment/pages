@@ -24,7 +24,7 @@
         </el-menu-item>
       </div>
       <div v-else>
-        <el-submenu index="">
+        <el-submenu :index="''+menu.menuid">
           <template slot="title">
             <i :class="menu.icon"></i>
             <span>{{menu.menuname}}</span>
