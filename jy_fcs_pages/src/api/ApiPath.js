@@ -170,6 +170,8 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     deleteMenu:URLHost+'/menu/delete',
     //根据角色ID查询菜单挂载信息
     findRelaByRoleId:URLHost+'/menu/findRelaByRole',
+    //保存角色授权
+    saveRelaFromRole:URLHost+'/menu/saveRelation',
 }
 export default {
   url
