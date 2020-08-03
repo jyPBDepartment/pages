@@ -57,23 +57,26 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" width="400px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateRole(scope)"
             type="text"
             size="medium"
-          
             icon="el-icon-edit"
             class="up"
-
-            
           >编辑</el-button>
+          <el-button
+          @click="openAddAuth(scope)"
+            type="text"
+            size="large"
+            icon="el-icon-edit"
+            class="auth"
+          >角色授权</el-button>
            <el-button
            @click="deleteUser(scope)"
             type="text"
             size="medium"
-           
             icon="el-icon-delete"
             class="del"
           >删除</el-button>
@@ -84,6 +87,7 @@
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
     <add-role :show="addRole" title="添加" @close="closeRoleDialog" @save="saveRole"></add-role>
+    <add-auth :transAuthId="transAuthId" :show="addAuth" title="角色授权" @close="closeAuthDialog" @save="saveAuth"></add-auth>
     <update-role
       :show="updateRoleFlag"
       :transRoleId="transRoleId"
@@ -110,6 +114,7 @@ import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import AddRole from "./addRole";
 import UpdateRole from "./updateRole";
+import AddAuth from "./addAuth";
 export default {
   inject: ["reload"],
   data() {
@@ -121,8 +126,10 @@ export default {
       editFormVisible: false, //控制编辑页面显示与隐藏
       menuAccessshow: false, //控制数据权限显示与隐藏
       addRole: false,
+      addAuth:false,
       updateRoleFlag: false,
       transRoleId: "",
+      transAuthId:"",
       formInline: {
         page: 1,
         limit: 10,
@@ -148,6 +155,7 @@ export default {
   // 注册组件
   components: {
     AddRole,
+    AddAuth,
     UpdateRole,
     Pagination
   },
@@ -187,8 +195,18 @@ export default {
     saveRole() {
       this.addRole = false;
     },
+    saveAuth(){
+      this.addAuth = false;
+    },
+    closeAuthDialog(){
+      this.addAuth = false;
+    },
     closeRoleDialog() {
       this.addRole = false;
+    },
+    openAddAuth(scope){
+      this.transAuthId = scope.row.id;
+      this.addAuth = true;
     },
     addRoles() {
       this.addRole = true;
@@ -324,6 +342,12 @@ export default {
   color: white;
   font-size: 12px;
 }
-
+.el-button.auth {
+  width: 100px;
+  background-color: #67c23a;
+  border-color: #67c23a;
+  color: white;
+  font-size: 12px;
+}
 
 </style>
