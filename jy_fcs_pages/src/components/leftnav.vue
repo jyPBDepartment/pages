@@ -16,18 +16,28 @@
     <div class="logobox">
       <img class="logoimg" src="../assets/img/logo.png" alt />
     </div>
-    <el-submenu v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
-      <template slot="title">
-        <i :class="menu.icon"></i>
-        <span>{{menu.menuname}}</span>
-      </template>
-      <el-menu-item-group>
-        <el-menu-item v-for="chmenu in menu.menus" :index="'/'+chmenu.url" :key="chmenu.menuid">
-          <i :class="chmenu.icon"></i>
-          <span>{{chmenu.menuname}}</span>
+    <div v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
+      <div v-if="menu.only=='Y'">
+        <el-menu-item :index="menu.url">
+          <i :class="menu.icon"></i>
+          <span slot="title">{{menu.menuname}}</span>
         </el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
+      </div>
+      <div v-else>
+        <el-submenu index="">
+          <template slot="title">
+            <i :class="menu.icon"></i>
+            <span>{{menu.menuname}}</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item v-for="chmenu in menu.menus" :index="'/'+chmenu.url" :key="chmenu.menuid">
+              <i :class="chmenu.icon"></i>
+              <span>{{chmenu.menuname}}</span>
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+      </div>
+    </div>
   </el-menu>
 </template>
 <script>
@@ -50,18 +60,10 @@ export default {
           menuid: 0,
           icon: "el-icon-reading",
           menuname: "首页",
-          hasThird: "null",
-          url: "null",
-          menus: [
-            {
-              menuid: 0 - 1,
-              icon: "el-icon-s-data",
-              menuname: "首页",
-              hasThird: "N",
-              url: "charts/statistics",
-              menus: null,
-            },
-          ],
+          hasThird: "N",
+          url: "charts/statistics",
+          menus: null,
+          only: "Y"
         },
         {
           menuid: 1,
@@ -69,6 +71,7 @@ export default {
           menuname: "门户管理",
           hasThird: null,
           url: null,
+          only: "N",
           menus: [
             {
               menuid: 1 - 1,
@@ -126,6 +129,7 @@ export default {
           menuname: "基础管理",
           hasThird: null,
           url: null,
+          only: "N",
           menus: [
             {
               menuid: 2 - 1,
@@ -168,6 +172,7 @@ export default {
           menuname: "圈子管理",
           hasThird: null,
           url: null,
+          only: "N",
           menus: [
             {
               menuid: 3 - 1,
