@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="43%"
+    width="50%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -22,15 +22,14 @@
             :data="jurIdOptions"
             :titles="['可添加权限','已添加权限']"
           >
-          <el-button type="primary" style="margin-left:60px" slot="left-footer" @click="updateAccountInfo" size="small">添加权限</el-button>
-          <el-button type="primary" style="margin-left:60px" slot="right-footer" @click="deleteAccountInfo" size="small">移除权限</el-button>
           </el-transfer>
         </template>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="submit">保存</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -43,15 +42,15 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
       type: String,
-      default: "对话框",
+      default: "对话框"
     },
     transPowerId: {
-      type: String,
-    },
+      type: String
+    }
   },
 
   data() {
@@ -62,7 +61,7 @@ export default {
       jurIdOptions: [],
       accountId: "",
       accountInfoOld: [],
-      jurCodel: "",
+      jurCodel: ""
     };
   },
   watch: {
@@ -74,17 +73,17 @@ export default {
       this.accountInfoForm = [];
       this.accountId = val;
       let params = {
-        id: val,
+        id: val
       };
       //根据Id查询用户信息
-      api.testAxiosGet(ApiPath.url.findAccountId, params).then((res) => {
+      api.testAxiosGet(ApiPath.url.findAccountId, params).then(res => {
         let code = res.status;
         if (code == "0") {
           let initAllJurisdiction = [];
           for (let i = 0; i < res.data1.length; i++) {
             initAllJurisdiction.push({
               value: res.data1[i]["id"],
-              desc: res.data1[i]["jurName"],
+              desc: res.data1[i]["jurName"]
             });
           }
           this.jurIdOptions = initAllJurisdiction;
@@ -97,33 +96,39 @@ export default {
           this.accountInfoOld = initSelectJurisdiction;
         }
       });
-    },
+    }
   },
   mounted() {},
   methods: {
-    updateAccountInfo() {
+    submit() {
       let addItem = [];
-      // 原数据
-      // this.accountInfoOld;
-      // 当前数据
-      // this.accountInfoForm;
-      // 1.处理数据
-      let add = []; // 中间容器接收遍历数据
-      for (let i = 0; i <= this.accountInfoForm.length; i++) {
-        for (let j = 0; j <= this.accountInfoOld.length; j++) {
-          // 如果不相等，证明是新增
-          if (this.accountInfoForm[i] != this.accountInfoOld[j]) {
-            add.push(this.accountInfoForm[i]);
-          }
+      let deleteItem = [];
+
+      let add = [];
+      let del = [];
+
+      for (let i = 0; i < this.accountInfoForm.length; i++) {
+        if (this.accountInfoOld.indexOf(this.accountInfoForm[i]) == -1) {
+          add.push(this.accountInfoForm[i]);
         }
       }
       addItem = add;
+
+      for (let m = 0; m < this.accountInfoOld.length; m++) {
+        if (this.accountInfoForm.indexOf(this.accountInfoOld[m]) == -1) {
+          del.push(this.accountInfoOld[m]);
+        }
+      }
+
+      deleteItem = del;
+
       let params = {
         accountId: this.accountId,
         addItem: aes.encrypt(JSON.stringify(addItem)),
+        deleteItem: aes.encrypt(JSON.stringify(deleteItem))
       };
       //修改用户信息
-      api.testAxiosGet(ApiPath.url.updateAccountPower, params).then((res) => {
+      api.testAxiosGet(ApiPath.url.updateAccountPower, params).then(res => {
         let code = res.status;
         if (code == "0") {
           this.$message.success(res.message);
@@ -132,41 +137,13 @@ export default {
         }
       });
     },
-    deleteAccountInfo(){
-      let deleteItem = [];
-      // 1.处理数据
-      let delet = [];
-      for (let m = 0; m <= this.accountInfoOld.length; m++) {
-        for (let n = 0; n <= this.accountInfoForm.length; n++) {
-          // 如果不相等，证明是删除
-          if (this.accountInfoOld[m] != this.accountInfoForm[n]) {
-            delet.push(this.accountInfoOld[m]);
-          }
-        }
-      }
-      deleteItem = delet;
-      let params = {
-        accountId: this.accountId,
-        jurCodel:aes.encrypt(JSON.stringify(deleteItem.jurCodel)),
-        deleteItem: aes.encrypt(JSON.stringify(deleteItem)),
-      };
-      //修改用户信息
-      api.testAxiosGet(ApiPath.url.deleteAccountPower, params).then((res) => {
-        let code = res.status;
-        if (code == "0") {
-          this.$message.success(res.message);
-          this.close();
-          this.reload();
-        }
-      });
-    },
-    close: function () {
+    close: function() {
       this.$emit("close");
     },
-    beforeClose: function () {
+    beforeClose: function() {
       this.close();
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
