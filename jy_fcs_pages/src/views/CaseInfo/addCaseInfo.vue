@@ -21,8 +21,6 @@
         <el-form-item label="名称" prop="name">
           <el-input type="text" v-model="editForm.name" placeholder="请输入名称" style="width:70%;"></el-input>
         </el-form-item>
-      
-       
         <el-form-item label="图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
@@ -135,11 +133,9 @@ export default {
       fileList: [],
       upload: ApiPath.url.uploadImg,
       localShow: this.show,
-
       // rules表单验证
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
-       
         classiCode: [
           { required: true, message: "请输入农作物种类编码", trigger: "blur" },
         ],
@@ -219,40 +215,48 @@ export default {
 
     //添加分类方法
     saveCaseInfo(editData) {
-      if(this.editForm.name !="" && this.imgUrl != "" && this.editForm.classiCode !="" && this.editForm.classiDipCode !="" && this.editForm.auditStatus !=""){
-      this.$refs[editData].validate((valid) => {
-     
-        if (valid) {
-          if (this.imgUrl != "") {
-            this.editForm.url = this.imgUrl;
-            let params = {
-              caseInfoEntity: this.editForm,
-            };
-            api
-              .testAxiosGet(ApiPath.url.saveCaseInfo, params)
-              .then((res) => {
-                let code = res.state;
-                this.$message.success(res.message);
-                this.reload();
-                this.close();
-              })
-              .catch((err) => {
-                this.$message.error(err.data);
-              });
+      if (
+        this.editForm.name != "" &&
+        this.imgUrl != "" &&
+        this.editForm.classiCode != "" &&
+        this.editForm.classiDipCode != "" &&
+        this.editForm.auditStatus != ""
+      ) {
+        this.$refs[editData].validate((valid) => {
+          if (valid) {
+            if (this.imgUrl != "") {
+              this.editForm.url = this.imgUrl;
+              let params = {
+                caseInfoEntity: this.editForm,
+              };
+              api
+                .testAxiosGet(ApiPath.url.saveCaseInfo, params)
+                .then((res) => {
+                  let code = res.state;
+                  this.$message.success(res.message);
+                  this.reload();
+                  this.close();
+                })
+                .catch((err) => {
+                  this.$message.error(err.data);
+                });
+            } else {
+              this.$message.error("请上传图片");
+              return;
+            }
           } else {
-            this.$message.error("请上传图片");
-            return;
+            return false;
           }
-        } else {
-          return false;
-        }
-      });
-      }else {
-            this.$alert('名称，图片，农作物种类编码，病虫害种类编码，状态不能为空！', '提示', {
-          confirmButtonText: '确定',
         });
-        }
-
+      } else {
+        this.$alert(
+          "名称，图片，农作物种类编码，病虫害种类编码，状态不能为空！",
+          "提示",
+          {
+            confirmButtonText: "确定",
+          }
+        );
+      }
     },
     close: function () {
       this.$emit("close");
@@ -296,8 +300,8 @@ export default {
   line-height: 20px;
   text-align: center;
 }
-.required{
+.required {
   color: red;
-  margin-left:-52px;
+  margin-left: -52px;
 }
 </style>

@@ -102,14 +102,10 @@
         <el-form-item label="审核人">
           <el-input type="text" v-model="agrForm.updateUser" readonly></el-input>
         </el-form-item>
-        <!-- <el-form-item label="审核状态" prop="status">
-          <el-input type="text" v-model="agrForm.status"></el-input>
-          <el-alert title="注：0.待审核1.审核通过2.审核拒绝3.预约中4.已完成;拒绝需写拒绝理由！" type="warning"></el-alert>
-        </el-form-item>-->
-         <!-- <el-radio-group v-model="agrForm.status">
+        <!-- <el-radio-group v-model="agrForm.status">
           <el-radio-button label="1">审核通过</el-radio-button>
           <el-radio-button label="2">审核驳回</el-radio-button>
-        </el-radio-group> -->
+        </el-radio-group>-->
         <el-form-item label="审核拒绝理由">
           <el-input type="textarea" v-model="agrForm.examineReason"></el-input>
         </el-form-item>
@@ -160,11 +156,11 @@ export default {
     show(val) {
       this.localShow = val;
     },
+    //根据Id查询用户信息
     agrContentId(val) {
       let params = {
         id: val,
       };
-      //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.agriFindById, params).then((res) => {
         if (res.state == 0) {
           this.agrForm = res.data;
@@ -173,7 +169,7 @@ export default {
     },
   },
   methods: {
-    //审核通过
+    //审核结果
     updateStatus: function (val) {
       if (val == "2") {
         if (
@@ -199,33 +195,6 @@ export default {
       });
       this.agrForm.updateUser = localStorage.getItem("userInfo");
     },
-    
-    //修改农服信息
-    // updateStatus: function () {
-    //   let params = {
-    //     agriculturalEntity: this.agrForm,
-    //   };
-    //   api
-    //     .testAxiosGet(ApiPath.url.updateStatus, params)
-    //     .then((res) => {
-    //       if (
-    //         this.agrForm.status == "2" &&
-    //         (this.agrForm.examineReason == "" ||
-    //           this.agrForm.examineReason == null)
-    //       ) {
-    //         this.$alert("审核状态为拒绝时必须如实填写拒绝理由！", "提示", {
-    //           confirmButtonText: "确定",
-    //         });
-    //       } else {
-    //         this.$message.success(res.message);
-    //         this.reload();
-    //         this.close();
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       this.$message.error(err.data);
-    //     });
-    // },
     close: function () {
       this.$emit("close");
     },

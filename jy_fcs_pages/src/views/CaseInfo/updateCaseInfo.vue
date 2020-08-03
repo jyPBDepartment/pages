@@ -25,7 +25,7 @@
         <el-form-item label="图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-           style="width:81%;margin-top:-38px;"
+            style="width:81%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -36,11 +36,7 @@
             :limit="limit"
             :on-exceed="uploadExceed"
           >
-            <el-button
-              size="small"
-              type="primary"
-            style="width:150%;" icon="el-icon-plus"
-            >点击上传</el-button>
+            <el-button size="small" type="primary" style="width:150%;" icon="el-icon-plus">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
@@ -128,7 +124,6 @@ export default {
     return {
       localShow: this.show,
       isShow: false,
-
       limit: 1,
       imgUrl: "",
       upload: ApiPath.url.uploadImg,
@@ -167,20 +162,17 @@ export default {
     show(val) {
       this.localShow = val;
     },
-
+    //根据Id查询用户信息
     transCaseInfoId(val) {
       let params = {
         id: val,
       };
-
-      //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.caseInfoFindById, params).then((res) => {
         this.caseInfoForm = res.data;
         let url = res.data.url;
         let urlArry = url.split("/");
         let urlName = urlArry[urlArry.length - 1];
         this.fileList.push({ name: urlName, url: url });
-
         this.imgUrl = res.data.url;
       });
     },
@@ -280,8 +272,8 @@ export default {
 .el-form {
   padding-left: 115px;
 }
-.required{
+.required {
   color: red;
-  margin-left:-52px;
+  margin-left: -52px;
 }
 </style>

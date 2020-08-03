@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       collapsed: false,
-      allmenu: []
+      allmenu: [],
     };
   },
   // 创建完毕状态(里面是操作)
@@ -47,19 +47,21 @@ export default {
       success: true,
       data: [
         {
-            menuid: 0,
-              icon: "el-icon-reading",
-              menuname: "首页",
-              hasThird: "null",
-              url: "null",
-              menus:[{
-                 menuid:  0 - 1,
+          menuid: 0,
+          icon: "el-icon-reading",
+          menuname: "首页",
+          hasThird: "null",
+          url: "null",
+          menus: [
+            {
+              menuid: 0 - 1,
               icon: "el-icon-s-data",
               menuname: "首页",
               hasThird: "N",
               url: "charts/statistics",
-              menus: null
-              }]
+              menus: null,
+            },
+          ],
         },
         {
           menuid: 1,
@@ -68,13 +70,13 @@ export default {
           hasThird: null,
           url: null,
           menus: [
-             {
+            {
               menuid: 1 - 1,
               icon: "el-icon-user",
               menuname: "账户管理",
               hasThird: "N",
               url: "accountIfo/AccountInfo",
-              menus: null
+              menus: null,
             },
             {
               menuid: 1 - 2,
@@ -82,15 +84,15 @@ export default {
               menuname: "模块管理",
               hasThird: "N",
               url: "moduleInfo/ModuleInfo",
-              menus: null
+              menus: null,
             },
-               {
+            {
               menuid: 1 - 3,
               icon: "el-icon-s-check",
               menuname: "权限管理",
               hasThird: "N",
               url: "powerInfo/powerInfo",
-              menus: null
+              menus: null,
             },
             {
               menuid: 1 - 4,
@@ -98,15 +100,15 @@ export default {
               menuname: "分类管理",
               hasThird: "N",
               url: "Classification/classification",
-              menus: null
+              menus: null,
             },
-               {
+            {
               menuid: 1 - 5,
               icon: "el-icon-moon-night",
               menuname: "农服管理",
               hasThird: "N",
               url: "Agricultural/agricultural",
-              menus: null
+              menus: null,
             },
             {
               menuid: 1 - 6,
@@ -114,11 +116,9 @@ export default {
               menuname: "看图识病",
               hasThird: "N",
               url: "CaseInfo/caseInfo",
-              menus: null
+              menus: null,
             },
-           
-         
-          ]
+          ],
         },
         {
           menuid: 2,
@@ -127,15 +127,13 @@ export default {
           hasThird: null,
           url: null,
           menus: [
-          
-           
             {
               menuid: 2 - 1,
               icon: "el-icon-s-custom",
               menuname: "管理员管理",
               hasThird: "N",
               url: "Admin/admin",
-              menus: null
+              menus: null,
             },
             {
               menuid: 2 - 2,
@@ -143,7 +141,7 @@ export default {
               menuname: "角色管理",
               hasThird: "N",
               url: "role/roleShow",
-              menus: null
+              menus: null,
             },
             {
               menuid: 2 - 3,
@@ -151,20 +149,18 @@ export default {
               menuname: "权限管理",
               hasThird: "N",
               url: "limit/limitRole",
-              menus: null
+              menus: null,
             },
-            
+
             {
               menuid: 2 - 4,
               icon: "el-icon-s-grid",
               menuname: "菜单管理",
               hasThird: "N",
               url: "menu/menuIndex",
-              menus: null
+              menus: null,
             },
-            
-            
-          ]
+          ],
         },
         {
           menuid: 3,
@@ -179,7 +175,7 @@ export default {
               menuname: "圈子管理",
               hasThird: "N",
               url: "postInfo/PostInfo",
-              menus: null
+              menus: null,
             },
             {
               menuid: 3 - 2,
@@ -187,7 +183,7 @@ export default {
               menuname: "关键词",
               hasThird: "N",
               url: "keyWord/KeyWord",
-              menus: null
+              menus: null,
             },
             {
               menuid: 3 - 3,
@@ -195,7 +191,7 @@ export default {
               menuname: "评论管理",
               hasThird: "N",
               url: "comment/comment",
-              menus: null
+              menus: null,
             },
             {
               menuid: 3 - 4,
@@ -203,19 +199,19 @@ export default {
               menuname: "回复管理",
               hasThird: "N",
               url: "reply/reply",
-              menus: null
-            }
-          ]
-        }
+              menus: null,
+            },
+          ],
+        },
       ],
-      msg: "success"
+      msg: "success",
     };
     this.allmenu = res.data;
     // 监听
-    this.$root.Bus.$on("toggle", value => {
+    this.$root.Bus.$on("toggle", (value) => {
       this.collapsed = !value;
     });
-  }
+  },
 };
 </script>
 <style>

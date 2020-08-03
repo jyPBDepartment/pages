@@ -2,79 +2,99 @@
  * 门户菜单 分类管理
  */
 <template>
-    <div class="ClassiFunction">
-          <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>分类管理</el-breadcrumb-item>
-    </el-breadcrumb>
-    <br>
+  <div class="ClassiFunction">
+    <!-- 面包屑导航 -->
+    <el-breadcrumb separator-class="el-icon-arrow-right"></el-breadcrumb>
+    <br />
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
-       
-    
-       <el-form-item label="分类编码" >
-        <el-input v-model="code" type="text" placeholder="请输入分类编码" class="el-input el-input--small" clearable ></el-input>
+      <el-form-item label="分类编码">
+        <el-input
+          v-model="code"
+          type="text"
+          placeholder="请输入分类编码"
+          class="el-input el-input--small"
+          clearable
+        ></el-input>
       </el-form-item>
-      <el-button type="warning" size="small"  @click="search"    icon="el-icon-search" class="height">查询</el-button>
-       <el-button type="info"  @click="resetRuleTag(search)"  size="small"  icon="el-icon-close" class="height">重置</el-button>
-       <el-row >
-         <el-button type="success"  @click="openRuleTag"  size="small"  icon="el-icon-plus">新建</el-button>
-       </el-row>
-      
+      <el-button type="warning" size="small" @click="search" icon="el-icon-search" class="height">查询</el-button>
+      <el-button
+        type="info"
+        @click="resetRuleTag(search)"
+        size="small"
+        icon="el-icon-close"
+        class="height"
+      >重置</el-button>
+      <el-row>
+        <el-button type="success" @click="openRuleTag" size="small" icon="el-icon-plus">新建</el-button>
+      </el-row>
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row   row-key="id"
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%;"
+      highlight-current-row
+      row-key="id"
       default-expand-all
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-    
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+    >
       <el-table-column sortable prop="code" label="分类编码" align="center" style="width:40px;"></el-table-column>
-     <el-table-column sortable prop="name" label="分类名称" align="center" style="width:40px;"></el-table-column>
-   
+      <el-table-column sortable prop="name" label="分类名称" align="center" style="width:40px;"></el-table-column>
       <!--switch开关（表单）-->
-        <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
-          <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.status"
-              active-value="1"
-              inactive-value="0"
-             active-color="rgb(19, 206, 102)"
-              inactive-color="rgb(255, 73, 73)"
-              @change="classiEnable(scope)"
-            ></el-switch>
-          </template>
-        </el-table-column>
-      <el-table-column  prop="createDate" label="创建时间" align="center">
-      </el-table-column>
-       <el-table-column  prop="updateDate" label="修改时间" align="center">
-      </el-table-column>
-       <el-table-column sortable prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="updateUser" label="修改人" align="center" style="width:40px;"></el-table-column>
-     <el-table-column fixed="right" label="操作" width="220px" align="center">
+      <el-table-column align="center" sortable prop="status" label="状态" min-width="50">
         <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)"  type="primary" size="small" icon="el-icon-edit">修改</el-button>
-          <el-button @click="deleteClassification(scope)"  type="danger" size="small" icon="el-icon-delete">删除</el-button>
-         
-       </template>
-   </el-table-column>
-  </el-table>
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            active-color="rgb(19, 206, 102)"
+            inactive-color="rgb(255, 73, 73)"
+            @change="classiEnable(scope)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column prop="createDate" label="创建时间" align="center"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center"></el-table-column>
+      <el-table-column sortable prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
+      <el-table-column sortable prop="updateUser" label="修改人" align="center" style="width:40px;"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="220px" align="center">
+        <template slot-scope="scope">
+          <el-button
+            @click="openUpdateDialog(scope)"
+            type="primary"
+            size="small"
+            icon="el-icon-edit"
+          >修改</el-button>
+          <el-button
+            @click="deleteClassification(scope)"
+            type="danger"
+            size="small"
+            icon="el-icon-delete"
+          >删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
-<add-classification :show="addClassificationFlag" title="添加分类信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-classification> 
+    <add-classification
+      :show="addClassificationFlag"
+      title="添加分类信息"
+      @close="closeRuleTagDialog"
+      @save="saveRuleTag"
+    ></add-classification>
 
- <update-classification
+    <update-classification
       :show="updateClassificationFlag"
       :transClassificationId="transClassificationId"
       title="修改"
       @close="closeUpdateClassificationDialog"
       @save="updateClassification"
     ></update-classification>
-    
-    </div>
-    
+  </div>
 </template>
 
 <script  >
@@ -91,28 +111,24 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
-    }
+      default: "对话框",
+    },
   },
 
   data() {
     return {
-     
-      code:"",
+      code: "",
       updateClassificationFlag: false,
-      
       transClassificationId: "",
-      
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
       addClassificationFlag: false,
-     
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
@@ -121,43 +137,43 @@ export default {
         limit: 10,
         varLable: "",
         varName: "",
-        token: localStorage.getItem("logintoken")
+        token: localStorage.getItem("logintoken"),
       },
       pageparm: {
         currentPage: 1,
         pageSize: 10,
-        total: 10
-      }
+        total: 10,
+      },
     };
   },
 
   watch: {
     show(val) {
       this.localShow = val;
-    }
+    },
   },
   created() {
     this.search(this.formInline);
   },
   methods: {
-      //switch开关
-    classiEnable: function(scope) {
+    //switch开关
+    classiEnable: function (scope) {
       let params = {
         id: scope.row.id,
-        status: scope.row.status
+        status: scope.row.status,
       };
       api
         .testAxiosGet(ApiPath.url.classiEnable, params)
-        .then(res => {
+        .then((res) => {
           let code = res.state;
           if (code == "1") {
             this.$message.success(res.message);
           } else {
             this.$message.success(res.message);
           }
-           this.reload();
+          this.reload();
         })
-        .catch(function(error) {});
+        .catch(function (error) {});
     },
     //分页赋值
     callFather(parm) {
@@ -165,17 +181,16 @@ export default {
       this.formInline.limit = parm.pageSize;
       this.search(this.formInline);
     },
-//查询方法
-      search: function(parameter) {
+    //查询方法
+    search: function (parameter) {
       let params = {
-      
-        code:this.code,
+        code: this.code,
         page: this.formInline.page,
-        size: this.formInline.limit
+        size: this.formInline.limit,
       };
       api
         .testAxiosGet(ApiPath.url.searchClassification, params)
-        .then(res => {
+        .then((res) => {
           let code = res.state;
           if (code == "0") {
             let parent = [];
@@ -183,23 +198,17 @@ export default {
             for (let i = 0; i < res.data.content.length; i++) {
               if (res.data.content[i]["parentCode"] == "") {
                 parent.push(res.data.content[i]);
-               
               } else {
                 children.push(res.data.content[i]);
-               
               }
             }
-           let child = [];
-           for (let j = 0; j < parent.length; j++) {
-          
+            let child = [];
+            for (let j = 0; j < parent.length; j++) {
               for (let k = 0; k < children.length; k++) {
-              
                 if (parent[j]["id"] == children[k]["parentCode"]) {
-                   child.push(children[k]);
-                   
+                  child.push(children[k]);
                 }
                 parent[j]["children"] = child;
-                  
               }
               child = [];
             }
@@ -208,18 +217,16 @@ export default {
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
             this.pageparm.total = res.data.totalElements;
-
           } else {
           }
         })
-        .catch(function(error) {
-        });
+        .catch(function (error) {});
     },
 
-    closeUpdateClassificationDialog: function() {
+    closeUpdateClassificationDialog: function () {
       this.updateClassificationFlag = false;
     },
-    updateClassification: function() {},
+    updateClassification: function () {},
     //删除
     deleteClassification(scope) {
       this.$confirm("确定要删除吗?", "信息", {
@@ -230,26 +237,27 @@ export default {
         let params = {
           id: scope.row.id,
         };
-        api.testAxiosGet(ApiPath.url.deleteClassification, params).then((res) => {
-          let code = res.status;
-          if (code == "0") {
-            this.$message.success(res.message);
-            this.reload();
-          } else {
-            this.$alert("删除失败，请先解除关联关系！", "提示", {
-              confirmButtonText: "确定",
-            });
-            this.reload();
-          }
-        });
+        api
+          .testAxiosGet(ApiPath.url.deleteClassification, params)
+          .then((res) => {
+            let code = res.status;
+            if (code == "0") {
+              this.$message.success(res.message);
+              this.reload();
+            } else {
+              this.$alert("删除失败，请先解除关联关系！", "提示", {
+                confirmButtonText: "确定",
+              });
+              this.reload();
+            }
+          });
       });
     },
-    onSubmit: function() {
+    onSubmit: function () {
       let params = {
         tagCode: this.tagCode,
         chName: this.tagName,
-
-        generateType: "gz"
+        generateType: "gz",
       };
     },
     openUpdateDialog(scope) {
@@ -259,23 +267,22 @@ export default {
     saveRuleTag() {
       this.addClassificationFlag = false;
     },
-    
+
     modifyRuleTag() {
       this.updateRuleTag = false;
     },
     openRuleTag() {
       this.addClassificationFlag = true;
     },
-    
+    // 重置
     resetRuleTag(search) {
-    
-      this.code="";
-     location.reload();
+      this.code = "";
+      location.reload();
     },
     closeRuleTagDialog() {
       this.addClassificationFlag = false;
     },
-    
+
     closeModifyRuleTagDialog() {
       this.updateRuleTag = false;
     },
@@ -289,47 +296,24 @@ export default {
       this.$emit("save", this.transData);
     },
 
-    deleteRuleTag(scope) {
-      let tagCode = scope.row.tagCode;
-      let params = {
-        tagcode: tagCode
-      };
-      api.testAxiosPost(ApiPath.url.deleteRuleTag, params).then(res => {
-        
-        let code = res.code;
-        if (code == "success") {
-          alert("删除成功");
-          this.$router.push("ruleTag");
-        } else {
-          alert(res.message);
-        }
-      });
-    },
-    updateRuleTagStatus(scope) {
-      let tagcode = scope.row.tagCode;
-      api.testAxiosPost(ApiPath.url.updateRuleTagStatus, tagCode).then(res => {
-       
-      });
-    },
+   
+   
     maunalRun(scope) {
       let tagcode = scope.row.tagCode;
-      api.testAxiosPost(ApiPath.url.maunalRun, tagCode).then(res => {
-      
-      });
-    }
+      api.testAxiosPost(ApiPath.url.maunalRun, tagCode).then((res) => {});
+    },
   },
   components: {
     AddClassification,
     UpdateClassification,
-    
-    Pagination
-  }
+    Pagination,
+  },
 };
 </script>
 
 <style scoped >
-.el-table{
-  background-color:#FFF
+.el-table {
+  background-color: #fff;
 }
 .el-row {
   margin-top: 2px;
@@ -342,10 +326,9 @@ export default {
   font-size: 14px;
   max-width: 150px;
 }
-.height{
+.height {
   margin-top: 6px;
 }
-
 </style>
 
 

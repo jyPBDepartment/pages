@@ -24,17 +24,17 @@
         <el-form-item label="权限编码" prop="jurCode">
           <el-input type="text" v-model="editForm.jurCode" placeholder="请输入权限编码" style="width:70%;"></el-input>
         </el-form-item>
-          <el-form-item label="上级权限编码" prop="subJurCode" >
-            <el-select  v-model="editForm.subJurCode"  placeholder="请输入上级权限编码" style="width:70%;">
-             <el-option
+        <el-form-item label="上级权限编码" prop="subJurCode">
+          <el-select v-model="editForm.subJurCode" placeholder="请输入上级权限编码" style="width:70%;">
+            <el-option
               v-for="item in powerOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              ></el-option>
-           </el-select>
+            ></el-option>
+          </el-select>
         </el-form-item>
-      
+
         <el-form-item label="状态" prop="auditStatus">
           <el-input
             type="text"
@@ -87,23 +87,23 @@ export default {
     return {
       labelPosition: "right",
       editForm: {
-        jurName:"",
-        jurCode:"",
-        subJurCode:"",
-        auditStatus:"",
-        createUser:localStorage.getItem("userInfo")
-      
+        jurName: "",
+        jurCode: "",
+        subJurCode: "",
+        auditStatus: "",
+        createUser: localStorage.getItem("userInfo"),
       },
       powerOptions: [],
-
       localShow: this.show,
-
       // rules表单验证
       rules: {
-         jurName: [{ required: true, message: "请输入权限名称", trigger: "blur" }],
+        jurName: [
+          { required: true, message: "请输入权限名称", trigger: "blur" },
+        ],
         jurCode: [
           { required: true, message: "请输入权限编码", trigger: "blur" },
         ],
+        auditStatus:[{required: true, message: "请输入状态", trigger: "blur"}]
       },
     };
   },
@@ -137,7 +137,7 @@ export default {
 
     //添加权限方法
     savePowerInfo: function () {
-      if (this.editForm.jurName != "") {
+      if (this.editForm.jurName != "" && this.editForm.jurCode !="" && this.editForm.auditStatus !="") {
         let params = {
           powerInfoEntity: this.editForm,
         };
@@ -152,7 +152,7 @@ export default {
             console.error(error);
           });
       } else {
-        this.$alert("权限名称不能为空！", "提示", {
+        this.$alert("权限名称,权限编码,状态不能为空！", "提示", {
           confirmButtonText: "确定",
         });
       }

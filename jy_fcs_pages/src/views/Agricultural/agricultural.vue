@@ -27,8 +27,14 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-button type="warning" @click="search" size="small" icon="el-icon-search" class="hright" >查询</el-button>
-      <el-button type="info" @click="resetRuleTag(search)" size="small" icon="el-icon-close" class="height">重置</el-button>
+      <el-button type="warning" @click="search" size="small" icon="el-icon-search" class="hright">查询</el-button>
+      <el-button
+        type="info"
+        @click="resetRuleTag(search)"
+        size="small"
+        icon="el-icon-close"
+        class="height"
+      >重置</el-button>
     </el-form>
 
     <!-- 展示的表单 -->
@@ -102,7 +108,13 @@
       <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
       <el-table-column prop="createUser" label="发布人" align="center" style="width:40px;"></el-table-column>
       <el-table-column prop="updateUser" label="审核人" align="center" style="width:40px;"></el-table-column>
-      <el-table-column prop="examineReason" label="审核拒绝理由" align="center" style="width:40px;" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column
+        prop="examineReason"
+        label="审核拒绝理由"
+        align="center"
+        style="width:40px;"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
       <el-table-column fixed="right" label="操作" align="center" style="width:100%">
         <template slot-scope="scope">
           <el-button @click="agrContent(scope)" type="primary" size="small">查看详情</el-button>
@@ -118,7 +130,7 @@
       title="查看详情"
       @close="closeUpdateAgrContentDialog"
     ></agrContent>
-   
+
     <br />
     <br />
   </div>
@@ -130,7 +142,6 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import agrContent from "./agrContent";
-
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -145,24 +156,19 @@ export default {
       default: "对话框",
     },
   },
-
   data() {
     return {
       name: "",
-      status:"",
+      status: "",
       agrContentFlag: false,
       agrContentId: "",
-      
       updateAgriculturalFlag: false,
-
       transAgriculturalId: "",
-     
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
       addAgriculturalFlag: false,
-
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
@@ -178,17 +184,16 @@ export default {
         pageSize: 10,
         total: 10,
       },
-       statusOptions: [
-        {value:"" ,label:"全部" },
-        {value:"0",label:"待审核"  },
-        {value:"1",label:"审核通过"},
-        {value:"2",label:"审核拒绝"},
-        {value:"3",label:"预约中"  },
-        {value:"4",label:"已完成"  }
+      statusOptions: [
+        { value: "", label: "全部" },
+        { value: "0", label: "待审核" },
+        { value: "1", label: "审核通过" },
+        { value: "2", label: "审核拒绝" },
+        { value: "3", label: "预约中" },
+        { value: "4", label: "已完成" },
       ],
     };
   },
-
   watch: {
     show(val) {
       this.localShow = val;
@@ -208,7 +213,7 @@ export default {
     search: function (parameter) {
       let params = {
         name: this.name,
-        status:this.status,
+        status: this.status,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
@@ -231,6 +236,7 @@ export default {
       this.updateAgriculturalFlag = false;
     },
     updateAgricultural: function () {},
+    // 查看详情
     agrContent(scope) {
       this.agrContentFlag = true;
       this.agrContentId = scope.row.id;
@@ -257,10 +263,10 @@ export default {
     openRuleTag() {
       this.addAgriculturalFlag = true;
     },
-
+    // 重置
     resetRuleTag(search) {
       this.name = "";
-      this.status="";
+      this.status = "";
       location.reload();
     },
     closeUpdateAgrContentDialog() {
@@ -282,7 +288,6 @@ export default {
   },
   components: {
     agrContent,
-  
     Pagination,
   },
 };
@@ -299,7 +304,7 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-.height{
+.height {
   margin-top: 6px;
 }
 </style>

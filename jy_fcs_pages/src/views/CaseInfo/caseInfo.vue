@@ -28,10 +28,16 @@
         </el-select>
       </el-form-item>
       <el-button type="warning" @click="search" size="small" icon="el-icon-search" class="height">查询</el-button>
-      <el-button type="info" @click="resetRuleTag(search)" size="small" icon="el-icon-close" class="height">重置</el-button>
-       <el-row >
-         <el-button type="success"  @click="openRuleTag"  size="small"  icon="el-icon-plus">新建</el-button>
-       </el-row>
+      <el-button
+        type="info"
+        @click="resetRuleTag(search)"
+        size="small"
+        icon="el-icon-close"
+        class="height"
+      >重置</el-button>
+      <el-row>
+        <el-button type="success" @click="openRuleTag" size="small" icon="el-icon-plus">新建</el-button>
+      </el-row>
     </el-form>
 
     <!-- 展示的表单 -->
@@ -52,37 +58,59 @@
         align="center"
         :show-overflow-tooltip="true"
       ></el-table-column>
-            <!--switch开关（表单）-->
-        <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
-          <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.auditStatus"
-              active-value="1"
-              inactive-value="0"
-             active-color="rgb(19, 206, 102)"
-              inactive-color="rgb(255, 73, 73)"
-              @change="caseInfoEnable(scope)"
-            ></el-switch>
-          </template>
-        </el-table-column>
+      <!--switch开关（表单）-->
+      <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.auditStatus"
+            active-value="1"
+            inactive-value="0"
+            active-color="rgb(19, 206, 102)"
+            inactive-color="rgb(255, 73, 73)"
+            @change="caseInfoEnable(scope)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column sortable prop="createDate" label="创建时间" align="center"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
       <el-table-column prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
-      
+
       <el-table-column fixed="right" label="操作" align="center" style="width:100%">
         <template slot-scope="scope">
-          <el-button @click="openUpdateDialog(scope)"  type="primary" size="small" icon="el-icon-edit" style="margin-bottom:5px">修改</el-button>
-          <el-button @click="deleteCase(scope)"  type="danger" size="small" icon="el-icon-delete" style="margin-left:0px;margin-bottom:5px">删除</el-button>
-          <el-button @click="caseContent(scope)" type="primary" size="small" style="margin-left:3px" >查看详情</el-button>
+          <el-button
+            @click="openUpdateDialog(scope)"
+            type="primary"
+            size="small"
+            icon="el-icon-edit"
+            style="margin-bottom:5px"
+          >修改</el-button>
+          <el-button
+            @click="deleteCase(scope)"
+            type="danger"
+            size="small"
+            icon="el-icon-delete"
+            style="margin-left:0px;margin-bottom:5px"
+          >删除</el-button>
+          <el-button
+            @click="caseContent(scope)"
+            type="primary"
+            size="small"
+            style="margin-left:3px"
+          >查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
-    <add-case-info :show="addCaseInfoFlag" title="添加看图识病信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-case-info>
+    <add-case-info
+      :show="addCaseInfoFlag"
+      title="添加看图识病信息"
+      @close="closeRuleTagDialog"
+      @save="saveRuleTag"
+    ></add-case-info>
 
- <update-case-info
+    <update-case-info
       :show="updateCaseInfoFlag"
       :transCaseInfoId="transCaseInfoId"
       title="修改"
@@ -105,9 +133,9 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-import addCaseInfo from '@/views/CaseInfo/addCaseInfo';
-import updateCaseInfo from '@/views/CaseInfo/updateCaseInfo';
-import caseContent from '@/views/CaseInfo/caseContent';
+import addCaseInfo from "@/views/CaseInfo/addCaseInfo";
+import updateCaseInfo from "@/views/CaseInfo/updateCaseInfo";
+import caseContent from "@/views/CaseInfo/caseContent";
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -127,17 +155,15 @@ export default {
     return {
       name: "",
       auditStatus: "",
-      addCaseInfoFlag:false,
-      updateCaseInfoFlag:false,
-      transCaseInfoId:"",
-      caseContentFlag:false,
-      caseContentId:"",
-
+      addCaseInfoFlag: false,
+      updateCaseInfoFlag: false,
+      transCaseInfoId: "",
+      caseContentFlag: false,
+      caseContentId: "",
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
-      
       mainBodyCode: "",
       tableData: [],
       formInline: {
@@ -170,23 +196,23 @@ export default {
   },
   methods: {
     //switch开关
-    caseInfoEnable: function(scope) {
+    caseInfoEnable: function (scope) {
       let params = {
         id: scope.row.id,
-        auditStatus: scope.row.auditStatus
+        auditStatus: scope.row.auditStatus,
       };
       api
         .testAxiosGet(ApiPath.url.caseInfoEnable, params)
-        .then(res => {
+        .then((res) => {
           let code = res.state;
           if (code == "1") {
             this.$message.success(res.message);
           } else {
             this.$message.success(res.message);
           }
-           this.reload();
+          this.reload();
         })
-        .catch(function(error) {});
+        .catch(function (error) {});
     },
     //分页赋值
     callFather(parm) {
@@ -216,25 +242,24 @@ export default {
         })
         .catch(function (error) {});
     },
-   
-    
-    deleteCase: function(scope) {
+    // 删除
+    deleteCase: function (scope) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => {
           let params = {
-            id: scope.row.id
+            id: scope.row.id,
           };
-          api.testAxiosGet(ApiPath.url.deleteCaseInfo, params).then(res => {
+          api.testAxiosGet(ApiPath.url.deleteCaseInfo, params).then((res) => {
             let code = res.state;
 
             if (code == "0") {
               this.$message({
                 type: "success",
-                message: "删除成功!"
+                message: "删除成功!",
               });
               this.reload();
             } else {
@@ -245,7 +270,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -271,8 +296,8 @@ export default {
     saveRuleTag() {
       this.addCaseInfoFlag = false;
     },
-    closeRuleTagDialog(){
-        this.addCaseInfoFlag = false;
+    closeRuleTagDialog() {
+      this.addCaseInfoFlag = false;
     },
     modifyRuleTag() {
       this.updateRuleTag = false;
@@ -280,16 +305,16 @@ export default {
     openRuleTag() {
       this.addCaseInfoFlag = true;
     },
-
+    // 重置
     resetRuleTag(search) {
       this.name = "";
       this.auditStatus = "";
       location.reload();
     },
-    closeUpdateCaseInfoDialog:function() {
+    closeUpdateCaseInfoDialog: function () {
       this.updateCaseInfoFlag = false;
     },
-    updateCaseInfo:function(){},
+    updateCaseInfo: function () {},
     closeModifyRuleTagDialog() {
       this.updateRuleTag = false;
     },
@@ -323,7 +348,7 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-.height{
+.height {
   margin-top: 6px;
 }
 </style>

@@ -20,9 +20,15 @@
         @submit.native.prevent
       >
         <el-form-item label="名称" prop="name">
-          <el-input type="text" v-model="caseInfoForm.name" placeholder="请输入名称" style=" width:70%;" readonly></el-input>
+          <el-input
+            type="text"
+            v-model="caseInfoForm.name"
+            placeholder="请输入名称"
+            style=" width:70%;"
+            readonly
+          ></el-input>
         </el-form-item>
-        <el-form-item label="图片地址" prop="imgUrl" >
+        <el-form-item label="图片地址" prop="imgUrl">
           <el-upload
             class="upload-demo"
             :action="upload"
@@ -59,7 +65,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="病虫害种类编码" prop="dipTypeCode">
-          <el-select v-model="caseInfoForm.dipTypeCode" placeholder="请输入病虫害种类编码" style="width:70%;" disabled>
+          <el-select
+            v-model="caseInfoForm.dipTypeCode"
+            placeholder="请输入病虫害种类编码"
+            style="width:70%;"
+            disabled
+          >
             <el-option
               v-for="item in dipOptions"
               :key="item.value"
@@ -124,15 +135,13 @@ export default {
     return {
       localShow: this.show,
       isShow: false,
-
       limit: 1,
       imgUrl: "",
       upload: ApiPath.url.uploadImg,
       fileList: [],
       labelPosition: "right",
       editFormVisible: false,
-      caseInfoForm: {
-      },
+      caseInfoForm: {},
       cropsOptions: [],
       dipOptions: [],
       //rules表单验证
@@ -146,26 +155,22 @@ export default {
       this.localShow = val;
     },
 
+    //根据Id查询用户信息
     caseContentId(val) {
       let params = {
         id: val,
       };
-
-      //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.caseFindById, params).then((res) => {
         this.caseInfoForm = res.data;
         let url = res.data.url;
         let urlArry = url.split("/");
         let urlName = urlArry[urlArry.length - 1];
         this.fileList.push({ name: urlName, url: url });
-
         this.imgUrl = res.data.url;
       });
     },
   },
-  mounted() {
-   
-  },
+  mounted() {},
   methods: {
     uploadExceed(files, fileList) {
       this.$message.error("只能上传一个图片，如需修改请先删除图片！");
@@ -179,7 +184,7 @@ export default {
     },
     handlePreview(file) {
       console.log(file);
-    },   
+    },
     close: function () {
       this.$emit("close");
     },
@@ -194,5 +199,4 @@ export default {
 .el-form {
   padding-left: 115px;
 }
-
 </style>

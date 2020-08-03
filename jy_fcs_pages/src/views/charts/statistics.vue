@@ -10,8 +10,6 @@
     <div class="Big">
       <div class="first">
         <div class="left">
-          <!-- <el-image :src="url" class="icon" /> -->
-          <!-- <el-image :src="url"  class="icon"></el-image> -->
           <img src="../../assets/img/三人.png" class="icon" />
         </div>
         <div class="right">
@@ -45,12 +43,10 @@
           <span type="text" class="center1">{{invationSum}}</span>
           <div class="last">
             <img src="../../assets/img/箭头(1).png" class="iconFront" />
-
             <span type="text" class="down">同比昨天32.32%</span>
           </div>
         </div>
       </div>
-
       <div class="first">
         <div class="left">
           <img src="../../assets/img/树叶.png" class="icon" />
@@ -73,11 +69,6 @@
           <div class="cavasbox" ref="SCEchart"></div>
         </div>
       </el-col>
-      <!-- <el-col :span="8" class="text-c">
-        <div class="st-gbox">
-          <div class="cavasbox" ref="SUMEchart"></div>
-        </div>
-      </el-col>-->
     </el-row>
   </div>
 </template>
@@ -92,7 +83,6 @@ export default {
       count: "",
       invationSum: "",
       argicultural: "",
-
       //  数据总览
       SCEoption: {
         title: {
@@ -103,7 +93,6 @@ export default {
             color: "#1C8FE5",
           },
         },
-
         tooltip: {},
         legend: {
           data: ["昨日", "今日"],
@@ -126,7 +115,6 @@ export default {
         xAxis: {
           type: "category",
           data: ["用户数量", "农活发布", "发帖数量", "农活预约"],
-
           axisLine: {
             lineStyle: {
               color: "#BBBBBB",
@@ -147,7 +135,6 @@ export default {
           {
             splitLine: { show: false },
             type: "value",
-
             min: 0,
             max: 50,
             position: "left",
@@ -168,7 +155,6 @@ export default {
           {
             splitLine: { show: false },
             type: "value",
-
             min: 0,
             max: 25,
             scale: "true",
@@ -238,9 +224,7 @@ export default {
     };
   },
   // 导入组件
-  components: {
-    // 点聚合组件
-  },
+  components: {},
   // 创建完毕状态(里面是操作)
   created() {
     this.transJurisdictionId();

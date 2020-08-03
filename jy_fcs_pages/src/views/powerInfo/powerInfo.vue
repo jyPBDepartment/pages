@@ -49,7 +49,7 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-     <el-table-column sortable prop="jurCode" label="权限编码" align="center"></el-table-column>
+      <el-table-column sortable prop="jurCode" label="权限编码" align="center"></el-table-column>
       <el-table-column sortable prop="jurName" label="权限名称" align="center" style="width:40px;"></el-table-column>
       <!--switch开关（表单）-->
       <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
@@ -64,7 +64,6 @@
           ></el-switch>
         </template>
       </el-table-column>
-
       <el-table-column prop="createDate" label="创建时间" align="center"></el-table-column>
       <el-table-column prop="updateDate" label="修改时间" align="center"></el-table-column>
       <el-table-column sortable prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
@@ -226,7 +225,6 @@ export default {
               }
               child = [];
             }
-
             this.tableData = parent;
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
@@ -269,7 +267,6 @@ export default {
       let params = {
         tagCode: this.tagCode,
         chName: this.tagName,
-
         generateType: "gz",
       };
     },
@@ -287,7 +284,7 @@ export default {
     openRuleTag() {
       this.addPowerInfoFlag = true;
     },
-
+    // 重置
     resetRuleTag(search) {
       this.jurName = "";
       this.jurCode = "";
@@ -310,27 +307,6 @@ export default {
       this.$emit("save", this.transData);
     },
 
-    deleteRuleTag(scope) {
-      let tagCode = scope.row.tagCode;
-      let params = {
-        tagcode: tagCode,
-      };
-      api.testAxiosPost(ApiPath.url.deleteRuleTag, params).then((res) => {
-        let code = res.code;
-        if (code == "success") {
-          alert("删除成功");
-          this.$router.push("ruleTag");
-        } else {
-          alert(res.message);
-        }
-      });
-    },
-    updateRuleTagStatus(scope) {
-      let tagcode = scope.row.tagCode;
-      api
-        .testAxiosPost(ApiPath.url.updateRuleTagStatus, tagCode)
-        .then((res) => {});
-    },
     maunalRun(scope) {
       let tagcode = scope.row.tagCode;
       api.testAxiosPost(ApiPath.url.maunalRun, tagCode).then((res) => {});
