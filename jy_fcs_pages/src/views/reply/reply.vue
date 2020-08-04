@@ -27,12 +27,12 @@
       <br />
     </el-form>
     <!--列表-->
-    <el-table  size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
+    <el-table  size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-      <el-table-column show-overflow-tooltip sortable prop="postCommentInfoEntity.postInfoEntity.name" label="贴子标题" align="center" ></el-table-column>
-      <el-table-column show-overflow-tooltip sortable prop="postCommentInfoEntity.commentContent" label="评论内容" align="center" ></el-table-column>
+      <el-table-column show-overflow-tooltip  prop="postCommentInfoEntity.postInfoEntity.name" label="贴子标题" align="center" ></el-table-column>
+      <el-table-column show-overflow-tooltip  prop="postCommentInfoEntity.commentContent" label="评论内容" align="center" ></el-table-column>
       <el-table-column sortable prop="replyUserName" label="回复人" align="center" ></el-table-column>
-      <el-table-column show-overflow-tooltip sortable prop="replyContent" label="评论回复内容" align="center" ></el-table-column>
+      <el-table-column show-overflow-tooltip  prop="replyContent" label="评论回复内容" align="center" ></el-table-column>
 
       <el-table-column sortable prop="replyDate" label="回复时间" align="center" ></el-table-column>
       <el-table-column align="center" label="状态（是否启用）" prop="status" >

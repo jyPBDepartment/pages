@@ -5,7 +5,7 @@
     <div class="navigationFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">基础管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">账户管理</el-breadcrumb-item>
       <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
@@ -24,7 +24,7 @@
 
     <!-- 展示的表单 -->
      <el-table
-      size="small"
+      size="mini"
       :data="tableData"
       highlight-current-row
       v-loading="loading"

@@ -5,7 +5,7 @@
   <div>
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">账户管理</el-breadcrumb-item>
       <el-breadcrumb-item>角色管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
@@ -32,7 +32,7 @@
     </el-form>
     <!--列表-->
     <el-table
-      size="small"
+      size="mini"
       :data="listData"
       highlight-current-row
       v-loading="loading"
@@ -41,8 +41,8 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="角色名称" align="center"></el-table-column>
-      <el-table-column show-overflow-tooltip sortable prop="remark" label="角色备注" align="center"></el-table-column>
+      <el-table-column  prop="name" label="角色名称" align="center"></el-table-column>
+      <el-table-column show-overflow-tooltip  prop="remark" label="角色备注" align="center"></el-table-column>
       <el-table-column sortable prop="addDate" label="创建时间" align="center"></el-table-column>
       <el-table-column sortable prop="updDate" label="修改时间" align="center"></el-table-column>
       <el-table-column align="center" label="状态" prop="state">
