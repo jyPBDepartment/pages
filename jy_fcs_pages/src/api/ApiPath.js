@@ -172,6 +172,8 @@ findAllClass:URLHost+'/classification/findSubClassiList',
     findRelaByRoleId:URLHost+'/menu/findRelaByRole',
     //保存角色授权
     saveRelaFromRole:URLHost+'/menu/saveRelation',
+    //清空角色授权
+    removeRoleAuth:URLHost+'/role/removeAuth',
 }
 export default {
   url

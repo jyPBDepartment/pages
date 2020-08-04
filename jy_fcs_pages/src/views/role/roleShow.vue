@@ -80,6 +80,13 @@
             icon="el-icon-delete"
             class="del"
           >删除</el-button>
+          <el-button
+           @click="removeAuth(scope)"
+            type="text"
+            size="medium"
+            icon="el-icon-remove"
+            class="removeAuth"
+          >权限清空</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -242,7 +249,29 @@ export default {
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
-
+    //清空角色权限
+    removeAuth(scope) {
+      this.$confirm("确定要清空角色权限吗?一旦清空数据不可恢复！", "信息", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        let params = {
+          id: scope.row.id,
+          };
+        api.testAxiosGet(ApiPath.url.removeRoleAuth, params).then(res => {
+          let code = res.status;
+        if(code == "0") {
+            this.$message.success(res.message);
+            this.reload();
+          }
+          else{
+            // this.$message.error(res.message);
+            this.$alert('清空失败，请联系管理员！', '提示', {confirmButtonText: '确定',});
+            this.reload();}
+        });
+      });
+    },
     // 删除角色
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {
@@ -349,5 +378,11 @@ export default {
   color: white;
   font-size: 12px;
 }
-
+.el-button.removeAuth {
+  width: 100px;
+  background-color: #e6a23c;
+  border-color: #e6a23c;
+  color: white;
+  font-size: 12px;
+}
 </style>
