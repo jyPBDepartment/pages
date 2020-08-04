@@ -244,9 +244,44 @@ selectType(result){
           menuEntity: aes.encrypt(JSON.stringify(this.editForm) )
         };
       //校验必填项
-      let valFlag = true;
+      if(this.editForm.name == ""){
+          this.$alert('名称不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+      }
       let menuFlag = this.editForm.menuType;
-      
+      if(menuFlag == 1){
+        //目录 
+        if(this.editForm.icon == ""){
+          this.$alert('目录图标不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+      }
+      if(menuFlag == 2){
+        //菜单 
+        if(this.editForm.icon == ""){
+          this.$alert('菜单图标不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+        if(this.editForm.url == ""){
+          this.$alert('菜单路由不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+        if(this.editForm.parentId == ""){
+          this.$alert('父菜单不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+      }
+      if(menuFlag == 3){
+        //按钮
+        if(this.editForm.parentId == ""){
+          this.$alert('父菜单不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+        if(this.editForm.perssions == ""){
+          this.$alert('权限标识不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+      }
         api.testAxiosGet(ApiPath.url.saveMenu,params).then(res =>{
                this.$message.success(res.message);
                this.reload();
