@@ -133,7 +133,6 @@ export default {
       menuAccessshow: false, //控制数据权限显示与隐藏
       addModuleInfo: false,
       updateModuleInfoFlag: false,
-      updatePasswordFlag: false,
       transModuleInfoId: "",
       transPasswordId: "",
       formInline: {
@@ -235,10 +234,6 @@ export default {
     openUpdateModuleInfo(scope) {
       this.transModuleInfoId = scope.row.id;
       this.updateModuleInfoFlag = true;
-    },
-    updatePass(scope) {
-      this.transPasswordId = scope.row.id;
-      this.updatePasswordFlag = true;
     },
     //重置
     resetForm(search) {

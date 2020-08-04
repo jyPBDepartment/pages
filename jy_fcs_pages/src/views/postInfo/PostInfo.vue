@@ -17,12 +17,7 @@
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search">查询</el-button>
-        <el-button
-          size="small"
-          type="info"
-          icon="el-icon-close"
-          @click="resetForm('search')"
-        >重置</el-button>
+        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')" >重置</el-button>
       </el-form-item>
     </el-form>
     <!--列表-->
@@ -94,7 +89,6 @@
     ></update-postInfo> 
   </div>
 </template>
-
 <script>
 import Pagination from "../../components/Pagination";
 import UpdatePostInfo from "./UpdatePostInfo"
@@ -210,19 +204,10 @@ export default {
       }).catch(function(error) {});
       
     },
-
     //显示编辑界面
     openUpdatePostInfo(scope) {
       this.transPostInfoId = scope.row.id;
       this.updatePostInfoFlag = true;
-    },
-    updatePass(scope) {
-      this.transPasswordId = scope.row.id;
-      this.updatePasswordFlag = true;
-    },
-    openUpdatePower(scope) {
-      this.transPowerId = scope.row.id;
-      this.updatePowerFlag = true;
     },
     //重置
     resetForm(search) {

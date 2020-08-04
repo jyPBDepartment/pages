@@ -136,8 +136,7 @@ export default {
     Pagination
   },
   watch: {},
-  mounted() {
-  },
+  mounted() {},
   created() {
     this.search(this.formInline);
   },
@@ -202,14 +201,6 @@ export default {
     openUpdateKeyWord(scope) {
       this.transKeyWordId = scope.row.id;
       this.updateKeyWordFlag = true;
-    },
-    updatePass(scope) {
-      this.transPasswordId = scope.row.id;
-      this.updatePasswordFlag = true;
-    },
-    openUpdatePower(scope) {
-      this.transPowerId = scope.row.id;
-      this.updatePowerFlag = true;
     },
     //重置
     resetForm(search) {

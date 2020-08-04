@@ -5,9 +5,9 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
+    class="al"
   >
     <!-- 插槽区 -->
     <slot>
@@ -152,5 +152,11 @@ export default {
 }
 .el-button {
   border: none;
+}
+.al{
+  position: absolute;
+  width: 1600px;
+  height: 750px;
+  background-size: 100% 100%;
 }
 </style>
