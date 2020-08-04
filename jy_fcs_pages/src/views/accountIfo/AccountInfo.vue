@@ -49,14 +49,14 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="账户名称" align="center"></el-table-column>
-      <el-table-column sortable prop="phone" label="手机号码" align="center"></el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="createUser" label="创建人" align="center"></el-table-column>
-      <el-table-column sortable prop="updateUser" label="修改人" align="center"></el-table-column>
-      <el-table-column align="center" label="状态" prop="auditStatus">
+      <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
+      <el-table-column prop="name" width="110" label="账户名称" align="center"></el-table-column>
+      <el-table-column prop="phone" width="100" label="手机号码" align="center"></el-table-column>
+      <el-table-column sortable prop="createDate" width="150" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="updateDate" width="150" label="修改时间" align="center"></el-table-column>
+      <el-table-column prop="createUser" width="100" label="创建人" align="center"></el-table-column>
+      <el-table-column prop="updateUser" width="100" label="修改人" align="center"></el-table-column>
+      <el-table-column align="center" width="80" label="状态" prop="auditStatus">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
