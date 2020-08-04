@@ -112,9 +112,15 @@
       </el-form>
     </slot>
     <span slot="footer">
-      <el-button type="success" icon="el-icon-check" @click="updateStatus('1')">审核通过</el-button>
-      <el-button type="danger" icon="el-icon-close" @click="updateStatus('2')">审核驳回</el-button>
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+     <span v-if="agrForm.status == 0 || agrForm.status ==3 || agrForm.status == 4 ">
+        <el-button type="success" icon="el-icon-check"  @click="updateStatus()" >审核通过</el-button>
+     </span>
+      <span v-if="agrForm.status == 0 || agrForm.status ==3 || agrForm.status == 4 ">
+        <el-button type="danger" icon="el-icon-close"  @click="refusePostInfo()">审核驳回</el-button>
+      </span>
+        <!-- <el-button type="danger" icon="el-icon-close"  @click="updateStatus('2')">审核驳回</el-button> -->
+     
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -141,9 +147,13 @@ export default {
   },
   data() {
     return {
+     
       labelPosition: "right",
       localShow: this.show,
-      agrForm: {},
+      agrForm: {
+        status:"",
+        examineReason:""
+      },
       // rules表单验证
       rules: {
         status: [
@@ -169,10 +179,24 @@ export default {
     },
   },
   methods: {
-    //审核结果
+     //审核结果
     updateStatus: function (val) {
-      if (val == "2") {
-        if (
+      let params = {
+        agriculturalEntity: this.agrForm,
+      };
+      api.testAxiosGet(ApiPath.url.updateStatus, params).then((res) => {
+        let code = res.state;
+        if (code == "0") {
+          this.$message.success(res.message);
+          this.close();
+          this.reload();
+        }
+      });
+      this.agrForm.updateUser = localStorage.getItem("userInfo");
+    },
+    //驳回
+    refusePostInfo: function () {
+        if (          
           this.agrForm.examineReason == "" ||
           this.agrForm.examineReason == null
         ) {
@@ -181,11 +205,11 @@ export default {
           });
           return false;
         }
-      }
+      
       let params = {
         agriculturalEntity: this.agrForm,
       };
-      api.testAxiosGet(ApiPath.url.updateStatus, params).then((res) => {
+      api.testAxiosGet(ApiPath.url.updateRefuse, params).then((res) => {
         let code = res.state;
         if (code == "0") {
           this.$message.success(res.message);

@@ -35,7 +35,7 @@
         icon="el-icon-close"
       >重置</el-button>
       <el-row>
-        <el-button type="success" size="small" @click="openRuleTag" icon="el-icon-plus">新建</el-button>
+        <el-button type="success" size="small" @click="openRuleTag" icon="el-icon-plus">添加</el-button>
       </el-row>
     </el-form>
 
@@ -47,12 +47,13 @@
       highlight-current-row
       row-key="id"
       default-expand-all
+      size="mini"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column sortable prop="jurCode" label="权限编码" align="center"></el-table-column>
-      <el-table-column sortable prop="jurName" label="权限名称" align="center" style="width:40px;"></el-table-column>
+      <el-table-column  prop="jurCode" label="权限编码" align="center"></el-table-column>
+      <el-table-column  prop="jurName" label="权限名称" align="center" style="width:40px;"></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
+      <el-table-column align="center"  prop="auditStatus" label="状态" min-width="50">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -64,10 +65,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="updateUser" label="修改人" align="center" style="width:40px;"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
+      <el-table-column  prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
+      <el-table-column  prop="updateUser" label="修改人" align="center" style="width:40px;"></el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
           <el-button
@@ -76,7 +77,7 @@
             type="primary"
             size="small"
             icon="el-icon-edit"
-          >修改</el-button>
+          >编辑</el-button>
           <el-button
             @click="deletePowerInfo(scope)"
             class="del"

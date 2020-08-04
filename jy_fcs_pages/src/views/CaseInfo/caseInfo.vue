@@ -36,30 +36,30 @@
         class="height"
       >重置</el-button>
       <el-row>
-        <el-button type="success" @click="openRuleTag" size="small" icon="el-icon-plus">新建</el-button>
+        <el-button type="success" @click="openRuleTag" size="small" icon="el-icon-plus">添加</el-button>
       </el-row>
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;" highlight-current-row>
-      <el-table-column type="index" label="序号" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="name" label="名称" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="url" label="图片" align="center" style="width:120px">
+    <el-table :data="tableData" border style="width: 100%;" highlight-current-row  size="mini">
+      <el-table-column type="index" label="序号" align="center" ></el-table-column>
+      <el-table-column  prop="name" label="名称" align="center" ></el-table-column>
+      <el-table-column  prop="url" label="图片" align="center" >
         <template slot-scope="scope">
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="cropsTypeCode" label="农作物种类编码" align="center"></el-table-column>
-      <el-table-column sortable prop="dipTypeCode" label="病虫害种类编码" align="center"></el-table-column>
+      <el-table-column  prop="cropsTypeCode" label="农作物种类编码" align="center"></el-table-column>
+      <el-table-column  prop="dipTypeCode" label="病虫害种类编码" align="center"></el-table-column>
       <el-table-column
-        sortable
+        
         prop="describetion"
         label="描述"
         align="center"
         :show-overflow-tooltip="true"
       ></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center" sortable prop="auditStatus" label="状态" min-width="50">
+      <el-table-column align="center"  prop="auditStatus" label="状态" min-width="50">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -71,11 +71,11 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center" ></el-table-column>
 
-      <el-table-column fixed="right" label="操作" align="center" style="width:100%">
+      <el-table-column fixed="right" label="操作" align="center" style="width:120%">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
@@ -83,7 +83,7 @@
             size="small"
             icon="el-icon-edit"
             style="margin-bottom:5px"
-          >修改</el-button>
+          >编辑</el-button>
           <el-button
             @click="deleteCase(scope)"
             type="danger"
@@ -95,7 +95,7 @@
             @click="caseContent(scope)"
             type="primary"
             size="small"
-            style="margin-left:3px"
+            style="margin-left:0px"
           >查看详情</el-button>
         </template>
       </el-table-column>

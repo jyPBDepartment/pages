@@ -102,11 +102,11 @@
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button
-        type="danger"
+        type="info"
         icon="el-icon-close"
         @click="close"
         size="medium"
-        style="background-color:white;border-color:black;color:black;font-size:12px"
+       
       >关闭</el-button>
     </span>
   </el-dialog>
