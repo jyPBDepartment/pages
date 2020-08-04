@@ -53,10 +53,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="审核" >
-            <el-button type="primary" icon="el-icon-check" @click="passPostInfo" class="insert">通过审核</el-button>
-            <el-button type="primary" icon="el-icon-close" @click="refusePostInfo" class="del">拒绝审核</el-button>
-        </el-form-item>
         <el-form-item label="审核驳回原因" >
           <el-input type="textarea" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input>
         </el-form-item>
@@ -64,7 +60,9 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-check" @click="passPostInfo" class="insert">通过审核</el-button></span>
+      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-close" @click="refusePostInfo" class="del">拒绝审核</el-button></span>
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -90,10 +88,20 @@ export default {
     return {
       labelPosition: "right",
       postInfoForm: {
+        code: "",
+        parentCode: "",
+        auditStatus: "",
+        auditOptinion: "",
+        createDate: "",
+        updateDate: "",
+        author: "",
+        createUser: "",
+        auditUser: "",
+        visibility: "",
         name: "",
+        status:"",
         id:"",
         reason:"",
-        auditUser:"",
       },
       localShow: this.show,
       visibilityOptions:[

@@ -23,7 +23,7 @@
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button type="primary" icon="el-icon-check" @click="updateAccountInfo">保存</el-button>
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>

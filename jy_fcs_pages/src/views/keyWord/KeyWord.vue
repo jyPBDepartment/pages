@@ -1,13 +1,7 @@
 <template>
   <div>
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>关键词管理</el-breadcrumb-item>
-    </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
-      <el-form-item label="搜索："></el-form-item>
       <el-form-item label="关键词名称">
         <el-input size="small" v-model="name" placeholder="输入关键词名称"></el-input>
       </el-form-item>
@@ -28,7 +22,7 @@
     </el-form>
     <!--列表-->
     <el-table
-      size="small"
+      size="mini"
       :data="listData"
       highlight-current-row
       v-loading="loading"
@@ -37,13 +31,13 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="名称" align="center"></el-table-column>
-      <el-table-column sortable prop="code" label="编码" align="center"></el-table-column>
-      <el-table-column sortable prop="parentName" label="分类编码" align="center"></el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="createUser" label="创建人" align="center"></el-table-column>
-      <el-table-column sortable prop="updateUser" label="修改人" align="center"></el-table-column>
+      <el-table-column prop="name" label="名称" align="center"></el-table-column>
+      <el-table-column prop="code" label="编码" align="center"></el-table-column>
+      <el-table-column prop="parentName" label="分类编码" align="center"></el-table-column>
+      <el-table-column prop="createDate" label="创建时间" align="center" width="150px"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" width="150px"></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center"></el-table-column>
+      <el-table-column prop="updateUser" label="修改人" align="center"></el-table-column>
       <el-table-column align="center" label="状态" prop="auditStatus">
         <template slot-scope="scope">
           <el-switch

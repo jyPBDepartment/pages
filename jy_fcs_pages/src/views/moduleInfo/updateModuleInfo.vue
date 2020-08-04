@@ -37,17 +37,14 @@
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button
-        type="success"
+        type="primary"
         icon="el-icon-check"
-        style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px"
         @click="updateModule('moduleInfoForm')"
       >保存</el-button>
       <el-button
-        type="danger"
+        type="info"
         icon="el-icon-close"
         @click="close"
-        size="medium"
-        style="background-color:white;border-color:black;color:black;font-size:12px"
       >关闭</el-button>
     </span>
   </el-dialog>

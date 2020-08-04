@@ -1,14 +1,8 @@
 
 <template>
   <div>
-    <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>圈子管理</el-breadcrumb-item>
-    </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
-      <el-form-item label="搜索："></el-form-item>
       <el-form-item label="名称">
         <el-input size="small" v-model="name" placeholder="输入名称"></el-input>
       </el-form-item>
@@ -22,7 +16,7 @@
     </el-form>
     <!--列表-->
     <el-table
-      size="small"
+      size="mini"
       :data="listData"
       highlight-current-row
       v-loading="loading"
@@ -31,11 +25,11 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="标题名称" align="center"></el-table-column>
-      <el-table-column sortable prop="code" label="内容" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column sortable prop="parentCode" label="分类id" align="center"></el-table-column>
-      <el-table-column sortable prop="author" label="作者" align="center"></el-table-column>
-      <el-table-column sortable prop="auditStatus" label="审核状态" align="center">
+      <el-table-column prop="name" label="标题名称" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="code" label="内容" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="parentCode" label="分类id" align="center"></el-table-column>
+      <el-table-column prop="author" label="作者" align="center"></el-table-column>
+      <el-table-column prop="auditStatus" label="审核状态" align="center">
         <template slot-scope="scope">
            <span v-if="scope.row.auditStatus==0">未审核</span>
            <span v-if="scope.row.auditStatus==1">审核中</span>
@@ -43,12 +37,12 @@
            <span v-if="scope.row.auditStatus==3">审核驳回</span>
           </template>
       </el-table-column>
-      <el-table-column sortable prop="auditOptinion" label="审核意见" align="center"></el-table-column>
-      <el-table-column sortable prop="createDate" label="发布时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="createUser" label="发布人" align="center"></el-table-column>
-      <el-table-column sortable prop="auditUser" label="审核人" align="center"></el-table-column>
-      <el-table-column sortable prop="visibility" label="可见程度" align="center">
+      <el-table-column prop="auditOptinion" label="审核意见" align="center"></el-table-column>
+      <el-table-column prop="createDate" label="发布时间" align="center" width="150px"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" width="150px"></el-table-column>
+      <el-table-column prop="createUser" label="发布人" align="center"></el-table-column>
+      <el-table-column prop="auditUser" label="审核人" align="center"></el-table-column>
+      <el-table-column prop="visibility" label="可见程度" align="center">
         <template slot-scope="scope">
            <span v-if="scope.row.visibility==0">自己可见</span>
            <span v-if="scope.row.visibility==1">全部可见</span>

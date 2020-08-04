@@ -29,13 +29,12 @@
           </el-select>
         </el-form-item>
       </el-form>
-        
     </slot>
-
+    
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button type="primary" icon="el-icon-check" @click="saveKeyWord()">保存</el-button>
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
