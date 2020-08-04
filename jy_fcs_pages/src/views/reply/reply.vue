@@ -34,7 +34,7 @@
       <el-table-column sortable prop="replyUserName" label="回复人" align="center" ></el-table-column>
       <el-table-column show-overflow-tooltip  prop="replyContent" label="评论回复内容" align="center" ></el-table-column>
 
-      <el-table-column sortable prop="replyDate" label="回复时间" align="center" ></el-table-column>
+      <el-table-column sortable prop="replyDate" label="回复时间" width="200px" align="center" ></el-table-column>
       <el-table-column align="center" label="状态（是否启用）" prop="status" >
         <template slot-scope="scope">
           <el-switch

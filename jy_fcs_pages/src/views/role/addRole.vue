@@ -25,6 +25,7 @@
             size="small"
             placeholder="请输入角色名称"
             style="width:80%"
+            maxlength="18"
           ></el-input>
         </el-form-item>
         <el-form-item label="角色备注" prop="name">
@@ -34,6 +35,7 @@
             size="small"
             placeholder="请输入角色名称"
             style="width:80%"
+            maxlength="255"
           ></el-input>
         </el-form-item>
       </el-form>

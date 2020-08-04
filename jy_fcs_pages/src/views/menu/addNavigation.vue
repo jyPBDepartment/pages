@@ -22,7 +22,7 @@
           </template>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name">
-          <el-input type="text" v-model="editForm.name" placeholder="请输入名称"  style=" width:70%;" ></el-input>
+          <el-input type="text" v-model="editForm.name" placeholder="请输入名称"  style=" width:70%;" maxlength="8"></el-input>
         </el-form-item>
         <el-form-item label="排序" prop="sort" >
           <el-input-number v-model="editForm.sort" :step=5 style="width:70%;" step-strictly></el-input-number>
@@ -40,10 +40,10 @@
             style="width:70%;">
         </selectTree>
         </el-form-item>
-        <el-form-item label="菜单路由" prop="url" v-if="urlShow" :required="urlShow">
-          <el-input type="text" v-model="editForm.url" placeholder="请输入菜单路由"  style=" width:70%;" ></el-input>
+        <el-form-item label="菜单路由" prop="url" v-if="urlShow" :required="urlShow" >
+          <el-input type="text" v-model="editForm.url" placeholder="请输入菜单路由" maxlength="64" style=" width:70%;" ></el-input>
         </el-form-item>
-        <el-form-item label="权限标识" prop="perssions" v-if="perssionsShow" :required="perssionsShow">
+        <el-form-item label="权限标识" prop="perssions" v-if="perssionsShow"  maxlength="64" :required="perssionsShow">
           <el-input type="text" v-model="editForm.perssions" placeholder="请输入权限标识"  style=" width:70%;" ></el-input>
         </el-form-item>
        

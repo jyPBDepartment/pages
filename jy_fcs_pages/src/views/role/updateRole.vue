@@ -13,7 +13,7 @@
     <slot>
       <el-form :model="roleForm" :rules="rules" ref="roleForm" :label-position="labelPosition">
         <el-form-item label="角色名称" prop="name">
-          <el-input type="text" v-model="roleForm.name" style="width:75%" size="small"></el-input>
+          <el-input type="text" v-model="roleForm.name" style="width:75%" size="small" maxlength="18"></el-input>
 
         </el-form-item>
         <el-form-item label="角色备注" prop="name">
@@ -23,6 +23,7 @@
             size="small"
             placeholder="请输入角色名称"
             style="width:80%"
+            maxlength="255"
           ></el-input>
         </el-form-item>
       </el-form>
