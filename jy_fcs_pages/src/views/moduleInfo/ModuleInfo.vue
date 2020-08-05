@@ -46,19 +46,19 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column prop="name" label="模块名称" align="center"></el-table-column>
-      <el-table-column prop="url" label="模块图片" align="center" width="130px">
+      <el-table-column type="index" label="序号" min-width="60" align="center"></el-table-column>
+      <el-table-column prop="name" label="模块名称" align="center" :show-overflow-tooltip="true" min-width="85px"></el-table-column>
+      <el-table-column prop="url" label="模块图片" align="center" min-width="130px">
         <template slot-scope="scope">
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center" width="150px"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" width="150px"></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center"></el-table-column>
-      <el-table-column prop="updateUser" label="修改人" align="center"></el-table-column>
-      <el-table-column prop="sort" label="排序" align="center"></el-table-column>
-      <el-table-column align="center" label="状态" prop="status">
+      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px"></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center" min-width="90px"></el-table-column>
+      <el-table-column prop="updateUser" label="修改人" align="center" min-width="90px"></el-table-column>
+      <!-- <el-table-column prop="sort" label="排序" align="center" min-width="100px"></el-table-column> -->
+      <el-table-column align="center" label="状态" prop="status" min-width="100px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -232,7 +232,8 @@ export default {
     //重置
     resetForm(search) {
       this.name = "";
-      (this.status = ""), location.reload();
+      this.status = "";
+      this.search();
     },
     // 删除角色
     deleteModuleInfo(scope) {
@@ -263,5 +264,18 @@ export default {
 }
 .userModuleInfo {
   width: 100%;
+}
+</style>
+<style>
+.el-tooltip__popper {
+  max-width: 300px;
+  font-size: 14px;
+  background: #84c1ff !important;
+}
+.el-tooltip__popper[x-placement^="top"] .popper__arrow {
+  border-top-color: #84c1ff;
+}
+.el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
+  border-top-color: pink;
 }
 </style>

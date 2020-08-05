@@ -42,19 +42,12 @@
         <el-form-item label="审核人">
           <el-input type="text" v-model="postInfoForm.auditUser" size="small" style="width:80%" readonly></el-input>
         </el-form-item>
-        <el-form-item label="可见程度">
-            <el-select v-model="postInfoForm.visibility" style="width:80%" size="small" readonly>
-            <el-option
-              v-for="item in visibilityOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              disabled
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="审核驳回原因" >
+         <el-form-item label="审核驳回原因" >
           <el-input type="textarea" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input>
+        </el-form-item>
+        <el-form-item label="可见程度:">
+            <span v-if="postInfoForm.visibility==1" class="vis">全部可见</span>
+            <span v-if="postInfoForm.visibility==0" class="vis">自己可见</span>
         </el-form-item>
       </el-form>
     </slot>
@@ -104,10 +97,6 @@ export default {
         reason:"",
       },
       localShow: this.show,
-      visibilityOptions:[
-        { value: "0", label: "自己可见" },
-        { value: "1", label: "全部可见" }
-      ]
     };
   },
   watch: {

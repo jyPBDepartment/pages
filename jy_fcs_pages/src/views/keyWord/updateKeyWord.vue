@@ -13,10 +13,10 @@
     <slot>
       <el-form :model="keyWordForm" :rules="rules" ref="keyWordForm" :label-position="labelPosition" label-width="100px" >
         <el-form-item label="关键字名称" prop="name">
-          <el-input type="text" v-model="keyWordForm.name" size="small" placeholder="请输入关键字名称" style="width:80%" ></el-input>
+          <el-input type="text" v-model="keyWordForm.name" size="small" placeholder="请输入关键字名称(不能超过16个字符)" style="width:80%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="关键字编码" prop="code">
-          <el-input type="text" v-model="keyWordForm.code" size="small" placeholder="请输入关键字编码" style="width:80%"></el-input>
+          <el-input type="text" v-model="keyWordForm.code" size="small" placeholder="请输入关键字编码(不能超过16个字符)" style="width:80%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="parentCode">
           <el-select v-model="keyWordForm.parentCode" style="width:80%" size="small">

@@ -13,10 +13,10 @@
     <slot>
       <el-form :model="accountInfoForm" :rules="rules" ref="accountInfoForm" :label-position="labelPosition" label-width="100px">
         <el-form-item label="账户名称" prop="name">
-          <el-input type="text" v-model="accountInfoForm.name" size="small" placeholder="请输入账户名称" style="width:80%" ></el-input>
+          <el-input type="text" v-model="accountInfoForm.name" size="small" placeholder="请输入账户名称(不能超过16个字符)" style="width:80%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
-          <el-input type="text" v-model="accountInfoForm.phone" size="small" placeholder="请输入手机号码" style="width:80%" @change="telPhone"></el-input>
+          <el-input type="text" v-model="accountInfoForm.phone" size="small" placeholder="请输入11位手机号码" style="width:80%" @change="telPhone" maxlength="11"></el-input>
         </el-form-item>
       </el-form>
     </slot>

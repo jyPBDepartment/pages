@@ -23,8 +23,9 @@
             type="text"
             v-model="editForm.name"
             size="small"
-            placeholder="请输入账户名称"
+            placeholder="请输入账户名称(不能超过16个字符)"
             style="width:80%"
+            maxlength="16"
           ></el-input>
         </el-form-item>
         <el-form-item label="账户密码" prop="password">
@@ -32,17 +33,19 @@
             type="password"
             v-model="editForm.password"
             size="small"
-            placeholder="请输入账户密码"
+            placeholder="请输入账户密码(不能超过16个字符)"
             style="width:80%"
+            maxlength="16"
           ></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="newPassword">
           <el-input
             type="password"
-            placeholder="请确认密码"
+            placeholder="请确认密码(不能超过16个字符)"
             v-model="editForm.newPassword"
             size="small"
             style="width:80%"
+            maxlength="16"
           ></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
@@ -50,9 +53,10 @@
             type="text"
             v-model="editForm.phone"
             size="small"
-            placeholder="请输入手机号码"
+            placeholder="请输入十一位手机号码"
             style="width:80%"
             @change="telPhone"
+            maxlength="11"
           ></el-input>
         </el-form-item>
       </el-form>
