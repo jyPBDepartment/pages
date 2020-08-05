@@ -19,10 +19,10 @@
         label-width="100px"
       >
         <el-form-item label="分类名称" prop="name">
-          <el-input type="text" v-model="editForm.name" placeholder="请输入分类名称" style="width:70%;"></el-input>
+          <el-input type="text" v-model="editForm.name" placeholder="请输入分类名称（不超过15个字符）" style="width:70%;" :maxLength = '15' ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="code">
-          <el-input type="text" v-model="editForm.code" placeholder="请输入分类编码" style="width:70%;"></el-input>
+          <el-input type="text" v-model="editForm.code" placeholder="请输入分类编码（不超过15个字符）" style="width:70%;" :maxLength = '15'></el-input>
         </el-form-item>
         <el-form-item label="上级分类编码" prop="parentCode">
           <el-select v-model="editForm.parentCode" placeholder="请输入上级分类编码" style="width:70%;">
@@ -34,9 +34,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-input type="text" v-model="editForm.status" placeholder="请输入状态" style=" width:70%;"></el-input>
-        </el-form-item>
+      
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -84,7 +82,7 @@ export default {
         name: "",
         code: "",
         parentCode: "",
-        status: "0",
+       
         createUser: localStorage.getItem("userInfo"),
       },
       classiOptions: [],
@@ -93,7 +91,7 @@ export default {
       rules: {
         name: [{ required: true, message: "请输入分类名称", trigger: "blur" }],
         code: [{ required: true, message: "请输入分类编码", trigger: "blur" }],
-        status: [{ required: true, message: "请输入状态", trigger: "blur" }],
+      
       },
     };
   },
@@ -129,8 +127,8 @@ export default {
     saveClassification: function () {
       if (
         this.editForm.name != "" &&
-        this.editForm.code != "" &&
-        this.editForm.status != ""
+        this.editForm.code != "" 
+        
       ) {
         let params = {
           classificationEntity: this.editForm,
@@ -146,7 +144,7 @@ export default {
             console.error(error);
           });
       } else {
-        this.$alert("分类名称，分类编码,状态不能为空！", "提示", {
+        this.$alert("分类名称，分类编码不能为空！", "提示", {
           confirmButtonText: "确定",
         });
       }

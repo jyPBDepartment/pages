@@ -12,6 +12,7 @@
         <el-input
           v-model="name"
           type="text"
+          :maxlength="10"
           placeholder="请输入标题名称"
           class="el-input el-input--small"
           clearable
@@ -39,19 +40,14 @@
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border  highlight-current-row  size="mini">
-      <el-table-column type="index" label="序号" align="center" style="width:40px;"></el-table-column>
-      <el-table-column  prop="name" label="标题名称" align="center" style="width:40px;"></el-table-column>
-      <el-table-column        
-        prop="descrip"
-        label="描述"
-        align="center"
-        :show-overflow-tooltip="true"
-      ></el-table-column>
+      <el-table-column type="index" label="序号" align="center"  min-width="5%" max-width="5%"></el-table-column>
+      <el-table-column  prop="name" label="标题名称" align="center"  min-width="45%" max-width="50%"></el-table-column>
+   
       <el-table-column        
         prop="transactionTypeCode"
         label="农服交易类型"
         align="center"
-        style="width:40px;"
+        min-width="45%" max-width="50%"
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionTypeCode==0">收购</span>
@@ -66,7 +62,7 @@
         prop="transactionCategoryCode"
         label="农服交易类别"
         align="center"
-        style="width:40px;"
+       min-width="45%" max-width="50%"
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionCategoryCode==0">玉米</span>
@@ -74,25 +70,22 @@
           <span v-if="scope.row.transactionCategoryCode==2">水稻</span>
         </template>
       </el-table-column>
-      <el-table-column  prop="purchasingPrice" label="收购价格（元）" align="center"></el-table-column>
-      <el-table-column  prop="purchasingArea" label="收购区域" align="center"></el-table-column>
-      <el-table-column  prop="sellingPrice" label="出售价格" align="center"></el-table-column>
-      <el-table-column  prop="sellingArea" label="出售区域" align="center"></el-table-column>
-      <el-table-column  prop="contactsUser" label="联系人" align="center"></el-table-column>
-      <el-table-column  prop="contactsPhone" label="联系方式" align="center"></el-table-column>
-      <el-table-column  prop="url" label="图片" align="center" width="80">
+      <el-table-column  prop="purchasingPrice" label="收购价格" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column  prop="purchasingArea" label="收购区域" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column  prop="sellingPrice" label="出售价格" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column  prop="sellingArea" label="出售区域" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column  prop="contactsUser" label="联系人" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column  prop="contactsPhone" label="联系方式" align="center" min-width="60%" max-width="65%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column  prop="url" label="图片" align="center" min-width="50%" max-width="50%">
         <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
+          <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column  prop="machineType" label="机器类型" align="center"></el-table-column>
+      <el-table-column  prop="machineType" label="机器类型" align="center" min-width="45%" max-width="50%"></el-table-column>
+      
+      <el-table-column  sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
 
-      <el-table-column  prop="model" label="型号" align="center"></el-table-column>
-      <el-table-column  prop="articleNumber" label="货号" align="center"></el-table-column>
-      <el-table-column  prop="labelCode" label="标签编码" align="center"></el-table-column>
-      <el-table-column  sortable prop="purchaseDate" label="购买时间" align="center" width="150"></el-table-column>
-
-      <el-table-column align="center" prop="status" label="审核状态" >
+      <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%" >
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
@@ -101,20 +94,12 @@
           <span v-if="scope.row.status==4">已完成</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="发布时间" align="center" width="150"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
-      <el-table-column prop="createUser" label="发布人" align="center" ></el-table-column>
-      <el-table-column prop="updateUser" label="审核人" align="center" ></el-table-column>
-      <el-table-column
-        prop="examineReason"
-        label="审核拒绝理由"
-        align="center"
-        style="width:40px;"
-        :show-overflow-tooltip="true"
-      ></el-table-column>
-      <el-table-column fixed="right" label="操作" align="center" style="width:100%">
+      <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
+     
+      <el-table-column fixed="right" label="操作" align="center" style="width:70%">
         <template slot-scope="scope">
-          <el-button @click="agrContent(scope)" type="primary" size="small">查看详情</el-button>
+          <el-button @click="agrContent(scope)" type="primary" size="small" style="padding:9px 6px;">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -265,7 +250,7 @@ export default {
     resetRuleTag(search) {
       this.name = "";
       this.status = "";
-      location.reload();
+     this.search();
     },
     closeUpdateAgrContentDialog() {
       this.agrContentFlag = false;

@@ -12,8 +12,10 @@
         <el-input
           v-model="name"
           type="text"
+          :maxlength="10"
           placeholder="请输入名称"
           class="el-input el-input--small"
+         
           clearable
         ></el-input>
       </el-form-item>
@@ -42,24 +44,25 @@
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border style="width: 100%;" highlight-current-row  size="mini">
-      <el-table-column type="index" label="序号" align="center" ></el-table-column>
-      <el-table-column  prop="name" label="名称" align="center" ></el-table-column>
-      <el-table-column  prop="url" label="图片" align="center" >
+      <el-table-column type="index" label="序号" align="center" min-width="48px" max-width="48px" ></el-table-column>
+      <el-table-column  prop="name" label="名称" align="center"  min-width="100px" max-width="139px"></el-table-column>
+      <el-table-column  prop="url" label="图片" align="center"  min-width="100px" max-width="135px">
         <template slot-scope="scope">
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column  prop="cropsTypeCode" label="农作物种类编码" align="center"></el-table-column>
-      <el-table-column  prop="dipTypeCode" label="病虫害种类编码" align="center"></el-table-column>
+      <el-table-column  prop="cropsTypeCode" label="农作物种类" align="center"  min-width="100px" max-width="135px"></el-table-column>
+      <el-table-column  prop="dipTypeCode" label="病虫害种类" align="center"  min-width="100px" max-width="135px"></el-table-column>
       <el-table-column
         
         prop="describetion"
         label="描述"
         align="center"
         :show-overflow-tooltip="true"
+        min-width="100px" max-width="135px"
       ></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center"  prop="auditStatus" label="状态" min-width="50">
+      <el-table-column align="center"  prop="auditStatus" label="状态" min-width="50"  max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -73,7 +76,7 @@
       </el-table-column>
       <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center" ></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center"  min-width="100px" max-width="135px"></el-table-column>
 
       <el-table-column fixed="right" label="操作" align="center" style="width:120%">
         <template slot-scope="scope">
@@ -309,7 +312,7 @@ export default {
     resetRuleTag(search) {
       this.name = "";
       this.auditStatus = "";
-      location.reload();
+     this.search();
     },
     closeUpdateCaseInfoDialog: function () {
       this.updateCaseInfoFlag = false;
@@ -365,6 +368,7 @@ export default {
 .el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
   border-top-color: pink;
 }
+
 </style>
 
 

@@ -13,10 +13,10 @@
      <slot>
       <el-form :rules="rules" ref="powerInfoForm" :model="powerInfoForm" label-width="100px">
         <el-form-item label="权限名称" prop="jurName">
-          <el-input type="text" v-model="powerInfoForm.jurName" placeholder="请输入权限名称" style=" width:70%;"></el-input>
+          <el-input type="text" v-model="powerInfoForm.jurName" placeholder="请输入权限名称（不超过15个字符）" :maxLength = '15' style=" width:70%;"></el-input>
         </el-form-item>
         <el-form-item label="权限编码" prop="jurCode" >
-           <el-input type="text" v-model="powerInfoForm.jurCode" placeholder="请输入权限编码" style=" width:70%;"></el-input>
+           <el-input type="text" v-model="powerInfoForm.jurCode" placeholder="请输入权限编码（不超过15个字符）" :maxLength = '15' style=" width:70%;"></el-input>
         </el-form-item>
       
          <el-form-item label="上级权限编码" prop="subJurCode" >
@@ -29,9 +29,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-          <el-form-item label="状态" prop="auditStatus">
-          <el-input type="text" v-model="powerInfoForm.auditStatus" placeholder="请输入状态" style=" width:70%;"></el-input>
-        </el-form-item>
+        
          
       </el-form>
     </slot>
@@ -70,7 +68,7 @@ export default {
         jurName:"",
         jurCode:"",
         subJurCode:"",
-        auditStatus:"",
+      
         
       },
      
@@ -81,7 +79,7 @@ export default {
         jurCode: [
           { required: true, message: "请输入权限编码", trigger: "blur" },
         ],
-        auditStatus:[{required: true, message: "请输入状态", trigger: "blur"}]
+       
       }
     };
   },

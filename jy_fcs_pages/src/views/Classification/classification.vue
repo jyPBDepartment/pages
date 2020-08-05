@@ -12,6 +12,7 @@
         <el-input
           v-model="code"
           type="text"
+          :maxlength="10"
           placeholder="请输入分类编码"
           class="el-input el-input--small"
           clearable
@@ -41,10 +42,10 @@
       size="mini"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column  prop="code" label="分类编码" align="center" style="width:40px;"></el-table-column>
-      <el-table-column  prop="name" label="分类名称" align="center" style="width:40px;"></el-table-column>
+      <el-table-column  prop="code" label="分类编码" align="center" min-width="80px" max-width="110px"></el-table-column>
+      <el-table-column  prop="name" label="分类名称" align="center" min-width="80px" max-width="110px"></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center"  prop="status" label="状态" min-width="50">
+      <el-table-column align="center"  prop="status" label="状态" min-width="50px" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -56,10 +57,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
-      <el-table-column  prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
-      <el-table-column  prop="updateUser" label="修改人" align="center" style="width:40px;"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="180"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="180"></el-table-column>
+      <el-table-column  prop="createUser" label="创建人" align="center" min-width="80px" max-width="115px"></el-table-column>
+      <el-table-column  prop="updateUser" label="修改人" align="center"  min-width="80px" max-width="115px"></el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
           <el-button
@@ -278,7 +279,7 @@ export default {
     // 重置
     resetRuleTag(search) {
       this.code = "";
-      location.reload();
+      this.search();
     },
     closeRuleTagDialog() {
       this.addClassificationFlag = false;

@@ -12,91 +12,60 @@
     <!-- 插槽区 -->
     <slot>
       <el-form
-        :rules="rules"
+        
         ref="caseInfoForm"
         :model="caseInfoForm"
         label-width="120px"
         :label-position="labelPosition"
         @submit.native.prevent
       >
-        <el-form-item label="名称" prop="name">
+        <el-form-item label="名称" >
           <el-input
             type="text"
             v-model="caseInfoForm.name"
-            placeholder="请输入名称"
+           
             style=" width:70%;"
             readonly
           ></el-input>
         </el-form-item>
-        <el-form-item label="图片地址" prop="imgUrl">
-          <el-upload
-            class="upload-demo"
-            :action="upload"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            list-type="picture"
-            :on-success="uploadSuccess"
-            :limit="limit"
-            :on-exceed="uploadExceed"
-            disabled
-          >
-            <el-button
-              size="small"
-              type="primary"
-              style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px"
-            >点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
+        <el-form-item label="图片">
+          <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url" readonly></el-image>
         </el-form-item>
-        <el-form-item label="农作物种类编码" prop="cropsTypeCode">
-          <el-select
-            v-model="caseInfoForm.cropsTypeCode"
-            placeholder="请输入农作物种类编码"
-            style="width:70%;"
-            disabled
-          >
-            <el-option
-              v-for="item in cropsOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="病虫害种类编码" prop="dipTypeCode">
-          <el-select
-            v-model="caseInfoForm.dipTypeCode"
-            placeholder="请输入病虫害种类编码"
-            style="width:70%;"
-            disabled
-          >
-            <el-option
-              v-for="item in dipOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="描述" prop="describetion">
-          <el-input
-            type="textarea"
-            v-model="caseInfoForm.describetion"
-            placeholder="请输入描述"
-            style="width:70%;"
-            readonly
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="状态" prop="auditStatus">
+        <el-form-item label="农作物种类编码" >
           <el-input
             type="text"
-            v-model="caseInfoForm.auditStatus"
-            placeholder="请输入状态"
+            v-model="caseInfoForm.cropsTypeCode"
+           
             style=" width:70%;"
-            disabled
+            readonly
           ></el-input>
         </el-form-item>
+        <el-form-item label="病虫害种类编码" >
+           <el-input
+            type="text"
+            v-model="caseInfoForm.dipTypeCode"           
+            style=" width:70%;"
+            readonly
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="描述"  class="bottom"   >
+          <el-input
+            type="textarea"
+            v-model="caseInfoForm.describetion"    
+            style=" width:70%;"
+            
+            :rows="3"
+            readonly
+          ></el-input>
+        </el-form-item>
+         <img src="../../assets/img/arrow.png" class="select"/>   
+        <el-form-item label="状态" >
+          <el-select v-model="caseInfoForm.auditStatus" disabled >            
+            <el-option label="启用" value="1" >启用</el-option>
+            <el-option label="禁用" value="0" >禁用</el-option>                   
+          </el-select>      
+        </el-form-item>
+         
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -144,10 +113,8 @@ export default {
       caseInfoForm: {},
       cropsOptions: [],
       dipOptions: [],
-      //rules表单验证
-      rules: {
-        name: [{ required: true, message: "请输入名称", trigger: "blur" }],
-      },
+      
+     
     };
   },
   watch: {
@@ -196,7 +163,26 @@ export default {
 </script>
 
 <style scoped>
-.el-form {
+  .el-form {
   padding-left: 115px;
+}
+.bottom{
+  margin-bottom: 0px;
+  
+}
+.select{
+  width:30px;
+  height:20px;
+  margin-left:304px;
+  margin-bottom:-34px;
+  position:relative;
+  z-index:100;
+}
+</style>
+<style>
+.el-input.is-disabled .el-input__inner{
+  color: black;
+  background-color: #fff; 
+  scrollbar-arrow-color: #fff;
 }
 </style>

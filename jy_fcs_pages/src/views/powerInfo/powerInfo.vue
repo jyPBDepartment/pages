@@ -12,6 +12,7 @@
         <el-input
           v-model="jurName"
           type="text"
+          :maxlength="10"
           placeholder="请输入权限名称"
           class="el-input el-input--small"
           clearable
@@ -21,6 +22,7 @@
         <el-input
           v-model="jurCode"
           type="text"
+          :maxlength="10"
           placeholder="请输入权限编码"
           class="el-input el-input--small"
           clearable
@@ -50,10 +52,10 @@
       size="mini"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column  prop="jurCode" label="权限编码" align="center"></el-table-column>
-      <el-table-column  prop="jurName" label="权限名称" align="center" style="width:40px;"></el-table-column>
+      <el-table-column  prop="jurCode" label="权限编码" align="center"  min-width="80px" max-width="115px"></el-table-column>
+      <el-table-column  prop="jurName" label="权限名称" align="center"  min-width="80px" max-width="115px"></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center"  prop="auditStatus" label="状态" min-width="50">
+      <el-table-column align="center"  prop="auditStatus" label="状态" min-width="50" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -65,10 +67,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
-      <el-table-column  prop="createUser" label="创建人" align="center" style="width:40px;"></el-table-column>
-      <el-table-column  prop="updateUser" label="修改人" align="center" style="width:40px;"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="180"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="180"></el-table-column>
+      <el-table-column  prop="createUser" label="创建人" align="center"  min-width="80px" max-width="115px"></el-table-column>
+      <el-table-column  prop="updateUser" label="修改人" align="center"  min-width="80px" max-width="115px"></el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
           <el-button
@@ -289,7 +291,7 @@ export default {
     resetRuleTag(search) {
       this.jurName = "";
       this.jurCode = "";
-      location.reload();
+      this.search();
     },
     closeRuleTagDialog() {
       this.addPowerInfoFlag = false;

@@ -21,7 +21,7 @@
           <el-input type="text" v-model="agrForm.name" readonly></el-input>
         </el-form-item>
         <el-form-item label="描述">
-          <el-input type="textarea" v-model="agrForm.descrip" readonly></el-input>
+          <el-input type="textarea" v-model="agrForm.descrip" :rows="3" readonly></el-input>
         </el-form-item>
         <!-- <el-form-item label="农服交易类型">
           <el-input type="text" v-model="agrForm.transactionTypeCode" readonly></el-input>

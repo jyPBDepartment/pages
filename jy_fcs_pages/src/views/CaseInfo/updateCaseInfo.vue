@@ -20,7 +20,7 @@
         @submit.native.prevent
       >
         <el-form-item label="名称" prop="name">
-          <el-input type="text" v-model="caseInfoForm.name" placeholder="请输入名称" style=" width:70%;"></el-input>
+          <el-input type="text" v-model="caseInfoForm.name" placeholder="请输入名称（不超过10个字符）" style=" width:70%;" :maxlength="10"></el-input>
         </el-form-item>
         <el-form-item label="图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
@@ -67,17 +67,10 @@
         <el-form-item label="描述" prop="describetion">
           <el-input
             type="textarea"
+            :maxlength="200"
             v-model="caseInfoForm.describetion"
-            placeholder="请输入描述"
+            placeholder="请输入描述（不超过200个字符）"
             style="width:70%;"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="状态" prop="auditStatus">
-          <el-input
-            type="text"
-            v-model="caseInfoForm.auditStatus"
-            placeholder="请输入状态"
-            style=" width:70%;"
           ></el-input>
         </el-form-item>
       </el-form>
@@ -152,9 +145,7 @@ export default {
             trigger: "blur",
           },
         ],
-        auditStatus: [
-          { required: true, message: "请输入状态", trigger: "blur" },
-        ],
+        
       },
     };
   },
@@ -194,7 +185,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               this.cropsOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["code"],
+                label: res.data[i]["name"],
               });
             }
           }
@@ -213,7 +204,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               this.dipOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["code"],
+                label: res.data[i]["name"],
               });
             }
           }
