@@ -15,11 +15,12 @@
       <el-form-item label="菜单名称" >
         <el-input v-model="name" type="text" placeholder="请输入菜单名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="text"  @click="search" size="medium" class="find"  icon="el-icon-search" >查询</el-button>
-       <el-button type="text"  @click="resetForm(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
+      <el-button type="warning"  @click="search" size="small"  icon="el-icon-search" >查询</el-button>
+       <el-button type="info"  @click="resetForm(search)"  size="small"  icon="el-icon-close">重置</el-button>
         <el-row>
-           <el-button type="text"  @click="openRuleTag"  size="medium" class="insert"  icon="el-icon-plus">添加</el-button>
+           <el-button type="success"  @click="openRuleTag"  size="small"  icon="el-icon-plus">添加</el-button>
         </el-row>
+        <br>
     </el-form>
 
     <!-- 展示的表单 -->
@@ -71,21 +72,19 @@
         <template slot-scope="scope">
            <el-button
            @click="openUpdateRole(scope)"
-            type="text"
-            size="medium"
+            type="primary"
+            size="small"
           
             icon="el-icon-edit"
-            class="up"
 
             
           >编辑</el-button>
            <el-button
            @click="deleteMenu(scope)"
-            type="text"
-            size="medium"
+            type="danger"
+            size="small"
            
             icon="el-icon-delete"
-            class="del"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -341,84 +340,16 @@ export default {
 </script>
 
 <style scoped >
-.el-table{
-  background-color:#FFF
-}
-.el-row {
-  margin-top: 2px;
-  margin-bottom: 6px;
-}
-.el-form-item {
-  font-size: 14px;
-}
 .el-tooltip__popper {
+  max-width: 300px;
   font-size: 14px;
-  max-width: 150px;
+  background: #84c1ff !important;
 }
-.template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
+.el-tooltip__popper[x-placement^="top"] .popper__arrow {
+  border-top-color: #84c1ff;
 }
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.find {
-  width: 82px;
-  background-color:#e6a23c;
-  color: #fff;
-  border-color: #e6a23c;
-  font-size: 12px;
-}
-.small {
-  width: 82px;
-  background-color: #909399;
-  border-color: #909399;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.insert{
-  width: 82px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.up {
-  margin-right: 20px;
-  width: 50px;
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-}
-.el-button.del {
-  width: 50px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
+.el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
+  border-top-color: pink;
 }
 
 </style>
