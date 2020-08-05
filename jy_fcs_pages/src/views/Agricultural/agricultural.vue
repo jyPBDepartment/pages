@@ -45,7 +45,7 @@
    
       <el-table-column        
         prop="transactionTypeCode"
-        label="农服交易类型"
+        label="交易类型"
         align="center"
         min-width="45%" max-width="50%"
       >
@@ -60,7 +60,7 @@
       </el-table-column>
       <el-table-column        
         prop="transactionCategoryCode"
-        label="农服交易类别"
+        label="交易类别"
         align="center"
        min-width="45%" max-width="50%"
       >

@@ -16,7 +16,7 @@
           <el-input type="text" v-model="postInfoForm.name" size="small" style="width:80%" readonly ></el-input>
         </el-form-item>
         <el-form-item label="内容" >
-          <el-input type="textarea" v-model="postInfoForm.code" size="small" style="width:80%" readonly></el-input>
+          <el-input type="textarea" :rows="3" v-model="postInfoForm.code" size="small" style="width:80%" readonly></el-input>
         </el-form-item>
         <el-form-item label="分类id">
           <el-input type="text" v-model="postInfoForm.parentCode" size="small" style="width:80%" readonly></el-input>
@@ -25,7 +25,7 @@
           <el-input type="text" v-model="postInfoForm.auditStatus" size="small" style="width:80%" readonly></el-input>
         </el-form-item>
         <el-form-item label="审核意见" >
-          <el-input type="textarea" v-model="postInfoForm.auditOptinion" size="small" style="width:80%" readonly></el-input>
+          <el-input type="textarea" :rows="3" v-model="postInfoForm.auditOptinion" size="small" style="width:80%" readonly></el-input>
         </el-form-item>
         <el-form-item label="发布时间" >
           <el-input type="text" v-model="postInfoForm.createDate" size="small" style="width:80%" readonly></el-input>
@@ -43,7 +43,7 @@
           <el-input type="text" v-model="postInfoForm.auditUser" size="small" style="width:80%" readonly></el-input>
         </el-form-item>
          <el-form-item label="审核驳回原因" >
-          <el-input type="textarea" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input>
+          <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input>
         </el-form-item>
         <el-form-item label="可见程度:">
             <span v-if="postInfoForm.visibility==1" class="vis">全部可见</span>
