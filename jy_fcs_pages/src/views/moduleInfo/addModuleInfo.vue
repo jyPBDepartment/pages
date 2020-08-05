@@ -23,13 +23,15 @@
             type="text"
             v-model="editForm.name"
             size="small"
-            placeholder="请输入模块名称"
+            placeholder="请输入模块名称(不能超过16个字符)"
             style="width:80%"
+            maxlength="16"
           ></el-input>
         </el-form-item>
         <el-form-item label="模块图片" prop="imgUrl">
+          <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-            style="width:80%"
+            style="width:80%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -173,4 +175,9 @@ export default {
 .el-button {
   border: none;
 }
+.required {
+  color: red;
+  margin-left: -79px;
+}
+
 </style>

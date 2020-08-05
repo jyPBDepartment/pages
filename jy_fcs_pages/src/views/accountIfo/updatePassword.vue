@@ -13,13 +13,13 @@
     <slot>
       <el-form class="user-account-key" ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="原密码" prop="pass">
-          <el-input type="text" placeholder="请输入原密码" v-model="form.pass"></el-input>
+          <el-input type="text" placeholder="请输入原密码(不能超过16个字符)" v-model="form.pass" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="新密码" prop="password">
-          <el-input type="password" placeholder="请设置新密码" v-model="form.password"></el-input>
+          <el-input type="password" placeholder="请设置新密码(不能超过16个字符)" v-model="form.password" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="newPassword2">
-          <el-input type="password" placeholder="请确认新密码" v-model="form.newPassword2"></el-input>
+          <el-input type="password" placeholder="请确认新密码(不能超过16个字符)" v-model="form.newPassword2" maxlength="16"></el-input>
         </el-form-item>
       </el-form>
     </slot>

@@ -13,10 +13,10 @@
     <slot>
       <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" >
         <el-form-item label="关键词名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入关键词名称" style="width:80%" ></el-input>
+          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入关键词名称(不能超过16个字符)" style="width:80%" maxlength="16" ></el-input>
         </el-form-item>
         <el-form-item label="关键词编码" prop="code">
-          <el-input type="text" v-model="editForm.code" size="small" placeholder="请输入关键词编码" style="width:80%" ></el-input>
+          <el-input type="text" v-model="editForm.code" size="small" placeholder="请输入关键词编码(不能超过16个字符)" style="width:80%" maxlength="16" ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="parentCode">
           <el-select v-model="editForm.parentCode" style="width:80%" size="small">
@@ -30,7 +30,7 @@
         </el-form-item>
       </el-form>
     </slot>
-    
+
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button type="primary" icon="el-icon-check" @click="saveKeyWord()">保存</el-button>

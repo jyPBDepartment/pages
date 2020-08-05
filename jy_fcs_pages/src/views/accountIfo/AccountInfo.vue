@@ -48,14 +48,14 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-      <el-table-column prop="name" width="110" label="账户名称" align="center"></el-table-column>
-      <el-table-column prop="phone" width="100" label="手机号码" align="center"></el-table-column>
-      <el-table-column prop="createDate" width="150" label="创建时间" align="center"></el-table-column>
-      <el-table-column prop="updateDate" width="150" label="修改时间" align="center"></el-table-column>
-      <el-table-column prop="createUser" width="100" label="创建人" align="center"></el-table-column>
-      <el-table-column prop="updateUser" width="100" label="修改人" align="center"></el-table-column>
-      <el-table-column align="center" width="80" label="状态" prop="auditStatus">
+      <el-table-column type="index" label="序号" min-width="20" align="center"></el-table-column>
+      <el-table-column prop="name" min-width="105" label="账户名称" align="center"></el-table-column>
+      <el-table-column prop="phone" min-width="95" label="手机号码" align="center"></el-table-column>
+      <el-table-column prop="createDate" min-width="135" label="创建时间" align="center" sortable></el-table-column>
+      <el-table-column prop="updateDate" min-width="135" label="修改时间" align="center" sortable></el-table-column>
+      <el-table-column prop="createUser" min-width="90" label="创建人" align="center"></el-table-column>
+      <el-table-column prop="updateUser" min-width="90" label="修改人" align="center"></el-table-column>
+      <el-table-column align="center" min-width="70" label="状态" prop="auditStatus">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -67,17 +67,17 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="权限设置" >
+      <el-table-column align="center" label="权限设置" min-width="110" >
         <template slot-scope="scope">
            <el-button
            @click="openUpdatePower(scope)"
-            type="success"
+            type="primary"
             size="small"
             icon="el-icon-s-tools"
           >权限设置</el-button>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="300px">
+      <el-table-column align="center" label="操作" min-width="291px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateAccountInfo(scope)"
@@ -85,18 +85,18 @@
             size="small"
             icon="el-icon-edit"
           >编辑</el-button>
+          <el-button
+           @click="updatePass(scope)"
+            type="primary"
+            size="small"
+            icon="el-icon-grape"
+          >修改密码</el-button>
            <el-button
            @click="deleteUser(scope)"
             type="danger"
             size="small"
             icon="el-icon-delete"
           >删除</el-button>
-          <el-button
-           @click="updatePass(scope)"
-            type="success"
-            size="small"
-            icon="el-icon-grape"
-          >修改密码</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -289,7 +289,7 @@ export default {
       this.name = "";
       this.phone="",
       this.auditStatus="",
-      location.reload();
+      this.search();
     },
     // 删除
     deleteUser(scope) {

@@ -24,12 +24,12 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column prop="name" label="标题名称" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="code" label="内容" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="parentCode" label="分类id" align="center"></el-table-column>
-      <el-table-column prop="author" label="作者" align="center"></el-table-column>
-      <el-table-column prop="auditStatus" label="审核状态" align="center">
+      <el-table-column type="index" label="序号" min-width="30" align="center"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" :show-overflow-tooltip="true" min-width="80px"></el-table-column>
+      <el-table-column prop="code" label="内容" align="center" :show-overflow-tooltip="true" min-width="80px"></el-table-column>
+      <el-table-column prop="parentCode" label="分类id" align="center" min-width="90px"></el-table-column>
+      <el-table-column prop="author" label="作者" align="center" min-width="90px"></el-table-column>
+      <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="90px">
         <template slot-scope="scope">
            <span v-if="scope.row.auditStatus==0">未审核</span>
            <span v-if="scope.row.auditStatus==1">审核中</span>
@@ -37,18 +37,16 @@
            <span v-if="scope.row.auditStatus==3">审核驳回</span>
           </template>
       </el-table-column>
-      <el-table-column prop="auditOptinion" label="审核意见" align="center"></el-table-column>
-      <el-table-column prop="createDate" label="发布时间" align="center" width="150px"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" width="150px"></el-table-column>
-      <el-table-column prop="createUser" label="发布人" align="center"></el-table-column>
-      <el-table-column prop="auditUser" label="审核人" align="center"></el-table-column>
-      <el-table-column prop="visibility" label="可见程度" align="center">
+      <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="140px"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px"></el-table-column>
+      <el-table-column prop="auditUser" label="审核人" align="center" min-width="100px"></el-table-column>
+      <el-table-column prop="visibility" label="可见程度" align="center" min-width="90px">
         <template slot-scope="scope">
            <span v-if="scope.row.visibility==0">自己可见</span>
            <span v-if="scope.row.visibility==1">全部可见</span>
           </template>
       </el-table-column>
-      <el-table-column align="center" label="状态" prop="status">
+      <el-table-column align="center" label="状态" prop="status" min-width="65px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -60,15 +58,14 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" min-width="120px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdatePostInfo(scope)"
-            type="success"
+            type="primary"
             size="small"
             icon="el-icon-document"
           >查看详情</el-button>
-     
         </template>
       </el-table-column>
     </el-table>
@@ -207,7 +204,7 @@ export default {
     resetForm(search) {
       this.name = "";
       this.createUser="";
-      location.reload();
+      this.search();
     },
   }
 };

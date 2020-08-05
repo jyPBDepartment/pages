@@ -13,11 +13,12 @@
     <slot>
       <el-form :rules="rules" ref="moduleInfoForm" :model="moduleInfoForm" label-width="100px" :label-position="labelPosition">
         <el-form-item label="模块名称" prop="name">
-          <el-input size="small" type="text" v-model="moduleInfoForm.name" placeholder="请输入名称" style=" width:75%;"></el-input>
+          <el-input size="small" type="text" v-model="moduleInfoForm.name" placeholder="请输入名称(不能超过16个字符)" style=" width:75%;" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="模块图片" prop="imgUrl">
+          <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-            style="width:75%"
+            style="width:75%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -179,5 +180,9 @@ export default {
 }
 .el-button {
   border: none;
+}
+.required {
+  color: red;
+  margin-left: -79px;
 }
 </style>
