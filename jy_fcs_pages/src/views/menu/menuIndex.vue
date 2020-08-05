@@ -3,15 +3,9 @@
  */
 <template>
     <div class="navigationFunction">
-          <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">账户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
-    </el-breadcrumb>
     <br>
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
-       <el-form-item label="搜索："></el-form-item>
       <el-form-item label="菜单名称" >
         <el-input v-model="name" type="text" placeholder="请输入菜单名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>

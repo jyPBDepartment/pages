@@ -4,13 +4,8 @@
 <template>
   <div>
     <!-- 面包屑导航 --> 
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">圈子管理</el-breadcrumb-item>
-      <el-breadcrumb-item>评论管理</el-breadcrumb-item>
-    </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" ref="searchForm" class="user-search">
-      <el-form-item label="搜索："></el-form-item>
       <el-form-item prop="type" label="评论内容">
         <el-input size="small" v-model="content" placeholder="输入评论内容"></el-input>
       </el-form-item>

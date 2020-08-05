@@ -4,13 +4,8 @@
 <template>
   <div>
     <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">账户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>角色管理</el-breadcrumb-item>
-    </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
-      <el-form-item label="搜索："></el-form-item>
       <el-form-item label="角色名称">
         <el-input size="small" v-model="name" placeholder="输入角色名称"></el-input>
       </el-form-item>
