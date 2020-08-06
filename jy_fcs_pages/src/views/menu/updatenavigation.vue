@@ -248,6 +248,7 @@ selectType(result){
     
   saveNavigation:function() {
       let typeFlag = this.editForm.menuType;
+      alert(typeFlag);
       if(typeFlag == 1){
         //目录
         this.editForm.url = "";
@@ -262,7 +263,29 @@ selectType(result){
         //按钮
         this.editForm.url = "";
         this.editForm.icon = "";
-  }
+      }
+      if(menuFlag == 1){
+        //目录 
+        if(this.editForm.icon == ""){
+          this.$alert('目录图标不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+      }
+      if(typeFlag == 2){
+        //菜单 
+        if(this.editForm.icon == ""){
+          this.$alert('菜单图标不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+        if(this.editForm.url == ""){
+          this.$alert('菜单路由不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+        if(this.editForm.parentId == ""){
+          this.$alert('父菜单不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+      }
       let params = {
           menuEntity: aes.encrypt(JSON.stringify(this.editForm) )
         };
