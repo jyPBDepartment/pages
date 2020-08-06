@@ -192,12 +192,6 @@ export default {
 </script>
 
 <style>
-.el-form {
-  padding-left: 100px;
-}
-.el-button{
-  border: none;
-}
 .el-checkbox__inner{
     width: 16px;
     height: 16px;

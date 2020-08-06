@@ -13,7 +13,7 @@
         <el-input size="small" v-model="user" placeholder="输入评论人"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="find">查询</el-button>
         
         <el-button size="small" type="info" icon="el-icon-remove-outline" @click="resetForm('search')" class="small">重置</el-button>
       </el-form-item>
@@ -109,6 +109,11 @@ export default {
     },
     // 获取评论列表
     search: function(parameter) {
+      if(parameter == 'manual'){
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
+      //alert(JSON.stringify(parameter));
       let params = {
         content: this.content,
         user: this.user,

@@ -52,7 +52,12 @@
     <!-- 按钮区 -->
     <span slot="footer">
      
-      <el-button type="success" icon="el-icon-check" @click="saveNavigation()" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
+      <el-button type="success" 
+       :disabled="saveFlag"
+       icon="el-icon-check" 
+       @click="saveNavigation()" 
+       size="medium" 
+       style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
        <el-button type="danger" icon="el-icon-close" @click="close" size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
     </span>
   </el-dialog>
@@ -86,6 +91,7 @@ export default {
     return {
       icon:"",
       isShow:false,
+      saveFlag:false,
       iconShow:true,
       urlShow:false,
       parentShow:false,
@@ -282,11 +288,12 @@ selectType(result){
           return;
         }
       }
+        this.saveFlag = true;
         api.testAxiosGet(ApiPath.url.saveMenu,params).then(res =>{
                this.$message.success(res.message);
                this.reload();
                this.close();
-               });
+               }).catch(function(error) {this.saveFlag = false;});
      
     },
      close: function() {

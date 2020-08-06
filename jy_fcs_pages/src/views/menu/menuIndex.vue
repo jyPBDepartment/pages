@@ -9,8 +9,10 @@
       <el-form-item label="菜单名称" >
         <el-input v-model="name" type="text" placeholder="请输入菜单名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
+       <el-form-item>
       <el-button type="warning"  @click="search" size="small"  icon="el-icon-search" >查询</el-button>
        <el-button type="info"  @click="resetForm(search)"  size="small"  icon="el-icon-close">重置</el-button>
+       </el-form-item>
         <el-row>
            <el-button type="success"  @click="openRuleTag"  size="small"  icon="el-icon-plus">添加</el-button>
         </el-row>

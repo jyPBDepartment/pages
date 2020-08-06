@@ -103,8 +103,9 @@ export default {
     },
     //新增保存
     saveRoles: function() {
-      this.saveFlag = true;
       if(this.editForm.name!=""){
+        this.saveFlag = true;
+
         let params = {
           roleEntity: aes.encrypt(JSON.stringify(this.editForm) )
         };
