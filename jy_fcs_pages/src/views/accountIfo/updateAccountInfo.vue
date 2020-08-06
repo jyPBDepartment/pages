@@ -22,7 +22,7 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" @click="updateAccountInfo">保存</el-button>
+      <el-button :disabled="isDisable" type="primary" icon="el-icon-check" @click="updateAccountInfo">保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -47,6 +47,7 @@ export default {
   },
   data() {
     return {
+      isDisable:false,
       labelPosition: "right",
       accountInfoForm: {
         name: "",
@@ -98,6 +99,7 @@ export default {
         this.$alert("手机号不能为空", "提示", { confirmButtonText: "确定" });
         return false;
       }
+      this.isDisable=true
       let params = {
         accountInfoEntity: this.accountInfoForm
       };
@@ -109,7 +111,9 @@ export default {
             this.close();
             this.reload();
           }
-      });
+      }).catch(function(err) {
+                this.isDisable=false
+       });
       this.accountInfoForm.updateUser =localStorage.getItem("userInfo");
     },
     close: function() {

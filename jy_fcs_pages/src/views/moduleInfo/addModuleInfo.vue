@@ -41,9 +41,10 @@
             :on-success="uploadSuccess"
             :limit="limit"
             :on-exceed="uploadExceed"
+            :beforeUpload="beforeAvatarUpload"
           >
             <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
-            <div slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -51,7 +52,12 @@
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" @click="saveModuleInfo('editForm')">保存</el-button>
+      <el-button
+        :disabled="isDisable"
+        type="primary"
+        icon="el-icon-check"
+        @click="saveModuleInfo('editForm')"
+      >保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -75,8 +81,8 @@ export default {
   },
   data() {
     return {
+      isDisable: false,
       labelPosition: "right",
-
       editForm: {
         name: "",
         id: "",
@@ -105,7 +111,25 @@ export default {
   },
   mounted() {},
   methods: {
-    //logo图片
+    beforeAvatarUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension = testmsg === "jpg";
+      const extension2 = testmsg === "png";
+      const isLt2M = file.size / 1024 / 1024 < 1;
+      if (!extension && !extension2) {
+        this.$message({
+          message: "上传文件只能是 jpg、png格式!",
+          type: "warning",
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: "上传文件大小不能超过 1M!",
+          type: "warning",
+        });
+      }
+      return extension || (extension2 && isLt2M);
+    },
     uploadExceed(files, fileList) {
       this.$message.error("只能上传一个图片，如需修改请先删除图片！");
       return;
@@ -137,6 +161,7 @@ export default {
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;
+            this.isDisable = true;
             let params = {
               moduleInfoEntity: this.editForm,
             };
@@ -152,8 +177,8 @@ export default {
                   this.$message.error(res.message);
                 }
               })
-              .catch((err) => {
-                this.$message.error(err.data);
+              .catch(function (err) {
+                this.isDisable = false;
               });
           } else {
             this.$message.error("请上传图片");
@@ -179,5 +204,4 @@ export default {
   color: red;
   margin-left: -79px;
 }
-
 </style>

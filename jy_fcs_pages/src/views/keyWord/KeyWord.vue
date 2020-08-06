@@ -6,7 +6,7 @@
         <el-input size="small" v-model="name" placeholder="输入关键词名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
         <el-button
           size="small"
           type="info"
@@ -135,6 +135,7 @@ export default {
     this.search(this.formInline);
   },
   methods: {
+
     // 分页插件事件
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -143,6 +144,10 @@ export default {
     },
     // 获取角色列表
     search: function(parameter) {
+      if(parameter == 'manual'){
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         name: this.name,
         page: this.formInline.page,
@@ -199,7 +204,9 @@ export default {
     //重置
     resetForm(search) {
       this.name = "";
-      this.search();
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
     // 删除角色
     deleteKeyWord(scope) {

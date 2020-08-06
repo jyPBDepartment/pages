@@ -21,8 +21,12 @@
         <el-form-item label="分类id">
           <el-input type="text" v-model="postInfoForm.parentCode" size="small" style="width:80%" readonly></el-input>
         </el-form-item>
-        <el-form-item label="审核状态" >
-          <el-input type="text" v-model="postInfoForm.auditStatus" size="small" style="width:80%" readonly></el-input>
+        <el-form-item label="审核状态:" >
+          <span v-if="postInfoForm.auditStatus==0">未审核</span>
+           <span v-if="postInfoForm.auditStatus==1">审核中</span>
+           <span v-if="postInfoForm.auditStatus==2">审核通过</span>
+           <span v-if="postInfoForm.auditStatus==3">审核驳回</span>
+          <!-- <el-input type="text" v-model="postInfoForm.auditStatus" size="small" style="width:80%" readonly></el-input> -->
         </el-form-item>
         <el-form-item label="审核意见" >
           <el-input type="textarea" :rows="3" v-model="postInfoForm.auditOptinion" size="small" style="width:80%" readonly></el-input>

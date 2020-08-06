@@ -16,7 +16,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
         <el-button
           size="small"
           type="info"
@@ -176,6 +176,10 @@ export default {
     },
     // 获取角色列表
     search: function (parameter) {
+      if(parameter == 'manual'){
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         name: this.name,
         status: this.status,
@@ -233,7 +237,9 @@ export default {
     resetForm(search) {
       this.name = "";
       this.status = "";
-      this.search();
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
     // 删除角色
     deleteModuleInfo(scope) {

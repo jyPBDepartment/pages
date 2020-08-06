@@ -10,7 +10,7 @@
         <el-input size="small" v-model="createUser" placeholder="输入发布人"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
         <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')" >重置</el-button>
       </el-form-item>
     </el-form>
@@ -145,6 +145,10 @@ export default {
     },
     // 获取角色列表
     search: function(parameter) {
+      if(parameter == 'manual'){
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         name: this.name,
         createUser:this.createUser,
@@ -204,7 +208,9 @@ export default {
     resetForm(search) {
       this.name = "";
       this.createUser="";
-      this.search();
+       this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
   }
 };

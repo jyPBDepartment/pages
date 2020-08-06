@@ -26,11 +26,13 @@
             :file-list="fileList"
             list-type="picture"
             :on-success="uploadSuccess"
-            :limit="limit"
+            :limit="1"
             :on-exceed="uploadExceed"
+            :beforeUpload="beforeAvatarUpload"
           >
+          <el-button :disabled="saveFlag" type="primary" icon="el-icon-check" @click="updateModule('moduleInfoForm')">保存</el-button>
             <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
-            <div slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -38,6 +40,7 @@
     <!-- 按钮区 -->
     <span slot="footer">
       <el-button
+      :disabled="saveFlag"
         type="primary"
         icon="el-icon-check"
         @click="updateModule('moduleInfoForm')"
@@ -72,9 +75,9 @@ export default {
   },
   data() {
     return {
+      saveFlag:false,
       localShow: this.show,
       isShow: false,
-
       limit: 1,
       imgUrl: "",
       upload: ApiPath.url.uploadImg,
@@ -114,6 +117,24 @@ export default {
   },
   mounted() {},
   methods: {
+    beforeAvatarUpload(file) {                
+      var testmsg=file.name.substring(file.name.lastIndexOf('.')+1)                 
+      const extension = testmsg === 'jpg'  
+      const extension2 = testmsg === 'png'  
+      const isLt2M = file.size / 1024 / 1024 < 1 
+      if(!extension && !extension2) {  
+          this.$message({  
+              message: '上传文件只能是 jpg、png格式!',  
+              type: 'warning'  
+          });  
+      }  
+      if(!isLt2M) {  
+          this.$message({  
+              message: '上传文件大小不能超过 1M!',  
+              type: 'warning'  
+          });  
+      }  return extension || extension2 && isLt2M  
+} ,
     handle() {
       this.isShow = true;
     },
@@ -144,6 +165,7 @@ export default {
         if (valid) {
           if (this.imgUrl != "") {
             this.moduleInfoForm.url = this.imgUrl;
+            this.saveFlag = true;
             let params = { moduleInfoEntity: this.moduleInfoForm };
             api
               .testAxiosGet(ApiPath.url.updateModuleInfo, params)
@@ -151,7 +173,8 @@ export default {
                 this.$message.success(res.message);
                 this.reload();
               })
-              .catch((err) => {
+              .catch(function(err) {
+                this.saveFlag = false;
                 this.$message.error(err.data);
               });
             this.moduleInfoForm.updateUser = localStorage.getItem("userInfo");

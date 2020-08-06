@@ -64,8 +64,8 @@
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" @click="saveAccountInfo()">保存</el-button>
-      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button :disabled="isDisable" type="primary" icon="el-icon-check" @click="saveAccountInfo()">保存</el-button>
+      <el-button  type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -95,6 +95,7 @@ export default {
       }
     };
     return {
+      isDisable:false,
       labelPosition: "right",
       editForm: {
         name: "",
@@ -167,6 +168,7 @@ export default {
         return false;
       }
         if (this.editForm.password == this.editForm.newPassword) {
+          this.isDisable=true
           let params = {
             accountInfoEntity: this.editForm,
           };
@@ -177,7 +179,9 @@ export default {
               this.close();
               this.reload();
             }
-          });
+          }).catch(function(err) {
+                this.isDisable=false
+           });
         } else {
           this.$alert("两次输入的密码不一致！", "提示", {
             confirmButtonText: "确定",

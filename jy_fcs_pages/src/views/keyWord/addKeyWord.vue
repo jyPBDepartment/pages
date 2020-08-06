@@ -11,12 +11,32 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" >
+      <el-form
+        :model="editForm"
+        :rules="rules"
+        ref="editForm"
+        :label-position="labelPosition"
+        label-width="100px"
+      >
         <el-form-item label="关键词名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入关键词名称(不能超过16个字符)" style="width:80%" maxlength="16" ></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.name"
+            size="small"
+            placeholder="请输入关键词名称(不能超过16个字符)"
+            style="width:80%"
+            maxlength="16"
+          ></el-input>
         </el-form-item>
         <el-form-item label="关键词编码" prop="code">
-          <el-input type="text" v-model="editForm.code" size="small" placeholder="请输入关键词编码(不能超过16个字符)" style="width:80%" maxlength="16" ></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.code"
+            size="small"
+            placeholder="请输入关键词编码(不能超过16个字符)"
+            style="width:80%"
+            maxlength="16"
+          ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="parentCode">
           <el-select v-model="editForm.parentCode" style="width:80%" size="small">
@@ -33,7 +53,7 @@
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" @click="saveKeyWord()">保存</el-button>
+      <el-button :disabled="isDisable" type="primary" icon="el-icon-check" @click="saveKeyWord()">保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -48,58 +68,60 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
-    }
+      default: "对话框",
+    },
   },
   data() {
     return {
+      isDisable: false,
       labelPosition: "right",
       editForm: {
         name: "",
-        id:"",
-        code:"",
-        parentCode:"",
-        createUser:localStorage.getItem("userInfo")
+        id: "",
+        code: "",
+        parentCode: "",
+        createUser: localStorage.getItem("userInfo"),
       },
       parentCodedOptions: [],
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
         code: [{ required: true, message: "请输入编码", trigger: "blur" }],
-        parentCode: [{ required: true, message: "请输入分类编码", trigger: "blur" }]
-      }
+        parentCode: [
+          { required: true, message: "请输入分类编码", trigger: "blur" },
+        ],
+      },
     };
   },
   watch: {
     show(val) {
       this.localShow = val;
-    }
+    },
   },
-  mounted(){
+  mounted() {
     this.findContext();
   },
   methods: {
-    findContext: function() {
+    findContext: function () {
       let params = {};
       api
         .testAxiosGet(ApiPath.url.findKeyWordList, params)
-        .then(res => {
+        .then((res) => {
           if (res.state == "0") {
-             this.parentCodedOptions.push({ value: "", label: "请选择" });
+            this.parentCodedOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
-             
               this.parentCodedOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["code"]
+                label: res.data[i]["code"],
               });
             }
           }
         })
-        .catch(function(error) {});
+        .catch(function (error) {});
     },
     beforeClose() {
       this.close();
@@ -108,14 +130,16 @@ export default {
       this.$emit("close");
     },
     //新增保存
-    saveKeyWord: function() {
+    saveKeyWord: function () {
       if (this.editForm.name == "") {
         this.$alert("名称不能为空", "提示", { confirmButtonText: "确定" });
         return false;
       }
 
-      if (this.editForm.code == "" ) {
-        this.$alert("关键词编码不能为空", "提示", { confirmButtonText: "确定" });
+      if (this.editForm.code == "") {
+        this.$alert("关键词编码不能为空", "提示", {
+          confirmButtonText: "确定",
+        });
         return false;
       }
 
@@ -123,19 +147,25 @@ export default {
         this.$alert("分类编码不能为空", "提示", { confirmButtonText: "确定" });
         return false;
       }
-          let params = {
-            keyWordEntity: this.editForm
-          };
-          api.testAxiosGet(ApiPath.url.addKeyWord, params).then(res => {
-             let code = res.status;
-             if(code == "0") {
-                this.$message.success(res.message);
-                this.close();
-                this.reload();
-             }
-          });
+      this.isDisable = true;
+      let params = {
+        keyWordEntity: this.editForm,
+      };
+      api
+        .testAxiosGet(ApiPath.url.addKeyWord, params)
+        .then((res) => {
+          let code = res.status;
+          if (code == "0") {
+            this.$message.success(res.message);
+            this.close();
+            this.reload();
+          }
+        })
+        .catch(function (err) {
+          this.isDisable = false;
+        });
     },
-  }
+  },
 };
 </script>
 
@@ -143,7 +173,7 @@ export default {
 .el-form {
   padding-left: 100px;
 }
-.el-button{
+.el-button {
   border: none;
 }
 </style>

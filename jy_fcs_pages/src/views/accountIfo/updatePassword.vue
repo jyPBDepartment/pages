@@ -13,19 +13,42 @@
     <slot>
       <el-form class="user-account-key" ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="原密码" prop="pass">
-          <el-input type="text" placeholder="请输入原密码(不能超过16个字符)" v-model="form.pass" maxlength="16"></el-input>
+          <el-input
+            type="text"
+            placeholder="请输入原密码(不能超过16个字符)"
+            v-model="form.pass"
+            maxlength="16"
+            clearable
+          ></el-input>
         </el-form-item>
         <el-form-item label="新密码" prop="password">
-          <el-input type="password" placeholder="请设置新密码(不能超过16个字符)" v-model="form.password" maxlength="16"></el-input>
+          <el-input
+            type="password"
+            placeholder="请设置新密码(不能超过16个字符)"
+            v-model="form.password"
+            maxlength="16"
+            clearable
+          ></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="newPassword2">
-          <el-input type="password" placeholder="请确认新密码(不能超过16个字符)" v-model="form.newPassword2" maxlength="16"></el-input>
+          <el-input
+            type="password"
+            placeholder="请确认新密码(不能超过16个字符)"
+            v-model="form.newPassword2"
+            maxlength="16"
+            clearable
+          ></el-input>
         </el-form-item>
       </el-form>
     </slot>
     <span slot="footer">
-      <el-button type="primary" @click="onSubmit('form')" icon="el-icon-check">保存</el-button>
-      <el-button @click="$refs['form'].resetFields()" icon="el-icon-remove-outline" type="primary" plain>重置</el-button>
+      <el-button
+        :disabled="isDisable"
+        type="primary"
+        @click="onSubmit('form')"
+        icon="el-icon-check"
+      >保存</el-button>
+      <el-button @click="resetForm" icon="el-icon-remove-outline" type="primary" plain>重置</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -38,15 +61,15 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
+      default: "对话框",
     },
     transPasswordId: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     //此处即表单发送之前验证
@@ -72,23 +95,28 @@ export default {
       }
     };
     return {
+      isDisable: false,
       localShow: this.show,
-      form: {},
-      oldPass:"",
+      oldPass: "",
       rules: {
         pass: [
           { required: true, message: "请输入原密码", trigger: "blur" },
-          { validator: valiPassword, trigger: "blur" }
+          { validator: valiPassword, trigger: "blur" },
         ],
         password: [
           { required: true, message: "请设置新密码", trigger: "blur" },
-          { validator: validateNewPassword, trigger: "blur" }
+          { validator: validateNewPassword, trigger: "blur" },
         ],
         newPassword2: [
           { required: true, message: "请确认新密码", trigger: "blur" },
-          { validator: validateNewPassword2, trigger: "blur" }
-        ]
-      }
+          { validator: validateNewPassword2, trigger: "blur" },
+        ],
+      },
+      form: {
+        pass: "",
+        password: "",
+        newPassword2: "",
+      },
     };
   },
   watch: {
@@ -97,43 +125,51 @@ export default {
     },
     transPasswordId(val) {
       let params = {
-        id: val
+        id: val,
       };
       //根据Id查询用户信息
-      api.testAxiosGet(ApiPath.url.findAccountInfoId, params).then(res => {
+      api.testAxiosGet(ApiPath.url.findAccountInfoId, params).then((res) => {
         this.formOld = res.data;
       });
-    }
+    },
   },
   mounted() {},
   methods: {
+    resetForm() {
+      this.$refs.form.resetFields();
+    },
     onSubmit(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
-        this.formOld.passWord = this.form.password;
-        console.log(this.formOld)
-          let params={ 
-             accountInfoEntity: this.formOld,
-           }
-           api.testAxiosGet(ApiPath.url.updatePassword, params).then(res => {
-                    this.$message.success('密码已修改')
-                    this.close();
-                    this.reload();
-                });
-                this.formOld.updateUser =localStorage.getItem("userInfo");
+          this.formOld.passWord = this.form.password;
+          this.isDisable = true;
+          let params = {
+            accountInfoEntity: this.formOld,
+          };
+          api
+            .testAxiosGet(ApiPath.url.updatePassword, params)
+            .then((res) => {
+              this.$message.success("密码已修改");
+              this.close();
+              this.reload();
+            })
+            .catch(function (err) {
+              this.isDisable = false;
+            });
+          this.formOld.updateUser = localStorage.getItem("userInfo");
         } else {
           this.$message.error("请正确填写表单");
           return false;
         }
       });
     },
-    close: function() {
+    close: function () {
       this.$emit("close");
     },
-    beforeClose: function() {
+    beforeClose: function () {
       this.close();
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
