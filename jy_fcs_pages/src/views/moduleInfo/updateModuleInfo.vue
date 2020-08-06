@@ -28,9 +28,8 @@
             :on-success="uploadSuccess"
             :limit="1"
             :on-exceed="uploadExceed"
-            :beforeUpload="beforeAvatarUpload"
+            :beforeUpload="beforeAvatarUpload"           
           >
-          <el-button :disabled="saveFlag" type="primary" icon="el-icon-check" @click="updateModule('moduleInfoForm')">保存</el-button>
             <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
             <div slot="tip">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
