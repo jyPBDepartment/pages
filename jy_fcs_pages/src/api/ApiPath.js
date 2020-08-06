@@ -173,6 +173,8 @@ const url = {
   findRelaByRoleId: URLHost + '/menu/findRelaByRole',
   //保存角色授权
   saveRelaFromRole: URLHost + '/menu/saveRelation',
+  //清空角色权限
+  removeRoleAuth:URLHost + '/role/removeAuth'
 }
 export default {
   url
