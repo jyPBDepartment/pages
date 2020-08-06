@@ -19,10 +19,22 @@
         label-width="100px"
       >
         <el-form-item label="权限名称" prop="jurName">
-          <el-input type="text" v-model="editForm.jurName" placeholder="请输入权限名称（不超过15个字符）" :maxLength = '15' style="width:70%;"></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.jurName"
+            placeholder="请输入权限名称（不超过15个字符）"
+            :maxLength="15"
+            style="width:70%;"
+          ></el-input>
         </el-form-item>
         <el-form-item label="权限编码" prop="jurCode">
-          <el-input type="text" v-model="editForm.jurCode" placeholder="请输入权限编码（不超过15个字符）" :maxLength = '15' style="width:70%;"></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.jurCode"
+            placeholder="请输入权限编码（不超过15个字符）"
+            :maxLength="15"
+            style="width:70%;"
+          ></el-input>
         </el-form-item>
         <el-form-item label="上级权限编码" prop="subJurCode">
           <el-select v-model="editForm.subJurCode" placeholder="请输入上级权限编码" style="width:70%;">
@@ -34,8 +46,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-
-       
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -45,15 +55,9 @@
         icon="el-icon-check"
         @click="savePowerInfo()"
         size="medium"
-       
+        :disabled="isDisable"
       >保存</el-button>
-      <el-button
-        type="info"
-        icon="el-icon-close"
-        @click="close"
-        size="medium"
-        
-      >关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -78,12 +82,13 @@ export default {
   },
   data() {
     return {
+      isDisable: false,
       labelPosition: "right",
       editForm: {
         jurName: "",
         jurCode: "",
         subJurCode: "",
-        
+
         createUser: localStorage.getItem("userInfo"),
       },
       powerOptions: [],
@@ -96,7 +101,6 @@ export default {
         jurCode: [
           { required: true, message: "请输入权限编码", trigger: "blur" },
         ],
-        
       },
     };
   },
@@ -130,7 +134,8 @@ export default {
 
     //添加权限方法
     savePowerInfo: function () {
-      if (this.editForm.jurName != "" && this.editForm.jurCode !="" ) {
+      this.isDisable = true;
+      if (this.editForm.jurName != "" && this.editForm.jurCode != "") {
         let params = {
           powerInfoEntity: this.editForm,
         };
@@ -141,8 +146,8 @@ export default {
             this.reload();
             this.close();
           })
-          .catch((error) => {
-            console.error(error);
+          .catch(function (err) {
+            this.isDisable = false;
           });
       } else {
         this.$alert("权限名称,权限编码不能为空！", "提示", {

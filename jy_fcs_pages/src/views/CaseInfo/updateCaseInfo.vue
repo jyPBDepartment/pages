@@ -37,7 +37,7 @@
             :on-exceed="uploadExceed"
           >
             <el-button size="small" type="primary" style="width:150%;" icon="el-icon-plus">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="农作物种类编码" prop="classiCode">
@@ -173,6 +173,24 @@ export default {
     this.findContexta();
   },
   methods: {
+     beforeAvatarUpload(file) {                
+      var testmsg=file.name.substring(file.name.lastIndexOf('.')+1)                 
+      const extension = testmsg === 'jpg'  
+      const extension2 = testmsg === 'png'  
+      const isLt2M = file.size / 1024 / 1024 < 1 
+      if(!extension && !extension2) {  
+          this.$message({  
+              message: '上传文件只能是 jpg、png格式!',  
+              type: 'warning'  
+          });  
+      }  
+      if(!isLt2M) {  
+          this.$message({  
+              message: '上传文件大小不能超过 1M!',  
+              type: 'warning'  
+          });  
+      }  return extension || extension2 && isLt2M  
+} ,
     //下拉列表显示1
     findContext: function () {
       let params = {

@@ -19,10 +19,22 @@
         label-width="100px"
       >
         <el-form-item label="分类名称" prop="name">
-          <el-input type="text" v-model="editForm.name" placeholder="请输入分类名称（不超过15个字符）" style="width:70%;" :maxLength = '15' ></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.name"
+            placeholder="请输入分类名称（不超过15个字符）"
+            style="width:70%;"
+            :maxLength="15"
+          ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="code">
-          <el-input type="text" v-model="editForm.code" placeholder="请输入分类编码（不超过15个字符）" style="width:70%;" :maxLength = '15'></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.code"
+            placeholder="请输入分类编码（不超过15个字符）"
+            style="width:70%;"
+            :maxLength="15"
+          ></el-input>
         </el-form-item>
         <el-form-item label="上级分类编码" prop="parentCode">
           <el-select v-model="editForm.parentCode" placeholder="请输入上级分类编码" style="width:70%;">
@@ -34,7 +46,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-      
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -44,15 +55,9 @@
         icon="el-icon-check"
         @click="saveClassification()"
         size="medium"
-        
+        :disabled="isDisable"
       >保存</el-button>
-      <el-button
-        type="info"
-        icon="el-icon-close"
-        @click="close"
-        size="medium"
-        
-      >关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -77,12 +82,13 @@ export default {
   },
   data() {
     return {
+      isDisable: false,
       labelPosition: "right",
       editForm: {
         name: "",
         code: "",
         parentCode: "",
-       
+
         createUser: localStorage.getItem("userInfo"),
       },
       classiOptions: [],
@@ -91,7 +97,6 @@ export default {
       rules: {
         name: [{ required: true, message: "请输入分类名称", trigger: "blur" }],
         code: [{ required: true, message: "请输入分类编码", trigger: "blur" }],
-      
       },
     };
   },
@@ -125,11 +130,8 @@ export default {
 
     //添加分类方法
     saveClassification: function () {
-      if (
-        this.editForm.name != "" &&
-        this.editForm.code != "" 
-        
-      ) {
+      this.isDisable = true;
+      if (this.editForm.name != "" && this.editForm.code != "") {
         let params = {
           classificationEntity: this.editForm,
         };
@@ -140,8 +142,8 @@ export default {
             this.reload();
             this.close();
           })
-          .catch((error) => {
-            console.error(error);
+          .catch(function (err) {
+            this.isDisable = false;
           });
       } else {
         this.$alert("分类名称，分类编码不能为空！", "提示", {

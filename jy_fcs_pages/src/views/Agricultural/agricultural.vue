@@ -28,7 +28,13 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-button type="warning" @click="search" size="small" icon="el-icon-search" class="hright">查询</el-button>
+      <el-button
+        type="warning"
+        @click="search('manual')"
+        size="small"
+        icon="el-icon-search"
+        class="height"
+      >查询</el-button>
       <el-button
         type="info"
         @click="resetRuleTag(search)"
@@ -39,15 +45,16 @@
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border  highlight-current-row  size="mini">
-      <el-table-column type="index" label="序号" align="center"  min-width="5%" max-width="5%"></el-table-column>
-      <el-table-column  prop="name" label="标题名称" align="center"  min-width="45%" max-width="50%"></el-table-column>
-   
-      <el-table-column        
+    <el-table :data="tableData" border highlight-current-row size="mini">
+      <el-table-column type="index" label="序号" align="center" min-width="5%" max-width="5%"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+
+      <el-table-column
         prop="transactionTypeCode"
         label="交易类型"
         align="center"
-        min-width="45%" max-width="50%"
+        min-width="45%"
+        max-width="50%"
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionTypeCode==0">收购</span>
@@ -58,11 +65,12 @@
           <span v-if="scope.row.transactionTypeCode==5">收割</span>
         </template>
       </el-table-column>
-      <el-table-column        
+      <el-table-column
         prop="transactionCategoryCode"
         label="交易类别"
         align="center"
-       min-width="45%" max-width="50%"
+        min-width="45%"
+        max-width="50%"
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionCategoryCode==0">玉米</span>
@@ -70,22 +78,65 @@
           <span v-if="scope.row.transactionCategoryCode==2">水稻</span>
         </template>
       </el-table-column>
-      <el-table-column  prop="purchasingPrice" label="收购价格" align="center" min-width="45%" max-width="50%"></el-table-column>
-      <el-table-column  prop="purchasingArea" label="收购区域" align="center" min-width="45%" max-width="50%"></el-table-column>
-      <el-table-column  prop="sellingPrice" label="出售价格" align="center" min-width="45%" max-width="50%"></el-table-column>
-      <el-table-column  prop="sellingArea" label="出售区域" align="center" min-width="45%" max-width="50%"></el-table-column>
-      <el-table-column  prop="contactsUser" label="联系人" align="center" min-width="45%" max-width="50%"></el-table-column>
-      <el-table-column  prop="contactsPhone" label="联系方式" align="center" min-width="60%" max-width="65%"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column  prop="url" label="图片" align="center" min-width="50%" max-width="50%">
+      <el-table-column
+        prop="purchasingPrice"
+        label="收购价格"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="purchasingArea"
+        label="收购区域"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="sellingPrice"
+        label="出售价格"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="sellingArea"
+        label="出售区域"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="contactsUser"
+        label="联系人"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="contactsPhone"
+        label="联系方式"
+        align="center"
+        min-width="60%"
+        max-width="65%"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column prop="url" label="图片" align="center" min-width="50%" max-width="50%">
         <template slot-scope="scope">
           <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column  prop="machineType" label="机器类型" align="center" min-width="45%" max-width="50%"></el-table-column>
-      
-      <el-table-column  sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
+      <el-table-column
+        prop="machineType"
+        label="机器类型"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
 
-      <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%" >
+      <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
+
+      <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
@@ -96,10 +147,15 @@
       </el-table-column>
       <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
-     
+
       <el-table-column fixed="right" label="操作" align="center" style="width:70%">
         <template slot-scope="scope">
-          <el-button @click="agrContent(scope)" type="primary" size="small" style="padding:9px 6px;">查看详情</el-button>
+          <el-button
+            @click="agrContent(scope)"
+            type="primary"
+            size="small"
+            style="padding:9px 6px;"
+          >查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -185,7 +241,6 @@ export default {
     this.search(this.formInline);
   },
   methods: {
-    
     //分页赋值
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -194,6 +249,10 @@ export default {
     },
     //查询方法
     search: function (parameter) {
+      if (parameter == "manual") {
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         name: this.name,
         status: this.status,
@@ -250,7 +309,9 @@ export default {
     resetRuleTag(search) {
       this.name = "";
       this.status = "";
-     this.search();
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
     closeUpdateAgrContentDialog() {
       this.agrContentFlag = false;

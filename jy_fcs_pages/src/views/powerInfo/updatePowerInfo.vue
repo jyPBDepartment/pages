@@ -68,8 +68,6 @@ export default {
         jurName:"",
         jurCode:"",
         subJurCode:"",
-      
-        
       },
      
      powerOptions:[],
@@ -95,6 +93,7 @@ export default {
 
       //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.powerInfoFindById, params).then(res => {
+       
         if (res.status == 0) {
           this.powerInfoForm = res.data;
         }
@@ -114,7 +113,8 @@ export default {
         api
           .testAxiosGet(ApiPath.url.updatePower, params)
           .then(res => {
-            if (res.status == "0") {
+           
+        if (res.status == "0") {
               for (let i = 0; i < res.data.length; i++) {
                 this.powerOptions.push({
                   value: res.data[i]["id"],
@@ -130,14 +130,18 @@ export default {
     //修改权限信息
     updatePowerInfo: function() {
       let params = {
-        powerInfoEntity: this.powerInfoForm
+        powerInfoEntity: this.powerInfoForm,
+        subJurCode:this.powerInfoForm.subJurCode
       };
 
       api.testAxiosGet(ApiPath.url.updatePowerInfo, params).then(res => {
-       
-       
-       this.$message.success(res.message);
-        
+        let code = res.status;
+        if (res.status =="1") {
+              this.$message.warning(res.message);
+            }
+            else {
+               this.$message.success(res.message);
+            }
         this.reload();
         
         this.close();

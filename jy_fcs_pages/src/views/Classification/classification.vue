@@ -18,7 +18,7 @@
           clearable
         ></el-input>
       </el-form-item>
-      <el-button type="warning" size="small" @click="search" icon="el-icon-search" class="height">查询</el-button>
+      <el-button type="warning" size="small" @click="search('manual')" icon="el-icon-search" class="height">查询</el-button>
       <el-button
         type="info"
         @click="resetRuleTag(search)"
@@ -185,6 +185,10 @@ export default {
     },
     //查询方法
     search: function (parameter) {
+       if (parameter == "manual") {
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         code: this.code,
         page: this.formInline.page,
@@ -243,7 +247,11 @@ export default {
           .testAxiosGet(ApiPath.url.deleteClassification, params)
           .then((res) => {
             let code = res.status;
-            if (code == "0") {
+            if(code == "1"){
+              this.$message.warning(res.message);
+              this.reload();
+            }
+           else if (code == "0") {
               this.$message.success(res.message);
               this.reload();
             } else {
@@ -279,7 +287,9 @@ export default {
     // 重置
     resetRuleTag(search) {
       this.code = "";
-      this.search();
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
     closeRuleTagDialog() {
       this.addClassificationFlag = false;

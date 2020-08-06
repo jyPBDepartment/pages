@@ -19,7 +19,13 @@
         label-width="130px"
       >
         <el-form-item label="名称" prop="name">
-          <el-input type="text" v-model="editForm.name" placeholder="请输入名称（不超过10个字符）" style="width:70%;" :maxlength="10" ></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.name"
+            placeholder="请输入名称（不超过10个字符）"
+            style="width:70%;"
+            :maxlength="10"
+          ></el-input>
         </el-form-item>
         <el-form-item label="图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
@@ -34,9 +40,10 @@
             :on-success="uploadSuccess"
             :limit="limit"
             :on-exceed="uploadExceed"
+            :beforeUpload="beforeAvatarUpload"
           >
             <el-button size="small" type="primary" style="width:150%;" icon="el-icon-plus">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="农作物种类编码" prop="classiCode">
@@ -66,10 +73,8 @@
             v-model="editForm.describetion"
             placeholder="请输入描述（不超过200个字符）"
             style="width:70%;"
-            
           ></el-input>
         </el-form-item>
-       
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -79,15 +84,9 @@
         icon="el-icon-check"
         @click="saveCaseInfo('editForm')"
         size="medium"
-       
+        :disabled="isDisable"
       >保存</el-button>
-      <el-button
-        type="info"
-        icon="el-icon-close"
-        @click="close"
-        size="medium"
-        
-      >关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -112,13 +111,14 @@ export default {
   },
   data() {
     return {
+      isDisable: false,
       labelPosition: "right",
       editForm: {
         name: "",
         url: "",
         classiCode: "",
         classiDipCode: "",
-       auditStatus:"",
+        auditStatus: "",
         createUser: localStorage.getItem("userInfo"),
       },
       cropsOptions: [],
@@ -141,7 +141,6 @@ export default {
             trigger: "blur",
           },
         ],
-        
       },
     };
   },
@@ -155,6 +154,25 @@ export default {
     this.findContexta();
   },
   methods: {
+    beforeAvatarUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension = testmsg === "jpg";
+      const extension2 = testmsg === "png";
+      const isLt2M = file.size / 1024 / 1024 < 1;
+      if (!extension && !extension2) {
+        this.$message({
+          message: "上传文件只能是 jpg、png格式!",
+          type: "warning",
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: "上传文件大小不能超过 1M!",
+          type: "warning",
+        });
+      }
+      return extension || (extension2 && isLt2M);
+    },
     //logo图片
     uploadExceed(files, fileList) {
       this.$message.error("只能上传一个图片，如需修改请先删除图片！");
@@ -208,11 +226,12 @@ export default {
 
     //添加分类方法
     saveCaseInfo(editData) {
+      this.isDisable = true;
       if (
         this.editForm.name != "" &&
         this.imgUrl != "" &&
         this.editForm.classiCode != "" &&
-        this.editForm.classiDipCode != ""        
+        this.editForm.classiDipCode != ""
       ) {
         this.$refs[editData].validate((valid) => {
           if (valid) {
@@ -229,8 +248,8 @@ export default {
                   this.reload();
                   this.close();
                 })
-                .catch((err) => {
-                  this.$message.error(err.data);
+                .catch(function (err) {
+                  this.isDisable = false;
                 });
             } else {
               this.$message.error("请上传图片");
@@ -262,7 +281,7 @@ export default {
 
 <style scoped>
 .el-form {
-  padding-left:100px;
+  padding-left: 100px;
 }
 .input {
   float: left;
