@@ -158,6 +158,7 @@ export default {
 
     // 删除评论
     deleteUser(scope) {
+      //alert(scope.$index);
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -170,7 +171,8 @@ export default {
           let code = res.status;
           if (code == "0") {
             this.$message.success(res.message);
-            this.reload();
+            //this.reload();
+            this.listData.splice(scope.$index, 1);
           } else {
             this.$message.console.error();
           }

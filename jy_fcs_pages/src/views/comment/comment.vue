@@ -165,7 +165,8 @@ export default {
           let code = res.status;
           if (code == "0") {
             this.$message.success(res.message);
-            this.reload();
+             //this.reload();
+            this.listData.splice(scope.$index, 1);
           } else {
             this.$message.console.error();
           }
