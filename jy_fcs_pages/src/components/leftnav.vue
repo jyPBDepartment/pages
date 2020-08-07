@@ -61,7 +61,7 @@ export default {
           icon: "el-icon-s-home",
           menuname: "首页",
           hasThird: "N",
-          url: "charts/statistics",
+          url: "/charts/statistics",
           menus: null,
           only: "Y"
         },

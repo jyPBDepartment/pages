@@ -187,6 +187,7 @@ export default {
       });
     },
     close: function () {
+      this.fileList=[];
       this.$emit("close");
     },
     beforeClose: function () {

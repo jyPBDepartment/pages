@@ -207,6 +207,7 @@ export default {
       this.addModuleInfo = true;
     },
     closeUpdateModuleInfoDialog() {
+      this.transModuleInfoId="";
       this.updateModuleInfoFlag = false;
     },
     upModuleInfo() {
