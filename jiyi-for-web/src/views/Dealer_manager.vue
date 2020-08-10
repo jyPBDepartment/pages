@@ -17,6 +17,7 @@
     >
       <Tabs :tabPane="tabPane" :tabList="tabList" :tabIndex="tabIndex" :type="false" />
     </Fast>
+    <div style="width:100%;height:2px;background:#f6f7fc;"></div>
     <Fast :title="modelName[1].title" :id="modelName[1].id" sTitle="农资销售随即搞定、销售数据尽在掌握、团队管理轻松实现">
       <el-row class="h_1">
         <el-col class="h_2" :span="8" v-for="(item, index) in advantageList" :key="index">
