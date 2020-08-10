@@ -156,6 +156,12 @@
             size="small"
             style="padding:9px 6px;"
           >查看详情</el-button>
+          <el-button
+            @click="checkContent(scope)"
+            type="primary"
+            size="small"
+            style="padding:9px 6px;"
+          >审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -168,6 +174,12 @@
       title="查看详情"
       @close="closeUpdateAgrContentDialog"
     ></agrContent>
+    <checkContent
+      :show="checkContentFlag"
+      :checkContentId="checkContentId"
+      title="详情审核"
+      @close="closeUpdateCheckContentDialog"
+    ></checkContent>
 
     <br />
     <br />
@@ -180,6 +192,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import agrContent from "./agrContent";
+import checkContent from '@/views/Agricultural/checkContent'
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -202,6 +215,9 @@ export default {
       agrContentId: "",
       updateAgriculturalFlag: false,
       transAgriculturalId: "",
+      checkContentFlag: false,
+      checkContentId: "",
+      updateCheckContentFlag: false,
       transTagCode: "",
       tagCode: "",
       tagName: "",
@@ -277,13 +293,19 @@ export default {
     closeUpdateAgriculturalDialog: function () {
       this.updateAgriculturalFlag = false;
     },
+    closeUpdateCheckContentDialog: function () {
+      this.updateCheckContentFlag = false;
+    },
     updateAgricultural: function () {},
     // 查看详情
     agrContent(scope) {
       this.agrContentFlag = true;
       this.agrContentId = scope.row.id;
     },
-
+    checkContent(scope) {
+      this.checkContentFlag = true;
+      this.checkContentId = scope.row.id;
+    },
     onSubmit: function () {
       let params = {
         tagCode: this.tagCode,
@@ -316,6 +338,9 @@ export default {
     closeUpdateAgrContentDialog() {
       this.agrContentFlag = false;
     },
+    closeUpdateCheckContentDialog() {
+      this.checkContentFlag = false;
+    },
 
     closeModifyRuleTagDialog() {
       this.updateRuleTag = false;
@@ -332,6 +357,7 @@ export default {
   },
   components: {
     agrContent,
+    checkContent,
     Pagination,
   },
 };

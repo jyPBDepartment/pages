@@ -285,7 +285,8 @@ export default {
                 type: "success",
                 message: "删除成功!",
               });
-              this.reload();
+             
+               this.tableData.splice(scope.$index, 1);
             } else {
               this.$message.success(res.message);
             }

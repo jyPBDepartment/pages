@@ -247,8 +247,7 @@ export default {
           this.count = res.farmwork;
           this.invationSum = res.invation;
           this.argicultural = res.agricultural;
-          // this.SCEoption.series.data[2] = res.invation;
-          // this.SCEoption.series.data[3] = res.farmwork;
+         
           this.SCEoption.series[1].data.push(
             10,
             res.agricultural,
@@ -257,8 +256,6 @@ export default {
           );
           this.chart = Chart.init(this.$refs.SCEchart);
           this.chart.setOption(this.SCEoption);
-          // console.log("昨天" +JSON.stringify(this.SCEoption.series[0].data));
-          // console.log("今天" +JSON.stringify(this.SCEoption.series[1].data));
         }
       });
     },

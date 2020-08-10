@@ -23,10 +23,7 @@
         <el-form-item label="描述">
           <el-input type="textarea" v-model="agrForm.descrip" :rows="3" readonly></el-input>
         </el-form-item>
-        <!-- <el-form-item label="农服交易类型">
-          <el-input type="text" v-model="agrForm.transactionTypeCode" readonly></el-input>
-          <el-alert title="注：0.收购1.出售2.出租3.播种4.植保5.收割" type="success"></el-alert>
-        </el-form-item>-->
+       
         <el-form-item label="交易类型"></el-form-item>
         <el-radio-group
           v-model="agrForm.transactionTypeCode"
@@ -40,10 +37,7 @@
           <el-radio label="4">植保</el-radio>
           <el-radio label="5">收割</el-radio>
         </el-radio-group>
-        <!--  <el-form-item label="农服交易类别">
-          <el-input type="text" v-model="agrForm.transactionCategoryCode" readonly></el-input>
-          <el-alert title="注：0.玉米1.农机2.水稻" type="success"></el-alert>
-        </el-form-item>-->
+      
         <el-form-item label="交易类别"></el-form-item>
         <el-radio-group
           v-model="agrForm.transactionCategoryCode"
@@ -102,25 +96,12 @@
         <el-form-item label="审核人">
           <el-input type="text" v-model="agrForm.updateUser" readonly></el-input>
         </el-form-item>
-        <!-- <el-radio-group v-model="agrForm.status">
-          <el-radio-button label="1">审核通过</el-radio-button>
-          <el-radio-button label="2">审核驳回</el-radio-button>
-        </el-radio-group>-->
-        <el-form-item label="审核拒绝理由">
-          <el-input type="textarea" v-model="agrForm.examineReason"></el-input>
-        </el-form-item>
+       
+        
       </el-form>
     </slot>
     <span slot="footer">
-     <span v-if="agrForm.status == 0 || agrForm.status ==3 || agrForm.status == 4 ">
-        <el-button type="success" icon="el-icon-check"  @click="updateStatus()" >审核通过</el-button>
-     </span>
-      <span v-if="agrForm.status == 0 || agrForm.status ==3 || agrForm.status == 4 ">
-        <el-button type="danger" icon="el-icon-close"  @click="refusePostInfo()">审核驳回</el-button>
-      </span>
-        <!-- <el-button type="danger" icon="el-icon-close"  @click="updateStatus('2')">审核驳回</el-button> -->
-     
-      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
+     <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -151,14 +132,7 @@ export default {
       labelPosition: "right",
       localShow: this.show,
       agrForm: {
-        status:"",
-        examineReason:""
-      },
-      // rules表单验证
-      rules: {
-        status: [
-          { required: true, message: "请输入审核状态", trigger: "blur" },
-        ],
+       
       },
     };
   },
@@ -179,46 +153,6 @@ export default {
     },
   },
   methods: {
-     //审核结果
-    updateStatus: function (val) {
-      let params = {
-        agriculturalEntity: this.agrForm,
-      };
-      api.testAxiosGet(ApiPath.url.updateStatus, params).then((res) => {
-        let code = res.state;
-        if (code == "0") {
-          this.$message.success(res.message);
-          this.close();
-          this.reload();
-        }
-      });
-      this.agrForm.updateUser = localStorage.getItem("userInfo");
-    },
-    //驳回
-    refusePostInfo: function () {
-        if (          
-          this.agrForm.examineReason == "" ||
-          this.agrForm.examineReason == null
-        ) {
-          this.$alert("请填写拒绝理由！", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-      
-      let params = {
-        agriculturalEntity: this.agrForm,
-      };
-      api.testAxiosGet(ApiPath.url.updateRefuse, params).then((res) => {
-        let code = res.state;
-        if (code == "0") {
-          this.$message.success(res.message);
-          this.close();
-          this.reload();
-        }
-      });
-      this.agrForm.updateUser = localStorage.getItem("userInfo");
-    },
     close: function () {
       this.$emit("close");
     },

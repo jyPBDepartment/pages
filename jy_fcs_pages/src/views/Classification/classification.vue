@@ -18,6 +18,16 @@
           clearable
         ></el-input>
       </el-form-item>
+       <el-form-item label="分类名称">
+        <el-input
+          v-model="name"
+          type="text"
+          :maxlength="10"
+          placeholder="请输入分类名称"
+          class="el-input el-input--small"
+          clearable
+        ></el-input>
+      </el-form-item>
       <el-button type="warning" size="small" @click="search('manual')" icon="el-icon-search" class="height">查询</el-button>
       <el-button
         type="info"
@@ -124,6 +134,7 @@ export default {
   data() {
     return {
       code: "",
+      name:"",
       updateClassificationFlag: false,
       transClassificationId: "",
       transTagCode: "",
@@ -137,9 +148,7 @@ export default {
       formInline: {
         page: 1,
         limit: 10,
-        // varLable: "",
-        // varName: "",
-        // token: localStorage.getItem("logintoken"),
+        
       },
       pageparm: {
         currentPage: 1,
@@ -191,6 +200,7 @@ export default {
       }
       let params = {
         code: this.code,
+        name:this.name,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
@@ -287,6 +297,7 @@ export default {
     // 重置
     resetRuleTag(search) {
       this.code = "";
+      this.name="";
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);

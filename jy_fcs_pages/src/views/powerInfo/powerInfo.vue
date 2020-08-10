@@ -260,7 +260,8 @@ export default {
           let code = res.status;
            if (code == "1"){
              this.$message.warning(res.message);
-            this.reload();
+             this.reload();
+            
           }
          else if (code == "0") {
             this.$message.success(res.message);

@@ -13,12 +13,24 @@
     <slot>
       <el-form :rules="rules" ref="classiForm" :model="classiForm" label-width="100px">
         <el-form-item label="分类名称" prop="name">
-          <el-input type="text" v-model="classiForm.name" placeholder="请输入分类名称（不超过15个字符）" :maxLength = '15' style=" width:70%;"></el-input>
+          <el-input
+            type="text"
+            v-model="classiForm.name"
+            placeholder="请输入分类名称（不超过15个字符）"
+            :maxLength="15"
+            style=" width:70%;"
+          ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="code">
-          <el-input type="text" v-model="classiForm.code" placeholder="请输入分类编码（不超过15个字符）" :maxLength = '15' style="width:70%;"></el-input>
+          <el-input
+            type="text"
+            v-model="classiForm.code"
+            placeholder="请输入分类编码（不超过15个字符）"
+            :maxLength="15"
+            style="width:70%;"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="上级分类编码" prop="parentCode">
+        <el-form-item label="上级分类编码" prop="parentCode" v-if="isShow">
           <el-select v-model="classiForm.parentCode" placeholder="请输入上级分类编码" style="width:70%;">
             <el-option
               v-for="item in classiOptions"
@@ -28,7 +40,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -39,13 +50,7 @@
         @click="updateClassification()"
         size="medium"
       >保存</el-button>
-      <el-button
-        type="info"
-        icon="el-icon-close"
-        @click="close"
-        size="medium"
-        
-      >关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -70,19 +75,18 @@ export default {
   },
   data() {
     return {
+      isShow:false,
       localShow: this.show,
       classiForm: {
         name: "",
         code: "",
         parentCode: "",
-       
       },
       classiOptions: [],
       // rules表单验证
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         code: [{ required: true, message: "请输入分类编码", trigger: "blur" }],
-       
       },
     };
   },
@@ -100,6 +104,11 @@ export default {
         .then((res) => {
           if (res.state == 0) {
             this.classiForm = res.data;
+            if(res.data.parentCode =="" || res.data.parentCode =="Null"){
+              this.isShow = true
+            }else{
+              this.isShow = false
+            }
           }
         });
     },
@@ -129,11 +138,18 @@ export default {
     updateClassification: function () {
       let params = {
         classificationEntity: this.classiForm,
+        parentCode:this.classiForm.parentCode
       };
       api
         .testAxiosGet(ApiPath.url.updateClassification, params)
         .then((res) => {
-          this.$message.success(res.message);
+          let code = res.state;
+          if (res.state == "1") {
+            this.$message.warning(res.message);
+          } else {
+            this.$message.success(res.message);
+          }
+
           this.reload();
           this.close();
         })

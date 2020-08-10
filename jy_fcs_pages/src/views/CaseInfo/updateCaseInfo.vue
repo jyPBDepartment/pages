@@ -237,6 +237,7 @@ export default {
       this.imgUrl = response.url;
     },
     handleRemove(file, fileList) {
+      this.imgUrl="",
       console.log(file, fileList);
     },
     handlePreview(file) {
@@ -268,6 +269,7 @@ export default {
       });
     },
     close: function () {
+       this.fileList=[];
       this.$emit("close");
     },
     beforeClose: function () {
