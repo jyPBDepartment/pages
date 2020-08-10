@@ -12,6 +12,7 @@
         <el-input
           v-model="name"
           type="text"
+          :maxlength="10"
           placeholder="请输入标题名称"
           class="el-input el-input--small"
           clearable
@@ -27,27 +28,33 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-button type="warning" @click="search" size="medium" icon="el-icon-search">查询</el-button>
-      <el-button type="info" @click="resetRuleTag(search)" size="medium" icon="el-icon-close">重置</el-button>
+      <el-button
+        type="warning"
+        @click="search('manual')"
+        size="small"
+        icon="el-icon-search"
+        class="height"
+      >查询</el-button>
+      <el-button
+        type="info"
+        @click="resetRuleTag(search)"
+        size="small"
+        icon="el-icon-close"
+        class="height"
+      >重置</el-button>
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;" highlight-current-row>
-      <el-table-column type="index" label="序号" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="name" label="标题名称" align="center" style="width:40px;"></el-table-column>
+    <el-table :data="tableData" border highlight-current-row size="mini">
+      <el-table-column type="index" label="序号" align="center" min-width="5%" max-width="5%"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+
       <el-table-column
-        sortable
-        prop="descrip"
-        label="描述"
-        align="center"
-        :show-overflow-tooltip="true"
-      ></el-table-column>
-      <el-table-column
-        sortable
         prop="transactionTypeCode"
-        label="农服交易类型"
+        label="交易类型"
         align="center"
-        style="width:40px;"
+        min-width="45%"
+        max-width="50%"
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionTypeCode==0">收购</span>
@@ -59,11 +66,11 @@
         </template>
       </el-table-column>
       <el-table-column
-        sortable
         prop="transactionCategoryCode"
-        label="农服交易类别"
+        label="交易类别"
         align="center"
-        style="width:40px;"
+        min-width="45%"
+        max-width="50%"
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionCategoryCode==0">玉米</span>
@@ -71,25 +78,65 @@
           <span v-if="scope.row.transactionCategoryCode==2">水稻</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="purchasingPrice" label="收购价格（元）" align="center"></el-table-column>
-      <el-table-column sortable prop="purchasingArea" label="收购区域" align="center"></el-table-column>
-      <el-table-column sortable prop="sellingPrice" label="出售价格" align="center"></el-table-column>
-      <el-table-column sortable prop="sellingArea" label="出售区域" align="center"></el-table-column>
-      <el-table-column sortable prop="contactsUser" label="联系人" align="center"></el-table-column>
-      <el-table-column sortable prop="contactsPhone" label="联系方式" align="center"></el-table-column>
-      <el-table-column sortable prop="url" label="图片" align="center" style="width:120px">
+      <el-table-column
+        prop="purchasingPrice"
+        label="收购价格"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="purchasingArea"
+        label="收购区域"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="sellingPrice"
+        label="出售价格"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="sellingArea"
+        label="出售区域"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="contactsUser"
+        label="联系人"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="contactsPhone"
+        label="联系方式"
+        align="center"
+        min-width="60%"
+        max-width="65%"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column prop="url" label="图片" align="center" min-width="50%" max-width="50%">
         <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
+          <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="machineType" label="机器类型" align="center"></el-table-column>
+      <el-table-column
+        prop="machineType"
+        label="机器类型"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
 
-      <el-table-column sortable prop="model" label="型号" align="center"></el-table-column>
-      <el-table-column sortable prop="articleNumber" label="货号" align="center"></el-table-column>
-      <el-table-column sortable prop="labelCode" label="标签编码" align="center"></el-table-column>
-      <el-table-column sortable prop="purchaseDate" label="购买时间" align="center"></el-table-column>
+      <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
 
-      <el-table-column align="center" prop="status" label="审核状态" style="width:50px;">
+      <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
@@ -98,14 +145,23 @@
           <span v-if="scope.row.status==4">已完成</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="发布时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column prop="createUser" label="发布人" align="center" style="width:40px;"></el-table-column>
-      <el-table-column prop="updateUser" label="审核人" align="center" style="width:40px;"></el-table-column>
-      <el-table-column prop="examineReason" label="审核拒绝理由" align="center" style="width:40px;" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column fixed="right" label="操作" align="center" style="width:100%">
+      <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
+
+      <el-table-column fixed="right" label="操作" align="center" style="width:70%">
         <template slot-scope="scope">
-          <el-button @click="agrContent(scope)" type="text">查看详情</el-button>
+          <el-button
+            @click="agrContent(scope)"
+            type="primary"
+            size="small"
+            style="padding:9px 6px;"
+          >查看详情</el-button>
+          <el-button
+            @click="checkContent(scope)"
+            type="primary"
+            size="small"
+            style="padding:9px 6px;"
+          >审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -118,7 +174,13 @@
       title="查看详情"
       @close="closeUpdateAgrContentDialog"
     ></agrContent>
-   
+    <checkContent
+      :show="checkContentFlag"
+      :checkContentId="checkContentId"
+      title="详情审核"
+      @close="closeUpdateCheckContentDialog"
+    ></checkContent>
+
     <br />
     <br />
   </div>
@@ -130,7 +192,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import agrContent from "./agrContent";
-
+import checkContent from '@/views/Agricultural/checkContent'
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -145,24 +207,22 @@ export default {
       default: "对话框",
     },
   },
-
   data() {
     return {
       name: "",
-      status:"",
+      status: "",
       agrContentFlag: false,
       agrContentId: "",
-      
       updateAgriculturalFlag: false,
-
       transAgriculturalId: "",
-     
+      checkContentFlag: false,
+      checkContentId: "",
+      updateCheckContentFlag: false,
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
       addAgriculturalFlag: false,
-
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
@@ -178,17 +238,16 @@ export default {
         pageSize: 10,
         total: 10,
       },
-       statusOptions: [
-        {value:"" ,label:"全部" },
-        {value:"0",label:"待审核"  },
-        {value:"1",label:"审核通过"},
-        {value:"2",label:"审核拒绝"},
-        {value:"3",label:"预约中"  },
-        {value:"4",label:"已完成"  }
+      statusOptions: [
+        { value: "", label: "全部" },
+        { value: "0", label: "待审核" },
+        { value: "1", label: "审核通过" },
+        { value: "2", label: "审核拒绝" },
+        { value: "3", label: "预约中" },
+        { value: "4", label: "已完成" },
       ],
     };
   },
-
   watch: {
     show(val) {
       this.localShow = val;
@@ -206,9 +265,13 @@ export default {
     },
     //查询方法
     search: function (parameter) {
+      if (parameter == "manual") {
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         name: this.name,
-        status:this.status,
+        status: this.status,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
@@ -230,12 +293,19 @@ export default {
     closeUpdateAgriculturalDialog: function () {
       this.updateAgriculturalFlag = false;
     },
+    closeUpdateCheckContentDialog: function () {
+      this.updateCheckContentFlag = false;
+    },
     updateAgricultural: function () {},
+    // 查看详情
     agrContent(scope) {
       this.agrContentFlag = true;
       this.agrContentId = scope.row.id;
     },
-
+    checkContent(scope) {
+      this.checkContentFlag = true;
+      this.checkContentId = scope.row.id;
+    },
     onSubmit: function () {
       let params = {
         tagCode: this.tagCode,
@@ -257,14 +327,19 @@ export default {
     openRuleTag() {
       this.addAgriculturalFlag = true;
     },
-
+    // 重置
     resetRuleTag(search) {
       this.name = "";
-      this.status="";
-      location.reload();
+      this.status = "";
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
     closeUpdateAgrContentDialog() {
       this.agrContentFlag = false;
+    },
+    closeUpdateCheckContentDialog() {
+      this.checkContentFlag = false;
     },
 
     closeModifyRuleTagDialog() {
@@ -282,7 +357,7 @@ export default {
   },
   components: {
     agrContent,
-  
+    checkContent,
     Pagination,
   },
 };
@@ -298,6 +373,9 @@ export default {
 }
 .el-form-item {
   font-size: 14px;
+}
+.height {
+  margin-top: 6px;
 }
 </style>
 

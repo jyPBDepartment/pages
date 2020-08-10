@@ -1,89 +1,103 @@
 /**
- * 门户菜单 导航管理
+ * 基础管理 菜单管理
  */
 <template>
     <div class="navigationFunction">
-          <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>导航管理</el-breadcrumb-item>
-    </el-breadcrumb>
     <br>
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
-       <el-form-item label="搜索："></el-form-item>
-      <el-form-item label="导航名称" >
-        <el-input v-model="name" type="text" placeholder="请输入导航名称" class="el-input el-input--small" clearable ></el-input>
+      <el-form-item label="菜单名称" >
+        <el-input v-model="name" type="text" placeholder="请输入菜单名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="text"  @click="search" size="medium" class="find"  icon="el-icon-search" >查询</el-button>
-       <el-button type="text"  @click="resetRuleTag(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
+       <el-form-item>
+      <el-button type="warning"  @click="search" size="small"  icon="el-icon-search" >查询</el-button>
+       <el-button type="info"  @click="resetForm(search)"  size="small"  icon="el-icon-close">重置</el-button>
+       </el-form-item>
         <el-row>
-           <el-button type="text"  @click="openRuleTag"  size="medium" class="insert"  icon="el-icon-plus">添加</el-button>
+           <el-button type="success"  @click="openRuleTag"  size="small"  icon="el-icon-plus">添加</el-button>
         </el-row>
+        <br>
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row>
-      <el-table-column type="index" label="序号"  align="center" style="width:40px;"></el-table-column>
-      <el-table-column label="一级菜单" align="center">
-      <el-table-column sortable prop="name" label="导航名称" align="center" style="width:40px;"></el-table-column>
-        <!--switch开关（表单）-->
-       <el-table-column align="center" sortable prop="status"  label="状态" min-width="50" >
+     <el-table
+      size="mini"
+      :data="tableData"
+      highlight-current-row
+      v-loading="loading"
+      border
+      element-loading-text="拼命加载中"
+      style="width: 100%;"
+      row-key="id"
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+    >
+      <el-table-column  prop="name" label="菜单名称" align="center" width="300px"></el-table-column>
+      <el-table-column  prop="icon" label="菜单图标" align="center" width="100px">
+        <template slot-scope="scope">
+          <i :class="scope.row.icon"></i>
+        </template>
+      </el-table-column>
+      <el-table-column  label="类型" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.menuType == 1">目录</el-tag>
+          <el-tag v-if="scope.row.menuType == 2" type="success">菜单</el-tag>
+          <el-tag v-if="scope.row.menuType == 3" type="info">按钮</el-tag>
+        </template>
+      </el-table-column>
+      
+      <el-table-column  align="center" label="状态" prop="state">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            active-value="1"
-            inactive-value="0"
-            active-color="#0080FF"
-            inactive-color="#84C1FF"
-            @change="navigationEnable(scope)"
+            active-value="0"
+            inactive-value="1"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="enableMenu(scope)"
           ></el-switch>
         </template>
       </el-table-column>
-      </el-table-column>
-      <el-table-column label="二级菜单" align="center">
-      <el-table-column sortable prop="subId" label="上级导航" align="center" style="width:40px;"></el-table-column>
-      
-      <el-table-column sortable prop="dropDownEnName" label="下拉内容" align="center"></el-table-column>
-    
-       <!-- <el-table-column sortable prop="url" label="图片地址" min-width="50">
+      <el-table-column  align="center" label="排序" prop="sort">
         <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
-        </template>
-      </el-table-column> -->
-      <el-table-column sortable prop="path" label="导航路径" align="center"></el-table-column>
-      </el-table-column>
-        <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
-        <template slot-scope="scope">
-          <div>{{scope.row.createDateTime|timestampToTime}}</div>
+          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
         </template>
       </el-table-column>
-       <el-table-column sortable prop="updateTime" label="修改时间" align="center">
+      <el-table-column  prop="url" label="菜单路由" align="center"></el-table-column>
+      <el-table-column  prop="perssions" label="权限标识" align="center"></el-table-column>
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <div>{{scope.row.updateTime|timestampToTime}}</div>
+           <el-button
+           @click="openUpdateRole(scope)"
+            type="primary"
+            size="small"
+          
+            icon="el-icon-edit"
+
+            
+          >编辑</el-button>
+           <el-button
+           @click="deleteMenu(scope)"
+            type="danger"
+            size="small"
+           
+            icon="el-icon-delete"
+          >删除</el-button>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="220px" align="center">
-        <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)" type="text" size="medium" class="up" icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteNavigation(scope)" type="text" size="medium" class="del" icon="el-icon-delete">删除</el-button>
-         
-       </template>
-   </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
+   
     <br />
     <br />
-<add-navigation :show="addNavigationFlag" title="添加导航信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
-
- <update-navigation
-      :show="updateNavigationFlag"
-      :transNavigationId="transNavigationId"
+<add-navigation :show="addNavigationFlag" title="添加菜单信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
+<update-menu
+      :show="updateMenuFlag"
+      :transRoleId="transRoleId"
       title="修改"
-      @close="closeUpdateNavigationDialog"
-      @save="updateNavigation"
-    ></update-navigation>
+      @close="closeUpdateRoleDialog"
+      @save="upRole"
+    ></update-menu>
+
     
     </div>
     
@@ -95,9 +109,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddNavigation from "./addNavigation.vue";
-import UpdateNavigation from "./updateNavigation.vue";
-import Pagination from "../../components/Pagination";
-
+import UpdateMenu from "./updateNavigation.vue";
 export default {
   inject: ["reload"],
   props: {
@@ -114,23 +126,17 @@ export default {
   data() {
     return {
       name: "",
-      updateNavigationFlag: false,
+      loading:false,
       transNavigationId: "",
+      transRoleId:"",
       transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
       addNavigationFlag: false,
-      updateRuleTag: false,
+      updateMenuFlag:false,
       mainBodyCode: "",
       tableData: [],
-      formInline: {
-        page: 1,
-        limit: 10,
-        varLable: "",
-        varName: "",
-        token: localStorage.getItem("logintoken")
-      },
       pageparm: {
         currentPage: 1,
         pageSize: 10,
@@ -144,63 +150,101 @@ export default {
     }
   },
   created() {
-    this.search(this.formInline);
+    this.search();
   },
   methods: {
-    //分页赋值
-    callFather(parm) {
-      this.formInline.page = parm.currentPage;
-      this.formInline.limit = parm.pageSize;
-      this.search(this.formInline);
-    },
 //查询方法
     search: function(parameter) {
       let params = {
-        name: this.name,
-        page: this.formInline.page,
-        size: this.formInline.limit
+        name: this.name
       };
       api
         .testAxiosGet(ApiPath.url.findMenuByName, params)
         .then(res => {
-          let code = res.status;
+          let code = res.status
           if (code == "0") {
-           this.tableData = res.data.content;
-            this.pageparm.currentPage = res.data.number + 1;
-            this.pageparm.pageSize = res.data.size;
-            this.pageparm.total = res.data.totalElements;
-
-          } else {
-          }
+            let parent = [];
+            let children = [];
+            for (let i = 0; i < res.data.length; i++) {
+              if (res.data[i]["level"] == 0) {
+                parent.push(res.data[i]);      
+              } else {
+                children.push(res.data[i]);
+              }
+            }
+           let child = [];
+           //遍历顶层目录，挂载子菜单
+           for (let j = 0; j < parent.length; j++) {
+          
+              for (let k = 0; k < children.length; k++) {
+              
+                if (parent[j]["id"] == children[k]["parentId"]) {
+                   child.push(children[k]);
+                   
+                }
+                parent[j]["children"] = child;
+                  
+              }
+              child = [];
+            }
+          //遍历children，挂载更次级菜单
+              for (let j = 0; j < children.length; j++) {
+          
+              for (let k = 0; k < children.length; k++) {
+              
+                if (children[j]["id"] == children[k]["parentId"]) {
+                   child.push(children[k]);
+                   
+                }
+                children[j]["children"] = child;
+                  
+              }
+              child = [];
+            }
+            this.tableData = parent;
+            
+          } 
         })
         .catch(function(error) {
         });
     },
-    closeUpdateNavigationDialog: function() {
-      this.updateNavigationFlag = false;
+    //重置
+    resetForm(search) {
+      //this.$refs['searchForm'].resetFields()
+      this.name = "";
+      this.search();
     },
-    updateNavigation: function() {},
+    //修改菜单排序
+    sortChange: function(scope) {
+      let params = {
+        id: scope.row.id,
+        sort: scope.row.sort
+      };
+      api
+        .testAxiosGet(ApiPath.url.changeMenuSort, params)
+        .then(res => {
+           this.$message.success(res.message);
+          // this.reload();
+        })
+        .catch(function(error) {});
+    },
     //switch开关
-    navigationEnable: function(scope) {
+    enableMenu: function(scope) {
       let params = {
         id: scope.row.id,
         status: scope.row.status
       };
       api
-        .testAxiosGet(ApiPath.url.navigationEnable, params)
+        .testAxiosGet(ApiPath.url.enableMenu, params)
         .then(res => {
-          let code = res.state;
-          if (code == "0") {
             this.$message.success(res.message);
-          } else {
-            this.$message.success(res.message);
-          }
           // this.reload();
         })
         .catch(function(error) {});
     },
-    deleteNavigation: function(scope) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+    //删除菜单
+    deleteMenu: function(scope) {
+      this.$confirm("此操作将永久删除该菜单, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -209,7 +253,7 @@ export default {
           let params = {
             id: scope.row.id
           };
-          api.testAxiosGet(ApiPath.url.deleteNavigation, params).then(res => {
+          api.testAxiosGet(ApiPath.url.deleteMenu, params).then(res => {
             let code = res.status;
 
             if (code == "0") {
@@ -219,7 +263,7 @@ export default {
               });
               this.reload();
             } else {
-              this.$message.success(res.message);
+              this.$message.error(res.message);
             }
           });
         })
@@ -237,17 +281,18 @@ export default {
         generateType: "gz"
       };
     },
-    openUpdateDialog(scope) {
-      console.log(scope);
-      this.transNavigationId = scope.row.id;
-      this.updateNavigationFlag = true;
+    openUpdateRole(scope) {
+      this.transRoleId = scope.row.id;
+      this.updateMenuFlag = true;
     },
     saveRuleTag() {
       this.addNavigationFlag = false;
     },
-    
+    upRole(){
+      this.updateMenuFlag = false;
+    },
     modifyRuleTag() {
-      this.updateRuleTag = false;
+      this.updateMenuFlag = false;
     },
     openRuleTag() {
       this.addNavigationFlag = true;
@@ -258,9 +303,8 @@ export default {
     closeRuleTagDialog() {
       this.addNavigationFlag = false;
     },
-    
-    closeModifyRuleTagDialog() {
-      this.updateRuleTag = false;
+    closeUpdateRoleDialog(){
+      this.updateMenuFlag = false;
     },
     beforeClose() {
       this.close();
@@ -270,22 +314,6 @@ export default {
     },
     save() {
       this.$emit("save", this.transData);
-    },
-    deleteRuleTag(scope) {
-      let tagCode = scope.row.tagCode;
-      let params = {
-        tagcode: tagCode
-      };
-      api.testAxiosPost(ApiPath.url.deleteRuleTag, params).then(res => {
-        console.log(res);
-        let code = res.code;
-        if (code == "success") {
-          alert("删除成功");
-          this.$router.push("ruleTag");
-        } else {
-          alert(res.message);
-        }
-      });
     },
     updateRuleTagStatus(scope) {
       let tagcode = scope.row.tagCode;
@@ -302,91 +330,22 @@ export default {
   },
   components: {
     AddNavigation,
-    UpdateNavigation,
-    Pagination
+    UpdateMenu
   }
 };
 </script>
 
 <style scoped >
-.el-table{
-  background-color:#FFF
-}
-.el-row {
-  margin-top: 2px;
-  margin-bottom: 6px;
-}
-.el-form-item {
-  font-size: 14px;
-}
 .el-tooltip__popper {
+  max-width: 300px;
   font-size: 14px;
-  max-width: 150px;
+  background: #84c1ff !important;
 }
-.template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
+.el-tooltip__popper[x-placement^="top"] .popper__arrow {
+  border-top-color: #84c1ff;
 }
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.find {
-  width: 82px;
-  background-color:#e6a23c;
-  color: #fff;
-  border-color: #e6a23c;
-  font-size: 12px;
-}
-.small {
-  width: 82px;
-  background-color: #909399;
-  border-color: #909399;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.insert{
-  width: 82px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.up {
-  margin-right: 20px;
-  width: 50px;
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-}
-.el-button.del {
-  width: 50px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
+.el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
+  border-top-color: pink;
 }
 
 </style>

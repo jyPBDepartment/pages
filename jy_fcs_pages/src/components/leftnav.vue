@@ -16,18 +16,28 @@
     <div class="logobox">
       <img class="logoimg" src="../assets/img/logo.png" alt />
     </div>
-    <el-submenu v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
-      <template slot="title">
-        <i :class="menu.icon"></i>
-        <span>{{menu.menuname}}</span>
-      </template>
-      <el-menu-item-group>
-        <el-menu-item v-for="chmenu in menu.menus" :index="'/'+chmenu.url" :key="chmenu.menuid">
-          <i :class="chmenu.icon"></i>
-          <span>{{chmenu.menuname}}</span>
+    <div v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
+      <div v-if="menu.only=='Y'">
+        <el-menu-item :index="menu.url">
+          <i :class="menu.icon"></i>
+          <span slot="title">{{menu.menuname}}</span>
         </el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
+      </div>
+      <div v-else>
+        <el-submenu :index="''+menu.menuid">
+          <template slot="title">
+            <i :class="menu.icon"></i>
+            <span>{{menu.menuname}}</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item v-for="chmenu in menu.menus" :index="'/'+chmenu.url" :key="chmenu.menuid">
+              <i :class="chmenu.icon"></i>
+              <span>{{chmenu.menuname}}</span>
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+      </div>
+    </div>
   </el-menu>
 </template>
 <script>
@@ -37,7 +47,7 @@ export default {
   data() {
     return {
       collapsed: false,
-      allmenu: []
+      allmenu: [],
     };
   },
   // 创建完毕状态(里面是操作)
@@ -47,154 +57,151 @@ export default {
       success: true,
       data: [
         {
-            menuid: 0,
-              icon: "el-icon-s-comment",
-              menuname: "首页",
-              hasThird: "null",
-              url: "null",
-              menus:[{
-                 menuid:  0 - 1,
-              icon: "el-icon-s-comment",
-              menuname: "首页",
-              hasThird: "N",
-              url: "charts/statistics",
-              menus: null
-              }]
+          menuid: 0,
+          icon: "el-icon-s-home",
+          menuname: "首页",
+          hasThird: "N",
+          url: "/charts/statistics",
+          menus: null,
+          only: "Y"
         },
         {
           menuid: 1,
-          icon: "el-icon-s-home",
-          menuname: "门户管理",
-          hasThird: null,
-          url: null,
-          menus: [
-             {
-              menuid: 1 - 1,
-              icon: "el-icon-eleme",
-              menuname: "账户管理",
-              hasThird: "N",
-              url: "accountIfo/AccountInfo",
-              menus: null
-            },
-            {
-              menuid: 1 - 2,
-              icon: "el-icon-eleme",
-              menuname: "模块管理",
-              hasThird: "N",
-              url: "moduleInfo/ModuleInfo",
-              menus: null
-            },
-               {
-              menuid: 1 - 3,
-              icon: "el-icon-discount",
-              menuname: "权限管理",
-              hasThird: "N",
-              url: "powerInfo/powerInfo",
-              menus: null
-            },
-            {
-              menuid: 1 - 4,
-              icon: "el-icon-connection",
-              menuname: "分类管理",
-              hasThird: "N",
-              url: "Classification/classification",
-              menus: null
-            },
-               {
-              menuid: 1 - 5,
-              icon: "el-icon-mobile-phone",
-              menuname: "农服管理",
-              hasThird: "N",
-              url: "Agricultural/agricultural",
-              menus: null
-            },
-           
-           
-         
-          ]
+          icon: "el-icon-copy-document",
+          menuname: "模块管理",
+          hasThird: "N",
+          url: "/moduleInfo/ModuleInfo",
+          menus: null,
+          only: "Y"
         },
         {
           menuid: 2,
-          icon: "el-icon-menu",
-          menuname: "基础管理",
+          icon: "el-icon-cherry",
+          menuname: "农服管理",
+          hasThird: "N",
+          url: "/Agricultural/agricultural",
+          menus: null,
+          only: "Y"
+        },
+        {
+          menuid: 3,
+          icon: "el-icon-bangzhu",
+          menuname: "圈子管理",
           hasThird: null,
           url: null,
+          only: "N",
           menus: [
-          
-           
             {
-              menuid: 2 - 1,
-              icon: "el-icon-s-custom",
-              menuname: "管理员管理",
+              menuid: 3 - 1,
+              icon: "el-icon-chat-line-round",
+              menuname: "圈子管理",
               hasThird: "N",
-              url: "Admin/admin",
-              menus: null
+              url: "postInfo/PostInfo",
+              menus: null,
             },
             {
-              menuid: 2 - 2,
+              menuid: 3 - 2,
+              icon: "el-icon-key",
+              menuname: "关键词",
+              hasThird: "N",
+              url: "keyWord/KeyWord",
+              menus: null,
+            },
+            {
+              menuid: 3 - 3,
+              icon: "el-icon-edit-outline",
+              menuname: "评论管理",
+              hasThird: "N",
+              url: "comment/comment",
+              menus: null,
+            },
+            {
+              menuid: 3 - 4,
+              icon: "el-icon-edit",
+              menuname: "回复管理",
+              hasThird: "N",
+              url: "reply/reply",
+              menus: null,
+            },
+          ],
+        },
+        {
+          menuid: 4,
+          icon: "el-icon-finished",
+          menuname: "看图识病",
+          hasThird: null,
+          url: null,
+          only: "N",
+          menus: [
+            {
+              menuid: 4 - 1,
+              icon: "el-icon-view",
+              menuname: "看图识病",
+              hasThird: "N",
+              url: "CaseInfo/caseInfo",
+              menus: null,
+            }
+          ],
+        },
+        {
+          menuid: 5,
+          icon: "el-icon-user-solid",
+          menuname: "账户管理",
+          hasThird: null,
+          url: null,
+          only: "N",
+          menus: [
+            {
+              menuid: 5 - 1,
+              icon: "el-icon-s-custom",
+              menuname: "账户管理",
+              hasThird: "N",
+              url: "accountIfo/AccountInfo",
+              menus: null,
+            },
+            {
+              menuid: 5 - 2,
+              icon: "el-icon-s-check",
+              menuname: "权限管理",
+              hasThird: "N",
+              url: "powerInfo/powerInfo",
+              menus: null,
+            },
+            {
+              menuid: 5 - 3,
               icon: "el-icon-user",
               menuname: "角色管理",
               hasThird: "N",
               url: "role/roleShow",
-              menus: null
+              menus: null,
             },
             {
-              menuid: 2 - 3,
-              icon: "el-icon-coin",
-              menuname: "权限管理",
-              hasThird: "N",
-              url: "limit/limitRole",
-              menus: null
-            },
-            
-            {
-              menuid: 2 - 4,
-              icon: "el-icon-s-grid",
+              menuid: 5 - 4,
+              icon: "el-icon-menu",
               menuname: "菜单管理",
               hasThird: "N",
               url: "menu/menuIndex",
-              menus: null
+              menus: null,
             },
-            
-            
-          ]
+            {
+              menuid: 5 - 5,
+              icon: "el-icon-orange",
+              menuname: "分类管理",
+              hasThird: "N",
+              url: "Classification/classification",
+              menus: null,
+            },
+          ],
         },
-        {
-          menuid: 3,
-          icon: "el-icon-menu",
-          menuname: "圈子管理",
-          hasThird: null,
-          url: null,
-          menus: [
-          
-           
-            {
-              menuid: 3 - 1,
-              icon: "el-icon-s-custom",
-              menuname: "圈子管理",
-              hasThird: "N",
-              url: "Admin/admin",
-              menus: null
-            },
-            {
-              menuid: 3 - 2,
-              icon: "el-icon-user",
-              menuname: "关键字",
-              hasThird: "N",
-              url: "keyWord/KeyWord",
-              menus: null
-            }
-          ]
-        }
       ],
-      msg: "success"
+      msg: "success",
     };
     this.allmenu = res.data;
     // 监听
-    this.$root.Bus.$on("toggle", value => {
+    this.$root.Bus.$on("toggle", (value) => {
       this.collapsed = !value;
     });
-  }
+  },
 };
 </script>
 <style>

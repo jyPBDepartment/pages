@@ -25,35 +25,26 @@
             size="small"
             placeholder="请输入角色名称"
             style="width:80%"
+            maxlength="18"
           ></el-input>
         </el-form-item>
-        <el-form-item label="权限名称" prop="limitId">
-          <el-select v-model="editForm.limitId" style="width:80%" size="small">
-            <el-option
-              v-for="item in limitIdOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+        <el-form-item label="角色备注" prop="name">
+          <el-input
+            type="textarea"
+            v-model="editForm.remark"
+            size="small"
+            placeholder="请输入角色名称"
+            style="width:80%"
+            maxlength="255"
+          ></el-input>
         </el-form-item>
       </el-form>
-        <el-form-item label="角色状态" prop="state">
-          <el-select v-model="editForm.state" style="width:80%" size="small">
-            <el-option
-              v-for="item in stateOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         
     </slot>
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" @click="saveRoles()">保存</el-button>
+      <el-button :disabled="saveFlag" type="primary" icon="el-icon-check" @click="saveRoles()">保存</el-button>
       <el-button icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -63,6 +54,7 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import aes from "@/utils/aes.js";
 export default {
   inject: ["reload"],
   props: {
@@ -77,11 +69,12 @@ export default {
   },
   data() {
     return {
-      
+      saveFlag:false,
       labelPosition: "right",
       editForm: {
         name: "",
         id:"",
+        remark:""
       },
       stateOptions: [
         { value: "0", label: "启用" },
@@ -92,7 +85,7 @@ export default {
       
       rules: {
         name: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
-        limitId:[{ required: true, message: "请选择权限类型", trigger: "blur" }]
+        remark:[{ required: true, message: "请输入角色备注", trigger: "blur" }]
       }
     };
   },
@@ -100,22 +93,6 @@ export default {
     show(val) {
       this.localShow = val;
     }
-  },
-  mounted(){
-    let params = {
-        limitId: this.editForm.limitId,
-        id:this.editForm.id 
-    };
-    // if(editForm.name!=""){}
-      api.testAxiosGet(ApiPath.url.findLimit, params).then(res => {
-        let code = res.status;
-        if (code=="0") {
-         for(let i=0;i<res.data.length;i++){
-           this.limitIdOptions.push({value:res.data[i]["id"],label:res.data[i]["name"]});
-         }  
-        }
-        
-      });
   },
   methods: {
     beforeClose() {
@@ -127,14 +104,16 @@ export default {
     //新增保存
     saveRoles: function() {
       if(this.editForm.name!=""){
+        this.saveFlag = true;
+
         let params = {
-          roleEntity: this.editForm
+          roleEntity: aes.encrypt(JSON.stringify(this.editForm) )
         };
-        api.testAxiosGet(ApiPath.url.addRole, params).then(res => {
+        api.testAxiosGet(ApiPath.url.saveRole, params).then(res => {
           this.$message.success(res.message);
           this.close();
           this.reload();
-        });
+        }).catch(function(error) {this.saveFlag = false;});
      }else{
        this.$alert('角色名称、权限名称不能为空！', '提示', {confirmButtonText: '确定',});
      }

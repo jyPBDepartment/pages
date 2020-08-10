@@ -11,34 +11,53 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="100px">
-          <el-form-item label="分类名称" prop="name">
-          <el-input type="text" v-model="editForm.name"  placeholder="请输入分类名称" style="width:70%;"></el-input>
-           
+      <el-form
+        :rules="rules"
+        ref="editForm"
+        :model="editForm"
+        :label-position="labelPosition"
+        label-width="100px"
+      >
+        <el-form-item label="分类名称" prop="name">
+          <el-input
+            type="text"
+            v-model="editForm.name"
+            placeholder="请输入分类名称（不超过15个字符）"
+            style="width:70%;"
+            :maxLength="15"
+          ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="code">
-          <el-input type="text" v-model="editForm.code"  placeholder="请输入分类编码" style="width:70%;"></el-input>
-           
+          <el-input
+            type="text"
+            v-model="editForm.code"
+            placeholder="请输入分类编码（不超过15个字符）"
+            style="width:70%;"
+            :maxLength="15"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="上级分类编码" prop="parentCode" >
-            <el-select  v-model="editForm.parentCode"  placeholder="请输入上级分类编码" style="width:70%;">
-             <el-option
+        <el-form-item label="上级分类编码" prop="parentCode">
+          <el-select v-model="editForm.parentCode" placeholder="请输入上级分类编码" style="width:70%;">
+            <el-option
               v-for="item in classiOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              ></el-option>
-           </el-select>
-        </el-form-item>
-         <el-form-item label="状态" prop="status">
-          <el-input type="text" v-model="editForm.status" placeholder="请输入状态" style=" width:70%;"></el-input>
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-        <el-button type="success" icon="el-icon-check" @click="saveClassification()" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px;width:105px;height:42px;">保存</el-button>
-         <el-button type="danger" icon="el-icon-close" @click="close" size="medium" style="background-color:white;border-color:#fff;color:black;font-size:12px;width:105px;height:42px;">关闭</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-check"
+        @click="saveClassification()"
+        size="medium"
+        :disabled="isDisable"
+      >保存</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -54,95 +73,91 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
-    }
+      default: "对话框",
+    },
   },
   data() {
     return {
+      isDisable: false,
       labelPosition: "right",
       editForm: {
         name: "",
-        code:"",
+        code: "",
         parentCode: "",
-        status: "0",
-      createUser:localStorage.getItem("userInfo")
+
+        createUser: localStorage.getItem("userInfo"),
       },
       classiOptions: [],
-
       localShow: this.show,
-
       // rules表单验证
       rules: {
         name: [{ required: true, message: "请输入分类名称", trigger: "blur" }],
         code: [{ required: true, message: "请输入分类编码", trigger: "blur" }],
-         status: [{ required: true, message: "请输入状态", trigger: "blur" }],
-      }
+      },
     };
   },
   watch: {
     show(val) {
       this.localShow = val;
-    }
+    },
   },
   mounted() {
     this.findContext();
   },
   methods: {
     //下拉列表显示
-    findContext: function() {
+    findContext: function () {
       let params = {};
       api
         .testAxiosGet(ApiPath.url.findAllClass, params)
-        .then(res => {
+        .then((res) => {
           if (res.state == "0") {
-             this.classiOptions.push({ value: "", label: "请选择" });
+            this.classiOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
-             
               this.classiOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["code"]
+                label: res.data[i]["code"],
               });
             }
           }
         })
-        .catch(function(error) {});
+        .catch(function (error) {});
     },
 
     //添加分类方法
-    saveClassification: function() {
-     
-       if (this.editForm.name != "" && this.editForm.code !="") {
-      let params = {
-        classificationEntity: this.editForm
-      };
-      api
-        .testAxiosGet(ApiPath.url.saveClassification, params)
-        .then(res => {
-          this.$message.success(res.message);
-          this.reload();
-          this.close();
-        })
-        .catch(error => {
-          console.error(error);
+    saveClassification: function () {
+      this.isDisable = true;
+      if (this.editForm.name != "" && this.editForm.code != "") {
+        let params = {
+          classificationEntity: this.editForm,
+        };
+        api
+          .testAxiosGet(ApiPath.url.saveClassification, params)
+          .then((res) => {
+            this.$message.success(res.message);
+            this.reload();
+            this.close();
+          })
+          .catch(function (err) {
+            this.isDisable = false;
+          });
+      } else {
+        this.$alert("分类名称，分类编码不能为空！", "提示", {
+          confirmButtonText: "确定",
         });
-    }else {
-            this.$alert('分类名称，分类编码不能为空！', '提示', {
-          confirmButtonText: '确定',
-        });
-        }
+      }
     },
-    close: function() {
+    close: function () {
       this.$emit("close");
     },
-    beforeClose: function() {
+    beforeClose: function () {
       this.close();
-    }
-   }
-    
+    },
+  },
 };
 </script>
 

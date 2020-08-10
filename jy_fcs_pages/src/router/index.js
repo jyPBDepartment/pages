@@ -15,6 +15,8 @@ import PowerInfo from '@/views/powerInfo/powerInfo';
 import KeyWord from '@/views/keyWord/KeyWord'
 //农服管理
 import Agricultural from '@/views/Agricultural/agricultural';
+//看图识病
+import CaseInfo from '@/views/CaseInfo/caseInfo'
 
 /**
  * 门户菜单
@@ -40,6 +42,8 @@ import Appointment from '@/views/appointment/appointmentShow';
 import Menu from '@/views/menu/menuIndex';
 //分类信息
 import Classification from '@/views/Classification/classification';
+//圈子管理
+import PostInfo from '@/views/postInfo/PostInfo'
 
 //问卷调查
 import Question from '@/views/Question/question';
@@ -63,11 +67,18 @@ import druidLogin from '@/views/druid/login1';
 // 图表界面
 import statistics from '@/views/charts/statistics';
 
+//评论管理
+import Reply from '@/views/reply/reply';
+
+//回复管理
+import Comment from '@/views/comment/comment';
+
 // 启用路由
 Vue.use(Router);
 
 // 导出路由 
 export default new Router({
+    mode:'history',
     routes: [{
         path: '/',
         name: '',
@@ -120,6 +131,14 @@ export default new Router({
                 requireAuth: true
             }
         },
+        {
+            path: '/CaseInfo/caseInfo',
+            name: '看图识病',
+            component: CaseInfo,
+            meta: {
+                requireAuth: true
+            }
+        },
        
        {
             path: '/druid/login',
@@ -154,6 +173,41 @@ export default new Router({
             path: '/keyWord/KeyWord',
             name: '关键字管理',
             component: KeyWord,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/comment/comment',
+            name: '评论管理',
+            component: Comment,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/reply/reply',
+            name: '回复管理',
+            component: Reply,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/postInfo/PostInfo',
+            name: '圈子管理',
+            component: PostInfo,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/menu/menuIndex',
+            name: '菜单管理',
+            component: Menu,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/role/roleShow',
+            name: '角色管理',
+            component: Role,
             meta: {
                 requireAuth: true
             }

@@ -11,34 +11,54 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" >
+      <el-form
+        :model="editForm"
+        :rules="rules"
+        ref="editForm"
+        :label-position="labelPosition"
+        label-width="100px"
+      >
         <el-form-item label="模块名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入模块名称" style="width:80%" ></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.name"
+            size="small"
+            placeholder="请输入模块名称(不能超过16个字符)"
+            style="width:80%"
+            maxlength="16"
+          ></el-input>
         </el-form-item>
-         <el-form-item label="模块图片" prop="imgUrl">
-            <el-upload
-              style="width:81%"
-              class="upload-demo"
-              :action="upload"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :file-list="fileList"
-              list-type="picture"
-              :on-success="uploadSuccess"
-              :limit="limit"
-              :on-exceed="uploadExceed"
-            >
-              <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
-          </el-form-item>
+        <el-form-item label="模块图片" prop="imgUrl">
+          <el-link type="danger" class="required" :underline="false">*</el-link>
+          <el-upload
+            style="width:80%;margin-top:-38px;"
+            class="upload-demo"
+            :action="upload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            list-type="picture"
+            :on-success="uploadSuccess"
+            :limit="limit"
+            :on-exceed="uploadExceed"
+            :beforeUpload="beforeAvatarUpload"
+          >
+            <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
+            <div slot="tip">只能上传jpg/png文件，且不超过1M</div>
+          </el-upload>
+        </el-form-item>
       </el-form>
     </slot>
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" @click="saveModuleInfo('editForm')">保存</el-button>
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button
+        :disabled="isDisable"
+        type="primary"
+        icon="el-icon-check"
+        @click="saveModuleInfo('editForm')"
+      >保存</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -52,48 +72,64 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
-    }
+      default: "对话框",
+    },
   },
   data() {
     return {
+      isDisable: false,
       labelPosition: "right",
-      
       editForm: {
         name: "",
-        id:"",
-        url:"",
-        createUser:localStorage.getItem("userInfo")
+        id: "",
+        url: "",
+        createUser: localStorage.getItem("userInfo"),
       },
       stateOptions: [
         { value: "0", label: "启用" },
-        { value: "1", label: "禁用" }
+        { value: "1", label: "禁用" },
       ],
       limit: 1,
       imgUrl: "",
       fileList: [],
       upload: ApiPath.url.uploadImg,
       localShow: this.show,
-      
+
       rules: {
-        name: [{ required: true, message: "请输入账户名称", trigger: "blur" }]
-      }
+        name: [{ required: true, message: "请输入模块名称", trigger: "blur" }],
+      },
     };
   },
   watch: {
     show(val) {
       this.localShow = val;
-    }
+    },
   },
-  mounted(){
-     
-  },
+  mounted() {},
   methods: {
-    //logo图片
+    beforeAvatarUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension = testmsg === "jpg";
+      const extension2 = testmsg === "png";
+      const isLt2M = file.size / 1024 / 1024 < 1;
+      if (!extension && !extension2) {
+        this.$message({
+          message: "上传文件只能是 jpg、png格式!",
+          type: "warning",
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: "上传文件大小不能超过 1M!",
+          type: "warning",
+        });
+      }
+      return extension || (extension2 && isLt2M);
+    },
     uploadExceed(files, fileList) {
       this.$message.error("只能上传一个图片，如需修改请先删除图片！");
       return;
@@ -116,18 +152,22 @@ export default {
     //新增保存
     saveModuleInfo(editData) {
       this.$refs[editData].validate((valid) => {
+        if (this.editForm.name == "") {
+          this.$alert("模块名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;
-            let params = { 
-                moduleInfoEntity: this.editForm,
-                
-                };
-                // let array = row.url.split("/");
-                // this.fileList.push({ name: array[array.length - 1], url: row.url });
+            this.isDisable = true;
+            let params = {
+              moduleInfoEntity: this.editForm,
+            };
             api
               .testAxiosGet(ApiPath.url.addModule, params)
-              .then(res => {
+              .then((res) => {
                 let code = res.status;
                 if (code == "0") {
                   this.reload();
@@ -137,9 +177,8 @@ export default {
                   this.$message.error(res.message);
                 }
               })
-              .catch(err => {
-                // this.loading = false;
-                this.$message.error(err.data);
+              .catch(function (err) {
+                this.isDisable = false;
               });
           } else {
             this.$message.error("请上传图片");
@@ -149,8 +188,8 @@ export default {
           return false;
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -158,7 +197,11 @@ export default {
 .el-form {
   padding-left: 100px;
 }
-.el-button{
+.el-button {
   border: none;
+}
+.required {
+  color: red;
+  margin-left: -79px;
 }
 </style>

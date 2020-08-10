@@ -5,43 +5,67 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="30%"
+    width="50%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" >
+      <el-form
+        :model="editForm"
+        :rules="rules"
+        ref="editForm"
+        :label-position="labelPosition"
+        label-width="100px"
+      >
         <el-form-item label="账户名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入账户名称" style="width:80%" ></el-input>
+          <el-input
+            type="text"
+            v-model="editForm.name"
+            size="small"
+            placeholder="请输入账户名称(不能超过16个字符)"
+            style="width:80%"
+            maxlength="16"
+          ></el-input>
         </el-form-item>
         <el-form-item label="账户密码" prop="password">
-          <el-input type="password" v-model="editForm.password" size="small" placeholder="请输入账户密码" style="width:80%" ></el-input>
+          <el-input
+            type="password"
+            v-model="editForm.password"
+            size="small"
+            placeholder="请输入账户密码(不能超过16个字符)"
+            style="width:80%"
+            maxlength="16"
+          ></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="newPassword">
-          <el-input type="password" placeholder="请确认密码" v-model="editForm.newPassword" size="small" style="width:80%"></el-input>
+          <el-input
+            type="password"
+            placeholder="请确认密码(不能超过16个字符)"
+            v-model="editForm.newPassword"
+            size="small"
+            style="width:80%"
+            maxlength="16"
+          ></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
-          <el-input type="text" v-model="editForm.phone" size="small" placeholder="请输入手机号码" style="width:80%" @change="telPhone"></el-input>
-        </el-form-item>
-        <el-form-item label="权限名称" prop="jurId">
-          <el-select v-model="editForm.jurId" style="width:80%" size="small">
-            <el-option
-              v-for="item in jurIdOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <el-input
+            type="text"
+            v-model="editForm.phone"
+            size="small"
+            placeholder="请输入十一位手机号码"
+            style="width:80%"
+            @change="telPhone"
+            maxlength="11"
+          ></el-input>
         </el-form-item>
       </el-form>
-        
     </slot>
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" @click="saveAccountInfo()">保存</el-button>
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button :disabled="isDisable" type="primary" icon="el-icon-check" @click="saveAccountInfo()">保存</el-button>
+      <el-button  type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -55,12 +79,12 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
-    }
+      default: "对话框",
+    },
   },
   data() {
     let validateNewPassword = (rule, value, callback) => {
@@ -71,49 +95,40 @@ export default {
       }
     };
     return {
+      isDisable:false,
       labelPosition: "right",
       editForm: {
         name: "",
-        id:"",
-        createUser:localStorage.getItem("userInfo")
+        id: "",
+        password:"",
+        newPassword:"",
+        phone:"",
+        jurId:"",
+        createUser: localStorage.getItem("userInfo"),
       },
       stateOptions: [
-        { value: "0", label: "启用" },
-        { value: "1", label: "禁用" }
+        { value: "0", label: "启用" },
+        { value: "1", label: "禁用" },
       ],
       jurIdOptions: [],
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入账户名称", trigger: "blur" }],
-        password:[{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
         newPassword: [
           { required: true, message: "请确认新密码", trigger: "blur" },
-          { validator: validateNewPassword, trigger: "blur" }
+          { validator: validateNewPassword, trigger: "blur" },
         ],
         phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
-        jurId:[{ required: true, message: "请选择权限类型", trigger: "blur" }],
-      }
+      },
     };
   },
   watch: {
     show(val) {
       this.localShow = val;
-    }
+    },
   },
-  mounted(){
-    let params = {
-        jurId: this.editForm.jurId,
-        id:this.editForm.id 
-    };
-      api.testAxiosGet(ApiPath.url.findCount, params).then(res => {
-        let code = res.status;
-        if (code=="0") {
-         for(let i=0;i<res.data.length;i++){
-           this.jurIdOptions.push({value:res.data[i]["id"],label:res.data[i]["jurName"]});
-         }  
-        }
-        
-      });
+  mounted() {
   },
   methods: {
     beforeClose() {
@@ -122,39 +137,58 @@ export default {
     close() {
       this.$emit("close");
     },
-    telPhone: function() {
+    telPhone: function () {
       if (!/^1[345789]\d{9}$/.test(this.editForm.phone)) {
         this.$alert("请输入正确的手机号！", "提示", {
-          confirmButtonText: "确定"
+          confirmButtonText: "确定",
         });
 
         this.editForm.phone = "";
       }
     },
     //新增保存
-    saveAccountInfo: function() {
-      if(this.editForm.name!=""){
-        if(this.editForm.password == this.editForm.newPassword){
-          let params = {
-            accountInfoEntity: this.editForm
-          };
-          api.testAxiosGet(ApiPath.url.addAccountInfo, params).then(res => {
-             let code = res.status;
-             if(code == "0") {
-                this.$message.success(res.message);
-                this.close();
-                this.reload();
-             }
-          });
-      }else{
-        this.$alert('两次输入的密码不一致！', '提示', {confirmButtonText: '确定',});
+    saveAccountInfo: function () {
+      if (this.editForm.name == "") {
+        this.$alert("账户名称不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
       }
-     }else{
-       this.$alert('账户名称、权限名称不能为空！', '提示', {confirmButtonText: '确定',});
-     }
 
+      if (this.editForm.password == "" ) {
+        this.$alert("密码不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+
+      if (this.editForm.newPassword == "") {
+        this.$alert("确认密码不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+
+      if (this.editForm.phone == "") {
+        this.$alert("手机号不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+        if (this.editForm.password == this.editForm.newPassword) {
+          this.isDisable=true
+          let params = {
+            accountInfoEntity: this.editForm,
+          };
+          api.testAxiosGet(ApiPath.url.addAccountInfo, params).then((res) => {
+            let code = res.status;
+            if (code == "0") {
+              this.$message.success(res.message);
+              this.close();
+              this.reload();
+            }
+          }).catch(function(err) {
+                this.isDisable=false
+           });
+        } else {
+          this.$alert("两次输入的密码不一致！", "提示", {
+            confirmButtonText: "确定",
+          });
+        }
     },
-  }
+  },
 };
 </script>
 
@@ -162,7 +196,7 @@ export default {
 .el-form {
   padding-left: 100px;
 }
-.el-button{
+.el-button {
   border: none;
 }
 </style>

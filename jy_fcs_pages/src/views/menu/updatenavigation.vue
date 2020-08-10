@@ -7,64 +7,70 @@
     modal-append-to-body
     width="40%"
     :close-on-click-modal="false"
-    :close-on-press-escape="false"  
+    :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
-     <slot>
-      <el-form :rules="rules" ref="navigationForm" :model="navigationForm" label-width="120px">
-      
-        <el-form-item label="导航名称" prop="name">
-          <el-input type="text" v-model="navigationForm.name" placeholder="请输入导航名称" style=" width:70%;" ></el-input>
+    <slot>
+      <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="120px" @submit.native.prevent>
+       <el-form-item label="菜单类型" prop="menuType">
+         <template>
+            <el-radio-group v-model="editForm.menuType" @change="selectType">
+              <el-radio :label="1">目录</el-radio>
+              <el-radio :label="2">菜单</el-radio>
+              <el-radio :label="3">按钮</el-radio>
+            </el-radio-group>
+          </template>
+        </el-form-item>
+        <el-form-item label="菜单名称" prop="name">
+          <el-input type="text" v-model="editForm.name" placeholder="请输入名称"  maxlength="8" style=" width:70%;" ></el-input>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort" >
+          <el-input-number v-model="editForm.sort" :step=5 style="width:70%;" step-strictly></el-input-number>
+        </el-form-item>
+        
+        <el-form-item label="图标" prop="icon" v-if="iconShow" >
+          <e-icon-picker v-model="editForm.icon" style="width:70%;"/>
+        </el-form-item>
+        <el-form-item label="父级菜单" prop="parentId" v-if="parentShow" :required="parentShow">
+          <selectTree
+            :data="treeDataSelect"
+            :defaultProps="{children:'children',label:'name',id:'id'}"
+            :filterable="editForm.id"
+            v-model="editForm.parentId"
+            style="width:70%;">
+        </selectTree>
+        </el-form-item>
+        <el-form-item label="菜单路由" prop="url" v-if="urlShow" :required="urlShow">
+          <el-input type="text" v-model="editForm.url" placeholder="请输入菜单路由"  maxlength="64" style=" width:70%;" ></el-input>
+        </el-form-item>
+        <el-form-item label="权限标识" prop="perssions" v-if="perssionsShow" :required="perssionsShow">
+          <el-input type="text" v-model="editForm.perssions" placeholder="请输入权限标识"  maxlength="64" style=" width:70%;" ></el-input>
         </el-form-item>
        
-        <el-form-item label="状态" prop="state">
-          <el-input type="text" v-model="navigationForm.status" placeholder="请输入状态" style=" width:70%;" ></el-input>
-        </el-form-item>
-        <el-button type="success"  @click="handle"  style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px">编辑二级菜单</el-button>
-       <el-button type="success"  @click="cancal" style="background-color:rgb(132, 193, 255);border:none;color:white;font-size:12px">收起二级菜单</el-button>
-       
-          <el-form-item label="上级导航" prop="subId" v-if="isShow">
-          <el-input type="text" v-model="navigationForm.subId" placeholder="请输入上级导航"  style=" width:70%;" ></el-input>
-        </el-form-item>
-        <el-form-item label="下拉英文内容" prop="dropDownEnName" v-if="isShow">
-          <el-input type="text" v-model="navigationForm.dropDownEnName" placeholder="下拉内容"  style=" width:70%;" ></el-input>
-        </el-form-item>
-<!--         
-          <el-form-item label="图片地址" prop="imgUrl" v-if="isShow">
-          <el-upload
-            class="upload-demo"
-            :action="upload"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            list-type="picture"
-            :on-success="uploadSuccess"
-            :limit="limit"
-            :on-exceed="uploadExceed"
-          >
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
-        </el-form-item> -->
-         <el-form-item label="导航路径"  prop="path" v-if="isShow">
-          <el-input type="text" v-model="navigationForm.path" placeholder="请输入导航路径" :autosize="{ minRows: 1, maxRows: 4}"  style=" width:70%;" >
-            <template slot="prepend">Http://</template>
-          </el-input>
-        </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="success" icon="el-icon-check" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px" @click="updateNavigation('navigationForm')">保存</el-button>
-      <el-button type="danger" icon="el-icon-close" @click="close"  size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
+     
+      <el-button type="success" icon="el-icon-check" @click="saveNavigation()" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
+       <el-button type="danger" icon="el-icon-close" @click="close" size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
     </span>
   </el-dialog>
 </template>
+
 <script>
+import qs from "qs";
+import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import eIconPicker from 'e-icon-picker';
+import 'e-icon-picker/dist/index.css';//基础样式
+import 'e-icon-picker/dist/main.css'; //fontAwesome 图标库样式
+import selectTree from "../../components/selectTree" ;//树形下拉选
+import aes from "@/utils/aes.js";
+Vue.use(eIconPicker, {FontAwesome: false, ElementUI: true});
 export default {
-  inject: ["reload"],
+   inject:['reload'],
   props: {
     show: {
       type: Boolean,
@@ -74,99 +80,156 @@ export default {
       type: String,
       default: "对话框"
     },
-    transNavigationId: {
+    transRoleId: {
       type: String
     }
   },
   data() {
+    
     return {
-      localShow: this.show,
+      icon:"",
       isShow:false,
-      isShowImg:false,
-      limit: 1,
-      imgUrl: "",
-      upload: ApiPath.url.uploadImg,
+      iconShow:true,
+      urlShow:false,
+      parentShow:false,
+      perssionsShow:false,
+      labelPosition:'right',
+      //upload: ApiPath.url.uploadImg,
       fileList: [],
-      labelPosition: "right",
-      editFormVisible: false,
-      navigationForm: {
-        name: "",
-        state: "",
-        subId: "",
-        dropDownEnName: "",
-        url: "",
-        path: ""
-      },
-      navigationOptions: [],
-      //rules表单验证
+      editFormVisible: false, 
+       editForm:{
+        name:"",
+        url:"",
+        perssions:"",
+        parentId:"",
+        icon:"",
+        menuType: "",
+        sort : "",
+        status: "",
+       } ,
+       treeDataSelect:[],
+       navigationOptions:[],
+       localShow: this.show,
+       //rules表单验证
       rules: {
-        name: [{ required: true, message: "请输入导航名称", trigger: "blur" }],
-      
-        subId: [{ required: true, message: "请输入上级导航", trigger: "blur" }],
-        dropDownEnName: [
-          { required: true, message: "请输入下拉英文内容", trigger: "blur" }
+        name: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
         ],
-        url: [{ required: true, message: "请输入图片地址", trigger: "blur" }],
-        path: [{ required: true, message: "请输入导航路径", trigger: "blur" }]
-      }
+        sort: [
+          { required: true, message: '请输入排序', trigger: 'blur' }
+        ]
+      },
     };
   },
   watch: {
     show(val) {
       this.localShow = val;
     },
-    transNavigationId(val) {
+    transRoleId(val) {
       let params = {
         id: val
       };
-
       //根据Id查询用户信息
-      api.testAxiosGet(ApiPath.url.navigationFindById, params).then(res => {
-        this.navigationForm = res.data;
-        let url = res.data.url;
-        let urlArry = url.split("/");
-        let urlName = urlArry[urlArry.length - 1];
-        this.fileList.push({ name: urlName, url: url });
-
-        this.imgUrl = res.data.url;
+      api.testAxiosGet(ApiPath.url.findMenuById, params).then(res => {
+        this.editForm = res.data;
+        this.selectType(res.data.menuType);
       });
     }
   },
-  mounted() {
+  created(){
     this.findContext();
   },
+  mounted() {
+    
+  },
+  components: {selectTree},
   methods: {
-   
-    handle() {
-      this.isShow = true;
+    all(){
+        // this.subId = this.name;
+        this.editForm.subId  = this.editForm.name;
     },
-    cancal() {
-      this.isShow = false;
-    },
-    //下拉列表显示
+selectType(result){
+  //更改菜单类型，控制相应组件显隐
+  if(result == 1){
+    //目录
+    this.iconShow = true;
+    this.urlShow = false;
+    this.parentShow = false;
+    this.perssionsShow = false;
+  }
+  if(result == 2){
+    //菜单
+    this.iconShow = true;
+    this.urlShow = true;
+    this.parentShow = true;    
+    this.perssionsShow = false;
+  }
+  if(result == 3){
+    //按钮
+    this.parentShow = true;    
+    this.perssionsShow = true;
+    this.iconShow = false;
+    this.urlShow = false;
+  }
+},
+     //获取菜单树，下拉列表显示
     findContext: function() {
-      let params = {
-        navigationEntity: this.navigationForm
-      };
+      let params = {};
       api
-        .testAxiosGet(ApiPath.url.findAllNc, params)
+        .testAxiosGet(ApiPath.url.findMenuTreeByName, params)
         .then(res => {
-          if (res.status == "0") {
+          let code = res.status
+          if (code == "0") {
+            let parent = [];
+            let children = [];
             for (let i = 0; i < res.data.length; i++) {
-              this.navigationOptions.push({
-                value: res.data[i]["name"],
-                label: res.data[i]["name"]
-              });
+              if (res.data[i]["level"] == 0) {
+                parent.push(res.data[i]);      
+              } else {
+                children.push(res.data[i]);
+              }
             }
-          }
+           let child = [];
+           //遍历顶层目录，挂载子菜单
+           for (let j = 0; j < parent.length; j++) {
+          
+              for (let k = 0; k < children.length; k++) {
+              
+                if (parent[j]["id"] == children[k]["parent_id"]) {
+                   child.push(children[k]);
+                   
+                }
+                parent[j]["children"] = child;
+                  
+              }
+              child = [];
+            }
+          //遍历children，挂载更次级菜单
+              for (let j = 0; j < children.length; j++) {
+          
+              for (let k = 0; k < children.length; k++) {
+              
+                if (children[j]["id"] == children[k]["parent_id"]) {
+                   child.push(children[k]);
+                   
+                }
+                children[j]["children"] = child;
+                  
+              }
+              child = [];
+            }
+            this.treeDataSelect = parent;
+            
+          } 
         })
-        .catch(function(error) {});
+        .catch(function(error) {
+        });
     },
-    uploadExceed(files, fileList) {
+     uploadExceed(files, fileList) {
       this.$message.error("只能上传一个图片，如需修改请先删除图片！");
       return;
     },
-    uploadSuccess(response, file, fileList) {
+    uploadSuccess(response, file,fileList) {
       this.imgUrl = response.url;
     },
     handleRemove(file, fileList) {
@@ -175,46 +238,79 @@ export default {
     handlePreview(file) {
       console.log(file);
     },
-
-    
-    updateNavigation(editData) {
-      this.$refs[editData].validate(valid => {
-        if (valid) {
-          if (this.imgUrl != "") {
-            this.navigationForm.url = this.imgUrl;
-            let params = { navigationEntity: this.navigationForm };
-            api
-              .testAxiosGet(ApiPath.url.updateNavigation, params)
-              .then(res => {
-                this.reload();
-                this.$message.success(res.message);
-             
-              })
-              .catch(err => {
-                this.$message.error(err.data);
-              });
-          } else {
-            this.$message.error("请上传图片");
-            return;
-          }
-        } else {
-          return false;
-        }
-      });
+    beforeClose() {
+      this.close();
     },
-    close: function() {
+
+    close() {
+      this.$emit("close");
+    },
+    
+  saveNavigation:function() {
+      let typeFlag = this.editForm.menuType;
+      alert(typeFlag);
+      if(typeFlag == 1){
+        //目录
+        this.editForm.url = "";
+        this.editForm.perssions = "";
+        this.editForm.parentId = "";
+      }
+      if(typeFlag == 2){
+        //菜单
+        this.editForm.perssions = "";
+      }
+      if(typeFlag == 3){
+        //按钮
+        this.editForm.url = "";
+        this.editForm.icon = "";
+      }
+      if(menuFlag == 1){
+        //目录 
+        if(this.editForm.icon == ""){
+          this.$alert('目录图标不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+      }
+      if(typeFlag == 2){
+        //菜单 
+        if(this.editForm.icon == ""){
+          this.$alert('菜单图标不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+        if(this.editForm.url == ""){
+          this.$alert('菜单路由不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+        if(this.editForm.parentId == ""){
+          this.$alert('父菜单不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+      }
+      let params = {
+          menuEntity: aes.encrypt(JSON.stringify(this.editForm) )
+        };
+        api.testAxiosGet(ApiPath.url.saveMenu,params).then(res =>{
+               this.$message.success(res.message);
+               this.reload();
+               this.close();
+               });
+     
+    },
+     close: function() {
       this.$emit("close");
     },
     beforeClose: function() {
       this.close();
     }
   }
+
 };
 </script>
 
 <style scoped>
-.el-form {
+.el-form{
   padding-left: 115px;
+ 
 }
 .el-button{
     
@@ -227,11 +323,12 @@ export default {
    
     margin: 4px 2px;
     cursor: pointer;
-    -webkit-transition-duration: 0.4s; /* Safari */
+    -webkit-transition-duration: 0.4s; 
     transition-duration: 0.4s;
-}
+} 
 
 .el-button:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
+ 
 </style>

@@ -1,14 +1,12 @@
-
 <template>
   <div>
     <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+    <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/' }">账户管理</el-breadcrumb-item>
       <el-breadcrumb-item>账户管理</el-breadcrumb-item>
-    </el-breadcrumb>
+    </el-breadcrumb> -->
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
-      <el-form-item label="搜索："></el-form-item>
       <el-form-item label="账户名称">
         <el-input size="small" v-model="name" placeholder="输入账户名称"></el-input>
       </el-form-item>
@@ -26,24 +24,23 @@
           </el-select>
         </el-form-item>
       <el-form-item>
-        <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" >查询</el-button>
         <el-button
-          size="medium"
-          type="text"
+          size="small"
+          type="info"
           icon="el-icon-close"
           @click="resetForm('search')"
-          class="small"
         >重置</el-button>
       </el-form-item>
       <br/>
       <el-row>
-      <el-button size="medium" type="text" icon="el-icon-plus" @click="addAccountInfos()" class="insert">添加</el-button>
+        <el-button size="small" type="success" icon="el-icon-plus" @click="addAccountInfos()">添加</el-button>
       </el-row>
       <br>
     </el-form>
     <!--列表-->
     <el-table
-      size="small"
+      size="mini"
       :data="listData"
       highlight-current-row
       v-loading="loading"
@@ -51,15 +48,14 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="账户名称" align="center"></el-table-column>
-      <el-table-column sortable prop="phone" label="手机号码" align="center"></el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="jurId" label="权限" align="center"></el-table-column>
-      <el-table-column sortable prop="createUser" label="创建人" align="center"></el-table-column>
-      <el-table-column sortable prop="updateUser" label="修改人" align="center"></el-table-column>
-      <el-table-column align="center" label="状态" prop="auditStatus">
+      <el-table-column type="index" label="序号" min-width="20" align="center"></el-table-column>
+      <el-table-column prop="name" min-width="105" label="账户名称" align="center"></el-table-column>
+      <el-table-column prop="phone" min-width="95" label="手机号码" align="center"></el-table-column>
+      <el-table-column prop="createDate" min-width="135" label="创建时间" align="center" sortable></el-table-column>
+      <el-table-column prop="updateDate" min-width="135" label="修改时间" align="center" sortable></el-table-column>
+      <el-table-column prop="createUser" min-width="90" label="创建人" align="center"></el-table-column>
+      <el-table-column prop="updateUser" min-width="90" label="修改人" align="center"></el-table-column>
+      <el-table-column align="center" min-width="70" label="状态" prop="auditStatus">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -71,29 +67,36 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="权限设置" min-width="110" >
+        <template slot-scope="scope">
+           <el-button
+           @click="openUpdatePower(scope)"
+            type="primary"
+            size="small"
+            icon="el-icon-s-tools"
+          >权限设置</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作" min-width="291px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateAccountInfo(scope)"
-            type="text"
-            size="medium"
+            type="primary"
+            size="small"
             icon="el-icon-edit"
-            class="up"
           >编辑</el-button>
-           <el-button
-           @click="deleteUser(scope)"
-            type="text"
-            size="medium"
-            icon="el-icon-delete"
-            class="del"
-          >删除</el-button>
           <el-button
            @click="updatePass(scope)"
-            type="text"
-            size="medium"
+            type="primary"
+            size="small"
             icon="el-icon-grape"
-            class="insert"
           >修改密码</el-button>
+           <el-button
+           @click="deleteUser(scope)"
+            type="danger"
+            size="small"
+            icon="el-icon-delete"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -114,6 +117,13 @@
       @close="closeUpdatePasswordDialog"
       @save="upPassword"
     ></update-password>
+    <update-power
+      :show="updatePowerFlag"
+      :transPowerId="transPowerId"
+      title="权限设置"
+      @close="closeUpdatePowerDialog"
+      @save="upPower"
+    ></update-power>
   </div>
 </template>
 
@@ -126,6 +136,7 @@ import api from "@/axios/api.js";
 import AddAccountInfo from "./addAccountInfo";
 import UpdateAccountInfo from "./updateAccountInfo";
 import UpdatePassword from "./updatePassword"
+import UpdatePower from "./updatePower"
 export default {
   inject: ["reload"],
   data() {
@@ -133,6 +144,7 @@ export default {
       name: "",
       phone:"",
       auditStatus:"",
+      updateUser:"",
       nshow: true, //switch开启
       fshow: false, //switch关闭
       loading: false, //是显示加载
@@ -143,6 +155,8 @@ export default {
       updatePasswordFlag:false,
       transAccountInfoId: "",
       transPasswordId:"",
+      transPowerId:"",
+      updatePowerFlag:false,
       formInline: {
         page: 1,
         limit: 10,
@@ -164,6 +178,7 @@ export default {
       //参数accountInfo
       saveAccountInfoId: "",
       auditStatusOptions: [
+        { value: "", label: "全部" },
         { value: "0", label: "启用" },
         { value: "1", label: "禁用" }
       ],
@@ -174,16 +189,15 @@ export default {
     AddAccountInfo,
     UpdateAccountInfo,
     Pagination,
-    UpdatePassword
+    UpdatePassword,
+    UpdatePower
   },
-
   watch: {},
   mounted() {
   },
   created() {
     this.search(this.formInline);
   },
-
   methods: {
     // 分页插件事件
     callFather(parm) {
@@ -193,6 +207,10 @@ export default {
     },
     // 获取角色列表
     search: function(parameter) {
+      if(parameter == 'manual'){
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         name: this.name,
         phone:this.phone,
@@ -232,12 +250,19 @@ export default {
     upPassword() {
       this.updatePasswordFlag = false;
     },
+    closeUpdatePowerDialog() {
+      this.updatePowerFlag = false;
+    },
+    upPower() {
+      this.updatePowerFlag = false;
+    },
     
     //启用/禁用
     accountInfoEnable: function(scope) {
       let params = {
         id: scope.row.id,
-        auditStatus: scope.row.auditStatus
+        auditStatus: scope.row.auditStatus,
+        updateUser:scope.row.updateUser
       };
       api.testAxiosGet(ApiPath.url.accountInfoEnable, params).then(res => {
         let code = res.status;
@@ -248,9 +273,8 @@ export default {
         }
         this.reload();
       }).catch(function(error) {});
-      
+      this.updateUser =localStorage.getItem("userInfo");
     },
-
     //显示编辑界面
     openUpdateAccountInfo(scope) {
       this.transAccountInfoId = scope.row.id;
@@ -260,15 +284,20 @@ export default {
       this.transPasswordId = scope.row.id;
       this.updatePasswordFlag = true;
     },
+    openUpdatePower(scope) {
+      this.transPowerId = scope.row.id;
+      this.updatePowerFlag = true;
+    },
     //重置
     resetForm(search) {
       this.name = "";
       this.phone="",
       this.auditStatus="",
-      location.reload();
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
-
-    // 删除角色
+    // 删除
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
@@ -284,11 +313,6 @@ export default {
             this.$message.success(res.message);
             this.reload();
           }
-        //   else{
-        //     this.$message.error(res.message);
-        //     // this.$alert('删除失败，请先解除关联关系！', '提示', {confirmButtonText: '确定',});
-        //     // this.reload();
-        //     }
         });
       });
     }
@@ -302,70 +326,5 @@ export default {
 }
 .userAccountInfo {
   width: 100%;
-}
-.template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
-}
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.find {
-  width: 82px;
-  background-color:#e6a23c;
-  color: #fff;
-  border-color: #e6a23c;
-  font-size: 12px;
-}
-.small {
-  width: 82px;
-  background-color: #909399;
-  border-color: #909399;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.insert{
-  width: 82px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.up {
-  margin-right: 20px;
-  width: 50px;
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-}
-.el-button.del {
-  width: 50px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
 }
 </style>

@@ -4,35 +4,29 @@
 <template>
   <div>
     <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>角色管理</el-breadcrumb-item>
-    </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
-      <el-form-item label="搜索："></el-form-item>
       <el-form-item label="角色名称">
         <el-input size="small" v-model="name" placeholder="输入角色名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search" >查询</el-button>
         <el-button
-          size="medium"
-          type="text"
+          size="small"
+          type="info"
           icon="el-icon-close"
           @click="resetForm('search')"
-          class="small"
         >重置</el-button>
       </el-form-item>
       <br/>
       <el-row>
-      <el-button size="medium" type="text" icon="el-icon-plus" @click="addRoles()" class="insert">添加</el-button>
+      <el-button size="small" type="success" icon="el-icon-plus" @click="addRoles()" >添加</el-button>
       </el-row>
       <br>
     </el-form>
     <!--列表-->
     <el-table
-      size="small"
+      size="mini"
       :data="listData"
       highlight-current-row
       v-loading="loading"
@@ -41,42 +35,48 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="角色名称" align="center"></el-table-column>
-      <el-table-column sortable prop="createTime" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" align="center"></el-table-column>
-      <el-table-column sortable prop="limitName" label="角色权限" align="center"></el-table-column>
+      <el-table-column  prop="name" label="角色名称" align="center"></el-table-column>
+      <el-table-column show-overflow-tooltip  prop="remark" label="角色备注" align="center"></el-table-column>
+      <el-table-column sortable prop="addDate" width="200px" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="updDate" width="200px" label="修改时间" align="center"></el-table-column>
       <el-table-column align="center" label="状态" prop="state">
         <template slot-scope="scope">
           <el-switch
-            v-model="scope.row.state"
+            v-model="scope.row.status"
             active-value="0"
             inactive-value="1"
-             active-color="rgb(19, 206, 102)"
-            inactive-color="rgb(255, 73, 73)"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
             @change="roleEnable(scope)"
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" width="400px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateRole(scope)"
-            type="text"
-            size="medium"
-          
+            type="primary"
+            size="small"
             icon="el-icon-edit"
-            class="up"
-
-            
           >编辑</el-button>
+          <el-button
+          @click="openAddAuth(scope)"
+            type="success"
+            size="small"
+            icon="el-icon-plus"
+          >角色授权</el-button>
            <el-button
            @click="deleteUser(scope)"
-            type="text"
-            size="medium"
-           
+            type="danger"
+            size="small"
             icon="el-icon-delete"
-            class="del"
           >删除</el-button>
+          <el-button
+           @click="removeAuth(scope)"
+            type="info"
+            size="small"
+            icon="el-icon-remove"
+          >权限清空</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,6 +84,7 @@
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
     <add-role :show="addRole" title="添加" @close="closeRoleDialog" @save="saveRole"></add-role>
+    <add-auth :transAuthId="transAuthId" :show="addAuth" title="角色授权" @close="closeAuthDialog" @save="saveAuth"></add-auth>
     <update-role
       :show="updateRoleFlag"
       :transRoleId="transRoleId"
@@ -110,6 +111,7 @@ import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import AddRole from "./addRole";
 import UpdateRole from "./updateRole";
+import AddAuth from "./addAuth";
 export default {
   inject: ["reload"],
   data() {
@@ -121,8 +123,10 @@ export default {
       editFormVisible: false, //控制编辑页面显示与隐藏
       menuAccessshow: false, //控制数据权限显示与隐藏
       addRole: false,
+      addAuth:false,
       updateRoleFlag: false,
       transRoleId: "",
+      transAuthId:"",
       formInline: {
         page: 1,
         limit: 10,
@@ -148,6 +152,7 @@ export default {
   // 注册组件
   components: {
     AddRole,
+    AddAuth,
     UpdateRole,
     Pagination
   },
@@ -187,8 +192,18 @@ export default {
     saveRole() {
       this.addRole = false;
     },
+    saveAuth(){
+      this.addAuth = false;
+    },
+    closeAuthDialog(){
+      this.addAuth = false;
+    },
     closeRoleDialog() {
       this.addRole = false;
+    },
+    openAddAuth(scope){
+      this.transAuthId = scope.row.id;
+      this.addAuth = true;
     },
     addRoles() {
       this.addRole = true;
@@ -203,15 +218,11 @@ export default {
     roleEnable: function(scope) {
       let params = {
         id: scope.row.id,
-        state: scope.row.state
+        status: scope.row.status
       };
-      api.testAxiosGet(ApiPath.url.roleEnable, params).then(res => {
+      api.testAxiosGet(ApiPath.url.enableRole, params).then(res => {
         let code = res.status;
-        if (code == "0") {
-          this.$message.success(res.message);
-        } else {
-          this.$message.success(res.message);
-        }
+        this.$message.success(res.message);
         // this.reload();
       }).catch(function(error) {});
     },
@@ -224,9 +235,33 @@ export default {
     //重置
     resetForm(search) {
       this.name = "";
-      location.reload();
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
-
+    //清空角色权限
+    removeAuth(scope) {
+      this.$confirm("确定要清空角色权限吗?一旦清空数据不可恢复！", "信息", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        let params = {
+          id: scope.row.id,
+          };
+        api.testAxiosGet(ApiPath.url.removeRoleAuth, params).then(res => {
+          let code = res.status;
+        if(code == "0") {
+            this.$message.success(res.message);
+            this.reload();
+          }
+          else{
+            // this.$message.error(res.message);
+            this.$alert('清空失败，请联系管理员！', '提示', {confirmButtonText: '确定',});
+            this.reload();}
+        });
+      });
+    },
     // 删除角色
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {
@@ -268,41 +303,6 @@ export default {
   border-color: rgb(121, 212, 59);
   border-radius: 3px;
 }
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.find {
-  width: 82px;
-  background-color:#e6a23c;
-  color: #fff;
-  border-color: #e6a23c;
-  font-size: 12px;
-}
-.small {
-  width: 82px;
-  background-color: #909399;
-  border-color: #909399;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
 .insert{
   width: 82px;
   background-color: #67c23a;
@@ -311,21 +311,4 @@ export default {
   font-size: 12px;
   margin-top: 4px;
 }
-.el-button.up {
-  margin-right: 20px;
-  width: 50px;
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-}
-.el-button.del {
-  width: 50px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
-}
-
-
 </style>
