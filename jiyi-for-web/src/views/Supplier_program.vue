@@ -18,13 +18,13 @@
       :title="modelName[1].title"
       :id="modelName[1].id"
       sTitle="实现采购、销统一的农资流转大平台；打通各环节中的各参与者、各终端，实现互联互通，促进商品信息的充分流动。"
-      background="#242B44"
+      background="#09182c"
       color="#fff"
       sColor="#fff"
       :allScreen="true"
     >  
     <div class="w">
-      <img src="https://s1.ax1x.com/2020/07/24/Ujid1K.gif" alt="" class="video">
+      <img src="https://s1.ax1x.com/2020/08/10/abJpqS.gif" alt="" class="video">
     </div>
       
     </Fast>
@@ -72,6 +72,7 @@
         </el-col>
       </el-row>
     </Fast>
+    <div style="width:100%;height:2px;background:#f6f7fc;"></div>
     <Callcontact />
   </div>
 </template>
@@ -220,7 +221,7 @@ export default {
   transition-duration: 0.5s;
 }
 .video {
-  height: 713px;
+  width: 100%;
 }
 .i {
   justify-content: space-around;

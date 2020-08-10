@@ -195,7 +195,7 @@ export default {
         }
       ],
       tabPane: [
-        "https://s1.ax1x.com/2020/07/24/UjP6zT.jpg",
+        "https://s1.ax1x.com/2020/08/10/abGIKK.jpg",
         "https://s1.ax1x.com/2020/07/24/UvQ1pD.jpg"
       ],
       tabIndex: 0,
