@@ -23,7 +23,7 @@
         <el-form-item label="描述">
           <el-input type="textarea" v-model="agrForm.descrip" :rows="3" readonly></el-input>
         </el-form-item>
-       
+
         <el-form-item label="交易类型"></el-form-item>
         <el-radio-group
           v-model="agrForm.transactionTypeCode"
@@ -37,7 +37,7 @@
           <el-radio label="4">植保</el-radio>
           <el-radio label="5">收割</el-radio>
         </el-radio-group>
-      
+
         <el-form-item label="交易类别"></el-form-item>
         <el-radio-group
           v-model="agrForm.transactionCategoryCode"
@@ -96,12 +96,49 @@
         <el-form-item label="审核人">
           <el-input type="text" v-model="agrForm.updateUser" readonly></el-input>
         </el-form-item>
-       
-        
+        <el-form-item label="干活开始时间">
+          <el-date-picker v-model="agrForm.beginDate" type="datetime" readonly></el-date-picker>
+        </el-form-item>
+        <el-form-item label="干活结束时间">
+          <el-date-picker type="datetime" v-model="agrForm.endDate" readonly></el-date-picker>
+        </el-form-item>
+        <el-form-item label="农机台数">
+          <el-input type="text" v-model="agrForm.machineNum" readonly></el-input>
+        </el-form-item>
+        <el-form-item label="是否面议">
+          <el-radio-group
+            v-model="agrForm.isFace"
+           
+            disabled
+          >
+            <el-radio label="0">是</el-radio>
+            <el-radio label="1">否</el-radio>
+           </el-radio-group>
+        </el-form-item>
+        <el-form-item label="农活类型">
+           <el-radio-group
+            v-model="agrForm.farmingMode"
+           
+            disabled
+          >
+            <el-radio label="0">整活</el-radio>
+            <el-radio label="1">零活</el-radio>
+           </el-radio-group>
+         
+        </el-form-item>
+        <el-form-item label="农活价格">
+          <el-input type="text" v-model="agrForm.agriPrice" readonly></el-input>
+        </el-form-item>
+        <el-form-item label="干活地点">
+          <el-input type="text" v-model="agrForm.workArea" readonly></el-input>
+        </el-form-item>
+        <el-form-item label="天数">
+          <el-input type="text" v-model="agrForm.days" readonly></el-input>
+        </el-form-item>
       </el-form>
     </slot>
     <span slot="footer">
-     <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -128,12 +165,9 @@ export default {
   },
   data() {
     return {
-     
       labelPosition: "right",
       localShow: this.show,
-      agrForm: {
-       
-      },
+      agrForm: {},
     };
   },
   watch: {

@@ -79,9 +79,51 @@ export default {
           icon: "el-icon-cherry",
           menuname: "农服管理",
           hasThird: "N",
-          url: "/Agricultural/agricultural",
+          url: null,
           menus: null,
-          only: "Y"
+          only: "N",
+          menus: [
+             {
+              menuid: 2 - 1,
+              icon: "el-icon-chat-line-round",
+              menuname: "农服管理",
+              hasThird: "N",
+              url: "Agricultural/agricultural",
+              menus: null,
+            },
+            {
+              menuid: 2 - 2,
+              icon: "el-icon-chat-line-round",
+              menuname: "粮食收购",
+              hasThird: "N",
+              url: "childrenMenu/PurchaseCorn",
+              menus: null,
+            },
+            {
+              menuid: 2 - 3,
+              icon: "el-icon-chat-line-round",
+              menuname: "粮食出售",
+              hasThird: "N",
+              url: "childrenMenu/sellFoodstuff",
+              menus: null,
+            },
+            {
+              menuid: 2 - 4,
+              icon: "el-icon-chat-line-round",
+              menuname: "农机出售",
+              hasThird: "N",
+              url: "childrenMenu/sellAgriMachinery",
+              menus: null,
+            },
+             {
+              menuid: 2 - 5,
+              icon: "el-icon-chat-line-round",
+              menuname: "粮食播种",
+              hasThird: "N",
+              url: "childrenMenu/CornSowing",
+              menus: null,
+            },
+            ]
         },
         {
           menuid: 3,

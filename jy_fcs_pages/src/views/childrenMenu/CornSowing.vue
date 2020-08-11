@@ -47,7 +47,44 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="5%" max-width="5%"></el-table-column>
-      <el-table-column prop="name" label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column prop="name" label="标题" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column
+        prop="descrip"
+        label="描述"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column sortable prop="beginDate" label="干活开始时间" align="center" width="135"></el-table-column>
+      <el-table-column sortable prop="days" label="天数" align="center" width="135"></el-table-column>
+      <el-table-column
+        prop="machineNum"
+        label="农机台数"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column prop="agriPrice" label="农活价格" align="center" min-width="45%" max-width="50%"></el-table-column>
+       <el-table-column prop="isFace" label="是否面议" align="center" min-width="45%" max-width="50%">
+           <template slot-scope="scope">
+          <span v-if="scope.row.isFace==0">是</span>
+          <span v-if="scope.row.isFace==1">否</span>          
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="farmingMode"
+        label="农活方式"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      >
+        <template slot-scope="scope">
+          <span v-if="scope.row.transactionTypeCode==0">整活</span>
+          <span v-if="scope.row.transactionTypeCode==1">零活</span>         
+        </template>
+      </el-table-column>
+
       <el-table-column
         prop="contactsUser"
         label="联系人"
@@ -61,13 +98,15 @@
         align="center"
         min-width="60%"
         max-width="65%"
-        :show-overflow-tooltip="true"
       ></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="80%" max-width="80%">
-        <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:80px;height:80px;"></el-image>
-        </template>
-      </el-table-column>
+      <el-table-column
+        prop="workArea"
+        label="干活地点"
+        align="center"
+        min-width="60%"
+        max-width="65%"
+      ></el-table-column>
+
       <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
@@ -80,38 +119,11 @@
       <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
 
-      <el-table-column fixed="right" label="操作" align="center" style="width:70%">
-        <template slot-scope="scope">
-          <el-button
-            @click="agrContent(scope)"
-            type="primary"
-            size="small"
-            style="padding:9px 6px;"
-          >查看详情</el-button>
-          <el-button
-            @click="checkContent(scope)"
-            type="primary"
-            size="small"
-            style="padding:9px 6px;"
-          >信息审核</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+     
 
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
-    <agrContent
-      :show="agrContentFlag"
-      :agrContentId="agrContentId"
-      title="查看详情"
-      @close="closeUpdateAgrContentDialog"
-    ></agrContent>
-    <checkContent
-      :show="checkContentFlag"
-      :checkContentId="checkContentId"
-      title="详情审核"
-      @close="closeUpdateCheckContentDialog"
-    ></checkContent>
+    </el-table>
 
     <br />
     <br />
@@ -123,8 +135,7 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-import agrContent from "./agrContent";
-import checkContent from '@/views/Agricultural/checkContent'
+
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -143,13 +154,7 @@ export default {
     return {
       name: "",
       status: "",
-      agrContentFlag: false,
-      agrContentId: "",
-      updateAgriculturalFlag: false,
-      transAgriculturalId: "",
-      checkContentFlag: false,
-      checkContentId: "",
-      updateCheckContentFlag: false,
+      
       transTagCode: "",
       tagCode: "",
       tagName: "",
@@ -288,8 +293,6 @@ export default {
     },
   },
   components: {
-    agrContent,
-    checkContent,
     Pagination,
   },
 };
