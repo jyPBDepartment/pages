@@ -25,7 +25,7 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" min-width="30" align="center"></el-table-column>
-      <el-table-column prop="name" label="标题名称" align="center" :show-overflow-tooltip="true" min-width="80px"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" :show-overflow-tooltip="true" min-width="110px"></el-table-column>
       <el-table-column prop="code" label="内容" align="center" :show-overflow-tooltip="true" min-width="80px"></el-table-column>
       <el-table-column prop="parentCode" label="分类id" align="center" min-width="90px"></el-table-column>
       <el-table-column prop="author" label="作者" align="center" min-width="90px"></el-table-column>
@@ -58,13 +58,13 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="120px">
+      <el-table-column align="center" label="操作" min-width="150px">
         <template slot-scope="scope">
+          <el-button type="danger" size="small" @click="examine(scope)">审核</el-button>
            <el-button
            @click="openUpdatePostInfo(scope)"
             type="primary"
             size="small"
-            icon="el-icon-document"
           >查看详情</el-button>
         </template>
       </el-table-column>
@@ -77,12 +77,21 @@
       title="查看详情"
       @close="closeUpdatePostInfoDialog"
       @save="upPostInfo"
-    ></update-postInfo> 
+    ></update-postInfo>
+    <examine
+      :show="examineFlag"
+      :examineId="examineId"
+      title="审核"
+      @close="closeexamineDialog"
+      @save="upExamine"
+    >
+    </examine>
   </div>
 </template>
 <script>
 import Pagination from "../../components/Pagination";
 import UpdatePostInfo from "./UpdatePostInfo"
+import Examine from "./examine"
 //后台路径引用
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
@@ -100,7 +109,9 @@ export default {
       menuAccessshow: false, //控制数据权限显示与隐藏
       addPostInfo: false,
       updatePostInfoFlag: false,
+      examineFlag:false,
       transPostInfoId: "",
+      examineId:"",
       formInline: {
         page: 1,
         limit: 10,
@@ -126,7 +137,8 @@ export default {
   // 注册组件
   components: {
     Pagination,
-    UpdatePostInfo
+    UpdatePostInfo,
+    Examine
   },
 
   watch: {},
@@ -181,6 +193,13 @@ export default {
     upPostInfo() {
       this.updatePostInfoFlag = false;
     },
+    closeexamineDialog(){
+      this.examineFlag = false;
+    },
+    upExamine(){
+      this.examineFlag = false;
+    },
+    
     
     //启用/禁用
     postInfoEnable: function(scope) {
@@ -203,6 +222,10 @@ export default {
     openUpdatePostInfo(scope) {
       this.transPostInfoId = scope.row.id;
       this.updatePostInfoFlag = true;
+    },
+    examine(scope){
+      this.examineId = scope.row.id;
+      this.examineFlag = true;
     },
     //重置
     resetForm(search) {
