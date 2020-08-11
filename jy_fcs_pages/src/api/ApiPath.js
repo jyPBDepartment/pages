@@ -174,7 +174,9 @@ const url = {
   //保存角色授权
   saveRelaFromRole: URLHost + '/menu/saveRelation',
   //清空角色权限
-  removeRoleAuth:URLHost + '/role/removeAuth'
+  removeRoleAuth:URLHost + '/role/removeAuth',
+  //获取看图识病关键词列表
+  findCaseKeyword:URLHost + '/caseInfo/findCaseKey',
 }
 export default {
   url
