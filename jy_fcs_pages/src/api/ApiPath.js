@@ -68,7 +68,7 @@ const url = {
   moduleFindById: URLHost + '/moduleInfo/findById',
   updateModuleInfo: URLHost + '/moduleInfo/update',
   //关键词分类
-  findKeyWordList: URLHost + '/classification/findKeyWordList',
+  findClassKey: URLHost + '/classification/findClassKey',
   //圈子管理
   postInfoSearch: URLHost + '/postInfo/findByName',
   //圈子状态 
@@ -174,9 +174,13 @@ const url = {
   //保存角色授权
   saveRelaFromRole: URLHost + '/menu/saveRelation',
   //清空角色权限
-  removeRoleAuth:URLHost + '/role/removeAuth',
+  removeRoleAuth: URLHost + '/role/removeAuth',
   //获取看图识病关键词列表
-  findCaseKeyword:URLHost + '/caseInfo/findCaseKey',
+  findCaseKeyword: URLHost + '/caseInfo/findCaseKey',
+  //权限子菜单查询
+  menuPowerInfo: URLHost + '/powerInfo/findListById',
+  //分类子菜单查询
+  menuClassification: URLHost + '/classification/findListById',
 }
 export default {
   url

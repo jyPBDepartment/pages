@@ -75,7 +75,7 @@ export default {
   },
   data() {
     return {
-      isShow:false,
+      isShow: true,
       localShow: this.show,
       classiForm: {
         name: "",
@@ -104,10 +104,10 @@ export default {
         .then((res) => {
           if (res.state == 0) {
             this.classiForm = res.data;
-            if(res.data.parentCode =="" || res.data.parentCode =="Null"){
-              this.isShow = true
-            }else{
-              this.isShow = false
+            if (res.data.parentCode == "" || res.data.parentCode == "Null") {
+              this.isShow = false;
+            } else {
+              this.isShow = true;
             }
           }
         });
@@ -138,18 +138,14 @@ export default {
     updateClassification: function () {
       let params = {
         classificationEntity: this.classiForm,
-        parentCode:this.classiForm.parentCode
+        parentCode: this.classiForm.parentCode,
       };
       api
         .testAxiosGet(ApiPath.url.updateClassification, params)
         .then((res) => {
           let code = res.state;
-          if (res.state == "1") {
-            this.$message.warning(res.message);
-          } else {
-            this.$message.success(res.message);
-          }
 
+          this.$message.success(res.message);
           this.reload();
           this.close();
         })

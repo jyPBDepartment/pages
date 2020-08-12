@@ -28,7 +28,13 @@
           clearable
         ></el-input>
       </el-form-item>
-      <el-button type="warning" size="small" @click="search('manual')" icon="el-icon-search" class="height">查询</el-button>
+      <el-button
+        type="warning"
+        size="small"
+        @click="search('manual')"
+        icon="el-icon-search"
+        class="height"
+      >查询</el-button>
       <el-button
         type="info"
         size="small"
@@ -50,12 +56,23 @@
       row-key="id"
       default-expand-all
       size="mini"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column  prop="jurCode" label="权限编码" align="center"  min-width="80px" max-width="115px"></el-table-column>
-      <el-table-column  prop="jurName" label="权限名称" align="center"  min-width="80px" max-width="115px"></el-table-column>
+      <el-table-column
+        prop="jurCode"
+        label="权限编码"
+        align="center"
+        min-width="80px"
+        max-width="115px"
+      ></el-table-column>
+      <el-table-column
+        prop="jurName"
+        label="权限名称"
+        align="center"
+        min-width="80px"
+        max-width="115px"
+      ></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center"  prop="auditStatus" label="状态" min-width="50" max-width="80px">
+      <el-table-column align="center" prop="auditStatus" label="状态" min-width="50" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -69,24 +86,37 @@
       </el-table-column>
       <el-table-column sortable prop="createDate" label="创建时间" align="center" width="180"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="180"></el-table-column>
-      <el-table-column  prop="createUser" label="创建人" align="center"  min-width="80px" max-width="115px"></el-table-column>
-      <el-table-column  prop="updateUser" label="修改人" align="center"  min-width="80px" max-width="115px"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="220px" align="center">
+      <el-table-column
+        prop="createUser"
+        label="创建人"
+        align="center"
+        min-width="80px"
+        max-width="115px"
+      ></el-table-column>
+      <el-table-column
+        prop="updateUser"
+        label="修改人"
+        align="center"
+        min-width="80px"
+        max-width="115px"
+      ></el-table-column>
+      <el-table-column fixed="right" label="操作" width="320px" align="center">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
-            class="up"
+           
             type="primary"
             size="small"
             icon="el-icon-edit"
           >编辑</el-button>
           <el-button
             @click="deletePowerInfo(scope)"
-            class="del"
+            
             type="danger"
             size="small"
             icon="el-icon-delete"
           >删除</el-button>
+          <el-button type="primary" size="small" @click="table = true,check(scope)"  icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -108,6 +138,85 @@
       @close="closeUpdatePowerInfoDialog"
       @save="updatePowerInfo"
     ></update-power-info>
+
+    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl" size="50%">
+      <el-table
+        :data="gridData"
+        border
+        highlight-current-row
+        row-key="id"
+        default-expand-all
+        size="mini"
+      >
+        <el-table-column
+          prop="jurCode"
+          label="权限编码"
+          align="center"
+          min-width="80px"
+          max-width="115px"
+        ></el-table-column>
+        <el-table-column
+          prop="jurName"
+          label="权限名称"
+          align="center"
+          min-width="80px"
+          max-width="115px"
+        ></el-table-column>
+        <!--switch开关（表单）-->
+        <el-table-column
+          align="center"
+          prop="auditStatus"
+          label="状态"
+          min-width="80"
+          max-width="100px"
+        >
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.auditStatus"
+              active-value="1"
+              inactive-value="0"
+              active-color="rgb(19, 206, 102)"
+              inactive-color="rgb(255, 73, 73)"
+              @change="powerInfoEnable(scope)"
+            ></el-switch>
+          </template>
+        </el-table-column>
+        <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
+        <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
+        <el-table-column
+          prop="createUser"
+          label="创建人"
+          align="center"
+          min-width="80px"
+          max-width="115px"
+        ></el-table-column>
+        <el-table-column
+          prop="updateUser"
+          label="修改人"
+          align="center"
+          min-width="80px"
+          max-width="115px"
+        ></el-table-column>
+        <el-table-column fixed="right" label="操作" width="220px" align="center">
+          <template slot-scope="scope">
+            <el-button
+              @click="openUpdateDialog(scope)"
+              class="up"
+              type="primary"
+              size="small"
+              icon="el-icon-edit"
+            >编辑</el-button>
+            <el-button
+              @click="deletePowerInfo(scope)"
+              class="del"
+              type="danger"
+              size="small"
+              icon="el-icon-delete"
+            >删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-drawer>
   </div>
 </template>
 
@@ -135,8 +244,10 @@ export default {
 
   data() {
     return {
+      table: false,
       jurName: "",
       jurCode: "",
+      subJurCode:"",
       updatePowerInfoFlag: false,
       transPowerInfoId: "",
       transTagCode: "",
@@ -147,6 +258,7 @@ export default {
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
+      gridData: [],
       formInline: {
         page: 1,
         limit: 10,
@@ -186,7 +298,7 @@ export default {
           } else {
             this.$message.success(res.message);
           }
-          this.reload();
+          
         })
         .catch(function (error) {});
     },
@@ -196,9 +308,25 @@ export default {
       this.formInline.limit = parm.pageSize;
       this.search(this.formInline);
     },
+    //子菜单查询方法
+    check: function (scope) {
+      let params = {
+        id:scope.row.id
+      };
+      api
+        .testAxiosGet(ApiPath.url.menuPowerInfo, params)
+        .then((res) => {
+          let code = res.status;
+          if (code == "0") {
+            this.gridData = res.data;
+          } else {
+          }
+        })
+        .catch(function (error) {});
+    },
     //查询方法
     search: function (parameter) {
-       if (parameter == "manual") {
+      if (parameter == "manual") {
         this.formInline.page = 1;
         this.formInline.limit = 10;
       }
@@ -213,26 +341,7 @@ export default {
         .then((res) => {
           let code = res.status;
           if (code == "0") {
-            let parent = [];
-            let children = [];
-            for (let i = 0; i < res.data.content.length; i++) {
-              if (res.data.content[i]["subJurCode"] == "") {
-                parent.push(res.data.content[i]);
-              } else {
-                children.push(res.data.content[i]);
-              }
-            }
-            let child = [];
-            for (let j = 0; j < parent.length; j++) {
-              for (let k = 0; k < children.length; k++) {
-                if (parent[j]["id"] == children[k]["subJurCode"]) {
-                  child.push(children[k]);
-                }
-                parent[j]["children"] = child;
-              }
-              child = [];
-            }
-            this.tableData = parent;
+            this.tableData = res.data.content;
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
             this.pageparm.total = res.data.totalElements;
@@ -258,12 +367,10 @@ export default {
         };
         api.testAxiosGet(ApiPath.url.deletePowerInfo, params).then((res) => {
           let code = res.status;
-           if (code == "1"){
-             this.$message.warning(res.message);
-             this.reload();
-            
-          }
-         else if (code == "0") {
+          if (code == "1") {
+            this.$message.warning(res.message);
+            this.reload();
+          } else if (code == "0") {
             this.$message.success(res.message);
             this.reload();
           } else {
@@ -272,7 +379,6 @@ export default {
             });
             this.reload();
           }
-         
         });
       });
     },

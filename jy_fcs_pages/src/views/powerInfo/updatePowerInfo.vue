@@ -159,13 +159,6 @@ export default {
           let code = res.status;
 
           this.$message.success(res.message);
-
-          // if (res.status =="1") {
-          //       this.$message.warning(res.message);
-          //     }
-          //     else {
-          //        this.$message.success(res.message);
-          //     }
           this.reload();
           this.close();
         })
