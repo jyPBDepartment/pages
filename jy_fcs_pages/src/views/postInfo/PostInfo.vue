@@ -58,9 +58,9 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="150px">
+      <el-table-column align="center" label="操作" min-width="200px">
         <template slot-scope="scope">
-          <el-button type="danger" size="small" @click="examine(scope)">审核</el-button>
+          <el-button type="primary" size="small" @click="examine(scope)">审核</el-button>
            <el-button
            @click="openUpdatePostInfo(scope)"
             type="primary"
@@ -130,7 +130,6 @@ export default {
         total: 10,
         token: localStorage.getItem("logintoken")
       },
-      userparm: [], //搜索权限
       listData: [], //用户数据
       // 数据权限
       PostInfoRight: [],

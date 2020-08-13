@@ -26,7 +26,6 @@
            <span v-if="postInfoForm.auditStatus==1">审核中</span>
            <span v-if="postInfoForm.auditStatus==2">审核通过</span>
            <span v-if="postInfoForm.auditStatus==3">审核驳回</span>
-          <!-- <el-input type="text" v-model="postInfoForm.auditStatus" size="small" style="width:80%" readonly></el-input> -->
         </el-form-item>
         <el-form-item label="审核意见" >
           <el-input type="textarea" :rows="3" v-model="postInfoForm.auditOptinion" size="small" style="width:80%" readonly></el-input>
@@ -46,8 +45,8 @@
         <el-form-item label="审核人">
           <el-input type="text" v-model="postInfoForm.auditUser" size="small" style="width:80%" readonly></el-input>
         </el-form-item>
-         <el-form-item label="审核驳回原因" >
-          <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input>
+         <el-form-item label="审核原因" >
+          <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%" readonly ></el-input>
         </el-form-item>
         <el-form-item label="可见程度:">
             <span v-if="postInfoForm.visibility==1" class="vis">全部可见</span>

@@ -12,8 +12,9 @@
     <!-- 插槽区 -->
     <slot>
       <el-form  ref="postInfoForm" :model="postInfoForm" :label-position="labelPosition" label-width="100px">
-         <el-form-item label="审核驳回原因" >
-          <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input>
+         <el-form-item label="审核原因" >
+          <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input></span>
+          <span v-if="postInfoForm.auditStatus==2||postInfoForm.auditStatus==3"><el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%" disabled></el-input></span>
         </el-form-item>
       </el-form>
     </slot>
@@ -89,12 +90,15 @@ export default {
     },
     //审核拒绝
     refusePostInfo: function(){
-       if(this.postInfoForm.reason == null && this.postInfoForm.reason == ""){
-         this.$alert("请填写拒绝理由！", "提示", {
+      if (          
+          this.postInfoForm.reason == "" ||
+          this.postInfoForm.reason == null
+        ) {
+          this.$alert("请填写拒绝理由！", "提示", {
             confirmButtonText: "确定",
           });
           return false;
-         }
+        }
         let params = {
         postInfoEntity: this.postInfoForm
       };

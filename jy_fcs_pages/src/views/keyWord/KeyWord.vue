@@ -33,7 +33,7 @@
       <el-table-column type="index" label="序号" min-width="60" align="center"></el-table-column>
       <el-table-column prop="name" label="名称" align="center" min-width="100px"></el-table-column>
       <el-table-column prop="code" label="编码" align="center"></el-table-column>
-      <el-table-column prop="parentName" label="分类编码" align="center" min-width="100px"></el-table-column>
+      <el-table-column prop="parentName" label="分类名称" align="center" min-width="100px"></el-table-column>
       <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="150px"></el-table-column>
       <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="150px"></el-table-column>
       <el-table-column prop="createUser" label="创建人" align="center" min-width="100px"></el-table-column>
@@ -136,7 +136,7 @@ export default {
     this.search(this.formInline);
   },
   methods: {
-
+    
     // 分页插件事件
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -227,7 +227,12 @@ export default {
             this.reload();
           }
         });
-      });
+      }).catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     }
   }
 };
