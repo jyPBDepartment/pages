@@ -165,16 +165,7 @@ export default {
         total: 10,
         token: localStorage.getItem("logintoken")
       },
-      userparm: [], //搜索权限
       listData: [], //用户数据
-      // 数据权限
-      AccountInfoRight: [],
-      AccountInfoRightProps: {
-        children: "children",
-        label: "name"
-      },
-      //参数accountInfo
-      saveAccountInfoId: "",
       auditStatusOptions: [
         { value: "", label: "全部" },
         { value: "0", label: "启用" },
