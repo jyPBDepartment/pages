@@ -77,6 +77,11 @@
           <span v-if="scope.row.status==4">已完成</span>
         </template>
       </el-table-column>
+       <el-table-column label="审核理由" prop="examineReason" align="center"
+        min-width="60%"
+        max-width="65%"
+        :show-overflow-tooltip="true">
+        </el-table-column>
       <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
 

@@ -257,15 +257,16 @@ export default {
         .catch(function (error) {});
     },
 
-    //添加分类方法
+    //添加看图识病方法
     saveCaseInfo(editData) {
-      this.isDisable = true;
+      
       if (
         this.editForm.name != "" &&
         this.imgUrl != "" &&
         this.editForm.classiCode != "" &&
         this.editForm.classiDipCode != ""
       ) {
+        this.isDisable = true;
         this.$refs[editData].validate((valid) => {
           if (valid) {
             if (this.imgUrl != "") {

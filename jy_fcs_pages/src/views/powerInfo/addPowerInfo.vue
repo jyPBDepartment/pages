@@ -134,8 +134,9 @@ export default {
 
     //添加权限方法
     savePowerInfo: function () {
-      this.isDisable = true;
+    
       if (this.editForm.jurName != "" && this.editForm.jurCode != "") {
+          this.isDisable = true;
         let params = {
           powerInfoEntity: this.editForm,
         };

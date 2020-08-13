@@ -28,7 +28,7 @@
         <el-radio-group
           v-model="agrForm.transactionTypeCode"
           style="padding-bottom:5px;padding-left:98px;margin-top:-84px;"
-          disabled
+          
         >
           <el-radio label="0" style="padding-bottom:10px">收购</el-radio>
           <el-radio label="1" style="padding-bottom:10px">出售</el-radio>
@@ -42,7 +42,7 @@
         <el-radio-group
           v-model="agrForm.transactionCategoryCode"
           style="padding-bottom:5px;padding-left:98px;margin-top:-84px;"
-          disabled
+          
         >
           <el-radio label="0">玉米</el-radio>
           <el-radio label="1">农机</el-radio>
@@ -108,8 +108,6 @@
         <el-form-item label="是否面议">
           <el-radio-group
             v-model="agrForm.isFace"
-           
-            disabled
           >
             <el-radio label="0">是</el-radio>
             <el-radio label="1">否</el-radio>
@@ -118,8 +116,6 @@
         <el-form-item label="农活类型">
            <el-radio-group
             v-model="agrForm.farmingMode"
-           
-            disabled
           >
             <el-radio label="0">整活</el-radio>
             <el-radio label="1">零活</el-radio>

@@ -136,6 +136,9 @@ export default {
     },
     //修改分类信息
     updateClassification: function () {
+       if (
+        this.classiForm.name != "" && this.classiForm.code != "" 
+      ) {
       let params = {
         classificationEntity: this.classiForm,
         parentCode: this.classiForm.parentCode,
@@ -153,6 +156,15 @@ export default {
           this.$message.error(err.data);
         });
       this.classiForm.updateUser = localStorage.getItem("userInfo");
+      }else {
+        this.$alert(
+          "名称，编码不能为空！",
+          "提示",
+          {
+            confirmButtonText: "确定",
+          }
+        );
+      }
     },
     close: function () {
       this.$emit("close");
@@ -161,6 +173,7 @@ export default {
       this.close();
     },
   },
+  
 };
 </script>
 

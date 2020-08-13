@@ -281,6 +281,12 @@ export default {
     },
     // 修改
     updateCaseInfo(editData) {
+       if (
+        this.caseInfoForm.name != "" &&
+        this.caseInfoForm.imgUrl != "" &&
+        this.caseInfoForm.classiCode != "" &&
+        this.caseInfoForm.classiDipCode != ""
+      ) {
       this.$refs[editData].validate((valid) => {
         if (valid) {
           if (this.imgUrl != "") {
@@ -309,6 +315,15 @@ export default {
           return false;
         }
       });
+      } else {
+        this.$alert(
+          "名称，图片，农作物种类编码，病虫害种类编码不能为空！",
+          "提示",
+          {
+            confirmButtonText: "确定",
+          }
+        );
+      }
     },
     close: function () {
        this.fileList=[];

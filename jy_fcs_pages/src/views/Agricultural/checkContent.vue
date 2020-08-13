@@ -17,9 +17,15 @@
         label-width="100px"
         :label-position="labelPosition"
       >
-        <el-form-item label="审核拒绝理由">
-          <el-input type="textarea" v-model="agrForm.examineReason"></el-input>
+        <el-form-item label="审核理由">
+          <span v-if="agrForm.status == 0 || agrForm.status==3 || agrForm.status==4">
+            <el-input v-model="agrForm.examineReason" type="textarea"  size="small"></el-input>
+          </span>
+          <span  v-if="agrForm.status == 1 || agrForm.status==2">
+            <el-input v-model="agrForm.examineReason" type="textarea" disabled size="small"></el-input>
+          </span>
         </el-form-item>
+      
       </el-form>
     </slot>
     <span slot="footer">

@@ -149,6 +149,7 @@ export default {
 
     //修改权限信息
     updatePowerInfo: function () {
+       if (this.powerInfoForm.jurName != "" && this.powerInfoForm.jurCode != "") {
       let params = {
         powerInfoEntity: this.powerInfoForm,
         subJurCode: this.powerInfoForm.subJurCode,
@@ -166,6 +167,15 @@ export default {
           this.$message.error(err.data);
         });
       this.powerInfoForm.updateUser = localStorage.getItem("userInfo");
+      }else {
+        this.$alert(
+          "名称，编码不能为空！",
+          "提示",
+          {
+            confirmButtonText: "确定",
+          }
+        );
+      }
     },
     close: function () {
       this.$emit("close");
