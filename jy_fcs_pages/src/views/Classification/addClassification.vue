@@ -120,7 +120,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               this.classiOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["code"],
+                label: res.data[i]["name"],
               });
             }
           }

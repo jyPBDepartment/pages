@@ -139,7 +139,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               this.powerOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["jurCode"],
+                label: res.data[i]["jurName"],
               });
             }
           }
