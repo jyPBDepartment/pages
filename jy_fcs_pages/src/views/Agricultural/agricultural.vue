@@ -47,7 +47,7 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="5%" max-width="5%"></el-table-column>
-      <el-table-column  label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column   prop="name" label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
       <el-table-column
         prop="contactsUser"
         label="联系人"

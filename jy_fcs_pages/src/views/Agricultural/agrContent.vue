@@ -11,7 +11,7 @@
   >
     <slot>
       <el-form
-        :rules="rules"
+       
         ref="agrForm"
         :model="agrForm"
         label-width="100px"
