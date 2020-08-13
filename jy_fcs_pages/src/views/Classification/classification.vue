@@ -18,7 +18,7 @@
           clearable
         ></el-input>
       </el-form-item>
-       <el-form-item label="分类名称">
+      <el-form-item label="分类名称">
         <el-input
           v-model="name"
           type="text"
@@ -28,7 +28,13 @@
           clearable
         ></el-input>
       </el-form-item>
-      <el-button type="warning" size="small" @click="search('manual')" icon="el-icon-search" class="height">查询</el-button>
+      <el-button
+        type="warning"
+        size="small"
+        @click="search('manual')"
+        icon="el-icon-search"
+        class="height"
+      >查询</el-button>
       <el-button
         type="info"
         @click="resetRuleTag(search)"
@@ -52,10 +58,10 @@
       size="mini"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column  prop="code" label="分类编码" align="center" min-width="80px" max-width="110px"></el-table-column>
-      <el-table-column  prop="name" label="分类名称" align="center" min-width="80px" max-width="110px"></el-table-column>
+      <el-table-column prop="code" label="分类编码" align="center" min-width="80px" max-width="110px"></el-table-column>
+      <el-table-column prop="name" label="分类名称" align="center" min-width="80px" max-width="110px"></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center"  prop="status" label="状态" min-width="50px" max-width="80px">
+      <el-table-column align="center" prop="status" label="状态" min-width="50px" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -69,9 +75,21 @@
       </el-table-column>
       <el-table-column sortable prop="createDate" label="创建时间" align="center" width="180"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="180"></el-table-column>
-      <el-table-column  prop="createUser" label="创建人" align="center" min-width="80px" max-width="115px"></el-table-column>
-      <el-table-column  prop="updateUser" label="修改人" align="center"  min-width="80px" max-width="115px"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="220px" align="center">
+      <el-table-column
+        prop="createUser"
+        label="创建人"
+        align="center"
+        min-width="80px"
+        max-width="115px"
+      ></el-table-column>
+      <el-table-column
+        prop="updateUser"
+        label="修改人"
+        align="center"
+        min-width="80px"
+        max-width="115px"
+      ></el-table-column>
+      <el-table-column fixed="right" label="操作" width="320px" align="center">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
@@ -85,6 +103,12 @@
             size="small"
             icon="el-icon-delete"
           >删除</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="table = true,check(scope)"
+            icon="el-icon-view"
+          >查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -106,6 +130,65 @@
       @close="closeUpdateClassificationDialog"
       @save="updateClassification"
     ></update-classification>
+
+    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl" size="50%">
+      <el-table
+        :data="gridData"
+        border
+        highlight-current-row
+        row-key="id"
+        default-expand-all
+        size="mini"
+      >
+        <el-table-column prop="code" label="分类编码" align="center" min-width="80px" max-width="110px"></el-table-column>
+        <el-table-column prop="name" label="分类名称" align="center" min-width="80px" max-width="110px"></el-table-column>
+        <!--switch开关（表单）-->
+        <el-table-column align="center" prop="status" label="状态" min-width="80px" max-width="100px">
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.status"
+              active-value="1"
+              inactive-value="0"
+              active-color="rgb(19, 206, 102)"
+              inactive-color="rgb(255, 73, 73)"
+              @change="classiEnable(scope)"
+            ></el-switch>
+          </template>
+        </el-table-column>
+        <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
+        <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
+        <el-table-column
+          prop="createUser"
+          label="创建人"
+          align="center"
+          min-width="80px"
+          max-width="115px"
+        ></el-table-column>
+        <el-table-column
+          prop="updateUser"
+          label="修改人"
+          align="center"
+          min-width="80px"
+          max-width="115px"
+        ></el-table-column>
+        <el-table-column fixed="right" label="操作" width="220px" align="center">
+          <template slot-scope="scope">
+            <el-button
+              @click="openUpdateDialog(scope)"
+              type="primary"
+              size="small"
+              icon="el-icon-edit"
+            >编辑</el-button>
+            <el-button
+              @click="deleteClassification(scope)"
+              type="danger"
+              size="small"
+              icon="el-icon-delete"
+            >删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-drawer>
   </div>
 </template>
 
@@ -133,8 +216,9 @@ export default {
 
   data() {
     return {
+      table: false,
       code: "",
-      name:"",
+      name: "",
       updateClassificationFlag: false,
       transClassificationId: "",
       transTagCode: "",
@@ -145,10 +229,10 @@ export default {
       updateRuleTag: false,
       mainBodyCode: "",
       tableData: [],
+      gridData:[],
       formInline: {
         page: 1,
         limit: 10,
-        
       },
       pageparm: {
         currentPage: 1,
@@ -182,7 +266,6 @@ export default {
           } else {
             this.$message.success(res.message);
           }
-          this.reload();
         })
         .catch(function (error) {});
     },
@@ -192,15 +275,31 @@ export default {
       this.formInline.limit = parm.pageSize;
       this.search(this.formInline);
     },
+    //子菜单查询方法
+    check: function (scope) {
+      let params = {
+        id: scope.row.id,
+      };
+      api
+        .testAxiosGet(ApiPath.url.menuClassification, params)
+        .then((res) => {
+          let code = res.status;
+          if (code == "0") {
+            this.gridData = res.data;
+          } else {
+          }
+        })
+        .catch(function (error) {});
+    },
     //查询方法
     search: function (parameter) {
-       if (parameter == "manual") {
+      if (parameter == "manual") {
         this.formInline.page = 1;
         this.formInline.limit = 10;
       }
       let params = {
         code: this.code,
-        name:this.name,
+        name: this.name,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
@@ -209,27 +308,7 @@ export default {
         .then((res) => {
           let code = res.state;
           if (code == "0") {
-            let parent = [];
-            let children = [];
-            for (let i = 0; i < res.data.content.length; i++) {
-              if (res.data.content[i]["parentCode"] == "") {
-                parent.push(res.data.content[i]);
-              } else {
-                children.push(res.data.content[i]);
-              }
-            }
-            let child = [];
-            for (let j = 0; j < parent.length; j++) {
-              for (let k = 0; k < children.length; k++) {
-                if (parent[j]["id"] == children[k]["parentCode"]) {
-                  child.push(children[k]);
-                }
-                parent[j]["children"] = child;
-              }
-              child = [];
-            }
-
-            this.tableData = parent;
+            this.tableData = res.data.content;
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
             this.pageparm.total = res.data.totalElements;
@@ -238,7 +317,6 @@ export default {
         })
         .catch(function (error) {});
     },
-
     closeUpdateClassificationDialog: function () {
       this.updateClassificationFlag = false;
     },
@@ -257,11 +335,10 @@ export default {
           .testAxiosGet(ApiPath.url.deleteClassification, params)
           .then((res) => {
             let code = res.status;
-            if(code == "1"){
+            if (code == "1") {
               this.$message.warning(res.message);
               this.reload();
-            }
-           else if (code == "0") {
+            } else if (code == "0") {
               this.$message.success(res.message);
               this.reload();
             } else {
@@ -297,7 +374,7 @@ export default {
     // 重置
     resetRuleTag(search) {
       this.code = "";
-      this.name="";
+      this.name = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
@@ -319,8 +396,6 @@ export default {
       this.$emit("save", this.transData);
     },
 
-   
-   
     maunalRun(scope) {
       let tagcode = scope.row.tagCode;
       api.testAxiosPost(ApiPath.url.maunalRun, tagCode).then((res) => {});

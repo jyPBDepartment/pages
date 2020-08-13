@@ -131,9 +131,10 @@ export default {
             } else {
               this.$message.error(res.message);
             }
+          }).catch(function (err) {
+            this.$message.error("登录失败");
           });
         } else {
-          // 获取图形验证码
           this.$message.error("请输入用户名,密码,验证码！");
           return false;
         }
@@ -154,7 +155,7 @@ export default {
       );
       for (var i = 0; i < codeLength; i++) {
         //取得随机数的索引（0~35）
-        var index = Math.floor(Math.random() * 36);
+        var index = Math.floor(Math.random() * 62);
         //根据索引取得随机数加到code上
         this.yCode += random[index];
       }

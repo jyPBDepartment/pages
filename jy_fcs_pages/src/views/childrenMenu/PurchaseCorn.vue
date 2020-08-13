@@ -47,8 +47,41 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="5%" max-width="5%"></el-table-column>
-      <el-table-column  label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+        <el-table-column
+        prop="transactionCategoryCode"
+        label="交易类别"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      >
+        <template slot-scope="scope">
+          <span v-if="scope.row.transactionCategoryCode==0">玉米</span>
+          <span v-if="scope.row.transactionCategoryCode==1">高粱</span>
+          <span v-if="scope.row.transactionCategoryCode==2">水稻</span>
+           <span v-if="scope.row.transactionCategoryCode==3">黄豆</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="descrip" label="描述" align="center" min-width="45%" max-width="50%" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="url" label="图片" align="center" min-width="50%" max-width="50%">
+        <template slot-scope="scope">
+          <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
+        </template>
+      </el-table-column>
       <el-table-column
+        prop="purchasingPrice"
+        label="收购价格"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column prop="isFace" label="是否面议" align="center" min-width="45%" max-width="50%">
+           <template slot-scope="scope">
+          <span v-if="scope.row.isFace==0">是</span>
+          <span v-if="scope.row.isFace==1">否</span>          
+        </template>
+      </el-table-column>
+       <el-table-column
         prop="contactsUser"
         label="联系人"
         align="center"
@@ -63,12 +96,17 @@
         max-width="65%"
         :show-overflow-tooltip="true"
       ></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="80%" max-width="80%">
-        <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:80px;height:80px;"></el-image>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
+      <el-table-column
+        prop="purchasingArea"
+        label="收购区域"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>  
+        <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
+      <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
+       <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
@@ -77,41 +115,12 @@
           <span v-if="scope.row.status==4">已完成</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
-
-      <el-table-column fixed="right" label="操作" align="center" style="width:70%">
-        <template slot-scope="scope">
-          <el-button
-            @click="agrContent(scope)"
-            type="primary"
-            size="small"
-            style="padding:9px 6px;"
-          >查看详情</el-button>
-          <el-button
-            @click="checkContent(scope)"
-            type="primary"
-            size="small"
-            style="padding:9px 6px;"
-          >信息审核</el-button>
-        </template>
-      </el-table-column>
+     
     </el-table>
 
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
-    <agrContent
-      :show="agrContentFlag"
-      :agrContentId="agrContentId"
-      title="查看详情"
-      @close="closeUpdateAgrContentDialog"
-    ></agrContent>
-    <checkContent
-      :show="checkContentFlag"
-      :checkContentId="checkContentId"
-      title="详情审核"
-      @close="closeUpdateCheckContentDialog"
-    ></checkContent>
+    
 
     <br />
     <br />
@@ -123,8 +132,8 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-import agrContent from "./agrContent";
-import checkContent from '@/views/Agricultural/checkContent'
+// import agrContent from "./agrContent";
+// import checkContent from "@/views/Agricultural/checkContent";
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -143,10 +152,10 @@ export default {
     return {
       name: "",
       status: "",
-      agrContentFlag: false,
-      agrContentId: "",
-      updateAgriculturalFlag: false,
-      transAgriculturalId: "",
+    //   agrContentFlag: false,
+    //   agrContentId: "",
+    //   updateAgriculturalFlag: false,
+    //   transAgriculturalId: "",
       checkContentFlag: false,
       checkContentId: "",
       updateCheckContentFlag: false,
@@ -288,8 +297,8 @@ export default {
     },
   },
   components: {
-    agrContent,
-    checkContent,
+    // agrContent,
+    // checkContent,
     Pagination,
   },
 };

@@ -118,10 +118,8 @@ export default {
   data() {
     return {
       name: "",
-      phone: "",
+      url: "",
       status: "",
-      nshow: true, //switch开启
-      fshow: false, //switch关闭
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
       menuAccessshow: false, //控制数据权限显示与隐藏
@@ -139,14 +137,9 @@ export default {
         total: 10,
         token: localStorage.getItem("logintoken"),
       },
-      userparm: [], //搜索权限
       listData: [], //用户数据
       // 数据权限
       ModuleInfoRight: [],
-      ModuleInfoRightProps: {
-        children: "children",
-        label: "name",
-      },
       //参数moduleInfo
       saveModuleInfoId: "",
       statusOptions: [
@@ -207,7 +200,6 @@ export default {
       this.addModuleInfo = true;
     },
     closeUpdateModuleInfoDialog() {
-      this.transModuleInfoId="";
       this.updateModuleInfoFlag = false;
     },
     upModuleInfo() {

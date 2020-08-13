@@ -12,51 +12,15 @@
     <!-- 插槽区 -->
     <slot>
       <el-form :model="postInfoForm" :label-position="labelPosition" label-width="100px">
-        <el-form-item label="标题名称">
-          <el-input type="text" v-model="postInfoForm.name" size="small" style="width:80%" readonly ></el-input>
-        </el-form-item>
-        <el-form-item label="内容" >
-          <el-input type="textarea" :rows="3" v-model="postInfoForm.code" size="small" style="width:80%" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="分类id">
-          <el-input type="text" v-model="postInfoForm.parentCode" size="small" style="width:80%" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="审核状态:" >
-          <span v-if="postInfoForm.auditStatus==0">未审核</span>
-           <span v-if="postInfoForm.auditStatus==1">审核中</span>
-           <span v-if="postInfoForm.auditStatus==2">审核通过</span>
-           <span v-if="postInfoForm.auditStatus==3">审核驳回</span>
-          <!-- <el-input type="text" v-model="postInfoForm.auditStatus" size="small" style="width:80%" readonly></el-input> -->
-        </el-form-item>
-        <el-form-item label="审核意见" >
-          <el-input type="textarea" :rows="3" v-model="postInfoForm.auditOptinion" size="small" style="width:80%" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="发布时间" >
-          <el-input type="text" v-model="postInfoForm.createDate" size="small" style="width:80%" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="修改时间" >
-          <el-input type="text" v-model="postInfoForm.updateDate" size="small" style="width:80%" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="作者" >
-          <el-input type="text" v-model="postInfoForm.author" size="small" style="width:80%" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="发布人" >
-          <el-input type="text" v-model="postInfoForm.createUser" size="small" style="width:80%" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="审核人">
-          <el-input type="text" v-model="postInfoForm.auditUser" size="small" style="width:80%" readonly></el-input>
-        </el-form-item>
          <el-form-item label="审核驳回原因" >
           <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input>
-        </el-form-item>
-        <el-form-item label="可见程度:">
-            <span v-if="postInfoForm.visibility==1" class="vis">全部可见</span>
-            <span v-if="postInfoForm.visibility==0" class="vis">自己可见</span>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
+      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-check" @click="passPostInfo" class="insert">通过审核</el-button></span>
+      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-close" @click="refusePostInfo" class="del">拒绝审核</el-button></span>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -75,7 +39,7 @@ export default {
       type: String,
       default: "对话框"
     },
-    transPostInfoId: {
+    examineId: {
       type: String
     }
   },
@@ -83,16 +47,6 @@ export default {
     return {
       labelPosition: "right",
       postInfoForm: {
-        code: "",
-        parentCode: "",
-        auditStatus: "",
-        auditOptinion: "",
-        createDate: "",
-        updateDate: "",
-        author: "",
-        createUser: "",
-        auditUser: "",
-        visibility: "",
         name: "",
         status:"",
         id:"",
@@ -105,7 +59,7 @@ export default {
     show(val) {
       this.localShow = val;
     },
-    transPostInfoId(val) {
+    examineId(val) {
       let params = {
         id: val
       };

@@ -47,7 +47,46 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="5%" max-width="5%"></el-table-column>
-      <el-table-column  label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column
+        prop="descrip"
+        label="描述"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column
+        prop="machineType"
+        label="机器类型"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      >
+       <template slot-scope="scope">
+        <span v-if="scope.row.machineType==0">玉米收割机</span>
+        <span v-if="scope.row.machineType==1">水稻收割机</span>
+        <span v-if="scope.row.machineType==2">玉米播种机</span>
+        <span v-if="scope.row.machineType==3">水稻插秧机</span>
+        <span v-if="scope.row.machineType==4">无人机喷药</span>
+       </template>
+      </el-table-column>
+      <el-table-column prop="model" label="机器型号" align="center" min-width="45%" max-width="50%"></el-table-column>
+       <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
+        <el-table-column
+        prop="sellingPrice"
+        label="出售价格"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
+      <el-table-column
+        prop="sellingArea"
+        label="出售区域"
+        align="center"
+        min-width="45%"
+        max-width="50%"
+      ></el-table-column>
       <el-table-column
         prop="contactsUser"
         label="联系人"
@@ -63,12 +102,12 @@
         max-width="65%"
         :show-overflow-tooltip="true"
       ></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="80%" max-width="80%">
+      <el-table-column prop="url" label="图片" align="center" min-width="50%" max-width="50%">
         <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:80px;height:80px;"></el-image>
+          <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
+  <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
@@ -77,41 +116,12 @@
           <span v-if="scope.row.status==4">已完成</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
-
-      <el-table-column fixed="right" label="操作" align="center" style="width:70%">
-        <template slot-scope="scope">
-          <el-button
-            @click="agrContent(scope)"
-            type="primary"
-            size="small"
-            style="padding:9px 6px;"
-          >查看详情</el-button>
-          <el-button
-            @click="checkContent(scope)"
-            type="primary"
-            size="small"
-            style="padding:9px 6px;"
-          >信息审核</el-button>
-        </template>
-      </el-table-column>
+     
     </el-table>
 
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
-    <agrContent
-      :show="agrContentFlag"
-      :agrContentId="agrContentId"
-      title="查看详情"
-      @close="closeUpdateAgrContentDialog"
-    ></agrContent>
-    <checkContent
-      :show="checkContentFlag"
-      :checkContentId="checkContentId"
-      title="详情审核"
-      @close="closeUpdateCheckContentDialog"
-    ></checkContent>
+   
 
     <br />
     <br />
@@ -123,8 +133,6 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-import agrContent from "./agrContent";
-import checkContent from '@/views/Agricultural/checkContent'
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -143,13 +151,7 @@ export default {
     return {
       name: "",
       status: "",
-      agrContentFlag: false,
-      agrContentId: "",
-      updateAgriculturalFlag: false,
-      transAgriculturalId: "",
-      checkContentFlag: false,
-      checkContentId: "",
-      updateCheckContentFlag: false,
+     
       transTagCode: "",
       tagCode: "",
       tagName: "",
@@ -229,15 +231,7 @@ export default {
       this.updateCheckContentFlag = false;
     },
     updateAgricultural: function () {},
-    // 查看详情
-    agrContent(scope) {
-      this.agrContentFlag = true;
-      this.agrContentId = scope.row.id;
-    },
-    checkContent(scope) {
-      this.checkContentFlag = true;
-      this.checkContentId = scope.row.id;
-    },
+   
     onSubmit: function () {
       let params = {
         tagCode: this.tagCode,
@@ -288,8 +282,7 @@ export default {
     },
   },
   components: {
-    agrContent,
-    checkContent,
+    
     Pagination,
   },
 };

@@ -38,7 +38,7 @@
             maxlength="16"
           ></el-input>
         </el-form-item>
-        <el-form-item label="分类编码" prop="parentCode">
+        <el-form-item label="分类" prop="parentCode">
           <el-select v-model="editForm.parentCode" style="width:80%" size="small">
             <el-option
               v-for="item in parentCodedOptions"
@@ -116,7 +116,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               this.parentCodedOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["code"],
+                label: res.data[i]["name"],
               });
             }
           }

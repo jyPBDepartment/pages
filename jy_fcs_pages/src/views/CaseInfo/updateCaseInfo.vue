@@ -64,6 +64,16 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="关键词" prop="keyCodes">
+          <el-select v-model="caseInfoForm.keyCodes" multiple  placeholder="请选择关键词" style="width:70%;">
+            <el-option
+              v-for="item in keyOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="描述" prop="describetion">
           <el-input
             type="textarea"
@@ -132,6 +142,7 @@ export default {
       },
       cropsOptions: [],
       dipOptions: [],
+      keyOptions:[],
       //rules表单验证
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
@@ -160,6 +171,12 @@ export default {
       };
       api.testAxiosGet(ApiPath.url.caseInfoFindById, params).then((res) => {
         this.caseInfoForm = res.data;
+        //重新组装数据
+        let keyArr = []
+					for(var i = 0; i < res.data.keyCodes.length; i++) {
+						keyArr.push(this.caseInfoForm.keyCodes[i]["id"])
+					}
+        this.caseInfoForm.keyCodes = keyArr;
         let url = res.data.url;
         let urlArry = url.split("/");
         let urlName = urlArry[urlArry.length - 1];
@@ -171,6 +188,7 @@ export default {
   mounted() {
     this.findContext();
     this.findContexta();
+    this.fandKeyWord();
   },
   methods: {
      beforeAvatarUpload(file) {                
@@ -191,6 +209,24 @@ export default {
           });  
       }  return extension || extension2 && isLt2M  
 } ,
+    //展示关键词下拉列表（多选）
+    fandKeyWord:function () {
+      let params = { };
+      api
+        .testAxiosGet(ApiPath.url.findCaseKeyword, params)
+        .then((res) => {
+          if (res.state == "0") {
+           // this.keyOptions.push({ value: "", label: "请选择" });
+            for (let i = 0; i < res.data.length; i++) {
+              this.keyOptions.push({
+                value: res.data[i]["id"],
+                label: res.data[i]["name"],
+              });
+            }
+          }
+        })
+        .catch(function (error) {});
+    },
     //下拉列表显示1
     findContext: function () {
       let params = {
@@ -249,6 +285,12 @@ export default {
         if (valid) {
           if (this.imgUrl != "") {
             this.caseInfoForm.url = this.imgUrl;
+            let keyArr = []
+						  for(var i = 0; i < this.caseInfoForm.keyCodes.length; i++) {
+							  keyArr.push(this.caseInfoForm.keyCodes[i])
+              }
+            this.caseInfoForm.keyCodes = null;
+            this.caseInfoForm.keys = keyArr.join()
             let params = { caseInfoEntity: this.caseInfoForm };
             api
               .testAxiosGet(ApiPath.url.updateCaseInfo, params)

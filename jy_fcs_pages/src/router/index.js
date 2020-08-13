@@ -17,6 +17,15 @@ import KeyWord from '@/views/keyWord/KeyWord'
 import Agricultural from '@/views/Agricultural/agricultural';
 //看图识病
 import CaseInfo from '@/views/CaseInfo/caseInfo'
+//收购粮食
+import PurchaseCorn from '@/views/childrenMenu/PurchaseCorn'
+//粮食出售
+import SellFoodstuff from '@/views/childrenMenu/sellFoodstuff'
+//农机出售
+import SellAgriMachinery from '@/views/childrenMenu/sellAgriMachinery'
+//农机出售
+import CornSowing from '@/views/childrenMenu/CornSowing'
+
 
 /**
  * 门户菜单
@@ -127,6 +136,38 @@ export default new Router({
             path: '/Agricultural/agricultural',
             name: '农服管理',
             component: Agricultural,
+            meta: {
+                requireAuth: true
+            }
+        },
+        {
+            path: '/childrenMenu/PurchaseCorn',
+            name: '粮食收购',
+            component: PurchaseCorn,
+            meta: {
+                requireAuth: true
+            }
+        },
+        {
+            path: '/childrenMenu/sellFoodstuff',
+            name: '粮食出售',
+            component: SellFoodstuff,
+            meta: {
+                requireAuth: true
+            }
+        },
+        {
+            path: '/childrenMenu/sellAgriMachinery',
+            name: '农机出售',
+            component: SellAgriMachinery,
+            meta: {
+                requireAuth: true
+            }
+        },
+        {
+            path: '/childrenMenu/CornSowing',
+            name: '粮食播种',
+            component: CornSowing,
             meta: {
                 requireAuth: true
             }
