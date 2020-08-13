@@ -1,9 +1,6 @@
 <template>
   <div class="Home">
-    <img
-      class="top_img"
-      src="https://s1.ax1x.com/2020/07/24/Ujd4Y9.jpg" style="height:640px;"
-    />
+    <img class="top_img" src="https://s1.ax1x.com/2020/07/24/Ujd4Y9.jpg" style="height:640px;" />
     <div class="banner-font" style>
       <h2 class="css2215ee06652225e">吉易掌柜</h2>
       <p class="css2215f1c4942225e">全用户场景解决方案</p>
@@ -59,7 +56,7 @@ export default {
     Fast,
     FixedNav,
     Callcontact,
-    FullFunctionality
+    FullFunctionality,
   },
   data() {
     return {
@@ -67,82 +64,82 @@ export default {
       modelName: [
         { title: "应用场景", id: "1" },
         { title: "核心优势", id: "2" },
-        { title: "产品功能", id: "3" }
+        { title: "产品功能", id: "3" },
       ],
       functionList: [
         {
           name: "购物车",
-          info: "商品可添加至购物车，可多商品合并下单"
+          info: "商品可添加至购物车，可多商品合并下单",
         },
         {
           name: "合并订单支付",
-          info: "可对已提交的多个订单进行合并支付"
+          info: "可对已提交的多个订单进行合并支付",
         },
         {
           name: "权限管理",
-          info: "可对店内、店外销售人员设置不同的权限"
+          info: "可对店内、店外销售人员设置不同的权限",
         },
         {
           name: "支付方式",
-          info: "支持现金、微信、支付宝支付方式"
+          info: "支持现金、微信、支付宝支付方式",
         },
         {
           name: "消息提醒",
-          info: "提醒交易、联系人、新闻、活动、公告等消息"
+          info: "提醒交易、联系人、新闻、活动、公告等消息",
         },
         {
           name: "资金管理",
-          info: "支持资金流水查询、提现、充值"
+          info: "支持资金流水查询、提现、充值",
         },
         {
           name: "即时通讯",
-          info: "支持单聊、群聊，可传输文字、语音、图片、表情、视频、文件"
+          info: "支持单聊、群聊，可传输文字、语音、图片、表情、视频、文件",
         },
         {
           name: "生意报表",
-          info: "可分别查看日、周、月等不同周期的可视化报表"
+          info: "可分别查看日、周、月等不同周期的可视化报表",
         },
         {
           name: "订单追踪",
-          info: "可对掌柜订单不同状态进行分类管理"
+          info: "可对掌柜订单不同状态进行分类管理",
         },
         {
           name: "订单凭证",
-          info: "订单详情页可分享至微信好友，也可保存至本地相册"
+          info: "订单详情页可分享至微信好友，也可保存至本地相册",
         },
         {
           name: "排行统计",
-          info: "经销商可按搜索条件查看统计销售排行或商品排行"
+          info: "经销商可按搜索条件查看统计销售排行或商品排行",
         },
         {
           name: "二维码推广",
-          info: "可实现员工、经纪人、农户共同分销商品"
+          info: "可实现员工、经纪人、农户共同分销商品",
         },
         {
           name: "经理人管理",
-          info: "支持经理人团队管理与自身佣金统计"
+          info: "支持经理人团队管理与自身佣金统计",
         },
         {
           name: "客户管理",
-          info: "支持客户与订单统计"
+          info: "支持客户与订单统计",
         },
         {
           name: "在线圈地",
-          info: "可在线圈定地块，显示面积、周长等信息"
+          info: "可在线圈定地块，显示面积、周长等信息",
         },
         {
           name: "测土配方",
-          info: "支持显示地块Ph值，氮钾磷等土壤元素的含量信息"
+          info: "支持显示地块Ph值，氮钾磷等土壤元素的含量信息",
         },
         {
           name: "预种植方案",
           info:
-            "根据种植品种、密度、灌溉方式、肥料等信息，可获取田间指导和产量预测"
+            "根据种植品种、密度、灌溉方式、肥料等信息，可获取田间指导和产量预测",
         },
         {
           name: "卫星遥感监测",
-          info: "支持监测地块中的农作物长势等信息"
-        }
+          info: "支持监测地块中的农作物长势等信息",
+        },
       ],
       marginTOP: false,
       bottonList: [
@@ -150,73 +147,73 @@ export default {
           src:
             "https://yanxuan.nosdn.127.net/e37f219870c719017e25855d1735fccd.png",
           title: "独立订单体系",
-          li: ["掌柜订单与农户订单互相独立", "进销存管理却可以同步"]
+          li: ["掌柜订单与农户订单互相独立", "进销存管理却可以同步"],
         },
         {
           src:
             "https://yanxuan.nosdn.127.net/1f70cd30d5f2fc317559cd522bb0af41.png",
           title: "店内、外分角色设定",
-          li: ["大掌柜、二掌柜不同权限", "匹配对应的销售场景"]
+          li: ["大掌柜、二掌柜不同权限", "匹配对应的销售场景"],
         },
         {
           src:
             "https://yanxuan.nosdn.127.net/23527042e3a7817212f0dbc3a7a5a807.png",
           title: "生意报表",
-          li: ["日、周、月报表实时查看", "各种数据图谱清晰直观"]
+          li: ["日、周、月报表实时查看", "各种数据图谱清晰直观"],
         },
         {
           src:
             "https://yanxuan.nosdn.127.net/1aef0593a2652a6dc0bcc0396190aae2.png",
           title: "掌柜分销",
-          li: ["二维码扫一扫轻松推荐", "佣金分配即时完成"]
+          li: ["二维码扫一扫轻松推荐", "佣金分配即时完成"],
         },
         {
           src:
             "https://yanxuan.nosdn.127.net/b64f68b2138459078baa84b54eaa574c.png",
           title: "规范进销存",
-          li: ["库存变动实时清晰可见", "每一个动作都可追溯"]
+          li: ["库存变动实时清晰可见", "每一个动作都可追溯"],
         },
         {
           src:
             "https://yanxuan.nosdn.127.net/499862f071d7a5ee72ade73a332db872.png",
           title: "销售排行",
-          li: ["掌柜销量排行，创造竞争氛围", "商品销量排行，及时调整销售策略"]
-        }
+          li: ["掌柜销量排行，创造竞争氛围", "商品销量排行，及时调整销售策略"],
+        },
       ],
       tabList: [
         {
           src:
             "https://yanxuan.nosdn.127.net/f2eeff2ac3f43c031176570d8173dee0.png",
-          title: "店内销售"
+          title: "店内销售",
         },
         {
           src:
             "https://yanxuan.nosdn.127.net/384516f4ced24f17148800c61ec3e05c.png",
-          title: "店外销售"
-        }
+          title: "店外销售",
+        },
       ],
       tabPane: [
-        "https://s1.ax1x.com/2020/08/10/abGIKK.jpg",
-        "https://s1.ax1x.com/2020/07/24/UvQ1pD.jpg"
+        "https://s1.ax1x.com/2020/08/13/azesoQ.jpg",
+        "https://s1.ax1x.com/2020/07/24/UvQ1pD.jpg",
       ],
       tabIndex: 0,
       advantageList: [
         {
           src:
             "https://yanxuan.nosdn.127.net/0f860f67ad9d9d61ad48a9aa0b8b4674.png",
-          content: "打通内外部，协同人财物，最大限度发挥人才效能，拓展生意规模"
+          content: "打通内外部，协同人财物，最大限度发挥人才效能，拓展生意规模",
         },
         {
           src:
             "https://yanxuan.nosdn.127.net/8f056c8a7d4dc58a4d2c92609476a38f.png",
-          content: "全场景覆盖销售终端满足销售多元化需求"
+          content: "全场景覆盖销售终端满足销售多元化需求",
         },
         {
           src:
             "https://yanxuan.nosdn.127.net/dc05d9fa3611b5a34c6da238a08be87f.png",
-          content: "数据清晰、分析明确为每位经销商决策提供数据指导"
-        }
-      ]
+          content: "数据清晰、分析明确为每位经销商决策提供数据指导",
+        },
+      ],
     };
   },
   mounted() {
@@ -234,8 +231,8 @@ export default {
     },
     screenChanges() {
       this.bannerHeight = document.documentElement.clientHeight - 100;
-    }
-  }
+    },
+  },
 };
 </script>
 
