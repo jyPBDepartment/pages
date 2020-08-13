@@ -11,7 +11,7 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="postInfoForm" :label-position="labelPosition" label-width="100px">
+      <el-form  ref="postInfoForm" :model="postInfoForm" :label-position="labelPosition" label-width="100px">
          <el-form-item label="审核驳回原因" >
           <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input>
         </el-form-item>
@@ -19,13 +19,15 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-check" @click="passPostInfo" class="insert">通过审核</el-button></span>
-      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-close" @click="refusePostInfo" class="del">拒绝审核</el-button></span>
+      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-check" @click="passPostInfo()" class="insert">通过审核</el-button></span>
+      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-close" @click="refusePostInfo()" class="del">拒绝审核</el-button></span>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
 <script>
+import qs from "qs";
+import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
@@ -47,7 +49,6 @@ export default {
     return {
       labelPosition: "right",
       postInfoForm: {
-        name: "",
         status:"",
         id:"",
         reason:"",
@@ -83,15 +84,20 @@ export default {
             this.close();
             this.reload();
           }
-      });
+      }).catch(function(error) {});
       this.postInfoForm.auditUser =localStorage.getItem("userInfo");
     },
     //审核拒绝
     refusePostInfo: function(){
+       if(this.postInfoForm.reason == null && this.postInfoForm.reason == ""){
+         this.$alert("请填写拒绝理由！", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+         }
         let params = {
         postInfoEntity: this.postInfoForm
       };
-      if(this.postInfoForm.reason!=null && this.postInfoForm.reason!=null){
         api.testAxiosGet(ApiPath.url.refusePostInfo, params).then(res => {
             let code = res.state;
             if(code == "0") {
@@ -99,12 +105,8 @@ export default {
                 this.close();
                 this.reload();
             }
-        });
+        }).catch(function(error) {});
       this.postInfoForm.auditUser =localStorage.getItem("userInfo");
-      }else{
-          this.$alert("驳回审核原因不能为空，请输入！", "提示", { confirmButtonText: "确定" });
-      }
-
     },
     close: function() {
       this.$emit("close");
@@ -137,4 +139,4 @@ export default {
   color: white;
   font-size: 12px;
 }
-</style>
+</style> 

@@ -101,6 +101,7 @@ export default {
       addKeyWord: false,
       updateKeyWordFlag: false,
       transKeyWordId: "",
+      parentCode:"",
       formInline: {
         page: 1,
         limit: 10,
@@ -150,6 +151,7 @@ export default {
       }
       let params = {
         name: this.name,
+        parentCode:this.parentCode,
         page: this.formInline.page,
         size: this.formInline.limit
       };

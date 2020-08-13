@@ -109,7 +109,7 @@ export default {
     findContext: function () {
       let params = {};
       api
-        .testAxiosGet(ApiPath.url.findKeyWordList, params)
+        .testAxiosGet(ApiPath.url.findClassKey, params)
         .then((res) => {
           if (res.state == "0") {
             this.parentCodedOptions.push({ value: "", label: "请选择" });

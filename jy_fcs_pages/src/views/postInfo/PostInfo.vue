@@ -1,13 +1,13 @@
 
 <template>
-  <div>
+  <div class="postinfo">
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="名称">
-        <el-input size="small" v-model="name" placeholder="输入名称"></el-input>
+        <el-input type="text" size="small" v-model="name" placeholder="输入名称"></el-input>
       </el-form-item>
       <el-form-item label="发布人">
-        <el-input size="small" v-model="createUser" placeholder="输入发布人"></el-input>
+        <el-input type="text" size="small" v-model="createUser" placeholder="输入发布人"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
@@ -83,30 +83,38 @@
       :examineId="examineId"
       title="审核"
       @close="closeexamineDialog"
-      @save="upExamine"
-    >
-    </examine>
+    ></examine>
   </div>
 </template>
 <script>
 import Pagination from "../../components/Pagination";
 import UpdatePostInfo from "./UpdatePostInfo"
-import Examine from "./examine"
+import examine from "./examine"
 //后台路径引用
+import qs from "qs";
+import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
 export default {
   inject: ["reload"],
+   props: {
+    show: {
+      type: Boolean,
+      default: false,
+    },
+    title: {
+      type: String,
+      default: "对话框",
+    },
+  },
   data() {
     return {
+      localShow: this.show,
       name: "",
       createUser:"",
-      nshow: true, //switch开启
-      fshow: false, //switch关闭
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
-      menuAccessshow: false, //控制数据权限显示与隐藏
       addPostInfo: false,
       updatePostInfoFlag: false,
       examineFlag:false,
@@ -138,11 +146,13 @@ export default {
   components: {
     Pagination,
     UpdatePostInfo,
-    Examine
+    examine
   },
 
-  watch: {},
-  mounted() {
+  watch: {
+    show(val) {
+      this.localShow = val;
+    },
   },
   created() {
     this.search(this.formInline);
@@ -193,14 +203,9 @@ export default {
     upPostInfo() {
       this.updatePostInfoFlag = false;
     },
-    closeexamineDialog(){
+    closeexamineDialog: function (){
       this.examineFlag = false;
     },
-    upExamine(){
-      this.examineFlag = false;
-    },
-    
-    
     //启用/禁用
     postInfoEnable: function(scope) {
       let params = {
