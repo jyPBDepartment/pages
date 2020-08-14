@@ -193,7 +193,7 @@ export default {
         },
       ],
       tabPane: [
-        "https://s1.ax1x.com/2020/08/13/azesoQ.jpg",
+        "https://s1.ax1x.com/2020/08/14/dPQYvD.jpg",
         "https://s1.ax1x.com/2020/07/24/UvQ1pD.jpg",
       ],
       tabIndex: 0,

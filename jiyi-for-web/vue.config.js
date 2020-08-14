@@ -25,7 +25,8 @@ module.exports = {
                     "https://cdn.jsdelivr.net/npm/vant@2.9/lib/index.css",
                     "http://cdn.repository.webfont.com/webfonts/nomal/139870/19892/5f16b988f629d810dc3d768c.css",
 					"http://cdn.repository.webfont.com/webfonts/nomal/139870/47894/5f16ba7ef629d810dc3d768f.css",
-					"http://cdn.repository.webfont.com/webfonts/nomal/139870/19892/5f17d632f629d80ac43104a2.css"
+					"http://cdn.repository.webfont.com/webfonts/nomal/139870/19892/5f17d632f629d80ac43104a2.css",
+					"http://cdn.repository.webfont.com/webfonts/nomal/139870/19892/5f365a95f629d8119c1362c6.css"
 				],
 				js: [
 					"https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js",
