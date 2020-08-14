@@ -18,10 +18,10 @@
         :label-position="labelPosition"
       >
         <el-form-item label="审核理由">
-          <span v-if="agrForm.status == 0 || agrForm.status==3 || agrForm.status==4">
+          <span v-if="agrForm.status == 0" >
             <el-input v-model="agrForm.examineReason" type="textarea"  size="small"></el-input>
           </span>
-          <span  v-if="agrForm.status == 1 || agrForm.status==2">
+          <span  v-if="agrForm.status == 1 || agrForm.status==2 || agrForm.status==3 || agrForm.status==4">
             <el-input v-model="agrForm.examineReason" type="textarea" disabled size="small"></el-input>
           </span>
         </el-form-item>
@@ -29,10 +29,10 @@
       </el-form>
     </slot>
     <span slot="footer">
-     <span v-if="agrForm.status == 0 || agrForm.status ==3 || agrForm.status == 4 ">
+     <span v-if="agrForm.status == 0 ">
         <el-button type="success" icon="el-icon-check"  @click="updateStatus()" >审核通过</el-button>
      </span>
-      <span v-if="agrForm.status == 0 || agrForm.status ==3 || agrForm.status == 4 ">
+      <span v-if="agrForm.status == 0 ">
         <el-button type="danger" icon="el-icon-close"  @click="refusePostInfo()">审核驳回</el-button>
       </span>
        
