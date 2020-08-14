@@ -13,15 +13,15 @@
     <slot>
       <el-form  ref="postInfoForm" :model="postInfoForm" :label-position="labelPosition" label-width="100px">
          <el-form-item label="审核原因" >
-          <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input></span>
-          <span v-if="postInfoForm.auditStatus==2||postInfoForm.auditStatus==3"><el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%" disabled></el-input></span>
+          <span v-if="postInfoForm.auditStatus==0"><el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input></span>
+          <span v-if="postInfoForm.auditStatus==1||postInfoForm.auditStatus==2"><el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%" readonly></el-input></span>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-check" @click="passPostInfo()" class="insert">通过审核</el-button></span>
-      <span v-if="postInfoForm.auditStatus==0||postInfoForm.auditStatus==1"><el-button type="primary" icon="el-icon-close" @click="refusePostInfo()" class="del">拒绝审核</el-button></span>
+      <span v-if="postInfoForm.auditStatus==0"><el-button type="primary" icon="el-icon-check" @click="passPostInfo()" class="insert">通过审核</el-button></span>
+      <span v-if="postInfoForm.auditStatus==0"><el-button type="primary" icon="el-icon-close" @click="refusePostInfo()" class="del">拒绝审核</el-button></span>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>

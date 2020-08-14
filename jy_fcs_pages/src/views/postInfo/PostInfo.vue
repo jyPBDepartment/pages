@@ -44,9 +44,8 @@
       <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="90px">
         <template slot-scope="scope">
           <span v-if="scope.row.auditStatus==0">未审核</span>
-          <span v-if="scope.row.auditStatus==1">审核中</span>
-          <span v-if="scope.row.auditStatus==2">审核通过</span>
-          <span v-if="scope.row.auditStatus==3">审核驳回</span>
+          <span v-if="scope.row.auditStatus==1">审核通过</span>
+          <span v-if="scope.row.auditStatus==2">审核驳回</span>
         </template>
       </el-table-column>
       <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="140px"></el-table-column>
