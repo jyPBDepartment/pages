@@ -1,17 +1,17 @@
 
 <template>
-  <div>
+  <div class="postinfo">
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="名称">
-        <el-input size="small" v-model="name" placeholder="输入名称"></el-input>
+        <el-input type="text" size="small" v-model="name" placeholder="输入名称"></el-input>
       </el-form-item>
       <el-form-item label="发布人">
-        <el-input size="small" v-model="createUser" placeholder="输入发布人"></el-input>
+        <el-input type="text" size="small" v-model="createUser" placeholder="输入发布人"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
-        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')" >重置</el-button>
+        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
     </el-form>
     <!--列表-->
@@ -25,26 +25,37 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" min-width="30" align="center"></el-table-column>
-      <el-table-column prop="name" label="标题名称" align="center" :show-overflow-tooltip="true" min-width="110px"></el-table-column>
-      <el-table-column prop="code" label="内容" align="center" :show-overflow-tooltip="true" min-width="80px"></el-table-column>
+      <el-table-column
+        prop="name"
+        label="标题名称"
+        align="center"
+        :show-overflow-tooltip="true"
+        min-width="110px"
+      ></el-table-column>
+      <el-table-column
+        prop="code"
+        label="内容"
+        align="center"
+        :show-overflow-tooltip="true"
+        min-width="80px"
+      ></el-table-column>
       <el-table-column prop="parentCode" label="分类id" align="center" min-width="90px"></el-table-column>
       <el-table-column prop="author" label="作者" align="center" min-width="90px"></el-table-column>
       <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="90px">
         <template slot-scope="scope">
-           <span v-if="scope.row.auditStatus==0">未审核</span>
-           <span v-if="scope.row.auditStatus==1">审核中</span>
-           <span v-if="scope.row.auditStatus==2">审核通过</span>
-           <span v-if="scope.row.auditStatus==3">审核驳回</span>
-          </template>
+          <span v-if="scope.row.auditStatus==0">未审核</span>
+          <span v-if="scope.row.auditStatus==1">审核通过</span>
+          <span v-if="scope.row.auditStatus==2">审核驳回</span>
+        </template>
       </el-table-column>
       <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="140px"></el-table-column>
       <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px"></el-table-column>
       <el-table-column prop="auditUser" label="审核人" align="center" min-width="100px"></el-table-column>
       <el-table-column prop="visibility" label="可见程度" align="center" min-width="90px">
         <template slot-scope="scope">
-           <span v-if="scope.row.visibility==0">自己可见</span>
-           <span v-if="scope.row.visibility==1">全部可见</span>
-          </template>
+          <span v-if="scope.row.visibility==0">自己可见</span>
+          <span v-if="scope.row.visibility==1">全部可见</span>
+        </template>
       </el-table-column>
       <el-table-column align="center" label="状态" prop="status" min-width="65px">
         <template slot-scope="scope">
@@ -58,14 +69,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="150px">
+      <el-table-column align="center" label="操作" min-width="200px">
         <template slot-scope="scope">
-          <el-button type="danger" size="small" @click="examine(scope)">审核</el-button>
-           <el-button
-           @click="openUpdatePostInfo(scope)"
-            type="primary"
-            size="small"
-          >查看详情</el-button>
+          <el-button type="primary" size="small" @click="examine(scope)">审核</el-button>
+          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,40 +85,43 @@
       @close="closeUpdatePostInfoDialog"
       @save="upPostInfo"
     ></update-postInfo>
-    <examine
-      :show="examineFlag"
-      :examineId="examineId"
-      title="审核"
-      @close="closeexamineDialog"
-      @save="upExamine"
-    >
-    </examine>
+    <examine :show="examineFlag" :examineId="examineId" title="审核" @close="closeexamineDialog"></examine>
   </div>
 </template>
 <script>
 import Pagination from "../../components/Pagination";
-import UpdatePostInfo from "./UpdatePostInfo"
-import Examine from "./examine"
+import UpdatePostInfo from "./UpdatePostInfo";
+import examine from "./examine";
 //后台路径引用
+import qs from "qs";
+import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
 export default {
   inject: ["reload"],
+  props: {
+    show: {
+      type: Boolean,
+      default: false,
+    },
+    title: {
+      type: String,
+      default: "对话框",
+    },
+  },
   data() {
     return {
+      localShow: this.show,
       name: "",
-      createUser:"",
-      nshow: true, //switch开启
-      fshow: false, //switch关闭
+      createUser: "",
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
-      menuAccessshow: false, //控制数据权限显示与隐藏
       addPostInfo: false,
       updatePostInfoFlag: false,
-      examineFlag:false,
+      examineFlag: false,
       transPostInfoId: "",
-      examineId:"",
+      examineId: "",
       formInline: {
         page: 1,
         limit: 10,
@@ -120,29 +130,22 @@ export default {
         currentPage: 1,
         pageSize: 10,
         total: 10,
-        token: localStorage.getItem("logintoken")
+        token: localStorage.getItem("logintoken"),
       },
-      userparm: [], //搜索权限
       listData: [], //用户数据
-      // 数据权限
-      PostInfoRight: [],
-      PostInfoRightProps: {
-        children: "children",
-        label: "name"
-      },
-      //参数postInfo
-      savePostInfoId: "",
     };
   },
   // 注册组件
   components: {
     Pagination,
     UpdatePostInfo,
-    Examine
+    examine,
   },
 
-  watch: {},
-  mounted() {
+  watch: {
+    show(val) {
+      this.localShow = val;
+    },
   },
   created() {
     this.search(this.formInline);
@@ -156,18 +159,18 @@ export default {
       this.search(this.formInline);
     },
     // 获取角色列表
-    search: function(parameter) {
-      if(parameter == 'manual'){
+    search: function (parameter) {
+      if (parameter == "manual") {
         this.formInline.page = 1;
         this.formInline.limit = 10;
       }
       let params = {
         name: this.name,
-        createUser:this.createUser,
+        createUser: this.createUser,
         page: this.formInline.page,
-        size: this.formInline.limit
+        size: this.formInline.limit,
       };
-      api.testAxiosGet(ApiPath.url.postInfoSearch, params).then(res => {
+      api.testAxiosGet(ApiPath.url.postInfoSearch, params).then((res) => {
         let code = res.status;
         if (code == "0") {
           this.loading = false;
@@ -193,49 +196,46 @@ export default {
     upPostInfo() {
       this.updatePostInfoFlag = false;
     },
-    closeexamineDialog(){
+    closeexamineDialog: function () {
       this.examineFlag = false;
     },
-    upExamine(){
-      this.examineFlag = false;
-    },
-    
-    
     //启用/禁用
-    postInfoEnable: function(scope) {
+    postInfoEnable: function (scope) {
       let params = {
         id: scope.row.id,
-        status: scope.row.status
+        status: scope.row.status,
       };
-      api.testAxiosGet(ApiPath.url.postInfoEnable, params).then(res => {
-        let code = res.status;
-        if (code == "0") {
-          this.$message.success(res.message);
-        } else {
-          this.$message.success(res.message);
-        }
-        this.reload();
-      }).catch(function(error) {});
-      
+      api
+        .testAxiosGet(ApiPath.url.postInfoEnable, params)
+        .then((res) => {
+          let code = res.status;
+          if (code == "0") {
+            this.$message.success(res.message);
+          } else {
+            this.$message.success(res.message);
+          }
+          this.reload();
+        })
+        .catch(function (error) {});
     },
     //显示编辑界面
     openUpdatePostInfo(scope) {
       this.transPostInfoId = scope.row.id;
       this.updatePostInfoFlag = true;
     },
-    examine(scope){
+    examine(scope) {
       this.examineId = scope.row.id;
       this.examineFlag = true;
     },
     //重置
     resetForm(search) {
       this.name = "";
-      this.createUser="";
-       this.formInline.page = 1;
+      this.createUser = "";
+      this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
-  }
+  },
 };
 </script>
 

@@ -7,18 +7,13 @@
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
-        <el-button
-          size="small"
-          type="info"
-          icon="el-icon-close"
-          @click="resetForm('search')"
-        >重置</el-button>
+        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
-      <br/>
+      <br />
       <el-row>
-      <el-button size="small" type="success" icon="el-icon-plus" @click="addKeyWords()">添加</el-button>
+        <el-button size="small" type="success" icon="el-icon-plus" @click="addKeyWords()">添加</el-button>
       </el-row>
-      <br>
+      <br />
     </el-form>
     <!--列表-->
     <el-table
@@ -33,7 +28,7 @@
       <el-table-column type="index" label="序号" min-width="60" align="center"></el-table-column>
       <el-table-column prop="name" label="名称" align="center" min-width="100px"></el-table-column>
       <el-table-column prop="code" label="编码" align="center"></el-table-column>
-      <el-table-column prop="parentName" label="分类编码" align="center" min-width="100px"></el-table-column>
+      <el-table-column prop="parentName" label="分类名称" align="center" min-width="100px"></el-table-column>
       <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="150px"></el-table-column>
       <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="150px"></el-table-column>
       <el-table-column prop="createUser" label="创建人" align="center" min-width="100px"></el-table-column>
@@ -52,14 +47,14 @@
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="200px">
         <template slot-scope="scope">
-           <el-button
-           @click="openUpdateKeyWord(scope)"
+          <el-button
+            @click="openUpdateKeyWord(scope)"
             type="primary"
             size="small"
             icon="el-icon-edit"
           >编辑</el-button>
-           <el-button
-           @click="deleteKeyWord(scope)"
+          <el-button
+            @click="deleteKeyWord(scope)"
             type="danger"
             size="small"
             icon="el-icon-delete"
@@ -77,7 +72,6 @@
       @close="closeUpdateKeyWordDialog"
       @save="upKeyWord"
     ></update-key-word>
-   
   </div>
 </template>
 <script>
@@ -101,6 +95,7 @@ export default {
       addKeyWord: false,
       updateKeyWordFlag: false,
       transKeyWordId: "",
+      parentCode: "",
       formInline: {
         page: 1,
         limit: 10,
@@ -109,25 +104,16 @@ export default {
         currentPage: 1,
         pageSize: 10,
         total: 10,
-        token: localStorage.getItem("logintoken")
+        token: localStorage.getItem("logintoken"),
       },
-      userparm: [], //搜索权限
       listData: [], //用户数据
-      // 数据权限
-      KeyWordRight: [],
-      KeyWordRightProps: {
-        children: "children",
-        label: "name"
-      },
-      //参数keyWord
-      saveKeyWordId: "",
     };
   },
   // 注册组件
   components: {
     addKeyWord,
     UpdateKeyWord,
-    Pagination
+    Pagination,
   },
   watch: {},
   mounted() {},
@@ -135,7 +121,6 @@ export default {
     this.search(this.formInline);
   },
   methods: {
-
     // 分页插件事件
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -143,17 +128,18 @@ export default {
       this.search(this.formInline);
     },
     // 获取角色列表
-    search: function(parameter) {
-      if(parameter == 'manual'){
+    search: function (parameter) {
+      if (parameter == "manual") {
         this.formInline.page = 1;
         this.formInline.limit = 10;
       }
       let params = {
         name: this.name,
+        parentCode: this.parentCode,
         page: this.formInline.page,
-        size: this.formInline.limit
+        size: this.formInline.limit,
       };
-      api.testAxiosGet(ApiPath.url.keyWordSearch, params).then(res => {
+      api.testAxiosGet(ApiPath.url.keyWordSearch, params).then((res) => {
         let code = res.state;
         if (code == "0") {
           this.loading = false;
@@ -180,21 +166,23 @@ export default {
       this.updateKeyWordFlag = false;
     },
     //启用/禁用
-    keyWordEnable: function(scope) {
+    keyWordEnable: function (scope) {
       let params = {
         id: scope.row.id,
-        auditStatus: scope.row.auditStatus
+        auditStatus: scope.row.auditStatus,
       };
-      api.testAxiosGet(ApiPath.url.keyWordEnable, params).then(res => {
-        let code = res.status;
-        if (code == "0") {
-          this.$message.success(res.message);
-        } else {
-          this.$message.success(res.message);
-        }
-        this.reload();
-      }).catch(function(error) {});
-      
+      api
+        .testAxiosGet(ApiPath.url.keyWordEnable, params)
+        .then((res) => {
+          let code = res.status;
+          if (code == "0") {
+            this.$message.success(res.message);
+          } else {
+            this.$message.success(res.message);
+          }
+          this.reload();
+        })
+        .catch(function (error) {});
     },
     //显示编辑界面
     openUpdateKeyWord(scope) {
@@ -213,21 +201,28 @@ export default {
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        let params = {
-          id: scope.row.id,
+        type: "warning",
+      })
+        .then(() => {
+          let params = {
+            id: scope.row.id,
           };
-        api.testAxiosGet(ApiPath.url.deleteKeyWord, params).then(res => {
-          let code = res.status;
-          if(code == "0") {
-            this.$message.success(res.message);
-            this.reload();
-          }
+          api.testAxiosGet(ApiPath.url.deleteKeyWord, params).then((res) => {
+            let code = res.status;
+            if (code == "0") {
+              this.$message.success(res.message);
+              this.reload();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
         });
-      });
-    }
-  }
+    },
+  },
 };
 </script>
 

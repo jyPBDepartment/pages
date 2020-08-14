@@ -73,7 +73,6 @@
            @click="openUpdatePower(scope)"
             type="primary"
             size="small"
-            icon="el-icon-s-tools"
           >权限设置</el-button>
         </template>
       </el-table-column>
@@ -89,7 +88,6 @@
            @click="updatePass(scope)"
             type="primary"
             size="small"
-            icon="el-icon-grape"
           >修改密码</el-button>
            <el-button
            @click="deleteUser(scope)"
@@ -167,16 +165,7 @@ export default {
         total: 10,
         token: localStorage.getItem("logintoken")
       },
-      userparm: [], //搜索权限
       listData: [], //用户数据
-      // 数据权限
-      AccountInfoRight: [],
-      AccountInfoRightProps: {
-        children: "children",
-        label: "name"
-      },
-      //参数accountInfo
-      saveAccountInfoId: "",
       auditStatusOptions: [
         { value: "", label: "全部" },
         { value: "0", label: "启用" },
@@ -314,7 +303,12 @@ export default {
             this.reload();
           }
         });
-      });
+      }).catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     }
   }
 };

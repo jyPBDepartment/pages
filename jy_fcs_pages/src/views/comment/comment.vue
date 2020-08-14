@@ -73,7 +73,7 @@ export default {
     return {
       content: "",
       user:"",
-      loading: false, //是显示加载
+      loading: true, //是显示加载
       formInline: {
         page: 1,
         limit: 10,
@@ -109,6 +109,7 @@ export default {
     },
     // 获取评论列表
     search: function(parameter) {
+      //点击搜索按钮时重置分页信息
       if(parameter == 'manual'){
         this.formInline.page = 1;
         this.formInline.limit = 10;

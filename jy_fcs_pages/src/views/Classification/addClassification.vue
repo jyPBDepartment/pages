@@ -120,7 +120,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               this.classiOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["code"],
+                label: res.data[i]["name"],
               });
             }
           }
@@ -130,8 +130,9 @@ export default {
 
     //添加分类方法
     saveClassification: function () {
-      this.isDisable = true;
+     
       if (this.editForm.name != "" && this.editForm.code != "") {
+         this.isDisable = true;
         let params = {
           classificationEntity: this.editForm,
         };

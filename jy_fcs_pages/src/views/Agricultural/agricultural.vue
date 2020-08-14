@@ -47,7 +47,7 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="5%" max-width="5%"></el-table-column>
-      <el-table-column  label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column   prop="name" label="标题名称" align="center" min-width="45%" max-width="50%"></el-table-column>
       <el-table-column
         prop="contactsUser"
         label="联系人"
@@ -77,6 +77,11 @@
           <span v-if="scope.row.status==4">已完成</span>
         </template>
       </el-table-column>
+       <el-table-column label="审核理由" prop="examineReason" align="center"
+        min-width="60%"
+        max-width="65%"
+        :show-overflow-tooltip="true">
+        </el-table-column>
       <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
 

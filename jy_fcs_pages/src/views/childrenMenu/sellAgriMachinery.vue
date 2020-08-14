@@ -107,6 +107,11 @@
           <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
         </template>
       </el-table-column>
+       <el-table-column label="标签编码" prop="labelCode" align="center"
+        min-width="60%"
+        max-width="65%">
+        
+        </el-table-column>
   <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>

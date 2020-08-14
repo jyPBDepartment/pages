@@ -124,7 +124,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               this.powerOptions.push({
                 value: res.data[i]["id"],
-                label: res.data[i]["jurCode"],
+                label: res.data[i]["jurName"],
               });
             }
           }
@@ -134,8 +134,9 @@ export default {
 
     //添加权限方法
     savePowerInfo: function () {
-      this.isDisable = true;
+    
       if (this.editForm.jurName != "" && this.editForm.jurCode != "") {
+          this.isDisable = true;
         let params = {
           powerInfoEntity: this.editForm,
         };

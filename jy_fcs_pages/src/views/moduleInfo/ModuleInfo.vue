@@ -17,12 +17,7 @@
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
-        <el-button
-          size="small"
-          type="info"
-          icon="el-icon-close"
-          @click="resetForm('search')"
-        >重置</el-button>
+        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
       <br />
       <el-row>
@@ -47,7 +42,13 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" min-width="60" align="center"></el-table-column>
-      <el-table-column prop="name" label="模块名称" align="center" :show-overflow-tooltip="true" min-width="85px"></el-table-column>
+      <el-table-column
+        prop="name"
+        label="模块名称"
+        align="center"
+        :show-overflow-tooltip="true"
+        min-width="85px"
+      ></el-table-column>
       <el-table-column prop="url" label="模块图片" align="center" min-width="130px">
         <template slot-scope="scope">
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
@@ -138,10 +139,6 @@ export default {
         token: localStorage.getItem("logintoken"),
       },
       listData: [], //用户数据
-      // 数据权限
-      ModuleInfoRight: [],
-      //参数moduleInfo
-      saveModuleInfoId: "",
       statusOptions: [
         { value: "", label: "全部" },
         { value: "0", label: "启用" },
@@ -169,7 +166,7 @@ export default {
     },
     // 获取角色列表
     search: function (parameter) {
-      if(parameter == 'manual'){
+      if (parameter == "manual") {
         this.formInline.page = 1;
         this.formInline.limit = 10;
       }
@@ -211,7 +208,9 @@ export default {
         id: scope.row.id,
         status: scope.row.status,
       };
-      api.testAxiosGet(ApiPath.url.moduleInfoEnable, params).then((res) => {
+      api
+        .testAxiosGet(ApiPath.url.moduleInfoEnable, params)
+        .then((res) => {
           let code = res.state;
           if (code == "0") {
             this.$message.success(res.message);
@@ -219,7 +218,8 @@ export default {
             this.$message.success(res.message);
           }
           this.reload();
-        }).catch(function (error) {});
+        })
+        .catch(function (error) {});
     },
     //显示编辑界面
     openUpdateModuleInfo(scope) {
@@ -240,18 +240,25 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
-      }).then(() => {
-        let params = {
-          id: scope.row.id,
-        };
-        api.testAxiosGet(ApiPath.url.deleteModuleInfo, params).then((res) => {
-          let code = res.status;
-          if (code == "0") {
-            this.$message.success(res.message);
-            this.reload();
-          }
+      })
+        .then(() => {
+          let params = {
+            id: scope.row.id,
+          };
+          api.testAxiosGet(ApiPath.url.deleteModuleInfo, params).then((res) => {
+            let code = res.status;
+            if (code == "0") {
+              this.$message.success(res.message);
+              this.reload();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
         });
-      });
     },
   },
 };

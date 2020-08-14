@@ -298,7 +298,7 @@ export default {
           } else {
             this.$message.success(res.message);
           }
-          
+          this.reload();
         })
         .catch(function (error) {});
     },
