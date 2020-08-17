@@ -181,6 +181,10 @@ const url = {
   menuPowerInfo: URLHost + '/powerInfo/findListById',
   //分类子菜单查询
   menuClassification: URLHost + '/classification/findListById',
+  //日志查询
+  findLogList:URLHost + '/dbLogInfo/findByName',
+  //日志删除
+  deleteLogInfo:URLHost + '/dbLogInfo/delete',
 }
 export default {
   url

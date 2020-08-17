@@ -82,6 +82,9 @@ import Reply from '@/views/reply/reply';
 //回复管理
 import Comment from '@/views/comment/comment';
 
+//日志管理
+import dbLog from '@/views/dbLog/logShow';
+
 // 启用路由
 Vue.use(Router);
 
@@ -249,6 +252,13 @@ export default new Router({
             path: '/role/roleShow',
             name: '角色管理',
             component: Role,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/dbLog/logShow',
+            name: '日志管理',
+            component: dbLog,
             meta: {
                 requireAuth: true
             }
