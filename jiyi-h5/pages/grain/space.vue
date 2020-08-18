@@ -1,47 +1,37 @@
-<!-- 注：param==0为粮食收购-出售详情，param==1为出售农机-出售详情,param==2为出租农机-出售详情 -->
+<!-- 注：0为粮食收购-出售详情，1为出售农机-出售详情,2为出租农机-出售详情 -->
 <template>
 	<view>
-
+		<HeaderSearch title="出租农机详情"></HeaderSearch>
 
 		<view class="init">
 			<image class="agri-img" src="@/static/logo.png" mode=""></image>
-
-			<text v-if="param == 2 " class="sell-bg">
-				出租
-			</text>
-			<text v-if="param == 2 " class="sell-title">{{title}}aaa</text>
-
-			<view v-if="param == 2 " class="sell-cool">
-				<image class="sell-img" src="@/static/logo.png" mode=""></image>
-				<text class="sell-text">分享</text>
-			</view>
-
-			<text v-if="param == 0 || param ==1" class="title">{{title}}aaa</text>
-			<text v-if="param == 0" class="price">¥{{price}}元/公斤</text>
-			<text v-if="param == 1 " class="price">¥{{price}}55555.00</text>
-			<text v-if="param == 2 " class="price">¥{{price}}元/亩</text>
-
-			<view class="tag">
-				<view class="tagGrain">
-					{{item.brige}}aaa
+			<view class="p-x-10">
+				<view class="g-flex g-a-c">
+					<view class="tag f-12" v-if="param == 2">
+						出租
+					</view>
+					<view class="title g-f-1 f-16" style="padding: 0 20rpx;">
+						收割机
+					</view>
+					<view v-if="param == 2" class="icon g-flex g-f-column">
+						<u-icon size="44" name="share"></u-icon>
+						<text class="f-12">分享</text>
+					</view>
 				</view>
-				<view class="tagG">
-					{{item.brige}}aaa
+				<view class="price" style="font-size: 42rpx;margin-top: 16rpx;">
+					￥{{price}}{{ company }}
 				</view>
-			</view>
+				<view class="labels g-flex" style="margin-top: 20rpx;">
+					<view class="label f-12">
+						可议价
+					</view>
 
-			<view class="type">
-				<text v-if="param == 0" class="type-text">类别：{{corn}}aaa</text>
-				<text v-if="param == 1 || param == 2 " class="type-agri">型号：{{corn}}bbb</text>
-				<text v-if="param == 1 || param == 2 " class="type-agri">货号：{{corn}}bbb</text>
-
-				<text v-if="param == 0" class="type-map">{{address}}吉林省榆树市五棵松市</text>
-				<text v-if="param == 1 || param == 2 " class="type-mapAgri">{{address}}长春公主岭</text>
-			</view>
-			<view class="tel">
-				<text class="phone">
-					电话：{{phone}}11111
-				</text>
+				</view>
+				<view class="info g-f-warp g-flex" >
+					<view class="text g-f-1 f-12" style="color: #999999;margin-top: 24rpx;" v-for="(item,index) in info" :key="index">
+						{{item}}
+					</view>
+				</view>
 			</view>
 		</view>
 
@@ -50,24 +40,42 @@
 </template>
 
 <script>
+	import HeaderSearch from '../../components/HeaderSearch/HeaderSearch.vue'
 	export default {
+		components: {
+			HeaderSearch
+		},
 		data() {
 			return {
-				param: {
-					param: Number,
-					default: 0
+				param: null,
+				price: "25.00",
+				company: '',
+				info: {
+					model: '',
+					goodsNum: '',
+					address: '',
+					phone: ''
 				},
-				// param: 0,
-				item: {
-					type: Array,
-					default: () => {
-						return []
-					}
-				},
+				item: [],
 			};
 		},
 		onLoad(e) {
 			this.param = e.index
+			// if(e.info){
+
+			// }
+			this.info = {
+				model: `${this.param == 0 ? "类别" : "型号"}：500`,
+				goodsNum: `${this.param == 0 ? " " : "货号：xd-500"}`,
+				address: "长春公主岭",
+				phone: "电话：15567891234"
+			}
+			if (this.param == 0) {
+				this.company = "元/公斤"
+			}
+			if (this.param == 2) {
+				this.company = "元/亩 "
+			}
 		},
 		methods: {
 
@@ -77,126 +85,30 @@
 
 <style lang="scss">
 	.init {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		margin-left: 24rpx;
-
-		.sell-bg {
-			border: 1px solid rgba(255, 0, 0, 1);
-			background-color: rgba(255, 0, 0, 1);
-			width: 70rpx;
-			line-height: 40rpx;
-			text-align: center;
-			font-size: 24rpx;
-			color: #FFF;
-		}
-
-		.sell-title {
-			font-size: 30rpx;
-			margin-bottom: 24rpx;
-			margin-top: -45rpx;
-			margin-left: 90rpx;
-		}
-
-		.sell-cool {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			margin-left: 650rpx;
-			margin-top: -70rpx;
-
-			.sell-img {
-				width: 46rpx;
-				height: 46rpx;
-				background-color: #fff;
-			}
-
-			.sell-text {
-				font-size: 24rpx;
-				color: rgba(153, 153, 153, 1);
-
-			}
-		}
-
-		.title {
-			font-size: 30rpx;
-			margin-bottom: 24rpx;
-		}
-
-		.price {
-			font-size: 42rpx;
-			margin-bottom: 24rpx;
-		}
-
-		.tag {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-
-			.tagGrain {
-				margin-right: 20rpx;
-				width: 100rpx;
-				border-radius: 16rpx;
-				border: 1px solid rgba(255, 87, 51, 1);
-				color: rgba(255, 87, 51, 1);
-				text-align: center;
-				font-size: 24rpx;
-				margin-bottom: 36rpx;
-			}
-
-			.tagG {
-				margin-right: 20rpx;
-				width: 100rpx;
-				border-radius: 16rpx;
-				border: 1px solid rgba(24, 144, 255, 1);
-				color: rgba(24, 144, 255, 1);
-				text-align: center;
-				font-size: 24rpx;
-				margin-bottom: 36rpx;
-			}
-		}
-
-		.type {
-			display: flex;
-			margin-bottom: 20rpx;
-
-			.type-text {
-				font-size: 24rpx;
-				color: rgba(153, 153, 153, 1);
-			}
-
-			.type-agri {
-				font-size: 24rpx;
-				color: rgba(153, 153, 153, 1);
-				margin-right: 100rpx;
-			}
-
-			.type-map {
-				font-size: 24rpx;
-				color: rgba(153, 153, 153, 1);
-				margin-left: 300rpx;
-			}
-
-			.type-mapAgri {
-				font-size: 24rpx;
-				color: rgba(153, 153, 153, 1);
-				margin-left: 80rpx;
-			}
-		}
-
-		.tel {
-			.phone {
-				font-size: 24rpx;
-				color: rgba(153, 153, 153, 1);
-			}
-		}
-
 		.agri-img {
-			margin-left: -89rpx;
-			margin-bottom: -40rpx;
-			width: 880rpx;
+			width: 750rpx;
 			height: 750rpx;
+		}
+		.tag {
+			width: 72rpx;
+			line-height: 50rpx;
+			background: #ff0000;
+			color: #fff;
+			text-align: center;
+		}
+		.labels {
+			.label {
+				padding: 5rpx 20rpx;
+				border: 1px solid #e51c2e;
+				border-radius: 30rpx;
+				color: #e51c2e;
+				margin-right: 20rpx;
+			}
+		}
+		.info {
+			.text {
+				min-width: 33%;
+			}
 		}
 	}
 </style>

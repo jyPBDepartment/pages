@@ -141,7 +141,7 @@
 	}
 
 	.f-20 {
-		font-size: 40rpx;
+		font-size: 40rpx !important;
 	}
 
 	.b-t {
