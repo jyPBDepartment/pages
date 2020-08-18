@@ -2,10 +2,15 @@
 	<view>
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
 		<Screen :condition="condition" :type="2"></Screen>
-		<view class="p-x-10">
-			<view class="commodity" style="width: 340rpx;">
-				<image style="width: 316rpx;height: 298rpx;margin: 12rpx;" src="../../static/logo.png" mode=""></image>
+		<view class="p-x-10  g-flex g-f-warp g-f-row g-j-s-b" style="margin:20rpx 0">
+			<view class="commodity b-f" style="width: 316rpx;padding: 12rpx; margin-bottom: 20rpx;" v-for="(item, index) in 10"
+			 :key="index">
+				<image style="width: 316rpx;height: 298rpx;" src="../../static/logo.png" mode=""></image>
 				<p style="height: 94rpx;line-height: 47rpx;" class="f-14 o-e">商品描述，最多两行，超出部分用商品描述，最多两行，超出部分用商品描述，最多两行，超出部分用...</p>
+				<view class="info g-flex g-a-c f-12" style="margin-top: 24rpx; margin-bottom: 15rpx;">
+					<view class="f-14 g-f-1" style="color: #1e1e1e;">￥55000.00</view>
+					<view style="color: #999999;">月销3笔</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -31,7 +36,7 @@
 </script>
 
 <style lang="scss">
-	page{
+	page {
 		background: rgba(229, 229, 229, 1);
 	}
 </style>

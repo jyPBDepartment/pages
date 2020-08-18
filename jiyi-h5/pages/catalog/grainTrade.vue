@@ -14,21 +14,18 @@
 					<view class="g-flex g-j-s-b f-12 tags">
 						<view class="tagGrain">信誉商家</view>
 					</view>
-					<view class="bottom">
-						<view class="img-col">
-							<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 40rpx;height:40rpx;"></image>
-						</view>
+					<view class="g-flex g-j-s-b f-14 g-a-c">
+						<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 40rpx;height:40rpx;"></image>
 						<view class="word">
-							<text >小智慧</text>
+							小智慧
 						</view>
-						<view class="date">
+						<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">
 							2030-05-12
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		
 	</view>
 </template>
 
@@ -60,8 +57,10 @@
 </script>
 
 <style lang="scss">
-	.tagGrain {	
-		
+	.app-modular{
+		border-bottom: 1px solid rgba(229, 229, 229, 1);
+	}
+	.tagGrain {
 		width: 140rpx;
 		line-height: 40rpx;
 		border-radius: 13rpx;
@@ -69,28 +68,16 @@
 		color: rgba(255, 87, 51, 1);
 		font-weight: bold;
 		text-align: center;
-		
 	}
-	.bottom{
-		display: flex;
-		justify-content: space-between;
-		font-size: 28rpx;
-		align-items: center;
-		.img-col{
-			margin-top: 10rpx;
-		}
-		.word{
-			line-height: 35rpx;
-			margin-left: -145rpx;
-			font-size: 24rpx;
-			
-		}
-		.date{
-			color: rgba(128, 128, 128, 1);
-			font-size: 12px;
-		}
-		
+
+	.app-number-grain {
+		color: #333;
+		line-height: 60rpx;
 	}
-	
-	
+
+	.word {
+		margin-left: -145rpx;
+		font-size: 13rpx;
+		font-weight: bold;
+	}
 </style>

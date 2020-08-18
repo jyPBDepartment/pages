@@ -21,6 +21,9 @@
 	import uniDrawer from "@/components/uni-drawer/uni-drawer.vue"
 	export default {
 		name: "Screen",
+		components: {
+			uniDrawer
+		},
 		props: {
 			//主筛选框筛选标题
 			condition: {
@@ -41,9 +44,6 @@
 				type: Number,
 				default: 0
 			},
-		},
-		components: {
-			uniDrawer
 		},
 		data(){
 			return{

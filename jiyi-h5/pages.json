@@ -3,13 +3,18 @@
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [
-
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/catalog/grainTrade"
+		},
 		{
 			"path": "pages/grain/space"
 		},
 		{
 			"path": "pages/catalog/grainTrade"
+		},
+		{
+			"path": "pages/catalog/leaseAgriculturalMachinery"
 		},
 		{
 			"path": "pages/catalog/sellAgriculturalMachinery"
@@ -31,14 +36,12 @@
 		},
 		{
 			"path": "pages/tabbar/use/index"
-		}, {
-			"path": "pages/grain/space",
-			"style": {}
 		}
+
 	],
 	"globalStyle": {
 		"navigationStyle": "custom"
-		},
+	},
 	"tabBar": {
 		"borderStyle": "black",
 		"backgroundColor": "#333",
