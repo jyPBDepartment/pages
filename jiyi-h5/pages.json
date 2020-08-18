@@ -1,0 +1,79 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/grain/space"
+		},
+		{
+			"path": "pages/catalog/grainTrade"
+		},
+		{
+			"path": "pages/catalog/sellAgriculturalMachinery"
+		},
+		{
+			"path": "pages/catalog/findDisease"
+		},
+		{
+			"path": "pages/tabbar/index/index"
+		},
+		{
+			"path": "pages/tabbar/service/index"
+		},
+		{
+			"path": "pages/tabbar/release/index"
+		},
+		{
+			"path": "pages/tabbar/community/index"
+		},
+		{
+			"path": "pages/tabbar/use/index"
+		}, {
+			"path": "pages/grain/space",
+			"style": {}
+		}
+	],
+	"globalStyle": {
+		"navigationStyle": "custom"
+		},
+	"tabBar": {
+		"borderStyle": "black",
+		"backgroundColor": "#333",
+		"color": "#8F8F94",
+		"selectedColor": "#f33e54",
+		"list": [{
+				"pagePath": "pages/tabbar/index/index",
+				"iconPath": "static/img/tabbar/home.png",
+				"selectedIconPath": "static/img/tabbar/homeactive.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/tabbar/service/index",
+				"iconPath": "static/img/tabbar/guanzhu.png",
+				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+				"text": "农服"
+			},
+			{
+				"pagePath": "pages/tabbar/release/index",
+				"iconPath": "static/img/tabbar/add.png",
+				"selectedIconPath": "static/img/tabbar/addactive.png",
+				"text": "发布"
+			},
+			{
+				"pagePath": "pages/tabbar/community/index",
+				"iconPath": "static/img/tabbar/news.png",
+				"selectedIconPath": "static/img/tabbar/newsactive.png",
+				"text": "圈子"
+			},
+			{
+				"pagePath": "pages/tabbar/use/index",
+				"iconPath": "static/img/tabbar/me.png",
+				"selectedIconPath": "static/img/tabbar/meactive.png",
+				"text": "我的"
+			}
+		]
+	}
+}
