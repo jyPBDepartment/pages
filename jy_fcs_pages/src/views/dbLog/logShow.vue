@@ -22,6 +22,10 @@
         >重置</el-button>
       </el-form-item>
       <br/>
+      <el-row>
+      <el-button size="small" type="warning" icon="el-icon-delete" @click="removeAll()" >清空日志</el-button>
+      </el-row>
+      <br/>
     </el-form>
     <!--列表-->
     <el-table
@@ -127,6 +131,27 @@ export default {
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
+    },
+    // 清空日志
+    removeAll(){
+      this.$confirm("确定要清空所有日志吗?", "信息", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }).then(() => {
+              let params = {};
+              api.testAxiosGet(ApiPath.url.deleteAllLog, params).then(res => {
+                let code = res.status;
+              if(code == "0") {
+                  this.$message.success(res.message);
+                  this.reload();
+                }
+                else{
+                  // this.$message.error(res.message);
+                  this.$alert('删除失败，请先解除关联关系！', '提示', {confirmButtonText: '确定',});
+                  this.reload();}
+              });
+            });
     },
     // 删除日志
     deleteUser(scope) {

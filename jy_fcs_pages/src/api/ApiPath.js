@@ -185,6 +185,8 @@ const url = {
   findLogList:URLHost + '/dbLogInfo/findByName',
   //日志删除
   deleteLogInfo:URLHost + '/dbLogInfo/delete',
+  //日志清空
+  deleteAllLog:URLHost + '/dbLogInfo/deleteAll',
 }
 export default {
   url
