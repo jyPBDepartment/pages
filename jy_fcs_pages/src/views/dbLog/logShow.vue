@@ -34,11 +34,11 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column  prop="module" label="模块" align="center"></el-table-column>
-      <el-table-column show-overflow-tooltip  prop="action" label="动作" align="center"></el-table-column>
+      <el-table-column  prop="module" label="模块" width="200px" align="center"></el-table-column>
+      <el-table-column show-overflow-tooltip  width="200px" prop="action" label="动作" align="center"></el-table-column>
       <el-table-column sortable prop="logDate" width="200px" label="操作时间" align="center"></el-table-column>
       <el-table-column show-overflow-tooltip  prop="actObj" label="操作描述" align="center"></el-table-column>
-      <el-table-column align="center" label="操作" width="400px">
+      <el-table-column align="center" label="操作" width="200px">
         <template slot-scope="scope">
            <el-button
            @click="deleteUser(scope)"
