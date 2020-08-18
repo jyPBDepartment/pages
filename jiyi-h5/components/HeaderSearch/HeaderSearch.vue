@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="HeaderSearch g-flex g-a-c p-x-10" v-if="!type">
+		<view class="HeaderSearch g-flex g-a-c p-x-10" v-if="!title">
 			<u-icon name="arrow-left" color="#fff"></u-icon>
 			<view class="search g-flex g-a-c g-j-c p-x-10 m-c">
 				<input class="f-14 t-c" v-model="search" placeholder="请输入搜索内容" type="text" value="" />
@@ -8,7 +8,7 @@
 		</view>
 		<view v-else class="HeaderSearch shadow b-f g-flex g-a-c g-j-c p-x-10 f-16">
 			<u-icon style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left" color="#999999"></u-icon>
-			玉米纹枯病
+			{{title}}
 		</view>
 		<view style="width: 100%; height: 88rpx;">
 			<!-- 占位 -->
@@ -19,10 +19,10 @@
 <script>
 	export default {
 		name: 'HeaderSearch',
-		props:{
-			type:{
-				type:Number,
-				default:0
+		props: {
+			title: {
+				type: String,
+				default: ''
 			}
 		},
 		components: {
