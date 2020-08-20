@@ -8,7 +8,7 @@
 				</view>
 				<slot v-else name="tooltip" />
 			</view>
-			<view class="u-calendar__action u-flex u-row-center">
+			<view class="u-calendar__action g-flex g-j-c g-a-c u-row-center">
 				<view class="u-calendar__action__icon">
 					<u-icon v-if="changeYear" name="arrow-left-double" :color="yearArrowColor" @click="changeYearHandler(0)"></u-icon>
 				</view>

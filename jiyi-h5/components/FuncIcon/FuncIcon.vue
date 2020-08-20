@@ -1,6 +1,6 @@
 <template>
 	<view class="p-y-10 btn b-t">
-		<view class="box" v-for="(item, index) in btnList" :key="index">
+		<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">
 			<view class="modular" :style="{'background-color':item.backgroundColor}">
 				<image :src="item.src" mode=""></image>
 			</view>
@@ -22,6 +22,20 @@
 		},
 		data() {
 			return {
+
+			}
+		},
+		methods: {
+			jump(item, index) {
+				if (index != 0) {
+					uni.navigateTo({
+						url: item.to
+					});
+				} else {
+					uni.switchTab({
+						url: item.to
+					});
+				}
 
 			}
 		}

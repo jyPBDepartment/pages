@@ -5,7 +5,28 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/grain/protection"
+			"path": "pages/grain/buyMachine"
+		},
+		{
+			"path": "pages/grain/tradingFood"
+		},
+		{
+			"path": "pages/grain/leaseMachine"
+		},
+		{
+			"path": "pages/grain/grainTrade"
+		},
+		{
+			"path": "pages/grain/agriculturalAppointment"
+		},
+		{
+			"path": "pages/tabbar/index/index"
+		},
+		{
+			"path": "pages/grain/agriculturalAppointment"
+		},
+		{
+			"path": "pages/search"
 		},
 		{
 			"path": "pages/catalog/grainTrade"
@@ -17,9 +38,6 @@
 			"path": "pages/grain/space"
 		},
 		{
-			"path": "pages/catalog/grainTrade"
-		},
-		{
 			"path": "pages/catalog/leaseAgriculturalMachinery"
 		},
 		{
@@ -28,9 +46,7 @@
 		{
 			"path": "pages/catalog/findDisease"
 		},
-		{
-			"path": "pages/tabbar/index/index"
-		},
+		
 		{
 			"path": "pages/tabbar/service/index"
 		},

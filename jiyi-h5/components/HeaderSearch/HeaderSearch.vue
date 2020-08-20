@@ -1,17 +1,21 @@
 <template>
 	<view>
 		<view class="HeaderSearch g-flex g-a-c p-x-10" v-if="!title">
-			<u-icon name="arrow-left" color="#fff"></u-icon>
+			<u-icon @click="back" name="arrow-left" color="#fff"></u-icon>
 			<view class="search g-flex g-a-c g-j-c p-x-10 m-c">
-				<input class="f-14 t-c" v-model="search" placeholder="请输入搜索内容" type="text" value="" />
+				<input @click="jumpSearch"  autofocus="autofocus" :disabled="disabled" class="input f-14" v-model="search" placeholder-class="placeholder-class"
+				 placeholder="请输入搜索内容" type="text" value="" />
 			</view>
 		</view>
-		<view v-else class="HeaderSearch shadow b-f g-flex g-a-c g-j-c p-x-10 f-16">
-			<u-icon style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left" color="#999999"></u-icon>
+		<view v-else="title" class="HeaderSearch shadow b-f g-flex g-a-c g-j-c p-x-10 f-16">
+			<u-icon  @click="back" style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left" color="#999999"></u-icon>
 			{{title}}
 		</view>
 		<view style="width: 100%; height: 88rpx;">
 			<!-- 占位 -->
+		</view>
+		<view class="search-content">
+
 		</view>
 	</view>
 </template>
@@ -23,6 +27,14 @@
 			title: {
 				type: String,
 				default: ''
+			},
+			disabled: {
+				type: Boolean,
+				default: false
+			},
+			focus: {
+				type: Boolean,
+				default: false
 			}
 		},
 		components: {
@@ -30,7 +42,8 @@
 		},
 		data() {
 			return {
-				search: '' //搜索输入得内容
+				search: '', //搜索输入得内容,
+				setFocus: false
 			};
 		},
 		watch: {
@@ -39,8 +52,25 @@
 				this.$emit('searchCallback', newValue)
 			}
 		},
-		created() {},
-		methods: {}
+		created() {
+			if (this.focus) {
+				
+			}
+		},
+		methods: {
+			jumpSearch() {
+				if (this.disabled) {
+					uni.navigateTo({
+						url: '/pages/search'
+					});
+				}
+			},
+			back(){
+				if(getCurrentPages().length > 1){
+					uni.navigateBack()
+				}
+			}
+		}
 	};
 </script>
 
@@ -59,8 +89,13 @@
 		border-radius: 35rpx;
 		background-color: $white;
 
-		input {
+		.input {
 			width: 100%;
 		}
+
+	}
+
+	.placeholder-class {
+		text-align: center;
 	}
 </style>

@@ -4,7 +4,18 @@
 		<HeaderSearch title="出租农机详情"></HeaderSearch>
 
 		<view class="init">
-			<image class="agri-img" src="@/static/logo.png" mode=""></image>
+			<view class="roll-out">
+				<swiper class="roll" :current="current" @change="getCurrent">
+					<block v-for="item in banner" :key="item">
+						<swiper-item>
+							<image src="@/static/logo.png" class="roll-image" />
+						</swiper-item>
+					</block>
+				</swiper>
+				<view class='toleft' @click='toleft()'></view>
+				<view class='toright' @click='toright()'></view>
+			</view>
+
 			<view class="p-x-10">
 				<view class="g-flex g-a-c">
 					<view class="tag f-12" v-if="param == 2">
@@ -25,13 +36,22 @@
 					<view class="label f-12">
 						可议价
 					</view>
-
+					<view class="label f-12">
+						优质商家
+					</view>
 				</view>
-				<view class="info g-f-warp g-flex" >
-					<view class="text g-f-1 f-12" style="color: #999999;margin-top: 24rpx;" v-for="(item,index) in info" :key="index">
+				<view class="info g-f-warp g-flex">
+					<view class="text g-f-1 f-12" style="color: #999999;margin-top: 24rpx;" v-for="item in info" :key="item">
 						{{item}}
 					</view>
 				</view>
+				<view class="space"></view>
+				<view class="info g-f-warp g-flex" >
+					<view class="text g-f-1 f-14" style="color: #333;margin-top: 52rpx;">
+						描述：诚信出售：黑龙江勃利地区自家烘干塔。国际玉米出库中。容重690以上。水分14.霉变焦糊1内。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1。
+					</view>
+				</view>
+				
 			</view>
 		</view>
 
@@ -41,12 +61,14 @@
 
 <script>
 	import HeaderSearch from '../../components/HeaderSearch/HeaderSearch.vue'
+
 	export default {
 		components: {
 			HeaderSearch
 		},
 		data() {
 			return {
+				current: '0',
 				param: null,
 				price: "25.00",
 				company: '',
@@ -54,12 +76,28 @@
 					model: '',
 					goodsNum: '',
 					address: '',
-					phone: ''
+					contactUser: '',
+					spaceCorn:'',
+					phone: '',				
+					
 				},
 				item: [],
+
+				banner: [{
+						url: '@/static/logo.png'
+					},
+					{
+						url: '@/static/logo.png'
+					},
+					{
+						url: '@/static/logo.png'
+					}
+				]
+
 			};
 		},
 		onLoad(e) {
+
 			this.param = e.index
 			// if(e.info){
 
@@ -67,17 +105,45 @@
 			this.info = {
 				model: `${this.param == 0 ? "类别" : "型号"}：500`,
 				goodsNum: `${this.param == 0 ? " " : "货号：xd-500"}`,
-				address: "长春公主岭",
-				phone: "电话：15567891234"
+				address: `${this.param == 0 ? "吉林省榆树市五棵松" : "长春公主岭"}`,
+				contactUser: "联系人：西西 ",
+				spaceCorn:"",
+				phone: "电话:15567891234"
 			}
 			if (this.param == 0) {
 				this.company = "元/公斤"
 			}
+			if (this.param == 1) {
+				this.company = "元"
+			}
 			if (this.param == 2) {
 				this.company = "元/亩 "
 			}
+
 		},
 		methods: {
+
+			//先获取当前的current
+			getCurrent: function(e) {
+				this.current = e.detail.current
+			},
+			//向左滑动
+			toleft: function() {
+				if (this.current == '0') {
+					this.current = this.banner.length - 1
+				} else {
+					this.current = this.current - 1
+				};
+
+			},
+			//向右滑动
+			toright: function() {
+				if (this.current == this.banner.length - 1) {
+					this.current = '0'
+				} else {
+					this.current = this.current + 1
+				}
+			}
 
 		}
 	}
@@ -85,10 +151,52 @@
 
 <style lang="scss">
 	.init {
-		.agri-img {
-			width: 750rpx;
-			height: 750rpx;
+
+		.roll-out {
+			position: relative;
+
+			.roll {
+				width: 750rpx;
+				height: 750rpx;
+			}
+
+			swiper-item {
+				width: 100%;
+				height: 100%;
+
+				.roll-image {
+					width: 750rpx;
+					height: 750rpx;
+				}
+			}
+
+			.toleft {
+				width: 30rpx;
+				height: 30rpx;
+				position: absolute;
+				top: 50%;
+				left: 36rpx;
+				border-right-color: transparent;
+				border-color: #fff;
+				border-width: 0 0 4px 4px;
+				border-style: solid;
+				transform: rotate(45deg) translateY(-50%);
+			}
+
+			.toright {
+				width: 30rpx;
+				height: 30rpx;
+				position: absolute;
+				top: 50%;
+				right: 60rpx;
+				border-right-color: transparent;
+				border-color: #fff;
+				border-width: 4px 4px 0 0;
+				border-style: solid;
+				transform: rotate(45deg) translateY(-50%);
+			}
 		}
+
 		.tag {
 			width: 72rpx;
 			line-height: 50rpx;
@@ -96,6 +204,7 @@
 			color: #fff;
 			text-align: center;
 		}
+
 		.labels {
 			.label {
 				padding: 5rpx 20rpx;
@@ -105,10 +214,17 @@
 				margin-right: 20rpx;
 			}
 		}
+
 		.info {
 			.text {
 				min-width: 33%;
 			}
+		}
+		.space{
+			width: 750rpx;
+			height:22rpx;
+			background-color: rgba(229, 229, 229, 1);
+			margin: 26rpx 0rpx -26rpx -20rpx;
 		}
 	}
 </style>

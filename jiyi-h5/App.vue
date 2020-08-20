@@ -100,6 +100,18 @@
 		padding: 20rpx 0;
 	}
 
+	.p-10 {
+		padding: 20rpx;
+	}
+
+	.m-y-10 {
+		margin: 20rpx 0;
+	}
+
+	.m-x-10 {
+		margin: 0 20rpx;
+	}
+
 	.g-f-row {
 		flex-direction: row;
 	}
@@ -161,10 +173,11 @@
 	}
 
 	.o-e {
+		-webkit-line-clamp: 2;
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
 		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.app-modular {
