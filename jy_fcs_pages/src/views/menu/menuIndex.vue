@@ -39,7 +39,8 @@
       </el-table-column>
       <el-table-column  label="类型" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.menuType == 1">目录</el-tag>
+          <el-tag v-if="scope.row.menuType == 1 && scope.row.only == 'Y'">独立目录</el-tag>
+          <el-tag v-if="scope.row.menuType == 1 && scope.row.only != 'Y'">目录</el-tag>
           <el-tag v-if="scope.row.menuType == 2" type="success">菜单</el-tag>
           <el-tag v-if="scope.row.menuType == 3" type="info">按钮</el-tag>
         </template>
