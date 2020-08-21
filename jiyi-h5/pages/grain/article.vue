@@ -7,17 +7,28 @@
 			<view class="g-f-1">发布时间：2020-8-20</view>
 		</view>
 		<view class="content f-14">
-
-
-			水稻直播指的是直接将种子播种的稻田之中，而不经过育苗、移栽的过程。
-
-
-			水稻直播省去了育苗、移栽、插秧的过程，省时省工;水稻直播不存在返青和拔秧植伤的过程，生育期要比同期移栽的水稻短;水稻直播简单、方便，有利于规模化发展。 
+			水稻直播指的是直接将种子播种的稻田之中，而不经过育苗、移栽的过程。水稻直播省去了育苗、移栽、插秧的过程，省时省工;水稻直播不存在返青和拔秧植伤的过程，生育期要比同期移栽的水稻短;水稻直播简单、方便，有利于规模化发展。 
 		</view>
 		<view class="comment">
 			<view class="comments g-flex g-a-c">
 				<u-input v-model="value" type="text" />
 				<view class="f-14" style="color: #1890ff;margin-left: 20rpx;">写留言</view>
+			</view>
+			<view style="padding: 0 36rpx;">
+				<view class="name f-14">
+					小吉易
+				</view>
+				<view class="f-12" style="height: 96rpx; color: #666666;">
+					由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的...
+				</view>
+				<view class="other g-flex f-12 g-a-c">
+					<view class="time">
+						08-20 13:08
+					</view>
+					<view class="number t-c">
+						134回复
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -34,8 +45,10 @@
 			}
 		},
 		onLoad(e) {
-			this.param = JSON.parse(e.params)
-			console.log(this.param)
+			if (e) {
+				this.param = JSON.parse(e.params)
+				console.log(this.param)
+			}
 		}
 	}
 </script>
@@ -63,5 +76,21 @@
 		height: 94rpx;
 		border-bottom: 1rpx solid #ddd;
 		border-top: 1rpx solid #ddd;
+	}
+
+	.name {
+		line-height: 56rpx;
+		margin: 24rpx 0 12rpx 0;
+	}
+
+	.other {
+		color: #808080;
+
+		.number {
+			padding: 5rpx 20rpx;
+			background-color: #e5e5e5;
+			margin-left: 20rpx;
+			border-radius: 20rpx;
+		}
 	}
 </style>
