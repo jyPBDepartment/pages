@@ -40,9 +40,16 @@
             style="width:70%;">
         </selectTree>
         </el-form-item>
-        <el-form-item label="菜单路由" prop="url" v-if="urlShow" :required="urlShow" >
-          <el-input type="text" v-model="editForm.url" placeholder="请输入菜单路由" maxlength="64" style=" width:70%;" ></el-input>
+        <el-form-item label="路由地址" prop="url" v-if="urlShow" :required="urlFlag" >
+          <el-input type="text" v-model="editForm.url" placeholder="请输入路由地址" maxlength="64" style=" width:70%;" ></el-input>
         </el-form-item>
+        <el-form-item label="是否独立目录" prop="only" v-if="onlyShow" :required="onlyShow" >
+          <el-radio-group v-model="editForm.only">
+              <el-radio label="Y">是</el-radio>
+              <el-radio label="N">否</el-radio>
+            </el-radio-group>
+        </el-form-item>
+
         <el-form-item label="权限标识" prop="perssions" v-if="perssionsShow"  maxlength="64" :required="perssionsShow">
           <el-input type="text" v-model="editForm.perssions" placeholder="请输入权限标识"  style=" width:70%;" ></el-input>
         </el-form-item>
@@ -93,7 +100,9 @@ export default {
       isShow:false,
       saveFlag:false,
       iconShow:true,
-      urlShow:false,
+      urlShow:true,
+      onlyShow:true,
+      urlFlag:false,
       parentShow:false,
       perssionsShow:false,
       labelPosition:'right',
@@ -103,6 +112,7 @@ export default {
        editForm:{
         name:"",
         url:"",
+        only : "N",
         perssions:"",
         parentId:"",
         icon:"",
@@ -146,7 +156,9 @@ selectType(result){
   if(result == 1){
     //目录
     this.iconShow = true;
-    this.urlShow = false;
+    this.urlShow = true;
+    this.onlyShow = true;
+    this.urlFlag = false;
     this.parentShow = false;
     this.perssionsShow = false;
     this.editForm.url = "";
@@ -157,9 +169,12 @@ selectType(result){
     //菜单
     this.iconShow = true;
     this.urlShow = true;
+    this.onlyShow = false;
+    this.urlFlag = true;
     this.parentShow = true;    
     this.perssionsShow = false;
     this.editForm.perssions = "";
+    this.editForm.only = "N";
   }
   if(result == 3){
     //按钮
@@ -167,8 +182,12 @@ selectType(result){
     this.perssionsShow = true;
     this.iconShow = false;
     this.urlShow = false;
+    this.onlyShow = false;
+    this.urlFlag = false;
     this.editForm.url = "";
     this.editForm.icon = "";
+    this.editForm.onlyShow = "";
+    this.editForm.only = "N";
   }
 },
      //获取菜单树，下拉列表显示
@@ -259,6 +278,10 @@ selectType(result){
         //目录 
         if(this.editForm.icon == ""){
           this.$alert('目录图标不能为空！', '提示', {confirmButtonText: '确定',});
+          return;
+        }
+        if(this.editForm.only == "Y" && this.editForm.url == ""){
+          this.$alert('独立目录URL不能为空！', '提示', {confirmButtonText: '确定',});
           return;
         }
       }

@@ -42,6 +42,9 @@
 </template>
 <script>
 import { menu } from "../api/userMG";
+import ApiPath from "@/api/ApiPath.js";
+//数据请求交互引用
+import api from "@/axios/api.js";
 export default {
   name: "leftnav",
   data() {
@@ -52,198 +55,12 @@ export default {
   },
   // 创建完毕状态(里面是操作)
   created() {
+    this.search();
+    //console.log(JSON.stringify({ menu }));
     // 获取图形验证码
     let res = {
       success: true,
-      data: [
-        {
-          menuid: 0,
-          icon: "el-icon-s-home",
-          menuname: "首页",
-          hasThird: "N",
-          url: "/charts/statistics",
-          menus: null,
-          only: "Y"
-        },
-        {
-          menuid: 1,
-          icon: "el-icon-copy-document",
-          menuname: "模块管理",
-          hasThird: "N",
-          url: "/moduleInfo/ModuleInfo",
-          menus: null,
-          only: "Y"
-        },
-        {
-          menuid: 2,
-          icon: "el-icon-cherry",
-          menuname: "农服管理",
-          hasThird: "N",
-          url: null,
-          menus: null,
-          only: "N",
-          menus: [
-             {
-              menuid: 2 - 1,
-              icon: "el-icon-chat-line-round",
-              menuname: "农服管理",
-              hasThird: "N",
-              url: "Agricultural/agricultural",
-              menus: null,
-            },
-            {
-              menuid: 2 - 2,
-              icon: "el-icon-chat-line-round",
-              menuname: "粮食收购",
-              hasThird: "N",
-              url: "childrenMenu/PurchaseCorn",
-              menus: null,
-            },
-            {
-              menuid: 2 - 3,
-              icon: "el-icon-chat-line-round",
-              menuname: "粮食出售",
-              hasThird: "N",
-              url: "childrenMenu/sellFoodstuff",
-              menus: null,
-            },
-            {
-              menuid: 2 - 4,
-              icon: "el-icon-chat-line-round",
-              menuname: "农机出售",
-              hasThird: "N",
-              url: "childrenMenu/sellAgriMachinery",
-              menus: null,
-            },
-             {
-              menuid: 2 - 5,
-              icon: "el-icon-chat-line-round",
-              menuname: "粮食播种",
-              hasThird: "N",
-              url: "childrenMenu/CornSowing",
-              menus: null,
-            },
-            ]
-        },
-        {
-          menuid: 3,
-          icon: "el-icon-bangzhu",
-          menuname: "圈子管理",
-          hasThird: null,
-          url: null,
-          only: "N",
-          menus: [
-            {
-              menuid: 3 - 1,
-              icon: "el-icon-chat-line-round",
-              menuname: "圈子管理",
-              hasThird: "N",
-              url: "postInfo/PostInfo",
-              menus: null,
-            },
-            {
-              menuid: 3 - 2,
-              icon: "el-icon-key",
-              menuname: "关键词",
-              hasThird: "N",
-              url: "keyWord/KeyWord",
-              menus: null,
-            },
-            {
-              menuid: 3 - 3,
-              icon: "el-icon-edit-outline",
-              menuname: "评论管理",
-              hasThird: "N",
-              url: "comment/comment",
-              menus: null,
-            },
-            {
-              menuid: 3 - 4,
-              icon: "el-icon-edit",
-              menuname: "回复管理",
-              hasThird: "N",
-              url: "reply/reply",
-              menus: null,
-            },
-          ],
-        },
-        {
-          menuid: 4,
-          icon: "el-icon-finished",
-          menuname: "看图识病",
-          hasThird: null,
-          url: null,
-          only: "N",
-          menus: [
-            {
-              menuid: 4 - 1,
-              icon: "el-icon-view",
-              menuname: "看图识病",
-              hasThird: "N",
-              url: "CaseInfo/caseInfo",
-              menus: null,
-            }
-          ],
-        },
-        {
-          menuid: 5,
-          icon: "el-icon-user-solid",
-          menuname: "账户管理",
-          hasThird: null,
-          url: null,
-          only: "N",
-          menus: [
-            {
-              menuid: 5 - 1,
-              icon: "el-icon-s-custom",
-              menuname: "账户管理",
-              hasThird: "N",
-              url: "accountIfo/AccountInfo",
-              menus: null,
-            },
-            {
-              menuid: 5 - 2,
-              icon: "el-icon-s-check",
-              menuname: "权限管理",
-              hasThird: "N",
-              url: "powerInfo/powerInfo",
-              menus: null,
-            },
-            {
-              menuid: 5 - 3,
-              icon: "el-icon-user",
-              menuname: "角色管理",
-              hasThird: "N",
-              url: "role/roleShow",
-              menus: null,
-            },
-            {
-              menuid: 5 - 4,
-              icon: "el-icon-menu",
-              menuname: "菜单管理",
-              hasThird: "N",
-              url: "menu/menuIndex",
-              menus: null,
-            },
-            {
-              menuid: 5 - 5,
-              icon: "el-icon-orange",
-              menuname: "分类管理",
-              hasThird: "N",
-              url: "Classification/classification",
-              menus: null,
-            },
-            {
-              menuid: 5 - 6,
-              icon: "el-icon-document",
-              menuname: "日志管理",
-              hasThird: "N",
-              url: "dbLog/logShow",
-              menus: null,
-            },
-          ],
-        },
-      ],
+      data: [],
       msg: "success",
     };
     this.allmenu = res.data;
@@ -252,6 +69,16 @@ export default {
       this.collapsed = !value;
     });
   },
+  methods: {
+    search: function(parameter) {
+      let params = {};
+      api.testAxiosGet(ApiPath.url.getNavMenuList, params).then(res => {
+        let code = res.state;
+        //console.log(JSON.stringify(res.data));
+        this.allmenu=res.data;
+      });
+    }
+  }
 };
 </script>
 <style>
