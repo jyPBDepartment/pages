@@ -62,9 +62,9 @@
 			search(e) {
 				console.log(e)
 			},
-			jump(){
+			jump() {
 				uni.navigateTo({
-					url:'../../grain/paddy'
+					url: '../../grain/paddy'
 				})
 			}
 
