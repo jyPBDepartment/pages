@@ -9,10 +9,14 @@
 			<view style="padding:46rpx 20rpx">
 				<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">筛选类别</view>
 				<view class="categorys g-flex g-f-warp g-j-s-b">
-					<view class="f-14 t-c category" v-for="(item, index) in 4" :key="index">
-						无人机
+					<view class="f-14 t-c category" v-for="(item, index) in categoryList " :key="index">
+						{{item}}
 					</view>
 				</view>
+			</view>
+			<view class="btns g-flex g-j-s-b">
+				<u-button class="btn" shape="circle" plain>重置</u-button>
+				<u-button class="btn" shape="circle" type="error">确认</u-button>
 			</view>
 		</uni-drawer>
 	</view>
@@ -30,6 +34,7 @@
 			return {
 				tabIndex: 0,
 				tabsList: ["全部", "推荐", "无人机", "筛选"],
+				categoryList: ["推荐", "无人机", "季节", "水稻"],
 				communityList: [{
 					title: '直播水稻和插秧到底有什么样的优劣势？',
 					content: '1.水稻直播优缺点 1、水稻直播 水稻直播指的是直接将种子播种的稻田之中,而不经过育苗、移栽的过程。 2、优点水稻直播省去了育苗、移栽、插秧的过程,省时省工;水稻直播不存在返1.水稻直播优缺点 1、水稻直播水稻直播指的是直接将种子播种的稻田之中,而不经过育苗、移栽的过程。 2、优点 水稻直播省去了育苗、移栽、插秧的过程,省时省工;水稻直播不存在返...',
@@ -59,7 +64,7 @@
 			jump(item) {
 				console.log(item)
 				uni.navigateTo({
-					url:`../../grain/article?params=${JSON.stringify(item)}`
+					url: `../../grain/article?params=${JSON.stringify(item)}`
 				})
 			}
 		}
@@ -88,5 +93,15 @@
 		background-color: #e5e5e5;
 		color: #505050;
 		margin-bottom: 20rpx;
+	}
+
+	.btns {
+		position: absolute;
+		bottom: 60rpx;
+		width: 100%;
+
+		.btn {
+			width: 192rpx;
+		}
 	}
 </style>
