@@ -3,13 +3,16 @@
 		<view class="HeaderSearch g-flex g-a-c p-x-10" v-if="!title">
 			<u-icon @click="back" name="arrow-left" color="#fff"></u-icon>
 			<view class="search g-flex g-a-c g-j-c p-x-10 m-c">
-				<input @click="jumpSearch"  autofocus="autofocus" :disabled="disabled" class="input f-14" v-model="search" placeholder-class="placeholder-class"
-				 placeholder="请输入搜索内容" type="text" value="" />
+				<input @click="jumpSearch" autofocus="autofocus" :disabled="disabled" class="input f-14" v-model="search"
+				 placeholder-class="placeholder-class" placeholder="请输入搜索内容" type="text" value="" />
 			</view>
 		</view>
-		<view v-else="title" class="HeaderSearch shadow b-f g-flex g-a-c g-j-c p-x-10 f-16">
-			<u-icon  @click="back" style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left" color="#999999"></u-icon>
+		<view v-else :class="bold && 'f-b'" class="HeaderSearch shadow b-f g-flex g-a-c g-j-c p-x-10 f-16">
+			<u-icon v-if="title !== '圈子'" @click="back" style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left"
+			 color="#999999"></u-icon>
 			{{title}}
+			<span style="position: absolute; right: 20rpx; color: #1890ff;z-index: 999;" class="f-14" v-if="title == '圈子'"
+			 @click="jump">发帖</span>
 		</view>
 		<view style="width: 100%; height: 88rpx;">
 			<!-- 占位 -->
@@ -32,7 +35,7 @@
 				type: Boolean,
 				default: false
 			},
-			focus: {
+			bold: {
 				type: Boolean,
 				default: false
 			}
@@ -54,7 +57,7 @@
 		},
 		created() {
 			if (this.focus) {
-				
+
 			}
 		},
 		methods: {
@@ -65,10 +68,15 @@
 					});
 				}
 			},
-			back(){
-				if(getCurrentPages().length > 1){
+			back() {
+				if (getCurrentPages().length > 1) {
 					uni.navigateBack()
 				}
+			},
+			jump() {
+				uni.navigateTo({
+					url: '/pages/community/release'
+				})
 			}
 		}
 	};

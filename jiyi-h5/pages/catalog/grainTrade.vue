@@ -1,9 +1,9 @@
 <template>
 	<view class="service">
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
-		<Screen :condition="condition"></Screen>
+		<Screen :screenList="screenList" :condition="condition"></Screen>
 		<view class="p-x-10">
-			<view class="app-modular g-flex" v-for="(item, index) in 2" :key="index">
+			<view class="app-modular g-flex" @click="jump" v-for="(item, index) in 2" :key="index">
 				<image class="app-img" src="@/static/logo.png" mode=""></image>
 				<view class="app-info g-f-1">
 					<p class="title f-14">收购玉米价格0.65-0.71之间</p>
@@ -40,8 +40,12 @@
 		data() {
 			return {
 				condition: [
-					"全部", "植保", "播种", "收割", "筛选"
-				]
+					"全部", "出售", "收割", "筛选"
+				],
+				screenList: [{
+					title: '农作物类别',
+					category: ["玉米", "水稻", "高粱", "水稻"]
+				}]
 			}
 		},
 		onLoad() {
@@ -51,15 +55,21 @@
 			search(e) {
 				console.log(e)
 			},
+			jump(){
+				uni.navigateTo({
+					url:'../grain/space?index=0'
+				})
+			}
 
 		}
 	}
 </script>
 
 <style lang="scss">
-	.app-modular{
+	.app-modular {
 		border-bottom: 1px solid rgba(229, 229, 229, 1);
 	}
+
 	.tagGrain {
 		width: 140rpx;
 		line-height: 40rpx;

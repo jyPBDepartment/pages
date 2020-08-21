@@ -131,7 +131,9 @@
 	.m-r-5 {
 		margin-right: 10rpx;
 	}
-
+	.f-b{
+		font-weight: bold;
+	}
 	.t-c {
 		text-align: center;
 	}
@@ -174,6 +176,13 @@
 
 	.o-e {
 		-webkit-line-clamp: 2;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.o-e3 {
+		-webkit-line-clamp: 3;
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		overflow: hidden;

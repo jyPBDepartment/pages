@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
-		<Screen :condition="condition" :type="2"></Screen>
+		<Screen :screenList="screenList" :condition="condition" :type="2"></Screen>
 		<view class="p-x-10  g-flex g-f-warp g-f-row g-j-s-b" style="margin:20rpx 0">
-			<view class="commodity b-f" style="width: 316rpx;padding: 12rpx; margin-bottom: 20rpx;" v-for="(item, index) in 10"
+			<view @click="jump" class="commodity b-f" style="width: 316rpx;padding: 12rpx; margin-bottom: 20rpx;" v-for="(item, index) in 10"
 			 :key="index">
 				<image style="width: 316rpx;height: 298rpx;" src="../../static/logo.png" mode=""></image>
 				<p style="height: 94rpx;line-height: 47rpx;" class="f-14 o-e">商品描述，最多两行，超出部分用商品描述，最多两行，超出部分用商品描述，最多两行，超出部分用...</p>
@@ -26,11 +26,19 @@
 		},
 		data() {
 			return {
-				condition: ["全部", "购买", "出售", "租赁"]
+				condition: ["全部", "购买", "出售", "租赁", "筛选"],
+				screenList: [{
+					title: '机器类型',
+					category: ["xd-500", "39006", "WS654", "GX321"]
+				}]
 			}
 		},
 		methods: {
-
+			jump() {
+				uni.navigateTo({
+					url:'../grain/space?index=1'
+				})
+			}
 		}
 	}
 </script>

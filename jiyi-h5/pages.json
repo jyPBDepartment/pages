@@ -5,6 +5,15 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/grain/article"
+		},
+		{
+			"path": "pages/grain/paddy"
+		},
+		{
+			"path": "pages/community/release"
+		},
+		{
 			"path": "pages/grain/buyMachine"
 		},
 		{
@@ -46,7 +55,7 @@
 		{
 			"path": "pages/catalog/findDisease"
 		},
-		
+
 		{
 			"path": "pages/tabbar/service/index"
 		},

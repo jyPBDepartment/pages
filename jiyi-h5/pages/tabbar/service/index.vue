@@ -1,9 +1,9 @@
 <template>
 	<view class="service">
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
-		<Screen :condition="condition"></Screen>
+		<Screen :screenList="screenList" :condition="condition"></Screen>
 		<view class="p-x-10">
-			<view class="app-modular g-flex">
+			<view class="app-modular g-flex" @click="jump">
 				<image class="app-img" src="../../../static/logo.png" mode=""></image>
 				<view class="app-info g-f-1">
 					<p class="title f-14">水稻植保</p>
@@ -43,6 +43,15 @@
 			return {
 				condition: [
 					"综合", "次数", "信用", "筛选"
+				],
+				screenList: [{
+						title: '农作物类别',
+						category: ["玉米", "水稻", "高粱", "水稻"]
+					},
+					{
+						title: '类别',
+						category: ["虫害", "草害", "病害"]
+					}
 				]
 			}
 		},
@@ -53,7 +62,12 @@
 			search(e) {
 				console.log(e)
 			},
-			
+			jump(){
+				uni.navigateTo({
+					url:'../../grain/paddy'
+				})
+			}
+
 		}
 	}
 </script>
