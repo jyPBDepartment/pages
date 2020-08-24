@@ -7,7 +7,7 @@
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容" :clearable="false" v-model="value" height="64" />
+					<u-input placeholder="输入内容" :clearable="false" v-model="name" height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
@@ -15,7 +15,7 @@
 					描述
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :clearable="false" v-model="value" height="200" />
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :clearable="false" v-model="descrip" height="200" />
 				</view>
 			</view>
 			<view class="setcover">
@@ -31,7 +31,7 @@
 					类型
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="value1" @change="radioGroupChange">
+					<u-radio-group v-model="transactionTypeCode" @change="radioGroupChange">
 						<u-radio @change="radioChange" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
@@ -43,7 +43,7 @@
 					种类
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="value" type="select" border @click="sexShow = true" />
+					<u-input placeholder="请选择" v-model="transactionCategoryCode" type="select" border @click="sexShow = true" />
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
@@ -52,20 +52,20 @@
 					价格
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="value2" @change="radioGroupChange">
+					<u-radio-group v-model="isFace" @change="radioGroupChange">
 						<u-radio @change="radioChange" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input v-if="value2 == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="value" height="64" />
+				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="purchasingPrice" height="64" />
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					联系人
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系人" :clearable="false" :focus="true" v-model="value" border height="64" />
+					<u-input placeholder="请输入联系人" :clearable="false" :focus="true" v-model="contactsUser" border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -73,7 +73,7 @@
 					联系电话
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="value" border height="64" />
+					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="contactsPhone" border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -81,11 +81,11 @@
 					区域
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="map" type="select" border @click="regionaStatus = true" />
-					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
+					<u-input placeholder="请选择" v-model="purchasingArea" type="select" border @click="regionaStatus = true" />
+					<!-- <u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet> -->
 				</view>
 			</view>
-			<u-button style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
+			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
 	</view>
@@ -95,6 +95,9 @@
 <script>
 	import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue'
 	import regionalComponents from '../../components/regionalComponents/regionalComponents.vue'
+	//后台路径引用
+	import ApiPath from "@/api/ApiPath.js";
+	
 	export default {
 		components: {
 			HeaderSearch,
@@ -103,10 +106,16 @@
 		data() {
 			return {
 				regionaStatus: false,
-				map: '',
-				value: '',
-				value1: '买',
-				value2: '面议',
+				
+				name: '',
+				descrip: '',
+				transactionTypeCode: '买',
+				transactionCategoryCode: '',
+				purchasingPrice: '',
+				contactsUser: '',
+				contactsPhone: '',
+				purchasingArea:'',
+				isFace:"面议",
 				list: [{
 						name: '买',
 						disabled: false
@@ -127,13 +136,16 @@
 				],
 				sexShow: false,
 				actionSheetList: [{
-						text: '男'
+						text: '玉米'
 					},
 					{
-						text: '女'
+						text: '农机'
 					},
 					{
-						text: '保密'
+						text: '水稻'
+					},
+					{
+						text: '黄豆'
 					}
 				],
 			};
@@ -168,7 +180,44 @@
 						}
 					}
 				});
-				this.map = map;
+				this.purchasingArea = map;
+			},
+			actionSheetCallback(index){
+				this.transactionCategoryCode= this.actionSheetList[index].text;
+			},
+			//发布方法
+			deploy(){
+				
+				// name: '',
+				// descrip: '',
+				// transactionTypeCode: '',
+				// transactionCategoryCode: '',
+				// purchasingPrice: '',
+				// contactsUser: '',
+				// contactsPhone: '',
+				// purchasingArea:'',
+				
+				
+				let param = {
+					name: this.name,
+					descrip: this.descrip,
+					transactionTypeCode: this.transactionTypeCode,
+					transactionCategoryCode: this.transactionCategoryCode,
+					purchasingPrice: this.purchasingPrice,
+					contactsUser: this.contactsUser,
+					contactsPhone: this.contactsPhone,
+					purchasingArea:this.purchasingArea,
+				}
+				// let param = {agricultural:agricultural}
+				uni.request({
+					method: 'GET', //请求方式
+					data:param,//请求数据
+					url:ApiPath.url.deploy,//请求接口路径
+					success: (res) => {//成功返回结果方法
+						
+					}
+				})
+				
 			}
 		}
 	}
