@@ -1,14 +1,14 @@
 <template>
 	<view>
 		<view class="HeaderSearch g-flex g-a-c p-x-10" v-if="!title">
-			<u-icon @click="back" name="arrow-left" color="#fff"></u-icon>
+			<u-icon @click="back" v-if="!hideBack" name="arrow-left" color="#fff"></u-icon>
 			<view class="search g-flex g-a-c g-j-c p-x-10 m-c">
 				<input @click="jumpSearch" autofocus="autofocus" :disabled="disabled" class="input f-14" v-model="search"
 				 placeholder-class="placeholder-class" placeholder="请输入搜索内容" type="text" value="" />
 			</view>
 		</view>
 		<view v-else :class="bold && 'f-b'" class="HeaderSearch shadow b-f g-flex g-a-c g-j-c p-x-10 f-16">
-			<u-icon v-if="title !== '圈子'" @click="back" style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left"
+			<u-icon v-if="title !== '圈子'" v-show="!hideBack" @click="back" style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left"
 			 color="#999999"></u-icon>
 			{{title}}
 			<span style="position: absolute; right: 20rpx; color: #1890ff;z-index: 999;" class="f-14" v-if="title == '圈子'"
@@ -37,6 +37,10 @@
 			},
 			bold: {
 				type: Boolean,
+				default: false
+			},
+			hideBack:{
+				type:Boolean,
 				default: false
 			}
 		},

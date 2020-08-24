@@ -31,7 +31,6 @@
 					url: '/api/data.json',
 					data: {},
 					success: function(res) {
-						console.log(res.data.data)
 						let LineA = {
 							categories: [],
 							series: []

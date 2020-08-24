@@ -67,7 +67,7 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="value" height="64" />
+				<u-input v-if="value2 == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="value" height="64" />
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">

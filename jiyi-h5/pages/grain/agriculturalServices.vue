@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderSearch title="粮食买卖" @searchCallback="search"></HeaderSearch>
+		<HeaderSearch title="农服发布" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10">
 			<view class="g-flex p-y-10 g-a-c" style="border-bottom: 1rpx solid #999;">
 				<view class="title f-14">
@@ -20,36 +20,33 @@
 			</view>
 			<view class="g-flex p-y-10">
 				<view class="title f-14" style="width: 140rpx;">
-					土地图片
+					设置封面图
 				</view>
 				<view class="info g-f-1" style="position: relative;">
 					<u-upload width="167" ref="uUpload" :action="action" :auto-upload="false"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
-					交易类型
+				<view class="title f-14" style="width: 140rpx;">
+					干活时间
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="value1" @change="radioGroupChange">
-						<u-radio @change="radioChange" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
+					<u-icon name="calendar" class="input-icon"></u-icon>
+					<u-input @click="dateShow = true" disabled placeholder="请选择时间" :clearable="false" :focus="true" v-model="value"
+					 border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<view class="title f-14" style="width: 140rpx;">
-					粮食类型
+				<view class="title f-14" style=" width: 140rpx;">
+					农机台数
 				</view>
-				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="value" type="select" border @click="sexShow = true" />
-					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
+				<view class="info g-f-1" style="position: relative;">
+					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="value" border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
-					价格
+					农活价格
 				</view>
 				<view class="info g-f-1" style="position: relative;">
 					<u-radio-group v-model="value2" @change="radioGroupChange">
@@ -61,13 +58,15 @@
 				<u-input v-if="value2 == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="value" height="64" />
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<view class="title f-14" style=" width: 140rpx;">
-					收购价格
+				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
+					农活方式
 				</view>
-				<view class="info g-f-1 g-flex g-j-s-b" style="position: relative;">
-					<view class="tag f-12 g-flex g-a-c g-j-c" v-for="(item, index) in 4" :key="index">
-						九新
-					</view>
+				<view class="info g-f-1" style="position: relative;">
+					<u-radio-group v-model="value1" @change="radioGroupChange">
+						<u-radio @change="radioChange" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
+							{{item.name}}
+						</u-radio>
+					</u-radio-group>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -95,9 +94,16 @@
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
-			<u-button style="margin: 40rpx;" shape="circle" type="error">发布预约</u-button>
+			<u-button style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
+		<u-calendar v-model="dateShow" mode="range" @change="change">
+			<view slot="tooltip">
+				<view class=" t-c p-y-10" style="color: #2979FF">
+					请选择开始/结束时间
+				</view>
+			</view>
+		</u-calendar>
 	</view>
 
 </template>
@@ -116,14 +122,14 @@
 				dateShow: false,
 				map: '',
 				value: '',
-				value1: '买',
+				value1: '零活',
 				value2: '面议',
 				list: [{
-						name: '买',
+						name: '整活',
 						disabled: false
 					},
 					{
-						name: '卖',
+						name: '零活',
 						disabled: false
 					}
 				],

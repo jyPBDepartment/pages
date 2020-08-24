@@ -11,7 +11,7 @@
 		</view>
 		<view class="comment">
 			<view class="comments g-flex g-a-c">
-				<u-input v-model="value" type="text" />
+				<view class="g-f-1 f-14" style="color: #999999;">精选留言</view>
 				<view class="f-14" style="color: #1890ff;margin-left: 20rpx;">写留言</view>
 			</view>
 			<view style="padding: 0 36rpx;">

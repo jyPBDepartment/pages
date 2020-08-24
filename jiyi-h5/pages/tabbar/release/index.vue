@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderSearch title="发布" @searchCallback="search"></HeaderSearch>
+		<HeaderSearch hideBack title="发布" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10  g-flex g-a-c " style="position: absolute; bottom: 40rpx;">
 			<view class="btn f-12" v-for="(item, index) in btnList" @click="jump(item)" :key="index">
 				<view class="img g-flex g-a-c g-j-c m-c">
@@ -24,7 +24,7 @@
 			return {
 				btnList: [{
 					src: '../../../static/logo.png',
-					url:'../../grain/agriculturalAppointment',
+					url:'../../grain/agriculturalServices',
 					name: '农服'
 				}, {
 					src: '../../../static/logo.png',

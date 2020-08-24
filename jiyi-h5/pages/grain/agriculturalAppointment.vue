@@ -80,7 +80,7 @@
 					<u-upload width="167" ref="uUpload" :action="action" :auto-upload="false"></u-upload>
 				</view>
 			</view>
-			<u-button style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
+			<u-button @click="release" style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
 		</view>
 		<u-calendar v-model="dateShow" mode="range" @change="change">
 			<view slot="tooltip">
@@ -114,6 +114,13 @@
 						text: '保密'
 					}
 				],
+			}
+		},
+		methods:{
+			release(){
+				uni.navigateTo({
+					url:'../response?state=1'
+				})
 			}
 		}
 	}

@@ -5,10 +5,10 @@
 		<FoodstuffPrice></FoodstuffPrice>
 		<view class="p-x-10">
 			<FuncIcon :btnList="btnList"></FuncIcon>
-			<Overview :type="1" title="病虫害" :previewList="previewList"></Overview>
-			<Overview :type="2" title="粮食收购" :previewList="previewList"></Overview>
-			<Overview :type="3" title="农机" :previewList="previewList"></Overview>
 			<Overview title="农服预约" :previewList="previewList"></Overview>
+			<Overview :type="2" title="粮食买卖" :previewList="previewList"></Overview>
+			<Overview :type="3" title="农机" :previewList="previewList"></Overview>
+			<Overview :type="1" title="病虫害" :previewList="previewList"></Overview>
 		</view>
 	</view>
 </template>
@@ -71,7 +71,7 @@
 			};
 		},
 		onLoad() {
-			console.log(11)
+			// console.log(11)
 		},
 		methods: {
 			//组件监听搜索内容方法

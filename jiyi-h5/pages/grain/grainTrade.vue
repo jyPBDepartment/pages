@@ -58,7 +58,7 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="value" height="64" />
+				<u-input v-if="value2 == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="value" height="64" />
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
@@ -85,6 +85,7 @@
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
+			<u-button style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
 	</view>

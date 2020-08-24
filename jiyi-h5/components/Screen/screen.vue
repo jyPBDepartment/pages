@@ -1,7 +1,7 @@
 <template>
 	<view class="b-f">
-		<view class="screen g-flex g-j-s-a g-a-c f-14">
-			<view class="sort" @click="selectLabel(item, index)" :class="index == screenIndex && 'screen-select'" v-for="(item, index) in condition"
+		<view class="screen g-flex g-a-c f-14">
+			<view class="sort g-f-1 g-flex g-a-c g-j-c" :style="item == '筛选' && 'border-left: 1rpx solid #e5e5e5;'" @click="selectLabel(item, index)" :class="index == screenIndex && 'screen-select'" v-for="(item, index) in condition"
 			 :key="index">{{item}}</view>
 		</view>
 		<uni-drawer ref="drawer" mode="right" :visible="true">
@@ -67,6 +67,9 @@
 		height: 84rpx;
 		color: #808080;
 		border-bottom: 1px solid #808080;
+		.sort{
+			height: 34rpx;
+		}
 	}
 
 	.screen-select {
@@ -91,4 +94,5 @@
 			width: 192rpx;
 		}
 	}
+
 </style>

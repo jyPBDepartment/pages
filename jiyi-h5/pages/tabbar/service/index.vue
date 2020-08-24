@@ -1,9 +1,9 @@
 <template>
 	<view class="service">
-		<HeaderSearch @searchCallback="search"></HeaderSearch>
+		<HeaderSearch hideBack @searchCallback="search"></HeaderSearch>
 		<Screen :screenList="screenList" :condition="condition"></Screen>
 		<view class="p-x-10">
-			<view class="app-modular g-flex" @click="jump">
+			<view class="app-modular g-flex" @click="jumpInfo">
 				<image class="app-img" src="../../../static/logo.png" mode=""></image>
 				<view class="app-info g-f-1">
 					<p class="title f-14">水稻植保</p>
@@ -20,14 +20,13 @@
 						<view class="app-number">
 							已预约120次
 						</view>
-						<view class="immediately g-flex g-a-c g-j-c c-f">
+						<view @click.stop @click="jump" class="immediately g-flex g-a-c g-j-c c-f">
 							立即预约
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-
 	</view>
 </template>
 
@@ -42,7 +41,7 @@
 		data() {
 			return {
 				condition: [
-					"综合", "次数", "信用", "筛选"
+					"综合", "植保", "播种", "收割", "筛选"
 				],
 				screenList: [{
 						title: '农作物类别',
@@ -62,9 +61,14 @@
 			search(e) {
 				console.log(e)
 			},
-			jump() {
+			jumpInfo() {
 				uni.navigateTo({
 					url: '../../grain/paddy'
+				})
+			},
+			jump() {
+				uni.navigateTo({
+					url: '../../grain/agriculturalAppointment'
 				})
 			}
 

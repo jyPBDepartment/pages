@@ -8,12 +8,12 @@
 			<view>
 				<view class="title f-16 g-flex g-j-s-b g-a-c">
 					搜索历史
-					<u-icon @click="open" size="44" name="trash"></u-icon>
+					<u-icon @click="empty" size="44" name="trash"></u-icon>
 				</view>
 				<view class="history g-flex f-16" v-for="(item, index) in 5" :key="index">
 					<u-icon name="clock" style="margin-right: 20rpx;"></u-icon>
 					<view class="g-f-1">玉米</view>
-					<u-icon class="g-j-e" name="close"></u-icon>
+					<u-icon class="g-j-e" name="close" @click="current"></u-icon>
 				</view>
 				
 			</view>
@@ -31,14 +31,19 @@
 		data() {
 			return {
 				show: false,
-				content: '确认删除全部历史记录'
+				content: ''
 			}
 		},
 		methods: {
 			search(e) {
 				console.log(e)
 			},
-			open() {
+			empty() {
+				this.content = '确认删除全部历史记录'
+				this.show = true;
+			},
+			current() {
+				this.content = '确认删除当前历史记录'
 				this.show = true;
 			}
 		},
