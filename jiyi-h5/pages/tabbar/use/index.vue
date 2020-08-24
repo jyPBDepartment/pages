@@ -1,6 +1,6 @@
 <template>
 	<view class="containt">
-		<HeaderSearch title="我的"></HeaderSearch>
+		<HeaderSearch hideBack title="我的"></HeaderSearch>
 		<view class="content">
 			<!-- 顶部 -->
 			<view class="first g-flex g-a-c">
