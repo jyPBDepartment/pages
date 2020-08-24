@@ -2,47 +2,102 @@
 	<view class="containt">
 		<HeaderSearch hideBack title="我的"></HeaderSearch>
 		<view class="content">
-
-			<view class="first  g-flex g-a-c">
+			<!-- 顶部 -->
+			<view class="first g-flex g-a-c">
 				<u-image src="https://cdn.uviewui.com/uview/example/fade.jpg" shape="circle" style="width: 132rpx;height: 132rpx;margin: 16rpx 0rpx 0rpx 0rpx;"></u-image>
-				<view class="name g-f-1 f-16" style="font-weight: bold;margin-left: -250rpx;">
+				<view class="name g-f-1 f-16">
 					小吉易
 				</view>
 				<view class="icon g-flex">
-					<text class="f-16" style="margin-right:30rpx;">进入</text>
-					<u-icon size="33" name="arrow-right" color="#999999" style="margin-right: 13rpx;  margin-top: 10rpx;" @click=""></u-icon>
+					<text class="text1 f-16">进入</text>
+					<u-icon size="33" name="arrow-right" class="icon1" @click=""></u-icon>
 				</view>
 			</view>
+			<!-- 下划线 -->
+			<view class="line">
+				<u-line></u-line>
+			</view>
+
+			<!-- 我的发布 -->
 			<view class="second">
+				
+				<view class="lineContent">
+				<!-- 	<u-line></u-line> -->
+				</view>
+				
+				<!-- 农机发布 -->
 				<view class="public g-flex g-a-c">
-
-					<u-icon size="58" name="coupon" color="#999999" style="margin:10rpx 32rpx 0rpx 0rpx;"></u-icon>
-					<text class="f-14" style="margin:0rpx 282rpx 0rpx 0rpx;"> 农机发布</text>
-					<view class="tagg f-12" style="margin-left: 90rpx;margin-right:36rpx;font-weight: bold;">8</view>
-					<u-icon size="33" name="arrow-right" color="#999999" style="margin-top: -4rpx;" @click=""></u-icon>
+					<u-icon size="58" name="coupon" class="icon2"></u-icon>
+					<text class="text2 f-14"> 农机发布</text>
+					<view class="tagg f-12">8</view>
+					<u-icon size="33" name="arrow-right" class="icon3" @click=""></u-icon>
 				</view>
-
-				<view class="public g-flex g-a-c" v-for="item in public" :key="item">
-					<u-icon size="58" name="coupon" color="#999999" style="margin:10rpx 32rpx 0rpx 0rpx;"></u-icon>
-					<text class="f-14" style="margin:0rpx 282rpx 0rpx 0rpx;"> {{item.name}}</text>
-					<view class="tag f-12" style="margin-left: 60rpx;margin-right:28rpx;font-weight: bold;">{{item.badge}}</view>
-					<u-icon size="33" name="arrow-right" color="#999999" style="margin-top: -4rpx;" @click=""></u-icon>
+				
+				<!-- 下划线 -->
+				<view class="lineContentDown">
+					<u-line></u-line>
 				</view>
-
+				
+				<!-- 粮食买卖 -->
+				<view class="public g-flex g-a-c">
+					<u-icon size="58" name="coupon" class="icon2"></u-icon>
+					<text class="text2 f-14"> 粮食买卖</text>
+					<view class="tag f-12">new</view>
+					<u-icon size="33" name="arrow-right" class="icon3" @click=""></u-icon>
+				</view>
+				
+				
+				
+				<!-- 农服发布 -->
+				<view class="public g-flex g-a-c">
+					<u-icon size="58" name="coupon" class="icon2"></u-icon>
+					<text class="text2 f-14"> 农服发布</text>
+					<view class="tag f-12"></view>
+					<u-icon size="33" name="arrow-right" class="icon3" @click=""></u-icon>
+				</view>
+				
+				<!-- 下划线 -->
+				<view class="lineContentDown">
+					<u-line></u-line>
+				</view>
+				
 			</view>
-			<view class="line">
-				<u-line class="useLine"></u-line>
-			</view>
+			
+			<!-- 我的预约 -->
 			<view class="third">
-				<view class="public g-flex g-a-c" v-for="item in mine" :key="item">
-					<u-icon size="58" name="coupon" color="#999999" style="margin:10rpx 32rpx 0rpx 0rpx;"></u-icon>
-					<text class="f-14" style="margin-left:0rpx;margin-right: 340rpx;"> {{item.name}}</text>
-					<u-icon size="33" name="arrow-right" color="#999999" style="margin-top: -4rpx;" @click=""></u-icon>
+				<!-- 下划线 -->
+				<view class="linea">
+					<!-- <u-line></u-line> -->
 				</view>
+				
+				<!-- 我的预约 -->
+				<view class="public g-flex g-a-c">
+					<u-icon size="58" name="coupon" class="icon4"></u-icon>
+					<text class="text3 f-14"> 我的预约</text>
+					
+					<u-icon size="33" name="arrow-right" class="icon5" @click=""></u-icon>
+				</view>
+				
+				<!-- 下划线 -->
+				<!-- <view class="lineb">
+					<u-line></u-line>
+				</view> -->
+				
+				<!-- 意向用户 -->
+			<view class="public g-flex g-a-c">
+				<u-icon size="58" name="coupon" class="icon4"></u-icon>
+				<text class="text3 f-14"> 意向用户</text>
+				
+				<u-icon size="33" name="arrow-right" class="icon5" @click=""></u-icon>
 			</view>
-			<view class="line">
-				<u-line class="useLine"></u-line>
+				
+				<!-- 下划线 -->
+				<view class="lineb">
+					<u-line></u-line>
+				</view>
+				
 			</view>
+
 		</view>
 	</view>
 
@@ -57,23 +112,7 @@
 		},
 		data() {
 			return {
-				title: 'Hello',
-				public: [{
-						name: '粮食买卖',
-						badge: 'New'
-					},
-					{
-						name: '农服发布',
-						badge: ''
-					}
-				],
-				mine: [{
-						name: '我预约的农服列表'
-					},
-					{
-						name: '预约我的农服列表'
-					}
-				]
+
 			}
 		},
 		onLoad() {
@@ -88,14 +127,39 @@
 <style lang="scss">
 	.content {
 		text-align: center;
-		margin-left: 28rpx;
-		margin-right: 28rpx;
-
+		margin:0rpx 28rpx 0rpx 28rpx;
+		.first{			
+			.name{
+				font-weight: bold;
+				margin-left: -250rpx;
+			}
+			.icon{
+				.text1{
+					margin-right:30rpx;
+				}
+				.icon1{
+					margin:10rpx 13rpx 0rpx 0rpx;
+					color:#999999
+				}
+			}
+		}
 		.second {
-			margin-top: 60rpx;
-
+			margin-top: 60rpx;			
+			.lineContent {
+				width: 750rpx;
+				border: 0px solid #f0f0f0;
+				// background-color: #f0f0f0;
+				margin: -20rpx 0rpx 10rpx -30rpx;				
+			}
 			.public {
-
+				margin-top: 10rpx;
+				.icon2{
+					color:#999999;
+					margin:0rpx 32rpx 0rpx 0rpx;
+				}
+				.text2{
+					margin:0rpx 282rpx 0rpx 0rpx;
+				}
 				.tagg {
 					width: 40rpx;
 					line-height: 40rpx;
@@ -103,8 +167,13 @@
 					color: #fff;
 					text-align: center;
 					border-radius: 80rpx;
+					margin:8rpx 36rpx 0rpx 90rpx;
+					font-weight: bold;
 				}
-
+				.icon3{
+					 color:#999999;
+					 margin-top: 8rpx;
+				}
 				.tag {
 					width: 80rpx;
 					line-height: 45rpx;
@@ -112,21 +181,51 @@
 					color: #fff;
 					text-align: center;
 					border-radius: 80rpx;
-
+					margin: 8rpx 28rpx 0rpx 60rpx;
+					font-weight: bold;
+				}
+			}
+		}
+		.third{
+			.public{
+				.icon4{
+					 color:#999999;
+					 margin:10rpx 32rpx 0rpx 0rpx;
+				}
+				.text3{
+					margin:10rpx 450rpx 0rpx 0rpx;
+				}
+				.icon5{
+					 color:#999999;
+					 margin-top: 10rpx;
 				}
 			}
 		}
 
 		.line {
 			width: 750rpx;
-			margin: 28rpx 0rpx 40rpx -30rpx;
-
-			.useLine {
-				color: #999999;
-			}
-
+			border: 0px solid #f0f0f0;
+			
+			margin: 16rpx 0rpx 40rpx -30rpx;
 		}
-
-
+		.lineContentDown {
+			width: 750rpx;
+			border: 0px solid #f0f0f0;
+			
+			margin: 16rpx 0rpx 10rpx -30rpx;
+		}
+		.linea {
+			width: 750rpx;
+			border: 0px solid #f0f0f0;
+			
+			margin: 50rpx 0rpx 0rpx -30rpx;			
+		}
+		.lineb {
+			width: 750rpx;
+			border: 0px solid #f0f0f0;
+			
+			margin: 16rpx 0rpx 0rpx -30rpx;
+		}
 	}
+	
 </style>
