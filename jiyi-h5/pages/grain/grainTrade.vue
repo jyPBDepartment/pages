@@ -31,8 +31,8 @@
 					类型
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="transactionTypeCode" @change="radioGroupChange">
-						<u-radio @change="radioChange" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
+					<u-radio-group v-model="transactionTypeName" @change="radioGroupChange">
+						<u-radio @change="radioChange(index)" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
@@ -43,7 +43,7 @@
 					种类
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="transactionCategoryCode" type="select" border @click="sexShow = true" />
+					<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" border @click="sexShow = true" />
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
@@ -52,13 +52,14 @@
 					价格
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="isFace" @change="radioGroupChange">
-						<u-radio @change="radioChange" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
+					<u-radio-group v-model="isFace" @change="radioGroupChange1">
+						<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="purchasingPrice" height="64" />
+				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="purchasingPrice"
+				 height="64" />
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
@@ -82,7 +83,6 @@
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
 					<u-input placeholder="请选择" v-model="purchasingArea" type="select" border @click="regionaStatus = true" />
-					<!-- <u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet> -->
 				</view>
 			</view>
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
@@ -97,7 +97,7 @@
 	import regionalComponents from '../../components/regionalComponents/regionalComponents.vue'
 	//后台路径引用
 	import ApiPath from "@/api/ApiPath.js";
-	
+
 	export default {
 		components: {
 			HeaderSearch,
@@ -106,45 +106,59 @@
 		data() {
 			return {
 				regionaStatus: false,
-				
 				name: '',
 				descrip: '',
-				transactionTypeCode: '买',
+				transactionTypeCode: '',
+				transactionTypeName: '收购',
 				transactionCategoryCode: '',
-				purchasingPrice: '',
+				purchasingPrice: 0,
 				contactsUser: '',
 				contactsPhone: '',
-				purchasingArea:'',
-				isFace:"面议",
+				purchasingArea: '',
+				isFace: "面议",
+				isFaceCode: "",
+				transactionCategoryName: '',
 				list: [{
-						name: '买',
+						value: '0',
+						name: '收购',
 						disabled: false
 					},
 					{
-						name: '卖',
+						value: '1',
+						name: '出售',
 						disabled: false
 					}
 				],
 				list1: [{
+						value: '0',
 						name: '面议',
 						disabled: false
 					},
 					{
+						value: '1',
 						name: '定价',
 						disabled: false
 					}
 				],
 				sexShow: false,
 				actionSheetList: [{
+						value: '0',
 						text: '玉米'
 					},
 					{
+						value: '1',
 						text: '农机'
 					},
 					{
+						value: '2',
 						text: '水稻'
 					},
 					{
+						value: '3',
+						text: '高粱'
+					},
+					{
+						value: '4',
 						text: '黄豆'
 					}
 				],
@@ -156,11 +170,19 @@
 			}, 1000)
 		},
 		methods: {
-			radioChange(e) {
+			radioChange(index) {
+				// this.transactionTypeCode = this.list[index].value
 				// console.log(e);
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {
+				// console.log(e);
+			},
+			radioChange1(index) {
+				// console.log(e);
+			},
+			// 选中任一radio时，由radio-group触发
+			radioGroupChange1(e) {
 				// console.log(e);
 			},
 			cancel() {
@@ -182,22 +204,83 @@
 				});
 				this.purchasingArea = map;
 			},
-			actionSheetCallback(index){
-				this.transactionCategoryCode= this.actionSheetList[index].text;
+			actionSheetCallback(index) {
+				this.transactionCategoryName = this.actionSheetList[index].text;
+				this.transactionCategoryCode = this.actionSheetList[index].value;
 			},
 			//发布方法
-			deploy(){
-				
-				// name: '',
-				// descrip: '',
-				// transactionTypeCode: '',
-				// transactionCategoryCode: '',
-				// purchasingPrice: '',
-				// contactsUser: '',
-				// contactsPhone: '',
-				// purchasingArea:'',
-				
-				
+			deploy() {
+
+
+
+				return;
+				if (this.name == '') {
+					uni.showToast({
+						title: "请输入标题"
+					})
+					return false;
+				}
+
+				if (this.descrip == '') {
+					uni.showToast({
+						title: "请输入描述信息"
+					})
+					return false;
+				}
+
+				if (this.transactionCategoryCode == '') {
+					uni.showToast({
+						title: "请选择种类"
+					})
+					return false;
+				}
+
+				if (this.contactsUser == '') {
+					uni.showToast({
+						title: "请输入联系人"
+					})
+					return false;
+				}
+
+				if (this.contactsPhone == '') {
+					uni.showToast({
+						title: "请输入联系电话"
+					})
+					return false;
+				}
+
+				if (this.contactsPhone == '') {
+					uni.showToast({
+						title: "请输入联系电话"
+					})
+					return false;
+				}
+
+				if (this.purchasingArea == '') {
+					uni.showToast({
+						title: "请选择区域"
+					})
+					return false;
+				}
+
+
+
+				//判断类型，并解析码值
+				for (let i = 0; i < this.list.length; i++) {
+					if (this.list[i].name == this.transactionTypeName) {
+						this.transactionTypeCode = this.list[i].value;
+						this.transactionTypeName = this.list[i].name;
+					}
+				}
+
+				//判断是否面议，并解析码值
+				for (let j = 0; j < this.list1.length; j++) {
+					if (this.list1[j].name == this.isFace) {
+						this.isFaceCode = this.list1[j].value;
+						this.isFace = this.list1[j].name;
+					}
+				}
+
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
@@ -206,18 +289,30 @@
 					purchasingPrice: this.purchasingPrice,
 					contactsUser: this.contactsUser,
 					contactsPhone: this.contactsPhone,
-					purchasingArea:this.purchasingArea,
+					purchasingArea: this.purchasingArea,
+					isFace: this.isFaceCode
 				}
-				// let param = {agricultural:agricultural}
+
 				uni.request({
 					method: 'GET', //请求方式
-					data:param,//请求数据
-					url:ApiPath.url.deploy,//请求接口路径
-					success: (res) => {//成功返回结果方法
-						
+					data: param, //请求数据
+					url: ApiPath.url.deploy, //请求接口路径
+					success: (res) => { //成功返回结果方法
+						uni.showToast({
+							title: "发布信息成功"
+						})
+
+						//发布成功返回发布主页面
+						setTimeout(function() {
+							//跳转page目录用navigateTo，跳转tabbar用switchTab
+							uni.switchTab({
+								url: "../tabbar/release/index"
+							})
+						}, 2000)
+
 					}
 				})
-				
+
 			}
 		}
 	}
