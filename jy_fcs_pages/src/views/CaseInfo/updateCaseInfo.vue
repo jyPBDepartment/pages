@@ -75,13 +75,16 @@
           </el-select>
         </el-form-item>
         <el-form-item label="描述" prop="describetion">
-          <el-input
-            type="textarea"
-            :maxlength="200"
-            v-model="caseInfoForm.describetion"
-            placeholder="请输入描述（不超过200个字符）"
-            style="width:70%;"
-          ></el-input>
+          <div class="edit_container">
+            <el-card style="height: 610px;width:85%">
+              <quill-editor
+                v-model="caseInfoForm.describetion"
+                ref="myQuillEditor"
+                style="height: 500px;width:100%"
+                :options="editorOption"
+              ></quill-editor>
+            </el-card>
+          </div>
         </el-form-item>
       </el-form>
     </slot>
@@ -108,6 +111,10 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import { quillEditor } from "vue-quill-editor";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
 export default {
   inject: ["reload"],
   props: {
@@ -158,7 +165,11 @@ export default {
         ],
         
       },
+      editorOption: {}
     };
+  },
+  components: {
+    quillEditor
   },
   watch: {
     show(val) {

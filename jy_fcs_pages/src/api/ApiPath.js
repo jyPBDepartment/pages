@@ -189,6 +189,8 @@ const url = {
   deleteAllLog:URLHost + '/dbLogInfo/deleteAll',
   //获取导航栏菜单
   getNavMenuList:URLHost + '/menu/getNavData',
+  //修改模块排序
+  changeModuleSort:URLHost + '/moduleInfo/changeSort',
 }
 export default {
   url

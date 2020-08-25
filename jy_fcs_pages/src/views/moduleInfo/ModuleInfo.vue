@@ -59,6 +59,11 @@
       <el-table-column prop="createUser" label="创建人" align="center" min-width="90px"></el-table-column>
       <el-table-column prop="updateUser" label="修改人" align="center" min-width="90px"></el-table-column>
       <!-- <el-table-column prop="sort" label="排序" align="center" min-width="100px"></el-table-column> -->
+      <el-table-column  align="center" label="排序" width="200px" prop="sort">
+        <template slot-scope="scope">
+          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="状态" prop="status" min-width="100px">
         <template slot-scope="scope">
           <el-switch
@@ -220,6 +225,20 @@ export default {
           this.reload();
         })
         .catch(function (error) {});
+    },
+    //修改菜单排序
+    sortChange: function(scope) {
+      let params = {
+        id: scope.row.id,
+        sort: scope.row.sort
+      };
+      api
+        .testAxiosGet(ApiPath.url.changeModuleSort, params)
+        .then(res => {
+           this.$message.success(res.message);
+          // this.reload();
+        })
+        .catch(function(error) {});
     },
     //显示编辑界面
     openUpdateModuleInfo(scope) {

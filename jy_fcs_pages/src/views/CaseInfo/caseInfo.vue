@@ -64,14 +64,6 @@
         min-width="100px"
         max-width="135px"
       ></el-table-column>
-      <el-table-column
-        prop="describetion"
-        label="描述"
-        align="center"
-        :show-overflow-tooltip="true"
-        min-width="100px"
-        max-width="135px"
-      ></el-table-column>
       <!--switch开关（表单）-->
       <el-table-column align="center" prop="auditStatus" label="状态" min-width="50" max-width="80px">
         <template slot-scope="scope">
