@@ -3,7 +3,8 @@
 		<HeaderSearch title="我的预约" @searchCallback="search"></HeaderSearch>
 		<Screen :condition="condition"></Screen>
 		<view class="p-x-10">
-			<view class="box box-border p-y-10 f-12 g-flex" v-for="(item, index) in List" :key="index">
+			<view @click="jump(`../grain/paddy?state=${index}`)" class="box box-border p-y-10 f-12 g-flex" v-for="(item, index) in List"
+			 :key="index">
 				<view class="image g-flex g-a-c g-j-c f-14 orange" :class="`${index == 1 && 'green' } ${index == 2 && ' blue'} ${index == 3 && ' red'}`">
 					未审核
 				</view>
@@ -64,7 +65,16 @@
 					}, {
 
 					}
-				]
+				],
+				state:null
+			}
+		},
+		
+		methods: {
+			jump(url) {
+				uni.navigateTo({
+					url: url
+				})
 			}
 		}
 	}

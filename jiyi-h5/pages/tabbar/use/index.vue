@@ -20,82 +20,82 @@
 
 			<!-- 我的发布 -->
 			<view class="second">
-				
+
 				<view class="lineContent">
-				<!-- 	<u-line></u-line> -->
+					<!-- 	<u-line></u-line> -->
 				</view>
-				
+
 				<!-- 农机发布 -->
-				<view class="public g-flex g-a-c">
+				<view class="public g-flex g-a-c" @click="jump('../../catalog/agriculturalMachinery?index=0')">
 					<u-icon size="58" name="coupon" class="icon2"></u-icon>
 					<text class="text2 f-14"> 农机发布</text>
 					<view class="tagg f-12">8</view>
 					<u-icon size="33" name="arrow-right" class="icon3" @click=""></u-icon>
 				</view>
-				
+
 				<!-- 下划线 -->
 				<view class="lineContentDown">
 					<u-line></u-line>
 				</view>
-				
+
 				<!-- 粮食买卖 -->
-				<view class="public g-flex g-a-c">
+				<view class="public g-flex g-a-c" @click="jump('../../catalog/agriculturalMachinery?index=1')">
 					<u-icon size="58" name="coupon" class="icon2"></u-icon>
 					<text class="text2 f-14"> 粮食买卖</text>
 					<view class="tag f-12">new</view>
 					<u-icon size="33" name="arrow-right" class="icon3" @click=""></u-icon>
 				</view>
-				
-				
-				
+
+
+
 				<!-- 农服发布 -->
-				<view class="public g-flex g-a-c">
+				<view class="public g-flex g-a-c" @click="jump('../../catalog/agriculturalMachinery?index=2')">
 					<u-icon size="58" name="coupon" class="icon2"></u-icon>
 					<text class="text2 f-14"> 农服发布</text>
 					<view class="tag f-12"></view>
 					<u-icon size="33" name="arrow-right" class="icon3" @click=""></u-icon>
 				</view>
-				
+
 				<!-- 下划线 -->
 				<view class="lineContentDown">
 					<u-line></u-line>
 				</view>
-				
+
 			</view>
-			
+
 			<!-- 我的预约 -->
 			<view class="third">
 				<!-- 下划线 -->
 				<view class="linea">
 					<!-- <u-line></u-line> -->
 				</view>
-				
+
 				<!-- 我的预约 -->
-				<view class="public g-flex g-a-c">
+				<view class="public g-flex g-a-c" @click="jump('../../catalog/myAppointment')">
 					<u-icon size="58" name="coupon" class="icon4"></u-icon>
 					<text class="text3 f-14"> 我的预约</text>
-					
+
 					<u-icon size="33" name="arrow-right" class="icon5" @click=""></u-icon>
 				</view>
-				
+
 				<!-- 下划线 -->
 				<!-- <view class="lineb">
 					<u-line></u-line>
 				</view> -->
-				
+
 				<!-- 意向用户 -->
-			<view class="public g-flex g-a-c">
-				<u-icon size="58" name="coupon" class="icon4"></u-icon>
-				<text class="text3 f-14"> 意向用户</text>
-				
-				<u-icon size="33" name="arrow-right" class="icon5" @click=""></u-icon>
-			</view>
-				
+				<view class="public g-flex g-a-c" @click="jump('../../catalog/potentialCustomers')">
+					<u-icon size="58" name="coupon" class="icon4"></u-icon>
+					<text class="text3 f-14"> 意向用户</text>
+
+					<u-icon size="33" name="arrow-right" class="icon5" @click=""></u-icon>
+				</view>
+
 				<!-- 下划线 -->
 				<view class="lineb">
 					<u-line></u-line>
 				</view>
-				
+
 			</view>
 
 		</view>
@@ -119,7 +119,12 @@
 
 		},
 		methods: {
-
+			jump(url) {
+				console.log(url)
+				uni.navigateTo({
+					url: url
+				})
+			}
 		}
 	}
 </script>
@@ -127,39 +132,48 @@
 <style lang="scss">
 	.content {
 		text-align: center;
-		margin:0rpx 28rpx 0rpx 28rpx;
-		.first{			
-			.name{
+		margin: 0rpx 28rpx 0rpx 28rpx;
+
+		.first {
+			.name {
 				font-weight: bold;
 				margin-left: -250rpx;
 			}
-			.icon{
-				.text1{
-					margin-right:30rpx;
+
+			.icon {
+				.text1 {
+					margin-right: 30rpx;
 				}
-				.icon1{
-					margin:10rpx 13rpx 0rpx 0rpx;
-					color:#999999
+
+				.icon1 {
+					margin: 10rpx 13rpx 0rpx 0rpx;
+					color: #999999
 				}
 			}
 		}
+
 		.second {
-			margin-top: 60rpx;			
+			margin-top: 60rpx;
+
 			.lineContent {
 				width: 750rpx;
 				border: 0px solid #f0f0f0;
 				// background-color: #f0f0f0;
-				margin: -20rpx 0rpx 10rpx -30rpx;				
+				margin: -20rpx 0rpx 10rpx -30rpx;
 			}
+
 			.public {
 				margin-top: 10rpx;
-				.icon2{
-					color:#999999;
-					margin:0rpx 32rpx 0rpx 0rpx;
+
+				.icon2 {
+					color: #999999;
+					margin: 0rpx 32rpx 0rpx 0rpx;
 				}
-				.text2{
-					margin:0rpx 282rpx 0rpx 0rpx;
+
+				.text2 {
+					margin: 0rpx 282rpx 0rpx 0rpx;
 				}
+
 				.tagg {
 					width: 40rpx;
 					line-height: 40rpx;
@@ -167,13 +181,15 @@
 					color: #fff;
 					text-align: center;
 					border-radius: 80rpx;
-					margin:8rpx 36rpx 0rpx 90rpx;
+					margin: 8rpx 36rpx 0rpx 90rpx;
 					font-weight: bold;
 				}
-				.icon3{
-					 color:#999999;
-					 margin-top: 8rpx;
+
+				.icon3 {
+					color: #999999;
+					margin-top: 8rpx;
 				}
+
 				.tag {
 					width: 80rpx;
 					line-height: 45rpx;
@@ -186,18 +202,21 @@
 				}
 			}
 		}
-		.third{
-			.public{
-				.icon4{
-					 color:#999999;
-					 margin:10rpx 32rpx 0rpx 0rpx;
+
+		.third {
+			.public {
+				.icon4 {
+					color: #999999;
+					margin: 10rpx 32rpx 0rpx 0rpx;
 				}
-				.text3{
-					margin:10rpx 450rpx 0rpx 0rpx;
+
+				.text3 {
+					margin: 10rpx 450rpx 0rpx 0rpx;
 				}
-				.icon5{
-					 color:#999999;
-					 margin-top: 10rpx;
+
+				.icon5 {
+					color: #999999;
+					margin-top: 10rpx;
 				}
 			}
 		}
@@ -205,27 +224,29 @@
 		.line {
 			width: 750rpx;
 			border: 0px solid #f0f0f0;
-			
+
 			margin: 16rpx 0rpx 40rpx -30rpx;
 		}
+
 		.lineContentDown {
 			width: 750rpx;
 			border: 0px solid #f0f0f0;
-			
+
 			margin: 16rpx 0rpx 10rpx -30rpx;
 		}
+
 		.linea {
 			width: 750rpx;
 			border: 0px solid #f0f0f0;
-			
-			margin: 50rpx 0rpx 0rpx -30rpx;			
+
+			margin: 50rpx 0rpx 0rpx -30rpx;
 		}
+
 		.lineb {
 			width: 750rpx;
 			border: 0px solid #f0f0f0;
-			
+
 			margin: 16rpx 0rpx 0rpx -30rpx;
 		}
 	}
-	
 </style>

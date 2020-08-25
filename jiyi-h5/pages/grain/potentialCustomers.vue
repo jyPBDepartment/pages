@@ -10,7 +10,7 @@
 			</block>
 		</swiper>
 		<view class="p-x-10">
-			<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
+			<view v-if="state == 3" class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
 				客户取消理由：因疫情原因，不用了
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -83,7 +83,7 @@
 					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="value" border height="64" />
 				</view>
 			</view>
-			<view class="btn g-flex">
+			<view class="btn g-flex" v-if="state == 0">
 				<view class="g-f-1">
 				</view>
 				<view class="g-f-1">
@@ -115,8 +115,8 @@
 						text: '保密'
 					}
 				],
-				map:'',
-				value:'',
+				map: '',
+				value: '',
 				banner: [],
 				title: "水稻植保详情",
 				price: "100",
@@ -128,10 +128,14 @@
 					contactUser: '',
 					tel: ''
 				},
+				state:null
 
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			if(e.state){
+				this.state = e.state
+			}
 			this.info = {
 				area: '面积：100亩',
 				workArea: '干活地点：长春农安101号',

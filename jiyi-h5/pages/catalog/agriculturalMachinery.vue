@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<HeaderSearch title="农机发布" @searchCallback="search"></HeaderSearch>
+		<HeaderSearch :title="title" @searchCallback="search"></HeaderSearch>
 		<Screen :condition="condition"></Screen>
 		<view class="p-x-10">
-			<view class="box box-border p-y-10 f-12 g-flex" v-for="(item, index) in List" :key="index">
+			<view @click="jump(`../grain/space?state=${index}`)" class="box box-border p-y-10 f-12 g-flex" v-for="(item, index) in List" :key="index">
 				<view class="image g-flex g-a-c g-j-c f-14 orange" :class="`${index == 1 && 'green' } ${index == 2 && ' red'}`">
 					未审核
 				</view>
@@ -26,7 +26,7 @@
 					</view>
 					<view class="reason" v-if="index == 2">
 						理由：信息可能存在虚假问题，请注意核实
-					</view>
+					</view> 
 				</view>
 
 			</view>
@@ -44,6 +44,7 @@
 		},
 		data() {
 			return {
+				title:'',
 				condition: ["待审核", "审核通过", "拒绝通过", "全部"],
 				List: [{
 
@@ -54,6 +55,24 @@
 
 					}
 				]
+			}
+		},
+		onLoad(e) {
+			if(e.index == 0){
+				this.title = '农机发布'
+			}
+			if(e.index == 1){
+				this.title = '粮食买卖'
+			}
+			if(e.index == 2){
+				this.title = '农服发布'
+			}
+		},
+		methods:{
+			jump(url){
+				uni.navigateTo({
+					url:url
+				})
 			}
 		}
 	}

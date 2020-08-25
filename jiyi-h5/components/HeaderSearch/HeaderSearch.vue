@@ -53,7 +53,7 @@
 			}
 		},
 		mounted() {
-			console.log(this.background)
+			// console.log(this.background)
 		},
 		components: {
 

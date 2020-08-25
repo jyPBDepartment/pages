@@ -10,7 +10,7 @@
 			</block>
 		</swiper>
 		<view class="p-x-10">
-			<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
+			<view v-if="state == 3" class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
 				商家取消理由：库存不足
 			</view>
 			<view class="g-flex g-a-c">
@@ -43,7 +43,7 @@
 
 		</view>
 
-		<view class="p-10">
+		<view class="p-10" v-if="state == null">
 			<u-button type="error" shape="circle">立即预约</u-button>
 		</view>
 		<view class="btn g-flex">
@@ -51,8 +51,9 @@
 
 			</view>
 			<view class="g-f-1">
-				<u-button @click="cencal(true)" shape="circle">取消</u-button>
-				<u-button type="error" shape="circle">联系商家</u-button>
+				<u-button v-if="state == 0" @click="cencal(true)" shape="circle">取消</u-button>
+				<u-button v-if="state == 1 || state == 2" type="error" shape="circle">联系商家</u-button>
+				<u-button v-if="state == 3" type="error" shape="circle">重新预约</u-button>
 			</view>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
@@ -81,10 +82,14 @@
 					contactUser: '',
 					tel: ''
 				},
+				state: null
 
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			if (e.state !== null) {
+				this.state = e.state
+			}
 			this.info = {
 				area: '面积：100亩',
 				workArea: '干活地点：长春农安101号',

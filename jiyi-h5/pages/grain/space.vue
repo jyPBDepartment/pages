@@ -17,7 +17,7 @@
 			</view>
 
 			<view class="p-x-10">
-				<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
+				<view v-if="state == 2" class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
 					理由：信息可能存在虚假问题，请注意核实
 				</view>
 				<view class="g-flex g-a-c">
@@ -56,10 +56,10 @@
 				</view>
 				<view class="btn g-flex">
 					<view class="g-f-1">
-						<u-button @click="cencal(true)" shape="circle">取消</u-button>
+						<u-button  v-if="state == 0" @click="cencal(true)" shape="circle">取消</u-button>
 					</view>
-					<view class="g-f-1">
-						<u-button type="error" shape="circle">修改信息</u-button>
+					<view  class="g-f-1">
+						<u-button  v-if="state == 0 || state == 2" type="error" shape="circle">修改信息</u-button>
 					</view>
 
 				</view>
@@ -106,12 +106,15 @@
 					{
 						url: '@/static/logo.png'
 					}
-				]
+				],
+				state:null
 
 			};
 		},
 		onLoad(e) {
-
+			if(e.state){
+				this.state = e.state
+			}
 			this.param = e.index
 			// if(e.info){
 
