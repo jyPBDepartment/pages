@@ -7,9 +7,9 @@
 				 placeholder-class="placeholder-class" placeholder="请输入搜索内容" type="text" value="" />
 			</view>
 		</view>
-		<view v-else :class="bold && 'f-b'" class="HeaderSearch shadow b-f g-flex g-a-c g-j-c p-x-10 f-16">
-			<u-icon v-if="title !== '圈子'" v-show="!hideBack" @click="back" style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left"
-			 color="#999999"></u-icon>
+		<view v-else :class="bold && 'f-b'" :style="{background:background,color:color}" class="HeaderSearch shadow g-flex g-a-c g-j-c p-x-10 f-16">
+			<u-icon v-if="title !== '圈子'" v-show="!hideBack" @click="back" style="position: absolute;left: 20rpx;" class="f-20"
+			 name="arrow-left" :color="color"></u-icon>
 			{{title}}
 			<span style="position: absolute; right: 20rpx; color: #1890ff;z-index: 999;" class="f-14" v-if="title == '圈子'"
 			 @click="jump">发帖</span>
@@ -39,10 +39,21 @@
 				type: Boolean,
 				default: false
 			},
-			hideBack:{
-				type:Boolean,
+			hideBack: {
+				type: Boolean,
 				default: false
+			},
+			background: {
+				type: String,
+				default: '#fff'
+			},
+			color: {
+				type: String,
+				default: '#000'
 			}
+		},
+		mounted() {
+			console.log(this.background)
 		},
 		components: {
 

@@ -25,19 +25,63 @@
 					<view class="time">
 						08-20 13:08
 					</view>
-					<view class="number t-c">
+					<view class="number t-c" @click="cencal(true)">
 						134回复
+					</view>
+				</view>
+				<view>
+					<view style="padding: 0 36rpx; border-left: 1rpx solid #e5e5e5;">
+						<view class="name f-14">
+							小吉易
+						</view>
+						<view class="f-12" style="height: 96rpx; color: #666666;">
+							由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的...
+						</view>
+					</view>
+
+					<view style="padding: 0 36rpx;" class="other g-flex f-12 g-a-c">
+						<view class="time">
+							08-20 13:08
+						</view>
+						<view class="number t-c">
+							134回复
+						</view>
+					</view>
+				</view>
+				<view>
+					<view style="padding: 0 36rpx; border-left: 1rpx solid #e5e5e5;">
+						<view class="name f-14">
+							小吉易
+						</view>
+						<view class="f-12" style="height: 96rpx; color: #666666;">
+							由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的...
+						</view>
+					</view>
+
+					<view style="padding: 0 36rpx;" class="other g-flex f-12 g-a-c">
+						<view class="time">
+							08-20 13:08
+						</view>
+						<view class="number t-c">
+							134回复
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
+		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
 </template>
 
 <script>
+	import CancelReason from '../../components/CancelReason/CancelReason.vue'
 	export default {
+		components: {
+			CancelReason
+		},
 		data() {
 			return {
+				cencalIsShow: false,
 				value: '',
 				param: {
 					title: ''
@@ -49,6 +93,14 @@
 				this.param = JSON.parse(e.params)
 				console.log(this.param)
 			}
+		},
+		methods: {
+			cencal(e) {
+				this.cencalIsShow = e
+			},
+			confirm(e) {
+				console.log(e)
+			},
 		}
 	}
 </script>

@@ -17,6 +17,9 @@
 			</view>
 
 			<view class="p-x-10">
+				<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
+					理由：信息可能存在虚假问题，请注意核实
+				</view>
 				<view class="g-flex g-a-c">
 					<view class="tag f-12" v-if="param == 2">
 						出租
@@ -46,28 +49,39 @@
 					</view>
 				</view>
 				<view class="space"></view>
-				<view class="info g-f-warp g-flex" >
+				<view class="info g-f-warp g-flex">
 					<view class="text g-f-1 f-14" style="color: #333;margin-top: 52rpx;">
 						描述：诚信出售：黑龙江勃利地区自家烘干塔。国际玉米出库中。容重690以上。水分14.霉变焦糊1内。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1。
 					</view>
 				</view>
-				
+				<view class="btn g-flex">
+					<view class="g-f-1">
+						<u-button @click="cencal(true)" shape="circle">取消</u-button>
+					</view>
+					<view class="g-f-1">
+						<u-button type="error" shape="circle">修改信息</u-button>
+					</view>
+
+				</view>
+
 			</view>
 		</view>
-
+		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
 
 </template>
 
 <script>
 	import HeaderSearch from '../../components/HeaderSearch/HeaderSearch.vue'
-
+	import CancelReason from '../../components/CancelReason/CancelReason.vue'
 	export default {
 		components: {
-			HeaderSearch
+			HeaderSearch,
+			CancelReason
 		},
 		data() {
 			return {
+				cencalIsShow: false,
 				current: '0',
 				param: null,
 				price: "25.00",
@@ -77,9 +91,9 @@
 					goodsNum: '',
 					address: '',
 					contactUser: '',
-					spaceCorn:'',
-					phone: '',				
-					
+					spaceCorn: '',
+					phone: '',
+
 				},
 				item: [],
 
@@ -107,7 +121,7 @@
 				goodsNum: `${this.param == 0 ? " " : "货号：xd-500"}`,
 				address: `${this.param == 0 ? "吉林省榆树市五棵松" : "长春公主岭"}`,
 				contactUser: "联系人：西西 ",
-				spaceCorn:"",
+				spaceCorn: "",
 				phone: "电话:15567891234"
 			}
 			if (this.param == 0) {
@@ -122,7 +136,12 @@
 
 		},
 		methods: {
-
+			cencal(e) {
+				this.cencalIsShow = e
+			},
+			confirm(e) {
+				console.log(e)
+			},
 			//先获取当前的current
 			getCurrent: function(e) {
 				this.current = e.detail.current
@@ -220,11 +239,18 @@
 				min-width: 33%;
 			}
 		}
-		.space{
+
+		.space {
 			width: 750rpx;
-			height:22rpx;
+			height: 22rpx;
 			background-color: rgba(229, 229, 229, 1);
 			margin: 26rpx 0rpx -26rpx -20rpx;
+		}
+	}
+
+	.btn {
+		view {
+			padding: 20rpx;
 		}
 	}
 </style>

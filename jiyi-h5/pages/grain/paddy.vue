@@ -10,10 +10,13 @@
 			</block>
 		</swiper>
 		<view class="p-x-10">
+			<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
+				商家取消理由：库存不足
+			</view>
 			<view class="g-flex g-a-c">
 
-			<view class="title g-f-1 f-16" style="padding:0rpx;">
-				{{title}}
+				<view class="title g-f-1 f-16" style="padding:0rpx;">
+					{{title}}
 				</view>
 
 			</view>
@@ -39,23 +42,36 @@
 
 
 		</view>
-		<view>
-			  <button round>立即预约 </button>
-		</view>
 
+		<view class="p-10">
+			<u-button type="error" shape="circle">立即预约</u-button>
+		</view>
+		<view class="btn g-flex">
+			<view class="g-f-1">
+
+			</view>
+			<view class="g-f-1">
+				<u-button @click="cencal(true)" shape="circle">取消</u-button>
+				<u-button type="error" shape="circle">联系商家</u-button>
+			</view>
+		</view>
+		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
 </template>
 
 <script>
+	import CancelReason from '../../components/CancelReason/CancelReason.vue'
 	import HeaderSearch from '../../components/HeaderSearch/HeaderSearch.vue'
 	export default {
 		components: {
+			CancelReason,
 			HeaderSearch
 		},
 		data() {
 			return {
+				cencalIsShow: false,
 				banner: [],
-				title:"水稻植保详情",
+				title: "水稻植保详情",
 				price: "100",
 				date: "2020-08-11 —— 2020-09-11",
 				sum: "10",
@@ -75,6 +91,14 @@
 				contactUser: '联系人：小植保',
 				tel: '联系电话：12345678901'
 			}
+		},
+		methods: {
+			cencal(e) {
+				this.cencalIsShow = e
+			},
+			confirm(e) {
+				console.log(e)
+			},
 		}
 
 	}
@@ -108,11 +132,19 @@
 			min-width: 50%;
 		}
 	}
-	button{
+
+	.button {
 		margin-top: 40rpx;
 		width: 680rpx;
 		border-radius: 40rpx;
-		background-color: rgba(229, 28, 46, 1);
 		color: #fff;
+	}
+
+	.btn {
+		width: 100%;
+
+		view {
+			padding: 20rpx;
+		}
 	}
 </style>
