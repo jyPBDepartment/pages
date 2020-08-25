@@ -23,7 +23,9 @@
 					设置封面
 				</view>
 				<view class="img g-flex g-a-c g-j-c">
-					<image src="../../static/img/tabbar/addactive.png" mode=""></image>
+					<!-- <image src="../../static/img/tabbar/addactive.png" mode=""></image> -->
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
+					 :file-list="fileList" max-count="1"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -88,6 +90,11 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
+		<u-mask :show="show" @click="show = false">
+			<view class="warp">
+				<view class="rect" @tap.stop></view>
+			</view>
+		</u-mask>
 	</view>
 
 </template>
@@ -105,6 +112,14 @@
 		},
 		data() {
 			return {
+				show: false,
+				// 演示地址，请勿直接使用
+				action: ApiPath.url.uploadImg,
+				fileList: [
+					// {
+					// 	// url: '',
+					// }
+				],
 				regionaStatus: false,
 				name: '',
 				descrip: '',
@@ -118,6 +133,7 @@
 				isFace: "面议",
 				isFaceCode: "",
 				transactionCategoryName: '',
+				url: "",
 				list: [{
 						value: '0',
 						name: '收购',
@@ -146,10 +162,6 @@
 						text: '玉米'
 					},
 					{
-						value: '1',
-						text: '农机'
-					},
-					{
 						value: '2',
 						text: '水稻'
 					},
@@ -170,6 +182,14 @@
 			}, 1000)
 		},
 		methods: {
+			uploadSuccess(data, index, lists, name) {
+				this.url = data.url;
+				this.show = false;
+				// alert(JSON.stringify(data))
+			},
+			onChoose(lists, name) {
+				this.show = true;
+			},
 			radioChange(index) {
 				// this.transactionTypeCode = this.list[index].value
 				// console.log(e);
@@ -189,7 +209,6 @@
 				this.regionaStatus = false;
 			},
 			sure(data) {
-				console.log(data);
 				this.regionaStatus = false;
 				let map = '';
 				data.forEach(item => {
@@ -211,9 +230,6 @@
 			//发布方法
 			deploy() {
 
-
-
-				return;
 				if (this.name == '') {
 					uni.showToast({
 						title: "请输入标题"
@@ -224,6 +240,13 @@
 				if (this.descrip == '') {
 					uni.showToast({
 						title: "请输入描述信息"
+					})
+					return false;
+				}
+
+				if (this.url == '') {
+					uni.showToast({
+						title: "请上传图片"
 					})
 					return false;
 				}
@@ -284,6 +307,7 @@
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
+					url: this.url,
 					transactionTypeCode: this.transactionTypeCode,
 					transactionCategoryCode: this.transactionCategoryCode,
 					purchasingPrice: this.purchasingPrice,
@@ -333,5 +357,18 @@
 			width: 100rpx;
 			height: 100rpx;
 		}
+	}
+
+	.warp {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+	}
+
+	.rect {
+		width: 120px;
+		height: 120px;
+		background-color: #fff;
 	}
 </style>
