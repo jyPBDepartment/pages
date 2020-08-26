@@ -114,9 +114,9 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar v-model="dateShow" mode="range" @change="change" active-bg-color="#19be6b" active-color="white" btn-type="success">
+		<u-calendar v-model="dateShow" mode="range" @change="change">
 			<view slot="tooltip">
-				<view class=" t-c p-y-10" style="color: #19be6b">
+				<view class=" t-c p-y-10" style="color: #2979FF">
 					请选择时间
 				</view>
 			</view>
@@ -275,12 +275,12 @@
 					})
 					return false;
 				}
-				// if (this.value == '') {
-				// 	uni.showToast({
-				// 		title: "请选择干活时间"
-				// 	})
-				// 	return false;
-				// }
+				if (this.value == '') {
+					uni.showToast({
+						title: "请选择干活时间"
+					})
+					return false;
+				}
 
 				if (this.transactionCategoryCode == '') {
 					uni.showToast({
