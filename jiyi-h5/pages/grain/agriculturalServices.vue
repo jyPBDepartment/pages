@@ -23,24 +23,24 @@
 					设置封面图
 				</view>
 				<!-- :action="action" -->
-			<view class="info g-f-1" style="position: relative;">
-				<!-- <image src="../../static/img/tabbar/addactive.png" mode=""></image> -->
-				<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
-				 :file-list="fileList" max-count="1"></u-upload>
-			</view>
+				<view class="info g-f-1" style="position: relative;">
+					<!-- <image src="../../static/img/tabbar/addactive.png" mode=""></image> -->
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
+					 :file-list="fileList" max-count="1"></u-upload>
+				</view>
 			</view>
 
-		<view class="g-flex p-y-10 g-a-c">
-						<view class="title f-14" style="width: 140rpx;">
-							干活时间
-						</view>
-						<view class="info g-f-1" style="position: relative;">
-							<u-icon name="calendar" class="input-icon"></u-icon>
-							<u-input @click="dateShow = true" disabled placeholder="请选择时间" :clearable="false" :focus="true" v-model="value"
-							 border height="64" />
-						</view>
-					</view>
-		
+			<view class="g-flex p-y-10 g-a-c">
+				<view class="title f-14" style="width: 140rpx;">
+					干活时间
+				</view>
+				<view class="info g-f-1" style="position: relative;">
+					<u-icon name="calendar" class="input-icon"></u-icon>
+					<u-input @click="dateShow = true" disabled placeholder="请选择时间" :clearable="false" :focus="true" v-model="value"
+					 border height="64" />
+				</view>
+			</view>
+
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style="width: 140rpx;">
 					农作物类型
@@ -114,7 +114,7 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar v-model="dateShow" mode="range" @change="change">
+		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change">
 			<view slot="tooltip">
 				<view class=" t-c p-y-10" style="color: #2979FF">
 					请选择时间
@@ -137,6 +137,8 @@
 		},
 		data() {
 			return {
+
+				currentDate: "",
 				regionaStatus: false,
 				dateShow: false,
 				action: ApiPath.url.uploadImg,
@@ -160,8 +162,8 @@
 				workArea: '',
 				beginDate: '',
 				endTime: '',
-				url:'',
-				value:'',
+				url: '',
+				value: '',
 				list: [{
 						value: '0',
 						name: '整活',
@@ -209,9 +211,15 @@
 			};
 		},
 		onLoad() {
+			// 设置干活时间选择日历的最小开始时间
+			this.currentDate = new Date().toISOString().slice(0,10)
+			// alert(uni.date)
 			setTimeout(() => {
 				this.$refs.region.getScreen();
 			}, 1000)
+		},
+		onReady() {
+			
 		},
 		methods: {
 			uploadSuccess(data, index, lists, name) {
@@ -223,9 +231,9 @@
 				this.show = true;
 			},
 			change(e) {
-				this.value=e.startDate+"至"+e.endDate;
-				this.beginDate=e.startDate;
-				this.endTime=e.endDate;
+				this.value = e.startDate + "至" + e.endDate;
+				this.beginDate = e.startDate;
+				this.endTime = e.endDate;
 			},
 			actionSheetCallback(index) {
 				this.transactionCategoryName = this.agriType[index].text;
@@ -261,7 +269,7 @@
 				this.workArea = map;
 			},
 			//发布方法
-			deploy() {				
+			deploy() {
 				if (this.name == '') {
 					uni.showToast({
 						title: "请输入标题"
@@ -341,10 +349,10 @@
 					contactsUser: this.contactsUser,
 					contactsPhone: this.contactsPhone,
 					workArea: this.workArea,
-					url:this.url,
-					beginDate:this.beginDate,
-					endDate:this.endTime,				
-				}				
+					url: this.url,
+					beginDate: this.beginDate,
+					endDate: this.endTime,
+				}
 				uni.request({
 					method: 'GET', //请求方式
 					data: param, //请求数据
