@@ -376,7 +376,7 @@
 					descrip: this.descrip,
 					url:this.url,
 					machineType:this.machineType,
-					// purchaseDate:this.purchaseDate,
+					purchaseDate:this.purchaseDate,
 					labelCode:this.labelCode,
 					contactsUser: this.contactsUser,
 					contactsPhone: this.contactsPhone,
