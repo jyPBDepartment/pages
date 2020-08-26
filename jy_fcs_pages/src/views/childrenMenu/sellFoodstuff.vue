@@ -57,9 +57,10 @@
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionCategoryCode==0">玉米</span>
-          <span v-if="scope.row.transactionCategoryCode==1">高粱</span>
+          <span v-if="scope.row.transactionCategoryCode==1">农机</span>
           <span v-if="scope.row.transactionCategoryCode==2">水稻</span>
-          <span v-if="scope.row.transactionCategoryCode==3">黄豆</span>
+           <span v-if="scope.row.transactionCategoryCode==3">高粱</span>
+          <span v-if="scope.row.transactionCategoryCode==4">黄豆</span>
         </template>
       </el-table-column>
       <el-table-column

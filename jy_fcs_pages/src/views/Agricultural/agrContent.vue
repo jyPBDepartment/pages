@@ -10,13 +10,7 @@
     :close-on-press-escape="false"
   >
     <slot>
-      <el-form
-       
-        ref="agrForm"
-        :model="agrForm"
-        label-width="100px"
-        :label-position="labelPosition"
-      >
+      <el-form ref="agrForm" :model="agrForm" label-width="100px" :label-position="labelPosition">
         <el-form-item label="标题名称">
           <el-input type="text" v-model="agrForm.name" readonly></el-input>
         </el-form-item>
@@ -28,7 +22,6 @@
         <el-radio-group
           v-model="agrForm.transactionTypeCode"
           style="padding-bottom:5px;padding-left:98px;margin-top:-84px;"
-          
         >
           <el-radio label="0" style="padding-bottom:10px">收购</el-radio>
           <el-radio label="1" style="padding-bottom:10px">出售</el-radio>
@@ -42,11 +35,12 @@
         <el-radio-group
           v-model="agrForm.transactionCategoryCode"
           style="padding-bottom:5px;padding-left:98px;margin-top:-84px;"
-          
         >
           <el-radio label="0">玉米</el-radio>
           <el-radio label="1">农机</el-radio>
           <el-radio label="2">水稻</el-radio>
+          <el-radio label="3">高粱</el-radio>
+          <el-radio label="4">黄豆</el-radio>
         </el-radio-group>
         <el-form-item label="收购价格(¥)">
           <el-input type="text" v-model="agrForm.purchasingPrice" readonly></el-input>
@@ -70,12 +64,11 @@
           <el-image style="width: 100px; height: 100px" :src="agrForm.url" readonly></el-image>
         </el-form-item>
         <el-form-item label="机器类型:">
-         <span v-if="agrForm.machineType==0">玉米收割机</span>
-        <span v-if="agrForm.machineType==1">水稻收割机</span>
-        <span v-if="agrForm.machineType==2">玉米播种机</span>
-        <span v-if="agrForm.machineType==3">水稻插秧机</span>
-        <span v-if="agrForm.machineType==4">无人机喷药</span>
-
+          <span v-if="agrForm.machineType==0">玉米收割机</span>
+          <span v-if="agrForm.machineType==1">水稻收割机</span>
+          <span v-if="agrForm.machineType==2">玉米播种机</span>
+          <span v-if="agrForm.machineType==3">水稻插秧机</span>
+          <span v-if="agrForm.machineType==4">无人机喷药</span>
         </el-form-item>
         <el-form-item label="型号">
           <el-input type="text" v-model="agrForm.model" readonly></el-input>
@@ -111,21 +104,16 @@
           <el-input type="text" v-model="agrForm.machineNum" readonly></el-input>
         </el-form-item>
         <el-form-item label="是否面议">
-          <el-radio-group
-            v-model="agrForm.isFace"
-          >
+          <el-radio-group v-model="agrForm.isFace">
             <el-radio label="0">是</el-radio>
             <el-radio label="1">否</el-radio>
-           </el-radio-group>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="农活类型">
-           <el-radio-group
-            v-model="agrForm.farmingMode"
-          >
+          <el-radio-group v-model="agrForm.farmingMode">
             <el-radio label="0">整活</el-radio>
             <el-radio label="1">零活</el-radio>
-           </el-radio-group>
-         
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="农活价格">
           <el-input type="text" v-model="agrForm.agriPrice" readonly></el-input>
