@@ -7,7 +7,7 @@
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容" :clearable="false" v-model="value" height="64" />
+					<u-input placeholder="输入内容" :clearable="false" v-model="name" height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
@@ -15,7 +15,7 @@
 					描述
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :clearable="false" v-model="value" height="200" />
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :clearable="false" v-model="descrip" height="200" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10">
@@ -23,7 +23,7 @@
 					土地图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload width="167" ref="uUpload" :action="action" :auto-upload="false"></u-upload>
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :file-list="fileList"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -31,8 +31,8 @@
 					交易类型
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="value1" @change="radioGroupChange">
-						<u-radio @change="radioChange" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
+					<u-radio-group v-model="transactionTypeCode" @change="radioGroupChange">
+						<u-radio @change="radioChange" v-for="(item, index) in list" :key="index" :name="item.value" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
@@ -43,8 +43,9 @@
 					机器类型
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="value" type="select" border @click="sexShow = true" />
-					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
+					<u-input placeholder="请选择" v-model="machineTypeName" type="select" border @click="sexShow = true" />
+					<u-action-sheet :list="machineTypeList" v-model="sexShow" @click="actionSheetCallback">
+					</u-action-sheet>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -52,7 +53,7 @@
 					机器型号
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入机器型号" :clearable="false" :focus="true" v-model="value" border height="64" />
+					<u-input placeholder="请输入机器型号" :clearable="false" :focus="true" v-model="model" border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -61,7 +62,7 @@
 				</view>
 				<view class="info g-f-1" style="position: relative;">
 					<u-icon name="calendar" class="input-icon"></u-icon>
-					<u-input @click="dateShow = true" disabled placeholder="请选择时间" :clearable="false" :focus="true" v-model="value"
+					<u-input @click="dateShow = true" disabled placeholder="请选择时间" :clearable="false" :focus="true" v-model="purchaseDate"
 					 border height="64" />
 				</view>
 			</view>
@@ -70,15 +71,15 @@
 					价格
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="value2" @change="radioGroupChange">
-						<u-radio @change="radioChange" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
+					<u-radio-group v-model="isFace" @change="radioGroupChangeP">
+						<u-radio @change="radioChangeP" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input v-if="value2 == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="value" height="64" />
+				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="purchasingPrice" height="64" />
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
+			<!-- <view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					标签
 				</view>
@@ -87,13 +88,25 @@
 						九新
 					</view>
 				</view>
+			</view> -->
+			<view class="g-flex p-y-10 g-a-c">
+				<view class="title f-14" style=" width: 140rpx;">
+					标签
+				</view>
+				<view class="info g-f-1 g-flex g-j-s-b" style="position: relative;">
+					<u-radio-group v-model="labelCode" @change="radioGroupChange1">
+						<u-radio @change="radioChange1" v-for="(item, index) in list3" :key="index" :name="item.name" :disabled="item.disabled">
+							{{item.name}}
+						</u-radio>
+					</u-radio-group>
+				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					联系人
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系人" :clearable="false" :focus="true" v-model="value" border height="64" />
+					<u-input placeholder="请输入联系人" :clearable="false" :focus="true" v-model="contactsUser" border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -101,7 +114,7 @@
 					联系电话
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="value" border height="64" />
+					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="contactsPhone" border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -109,17 +122,15 @@
 					区域
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="map" type="select" border @click="regionaStatus = true" />
-					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
-				</view>
+					<u-input placeholder="请选择" v-model="purchasingArea" type="select" border @click="regionaStatus = true" /></view>
 			</view>
-			<u-button style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
+			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
-		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar v-model="dateShow" mode="range" @change="change">
+		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure"/>
+		<u-calendar v-model="dateShow" @change="change">
 			<view slot="tooltip">
 				<view class=" t-c p-y-10" style="color: #2979FF">
-					请选择开始/结束时间
+					请选择购买时间
 				</view>
 			</view>
 		</u-calendar>
@@ -130,6 +141,8 @@
 <script>
 	import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue'
 	import regionalComponents from '../../components/regionalComponents/regionalComponents.vue'
+	//后台路径引用
+	import ApiPath from "@/api/ApiPath.js";
 	export default {
 		components: {
 			HeaderSearch,
@@ -139,41 +152,85 @@
 			return {
 				regionaStatus: false,
 				dateShow: false,
-				map: '',
-				value: '',
-				value1: '购买',
-				value2: '面议',
+				
+				name: '',
+				descrip: '',
+				url:'',
+				machineType:'',
+				machineTypeName:'',
+				purchaseDate:'',
+				contactsUser: '',
+				contactsPhone: '',
+				purchasingArea:'',
+				model:'',
+				purchasingPrice:'',
+				transactionTypeCode:'0',
+				transactionCategoryCode:'1',
+				isFace:"面议",
+				isFaceCode: "",
+				labelCode:"全新",
+				action: ApiPath.url.uploadImg,
+				fileList: [],
 				list: [{
+						value:'0',
 						name: '购买',
 						disabled: false
 					},
 					{
+						value:'1',
 						name: '出售',
 						disabled: false
 					},
 					{
+						value:'2',
 						name: '出租',
 						disabled: false
 					}
 				],
+				list3: [{
+						name: '九新',
+						disabled: false
+					},
+					{
+						name: '八新',
+						disabled: false
+					},
+					{
+						name: '全新',
+						disabled: false
+					}
+				],
 				list1: [{
+						value:'0',
 						name: '面议',
 						disabled: false
 					},
 					{
+						value:'1',
 						name: '定价',
 						disabled: false
 					}
 				],
 				sexShow: false,
-				actionSheetList: [{
-						text: '男'
+				machineTypeList: [{
+						value:'0',
+						text: '玉米收割机'
 					},
 					{
-						text: '女'
+						value:'1',
+						text: '水稻收割机'
 					},
 					{
-						text: '保密'
+						value:'2',
+						text: '玉米播种机'
+					},
+					{
+						value:'3',
+						text: '水稻插秧机'
+					},
+					{
+						value:'4',
+						text: '无人机喷药'
 					}
 				],
 			};
@@ -184,11 +241,34 @@
 			}, 1000)
 		},
 		methods: {
-			radioChange(e) {
+			uploadSuccess(data, index, lists, name) {
+				this.url = data.url;
+				this.show = false;
+			},
+			onChoose(lists, name) {
+				this.show = true;
+			},
+			change(e) {
+				this.purchaseDate=e.year+"-"+e.month+"-"+e.day;
 				// console.log(e);
+			},
+			radioChange1(index){
+				
+			},
+			radioChange(index) {
+				// console.log(e);
+			},
+			radioGroupChange1(e){
+				
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {
+				// console.log(e);
+			},
+			radioChangeP(index) {
+				// console.log(e);
+			},
+			radioGroupChangeP(e) {
 				// console.log(e);
 			},
 			cancel() {
@@ -208,8 +288,127 @@
 						}
 					}
 				});
-				this.map = map;
+				this.purchasingArea = map;
+			},
+			actionSheetCallback(index){
+				this.machineType= this.machineTypeList[index].value;
+				this.machineTypeName=this.machineTypeList[index].text;
+			},
+			deploy(){				
+				if (this.name == '') {
+					uni.showModal({
+						title: "请输入标题"
+					})
+					return false;
+				}
+				
+				if (this.descrip == '') {
+					uni.showToast({
+						title: "请输入描述信息"
+					})
+					return false;
+				}
+				// if (this.url == '') {
+				// 	uni.showToast({
+				// 		title: "请添加土地图片"
+				// 	})
+				// 	return false;
+				// }
+				
+				if (this.transactionTypeCode == '') {
+					uni.showToast({
+						title: "请选择交易类型"
+					})
+					return false;
+				}
+				
+				if (this.machineType == '') {
+					uni.showToast({
+						title: "请选择机器类型"
+					})
+					return false;
+				}
+				
+				if (this.model == '') {
+					uni.showToast({
+						title: "请输入机器型号"
+					})
+					return false;
+				}
+				if (this.contactsUser == '') {
+					uni.showToast({
+						title: "请输入联系人"
+					})
+					return false;
+				}
+				
+				if (this.contactsPhone == '') {
+					uni.showToast({
+						title: "请输入联系电话"
+					})
+					return false;
+				}
+				
+				if (this.purchasingArea == '') {
+					uni.showToast({
+						title: "请选择区域"
+					})
+					return false;
+				}
+				
+				//判断类型，并解析码值
+				for (let i = 0; i < this.list.length; i++) {
+					if (this.list[i].name == this.transactionTypeName) {
+						this.transactionTypeCode = this.list[i].value;
+						this.transactionTypeName = this.list[i].name;
+					}
+				}
+				
+				//判断是否面议，并解析码值
+				for (let j = 0; j < this.list1.length; j++) {
+					if (this.list1[j].name == this.isFace) {
+						this.isFaceCode = this.list1[j].value;
+						this.isFace = this.list1[j].name;
+					}
+				}
+				let param = {
+					name: this.name,
+					descrip: this.descrip,
+					url:this.url,
+					machineType:this.machineType,
+					// purchaseDate:this.purchaseDate,
+					labelCode:this.labelCode,
+					contactsUser: this.contactsUser,
+					contactsPhone: this.contactsPhone,
+					purchasingArea:this.purchasingArea,
+					transactionTypeCode:this.transactionTypeCode,
+					isFace:this.isFaceCode,
+					model:this.model,
+					purchasingPrice:this.purchasingPrice,
+					transactionCategoryCode:this.transactionCategoryCode,
+				}
+				console.log(this.purchaseDate);
+				uni.request({
+					method: 'GET', //请求方式
+					data:param,//请求数据
+					url:ApiPath.url.deploy,//请求接口路径
+					success: (res) => {//成功返回结果方法
+						uni.showToast({
+							title: "发布信息成功"
+						})
+						
+						//发布成功返回发布主页面
+						setTimeout(function() {
+							//跳转page目录用navigateTo，跳转tabbar用switchTab
+							uni.switchTab({
+								url: "../tabbar/release/index"
+							})
+						}, 2000)
+					}
+				})
+				
 			}
+			
 		}
 	}
 </script>
