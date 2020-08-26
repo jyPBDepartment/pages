@@ -114,9 +114,9 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar v-model="dateShow" mode="range" @change="change">
+		<u-calendar v-model="dateShow" mode="range" @change="change" active-bg-color="#19be6b" active-color="white" btn-type="success">
 			<view slot="tooltip">
-				<view class=" t-c p-y-10" style="color: #2979FF">
+				<view class=" t-c p-y-10" style="color: #19be6b">
 					请选择时间
 				</view>
 			</view>
@@ -153,7 +153,7 @@
 				isFace: "面议",
 				isFaceCode: "",
 				agriPrice: '',
-				farmingMode: '',
+				farmingMode: '整活',
 				farmingModeCode: '',
 				contactsUser: '',
 				contactsPhone: '',
@@ -342,8 +342,8 @@
 					contactsPhone: this.contactsPhone,
 					workArea: this.workArea,
 					url:this.url,
-					// beginDate:this.beginDate,
-					// endDate:this.endTime,				
+					beginDate:this.beginDate,
+					endDate:this.endTime,				
 				}				
 				uni.request({
 					method: 'GET', //请求方式

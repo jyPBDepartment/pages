@@ -69,8 +69,13 @@
         <el-form-item label="图片">
           <el-image style="width: 100px; height: 100px" :src="agrForm.url" readonly></el-image>
         </el-form-item>
-        <el-form-item label="机器类型">
-          <el-input type="text" v-model="agrForm.machineType" readonly></el-input>
+        <el-form-item label="机器类型:">
+         <span v-if="agrForm.machineType==0">玉米收割机</span>
+        <span v-if="agrForm.machineType==1">水稻收割机</span>
+        <span v-if="agrForm.machineType==2">玉米播种机</span>
+        <span v-if="agrForm.machineType==3">水稻插秧机</span>
+        <span v-if="agrForm.machineType==4">无人机喷药</span>
+
         </el-form-item>
         <el-form-item label="型号">
           <el-input type="text" v-model="agrForm.model" readonly></el-input>
@@ -82,7 +87,7 @@
           <el-input type="text" v-model="agrForm.labelCode" readonly></el-input>
         </el-form-item>
         <el-form-item label="购买时间">
-          <el-date-picker v-model="agrForm.purchaseDate" type="datetime" readonly></el-date-picker>
+          <el-date-picker v-model="agrForm.purchaseDate" type="date" readonly></el-date-picker>
         </el-form-item>
         <el-form-item label="发布时间">
           <el-date-picker v-model="agrForm.createDate" type="datetime" readonly></el-date-picker>
@@ -97,10 +102,10 @@
           <el-input type="text" v-model="agrForm.updateUser" readonly></el-input>
         </el-form-item>
         <el-form-item label="干活开始时间">
-          <el-date-picker v-model="agrForm.beginDate" type="datetime" readonly></el-date-picker>
+          <el-date-picker v-model="agrForm.beginDate" type="date" readonly></el-date-picker>
         </el-form-item>
         <el-form-item label="干活结束时间">
-          <el-date-picker type="datetime" v-model="agrForm.endDate" readonly></el-date-picker>
+          <el-date-picker type="date" v-model="agrForm.endDate" readonly></el-date-picker>
         </el-form-item>
         <el-form-item label="农机台数">
           <el-input type="text" v-model="agrForm.machineNum" readonly></el-input>
