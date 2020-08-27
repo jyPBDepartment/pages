@@ -20,7 +20,7 @@
 			</view>
 			<view class="g-flex p-y-10">
 				<view class="title f-14" style="width: 140rpx;">
-					土地图片
+					农机图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
 					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :file-list="fileList"></u-upload>
@@ -152,7 +152,6 @@
 			return {
 				regionaStatus: false,
 				dateShow: false,
-				
 				name: '',
 				descrip: '',
 				url:'',
@@ -163,7 +162,7 @@
 				contactsPhone: '',
 				purchasingArea:'',
 				model:'',
-				purchasingPrice:'',
+				purchasingPrice: 0,
 				transactionTypeCode:'0',
 				transactionCategoryCode:'1',
 				isFace:"面议",
@@ -308,12 +307,6 @@
 					})
 					return false;
 				}
-				// if (this.url == '') {
-				// 	uni.showToast({
-				// 		title: "请添加土地图片"
-				// 	})
-				// 	return false;
-				// }
 				
 				if (this.transactionTypeCode == '') {
 					uni.showToast({
