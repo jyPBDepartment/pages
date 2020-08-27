@@ -58,7 +58,11 @@
                     <el-menu-item index="/partner">合作伙伴</el-menu-item>
                     <el-menu-item index="/join">加入我们</el-menu-item>
                   </el-submenu>
+                  <el-menu-item index="/download">
+                    <span class="pd">下载app</span>
+                  </el-menu-item>
                 </el-menu>
+                
               </el-col>
             </el-row>
           </div>
