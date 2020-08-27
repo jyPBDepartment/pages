@@ -117,7 +117,7 @@
 <script>
 import Fast from "../components/Fast/Fast";
 import MobileBanner from "../components/MobileBanner/MobileBanner";
-import aes from "@/util/aes";
+// import aes from "@/util/aes";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
@@ -530,7 +530,7 @@ export default {
             }
           }
         }
-        this.editForm.questionAnswer = aes.encrypt(JSON.stringify(paramList));
+        // this.editForm.questionAnswer = aes.encrypt(JSON.stringify(paramList));
 
         // console.log(aes.decrypt(aes.encrypt(JSON.stringify(paramList))))
         //评分+表单数据

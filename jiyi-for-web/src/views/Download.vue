@@ -18,14 +18,14 @@
         </div>
         <div class="botton">
           <div class="b-box">
-            <img src="../assets/jyhn.png" alt />
+            <img src="../assets/ewm.png" alt />
             <div class="btn">
               <a href="	
 http://60.205.246.126:8001/apk/jyhn.apk">吉易慧农安卓版本下载</a>
             </div>
           </div>
           <div class="b-box">
-            <img src="../assets/jysk.png" alt />
+            <img src="../assets/ewm.png" alt />
             <div class="btn" style="background:#3377bd">
               <a href="	
 http://60.205.246.126:8001/apk/jysk.apk">吉易掌柜安卓版本下载</a>
