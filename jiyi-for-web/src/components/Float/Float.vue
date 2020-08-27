@@ -45,8 +45,8 @@
 </template>
 
 <script>
-// import ApiPath from '@/api/ApiPath'
-// import api from '@/axios/api'
+import ApiPath from '@/api/ApiPath'
+import api from '@/axios/api'
 export default {
   name: "Tabs",
   props: {

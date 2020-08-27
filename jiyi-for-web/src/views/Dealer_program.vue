@@ -6,7 +6,7 @@
       style="height:640px;"
     />
     <div class="banner-font" style>
-      <h2 class="css2215ee06652225e">专注为农资经销商提供助力方</h2>
+      <h2 class="css2215ee06652225e">专注为农资经销商提供助力方<span class="css22917b201a2225e">案</span></h2>
       <p class="css2215f1c4942225e">农业种植全产业链互联网服务平台</p>
     </div>
     <!-- <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav> -->

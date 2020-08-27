@@ -21,6 +21,8 @@
         <Rotation style="margin-top:30px" :banner="banner" :height="648" />
       </div>
     </Fast>
+    
+    <div style="width:100%;height:2px;background:#f6f7fc;"></div>
     <Fast :title="modelName[1].title" :id="modelName[1].id">
       <el-row class="h_y">
         <el-col :span="12" class="text1">

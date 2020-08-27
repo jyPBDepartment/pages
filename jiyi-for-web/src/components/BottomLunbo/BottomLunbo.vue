@@ -27,13 +27,13 @@
     <div class="right">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
         <van-swipe-item>
-          <img src="https://yanxuan.nosdn.127.net/d38f8b23ae2fea304c931a02e2bfb355.jpg" alt />
+          <img src="https://s1.ax1x.com/2020/08/14/dPlSG6.jpg" alt />
         </van-swipe-item>
         <van-swipe-item>
-          <img src="https://yanxuan.nosdn.127.net/8cd94202ed7367fff8f289c5f779b07a.jpg" alt />
+          <img src="https://s1.ax1x.com/2020/08/14/dPlpRK.jpg" alt />
         </van-swipe-item>
         <van-swipe-item>
-          <img src="https://yanxuan.nosdn.127.net/471eae8d68fc287e742b9c17f383eaa2.jpg" alt />
+          <img src="https://s1.ax1x.com/2020/08/14/dPl9xO.jpg" alt />
         </van-swipe-item>
       </van-swipe>
     </div>

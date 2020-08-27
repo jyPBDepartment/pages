@@ -58,6 +58,11 @@ const routes = [
     name: 'join',
     component: resolve => require(['../views/Join.vue'],resolve)
   },
+  {
+    path: '/download',
+    name: 'download',
+    component: resolve => require(['../views/download.vue'],resolve)
+  },
   // {
   //   path: '/real_time_info',
   //   name: 'real_time_info',

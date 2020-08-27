@@ -68,11 +68,16 @@ const routes = [
     path: '/article',
     name: 'article',
     component: resolve => require(['../views/Article.vue'], resolve)
+  },
+  {
+    path: '/download',
+    name: 'download',
+    component: resolve => require(['../views/Download.vue'], resolve)
   }
 ]
 
 const router = new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })

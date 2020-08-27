@@ -3,8 +3,7 @@
     <img class="top_img" src="https://s1.ax1x.com/2020/07/24/UjdcLT.jpg" style="height:640px" />
     <div class="banner-font">
       <h2 class="css2215ee06652225e">
-        为合作伙
-        <span class="css221a45fbb02225e">伴</span>提供全方位的合作
+        为合作伙<span class="css221a45fbb02225e">伴</span>提供全方位的合作
       </h2>
     </div>
     <Fast title="为合作伙伴提供全方位的合作与支持">
