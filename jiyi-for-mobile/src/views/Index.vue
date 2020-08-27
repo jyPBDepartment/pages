@@ -184,7 +184,11 @@ export default {
               routerPath: "join"
             }
           ]
-        }
+        },
+        {
+          name: "下载app",
+          routerPath: "download"
+        },
       ]
     };
   },
