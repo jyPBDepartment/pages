@@ -7,7 +7,7 @@
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容" :clearable="false" v-model="name" height="64" />
+					<u-input placeholder="输入内容" :clearable="false" v-model="name" height="64"/>
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
@@ -65,8 +65,8 @@
 					农活价格
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="isFace" @change="radioGroupChange">
-						<u-radio @change="radioChange(index)" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
+					<u-radio-group v-model="isFace" @change="radioGroupChange1">
+						<u-radio @change="radioChange1(index)" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
@@ -74,13 +74,14 @@
 				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="agriPrice"
 				 height="64" />
 			</view>
+			
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					农活方式
 				</view>
 				<view class="info g-f-1" style="position: relative;">
 					<u-radio-group v-model="farmingMode" @change="radioGroupChange">
-						<u-radio @change="radioChange1(index)" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
+						<u-radio @change="radioChange(index)" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
@@ -114,7 +115,7 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change">
+		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01"  @change="change">
 			<view slot="tooltip">
 				<view class=" t-c p-y-10" style="color: #2979FF">
 					请选择时间
@@ -154,7 +155,7 @@
 				machineNum: '',
 				isFace: "面议",
 				isFaceCode: "",
-				agriPrice: '',
+				agriPrice: 0,
 				farmingMode: '整活',
 				farmingModeCode: '',
 				contactsUser: '',
@@ -242,11 +243,14 @@
 			radioChange(index) {
 				// console.log(e);
 			},
+			// 选中任一radio时，由radio-group触发
+			radioGroupChange(e) {
+				// console.log(e);
+			},
 			radioChange1(index) {
 				// console.log(e);
 			},
-			// 选中任一radio时，由radio-group触发
-			radioGroupChange(e) {
+			radioGroupChange1(e){
 				// console.log(e);
 			},
 			cancel() {
@@ -283,6 +287,14 @@
 					})
 					return false;
 				}
+				
+				if (this.url == '') {
+					uni.showToast({
+						title: "请选择图片"
+					})
+					return false;
+				}
+				
 				if (this.value == '') {
 					uni.showToast({
 						title: "请选择干活时间"

@@ -34,7 +34,7 @@
         <el-form-item label="交易类别"></el-form-item>
         <el-radio-group
           v-model="agrForm.transactionCategoryCode"
-          style="padding-bottom:5px;padding-left:98px;margin-top:-84px;"
+          style="padding-bottom:5px;padding-left:98px;margin-top:-98px;"
         >
           <el-radio label="0">玉米</el-radio>
           <el-radio label="1">农机</el-radio>
@@ -64,12 +64,17 @@
           <el-image style="width: 100px; height: 100px" :src="agrForm.url" readonly></el-image>
         </el-form-item>
         <el-form-item label="机器类型:">
-          <span v-if="agrForm.machineType==0">玉米收割机</span>
-          <span v-if="agrForm.machineType==1">水稻收割机</span>
-          <span v-if="agrForm.machineType==2">玉米播种机</span>
-          <span v-if="agrForm.machineType==3">水稻插秧机</span>
-          <span v-if="agrForm.machineType==4">无人机喷药</span>
         </el-form-item>
+           <el-radio-group
+          v-model="agrForm.machineType"
+          style="padding-bottom:5px;padding-left:98px;margin-top:-84px;"
+        >
+          <el-radio label="0" style="padding-bottom:10px">玉米收割机</el-radio>
+          <el-radio label="1" style="padding-bottom:10px">水稻收割机</el-radio>
+          <el-radio label="2">玉米播种机</el-radio>
+          <el-radio label="3">水稻插秧机</el-radio>
+          <el-radio label="4">无人机喷药</el-radio>
+        </el-radio-group>
         <el-form-item label="型号">
           <el-input type="text" v-model="agrForm.model" readonly></el-input>
         </el-form-item>
