@@ -42,7 +42,7 @@
           <el-radio label="3">高粱</el-radio>
           <el-radio label="4">黄豆</el-radio>
         </el-radio-group>
-        <el-form-item label="收购价格(¥)">
+        <el-form-item label="收购价格(元)">
           <el-input type="text" v-model="agrForm.purchasingPrice" readonly></el-input>
         </el-form-item>
         <el-form-item label="收购区域">
@@ -120,7 +120,7 @@
             <el-radio label="1">零活</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="农活价格">
+        <el-form-item label="农活价格(元)">
           <el-input type="text" v-model="agrForm.agriPrice" readonly></el-input>
         </el-form-item>
         <el-form-item label="干活地点">
@@ -162,6 +162,7 @@ export default {
       labelPosition: "right",
       localShow: this.show,
       agrForm: {},
+     
     };
   },
   watch: {
