@@ -3,11 +3,12 @@
 		<HeaderSearch title="农机" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10">
 			<view class="g-flex p-y-10 g-a-c" style="border-bottom: 1rpx solid #999;">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14">
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容" :clearable="false" v-model="name" height="64" />
+					<u-input placeholder="输入内容(必填,不能超过20个汉字)" maxlength="20" :clearable="false" v-model="name" height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
@@ -19,6 +20,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					农机图片
 				</view>
@@ -27,6 +29,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					交易类型
 				</view>
@@ -39,6 +42,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					机器类型
 				</view>
@@ -49,14 +53,16 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					机器型号
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入机器型号" :clearable="false" :focus="true" v-model="model" border height="64" />
+					<u-input placeholder="请输入机器型号" :clearable="false" :focus="true" v-model="model" border height="64"/>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					购买时间
 				</view>
@@ -67,6 +73,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					价格
 				</view>
@@ -78,6 +85,7 @@
 					</u-radio-group>
 				</view>
 				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="purchasingPrice" height="64" />
+				<view v-if="isFace == '定价'" style="font-size: 32rpx;margin-left: 10rpx;">元</view>
 			</view>
 			<!-- <view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
@@ -90,6 +98,7 @@
 				</view>
 			</view> -->
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					标签
 				</view>
@@ -102,6 +111,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					联系人
 				</view>
@@ -110,14 +120,16 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					联系电话
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="contactsPhone" border height="64" />
+					<u-input placeholder="请输入联系电话" type="number" maxlength="11"  :clearable="false" :focus="true" v-model="contactsPhone" border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					区域
 				</view>
@@ -162,7 +174,7 @@
 				contactsPhone: '',
 				purchasingArea:'',
 				model:'',
-				purchasingPrice: 0,
+				purchasingPrice: '0.0',
 				transactionTypeCode:'0',
 				transactionCategoryCode:'1',
 				isFace:"面议",
@@ -240,6 +252,7 @@
 			}, 1000)
 		},
 		methods: {
+			
 			uploadSuccess(data, index, lists, name) {
 				this.url = data.url;
 				this.show = false;
@@ -300,10 +313,9 @@
 					})
 					return false;
 				}
-				
-				if (this.descrip == '') {
+				if (this.url == '') {
 					uni.showToast({
-						title: "请输入描述信息"
+						title: "请上传图片"
 					})
 					return false;
 				}
@@ -328,6 +340,26 @@
 					})
 					return false;
 				}
+				if(!/[0-9]+[a-zA-Z]+[0-9a-zA-Z]*|[a-zA-Z]+[0-9]+[0-9a-zA-Z]*/g.test(this.model)){
+					uni.showToast({
+						title: "请输入正确的机器型号"
+					})
+					return false;
+				}
+				if (this.purchaseDate == '') {
+					uni.showToast({
+						title: "请输入购买时间"
+					})
+					return false;
+				}
+				
+				if(!/^\+?(\d*\.\d{1})$/.test(this.purchasingPrice)){
+					uni.showToast({
+						title: "请输入正确的价格"
+					})
+					return false;
+				}
+	
 				if (this.contactsUser == '') {
 					uni.showToast({
 						title: "请输入联系人"
@@ -341,6 +373,12 @@
 					})
 					return false;
 				}
+				if (!/^1[345789]\d{9}$/.test(this.contactsPhone)) {
+				     uni.showToast({
+				      title: "请输入正确的联系电话"
+				     })
+				     return false;
+				    }
 				
 				if (this.purchasingArea == '') {
 					uni.showToast({
