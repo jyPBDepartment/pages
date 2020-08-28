@@ -328,13 +328,14 @@
 					})
 					return false;
 				}
-				if(this.agriPrice =='')
-				{
-					uni.showToast({
-						title: "请输入价格"
-					})
-					return false;
-				}
+				// if(this.agriPrice =='')
+				// {
+				// 	uni.showToast({
+				// 		title: "请输入价格"
+				// 	})
+				// 	return false;
+				// }
+				
 				if(!/^\d+(\.\d{1})?$/.test(this.agriPrice))
 				{
 					uni.showToast({
