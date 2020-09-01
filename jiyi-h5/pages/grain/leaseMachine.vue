@@ -245,7 +245,6 @@
 		methods: {
 			
 			uploadSuccess(data, index, lists, name) {
-				console.log(data.url+"123456789")
 				this.url.push(data.url) ;
 				this.show = false;
 			},
