@@ -8,10 +8,10 @@
 				<view class="name g-f-1 f-16">
 					小吉易
 				</view>
-				<view class="icon g-flex">
+				<!-- <view class="icon g-flex">
 					<text class="text1 f-16">进入</text>
 					<u-icon size="33" name="arrow-right" class="icon1" @click=""></u-icon>
-				</view>
+				</view> -->
 			</view>
 			<!-- 下划线 -->
 			<view class="line">
@@ -29,7 +29,7 @@
 				<view class="public g-flex g-a-c" @click="jump('../../catalog/agriculturalMachinery?index=0')">
 					<u-icon size="58" name="coupon" class="icon2"></u-icon>
 					<text class="text2 f-14"> 农机发布</text>
-					<view class="tagg f-12">8</view>
+					<view class="tagg f-12"></view>
 					<u-icon size="33" name="arrow-right" class="icon3" @click=""></u-icon>
 				</view>
 
@@ -42,7 +42,7 @@
 				<view class="public g-flex g-a-c" @click="jump('../../catalog/agriculturalMachinery?index=1')">
 					<u-icon size="58" name="coupon" class="icon2"></u-icon>
 					<text class="text2 f-14"> 粮食买卖</text>
-					<view class="tag f-12">new</view>
+					<view class="tag f-12"></view>
 					<u-icon size="33" name="arrow-right" class="icon3" @click=""></u-icon>
 				</view>
 
@@ -137,7 +137,8 @@
 		.first {
 			.name {
 				font-weight: bold;
-				margin-left: -250rpx;
+				margin-left:-380rpx;
+				margin-top: 20rpx;
 			}
 
 			.icon {
