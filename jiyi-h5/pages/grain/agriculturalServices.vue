@@ -29,7 +29,7 @@
 				<view class="info g-f-1" style="position: relative;">
 					<!-- <image src="../../static/img/tabbar/addactive.png" mode=""></image> -->
 					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
-					 :file-list="fileList" max-count="1"></u-upload>
+					 :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 
@@ -174,7 +174,7 @@
 				workArea: '',
 				beginDate: '',
 				endTime: '',
-				url: '',
+				url: [],
 				value: '',
 				list: [{
 						value: '0',
@@ -238,9 +238,9 @@
 		methods: {
 		
 			uploadSuccess(data, index, lists, name) {
-				this.url = data.url;
+				this.url.push(data.url) 
 				this.show = false;
-				// alert(JSON.stringify(data))
+				
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -382,7 +382,15 @@
 						this.isFace = this.list1[j].name;
 					}
 				}
-				// alert(this.beginDate)
+				
+				//传递多个图片
+				let addItem = "";
+				let add = [];
+				for (let i = 0; i < this.url.length; i++) {
+				     add.push(this.url[i]);
+				 }
+				 addItem = add.join(",");
+				 
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
@@ -397,6 +405,7 @@
 					url: this.url,
 					beginDate: this.beginDate,
 					endDate: this.endTime,
+					addItem:addItem,
 				}
 				uni.request({
 					method: 'GET', //请求方式
