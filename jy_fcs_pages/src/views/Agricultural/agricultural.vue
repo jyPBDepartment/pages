@@ -63,11 +63,6 @@
         max-width="65%"
         :show-overflow-tooltip="true"
       ></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="80%" max-width="80%">
-        <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:80px;height:80px;"></el-image>
-        </template>
-      </el-table-column>
       <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
