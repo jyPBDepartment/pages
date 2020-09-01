@@ -53,7 +53,8 @@ import Menu from '@/views/menu/menuIndex';
 import Classification from '@/views/Classification/classification';
 //圈子管理
 import PostInfo from '@/views/postInfo/PostInfo'
-
+//发布模块管理
+import DepolyModule from '@/views/DepolyModule/DepolyModule'
 //问卷调查
 import Question from '@/views/Question/question';
 
@@ -209,6 +210,13 @@ export default new Router({
             path: '/moduleInfo/ModuleInfo',
             name: '模块管理',
             component: ModuleInfo,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/DepolyModule/DepolyModule',
+            name: '发布模块管理',
+            component: DepolyModule,
             meta: {
                 requireAuth: true
             }

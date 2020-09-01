@@ -67,6 +67,20 @@ const url = {
   //模块修改
   moduleFindById: URLHost + '/moduleInfo/findById',
   updateModuleInfo: URLHost + '/moduleInfo/update',
+
+  //发布模块管理
+  depolyMoudleSearch: URLHost + '/deployModuleInfo/findByName',
+  //添加发布模块
+  addDeployModule: URLHost + '/deployModuleInfo/save',
+  //修改发布模块
+  updateDeployModule: URLHost + '/deployModuleInfo/update',
+  //findbyib
+  depolyModuleFindId: URLHost + '/deployModuleInfo/findById',
+  //发布模块删除
+  deleteDepolyModule: URLHost + '/deployModuleInfo/delete',
+  //启用
+  deployModuleEnable: URLHost + '/deployModuleInfo/enable',
+
   //关键词分类
   findClassKey: URLHost + '/classification/findClassKey',
   //圈子管理

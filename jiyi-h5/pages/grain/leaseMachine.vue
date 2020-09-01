@@ -158,7 +158,7 @@
 	export default {
 		components: {
 			HeaderSearch,
-			regionalComponents
+			regionalComponents,
 		},
 		data() {
 			return {
@@ -166,7 +166,7 @@
 				dateShow: false,
 				name: '',
 				descrip: '',
-				url:'',
+				url: [],
 				machineType:'',
 				machineTypeName:'',
 				purchaseDate:'',
@@ -254,7 +254,8 @@
 		methods: {
 			
 			uploadSuccess(data, index, lists, name) {
-				this.url = data.url;
+				console.log(data.url+"123456789")
+				this.url.push(data.url) ;
 				this.show = false;
 			},
 			onChoose(lists, name) {
@@ -402,6 +403,15 @@
 						this.isFace = this.list1[j].name;
 					}
 				}
+				
+				//传递多个图片
+				let addItem = "";
+				let add = [];
+				for (let i = 0; i < this.url.length; i++) {
+				     add.push(this.url[i]);
+				 }
+				 addItem = add.join(",");
+				 
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
@@ -417,8 +427,8 @@
 					model:this.model,
 					purchasingPrice:this.purchasingPrice,
 					transactionCategoryCode:this.transactionCategoryCode,
+					addItem:addItem,
 				}
-				console.log(this.purchaseDate);
 				uni.request({
 					method: 'GET', //请求方式
 					data:param,//请求数据
