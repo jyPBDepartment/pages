@@ -58,6 +58,9 @@
 			"path": "pages/grain/grainTrade"  //好像没用
 		},
 		{
+			"path": "pages/catalog/grainTrade"  //粮食买卖列表页面
+		},
+		{
 			"path": "pages/grain/agriculturalAppointment"  //发布农服预约
 		},
 		{

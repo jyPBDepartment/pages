@@ -145,6 +145,7 @@
 				console.log(e)
 			},
 			jump(item, index) {
+				console.log(item.to)
 				if (index != 0) {
 					uni.navigateTo({
 						url: item.to
