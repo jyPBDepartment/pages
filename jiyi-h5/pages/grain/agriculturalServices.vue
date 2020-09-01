@@ -3,34 +3,38 @@
 		<HeaderSearch title="农服发布" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10">
 			<view class="g-flex p-y-10 g-a-c" style="border-bottom: 1rpx solid #999;">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14">
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容" :clearable="false" v-model="name" height="64"/>
+					<u-input placeholder="输入内容(最多输入20字)" :clearable="false" v-model="name" maxlength="20" height="64"/>
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
+				<span style="color: #fff;" >*</span>
 				<view class="title f-14" style="padding: 10rpx 0;">
 					描述
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :clearable="false" v-model="descrip" height="200" />
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" maxlength="500" :clearable="false" v-model="descrip" height="200" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style="width: 140rpx;">
-					设置封面图
+					农服图片
 				</view>
 				<!-- :action="action" -->
 				<view class="info g-f-1" style="position: relative;">
 					<!-- <image src="../../static/img/tabbar/addactive.png" mode=""></image> -->
 					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
-					 :file-list="fileList" max-count="1"></u-upload>
+					 :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					干活时间
 				</view>
@@ -42,6 +46,7 @@
 			</view>
 
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					农作物类型
 				</view>
@@ -53,6 +58,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					农机台数
 				</view>
@@ -61,6 +67,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					农活价格
 				</view>
@@ -71,11 +78,12 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="agriPrice"
-				 height="64" />
-			</view>
+				<u-input type="number" v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="true" v-model="agriPrice" height="64"/>
+				<view v-if="isFace == '定价'" style="font-size: 32rpx;margin-left: 10rpx;">元</view>
+				</view>
 			
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					农活方式
 				</view>
@@ -88,6 +96,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					联系人
 				</view>
@@ -96,20 +105,21 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					联系电话
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="contactsPhone" border height="64" />
+					<u-input type="number" maxlength="11" placeholder="请输入联系电话,仅限数字" :clearable="false" :focus="true" v-model="contactsPhone" border height="64"  />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					区域
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
 					<u-input placeholder="请选择" v-model="workArea" type="select" border @click="regionaStatus = true" />
-					<!-- <u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet> -->
 				</view>
 			</view>
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
@@ -148,6 +158,7 @@
 					// 	// url: '',
 					// }
 				],
+				
 				name: '',
 				descrip: '',
 				transactionCategoryCode: '',
@@ -163,7 +174,7 @@
 				workArea: '',
 				beginDate: '',
 				endTime: '',
-				url: '',
+				url: [],
 				value: '',
 				list: [{
 						value: '0',
@@ -211,22 +222,25 @@
 				],
 			};
 		},
-		onLoad() {
+		onLoad() {		
+
 			// 设置干活时间选择日历的最小开始时间
 			this.currentDate = new Date().toISOString().slice(0,10)
 			// alert(uni.date)
 			setTimeout(() => {
 				this.$refs.region.getScreen();
 			}, 1000)
+			
 		},
 		onReady() {
 			
 		},
 		methods: {
+		
 			uploadSuccess(data, index, lists, name) {
-				this.url = data.url;
+				this.url.push(data.url) 
 				this.show = false;
-				// alert(JSON.stringify(data))
+				
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -314,17 +328,36 @@
 					})
 					return false;
 				}
-
+				// if(this.agriPrice =='')
+				// {
+				// 	uni.showToast({
+				// 		title: "请输入价格"
+				// 	})
+				// 	return false;
+				// }
+				
+				if(!/^\d+(\.\d{1})?$/.test(this.agriPrice))
+				{
+					uni.showToast({
+						title: "价格只允许一位小数"
+					})
+					return false;
+				}
 				if (this.contactsUser == '') {
 					uni.showToast({
 						title: "请输入联系人"
 					})
 					return false;
 				}
-
 				if (this.contactsPhone == '') {
 					uni.showToast({
 						title: "请输入联系电话"
+					})
+					return false;
+				}
+				if (this.contactsPhone == '' || !/^1[345789]\d{9}$/.test(this.contactsPhone)) {
+					uni.showToast({
+						title: "请输入正确的联系电话"
 					})
 					return false;
 				}
@@ -349,7 +382,15 @@
 						this.isFace = this.list1[j].name;
 					}
 				}
-				// alert(this.beginDate)
+				
+				//传递多个图片
+				let addItem = "";
+				let add = [];
+				for (let i = 0; i < this.url.length; i++) {
+				     add.push(this.url[i]);
+				 }
+				 addItem = add.join(",");
+				 
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
@@ -364,6 +405,7 @@
 					url: this.url,
 					beginDate: this.beginDate,
 					endDate: this.endTime,
+					addItem:addItem,
 				}
 				uni.request({
 					method: 'GET', //请求方式

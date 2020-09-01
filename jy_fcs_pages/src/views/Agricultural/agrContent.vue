@@ -42,7 +42,7 @@
           <el-radio label="3">高粱</el-radio>
           <el-radio label="4">黄豆</el-radio>
         </el-radio-group>
-        <el-form-item label="收购价格(¥)">
+        <el-form-item label="收购价格(元)">
           <el-input type="text" v-model="agrForm.purchasingPrice" readonly></el-input>
         </el-form-item>
         <el-form-item label="收购区域">
@@ -60,8 +60,10 @@
         <el-form-item label="联系方式">
           <el-input type="text" v-model="agrForm.contactsPhone" readonly></el-input>
         </el-form-item>
-        <el-form-item label="图片">
-          <el-image style="width: 100px; height: 100px" :src="agrForm.url" readonly></el-image>
+        <el-form-item label="图片" >
+          <span  v-for="item in agrList" :key="item">
+              <el-image style="width: 100px; height: 100px;margin-right:15px;" :src="item" readonly></el-image>
+          </span>
         </el-form-item>
         <el-form-item label="机器类型:">
         </el-form-item>
@@ -120,7 +122,7 @@
             <el-radio label="1">零活</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="农活价格">
+        <el-form-item label="农活价格(元)">
           <el-input type="text" v-model="agrForm.agriPrice" readonly></el-input>
         </el-form-item>
         <el-form-item label="干活地点">
@@ -162,6 +164,8 @@ export default {
       labelPosition: "right",
       localShow: this.show,
       agrForm: {},
+      agrList:[],
+     
     };
   },
   watch: {
@@ -176,6 +180,7 @@ export default {
       api.testAxiosGet(ApiPath.url.agriFindById, params).then((res) => {
         if (res.state == 0) {
           this.agrForm = res.data;
+          this.agrList =  res.data1;
         }
       });
     },
