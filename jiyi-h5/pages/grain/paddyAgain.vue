@@ -10,6 +10,9 @@
 			</block>
 		</swiper>
 		<view class="p-x-10">
+			<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
+				商家取消理由：库存不足
+			</view>
 			<view class="g-flex g-a-c">
 
 				<view class="title g-f-1 f-16" style="padding:0rpx;">
@@ -39,9 +42,13 @@
 
 
 		</view>
+		<view class="btn g-flex">
+			<view class="g-f-1">
 
-		<view class="p-10">
-			<u-button type="error" shape="circle">立即预约</u-button>
+			</view>
+			<view class="g-f-1">
+				<u-button type="error" shape="circle">重新预约</u-button>
+			</view>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
@@ -74,7 +81,7 @@
 		},
 		onLoad(e) {
 			this.info = {
-				area:  '面积：100亩',
+				area: '面积：100亩',
 				workArea: '干活地点：长春农安101号',
 				contactUser: '联系人：小植保',
 				tel: '联系电话：12345678901'

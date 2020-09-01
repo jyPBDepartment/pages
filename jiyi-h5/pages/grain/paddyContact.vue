@@ -34,14 +34,15 @@
 				<view class="text g-f-1 f-12" style="color: #999999;margin-top: 24rpx;" v-for="item in info" :key="item">
 					{{item}}
 				</view>
+			</view>
+		</view>
+		<view class="btn g-flex">
+			<view class="g-f-1">
 
 			</view>
-
-
-		</view>
-
-		<view class="p-10">
-			<u-button type="error" shape="circle">立即预约</u-button>
+			<view class="g-f-1">
+				<u-button type="error" shape="circle">联系商家</u-button>
+			</view>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
@@ -74,7 +75,7 @@
 		},
 		onLoad(e) {
 			this.info = {
-				area:  '面积：100亩',
+				area: '面积：100亩',
 				workArea: '干活地点：长春农安101号',
 				contactUser: '联系人：小植保',
 				tel: '联系电话：12345678901'

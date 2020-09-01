@@ -17,8 +17,11 @@
 			</view>
 
 			<view class="p-x-10">
+				<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
+					理由：信息可能存在虚假问题，请注意核实
+				</view>
 				<view class="g-flex g-a-c">
-					<view class="tag f-12" v-if="param == 1">
+					<view class="tag f-12" v-if="param == 2">
 						出租
 					</view>
 					<view class="title g-f-1 f-16" style="padding: 0 20rpx;">
@@ -49,6 +52,13 @@
 				<view class="info g-f-warp g-flex">
 					<view class="text g-f-1 f-14" style="color: #333;margin-top: 52rpx;">
 						描述：诚信出售：黑龙江勃利地区自家烘干塔。国际玉米出库中。容重690以上。水分14.霉变焦糊1内。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1。
+					</view>
+				</view>
+				<view class="btn g-flex">
+					<view class="g-f-1">
+					</view>
+					<view  class="g-f-1">
+						<u-button type="error" shape="circle">修改信息</u-button>
 					</view>
 				</view>
 
@@ -95,10 +105,14 @@
 						url: '@/static/logo.png'
 					}
 				],
+				state:null
 
 			};
 		},
 		onLoad(e) {
+			if(e.state){
+				this.state = e.state
+			}
 			this.param = e.index
 			// if(e.info){
 
@@ -115,7 +129,7 @@
 				this.company = "元/公斤"
 			}
 			if (this.param == 1) {
-				this.company = "元/天"
+				this.company = "元"
 			}
 			if (this.param == 2) {
 				this.company = "元/亩 "

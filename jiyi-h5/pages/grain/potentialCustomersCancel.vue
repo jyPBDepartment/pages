@@ -10,6 +10,9 @@
 			</block>
 		</swiper>
 		<view class="p-x-10">
+			<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
+				客户取消理由：因疫情原因，不用了
+			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style="width: 140rpx;">
 					干活时间

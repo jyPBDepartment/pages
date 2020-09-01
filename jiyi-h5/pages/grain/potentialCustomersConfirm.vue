@@ -80,6 +80,14 @@
 					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="value" border height="64" />
 				</view>
 			</view>
+			<view class="btn g-flex">
+				<view class="g-f-1">
+				</view>
+				<view class="g-f-1">
+					<u-button type="error" shape="circle">确认</u-button>
+				</view>
+
+			</view>
 		</view>
 	</view>
 </template>
@@ -117,14 +125,10 @@
 					contactUser: '',
 					tel: ''
 				},
-				state:null
 
 			}
 		},
 		onLoad(e) {
-			if(e.state){
-				this.state = e.state
-			}
 			this.info = {
 				area: '面积：100亩',
 				workArea: '干活地点：长春农安101号',

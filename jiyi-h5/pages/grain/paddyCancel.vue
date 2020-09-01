@@ -39,9 +39,13 @@
 
 
 		</view>
+		<view class="btn g-flex">
+			<view class="g-f-1">
 
-		<view class="p-10">
-			<u-button type="error" shape="circle">立即预约</u-button>
+			</view>
+			<view class="g-f-1">
+				<u-button @click="cencal(true)" shape="circle">取消</u-button>
+			</view>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
@@ -74,7 +78,7 @@
 		},
 		onLoad(e) {
 			this.info = {
-				area:  '面积：100亩',
+				area: '面积：100亩',
 				workArea: '干活地点：长春农安101号',
 				contactUser: '联系人：小植保',
 				tel: '联系电话：12345678901'
