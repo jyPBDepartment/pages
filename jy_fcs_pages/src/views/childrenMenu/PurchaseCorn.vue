@@ -64,13 +64,8 @@
         </template>
       </el-table-column>
       <el-table-column prop="descrip" label="描述" align="center" min-width="45%" max-width="50%" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="50%" max-width="50%">
-        <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
-        </template>
-      </el-table-column>
       <el-table-column
-        prop="purchasingPrice"
+        prop="price"
         label="收购价格"
         align="center"
         min-width="45%"
@@ -98,11 +93,12 @@
         :show-overflow-tooltip="true"
       ></el-table-column>
       <el-table-column
-        prop="purchasingArea"
+        prop="address"
         label="收购区域"
         align="center"
         min-width="45%"
         max-width="50%"
+        :show-overflow-tooltip="true"
       ></el-table-column>  
         <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
       <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>

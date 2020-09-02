@@ -111,19 +111,19 @@ export default {
     
     updateModule(editData) {
       this.$refs[editData].validate((valid) => {
-        if (this.editForm.deployModuleName == "") {
+        if (this.deployModuleForm.deployModuleName == "") {
           this.$alert("发布模块名称不能为空", "提示", {
             confirmButtonText: "确定",
           });
           return false;
         }
-        if (this.editForm.linkUrl == "") {
+        if (this.deployModuleForm.linkUrl == "") {
           this.$alert("连接路径不能为空", "提示", {
             confirmButtonText: "确定",
           });
           return false;
         }
-        if (this.editForm.picUrl == "") {
+        if (this.deployModuleForm.picUrl == "") {
           this.$alert("图片路径不能为空", "提示", {
             confirmButtonText: "确定",
           });
