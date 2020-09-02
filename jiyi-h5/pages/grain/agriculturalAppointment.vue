@@ -216,6 +216,13 @@
 					})
 					return false;
 				}
+				if(this.url =='')
+				{
+					uni.showToast({
+						title: "请选择图片"
+					})
+					return false;
+				}
 			
 			//传递多个图片
 			let addItem = [];
