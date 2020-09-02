@@ -73,7 +73,7 @@
 			<u-button @click="appointment" style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-	<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01"  @change="change" active-bg-color="#42b983">
+	<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01"  @change="change" active-bg-color="#42b983" btn-type="success">
 		<view slot="tooltip">
 			<view class=" t-c p-y-10" style="color: #2979FF">
 				请选择时间
