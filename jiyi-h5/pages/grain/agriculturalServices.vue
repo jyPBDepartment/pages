@@ -91,7 +91,7 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input type="number" v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="true" v-model="agriPrice" height="64"/>
+				<u-input type="number" v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="true" v-model="price" height="64"/>
 				<view v-if="isFace == '定价'" style="font-size: 32rpx;margin-left: 10rpx;">元</view>
 				</view>
 			
@@ -132,7 +132,7 @@
 					区域
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="workArea" type="select" border @click="regionaStatus = true" />
+					<u-input placeholder="请选择" v-model="address" type="select" border @click="regionaStatus = true" />
 				</view>
 			</view>
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
@@ -181,12 +181,12 @@
 				machineNum: '',
 				isFace: "面议",
 				isFaceCode: "",
-				agriPrice: 0,
+				price: 0,
 				farmingMode: '整活',
 				farmingModeCode: '',
 				contactsUser: '',
 				contactsPhone: '',
-				workArea: '',
+				address: '',
 				beginDate: '',
 				endTime: '',
 				url: [],
@@ -314,7 +314,7 @@
 						}
 					}
 				});
-				this.workArea = map;
+				this.address = map;
 			},
 			//发布方法
 			deploy() {
@@ -323,15 +323,7 @@
 						title: "请输入标题"
 					})
 					return false;
-				}
-
-				if (this.descrip == '') {
-					uni.showToast({
-						title: "请输入描述信息"
-					})
-					return false;
-				}
-				
+				}				
 				if (this.url == '') {
 					uni.showToast({
 						title: "请选择图片"
@@ -363,15 +355,7 @@
 					})
 					return false;
 				}
-				// if(this.agriPrice =='')
-				// {
-				// 	uni.showToast({
-				// 		title: "请输入价格"
-				// 	})
-				// 	return false;
-				// }
-				
-				if(!/^\d+(\.\d{1})?$/.test(this.agriPrice))
+				if(!/^\d+(\.\d{1})?$/.test(this.price))
 				{
 					uni.showToast({
 						title: "价格只允许一位小数"
@@ -396,7 +380,7 @@
 					})
 					return false;
 				}
-				if (this.workArea == '') {
+				if (this.address == '') {
 					uni.showToast({
 						title: "请选择干活区域"
 					})
@@ -433,11 +417,11 @@
 					transactionCategoryCode: this.transactionCategoryCode,
 					machineNum: this.machineNum,
 					isFace: this.isFaceCode,
-					agriPrice: this.agriPrice,
+					price: this.price,
 					farmingMode: this.farmingMode,
 					contactsUser: this.contactsUser,
 					contactsPhone: this.contactsPhone,
-					workArea: this.workArea,
+					address: this.address,
 					url: this.url,
 					beginDate: this.beginDate,
 					endDate: this.endTime,

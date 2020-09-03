@@ -28,7 +28,7 @@
 				</view>
 				<view class="img g-flex g-a-c g-j-c">
 					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
-					 :file-list="fileList" max-count="1"></u-upload>
+					 :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -66,7 +66,7 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="purchasingPrice"
+				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="price"
 				 height="64" />
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -93,7 +93,7 @@
 					区域
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="purchasingArea" type="select" border @click="regionaStatus = true" />
+					<u-input placeholder="请选择" v-model="address" type="select" border @click="regionaStatus = true" />
 				</view>
 			</view>
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
@@ -131,14 +131,14 @@
 				transactionTypeCode: '',
 				transactionTypeName: '收购',
 				transactionCategoryCode: '',
-				purchasingPrice: '0.0',
+				price: '0.0',
 				contactsUser: '',
 				contactsPhone: '',
-				purchasingArea: '',
+				address: '',
 				isFace: "面议",
 				isFaceCode: "",
 				transactionCategoryName: '',
-				url: "",
+				url:[],
 				list: [{
 						value: '0',
 						name: '收购',
@@ -188,7 +188,7 @@
 		},
 		methods: {
 			uploadSuccess(data, index, lists, name) {
-				this.url = data.url;
+				this.url.push(data.url);
 				this.show = false;
 				// alert(JSON.stringify(data))
 			},
@@ -226,7 +226,7 @@
 						}
 					}
 				});
-				this.purchasingArea = map;
+				this.address = map;
 			},
 			actionSheetCallback(index) {
 				this.transactionCategoryName = this.actionSheetList[index].text;
@@ -242,13 +242,7 @@
 					return false;
 				}
 
-				if (this.descrip == '') {
-					uni.showToast({
-						title: "请输入描述信息"
-					})
-					return false;
-				}
-
+				
 				if (this.url == '') {
 					uni.showToast({
 						title: "请上传图片"
@@ -263,7 +257,7 @@
 					return false;
 				}
 				
-				if(!/^\+?(\d*\.\d{1})$/.test(this.purchasingPrice)){
+				if(!/^\+?(\d*\.\d{1})$/.test(this.price)){
 					uni.showToast({
 						title: "请输入正确的价格"
 					})
@@ -297,7 +291,7 @@
 				     return false;
 				}
 
-				if (this.purchasingArea == '') {
+				if (this.address == '') {
 					uni.showToast({
 						title: "请选择区域"
 					})
@@ -322,17 +316,26 @@
 					}
 				}
 
+				//传递多个图片
+				let addItem = [];
+				let add = [];
+				for (let i = 0; i < this.url.length; i++) {
+				     add.push(this.url[i]);
+				 }
+				 addItem = add.join(",");
+				
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
 					url: this.url,
 					transactionTypeCode: this.transactionTypeCode,
 					transactionCategoryCode: this.transactionCategoryCode,
-					purchasingPrice: this.purchasingPrice,
+					price: this.price,
 					contactsUser: this.contactsUser,
 					contactsPhone: this.contactsPhone,
-					purchasingArea: this.purchasingArea,
-					isFace: this.isFaceCode
+					address: this.address,
+					isFace: this.isFaceCode,
+					addItem:addItem
 				}
 
 				uni.request({
