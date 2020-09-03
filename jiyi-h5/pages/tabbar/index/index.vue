@@ -7,9 +7,9 @@
 			<view class="p-y-10 btn b-t">
 				<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">
 					<view class="modular" :style="{'background-color':item.backgroundColor}">
-						<image :src="item.src" mode=""></image>
+						<image :src="item.url" mode=""></image>
 					</view>
-					<p>{{item.title}}</p>
+					<p>{{item.name}}</p>
 				</view>
 			</view>
 			<view class="appointment b-t">
@@ -19,16 +19,13 @@
 					<u-icon class="f-14" @click="moreNf" name="arrow-right"></u-icon>
 				</view>
 				<view class="preview" @click="detailsNf">
-					<view class="buju" v-for="(item, index) in previewList" :key="index">
+					<view v-if="!nfList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
+					<view class="buju" v-for="(item, index) in nfList" :key="index">
 						<view class="img">
-							<image class="preview-img" :src="item.src" mode=""></image>
-							<view class="number g-flex g-a-c">
-								<image class="m-r-5" src="../../../static/img/qa.png" mode=""></image>
-								<span class="f-12 c-f">{{item.number}}</span>
-							</view>
+							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-14 title">{{item.title}}</p>
-						<p class="f-12 address">{{item.address}}</p>
+						<p class="f-14 title">{{item.name}}</p>
+						<p class="f-12 address">{{item.workArea}}</p>
 					</view>
 				</view>
 			</view>
@@ -39,11 +36,12 @@
 					<u-icon class="f-14" @click="moreMm" name="arrow-right"></u-icon>
 				</view>
 				<view class="preview" @click="detailsMm">
-					<view class="buju" v-for="(item, index) in previewList" :key="index">
+					<view v-if="!mmList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
+					<view class="buju" v-for="(item, index) in mmList" :key="index">
 						<view class="img">
-							<image class="preview-img" :src="item.src" mode=""></image>
+							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-12 o-e" style="height: 47px;line-height: 23px;">现货供应大型玉米收割机自走式玉现货供应大型玉米收割机现货供应大型玉米收割机</p>
+						<p class="f-12 o-e" style="height: 47px;line-height: 23px;">{{item.name}}</p>
 					</view>
 				</view>
 			</view>
@@ -54,12 +52,13 @@
 					<u-icon class="f-14" @click="moreNj" name="arrow-right"></u-icon>
 				</view>
 				<view class="preview" @click="detailsNj">
-					<view class="buju" v-for="(item, index) in previewList" :key="index">
+					<view v-if="!NjList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
+					<view class="buju" v-for="(item, index) in NjList" :key="index">
 						<view class="img">
-							<view class="tag f-12 t-c">出租</view>
-							<image class="preview-img" :src="item.src" mode=""></image>
+							<view class="tag f-12 t-c">{{item.transactionTypeCode}}</view>
+							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-12 o-e" style="height: 47px;line-height: 23px;">现货供应大型玉米收割机自走式玉现货供应大型玉米收割机现货供应大型玉米收割机</p>
+						<p class="f-12 o-e" style="height: 47px;line-height: 23px;">{{item.name}}</p>
 					</view>
 				</view>
 			</view>
@@ -70,12 +69,12 @@
 					<u-icon class="f-14" @click="moreCh" name="arrow-right"></u-icon>
 				</view>
 				<view class="preview" @click="detailsCh">
-					<view class="buju" v-for="(item, index) in previewList" :key="index">
+					<view v-if="!ChList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
+					<view class="buju" v-for="(item, index) in ChList" :key="index">
 						<view class="img">
-							<view v-if="item.type == 3" class="tag f-12 t-c">出租</view>
-							<image class="preview-img" :src="item.src" mode=""></image>
+							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-14 title g-j-c">{{item.title}}</p>
+						<p class="f-14 title g-j-c">{{item.name}}</p>
 					</view>
 				</view>
 			</view>
@@ -84,6 +83,7 @@
 </template>
 
 <script>
+	import Interface from '@/api/ApiPath.js'
 	import FoodstuffPrice from '@/components/FoodstuffPrice/FoodstuffPrice.vue'
 	import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue'
 	export default {
@@ -93,51 +93,101 @@
 		},
 		data() {
 			return {
-				btnList: [{
-						to: "/pages/tabbar/service/index",
-						src: '../../../static/logo.png',
-						title: '农服',
-						backgroundColor: '#55be95'
-					},
-					{
-						to: "/pages/catalog/grainTrade",
-						src: '../../../static/logo.png',
-						title: '粮食买卖',
-						backgroundColor: '#985b3c'
-					},
-					{
-						to: "/pages/catalog/sellAgriculturalMachinery",
-						src: '../../../static/logo.png',
-						title: '农机',
-						backgroundColor: '#52ace8'
-					}, {
-						to: '/pages/catalog/findDisease',
-						src: '../../../static/logo.png',
-						title: '看图识病',
-						backgroundColor: '#f4c343'
-					}
-
-				],
-				previewList: [{
-					src: '../../../static/logo.png',
-					number: 280,
-					title: '水稻植保',
-					address: '长春市·榆树市'
-				}, {
-					src: '../../../static/logo.png',
-					number: 280,
-					title: '水稻植保',
-					address: '长春市·榆树市'
-				}, {
-					src: '../../../static/logo.png',
-					number: 280,
-					title: '水稻植保',
-					address: '长春市·榆树市'
-				}]
+				btnList: [],
+				nfList: [],
+				mmList: [],
+				NjList: [],
+				ChList: []
 			};
 		},
 		onLoad() {
-			// console.log(11)
+			uni.request({
+				url: Interface.url.findModuleOn,
+				method: "GET",
+				data: {},
+				success: (res) => {
+					if (res.data.state == 0) {
+						this.btnList = res.data.data
+					}
+				},
+				fail: (err) => {}
+			});
+			uni.request({
+				url: Interface.url.findNewInfo,
+				method: "GET",
+				data: {
+					type: 0
+				},
+				success: (res) => {
+					if (res.data.state == 0) {
+						this.nfList = res.data.data.map(item => {
+							let address
+							if (typeof(item.workArea) == "object") {
+								item.workArea = ''
+								address = item.workArea
+							}
+							if (item.workArea.split('/').length > 1) {
+								address = `${item.workArea.split('/')[0]}/${item.workArea.split('/')[1]}`
+							}
+							item.workArea = address
+							return item
+						})
+					}
+				},
+				fail: (err) => {}
+			});
+			uni.request({
+				url: Interface.url.findNewInfo,
+				method: "GET",
+				data: {
+					type: 1
+				},
+				success: (res) => {
+					if (res.data.state == 0) {
+						this.mmList = res.data.data
+					}
+				},
+				fail: (err) => {}
+			});
+			uni.request({
+				url: Interface.url.findNewInfo,
+				method: "GET",
+				data: {
+					type: 2
+				},
+				success: (res) => {
+					if (res.data.state == 0) {
+						this.NjList = res.data.data.map(item => {
+							if (item.transactionTypeCode == 0) {
+								item.transactionTypeCode = '收购'
+							} else if (item.transactionTypeCode == 1) {
+								item.transactionTypeCode = '出售'
+							} else if (item.transactionTypeCode == 2) {
+								item.transactionTypeCode = '出租'
+							} else if (item.transactionTypeCode == 3) {
+								item.transactionTypeCode = '播种'
+							} else if (item.transactionTypeCode == 4) {
+								item.transactionTypeCode = '植保'
+							} else if (item.transactionTypeCode == 5) {
+								item.transactionTypeCode = '收割'
+							}
+							return item
+						})
+					}
+				},
+				fail: (err) => {}
+			});
+			uni.request({
+				url: Interface.url.findLatestCaseInfo,
+				method: "GET",
+				data: {},
+				success: (res) => {
+					if (res.data.state == 0) {
+						this.ChList = res.data.data
+					}
+				},
+				fail: (err) => {}
+			});
 		},
 		methods: {
 			//组件监听搜索内容方法
@@ -145,14 +195,13 @@
 				console.log(e)
 			},
 			jump(item, index) {
-				console.log(item.to)
-				if (index != 0) {
+				if (item.tabMode != 0) {
 					uni.navigateTo({
-						url: item.to
+						url: item.routeUrl
 					});
 				} else {
 					uni.switchTab({
-						url: item.to
+						url: item.routeUrl
 					});
 				}
 			},
@@ -163,17 +212,17 @@
 			},
 			moreMm() {
 				uni.navigateTo({
-					url: '/pages/catalog/findDisease'
+					url: '/pages/catalog/grainTrade'
 				})
 			},
 			moreNj() {
 				uni.navigateTo({
-					url: '/pages/catalog/grainTrade'
+					url: '/pages/catalog/sellAgriculturalMachinery'
 				})
 			},
 			moreCh() {
 				uni.navigateTo({
-					url: '/pages/catalog/sellAgriculturalMachinery'
+					url: '/pages/catalog/findDisease'
 				})
 			},
 			detailsNf() {
@@ -188,12 +237,12 @@
 			},
 			detailsNj() {
 				uni.navigateTo({
-					url:  '/pages/grain/space?index=1'
+					url: '/pages/grain/space?index=1'
 				})
 			},
 			detailsCh() {
 				uni.navigateTo({
-					url:  '/pages/grain/richText'
+					url: '/pages/grain/richText'
 				})
 			},
 		}
@@ -224,8 +273,8 @@
 				align-items: center;
 
 				image {
-					width: 56rpx;
-					height: 56rpx;
+					width: 100%;
+					height: 100%;
 				}
 			}
 
@@ -247,12 +296,13 @@
 
 	.preview {
 		display: flex;
-		justify-content: space-between;
 		flex-wrap: wrap;
 
 		.buju {
 			width: 210rpx;
 			padding-bottom: 20rpx;
+			padding-left: 10rpx;
+			padding-right: 16rpx;
 
 			.img {
 				width: 210rpx;
@@ -292,7 +342,8 @@
 			}
 
 			.title {
-				line-height: 66rpx;
+				line-height: 32rpx;
+				margin-top: 20rpx;
 			}
 
 			.address {

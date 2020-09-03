@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import App from './App'
 import uView from "uview-ui";
+// 注册全局组件
+import MescrollBody from "./mescroll-uni/mescroll-body.vue"
+import MescrollUni from "./mescroll-uni/mescroll-uni.vue"
+Vue.component('mescroll-body', MescrollBody)
+Vue.component('mescroll-uni', MescrollUni)
 
 Vue.use(uView);
 Vue.config.productionTip = false

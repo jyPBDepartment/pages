@@ -14,24 +14,6 @@
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" >
-					农作物类型
-				</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="value" type="select" border @click="sexShow = true" />
-					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
-				</view>
-			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<view class="title f-14" >
-					农服类别
-				</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="value" type="select" border @click="sexShow = true" />
-					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
-				</view>
-			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<view class="title f-14" >
 					面积
 				</view>
 				<view class="info g-f-1" style="position: relative;">

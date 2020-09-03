@@ -18,7 +18,6 @@
 			}
 		},
 		onLoad(e) {
-			console.log(e)
 			if (e.state) {
 				this.state = e.state
 				if (e.state == 0) {
