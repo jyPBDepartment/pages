@@ -42,17 +42,11 @@
           <el-radio label="3">高粱</el-radio>
           <el-radio label="4">黄豆</el-radio>
         </el-radio-group>
-        <el-form-item label="收购价格(元)">
-          <el-input type="text" v-model="agrForm.purchasingPrice" readonly></el-input>
+        <el-form-item label="价格(元)">
+          <el-input type="text" v-model="agrForm.price" readonly></el-input>
         </el-form-item>
-        <el-form-item label="收购区域">
-          <el-input type="text" v-model="agrForm.purchasingArea" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="出售价格">
-          <el-input type="text" v-model="agrForm.sellingPrice" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="出售区域">
-          <el-input type="text" v-model="agrForm.sellingArea" readonly></el-input>
+        <el-form-item label="区域">
+          <el-input type="text" v-model="agrForm.address" readonly :show-overflow-tooltip="true"></el-input>
         </el-form-item>
         <el-form-item label="联系人">
           <el-input type="text" v-model="agrForm.contactsUser" readonly></el-input>
@@ -121,12 +115,6 @@
             <el-radio label="0">整活</el-radio>
             <el-radio label="1">零活</el-radio>
           </el-radio-group>
-        </el-form-item>
-        <el-form-item label="农活价格(元)">
-          <el-input type="text" v-model="agrForm.agriPrice" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="干活地点">
-          <el-input type="text" v-model="agrForm.workArea" readonly></el-input>
         </el-form-item>
         <el-form-item label="天数">
           <el-input type="text" v-model="agrForm.days" readonly></el-input>

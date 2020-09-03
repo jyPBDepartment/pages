@@ -3,6 +3,7 @@
 		<HeaderSearch title="粮食买卖" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10">
 			<view class="g-flex p-y-10 g-a-c" style="border-bottom: 1rpx solid #999;">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14">
 					标题
 				</view>
@@ -11,6 +12,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
+				<span style="color: #ffffff;">*</span>
 				<view class="title f-14" style="padding: 10rpx 0;">
 					描述
 				</view>
@@ -19,16 +21,18 @@
 				</view>
 			</view>
 			<view class="setcover">
+				
 				<view class="f-14" style="line-height: 80rpx;">
+					<span style="color: #ff0000;">*</span>
 					设置封面
 				</view>
 				<view class="img g-flex g-a-c g-j-c">
-					<!-- <image src="../../static/img/tabbar/addactive.png" mode=""></image> -->
 					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
 					 :file-list="fileList" max-count="1"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					类型
 				</view>
@@ -41,6 +45,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					种类
 				</view>
@@ -50,6 +55,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					价格
 				</view>
@@ -64,6 +70,7 @@
 				 height="64" />
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					联系人
 				</view>
@@ -72,6 +79,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					联系电话
 				</view>
@@ -80,6 +88,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					区域
 				</view>
@@ -115,18 +124,14 @@
 				show: false,
 				// 演示地址，请勿直接使用
 				action: ApiPath.url.uploadImg,
-				fileList: [
-					// {
-					// 	// url: '',
-					// }
-				],
+				fileList: [],
 				regionaStatus: false,
 				name: '',
 				descrip: '',
 				transactionTypeCode: '',
 				transactionTypeName: '收购',
 				transactionCategoryCode: '',
-				purchasingPrice: 0,
+				purchasingPrice: '0.0',
 				contactsUser: '',
 				contactsPhone: '',
 				purchasingArea: '',
@@ -257,6 +262,13 @@
 					})
 					return false;
 				}
+				
+				if(!/^\+?(\d*\.\d{1})$/.test(this.purchasingPrice)){
+					uni.showToast({
+						title: "请输入正确的价格"
+					})
+					return false;
+				}
 
 				if (this.contactsUser == '') {
 					uni.showToast({
@@ -277,6 +289,12 @@
 						title: "请输入联系电话"
 					})
 					return false;
+				}
+				if (!/^1[345789]\d{9}$/.test(this.contactsPhone)) {
+				     uni.showToast({
+				      title: "请输入正确的联系电话"
+				     })
+				     return false;
 				}
 
 				if (this.purchasingArea == '') {

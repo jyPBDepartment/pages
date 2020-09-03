@@ -52,11 +52,24 @@
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
 					<view class=" info g-f-1" style="position: relative;">
+						<u-input placeholder="请选择" v-model="transactionTypeName" type="select" border @click="sexShow1 = true" />
+						<u-action-sheet :list="agriCategory" v-model="sexShow1" @click="actionSheetCallback1"></u-action-sheet>
+					</view>
+				</view>
+			</view>
+			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #FA3534;" >*</span>
+				<view class="title f-14" style="width: 140rpx;">
+					农作物类别
+				</view>
+				<view class=" info g-f-1" style="position: relative;">
+					<view class=" info g-f-1" style="position: relative;">
 						<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" border @click="sexShow = true" />
 						<u-action-sheet :list="agriType" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 					</view>
 				</view>
 			</view>
+			
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #FA3534;" >*</span>
 				<view class="title f-14" style=" width: 140rpx;">
@@ -161,6 +174,8 @@
 				
 				name: '',
 				descrip: '',
+				transactionTypeName:'',
+				transactionTypeCode:'',
 				transactionCategoryCode: '',
 				transactionCategoryName: '',
 				machineNum: '',
@@ -199,13 +214,24 @@
 					}
 				],
 				sexShow: false,
+				sexShow1: false,
+				agriCategory: [
+					{
+						value: '3',
+						text: '播种'
+					},
+					{
+						value: '4',
+						text: '植保'
+					},
+					{
+						value: '5',
+						text: '收割'
+					}
+				],
 				agriType: [{
 						value: '0',
 						text: '玉米'
-					},
-					{
-						value: '1',
-						text: '农机'
 					},
 					{
 						value: '2',
@@ -253,6 +279,10 @@
 			actionSheetCallback(index) {
 				this.transactionCategoryName = this.agriType[index].text;
 				this.transactionCategoryCode = this.agriType[index].value;
+			},
+			actionSheetCallback1(index) {
+				this.transactionTypeName = this.agriCategory[index].text;
+				this.transactionTypeCode = this.agriCategory[index].value;
 			},
 			radioChange(index) {
 				// console.log(e);
@@ -315,10 +345,15 @@
 					})
 					return false;
 				}
-
-				if (this.transactionCategoryCode == '') {
+				if (this.transactionTypeCode == '') {
 					uni.showToast({
 						title: "请选择农作物类型"
+					})
+					return false;
+				}
+				if (this.transactionCategoryCode == '') {
+					uni.showToast({
+						title: "请选择农作物类别"
 					})
 					return false;
 				}
@@ -394,6 +429,7 @@
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
+					transactionTypeCode:this.transactionTypeCode,
 					transactionCategoryCode: this.transactionCategoryCode,
 					machineNum: this.machineNum,
 					isFace: this.isFaceCode,

@@ -12,6 +12,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
+				<span style="color: #ffffff;">*</span>
 				<view class="title f-14" style="padding: 10rpx 0;">
 					描述
 				</view>
@@ -87,16 +88,6 @@
 				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="purchasingPrice" height="64" />
 				<view v-if="isFace == '定价'" style="font-size: 32rpx;margin-left: 10rpx;">元</view>
 			</view>
-			<!-- <view class="g-flex p-y-10 g-a-c">
-				<view class="title f-14" style=" width: 140rpx;">
-					标签
-				</view>
-				<view class="info g-f-1 g-flex g-j-s-b" style="position: relative;">
-					<view class="tag f-12 g-flex g-a-c g-j-c" v-for="(item, index) in 4" :key="index">
-						九新
-					</view>
-				</view>
-			</view> -->
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
@@ -254,7 +245,6 @@
 		methods: {
 			
 			uploadSuccess(data, index, lists, name) {
-				console.log(data.url+"123456789")
 				this.url.push(data.url) ;
 				this.show = false;
 			},

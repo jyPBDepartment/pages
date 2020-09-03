@@ -65,7 +65,7 @@
         min-width="45%"
         max-width="50%"
       ></el-table-column>
-      <el-table-column prop="agriPrice" label="农活价格" align="center" min-width="45%" max-width="50%"></el-table-column>
+      <el-table-column prop="price" label="农活价格" align="center" min-width="45%" max-width="50%"></el-table-column>
        <el-table-column prop="isFace" label="是否面议" align="center" min-width="45%" max-width="50%">
            <template slot-scope="scope">
           <span v-if="scope.row.isFace==0">是</span>
@@ -100,11 +100,12 @@
         max-width="65%"
       ></el-table-column>
       <el-table-column
-        prop="workArea"
+        prop="address"
         label="干活地点"
         align="center"
         min-width="60%"
         max-width="65%"
+        :show-overflow-tooltip="true"
       ></el-table-column>
 
       <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">

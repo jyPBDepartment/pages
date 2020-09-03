@@ -71,13 +71,8 @@
         max-width="50%"
         :show-overflow-tooltip="true"
       ></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="50%" max-width="50%">
-        <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
-        </template>
-      </el-table-column>
       <el-table-column
-        prop="sellingPrice"
+        prop="price"
         label="出售价格"
         align="center"
         min-width="45%"
@@ -90,11 +85,12 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="sellingArea"
+        prop="address"
         label="出售区域"
         align="center"
         min-width="45%"
         max-width="50%"
+        :show-overflow-tooltip="true"
       ></el-table-column>
 
       <el-table-column
