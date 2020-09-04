@@ -54,10 +54,15 @@
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px"></el-table-column>
+      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="100px"></el-table-column>
+      <el-table-column prop="routeUrl" :show-overflow-tooltip="true" label="跳转路由" align="center" sortable min-width="100px"></el-table-column>
       <el-table-column prop="createUser" label="创建人" align="center" min-width="90px"></el-table-column>
-      <el-table-column prop="updateUser" label="修改人" align="center" min-width="90px"></el-table-column>
+      <el-table-column  label="跳转类型" align="center">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.tabMode == 0" type="success">标签</el-tag>
+          <el-tag v-if="scope.row.tabMode == 1" type="info">导航</el-tag>
+        </template>
+      </el-table-column>
       <!-- <el-table-column prop="sort" label="排序" align="center" min-width="100px"></el-table-column> -->
       <el-table-column  align="center" label="排序" width="200px" prop="sort">
         <template slot-scope="scope">

@@ -28,8 +28,8 @@
         <el-form-item label="跳转类型" prop="tabMode">
          <template>
             <el-radio-group v-model="moduleInfoForm.tabMode">
-              <el-radio :label='"0"'>目录</el-radio>
-              <el-radio :label='"1"'>菜单</el-radio>
+              <el-radio :label='"0"'>标签</el-radio>
+              <el-radio :label='"1"'>导航</el-radio>
             </el-radio-group>
           </template>
         </el-form-item>

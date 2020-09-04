@@ -41,8 +41,8 @@
         <el-form-item label="跳转类型" prop="tabMode">
          <template>
             <el-radio-group v-model="editForm.tabMode">
-              <el-radio label="0">直接跳转</el-radio>
-              <el-radio label="1">目录跳转</el-radio>
+              <el-radio label="0">标签</el-radio>
+              <el-radio label="1">导航</el-radio>
             </el-radio-group>
           </template>
         </el-form-item>
@@ -106,7 +106,7 @@ export default {
         id: "",
         url: "",
         routeUrl:"",
-        tabMode:"",
+        tabMode:"0",
         createUser: localStorage.getItem("userInfo"),
       },
       stateOptions: [
