@@ -4,7 +4,7 @@
 		<Screen :screenList="screenList" :condition="condition"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
-				<view class="app-modular g-flex" v-for="(item,index) in btnList" :key="index" @click="jumpInfo">
+				<view class="app-modular g-flex" v-for="(item,index) in btnList" :key="index" @click="jumpInfo(item.id)">
 
 
 					<image class="app-img" :src="item.imageUrl"></image> 
@@ -76,7 +76,7 @@
 				name: '',
 				address: '',
 				imageUrl: '',
-				
+				ids:'',
 				formInline: {
 					page: 1,
 					limit: 10,
@@ -165,12 +165,13 @@
 				});
 
 			},
-			jumpInfo() {
-				
-				uni.navigateTo({
-					url: '../../grain/paddy?id=402881e4744de37901744e0c0cae021c'
-				})
-			},
+			jumpInfo(getId) {
+			    this.ids=getId
+			    uni.navigateTo({
+			     url: '../../grain/paddy?id='+this.ids
+			    })
+			    
+			   },
 			jump() {
 				uni.navigateTo({
 					url: '../../grain/agriculturalAppointment'
