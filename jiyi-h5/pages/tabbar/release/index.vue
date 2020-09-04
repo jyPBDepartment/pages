@@ -2,7 +2,7 @@
 	<view>
 		<HeaderSearch hideBack title="发布" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10  g-flex g-a-c " style="position: absolute; bottom: 40rpx;">
-			<view class="btn f-12" v-for="(item, index) in btnList" @click="jump(item)" :key="index">
+			<view class="btn f-12" v-for="(item, index) in btnList" @click="jump(item, index)" :key="index">
 				<view class="img g-flex g-a-c g-j-c m-c">
 					<image :src="item.src" mode=""></image>
 				</view>
@@ -16,28 +16,19 @@
 
 <script>
 	import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue'
+	import ApiPath from "@/api/ApiPath.js";
 	export default {
 		components: {
 			HeaderSearch
 		},
 		data() {
 			return {
-				btnList: [{
-					src: '../../../static/logo.png',
-					url:'../../grain/agriculturalServices',
-					name: '农服'
-				}, {
-					src: '../../../static/logo.png',
-					url:'../../grain/grainTrade',
-					name: '粮食买卖'
-				}, {
-					src: '../../../static/logo.png',
-					url:'../../grain/leaseMachine',
-					name: '农机'
-				}]
+				btnList: []
 			};
 		},
-		onLoad() {},
+		onLoad() {
+			this.moduleShow();
+		},
 		onShow() {
 
 		},
@@ -45,6 +36,27 @@
 
 		},
 		methods: {
+			moduleShow() {
+				let param = {}
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.moduleShow, //请求接口路径
+					success: (res) => { //成功返回结果方法
+						if (res.data.state == 0) {
+							let resp = [];
+							for (var i = 0; i < res.data.data.length; i++) {
+								resp.push({
+									'url': res.data.data[i].linkUrl,
+									'src': res.data.data[i].picUrl,
+									'name': res.data.data[i].deployModuleName,
+								})
+							}
+							this.btnList = resp;
+						}
+					}
+				})
+			},
 			jump(item) {
 				uni.navigateTo({
 					url: item.url
@@ -60,14 +72,17 @@
 		margin-left: 40rpx;
 
 		.img {
-			width: 92rpx;
-			height: 92rpx;
-			background-color: #55be95;
-			border-radius: 26rpx;
+			border-radius: 28rpx;
+			overflow: hidden;
+			width: 100rpx;
+			height: 100rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
 			image {
-				width: 56rpx;
-				height: 56rpx;
+				width: 100%;
+				height: 100%;
 			}
 		}
 
