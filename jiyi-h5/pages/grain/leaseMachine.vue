@@ -85,7 +85,7 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="purchasingPrice" height="64" />
+				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="price" height="64" />
 				<view v-if="isFace == '定价'" style="font-size: 32rpx;margin-left: 10rpx;">元</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -125,7 +125,7 @@
 					区域
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="purchasingArea" type="select" border @click="regionaStatus = true" /></view>
+					<u-input placeholder="请选择" v-model="address" type="select" border @click="regionaStatus = true" /></view>
 			</view>
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
@@ -163,9 +163,9 @@
 				purchaseDate:'',
 				contactsUser: '',
 				contactsPhone: '',
-				purchasingArea:'',
+				address:'',
 				model:'',
-				purchasingPrice: '0.0',
+				price: '0.0',
 				transactionTypeCode:'0',
 				transactionCategoryCode:'1',
 				isFace:"面议",
@@ -291,7 +291,7 @@
 						}
 					}
 				});
-				this.purchasingArea = map;
+				this.address = map;
 			},
 			actionSheetCallback(index){
 				this.machineType= this.machineTypeList[index].value;
@@ -344,7 +344,7 @@
 					return false;
 				}
 				
-				if(!/^\+?(\d*\.\d{1})$/.test(this.purchasingPrice)){
+				if(!/^\+?(\d*\.\d{1})$/.test(this.price)){
 					uni.showToast({
 						title: "请输入正确的价格"
 					})
@@ -371,7 +371,7 @@
 				     return false;
 				    }
 				
-				if (this.purchasingArea == '') {
+				if (this.address == '') {
 					uni.showToast({
 						title: "请选择区域"
 					})
@@ -411,11 +411,11 @@
 					labelCode:this.labelCode,
 					contactsUser: this.contactsUser,
 					contactsPhone: this.contactsPhone,
-					purchasingArea:this.purchasingArea,
+					address:this.address,
 					transactionTypeCode:this.transactionTypeCode,
 					isFace:this.isFaceCode,
 					model:this.model,
-					purchasingPrice:this.purchasingPrice,
+					price:this.price,
 					transactionCategoryCode:this.transactionCategoryCode,
 					addItem:addItem,
 				}
