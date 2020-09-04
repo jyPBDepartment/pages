@@ -35,7 +35,7 @@
 		</view>
 
 		<view class="p-10">
-			<u-button type="error" shape="circle">立即预约</u-button>
+			<u-button type="error" shape="circle" @click.stop  @click="preview" style="margin-top: 30rpx;">立即预约</u-button>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
@@ -100,6 +100,11 @@
 						}
 					}
 
+				})
+			},
+			preview() {
+				uni.navigateTo({
+					url: '../grain/agriculturalAppointment'
 				})
 			}
 		}
