@@ -15,6 +15,24 @@
         <el-form-item label="模块名称" prop="name">
           <el-input size="small" type="text" v-model="moduleInfoForm.name" placeholder="请输入名称(不能超过16个字符)" style=" width:75%;" maxlength="16"></el-input>
         </el-form-item>
+        <el-form-item label="跳转路由" prop="routeUrl">
+          <el-input
+            type="text"
+            v-model="moduleInfoForm.routeUrl"
+            size="small"
+            placeholder="请输入跳转路由(不能超过16个字符)"
+            style="width:80%"
+            maxlength="16"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="跳转类型" prop="tabMode">
+         <template>
+            <el-radio-group v-model="moduleInfoForm.tabMode">
+              <el-radio :label='"0"'>目录</el-radio>
+              <el-radio :label='"1"'>菜单</el-radio>
+            </el-radio-group>
+          </template>
+        </el-form-item>
         <el-form-item label="模块图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
@@ -87,6 +105,8 @@ export default {
         name: "",
         status: "",
         url: "",
+        routeUrl:"",
+        tabMode:"",
       },
       //rules表单验证
       rules: {
@@ -105,6 +125,7 @@ export default {
       //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.moduleFindById, params).then((res) => {
         this.moduleInfoForm = res.data;
+        console.log(this.moduleInfoForm.tabMode);
         let url = res.data.url;
         let urlArry = url.split("/");
         let urlName = urlArry[urlArry.length - 1];
