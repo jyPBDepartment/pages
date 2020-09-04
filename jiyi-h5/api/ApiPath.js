@@ -32,6 +32,15 @@ const url = {
 	//根据农服标题名称查询农服列表信息
 	findAgriType: URLHost + '/agricultural/findAgriType',
 
+	//加载病虫害分页信息
+	findCasePage: URLHost + '/caseInfo/findCasePage',
+
+	//查询分类 -- 加载农作物分类
+	getCaseList: URLHost + '/classification/getCaseList',
+
+	//查询分类 -- 信息加载病虫害检索编码
+	getDipList: URLHost + '/classification/getDipList',
+
 
 
 }

@@ -1,10 +1,10 @@
 <template>
 	<view>
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
-		<Screen :screenList="screenList" :condition="condition" :type="2"></Screen>
+		<Screen @select="select" :condition="condition" :type="2"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10  g-flex g-f-warp g-f-row g-j-s-b" style="margin:20rpx 0;">
-				<view @click="jump" class="commodity b-f" v-for="(item, index) in dataList" :key="index">
+				<view @click="jump(item)" class="commodity b-f" v-for="(item, index) in dataList" :key="index">
 					<view class="label f-12">{{item.labelCode}}</view>
 					<image style="width: 316rpx;height: 298rpx;" :src="item.url" mode="">
 
@@ -17,12 +17,12 @@
 				</view>
 			</view>
 		</mescroll-body>
-
 	</view>
 </template>
 
 <script>
 	let _this
+	let type = 0
 	import Interface from '@/api/ApiPath.js'
 	import MescrollMixin from "@/mescroll-uni/mescroll-mixins.js";
 	import Screen from '@/components/Screen/screen.vue'
@@ -35,11 +35,21 @@
 		},
 		data() {
 			return {
-				condition: ["全部", "购买", "出售", "租赁", "筛选"],
-				screenList: [{
-					title: '机器类型',
-					category: ["xd-500", "39006", "WS654", "GX321"]
+				condition: [{
+					name: "全部",
+					code: null
+				}, {
+					name: "购买",
+					code: 0
+				}, {
+					name: "出售",
+					code: 1
+				}, {
+					name: "租赁",
+					code: 2
 				}],
+				searchName: '',
+				transactionTypeCode: null,
 				mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
 				// 下拉刷新的配置(可选, 绝大部分情况无需配置)
 				downOption: {
@@ -50,7 +60,7 @@
 					page: {
 						size: 10 // 每页数据的数量,默认10
 					},
-					noMoreSize: 5, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+					noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
 					empty: {
 						tip: '暂无相关数据'
 					}
@@ -60,10 +70,21 @@
 			}
 		},
 		methods: {
-			jump() {
+			removeSpaces(string) {
+				return string.replace(/\s*/g, '')
+			},
+			jump(item) {
 				uni.navigateTo({
-					url: '../grain/space?index=1'
+					url: `../grain/space?index=1&id=${item.id}`
 				})
+			},
+			search(e) {
+				this.searchName = this.removeSpaces(e)
+				this.downCallback()
+			},
+			select(code) {
+				this.transactionTypeCode = code
+				this.downCallback()
 			},
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
 			mescrollInit(mescroll) {
@@ -75,18 +96,28 @@
 			},
 			/*上拉加载的回调*/
 			upCallback(page) {
+				let url
+				if (this.searchName == '') url = Interface.url.findAgriType
+				if (this.searchName != '') url = Interface.url.findAgriInfo
+				this.request(page, url)
+			},
+			request(page, url) {
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
 				// 第1种: 请求具体接口
 				uni.request({
-					url: Interface.url.findAgriType,
+					url: url,
 					method: "GET",
 					data: {
 						type: 2,
+						name: this.searchName,
 						page: pageNum,
-						size: pageSize
+						size: pageSize,
+						transactionTypeCode: this.transactionTypeCode,
+
 					},
 					success: (res) => {
+						console.log(res.data)
 						if (res.data.state == 0) {
 							let curPageData = res.data.data.content
 							let curPageLen = curPageData.length;
@@ -103,7 +134,6 @@
 						this.mescroll.endErr()
 					}
 				});
-
 			}
 
 		}

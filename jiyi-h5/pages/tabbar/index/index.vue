@@ -41,7 +41,7 @@
 						<view class="img">
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-12 o-e" style="height: 47px;line-height: 23px;">{{item.name}}</p>
+						<p class="f-12 o-e" style="line-height: 32rpx;margin-top: 20rpx;">{{item.name}}</p>
 					</view>
 				</view>
 			</view>
@@ -58,7 +58,7 @@
 							<view class="tag f-12 t-c">{{item.transactionTypeCode}}</view>
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-12 o-e" style="height: 47px;line-height: 23px;">{{item.name}}</p>
+						<p class="f-12 o-e" style="line-height: 32rpx;margin-top: 20rpx;">{{item.name}}</p>
 					</view>
 				</view>
 			</view>
@@ -121,15 +121,17 @@
 				success: (res) => {
 					if (res.data.state == 0) {
 						this.nfList = res.data.data.map(item => {
-							let address
-							if (typeof(item.workArea) == "object") {
-								item.workArea = ''
-								address = item.workArea
+							if (item.workArea) {
+								let address
+								if (typeof(item.workArea) == "object") {
+									item.workArea = ''
+									address = item.workArea
+								}
+								if (item.workArea.split('/').length > 1) {
+									address = `${item.workArea.split('/')[0]}/${item.workArea.split('/')[1]}`
+								}
+								item.workArea = address
 							}
-							if (item.workArea.split('/').length > 1) {
-								address = `${item.workArea.split('/')[0]}/${item.workArea.split('/')[1]}`
-							}
-							item.workArea = address
 							return item
 						})
 					}
