@@ -34,7 +34,6 @@
         min-width="85px"
       ></el-table-column>
        <el-table-column prop="linkUrl" label="连接路径" align="center" sortable min-width="140px"></el-table-column>
-        <!-- <el-table-column prop="picUrl" label="图片路径" align="center" sortable min-width="140px"></el-table-column> -->
         <el-table-column prop="picUrl" label="图片" align="center" min-width="130px">
         <template slot-scope="scope">
           <el-image :src="scope.row.picUrl" style="width:100px;height:100px;"></el-image>

@@ -68,7 +68,6 @@
 				name: '',
 				address: '',
 				imageUrl: '',
-				ids:'',
 				formInline: {
 					page: 1,
 					limit: 10,
@@ -78,20 +77,18 @@
 					pageSize: 10,
 					total: 10,
 				},
-				btnList: [
-
-				],
+				btnList: [],
 				condition: [
 					{
-						code:1,
+						code:"",
 						name:"综合"
-					},{
-						code:3,
-						name: "植保"
-					}, 
+					},
 					{
-						code:4,
+						code:3,
 						name: "播种"
+					},{
+						code:4,
+						name: "植保"
 					}, 
 					{
 						code:5,
@@ -124,7 +121,6 @@
 				],
 				transactionTypeCode:null,
 				transactionCategoryCode: null,
-				// cropsTypeCode: null,
 				// 上拉加载的配置(可选, 绝大部分情况无需配置)
 				upOption: {
 					page: {
@@ -199,7 +195,6 @@
 						if (res.data.state == 0) {
 							
 							let curPageData = res.data.data.content
-							
 							let curPageLen = curPageData.length;
 						
 							//设置列表数据
@@ -224,9 +219,8 @@
 
 			},
 			jumpInfo(getId) {
-			    this.ids=getId
 			    uni.navigateTo({
-			     url: '../../grain/paddy?id='+this.ids
+			     url: '../../grain/paddy?id='+getId
 			    })
 			    
 			   },

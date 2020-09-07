@@ -83,8 +83,8 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="可见程度:">
-              <span v-if="postInfoForm.visibility==1" class="vis">全部可见</span>
-              <span v-if="postInfoForm.visibility==0" class="vis">自己可见</span>
+              <span v-if="postInfoForm.visibility==1">全部可见</span>
+              <span v-if="postInfoForm.visibility==0">自己可见</span>
             </el-form-item>
           </el-col>
           <el-col :span="11">
