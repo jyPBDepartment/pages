@@ -76,7 +76,7 @@
 					农机台数
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="machineNum" border height="64" />
+					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="machineNum" border height="64" maxlength="10"/>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -271,15 +271,18 @@
 			onChoose(lists, name) {
 				this.show = true;
 			},
+			//日期
 			change(e) {
 				this.value = e.startDate + "至" + e.endDate;
 				this.beginDate = e.startDate;
 				this.endTime = e.endDate;
 			},
+			//农作物类别
 			actionSheetCallback(index) {
 				this.transactionCategoryName = this.agriType[index].text;
 				this.transactionCategoryCode = this.agriType[index].value;
 			},
+			//农作物类型
 			actionSheetCallback1(index) {
 				this.transactionTypeName = this.agriCategory[index].text;
 				this.transactionTypeCode = this.agriCategory[index].value;
@@ -300,6 +303,7 @@
 			cancel() {
 				this.regionaStatus = false;
 			},
+			//区域
 			sure(data) {
 				console.log(data);
 				this.regionaStatus = false;
