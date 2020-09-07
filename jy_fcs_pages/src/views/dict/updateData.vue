@@ -105,11 +105,9 @@ export default {
       this.localShow = val;
     },
     currentDictType(val) {
-      //alert('111'+val);
       this.dataEditForm.dictType = val;
     },
     transDataId(val){
-      alert(val);
       let params = {
         id: val,
       };

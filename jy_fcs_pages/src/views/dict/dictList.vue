@@ -56,7 +56,6 @@
       row-key="id"
       default-expand-all
       size="mini"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column prop="dictType" label="字典编码" align="center" min-width="80px" max-width="110px"></el-table-column>
       <el-table-column prop="dictName" label="字典名称" align="center" min-width="80px" max-width="110px"></el-table-column>
@@ -154,7 +153,7 @@
         row-key="id"
         default-expand-all
         size="mini"
-        style="margin-left:10px"
+        style="margin-left:10px;height:100%"
       >
       
         <el-table-column prop="dictLabel" label="字典标签" align="center" min-width="80px" max-width="110px"></el-table-column>
@@ -312,7 +311,7 @@ export default {
       let params = {
         type: scope.row.dictType,
       };
-      console.log(scope.row.dictType);
+      //console.log(scope.row.dictType);
       api
         .testAxiosGet(ApiPath.url.findDataByType, params)
         .then((res) => {
@@ -508,6 +507,9 @@ export default {
 .height {
   margin-top: 6px;
 }
+ .el-table >.el-table__fixed-right {
+    height: 100% !important;
+  }
 </style>
 
 
