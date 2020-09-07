@@ -5,78 +5,68 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="55%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
       <el-form
-        
         ref="caseInfoForm"
         :model="caseInfoForm"
         label-width="120px"
         :label-position="labelPosition"
         @submit.native.prevent
+        
       >
-        <el-form-item label="名称" >
-          <el-input
-            type="text"
-            v-model="caseInfoForm.name"
-           
-            style=" width:70%;"
-            readonly
-          ></el-input>
+      <el-row :gutter="60">
+        <el-col :span="10">
+          <el-form-item label="病虫害名称:" style=" width:70%;">
+          <span>{{caseInfoForm.name}}</span>
         </el-form-item>
-        <el-form-item label="图片">
-          <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url" readonly></el-image>
-        </el-form-item>
-        <el-form-item label="农作物种类编码" >
-          <el-input
-            type="text"
-            v-model="caseInfoForm.cropsTypeCode"
-           
-            style=" width:70%;"
-            readonly
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="病虫害种类编码" >
-           <el-input
-            type="text"
-            v-model="caseInfoForm.dipTypeCode"           
-            style=" width:70%;"
-            readonly
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="描述"  class="bottom"   >
-          <el-input
-            type="textarea"
-            v-model="caseInfoForm.describetion"    
-            style=" width:70%;"
-            
-            :rows="3"
-            readonly
-          ></el-input>
-        </el-form-item>
-         <img src="../../assets/img/arrow.png" class="select"/>   
-        <el-form-item label="状态" >
-          <el-select v-model="caseInfoForm.auditStatus" disabled >            
-            <el-option label="启用" value="1" >启用</el-option>
-            <el-option label="禁用" value="0" >禁用</el-option>                   
-          </el-select>      
+        </el-col>
+        <el-col :span="10">
+        <el-form-item label="状态:">
+          <span v-if="caseInfoForm.auditStatus=='1'">启用</span>
+          <span v-if="caseInfoForm.auditStatus=='0'">禁用</span>
         </el-form-item>
          
+        </el-col>
+      </el-row>
+        <el-row :gutter="60">
+          <el-col :span="10">
+             <el-form-item label="农作物种类:">
+          <span>{{caseInfoForm.cropsTypeCode}}</span>
+        </el-form-item>
+          </el-col>
+          <el-col :span="10">
+              <el-form-item label="病虫害种类:">
+          <span>{{caseInfoForm.dipTypeCode}}</span>
+        </el-form-item>
+          </el-col>
+        </el-row>
+         <el-form-item label="病虫害图片:">
+          <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url" readonly></el-image>
+        </el-form-item>
+      
+        
+        <el-form-item label="描述" class="bottom" style="margin-left:-80px;">
+         
+          <el-card style="height: 350px;width:85%" >
+              <quill-editor
+                v-model="caseInfoForm.describetion"
+                ref="myQuillEditor"
+                style="height: 500px;width:100%"
+                disabled
+              ></quill-editor>
+            </el-card>
+        </el-form-item>
+       
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button
-        type="info"
-        icon="el-icon-close"
-        @click="close"
-        size="medium"
-       
-      >关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -85,6 +75,11 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import aes from "@/utils/aes.js";
+import { quillEditor } from "vue-quill-editor";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
 export default {
   inject: ["reload"],
   props: {
@@ -113,8 +108,6 @@ export default {
       caseInfoForm: {},
       cropsOptions: [],
       dipOptions: [],
-      
-     
     };
   },
   watch: {
@@ -158,31 +151,34 @@ export default {
     beforeClose: function () {
       this.close();
     },
+   
+  },
+   components: {
+       quillEditor 
   },
 };
 </script>
 
 <style scoped>
-  .el-form {
+.el-form {
   padding-left: 115px;
 }
-.bottom{
+.bottom {
   margin-bottom: 0px;
-  
 }
-.select{
-  width:30px;
-  height:20px;
-  margin-left:304px;
-  margin-bottom:-34px;
-  position:relative;
-  z-index:100;
+.select {
+  width: 30px;
+  height: 20px;
+  margin-left: 304px;
+  margin-bottom: -34px;
+  position: relative;
+  z-index: 100;
 }
 </style>
 <style>
-.el-input.is-disabled .el-input__inner{
+.el-input.is-disabled .el-input__inner {
   color: black;
-  background-color: #fff; 
+  background-color: #fff;
   scrollbar-arrow-color: #fff;
 }
 </style>

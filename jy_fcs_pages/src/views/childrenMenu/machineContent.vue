@@ -14,13 +14,12 @@
         <el-row :gutter="60">
           <el-col span="10">
             <el-form-item label="标题名称:" class="tableType">
-               <span>{{agrForm.name}}</span>
+              <span>{{agrForm.name}}</span>
             </el-form-item>
           </el-col>
           <el-col span="10">
             <el-form-item label="描述:" class="tableType">
-           
-                <span>{{agrForm.descrip}}</span>
+              <span>{{agrForm.descrip}}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -31,78 +30,27 @@
         </el-form-item>
         <el-row :gutter="60">
           <el-col :span="10">
-            <el-form-item label="开始时间:">
-              <!-- <el-date-picker v-model="agrForm.beginDate" type="date" readonly></el-date-picker> -->
-               <span>{{agrForm.beginDate}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="结束时间:">
-              <!-- <el-date-picker type="date" v-model="agrForm.endDate" readonly></el-date-picker> -->
-                <span>{{agrForm.endDate}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="天数:">
-             
-                <span>{{agrForm.days}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="价格(元):">
-
-               <span>{{agrForm.price}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
             <el-form-item label="交易类型:"></el-form-item>
             <el-radio-group
               v-model="agrForm.transactionTypeCode"
               style="padding-left:98px;margin-top:-104px;"
             >
-              <el-radio label="3">播种</el-radio>
-              <el-radio label="4">植保</el-radio>
-              <el-radio label="5">收割</el-radio>
+              <el-radio label="0">收购</el-radio>
+              <el-radio label="1">出售</el-radio>
+              <el-radio label="2">出租</el-radio>
             </el-radio-group>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="交易类别:"></el-form-item>
-            <el-radio-group
-              v-model="agrForm.transactionCategoryCode"
-              style="padding-left:98px;margin-top:-104px;"
-            >
-              <el-radio label="0">玉米</el-radio>
-              <el-radio label="2">水稻</el-radio>
-              <el-radio label="3">高粱</el-radio>
-              <el-radio label="4">黄豆</el-radio>
-            </el-radio-group>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="农机台数:">
-             
-               <span>{{agrForm.machineNum}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="干活地点:">
-            
-                <span>{{agrForm.address}}</span>
+            <el-form-item label="机器型号:">
+              <span>{{agrForm.model}}</span>
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row :gutter="60">
           <el-col :span="10">
-            <el-form-item label="农活方式:">
-              <el-radio-group v-model="agrForm.farmingMode">
-                <el-radio label="0">整活</el-radio>
-                <el-radio label="1">零活</el-radio>
-              </el-radio-group>
+            <el-form-item label="价格(元):">
+              <span>{{agrForm.price}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
@@ -117,48 +65,75 @@
         <el-row :gutter="60">
           <el-col :span="10">
             <el-form-item label="联系人:">
-             
-               <span>{{agrForm.contactsUser}}</span>
+              <span>{{agrForm.contactsUser}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label="联系方式:">
-            
               <span>{{agrForm.contactsPhone}}</span>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="60">
           <el-col :span="10">
+            <el-form-item label="区域:">
+              <span>{{agrForm.address}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="购买时间:">
+              <span>{{agrForm.purchaseDate}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="60">
+          <el-col :span="10">
+            <el-form-item label="机器类型:"></el-form-item>
+            <el-radio-group
+              v-model="agrForm.machineType"
+              style="padding-left:98px;margin-top:-104px;"
+            >
+              <el-radio label="0" style="margin-bottom:6px;">玉米收割机</el-radio>
+              <el-radio label="1" style="margin-bottom:6px;">水稻收割机</el-radio>
+              <el-radio label="2" style="margin-bottom:6px;">玉米播种机</el-radio>
+              <el-radio label="3" style="margin-bottom:6px;">水稻插秧机</el-radio>
+              <el-radio label="4">无人机喷药</el-radio>
+            </el-radio-group>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="标签:"  style="margin-left:-31px;">
+              <span>{{agrForm.labelCode}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="60">
+          <el-col :span="10">
             <el-form-item label="发布时间:">
-              <!-- <el-date-picker v-model="agrForm.createDate" type="datetime" readonly></el-date-picker> -->
-               <span>{{agrForm.createDate}}</span>
+              <span>{{agrForm.createDate}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label="修改时间:">
-              <!-- <el-date-picker v-model="agrForm.updateDate" type="datetime" readonly></el-date-picker> -->
-               <span>{{agrForm.updateDate}}</span>
+              <span>{{agrForm.updateDate}}</span>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="60">
           <el-col :span="10">
             <el-form-item label="发布人:">
-              
-                <span>{{agrForm.createUser}}</span>
+              <span>{{agrForm.createUser}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label="审核人:">
-             
-                <span>{{agrForm.updateUser}}</span>
+              <span>{{agrForm.updateUser}}</span>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="30">
           <el-form-item label="审核理由:" style="width: 60%; padding-left: 15px;">
-            <span v-if="agrForm.status == '0'" >
+            <span v-if="agrForm.status == '0'">
               <el-input v-model="agrForm.examineReason" type="textarea" size="small"></el-input>
             </span>
             <span
@@ -199,7 +174,7 @@ export default {
       type: String,
       default: "对话框",
     },
-    agrContentId: {
+    machineContentId: {
       type: String,
     },
   },
@@ -219,7 +194,7 @@ export default {
       this.localShow = val;
     },
     //根据Id查询用户信息
-    agrContentId(val) {
+    machineContentId(val) {
       let params = {
         id: val,
       };
@@ -286,7 +261,7 @@ export default {
   padding-left: 80px;
   width: 100%;
 }
-.el-input__inner{
-  border:0px solid #fff !important;
+.el-input__inner {
+  border: 0px solid #fff !important;
 }
 </style>

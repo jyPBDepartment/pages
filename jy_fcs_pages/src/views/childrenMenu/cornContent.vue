@@ -29,44 +29,15 @@
             <el-image style="width: 100px; height: 100px;margin-right:15px;" :src="item" readonly></el-image>
           </span>
         </el-form-item>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="开始时间:">
-              <!-- <el-date-picker v-model="agrForm.beginDate" type="date" readonly></el-date-picker> -->
-               <span>{{agrForm.beginDate}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="结束时间:">
-              <!-- <el-date-picker type="date" v-model="agrForm.endDate" readonly></el-date-picker> -->
-                <span>{{agrForm.endDate}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="天数:">
-             
-                <span>{{agrForm.days}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="价格(元):">
-
-               <span>{{agrForm.price}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
+       <el-row :gutter="60">
           <el-col :span="10">
             <el-form-item label="交易类型:"></el-form-item>
             <el-radio-group
               v-model="agrForm.transactionTypeCode"
               style="padding-left:98px;margin-top:-104px;"
             >
-              <el-radio label="3">播种</el-radio>
-              <el-radio label="4">植保</el-radio>
-              <el-radio label="5">收割</el-radio>
+              <el-radio label="0">收购</el-radio>
+              <el-radio label="1">出售</el-radio>
             </el-radio-group>
           </el-col>
           <el-col :span="10">
@@ -84,33 +55,17 @@
         </el-row>
         <el-row :gutter="60">
           <el-col :span="10">
-            <el-form-item label="农机台数:">
-             
-               <span>{{agrForm.machineNum}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="干活地点:">
-            
-                <span>{{agrForm.address}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="农活方式:">
-              <el-radio-group v-model="agrForm.farmingMode">
-                <el-radio label="0">整活</el-radio>
-                <el-radio label="1">零活</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
             <el-form-item label="是否面议:">
               <el-radio-group v-model="agrForm.isFace">
                 <el-radio label="0">是</el-radio>
                 <el-radio label="1">否</el-radio>
               </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="价格(元):">
+
+               <span>{{agrForm.price}}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -128,16 +83,20 @@
             </el-form-item>
           </el-col>
         </el-row>
+         <el-form-item label="区域:">
+            
+                <span>{{agrForm.address}}</span>
+            </el-form-item>
         <el-row :gutter="60">
           <el-col :span="10">
             <el-form-item label="发布时间:">
-              <!-- <el-date-picker v-model="agrForm.createDate" type="datetime" readonly></el-date-picker> -->
+             
                <span>{{agrForm.createDate}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label="修改时间:">
-              <!-- <el-date-picker v-model="agrForm.updateDate" type="datetime" readonly></el-date-picker> -->
+              
                <span>{{agrForm.updateDate}}</span>
             </el-form-item>
           </el-col>
@@ -199,7 +158,7 @@ export default {
       type: String,
       default: "对话框",
     },
-    agrContentId: {
+    cornContentId: {
       type: String,
     },
   },
@@ -219,7 +178,7 @@ export default {
       this.localShow = val;
     },
     //根据Id查询用户信息
-    agrContentId(val) {
+    cornContentId(val) {
       let params = {
         id: val,
       };
