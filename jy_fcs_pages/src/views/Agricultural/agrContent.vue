@@ -12,12 +12,12 @@
     <slot>
       <el-form ref="agrForm" :model="agrForm" label-width="100px" :label-position="labelPosition">
         <el-row :gutter="60">
-          <el-col span="10">
+          <el-col :span="10">
             <el-form-item label="标题名称:" class="tableType">
                <span>{{agrForm.name}}</span>
             </el-form-item>
           </el-col>
-          <el-col span="10">
+          <el-col :span="10">
             <el-form-item label="描述:" class="tableType">
            
                 <span>{{agrForm.descrip}}</span>
