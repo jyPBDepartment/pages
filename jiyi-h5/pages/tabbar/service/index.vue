@@ -1,12 +1,10 @@
 <template>
 	<view class="service">
 		<HeaderSearch hideBack @searchCallback="search"></HeaderSearch>
-		<Screen :screenList="screenList" :condition="condition"></Screen>
+		<Screen @screened="screened" :screenList="screenList" @select="select" :condition="condition"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
 				<view class="app-modular g-flex" v-for="(item,index) in btnList" :key="index" @click="jumpInfo(item.id)">
-
-
 					<image class="app-img" :src="item.imageUrl"></image> 
 
 					<view class="app-info g-f-1">
@@ -39,7 +37,6 @@
 	import MescrollMixin from "@/mescroll-uni/mescroll-mixins.js";
 	import Screen from '../../../components/Screen/screen.vue'
 	import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue'
-	
 	//后台路径引用
 	import ApiPath from "@/api/ApiPath.js";
 	export default {
@@ -66,13 +63,8 @@
 						tip: '暂无相关数据'
 					}
 				},
-				// updateKeyWordFlag:false,
-				child: '',
-				state: false,
-				msg: '',
-				transKeyWordId: '',
-				transactionTypeCode: '',
-				transactionCategoryCode: '',
+				transactionTypeCode: '', //类型 植保3 4 5
+				transactionCategoryCode: '', //交易类别
 				name: '',
 				address: '',
 				imageUrl: '',
@@ -90,27 +82,93 @@
 
 				],
 				condition: [
-					"综合", "植保", "播种", "收割", "筛选"
-				],
-				screenList: [{
-						title: '农作物类别',
-						category: ["玉米", "水稻", "高粱", "水稻"]
+					{
+						code:1,
+						name:"综合"
+					},{
+						code:3,
+						name: "植保"
+					}, 
+					{
+						code:4,
+						name: "播种"
+					}, 
+					{
+						code:5,
+						name: "收割"
 					},
 					{
-						title: '类别',
-						category: ["虫害", "草害", "病害"]
+						code:0,
+						name: "筛选"
+					}, 
+				],
+				screenList: [{
+					title: '农作物类别',
+					category: [{
+						code:0,
+						name:"玉米"
+					},{
+						code:2,
+						name: "水稻"
+					}, 
+					{
+						code:3,
+						name: "高粱"
+					}, 
+					{
+						code:4,
+						name: "黄豆"
+					}]
+
+					},
+				],
+				transactionTypeCode:null,
+				transactionCategoryCode: null,
+				// cropsTypeCode: null,
+				// 上拉加载的配置(可选, 绝大部分情况无需配置)
+				upOption: {
+					page: {
+						size: 10 // 每页数据的数量,默认10
+					},
+					noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+					empty: {
+						tip: '暂无相关数据'
 					}
-				]
+				},
 			}
 		},
 		onLoad() {
-
+			// uni.request({
+			// 	url: ApiPath.url.getCaseList,
+			// 	method: "GET",
+			// 	data: {},
+			// 	success: (res) => {
+			// 		if (res.data.state == 0) {
+			// 			let data = res.data.data.map(item => {
+			// 				item.code = item.id
+			// 				return item
+			// 			})
+			// 			this.screenList[0].category = data
+			// 		}
+			// 	}
+			// });
 		},
 		methods: {
-			//组件
-			// upKeyWord() {
-			//      this.updateKeyWordFlag = false;
-			//    },
+			removeSpaces(string) {
+				return string.replace(/\s*/g, '')
+			},
+			search(e) {
+				this.searchName = this.removeSpaces(e)
+				this.downCallback()
+			},
+			select(code) {
+				this.transactionTypeCode = code
+				this.downCallback()
+			},
+			screened(code) {
+				this.transactionCategoryCode = code
+				this.downCallback()
+			},
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
@@ -118,10 +176,6 @@
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
 				this.mescroll.resetUpScroll();
-			},
-
-			search(e) {
-				console.log(e)
 			},
 			
 			/*上拉加载的回调*/
@@ -133,13 +187,17 @@
 					url: ApiPath.url.agrSearch,
 					method: "GET",
 					data: {
+						name: this.searchName,
 						type: 0,
 						page: pageNum,
-						size: pageSize
+						size: pageSize,
+						transactionCategoryCode: this.transactionCategoryCode,
+						transactionTypeCode:this.transactionTypeCode,
 					},
 					success: (res) => {
 						
 						if (res.data.state == 0) {
+							
 							let curPageData = res.data.data.content
 							
 							let curPageLen = curPageData.length;
