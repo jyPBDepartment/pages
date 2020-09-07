@@ -86,6 +86,9 @@ import Comment from '@/views/comment/comment';
 //日志管理
 import dbLog from '@/views/dbLog/logShow';
 
+//字典管理
+import dict from '@/views/dict/dictList';
+
 // 启用路由
 Vue.use(Router);
 
@@ -267,6 +270,13 @@ export default new Router({
             path: '/dbLog/logShow',
             name: '日志管理',
             component: dbLog,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/dict/dictList',
+            name: '日志管理',
+            component: dict,
             meta: {
                 requireAuth: true
             }
