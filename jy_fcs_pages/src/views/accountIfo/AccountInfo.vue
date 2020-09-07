@@ -251,7 +251,7 @@ export default {
       let params = {
         id: scope.row.id,
         auditStatus: scope.row.auditStatus,
-        updateUser:scope.row.updateUser
+        updateUser:localStorage.getItem("userInfo")
       };
       api.testAxiosGet(ApiPath.url.accountInfoEnable, params).then(res => {
         let code = res.status;

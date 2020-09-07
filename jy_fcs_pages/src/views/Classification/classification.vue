@@ -139,6 +139,7 @@
         row-key="id"
         default-expand-all
         size="mini"
+        style="height:100%"
       >
         <el-table-column prop="code" label="分类编码" align="center" min-width="80px" max-width="110px"></el-table-column>
         <el-table-column prop="name" label="分类名称" align="center" min-width="80px" max-width="110px"></el-table-column>
@@ -428,6 +429,9 @@ export default {
 .height {
   margin-top: 6px;
 }
+ .el-table >.el-table__fixed-right {
+    height: 100% !important;
+  }
 </style>
 
 

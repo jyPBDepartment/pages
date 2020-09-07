@@ -71,8 +71,7 @@
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="200px">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="examine(scope)">审核</el-button>
-          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small">查看详情</el-button>
+          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small">信息审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -81,17 +80,15 @@
     <update-postInfo
       :show="updatePostInfoFlag"
       :transPostInfoId="transPostInfoId"
-      title="查看详情"
+      title="信息审核"
       @close="closeUpdatePostInfoDialog"
       @save="upPostInfo"
     ></update-postInfo>
-    <examine :show="examineFlag" :examineId="examineId" title="审核" @close="closeexamineDialog"></examine>
   </div>
 </template>
 <script>
 import Pagination from "../../components/Pagination";
 import UpdatePostInfo from "./UpdatePostInfo";
-import examine from "./examine";
 //后台路径引用
 import qs from "qs";
 import Vue from "vue";
@@ -119,9 +116,7 @@ export default {
       editFormVisible: false, //控制编辑页面显示与隐藏
       addPostInfo: false,
       updatePostInfoFlag: false,
-      examineFlag: false,
       transPostInfoId: "",
-      examineId: "",
       formInline: {
         page: 1,
         limit: 10,
@@ -139,7 +134,6 @@ export default {
   components: {
     Pagination,
     UpdatePostInfo,
-    examine,
   },
 
   watch: {
@@ -196,9 +190,6 @@ export default {
     upPostInfo() {
       this.updatePostInfoFlag = false;
     },
-    closeexamineDialog: function () {
-      this.examineFlag = false;
-    },
     //启用/禁用
     postInfoEnable: function (scope) {
       let params = {
@@ -215,17 +206,13 @@ export default {
             this.$message.success(res.message);
           }
           this.reload();
-        })
-        .catch(function (error) {});
+        });
+        // .catch(function (error) {});
     },
     //显示编辑界面
     openUpdatePostInfo(scope) {
       this.transPostInfoId = scope.row.id;
       this.updatePostInfoFlag = true;
-    },
-    examine(scope) {
-      this.examineId = scope.row.id;
-      this.examineFlag = true;
     },
     //重置
     resetForm(search) {

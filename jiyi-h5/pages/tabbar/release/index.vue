@@ -47,9 +47,9 @@
 							let resp = [];
 							for (var i = 0; i < res.data.data.length; i++) {
 								resp.push({
-									'url': res.data.data[i].linkUrl,
-									'src': res.data.data[i].picUrl,
-									'name': res.data.data[i].deployModuleName,
+									'url': res.data.data[i].linkUrl, //连接路径
+									'src': res.data.data[i].picUrl, //图片地址
+									'name': res.data.data[i].deployModuleName, //发布模块名称
 								})
 							}
 							this.btnList = resp;
@@ -59,7 +59,7 @@
 			},
 			jump(item) {
 				uni.navigateTo({
-					url: item.url
+					url: item.url //跳转地址
 				})
 			}
 		}

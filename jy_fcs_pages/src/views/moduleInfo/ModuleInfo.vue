@@ -131,6 +131,7 @@ export default {
       name: "",
       url: "",
       status: "",
+      updateUser:"",
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
       menuAccessshow: false, //控制数据权限显示与隐藏
@@ -217,6 +218,7 @@ export default {
       let params = {
         id: scope.row.id,
         status: scope.row.status,
+        updateUser: localStorage.getItem("userInfo")
       };
       api
         .testAxiosGet(ApiPath.url.moduleInfoEnable, params)
