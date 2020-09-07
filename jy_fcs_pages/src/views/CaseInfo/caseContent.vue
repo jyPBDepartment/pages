@@ -17,51 +17,46 @@
         label-width="120px"
         :label-position="labelPosition"
         @submit.native.prevent
-        
       >
-      <el-row :gutter="60">
-        <el-col :span="10">
-          <el-form-item label="病虫害名称:" style=" width:70%;">
-          <span>{{caseInfoForm.name}}</span>
-        </el-form-item>
-        </el-col>
-        <el-col :span="10">
-        <el-form-item label="状态:">
-          <span v-if="caseInfoForm.auditStatus=='1'">启用</span>
-          <span v-if="caseInfoForm.auditStatus=='0'">禁用</span>
-        </el-form-item>
-         
-        </el-col>
-      </el-row>
         <el-row :gutter="60">
           <el-col :span="10">
-             <el-form-item label="农作物种类:">
-          <span>{{caseInfoForm.cropsTypeCode}}</span>
-        </el-form-item>
+            <el-form-item label="病虫害名称:" style=" width:70%;">
+              <span>{{caseInfoForm.name}}</span>
+            </el-form-item>
           </el-col>
           <el-col :span="10">
-              <el-form-item label="病虫害种类:">
-          <span>{{caseInfoForm.dipTypeCode}}</span>
-        </el-form-item>
+            <el-form-item label="状态:">
+              <span v-if="caseInfoForm.auditStatus=='1'">启用</span>
+              <span v-if="caseInfoForm.auditStatus=='0'">禁用</span>
+            </el-form-item>
           </el-col>
         </el-row>
-         <el-form-item label="病虫害图片:">
+        <el-row :gutter="60">
+          <el-col :span="10">
+            <el-form-item label="农作物种类:">
+              <span>{{caseInfoForm.cropsTypeCode}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="病虫害种类:">
+              <span>{{caseInfoForm.dipTypeCode}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="病虫害图片:">
           <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url" readonly></el-image>
         </el-form-item>
-      
-        
+
         <el-form-item label="描述" class="bottom" style="margin-left:-80px;">
-         
-          <el-card style="height: 350px;width:85%" >
-              <quill-editor
-                v-model="caseInfoForm.describetion"
-                ref="myQuillEditor"
-                style="height: 500px;width:100%"
-                disabled
-              ></quill-editor>
-            </el-card>
+          <el-card style="height: 350px;width:85%">
+            <quill-editor
+              v-model="caseInfoForm.describetion"
+              ref="myQuillEditor"
+              style="height: 500px;width:100%"
+              disabled
+            ></quill-editor>
+          </el-card>
         </el-form-item>
-       
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -75,11 +70,11 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
-import aes from "@/utils/aes.js";
-import { quillEditor } from "vue-quill-editor";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
+import aes from "@/utils/aes.js";
+import { quillEditor } from "vue-quill-editor";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
 export default {
   inject: ["reload"],
   props: {
@@ -151,10 +146,9 @@ export default {
     beforeClose: function () {
       this.close();
     },
-   
   },
-   components: {
-       quillEditor 
+  components: {
+    quillEditor,
   },
 };
 </script>
