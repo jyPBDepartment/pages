@@ -58,6 +58,7 @@
 						success: (res) => {
 							if (res.data.state == 0) {
 								this.list = res.data.data
+								console.log(res.data.data)
 							}
 						},
 						fail: (err) => {}

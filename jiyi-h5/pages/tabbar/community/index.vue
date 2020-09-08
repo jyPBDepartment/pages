@@ -4,7 +4,10 @@
 		<view class="tabs g-flex g-j-s-a g-a-c f-14">
 			<view @click="selectTab(index)" :class="index == tabIndex && 'tab-hover'" v-for="(item, index) in tabsList" :key="index">{{item}}</view>
 		</view>
-		<CommunityInfo @click="jump" v-for="(item, index) in communityList" :key="index" :communityInfo="item" />
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<CommunityInfo @click="jump" v-for="(item, index) in dataList" :key="index" :communityInfo="item" />
+		</mescroll-body>
+
 		<uni-drawer ref="drawer" mode="right" :visible="true">
 			<view style="padding:46rpx 20rpx">
 				<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">筛选类别</view>
@@ -23,9 +26,12 @@
 </template>
 
 <script>
+	import Interface from '@/api/ApiPath.js'
+	import MescrollMixin from "@/mescroll-uni/mescroll-mixins.js";
 	import uniDrawer from "@/components/uni-drawer/uni-drawer.vue"
 	import CommunityInfo from '../../../components/CommunityInfo/CommunityInfo.vue'
 	export default {
+		mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 		components: {
 			uniDrawer,
 			CommunityInfo
@@ -35,23 +41,27 @@
 				tabIndex: 0,
 				tabsList: ["全部", "推荐", "无人机", "筛选"],
 				categoryList: ["推荐", "无人机", "季节", "水稻"],
-				communityList: [{
-					title: '直播水稻和插秧到底有什么样的优劣势？',
-					content: '1.水稻直播优缺点 1、水稻直播 水稻直播指的是直接将种子播种的稻田之中,而不经过育苗、移栽的过程。 2、优点水稻直播省去了育苗、移栽、插秧的过程,省时省工;水稻直播不存在返1.水稻直播优缺点 1、水稻直播水稻直播指的是直接将种子播种的稻田之中,而不经过育苗、移栽的过程。 2、优点 水稻直播省去了育苗、移栽、插秧的过程,省时省工;水稻直播不存在返...',
-					author: '吉易慧农',
-					commentQuantity: '1543',
-					releaseTime: '1天前'
-				}, {
-					title: '直播水稻和插秧到底有什么样的优劣势？',
-					content: '1.水稻直播优缺点 1、水稻直播 水稻直播指的是直接将种子播种的稻田之中,而不经过育苗、移栽的过程。 2、优点水稻直播省去了育苗、移栽、插秧的过程,省时省工;水稻直播不存在返1.水稻直播优缺点 1、水稻直播水稻直播指的是直接将种子播种的稻田之中,而不经过育苗、移栽的过程。 2、优点 水稻直播省去了育苗、移栽、插秧的过程,省时省工;水稻直播不存在返...',
-					author: '吉易慧农',
-					commentQuantity: '1543',
-					releaseTime: '1天前'
-				}]
+				postType:null,
+				mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
+				// 下拉刷新的配置(可选, 绝大部分情况无需配置)
+				downOption: {
+
+				},
+				// 上拉加载的配置(可选, 绝大部分情况无需配置)
+				upOption: {
+					page: {
+						size: 10 // 每页数据的数量,默认10
+					},
+					noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+					empty: {
+						tip: '暂无相关数据'
+					}
+				},
+				// 列表数据
+				dataList: []
 			}
 		},
 		onLoad() {
-
 		},
 		methods: {
 			selectTab(index) {
@@ -66,6 +76,49 @@
 				uni.navigateTo({
 					url: `../../grain/article?params=${JSON.stringify(item)}`
 				})
+			},
+			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+			},
+			/*下拉刷新的回调, 有三种处理方式:*/
+			downCallback() {
+				this.mescroll.resetUpScroll();
+			},
+			/*上拉加载的回调*/
+			upCallback(page) {
+				this.request(page, Interface.url.findAllPostInfo)
+			},
+			request(page, url) {
+				let pageNum = page.num; // 页码, 默认从1开始
+				let pageSize = page.size; // 页长, 默认每页10条
+				// 第1种: 请求具体接口
+				uni.request({
+					url: url,
+					method: "GET",
+					data: {
+						page: pageNum,
+						size: pageSize,
+						postType:this.postType
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.state == 0) {
+							let curPageData = res.data.data.content
+							let curPageLen = curPageData.length;
+							//设置列表数据
+							if (page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
+							this.dataList = this.dataList.concat(curPageData); //追加新数据
+							this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
+						}
+						// 请求成功,隐藏加载状态
+						this.mescroll.endSuccess()
+					},
+					fail: (err) => {
+						// 请求失败,隐藏加载状态
+						this.mescroll.endErr()
+					}
+				});
 			}
 		}
 	}

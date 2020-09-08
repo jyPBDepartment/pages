@@ -107,7 +107,12 @@
 				data: {},
 				success: (res) => {
 					if (res.data.state == 0) {
-						this.btnList = res.data.data
+						this.btnList = res.data.data.map(item => {
+							if (item.url != '') {
+								item.url = item.url.split(',')[0]
+							}
+							return item
+						})
 					}
 				},
 				fail: (err) => {}
@@ -120,6 +125,8 @@
 				},
 				success: (res) => {
 					if (res.data.state == 0) {
+
+						console.log(res.data)
 						this.nfList = res.data.data.map(item => {
 							if (item.workArea) {
 								let address
@@ -131,6 +138,9 @@
 									address = `${item.workArea.split('/')[0]}/${item.workArea.split('/')[1]}`
 								}
 								item.workArea = address
+							}
+							if (item.url != '') {
+								item.url = item.url.split(',')[0]
 							}
 							return item
 						})
@@ -146,7 +156,12 @@
 				},
 				success: (res) => {
 					if (res.data.state == 0) {
-						this.mmList = res.data.data
+						this.mmList = res.data.data.map(item => {
+							if (item.url != '') {
+								item.url = item.url.split(',')[0]
+							}
+							return item
+						})
 					}
 				},
 				fail: (err) => {}
@@ -173,6 +188,9 @@
 							} else if (item.transactionTypeCode == 5) {
 								item.transactionTypeCode = '收割'
 							}
+							if (item.url != '') {
+								item.url = item.url.split(',')[0]
+							}
 							return item
 						})
 					}
@@ -185,7 +203,12 @@
 				data: {},
 				success: (res) => {
 					if (res.data.state == 0) {
-						this.ChList = res.data.data
+						this.ChList = res.data.data.map(item => {
+							if (item.url != '') {
+								item.url = item.url.split(',')[0]
+							}
+							return item
+						})
 					}
 				},
 				fail: (err) => {}

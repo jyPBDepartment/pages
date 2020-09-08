@@ -1,15 +1,15 @@
 <template>
 	<view class="content p-10" @click="jump(communityInfo)">
 		<view class="title f-16">
-			{{ communityInfo.title }}
+			{{ communityInfo.name }}
 		</view>
 		<view class="simple f-12 o-e3">
-			{{ communityInfo.content }}
+			{{ communityInfo.code }}
 		</view>
 		<view class="article-info f-12 g-flex">
 			<view style="width: 168rpx;">{{ communityInfo.author }}</view>
-			<view class="g-f-1">{{ communityInfo.commentQuantity }}评论</view>
-			<view style="color: #999999;">{{ communityInfo.releaseTime }}</view>
+			<view class="g-f-1">{{ communityInfo.commentSize }}评论</view>
+			<view style="color: #999999;">{{ communityInfo.time }}</view>
 		</view>
 	</view>
 </template>

@@ -30,14 +30,10 @@
 
 					<view class="count">共{{sum}}天</view>
 				</view>
-
 				<view class="text g-f-1 f-12" style="color: #999999;margin-top: 24rpx;" v-for="item in info" :key="item">
 					{{item}}
 				</view>
-
 			</view>
-
-
 		</view>
 		<view class="btn g-flex">
 			<view class="g-f-1">

@@ -1,7 +1,7 @@
 //配置后台接口
 //开发环境基础路径地址
-// const URLHost = 'http://192.168.120.52:8080';
-const URLHost = 'http://localhost:8080';
+const URLHost = 'http://192.168.1.100:8080';
+// const URLHost = 'http://localhost:8080';
 //生产环境基础路径地址
 // const URLHost = 'http://60.205.246.126/jy_fcs';
 const url = {
@@ -41,6 +41,15 @@ const url = {
 
 	//查询分类 -- 信息加载病虫害检索编码
 	getDipList: URLHost + '/classification/getDipList',
+
+	//加载帖子类别滑块项
+	addPostInfo: URLHost + '/postInfo/addPostInfo',
+
+	//新增帖子
+	getPostType: URLHost + '/postInfo/getPostType',
+
+	//加载帖子列表
+	findAllPostInfo: URLHost + '/postInfo/findAllPostInfo',
 
 
 	//农服预约

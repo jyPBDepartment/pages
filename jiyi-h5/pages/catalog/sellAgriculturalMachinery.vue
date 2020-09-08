@@ -119,7 +119,12 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.state == 0) {
-							let curPageData = res.data.data.content
+							let curPageData = res.data.data.content.map(item =>{
+								if (item.url != '') {
+									item.url = item.url.split(',')[0]
+								}
+								return item
+							})
 							let curPageLen = curPageData.length;
 							//设置列表数据
 							if (page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
