@@ -28,6 +28,24 @@
             maxlength="16"
           ></el-input>
         </el-form-item>
+        <el-form-item label="跳转路由" prop="routeUrl">
+          <el-input
+            type="text"
+            v-model="editForm.routeUrl"
+            size="small"
+            placeholder="请输入跳转路由(不能超过16个字符)"
+            style="width:80%"
+            maxlength="16"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="跳转类型" prop="tabMode">
+         <template>
+            <el-radio-group v-model="editForm.tabMode">
+              <el-radio label="0">标签</el-radio>
+              <el-radio label="1">导航</el-radio>
+            </el-radio-group>
+          </template>
+        </el-form-item>
         <el-form-item label="模块图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
@@ -87,6 +105,8 @@ export default {
         name: "",
         id: "",
         url: "",
+        routeUrl:"",
+        tabMode:"0",
         createUser: localStorage.getItem("userInfo"),
       },
       stateOptions: [

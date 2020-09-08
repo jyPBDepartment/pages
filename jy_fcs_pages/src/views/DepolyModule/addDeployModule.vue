@@ -36,26 +36,31 @@
             style="width:80%"
           ></el-input>
         </el-form-item>
-        <el-form-item label="图片路径" prop="picUrl">
-          <el-input
-            type="text"
-            v-model="editForm.picUrl"
-            size="small"
-            placeholder="请输入图片路径"
-            style="width:80%"
-          ></el-input>
+        <el-form-item label="模块图片" prop="imgUrl">
+          <el-link type="danger" class="required" :underline="false">*</el-link>
+          <el-upload
+            style="width:80%;margin-top:-38px;"
+            class="upload-demo"
+            :action="upload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            list-type="picture"
+            :on-success="uploadSuccess"
+            :limit="limit"
+            :on-exceed="uploadExceed"
+            :beforeUpload="beforeAvatarUpload"
+          >
+            <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
+            <div slot="tip">只能上传jpg/png文件，且不超过1M</div>
+          </el-upload>
         </el-form-item>
       </el-form>
     </slot>
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button
-        :disabled="isDisable"
-        type="primary"
-        icon="el-icon-check"
-        @click="saveModuleInfo('editForm')"
-      >保存</el-button>
+      <el-button :disabled="isDisable" type="primary" icon="el-icon-check" @click="saveDeployModule('editForm')" >保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -81,6 +86,10 @@ export default {
     return {
       isDisable: false,
       labelPosition: "right",
+      upload: ApiPath.url.uploadImg,
+      fileList: [],
+      limit: 1,
+      imgUrl: "",
       editForm: {
         deployModuleName: "",
         linkUrl: "",
@@ -95,9 +104,6 @@ export default {
         linkUrl: [
           { required: true, message: "请输入连接路径", trigger: "blur" },
         ],
-        picUrl: [
-          { required: true, message: "请输入图片路径", trigger: "blur" },
-        ],
       },
     };
   },
@@ -108,6 +114,38 @@ export default {
   },
   mounted() {},
   methods: {
+    beforeAvatarUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension = testmsg === "jpg";
+      const extension2 = testmsg === "png";
+      const isLt2M = file.size / 1024 / 1024 < 1;
+      if (!extension && !extension2) {
+        this.$message({
+          message: "上传文件只能是 jpg、png格式!",
+          type: "warning",
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: "上传文件大小不能超过 1M!",
+          type: "warning",
+        });
+      }
+      return extension || (extension2 && isLt2M);
+    },
+    uploadExceed(files, fileList) {
+      this.$message.error("只能上传一个图片，如需修改请先删除图片！");
+      return;
+    },
+    uploadSuccess(response, file, fileList) {
+      this.imgUrl = response.url;
+    },
+    handleRemove(file, fileList) {
+      (this.imgUrl = ""), console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
     beforeClose() {
       this.close();
     },
@@ -115,7 +153,7 @@ export default {
       this.$emit("close");
     },
     //新增保存
-    saveModuleInfo(editData) {
+    saveDeployModule(editData) {
       this.$refs[editData].validate((valid) => {
         if (this.editForm.deployModuleName == "") {
           this.$alert("发布模块名称不能为空", "提示", {
@@ -129,32 +167,38 @@ export default {
           });
           return false;
         }
-        if (this.editForm.picUrl == "") {
+        if (this.editForm.imgUrl == "") {
           this.$alert("图片路径不能为空", "提示", {
             confirmButtonText: "确定",
           });
           return false;
         }
         if (valid) {
-          this.isDisable = true;
-          let params = {
-            deployModuleEntity: this.editForm,
-          };
-          api
-            .testAxiosGet(ApiPath.url.addDeployModule, params)
-            .then((res) => {
-              let code = res.state;
-              if (code == "0") {
-                this.reload();
-                this.$message.success(res.message);
-                this.loading = false;
-              } else {
-                this.$message.error(res.message);
-              }
-            })
-            .catch(function (err) {
-              this.isDisable = false;
-            });
+          if (this.imgUrl != "") {
+            this.editForm.picUrl = this.imgUrl;
+            this.isDisable = true;
+            let params = {
+              deployModuleEntity: this.editForm,
+            };
+            api
+              .testAxiosGet(ApiPath.url.addDeployModule, params)
+              .then((res) => {
+                let code = res.state;
+                if (code == "0") {
+                  this.reload();
+                  this.$message.success(res.message);
+                  this.loading = false;
+                } else {
+                  this.$message.error(res.message);
+                }
+              })
+              .catch(function (err) {
+                this.isDisable = false;
+              });
+          } else {
+            this.$message.error("请上传图片");
+            return;
+          }
         } else {
           return false;
         }

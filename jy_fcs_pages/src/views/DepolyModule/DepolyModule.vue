@@ -34,7 +34,11 @@
         min-width="85px"
       ></el-table-column>
        <el-table-column prop="linkUrl" label="连接路径" align="center" sortable min-width="140px"></el-table-column>
-        <el-table-column prop="picUrl" label="图片路径" align="center" sortable min-width="140px"></el-table-column>
+        <el-table-column prop="picUrl" label="图片" align="center" min-width="130px">
+        <template slot-scope="scope">
+          <el-image :src="scope.row.picUrl" style="width:100px;height:100px;"></el-image>
+        </template>
+      </el-table-column>
       <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px"></el-table-column>
       <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px"></el-table-column>
       <el-table-column prop="createUser" label="创建人" align="center" min-width="90px"></el-table-column>
@@ -53,14 +57,12 @@
       </el-table-column>
       <el-table-column align="center" label="操作" width="200px">
         <template slot-scope="scope">
-          <el-button
-            @click="openUpdateModuleInfo(scope)"
+          <el-button @click="openUpdateModuleInfo(scope)"
             type="primary"
             size="small"
             icon="el-icon-edit"
           >编辑</el-button>
-          <el-button
-            @click="deleteModuleInfo(scope)"
+          <el-button @click="deleteModuleInfo(scope)"
             type="danger"
             size="small"
             icon="el-icon-delete"
@@ -99,7 +101,9 @@ export default {
   data() {
     return {
       deployModuleName: "",
+      picUrl:"",
       status: "",
+      updateUser:"",
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
       menuAccessshow: false, //控制数据权限显示与隐藏
@@ -177,6 +181,7 @@ export default {
       let params = {
         id: scope.row.id,
         status: scope.row.status,
+        updateUser: localStorage.getItem("userInfo")
       };
       api
         .testAxiosGet(ApiPath.url.deployModuleEnable, params)

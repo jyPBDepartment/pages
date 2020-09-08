@@ -205,6 +205,30 @@ const url = {
   getNavMenuList:URLHost + '/menu/getNavData',
   //修改模块排序
   changeModuleSort:URLHost + '/moduleInfo/changeSort',
+  //获取字典类型分页数据
+  findDictType:URLHost + '/dict/findTypeByName',
+  //保存字典类别
+  saveDictType:URLHost + '/dict/addType',
+  //保存字典键值
+  saveDictData:URLHost + '/dict/addData',
+  //启用禁用字典类型
+  dictTypeEnable:URLHost + '/dict/enableType',
+  //启用禁用字典键值
+  dictDataEnable:URLHost + '/dict/enableData',
+  //删除字典类别
+  deleteDictType:URLHost + '/dict/deleteDictType',
+  //删除字典键值
+  deleteDictData:URLHost + '/dict/deleteDictData',
+  //根据id获取字典类别信息
+  findDictTypeById:URLHost + '/dict/findTypeById',
+  //根据id获取字典键值信息
+  findDictDataById:URLHost + '/dict/findDataById',
+  //修改字典类别
+  updateDictType:URLHost + '/dict/updateType',
+  //修改字典键值
+  updateDictData:URLHost + '/dict/updateData',
+  //根据类别获取所有键值
+  findDataByType:URLHost + '/dict/findDataByType',
 }
 export default {
   url

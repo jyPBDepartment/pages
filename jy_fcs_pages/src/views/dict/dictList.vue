@@ -8,26 +8,26 @@
     <br />
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
-      <el-form-item label="分类编码">
-        <el-input
-          v-model="code"
-          type="text"
-          :maxlength="10"
-          placeholder="请输入分类编码"
-          class="el-input el-input--small"
-          clearable
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="分类名称">
+      <el-form-item label="字典名称">
         <el-input
           v-model="name"
           type="text"
           :maxlength="10"
-          placeholder="请输入分类名称"
+          placeholder="请输入字典类型名称"
           class="el-input el-input--small"
           clearable
         ></el-input>
       </el-form-item>
+      <el-form-item label="状态" prop="status">
+          <el-select v-model="status" style="width:80%" size="small">
+            <el-option
+              v-for="item in auditStatusOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
       <el-button
         type="warning"
         size="small"
@@ -43,7 +43,7 @@
         class="height"
       >重置</el-button>
       <el-row>
-        <el-button type="success" @click="openRuleTag" size="small" icon="el-icon-plus">添加</el-button>
+        <el-button type="success" @click="openDictTag" size="small" icon="el-icon-plus">添加</el-button>
       </el-row>
     </el-form>
 
@@ -56,35 +56,27 @@
       row-key="id"
       default-expand-all
       size="mini"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="code" label="分类编码" align="center" min-width="80px" max-width="110px"></el-table-column>
-      <el-table-column prop="name" label="分类名称" align="center" min-width="80px" max-width="110px"></el-table-column>
+      <el-table-column prop="dictType" label="字典编码" align="center" min-width="80px" max-width="110px"></el-table-column>
+      <el-table-column prop="dictName" label="字典名称" align="center" min-width="80px" max-width="110px"></el-table-column>
       <!--switch开关（表单）-->
       <el-table-column align="center" prop="status" label="状态" min-width="50px" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            active-value="1"
-            inactive-value="0"
+            active-value="0"
+            inactive-value="1"
             active-color="rgb(19, 206, 102)"
             inactive-color="rgb(255, 73, 73)"
-            @change="classiEnable(scope)"
+            @change="typeEnable(scope)"
           ></el-switch>
         </template>
       </el-table-column>
       <el-table-column sortable prop="createDate" label="创建时间" align="center" width="180"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="180"></el-table-column>
       <el-table-column
-        prop="createUser"
+        prop="createBy"
         label="创建人"
-        align="center"
-        min-width="80px"
-        max-width="115px"
-      ></el-table-column>
-      <el-table-column
-        prop="updateUser"
-        label="修改人"
         align="center"
         min-width="80px"
         max-width="115px"
@@ -98,7 +90,7 @@
             icon="el-icon-edit"
           >编辑</el-button>
           <el-button
-            @click="deleteClassification(scope)"
+            @click="deleteType(scope)"
             type="danger"
             size="small"
             icon="el-icon-delete"
@@ -108,7 +100,7 @@
             size="small"
             @click="table = true,check(scope)"
             icon="el-icon-view"
-          >查看</el-button>
+          >管理键值</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -118,7 +110,7 @@
     <br />
     <add-classification
       :show="addClassificationFlag"
-      title="添加分类信息"
+      title="添加字典"
       @close="closeRuleTagDialog"
       @save="saveRuleTag"
     ></add-classification>
@@ -131,7 +123,29 @@
       @save="updateClassification"
     ></update-classification>
 
-    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl" size="50%">
+    <add-data
+      :show="addDataFlag"
+      :currentDictType= "currentDictType"
+      title="新增键值"
+      @close="closeAddDataDialog"
+      @save="saveDataEntity"
+    >
+    </add-data>
+      
+    <update-data
+      :show="updateDataFlag"
+      :currentDictType= "currentDictType"
+      :transDataId = "transDataId"
+      title="修改键值"
+      @close="closeUpdateDataDialog"
+      @save="updateDataEntity"
+    >
+    </update-data>
+
+    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl"  size="50%">
+      <el-row >
+        <el-button style="margin-left:10px" type="success" @click="openAddDataDialog" size="small" icon="el-icon-plus">添加</el-button>
+      </el-row>
       <el-table
         :data="gridData"
         border
@@ -139,49 +153,35 @@
         row-key="id"
         default-expand-all
         size="mini"
-        style="height:100%"
+        style="margin-left:10px;height:100%"
       >
-        <el-table-column prop="code" label="分类编码" align="center" min-width="80px" max-width="110px"></el-table-column>
-        <el-table-column prop="name" label="分类名称" align="center" min-width="80px" max-width="110px"></el-table-column>
+      
+        <el-table-column prop="dictLabel" label="字典标签" align="center" min-width="80px" max-width="110px"></el-table-column>
+        <el-table-column prop="dictValue" label="键值" align="center" min-width="80px" max-width="110px"></el-table-column>
         <!--switch开关（表单）-->
-        <el-table-column align="center" prop="status" label="状态" min-width="80px" max-width="100px">
-          <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.status"
-              active-value="1"
-              inactive-value="0"
-              active-color="rgb(19, 206, 102)"
-              inactive-color="rgb(255, 73, 73)"
-              @change="classiEnable(scope)"
-            ></el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
-        <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
-        <el-table-column
-          prop="createUser"
-          label="创建人"
-          align="center"
-          min-width="80px"
-          max-width="115px"
-        ></el-table-column>
-        <el-table-column
-          prop="updateUser"
-          label="修改人"
-          align="center"
-          min-width="80px"
-          max-width="115px"
-        ></el-table-column>
+        <el-table-column align="center" prop="status" label="状态" min-width="50px" max-width="80px">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="0"
+            inactive-value="1"
+            active-color="rgb(19, 206, 102)"
+            inactive-color="rgb(255, 73, 73)"
+            @change="dataEnable(scope)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+        <el-table-column prop="dictSort" label="排序" align="center" min-width="80px" max-width="110px"></el-table-column>
         <el-table-column fixed="right" label="操作" width="220px" align="center">
           <template slot-scope="scope">
             <el-button
-              @click="openUpdateDialog(scope)"
+              @click="openUpateDataDialog(scope)"
               type="primary"
               size="small"
               icon="el-icon-edit"
             >编辑</el-button>
             <el-button
-              @click="deleteClassification(scope)"
+              @click="deleteData(scope)"
               type="danger"
               size="small"
               icon="el-icon-delete"
@@ -198,8 +198,10 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-import AddClassification from "./addClassification.vue";
-import UpdateClassification from "./updateClassification.vue";
+import AddClassification from "./addDict.vue";
+import AddData from "./addData.vue";
+import UpdateData from "./updateData.vue";
+import UpdateClassification from "./updateDict.vue";
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -218,11 +220,15 @@ export default {
   data() {
     return {
       table: false,
-      code: "",
       name: "",
+      status:"",
       updateClassificationFlag: false,
+      addDataFlag:false,
+      updateDataFlag:false,
       transClassificationId: "",
+      transDataId:"",
       transTagCode: "",
+      currentDictType:"",
       tagCode: "",
       tagName: "",
       localShow: this.show,
@@ -231,6 +237,11 @@ export default {
       mainBodyCode: "",
       tableData: [],
       gridData:[],
+      auditStatusOptions: [
+        { value: "", label: "全部" },
+        { value: "0", label: "启用" },
+        { value: "1", label: "禁用" }
+      ],
       formInline: {
         page: 1,
         limit: 10,
@@ -253,13 +264,13 @@ export default {
   },
   methods: {
     //switch开关
-    classiEnable: function (scope) {
+    typeEnable: function (scope) {
       let params = {
         id: scope.row.id,
         status: scope.row.status,
       };
       api
-        .testAxiosGet(ApiPath.url.classiEnable, params)
+        .testAxiosGet(ApiPath.url.dictTypeEnable, params)
         .then((res) => {
           let code = res.state;
           if (code == "1") {
@@ -267,7 +278,24 @@ export default {
           } else {
             this.$message.success(res.message);
           }
-          this.reload();
+        })
+        .catch(function (error) {});
+    },
+    //switch开关
+    dataEnable: function (scope) {
+      let params = {
+        id: scope.row.id,
+        status: scope.row.status,
+      };
+      api
+        .testAxiosGet(ApiPath.url.dictDataEnable, params)
+        .then((res) => {
+          let code = res.state;
+          if (code == "1") {
+            this.$message.success(res.message);
+          } else {
+            this.$message.success(res.message);
+          }
         })
         .catch(function (error) {});
     },
@@ -279,16 +307,17 @@ export default {
     },
     //子菜单查询方法
     check: function (scope) {
+      this.currentDictType = scope.row.dictType;
       let params = {
-        id: scope.row.id,
+        type: scope.row.dictType,
       };
+      //console.log(scope.row.dictType);
       api
-        .testAxiosGet(ApiPath.url.menuClassification, params)
+        .testAxiosGet(ApiPath.url.findDataByType, params)
         .then((res) => {
-          let code = res.status;
+          let code = res.state;
           if (code == "0") {
             this.gridData = res.data;
-          } else {
           }
         })
         .catch(function (error) {});
@@ -300,13 +329,13 @@ export default {
         this.formInline.limit = 10;
       }
       let params = {
-        code: this.code,
         name: this.name,
+        status:this.status,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
       api
-        .testAxiosGet(ApiPath.url.searchClassification, params)
+        .testAxiosGet(ApiPath.url.findDictType, params)
         .then((res) => {
           let code = res.state;
           if (code == "0") {
@@ -314,8 +343,7 @@ export default {
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
             this.pageparm.total = res.data.totalElements;
-          } else {
-          }
+          } 
         })
         .catch(function (error) {});
     },
@@ -323,8 +351,8 @@ export default {
       this.updateClassificationFlag = false;
     },
     updateClassification: function () {},
-    //删除
-    deleteClassification(scope) {
+    //删除字典类别
+    deleteType(scope) {
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -334,9 +362,9 @@ export default {
           id: scope.row.id,
         };
         api
-          .testAxiosGet(ApiPath.url.deleteClassification, params)
+          .testAxiosGet(ApiPath.url.deleteDictType, params)
           .then((res) => {
-            let code = res.status;
+            let code = res.state;
             if (code == "1") {
               this.$message.warning(res.message);
               this.reload();
@@ -344,7 +372,36 @@ export default {
               this.$message.success(res.message);
               this.reload();
             } else {
-              this.$alert("删除失败，请先解除关联关系！", "提示", {
+              this.$alert("删除失败，请联系系统管理员！", "提示", {
+                confirmButtonText: "确定",
+              });
+              this.reload();
+            }
+          });
+      });
+    },
+    //删除字典键值
+    deleteData(scope) {
+      this.$confirm("确定要删除吗?", "信息", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        let params = {
+          id: scope.row.id,
+        };
+        api
+          .testAxiosGet(ApiPath.url.deleteDictData, params)
+          .then((res) => {
+            let code = res.state;
+            if (code == "1") {
+              this.$message.warning(res.message);
+              this.reload();
+            } else if (code == "0") {
+              this.$message.success(res.message);
+              this.reload();
+            } else {
+              this.$alert("删除失败，请联系系统管理员！", "提示", {
                 confirmButtonText: "确定",
               });
               this.reload();
@@ -359,6 +416,25 @@ export default {
         generateType: "gz",
       };
     },
+    closeAddDataDialog(){
+      this.addDataFlag = false;
+    },
+    closeUpdateDataDialog(){
+      this.updateDataFlag = false;
+    },
+    saveDataEntity(){
+      this.addDataFlag = false;
+    },
+    updateDataEntity(){
+      this.updateDataFlag = false;
+    },
+    openAddDataDialog(){
+      this.addDataFlag = true;
+    },
+    openUpateDataDialog(scope){
+      this.transDataId = scope.row.id;
+      this.updateDataFlag = true;
+    },
     openUpdateDialog(scope) {
       this.transClassificationId = scope.row.id;
       this.updateClassificationFlag = true;
@@ -370,13 +446,13 @@ export default {
     modifyRuleTag() {
       this.updateRuleTag = false;
     },
-    openRuleTag() {
+    openDictTag() {
       this.addClassificationFlag = true;
     },
     // 重置
     resetRuleTag(search) {
-      this.code = "";
-      this.name = "";
+      this.dictName = "";
+      this.status = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
@@ -407,6 +483,8 @@ export default {
     AddClassification,
     UpdateClassification,
     Pagination,
+    AddData,
+    UpdateData,
   },
 };
 </script>

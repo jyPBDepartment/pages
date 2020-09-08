@@ -87,6 +87,7 @@ export default {
   data() {
     return {
       name: "",
+      updateUser:"",
       nshow: true, //switch开启
       fshow: false, //switch关闭
       loading: false, //是显示加载
@@ -170,6 +171,7 @@ export default {
       let params = {
         id: scope.row.id,
         auditStatus: scope.row.auditStatus,
+        updateUser: localStorage.getItem("userInfo")
       };
       api
         .testAxiosGet(ApiPath.url.keyWordEnable, params)

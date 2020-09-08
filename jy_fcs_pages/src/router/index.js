@@ -13,18 +13,14 @@ import ModuleInfo from '@/views/moduleInfo/ModuleInfo';
 import PowerInfo from '@/views/powerInfo/powerInfo';
 //关键字管理
 import KeyWord from '@/views/keyWord/KeyWord'
-//农服管理
+//农服发布
 import Agricultural from '@/views/Agricultural/agricultural';
 //看图识病
 import CaseInfo from '@/views/CaseInfo/caseInfo'
-//收购粮食
-import PurchaseCorn from '@/views/childrenMenu/PurchaseCorn'
-//粮食出售
-import SellFoodstuff from '@/views/childrenMenu/sellFoodstuff'
-//农机出售
+//农机发布
 import SellAgriMachinery from '@/views/childrenMenu/sellAgriMachinery'
-//农机出售
-import CornSowing from '@/views/childrenMenu/CornSowing'
+//粮食买卖发布
+import CornBusiness from '@/views/childrenMenu/CornBusiness'
 
 
 /**
@@ -86,6 +82,9 @@ import Comment from '@/views/comment/comment';
 //日志管理
 import dbLog from '@/views/dbLog/logShow';
 
+//字典管理
+import dict from '@/views/dict/dictList';
+
 // 启用路由
 Vue.use(Router);
 
@@ -138,40 +137,26 @@ export default new Router({
             }
         }, {
             path: '/Agricultural/agricultural',
-            name: '农服管理',
+            name: '农服发布',
             component: Agricultural,
             meta: {
                 requireAuth: true
             }
         },
-        {
-            path: '/childrenMenu/PurchaseCorn',
-            name: '粮食收购',
-            component: PurchaseCorn,
-            meta: {
-                requireAuth: true
-            }
-        },
-        {
-            path: '/childrenMenu/sellFoodstuff',
-            name: '粮食出售',
-            component: SellFoodstuff,
-            meta: {
-                requireAuth: true
-            }
-        },
+        
+        
         {
             path: '/childrenMenu/sellAgriMachinery',
-            name: '农机出售',
+            name: '农机发布',
             component: SellAgriMachinery,
             meta: {
                 requireAuth: true
             }
         },
         {
-            path: '/childrenMenu/CornSowing',
-            name: '粮食播种',
-            component: CornSowing,
+            path: '/childrenMenu/CornBusiness',
+            name: '粮食买卖',
+            component: CornBusiness,
             meta: {
                 requireAuth: true
             }
@@ -267,6 +252,13 @@ export default new Router({
             path: '/dbLog/logShow',
             name: '日志管理',
             component: dbLog,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/dict/dictList',
+            name: '日志管理',
+            component: dict,
             meta: {
                 requireAuth: true
             }

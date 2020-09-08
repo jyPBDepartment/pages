@@ -55,11 +55,11 @@ const url = {
 	//农服预约
 	appointment: URLHost + '/farmwork/save',
 	//加载农服列表
-	agrSearch: URLHost + '/agricultural/findAgriType',
+	agrSearch: URLHost + '/agricultural/findAgriInfo',
 	//查询发布模块信息
 	moduleShow: URLHost + '/deployModuleInfo/findAllDeployModuleInfo',
 	//农服预约详情页面
-	transKeyWordId: URLHost + '/agricultural/findId'
+	transKeyWordId: URLHost + '/agricultural/findId',
 
 }
 export default {

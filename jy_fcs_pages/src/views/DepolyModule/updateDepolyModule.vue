@@ -11,31 +11,56 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :rules="rules" ref="deployModuleForm" :model="deployModuleForm" label-width="100px" :label-position="labelPosition">
-         <el-form-item label="发布模块" prop="deployModuleName">
-          <el-input type="text" v-model="deployModuleForm.deployModuleName" size="small" placeholder="请输入发布模块名称" style="width:80%"></el-input>
+      <el-form
+        :rules="rules"
+        ref="deployModuleForm"
+        :model="deployModuleForm"
+        label-width="100px"
+        :label-position="labelPosition"
+      >
+        <el-form-item label="发布模块" prop="deployModuleName">
+          <el-input
+            type="text"
+            v-model="deployModuleForm.deployModuleName"
+            size="small"
+            placeholder="请输入发布模块名称"
+            style="width:80%"
+          ></el-input>
         </el-form-item>
         <el-form-item label="连接路径" prop="linkUrl">
-          <el-input type="text" v-model="deployModuleForm.linkUrl" size="small" placeholder="请输入连接路径"  style="width:80%"></el-input>
+          <el-input
+            type="text"
+            v-model="deployModuleForm.linkUrl"
+            size="small"
+            placeholder="请输入连接路径"
+            style="width:80%"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="图片路径" prop="picUrl">
-          <el-input type="text"  v-model="deployModuleForm.picUrl" size="small"  placeholder="请输入图片路径" style="width:80%" ></el-input>
+        <el-form-item label="模块图片" prop="imgUrl">
+          <el-link type="danger" class="required" :underline="false">*</el-link>
+          <el-upload
+            style="width:75%;margin-top:-38px;"
+            class="upload-demo"
+            :action="upload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            list-type="picture"
+            :on-success="uploadSuccess"
+            :limit="1"
+            :on-exceed="uploadExceed"
+            :beforeUpload="beforeAvatarUpload"
+          >
+            <el-button size="small" type="primary" style="width:150%" icon="el-icon-plus">点击上传</el-button>
+            <div slot="tip">只能上传jpg/png文件，且不超过1M</div>
+          </el-upload>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button
-      :disabled="saveFlag"
-        type="primary"
-        icon="el-icon-check"
-        @click="updateModule('deployModuleForm')"
-      >保存</el-button>
-      <el-button
-        type="info"
-        icon="el-icon-close"
-        @click="close"
-      >关闭</el-button>
+      <el-button :disabled="saveFlag" type="primary" icon="el-icon-check" @click="updateModule('deployModuleForm')">保存</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -61,15 +86,19 @@ export default {
   },
   data() {
     return {
-      saveFlag:false,
+      saveFlag: false,
       localShow: this.show,
       isShow: false,
+      limit: 1,
+      imgUrl: "",
+      upload: ApiPath.url.uploadImg,
+      fileList: [],
       labelPosition: "right",
       editFormVisible: false,
-      deployModuleForm:{
-        deployModuleName:"",
-        linkUrl:"",
-        picUrl:"",
+      deployModuleForm: {
+        deployModuleName: "",
+        linkUrl: "",
+        picUrl: "",
       },
       //rules表单验证
       rules: {
@@ -79,9 +108,7 @@ export default {
         linkUrl: [
           { required: true, message: "请输入连接路径", trigger: "blur" },
         ],
-        picUrl: [
-          { required: true, message: "请输入图片路径", trigger: "blur" },
-        ],
+
       },
     };
   },
@@ -96,19 +123,58 @@ export default {
       //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.depolyModuleFindId, params).then((res) => {
         this.deployModuleForm = res.data;
+         let url = res.data.picUrl;
+        let urlArry = url.split("/");
+        let urlName = urlArry[urlArry.length - 1];
+        this.fileList.push({ name: urlName, url: url });
+        this.imgUrl = res.data.picUrl;
       });
     },
   },
-  mounted() {},
-  methods: {
 
+  mounted() {},
+
+  methods: {
     handle() {
       this.isShow = true;
     },
     cancal() {
       this.isShow = false;
     },
-    
+
+    beforeAvatarUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension = testmsg === "jpg";
+      const extension2 = testmsg === "png";
+      const isLt2M = file.size / 1024 / 1024 < 1;
+      if (!extension && !extension2) {
+        this.$message({
+          message: "上传文件只能是 jpg、png格式!",
+          type: "warning",
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: "上传文件大小不能超过 1M!",
+          type: "warning",
+        });
+      }
+      return extension || (extension2 && isLt2M);
+    },
+    uploadExceed(files, fileList) {
+      this.$message.error("只能上传一个图片，如需修改请先删除图片！");
+      return;
+    },
+    uploadSuccess(response, file, fileList) {
+      this.imgUrl = response.url;
+    },
+    handleRemove(file, fileList) {
+      this.imgUrl = "";
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
     updateModule(editData) {
       this.$refs[editData].validate((valid) => {
         if (this.deployModuleForm.deployModuleName == "") {
@@ -123,13 +189,15 @@ export default {
           });
           return false;
         }
-        if (this.deployModuleForm.picUrl == "") {
+        if (this.deployModuleForm.imgUrl == "") {
           this.$alert("图片路径不能为空", "提示", {
             confirmButtonText: "确定",
           });
           return false;
         }
         if (valid) {
+          if (this.imgUrl != "") {
+            this.deployModuleForm.picUrl = this.imgUrl;
             this.saveFlag = true;
             let params = { deployModuleEntity: this.deployModuleForm };
             api
@@ -138,11 +206,15 @@ export default {
                 this.$message.success(res.message);
                 this.reload();
               })
-              .catch(function(err) {
+              .catch(function (err) {
                 this.saveFlag = false;
                 this.$message.error(err.data);
               });
             this.deployModuleForm.updateUser = localStorage.getItem("userInfo");
+          } else {
+            this.$message.error("请上传图片");
+            return;
+          }
         } else {
           return false;
         }
