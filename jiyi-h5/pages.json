@@ -7,6 +7,9 @@
 			"path": "pages/tabbar/index/index"   //首页
 		},
 		{
+			"path": "pages/catalog/potentialCustomers"  //意向客户详情
+		},
+		{
 			"path": "pages/grain/potentialCustomers"  //意向客户详情
 		},
 		{

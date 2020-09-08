@@ -2,7 +2,8 @@
 	<view>
 		<HeaderSearch title="圈子" @searchCallback="search"></HeaderSearch>
 		<view class="tabs g-flex g-j-s-a g-a-c f-14">
-			<view @click="selectTab(index)" :class="index == tabIndex && 'tab-hover'" v-for="(item, index) in tabsList" :key="index">{{item}}</view>
+			<view @click="selectTab(item, index)" :class="(index == tabIndex) && 'tab-hover'" v-for="(item, index) in tabsList"
+			 :key="index">{{item.name}}</view>
 		</view>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<CommunityInfo @click="jump" v-for="(item, index) in dataList" :key="index" :communityInfo="item" />
@@ -12,13 +13,14 @@
 			<view style="padding:46rpx 20rpx">
 				<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">筛选类别</view>
 				<view class="categorys g-flex g-f-warp g-j-s-b">
-					<view class="f-14 t-c category" v-for="(item, index) in categoryList " :key="index">
-						{{item}}
+					<view :class="(index == selectCategoryIndex && tabIndex == 4) && 'screened'" class="f-14 t-c category" @click="selectCategory(item, index)"
+					 v-for="(item, index) in categoryList " :key="index">
+						{{item.name}}
 					</view>
 				</view>
 			</view>
 			<view class="btns g-flex g-j-s-b">
-				<u-button class="btn" shape="circle" plain>重置</u-button>
+				<u-button class="btn" shape="circle" @click="recharge" plain>重置</u-button>
 				<u-button class="btn" shape="circle" type="error">确认</u-button>
 			</view>
 		</uni-drawer>
@@ -39,9 +41,10 @@
 		data() {
 			return {
 				tabIndex: 0,
-				tabsList: ["全部", "推荐", "无人机", "筛选"],
-				categoryList: ["推荐", "无人机", "季节", "水稻"],
-				postType:null,
+				tabsList: [],
+				categoryList: [],
+				selectCategoryIndex: null,
+				postType: null,
 				mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
 				// 下拉刷新的配置(可选, 绝大部分情况无需配置)
 				downOption: {
@@ -61,21 +64,68 @@
 				dataList: []
 			}
 		},
+		watch: {
+			selectCategoryIndex(newValue) {
+				if (newValue != null) {
+					this.tabIndex = this.tabsList.findIndex(item => item.name == '筛选')
+				} else {
+					this.tabIndex = 0
+				}
+			}
+		},
 		onLoad() {
+			uni.request({
+				url: Interface.url.getPostType,
+				method: "GET",
+				data: {},
+				success: (res) => {
+					this.tabsList.push({
+						name: "全部",
+						postType: null
+					})
+					res.data.data.forEach((item, index) => {
+						if (index <= 2) {
+							this.tabsList.push(item)
+						}
+					})
+					this.tabsList.push({
+						name: "筛选",
+						postType: null
+					})
+					this.categoryList = res.data.data
+				},
+				fail: (err) => {}
+			});
 		},
 		methods: {
-			selectTab(index) {
-				if (index == 3) {
+			selectTab(item, index) {
+				if (item.name == "筛选") {
 					this.$refs.drawer.open()
 				} else {
+					console.log(item)
 					this.tabIndex = index
+					this.postType = item.parentCode
+					this.mescroll.resetUpScroll();
 				}
+			},
+			selectCategory(item, index) {
+				this.selectCategoryIndex = index
+				this.postType = item.parentCode
+				this.mescroll.resetUpScroll();
 			},
 			jump(item) {
 				console.log(item)
 				uni.navigateTo({
 					url: `../../grain/article?params=${JSON.stringify(item)}`
 				})
+			},
+			recharge() {
+				if (this.selectCategoryIndex != null) {
+					this.selectCategoryIndex = null
+					this.$refs.drawer.close()
+					this.postType = null
+					this.mescroll.resetUpScroll();
+				}
 			},
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
 			mescrollInit(mescroll) {
@@ -99,7 +149,7 @@
 					data: {
 						page: pageNum,
 						size: pageSize,
-						postType:this.postType
+						postType: this.postType
 					},
 					success: (res) => {
 						console.log(res.data)
@@ -156,5 +206,10 @@
 		.btn {
 			width: 192rpx;
 		}
+	}
+
+	.screened {
+		background-color: #e51c2e !important;
+		color: #fff !important;
 	}
 </style>

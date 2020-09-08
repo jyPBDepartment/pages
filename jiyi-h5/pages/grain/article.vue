@@ -1,79 +1,65 @@
 <template>
 	<view>
-		<HeaderSearch bold :title="param.title" @searchCallback="search"></HeaderSearch>
+		<HeaderSearch bold :title="param.name" @searchCallback="search"></HeaderSearch>
 		<view class="title f-14 g-flex g-f-warp">
-			<view class="f-16">小吉易</view>
+			<view class="f-16">{{param.author}}</view>
 			<view class="g-f-1">农业专家</view>
-			<view class="g-f-1">发布时间：2020-8-20</view>
+			<view class="g-f-2 t-c">发布时间：{{param.createDate}}</view>
 		</view>
 		<view class="content f-14">
-			水稻直播指的是直接将种子播种的稻田之中，而不经过育苗、移栽的过程。水稻直播省去了育苗、移栽、插秧的过程，省时省工;水稻直播不存在返青和拔秧植伤的过程，生育期要比同期移栽的水稻短;水稻直播简单、方便，有利于规模化发展。 
+			{{param.code}}
 		</view>
 		<view class="comment">
 			<view class="comments g-flex g-a-c">
 				<view class="g-f-1 f-14" style="color: #999999;">精选留言</view>
-				<view class="f-14" style="color: #1890ff;margin-left: 20rpx;">写留言</view>
+				<view class="f-14" @click="writeReview" style="color: #1890ff;margin-left: 20rpx;">写留言</view>
 			</view>
-			<view style="padding: 0 36rpx;">
-				<view class="name f-14">
-					小吉易
-				</view>
-				<view class="f-12" style="height: 96rpx; color: #666666;">
-					由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的...
-				</view>
-				<view class="other g-flex f-12 g-a-c">
-					<view class="time">
-						08-20 13:08
+			<view v-if="!commentList.length" class="f-14 t-c" style="padding: 30rpx;">暂无评论内容</view>
+			<view style="padding: 20rpx 36rpx;">
+				<view v-for="(item, index) in commentList" :key="index" @click="replyComments(item)">
+					<view class="name f-14">
+						{{item.commentUserName}}
 					</view>
-					<view class="number t-c" @click="cencal(true)">
-						134回复
+					<view class="f-12" style="height: 96rpx; color: #666666;">
+						{{item.commentContent}}
 					</view>
-				</view>
-				<view>
-					<view style="padding: 0 36rpx; border-left: 1rpx solid #e5e5e5;">
-						<view class="name f-14">
-							小吉易
+					<view class="other g-flex f-12 g-a-c">
+						<view class="time">
+							{{formatDate(item.commentDate)}}
 						</view>
-						<view class="f-12" style="height: 96rpx; color: #666666;">
-							由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的...
+						<view class="number t-c" @click.stop v-if="item.replyList != null" @click="viewReply(item)">
+							{{item.replySize}}回复
 						</view>
 					</view>
 
-					<view style="padding: 0 36rpx;" class="other g-flex f-12 g-a-c">
-						<view class="time">
-							08-20 13:08
+					<view @click.stop v-for="(item1, index1) in item.getReplyList" :key="index1">
+						<view style="padding: 0 36rpx; border-left: 1rpx solid #e5e5e5;">
+							<view class="name f-14">
+								{{item1.replyUserName}}
+							</view>
+							<view class="f-12" style="height: 96rpx; color: #666666;">
+								{{item1.replyContent}}
+							</view>
 						</view>
-						<view class="number t-c">
-							134回复
-						</view>
-					</view>
-				</view>
-				<view>
-					<view style="padding: 0 36rpx; border-left: 1rpx solid #e5e5e5;">
-						<view class="name f-14">
-							小吉易
-						</view>
-						<view class="f-12" style="height: 96rpx; color: #666666;">
-							由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的...
-						</view>
-					</view>
 
-					<view style="padding: 0 36rpx;" class="other g-flex f-12 g-a-c">
-						<view class="time">
-							08-20 13:08
-						</view>
-						<view class="number t-c">
-							134回复
+						<view style="padding: 0 36rpx;" class="other g-flex f-12 g-a-c">
+							<view class="time">
+								{{formatDate(item.commentDate)}}
+							</view>
 						</view>
 					</view>
 				</view>
+				<view v-if="commentList.length < totalElements" @click.stop @click="getMoreComment" class="f-14 t-c" style="padding: 30rpx; color: #2B85E4;">
+					展开更多评论</view>
 			</view>
 		</view>
-		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
+		<CancelReason name="确认回复" @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
 </template>
 
 <script>
+	let type
+	import Interface from '@/api/ApiPath.js'
 	import CancelReason from '../../components/CancelReason/CancelReason.vue'
 	export default {
 		components: {
@@ -83,9 +69,18 @@
 			return {
 				cencalIsShow: false,
 				value: '',
+				contentId: '',
+				commentPage: 1,
+				commentSize: 1,
+				totalPages: null,
+				totalElements: null,
+				commentList: [],
+				expandReplyIndex: null,
+				replyList: [],
 				param: {
-					title: ''
-				}
+					name: ''
+				},
+
 			}
 		},
 		onLoad(e) {
@@ -93,14 +88,166 @@
 				this.param = JSON.parse(e.params)
 				console.log(this.param)
 			}
+			this.request()
 		},
 		methods: {
-			cencal(e) {
-				this.cencalIsShow = e
+			replyComments(item) {
+				this.contentId = item.id
+				this.cencalIsShow = true
+				type = 2
+			},
+			writeReview() {
+				this.cencalIsShow = true
+				type = 1
+			},
+			viewReply(item) {
+				this.contentId = item.id
+				uni.request({
+					url: Interface.url.findByCommentId,
+					method: "GET",
+					data: {
+						commentId: this.contentId,
+						page: 1,
+						size: 5
+					},
+					success: (res) => {
+						let index = this.commentList.findIndex(item => item.id == this.contentId)
+						this.commentList[index].getReplyList = res.data.data.content
+						console.log(res.data)
+					},
+					fail: (err) => {}
+				});
+			},
+			cencal(item) {
+				this.cencalIsShow = item
 			},
 			confirm(e) {
-				console.log(e)
+				if (type == 1) {
+					uni.request({
+						url: Interface.url.addCommentInfo,
+						method: "GET",
+						data: {
+							commentContent: e,
+							commentUserName: 'ceshi',
+							postId: this.param.id
+						},
+						success: (res) => {
+							if (res.data.state == 0) {
+								uni.showToast({
+									title: '发表成功',
+									icon: 'success',
+									duration: 2000
+								});
+								this.request()
+							} else {
+								uni.showToast({
+									title: '发表失败',
+									icon: 'none',
+									duration: 2000
+								});
+							}
+							this.cencalIsShow = false
+					
+						},
+						fail: (err) => {
+							uni.showToast({
+								title: '发表失败',
+								icon: 'none',
+								duration: 2000
+							});
+							this.cencalIsShow = false
+						}
+					});
+				}
+				if (type == 2) {
+					uni.request({
+						url: Interface.url.addReplyInfo,
+						method: "GET",
+						data: {
+							replyContent: e,
+							replyUserName: 'ceshi',
+							commentId: this.contentId
+						},
+						success: (res) => {
+							if (res.data.state == 0) {
+								uni.showToast({
+									title: '发表成功',
+									icon: 'success',
+									duration: 2000
+								});
+								this.request()
+							} else {
+								uni.showToast({
+									title: '发表失败',
+									icon: 'none',
+									duration: 2000
+								});
+							}
+							this.cencalIsShow = false
+					
+						},
+						fail: (err) => {
+							uni.showToast({
+								title: '发表失败',
+								icon: 'none',
+								duration: 2000
+							});
+							this.cencalIsShow = false
+						}
+					});
+				}
+				
+
 			},
+			//时间戳转换方法    date:时间戳数字
+			formatDate(date) {
+				var date = new Date(date);
+				var YY = date.getFullYear() + '-';
+				var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+				var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+				var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+				var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+				var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+				return YY + MM + DD + " " + hh + mm + ss;
+			},
+			getMoreComment() {
+				if (this.commentSize == 1) {
+					this.commentSize = 10
+					this.request()
+				} else {
+					this.commentPage += 1
+					this.request()
+				}
+
+			},
+			request() {
+				uni.request({
+					url: Interface.url.findByPostId,
+					method: "GET",
+					data: {
+						postId: this.param.id,
+						page: this.commentPage,
+						size: this.commentSize
+					},
+					success: (res) => {
+						console.log(res.data.data)
+						this.totalPages = res.data.data.totalPages
+						this.totalElements = res.data.data.totalElements
+						let data = res.data.data.content.map(item => {
+							item.getReplyList = []
+							return item
+						})
+						if (this.commentPage == 1) {
+							this.commentList = data
+						} else {
+							this.commentList = this.commentList.concat(data);
+						}
+
+					},
+					fail: (err) => {}
+				});
+			}
+
 		}
 	}
 </script>

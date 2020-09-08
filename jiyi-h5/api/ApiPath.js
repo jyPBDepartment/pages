@@ -1,6 +1,6 @@
 //配置后台接口
 //开发环境基础路径地址
-const URLHost = 'http://192.168.1.100:8080';
+const URLHost = 'http://192.168.1.102:8080';
 // const URLHost = 'http://localhost:8080';
 //生产环境基础路径地址
 // const URLHost = 'http://60.205.246.126/jy_fcs';
@@ -50,6 +50,18 @@ const url = {
 
 	//加载帖子列表
 	findAllPostInfo: URLHost + '/postInfo/findAllPostInfo',
+
+	//加载评论列表
+	findByPostId: URLHost + '/commentInfo/findByPostId',
+
+	//加载回复列表
+	findByCommentId: URLHost + '/replyInfo/findByCommentId',
+
+	//加载回复列表
+	addCommentInfo: URLHost + '/commentInfo/addCommentInfo',
+
+	//加载回复列表
+	addReplyInfo: URLHost + '/replyInfo/addReplyInfo',
 
 
 	//农服预约

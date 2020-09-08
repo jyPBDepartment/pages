@@ -5,7 +5,7 @@
 				<u-input v-model="value" type="textarea " />
 			</view>
 			<view class="btn g-flex g-j-e">
-				<u-button @click="confirm" size="mini" class="confirm f-12 " shape="circle" type="error">确认取消</u-button>
+				<u-button @click="confirm" size="mini" class="confirm f-12 " shape="circle" type="error">{{name}}</u-button>
 			</view>
 		</view>
 	</view>
@@ -18,11 +18,22 @@
 			isShow: {
 				type: Boolean,
 				default: false
+			},
+			name: {
+				type: String,
+				default: ""
 			}
 		},
 		data() {
 			return {
 				value: '',
+			}
+		},
+		watch:{
+			isShow(newValue){
+				if(!newValue){
+					this.value = ''
+				}
 			}
 		},
 		methods: {
