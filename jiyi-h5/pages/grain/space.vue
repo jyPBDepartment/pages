@@ -31,12 +31,15 @@
 					<span v-if="transactionCategoryCode=='2'">类别：水稻</span>
 					<span v-if="transactionCategoryCode=='3'">类别：高粱</span>
 					<span v-if="transactionCategoryCode=='4'">类别：黄豆</span>
-					{{address}}
 				</view> 
 					<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
 						<view>联系人：{{contactsUser}}</view>
 						<view>联系电话：{{contactsPhone}}</view>
 					</view>
+					<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
+						<view>地址：{{address}}</view>
+					</view>
+					
 				<view class="space"></view>
 				<view class="info g-f-warp g-flex">
 					<view class="text g-f-1 f-14" style="color: #333;margin-top: 52rpx;">

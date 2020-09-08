@@ -41,7 +41,6 @@
 				<view class="info  g-flex ">
 				     <view class="text g-f-1  g-a-c g-flex g-j-s-b f-12" style="margin-bottom:20rpx;">
 					   <view>型号：{{model}}</view>
-					  <view>货号：{{articleNumber}}</view>
 					  <span v-if="machineType=='0'">农机类型：玉米收割机</span>
 					   <span v-if="machineType=='1'">农机类型：水稻收割机</span>
 					   <span v-if="machineType=='2'">农机类型：玉米播种机</span>
@@ -99,7 +98,6 @@
 				machineType:'',
 				labelCode:'',
 				model:'',
-				articleNumber:'',
 				address:'',
 				contactsUser:'',
 				contactsPhone:'',
@@ -126,7 +124,6 @@
 						this.machineType = res.data.data.machineType
 						this.labelCode = res.data.data.labelCode
 						this.model = res.data.data.model
-						this.articleNumber = res.data.data.articleNumber
 						this.address = res.data.data.address
 						this.contactsUser = res.data.data.contactsUser
 						this.contactsPhone = res.data.data.contactsPhone
@@ -242,7 +239,7 @@
 
 		.info {
 			.text {
-				min-width: 33%;
+				min-width: 50%;
 			}
 		}
 

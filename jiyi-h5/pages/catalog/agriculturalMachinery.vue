@@ -24,9 +24,6 @@
 								{{item.purchaseDate}}
 							</view>
 						</view>
-						<view class="other g-a-c g-flex g-j-s-b" v-if="index1==0">
-							货号：{{item.articleNumber}}
-						</view>
 						<!-- 农机地址 -->
 						<view class="other g-a-c g-flex g-j-s-b " style="font-size: smaller;" v-if="index1==0">
 							地址：{{item.address}}
