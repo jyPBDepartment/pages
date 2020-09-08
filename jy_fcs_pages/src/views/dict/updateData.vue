@@ -95,8 +95,7 @@ export default {
       localShow: this.show,
       // rules表单验证
       rules: {
-        dictLabel: [{ required: true, message: "请输入字典名称", trigger: "blur" }],
-        dictValue: [{ required: true, message: "请输入字典编码", trigger: "blur" }],
+        dictLabel: [{ required: true, message: "请输入字典名称", trigger: "blur" }]
       },
     };
   },
@@ -125,7 +124,7 @@ export default {
     //添加字典方法
     saveDictType: function () {
      
-      if (this.dataEditForm.dictLabel != "" && this.dataEditForm.dictValue != "") {
+      if (this.dataEditForm.dictLabel != "" ) {
          this.isDisable = true;
         let params = {
           dataEntity: this.dataEditForm,

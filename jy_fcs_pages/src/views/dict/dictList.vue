@@ -203,7 +203,7 @@ import AddData from "./addData.vue";
 import UpdateData from "./updateData.vue";
 import UpdateClassification from "./updateDict.vue";
 import Pagination from "../../components/Pagination";
-
+import { getDictValue,dictTypeConst } from "../../utils/dataUtil";
 export default {
   inject: ["reload"],
   props: {
@@ -261,6 +261,10 @@ export default {
   },
   created() {
     this.search(this.formInline);
+    getDictValue(dictTypeConst.enableStatus).then((res) => {
+      //调用后台字典接口，返回码值集合
+      alert(JSON.stringify(res.data.data));
+    });
   },
   methods: {
     //switch开关
