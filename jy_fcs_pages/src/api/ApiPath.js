@@ -229,6 +229,10 @@ const url = {
   updateDictData:URLHost + '/dict/updateData',
   //根据类别获取所有键值
   findDataByType:URLHost + '/dict/findDataByType',
+  //根据类别清空所有键值
+  removeDataByType:URLHost + '/dict/removeData',
+  //根据字典类型获取对应所有生效键值
+  getDictValue:URLHost + '/dict/getDictValue',
 }
 export default {
   url

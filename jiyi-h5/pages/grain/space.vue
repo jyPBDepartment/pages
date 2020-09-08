@@ -1,67 +1,70 @@
-<!-- 注：0为粮食收购-出售详情，1为出售农机-出售详情,2为出租农机-出售详情 -->
 <template>
 	<view>
-		<HeaderSearch title="出租农机详情"></HeaderSearch>
+		<HeaderSearch title="粮食买卖详情"></HeaderSearch>
 
 		<view class="init">
 			<view class="roll-out">
 				<swiper class="roll" :current="current" @change="getCurrent">
 					<block v-for="item in banner" :key="item">
 						<swiper-item>
-							<image src="@/static/logo.png" class="roll-image" />
+							<image :src="item.url" mode='aspectFill' class="swiperImage"></image>
 						</swiper-item>
 					</block>
 				</swiper>
 				<view class='toleft' @click='toleft()'></view>
 				<view class='toright' @click='toright()'></view>
 			</view>
-
 			<view class="p-x-10">
 				<view class="g-flex g-a-c">
-					<view class="tag f-12" v-if="param == 1">
-						出租
-					</view>
-					<view class="title g-f-1 f-16" style="padding: 0 20rpx;">
-						收割机
-					</view>
-					<view v-if="param == 2" class="icon g-flex g-f-column">
-						<u-icon size="44" name="share"></u-icon>
-						<text class="f-12">分享</text>
+					<view class="title g-f-1 f-21" style="padding: 10rpx 0;">
+						{{name}}
 					</view>
 				</view>
-				<view class="price" style="font-size: 42rpx;margin-top: 16rpx;">
-					￥{{price}}{{ company }}
+				<view class="price f-16" style="margin: 10rpx 0;">
+					<span v-if="isFace=='0'">面议</span>
+					<span v-if="isFace=='1'">￥{{price}}/公斤</span>
 				</view>
-				<view class="labels g-flex" style="margin-top: 20rpx;">
-					<view class="label f-12">
-						可议价
+				<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
+					<span v-if="transactionTypeCode=='0'">类型：收购</span>
+					<span v-if="transactionTypeCode=='1'">类型：出售</span>
+					<span v-if="transactionCategoryCode=='0'">类别：玉米</span>
+					<span v-if="transactionCategoryCode=='2'">类别：水稻</span>
+					<span v-if="transactionCategoryCode=='3'">类别：高粱</span>
+					<span v-if="transactionCategoryCode=='4'">类别：黄豆</span>
+				</view> 
+					<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
+						<view>联系人：{{contactsUser}}</view>
+						<view>联系电话：{{contactsPhone}}</view>
 					</view>
-					<view class="label f-12">
-						优质商家
+					<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
+						<view>地址：{{address}}</view>
 					</view>
-				</view>
-				<view class="info g-f-warp g-flex">
-					<view class="text g-f-1 f-12" style="color: #999999;margin-top: 24rpx;" v-for="item in info" :key="item">
-						{{item}}
-					</view>
-				</view>
+					
 				<view class="space"></view>
 				<view class="info g-f-warp g-flex">
 					<view class="text g-f-1 f-14" style="color: #333;margin-top: 52rpx;">
-						描述：诚信出售：黑龙江勃利地区自家烘干塔。国际玉米出库中。容重690以上。水分14.霉变焦糊1内。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1。
+						描述：{{descrip}}
 					</view>
 				</view>
-
+				<view class="btn g-flex">
+					<view class="g-f-1">
+						<u-button @click="cencal(true)" shape="circle">取消</u-button>
+					</view>
+					<view  class="g-f-1">
+						<u-button type="error" shape="circle">修改信息</u-button>
+					</view>
+				</view>
 			</view>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
-
 </template>
 
 <script>
 	import HeaderSearch from '../../components/HeaderSearch/HeaderSearch.vue'
 	import CancelReason from '../../components/CancelReason/CancelReason.vue'
+	//后台路径引用
+	import ApiPath from "@/api/ApiPath.js";
 	export default {
 		components: {
 			HeaderSearch,
@@ -72,62 +75,59 @@
 				cencalIsShow: false,
 				current: '0',
 				param: null,
-				price: "25.00",
+				price: '',
 				company: '',
-				info: {
-					model: '',
-					goodsNum: '',
-					address: '',
-					contactUser: '',
-					spaceCorn: '',
-					phone: '',
-
-				},
 				item: [],
-
-				banner: [{
-						url: '@/static/logo.png'
-					},
-					{
-						url: '@/static/logo.png'
-					},
-					{
-						url: '@/static/logo.png'
-					}
-				],
-
+				banner: [],
+				transactionTypeCode:'',
+				transactionCategoryCode:'',
+				labelCode:'',
+				model:'',
+				articleNumber:'',
+				address:'',
+				contactsUser:'',
+				contactsPhone:'',
+				descrip:'',
+				isFace:'',
+				url:'',
+				name:'',
 			};
 		},
 		onLoad(e) {
-			this.param = e.index
-			// if(e.info){
-
-			// }
-			this.info = {
-				model: `${this.param == 0 ? "类别" : "型号"}：500`,
-				goodsNum: `${this.param == 0 ? " " : "货号：xd-500"}`,
-				address: `${this.param == 0 ? "吉林省榆树市五棵松" : "长春公主岭"}`,
-				contactUser: "联系人：西西 ",
-				spaceCorn: "",
-				phone: "电话:15567891234"
-			}
-			if (this.param == 0) {
-				this.company = "元/公斤"
-			}
-			if (this.param == 1) {
-				this.company = "元/天"
-			}
-			if (this.param == 2) {
-				this.company = "元/亩 "
-			}
-
+			this.transKeyWordId(e.id)
 		},
 		methods: {
-			cencal(e) {
-				this.cencalIsShow = e
-			},
-			confirm(e) {
-				console.log(e)
+			//查看详情
+			transKeyWordId(val) {
+				let param = {
+					id: val,
+				};
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.transKeyWordId, //请求接口路径
+					success: (res) => { //成功返回结果方法
+						this.transactionTypeCode = res.data.data.transactionTypeCode
+						this.transactionCategoryCode = res.data.data.transactionCategoryCode
+						this.labelCode = res.data.data.labelCode
+						this.model = res.data.data.model
+						this.articleNumber = res.data.data.articleNumber
+						this.address = res.data.data.address
+						this.contactsUser = res.data.data.contactsUser
+						this.contactsPhone = res.data.data.contactsPhone
+						this.descrip = res.data.data.descrip
+						this.price = res.data.data.price
+						this.isFace = res.data.data.isFace
+						// this.url = res.data.data.url
+						this.name = res.data.data.name
+						//查找图片
+						for (var i = 0; i < res.data.dataPic.length; i++) {
+							this.banner.push({
+								'url': res.data.dataPic[i].picUrl
+							})
+						}
+					}
+				})
 			},
 			//先获取当前的current
 			getCurrent: function(e) {
@@ -140,7 +140,6 @@
 				} else {
 					this.current = this.current - 1
 				};
-
 			},
 			//向右滑动
 			toright: function() {
@@ -149,8 +148,13 @@
 				} else {
 					this.current = this.current + 1
 				}
-			}
-
+			},
+			cencal(e) {
+				this.cencalIsShow = e
+			},
+			confirm(e) {
+				console.log(e)
+			},
 		}
 	}
 </script>
@@ -233,11 +237,15 @@
 			background-color: rgba(229, 229, 229, 1);
 			margin: 26rpx 0rpx -26rpx -20rpx;
 		}
-	}
+	}.swiperImage {
+				width: 750rpx;
+				height: 750rpx;
+			}
 
 	.btn {
 		view {
 			padding: 20rpx;
 		}
 	}
+	
 </style>

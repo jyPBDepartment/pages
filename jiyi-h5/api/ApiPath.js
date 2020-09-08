@@ -2,6 +2,7 @@
 //开发环境基础路径地址
 const URLHost = 'http://192.168.1.102:8080';
 // const URLHost = 'http://localhost:8080';
+
 //生产环境基础路径地址
 // const URLHost = 'http://60.205.246.126/jy_fcs';
 const url = {
@@ -72,6 +73,8 @@ const url = {
 	moduleShow: URLHost + '/deployModuleInfo/findAllDeployModuleInfo',
 	//农服预约详情页面
 	transKeyWordId: URLHost + '/agricultural/findId',
+	 //搜索我的农机发布
+    findMyPublication: URLHost + '/agricultural/findMyPublication',
 
 }
 export default {
