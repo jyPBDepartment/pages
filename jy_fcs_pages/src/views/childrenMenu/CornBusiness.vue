@@ -113,13 +113,13 @@
           >信息审核</el-button>
         </template>
       </el-table-column>
-     
+      </el-table>
+
 
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
      <cornContent :show="cornContentFlag" :cornContentId="cornContentId" title="信息审核"  @close="closeUpdateCornContentDialog"></cornContent>
-    </el-table>
-
+   
     <br />
     <br />
   </div>
@@ -207,7 +207,7 @@ export default {
       let params = {
         name: this.name,
         status: this.status,
-         type: this.type,
+        type: this.type,
         page: this.formInline.page,
         size: this.formInline.limit,
       };

@@ -131,10 +131,11 @@
           >信息审核</el-button>
         </template>
       </el-table-column>
+       </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <machineContent :show="machineContentFlag" :machineContentId="machineContentId" title="信息审核"  @close="closeUpdateMachineContentDialog"></machineContent>
-    </el-table>
+   
     <br />
     <br />
   </div>
