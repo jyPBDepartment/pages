@@ -1,77 +1,69 @@
-<!-- 注：0为粮食收购-出售详情，1为出售农机-出售详情,2为出租农机-出售详情 -->
 <template>
 	<view>
-		<HeaderSearch title="出租农机详情"></HeaderSearch>
-
+		<HeaderSearch title="农服详情"></HeaderSearch>
 		<view class="init">
 			<view class="roll-out">
 				<swiper class="roll" :current="current" @change="getCurrent">
 					<block v-for="item in banner" :key="item">
 						<swiper-item>
-							<image src="@/static/logo.png" class="roll-image" />
+							<image :src="item.url" mode='aspectFill' class="swiperImage"></image>
 						</swiper-item>
 					</block>
 				</swiper>
 				<view class='toleft' @click='toleft()'></view>
 				<view class='toright' @click='toright()'></view>
 			</view>
-
 			<view class="p-x-10">
-				<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
-					理由：信息可能存在虚假问题，请注意核实
-				</view>
 				<view class="g-flex g-a-c">
-					<view class="tag f-12" v-if="param == 2">
-						出租
-					</view>
-					<view class="title g-f-1 f-16" style="padding: 0 20rpx;">
-						收割机
-					</view>
-					<view v-if="param == 2" class="icon g-flex g-f-column">
-						<u-icon size="44" name="share"></u-icon>
-						<text class="f-12">分享</text>
+					<view class="title f-21" style="padding: 16rpx 0 ;">
+						{{name}}
 					</view>
 				</view>
-				<view class="price" style="font-size: 42rpx;margin-top: 16rpx;">
-					￥{{price}}{{ company }}
+				<view class="price f-16" style="margin-bottom: 16rpx;">
+					<span v-if="isFace=='0'">面议</span>
+					<span v-if="isFace=='1'">￥{{price}}{{ company }}</span>
 				</view>
-				<view class="labels g-flex" style="margin-top: 20rpx;">
-					<view class="label f-12">
-						可议价
-					</view>
-					<view class="label f-12">
-						优质商家
-					</view>
+				<view class="other g-a-c g-flex g-j-s-b f-12" style="margin-bottom: 16rpx;">
+					<span v-if="transactionTypeCode=='3'">类型：播种</span>
+					<span v-if="transactionTypeCode=='4'">类型：植保</span>
+					<span v-if="transactionTypeCode=='5'">类型：收割</span>
+					<span v-if="farmingMode=='0'">农活方式：整活</span>
+					<span v-if="farmingMode=='1'">农活方式：零活</span>
 				</view>
-				<view class="info g-f-warp g-flex">
-					<view class="text g-f-1 f-12" style="color: #999999;margin-top: 24rpx;" v-for="item in info" :key="item">
-						{{item}}
-					</view>
+				<view class="f-12 g-flex g-a-c g-j-s-b">
+					<view style="margin-bottom: 16rpx;">时间：{{beginDate}}至{{endDate}}</view>
+					干活天数：{{days}}
 				</view>
+				<view class="other g-a-c g-flex g-j-s-b f-12" style="margin-bottom: 16rpx;">
+					联系人：{{contactsUser}}
+					<view>联系电话：{{contactsPhone}}</view>
+				</view>
+				<view class="other g-a-c g-flex g-j-s-b f-12">地址：{{address}}</view>
 				<view class="space"></view>
 				<view class="info g-f-warp g-flex">
 					<view class="text g-f-1 f-14" style="color: #333;margin-top: 52rpx;">
-						描述：诚信出售：黑龙江勃利地区自家烘干塔。国际玉米出库中。容重690以上。水分14.霉变焦糊1内。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1.水分15内价格优惠，一手货源，售后有保障。685容重大颗粒。霉变焦糊1。
+						描述：{{descrip}}
 					</view>
 				</view>
 				<view class="btn g-flex">
 					<view class="g-f-1">
+						<u-button @click="cencal(true)" shape="circle">取消</u-button>
 					</view>
-					<view  class="g-f-1">
+					<view class="g-f-1">
 						<u-button type="error" shape="circle">修改信息</u-button>
 					</view>
 				</view>
-
 			</view>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
-
 </template>
 
 <script>
 	import HeaderSearch from '../../components/HeaderSearch/HeaderSearch.vue'
 	import CancelReason from '../../components/CancelReason/CancelReason.vue'
+	//后台路径引用
+	import ApiPath from "@/api/ApiPath.js";
 	export default {
 		components: {
 			HeaderSearch,
@@ -82,61 +74,66 @@
 				cencalIsShow: false,
 				current: '0',
 				param: null,
-				price: "25.00",
+				price: '',
 				company: '',
-				info: {
-					model: '',
-					goodsNum: '',
-					address: '',
-					contactUser: '',
-					spaceCorn: '',
-					phone: '',
-
-				},
 				item: [],
-
-				banner: [{
-						url: '@/static/logo.png'
-					},
-					{
-						url: '@/static/logo.png'
-					},
-					{
-						url: '@/static/logo.png'
-					}
-				],
-				state:null
-
+				banner: [],
+				transactionTypeCode: '',
+				machineType: '',
+				labelCode: '',
+				model: '',
+				articleNumber: '',
+				address: '',
+				contactsUser: '',
+				contactsPhone: '',
+				descrip: '',
+				isFace: '',
+				name: '',
+				farmingMode: '',
+				beginDate: '',
+				endDate: '',
+				days: '',
 			};
 		},
 		onLoad(e) {
-			if(e.state){
-				this.state = e.state
-			}
-			this.param = e.index
-			// if(e.info){
-
-			// }
-			this.info = {
-				model: `${this.param == 0 ? "类别" : "型号"}：500`,
-				goodsNum: `${this.param == 0 ? " " : "货号：xd-500"}`,
-				address: `${this.param == 0 ? "吉林省榆树市五棵松" : "长春公主岭"}`,
-				contactUser: "联系人：西西 ",
-				spaceCorn: "",
-				phone: "电话:15567891234"
-			}
-			if (this.param == 0) {
-				this.company = "元/公斤"
-			}
-			if (this.param == 1) {
-				this.company = "元"
-			}
-			if (this.param == 2) {
-				this.company = "元/亩 "
-			}
-
+			this.transKeyWordId(e.id)
 		},
 		methods: {
+			//查看详情
+			transKeyWordId(val) {
+				let param = {
+					id: val,
+				};
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.transKeyWordId, //请求接口路径
+					success: (res) => { //成功返回结果方法
+						this.transactionTypeCode = res.data.data.transactionTypeCode
+						this.machineType = res.data.data.machineType
+						this.labelCode = res.data.data.labelCode
+						this.model = res.data.data.model
+						this.articleNumber = res.data.data.articleNumber
+						this.address = res.data.data.address
+						this.contactsUser = res.data.data.contactsUser
+						this.contactsPhone = res.data.data.contactsPhone
+						this.descrip = res.data.data.descrip
+						this.price = res.data.data.price
+						this.isFace = res.data.data.isFace
+						this.name = res.data.data.name
+						this.farmingMode = res.data.data.farmingMode
+						this.beginDate = res.data.data.beginDate
+						this.endDate = res.data.data.endDate
+						this.days = res.data.data.days
+						//查找图片
+						for (var i = 0; i < res.data.dataPic.length; i++) {
+							this.banner.push({
+								'url': res.data.dataPic[i].picUrl
+							})
+						}
+					}
+				})
+			},
 			cencal(e) {
 				this.cencalIsShow = e
 			},
@@ -154,7 +151,6 @@
 				} else {
 					this.current = this.current - 1
 				};
-
 			},
 			//向右滑动
 			toright: function() {
@@ -164,7 +160,6 @@
 					this.current = this.current + 1
 				}
 			}
-
 		}
 	}
 </script>
@@ -247,6 +242,11 @@
 			background-color: rgba(229, 229, 229, 1);
 			margin: 26rpx 0rpx -26rpx -20rpx;
 		}
+	}
+
+	.swiperImage {
+		width: 750rpx;
+		height: 750rpx;
 	}
 
 	.btn {
