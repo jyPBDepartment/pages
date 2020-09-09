@@ -78,8 +78,10 @@ const url = {
 	moduleShow: URLHost + '/deployModuleInfo/findAllDeployModuleInfo',
 	//农服预约详情页面
 	transKeyWordId: URLHost + '/agricultural/findId',
-	//搜索我的农机发布
+	//搜索我的页面中农机，农服，粮食买卖列表
 	findMyPublication: URLHost + '/agricultural/findMyPublication',
+	//我的页面中农机，农服，粮食买卖详情页面
+	findMineId: URLHost + '/agricultural/findMineId',
 
 }
 export default {
