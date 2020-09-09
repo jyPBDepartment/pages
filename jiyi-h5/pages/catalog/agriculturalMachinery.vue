@@ -13,7 +13,7 @@
 							<view class="o-e" style="width: 300rpx;">
 								{{item.name}}
 							</view>
-							<view class="f-14 price" >
+							<view class="price f-14" >
 								<span v-if="item.isFace=='0'">面议</span>
 								<span v-if="item.isFace=='1'">￥{{item.price}}{{company}}</span>
 							</view>
@@ -343,20 +343,17 @@
 			.title {
 				height: 76rpx;
 				color: #333;
-
 				.price {
 					width: 210rpx;
 					text-align: right;
-
+					margin-left: -30rpx;
 				}
-
 			}
 
 			.other {
 				line-height: 40rpx;
 			}
 		}
-
 		.reason {
 			text-align: right;
 			color: #e51c2e;
