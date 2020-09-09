@@ -9,7 +9,7 @@
           吉林吉易互联网平台发展有限公司
         </p>
         <div class="info">
-          <img class="icon" src="../assets/icon.png" alt />
+          <img class="icon" src="http://60.205.246.126:8001/images/2020/09/09/1599641366066433.png" alt />
           <div>
             <h2>吉易慧农APP上线啦！</h2>
             <p>软件大小14M</p>
@@ -28,7 +28,7 @@ http://60.205.246.126:8001/apk/jyhn.apk">吉易慧农安卓版本下载</a>
             <img src="../assets/ewm.png" alt />
             <div class="btn" style="background:#3377bd">
               <a href="	
-http://60.205.246.126:8001/apk/jysk.apk">吉易掌柜安卓版本下载</a>
+http://60.205.246.126:8001/apk/jyzg.apk">吉易掌柜安卓版本下载</a>
             </div>
           </div>
         </div>

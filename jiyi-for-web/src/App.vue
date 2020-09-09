@@ -20,8 +20,12 @@ export default {
       /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
     );
     if (flag) {
-      //移动端
+      //移动端生产环境
       window.location.href='http://www.jiyinongye.com/phone/#/';
+      // 移动端本地环境
+      // window.location.href='http://localhost:8091';
+      // 移动端开发环境
+      // window.location.href='http://192.168.1.106:8080/phone/#/';
     }
   },
 };

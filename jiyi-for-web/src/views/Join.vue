@@ -119,7 +119,7 @@
 <script>
 import Fast from "../components/Fast/Fast";
 import Callcontact from "../components/Callcontact/Callcontact";
-// import aes from "@/util/aes";
+import aes from "@/util/aes";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {

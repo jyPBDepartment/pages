@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       info: false,
-      url:"https://yanxuan.nosdn.127.net/52e87332b3ed02a5ec1a71911272337b.png",
+      url:"http://60.205.246.126:8001/images/2020/09/09/1599641484086897.jpg",
     
     };
   },
