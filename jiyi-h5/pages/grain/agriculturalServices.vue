@@ -166,12 +166,7 @@
 				regionaStatus: false,
 				dateShow: false,
 				action: ApiPath.url.uploadImg,
-				fileList: [
-					// {
-					// 	// url: '',
-					// }
-				],
-				
+				fileList: [],
 				name: '',
 				descrip: '',
 				transactionTypeName:'',
@@ -191,6 +186,8 @@
 				endTime: '',
 				url: [],
 				value: '',
+				createUser:"发布人",
+				createUserId:"402881e47457b3060174581e29f30000",
 				list: [{
 						value: '0',
 						name: '整活',
@@ -252,7 +249,6 @@
 
 			// 设置干活时间选择日历的最小开始时间
 			this.currentDate = new Date().toISOString().slice(0,10)
-			// alert(uni.date)
 			setTimeout(() => {
 				this.$refs.region.getScreen();
 			}, 1000)
@@ -288,17 +284,13 @@
 				this.transactionTypeCode = this.agriCategory[index].value;
 			},
 			radioChange(index) {
-				// console.log(e);
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {
-				// console.log(e);
 			},
 			radioChange1(index) {
-				// console.log(e);
 			},
 			radioGroupChange1(e){
-				// console.log(e);
 			},
 			cancel() {
 				this.regionaStatus = false;
@@ -429,6 +421,8 @@
 					url: this.url,
 					beginDate: this.beginDate,
 					endDate: this.endTime,
+					createUser:this.createUser,
+					createUserId:this.createUserId,
 					addItem:addItem,
 				}
 				uni.request({

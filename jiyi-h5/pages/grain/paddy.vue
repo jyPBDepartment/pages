@@ -16,7 +16,9 @@
 				</view>
 			</view>
 			<view class="price" style="font-size: 42rpx;margin-top: 16rpx;">
-				￥{{price}}元/天
+				<span v-if="isFace=='0'">面议</span>
+				<span v-if="isFace=='1'">￥{{price}}元/天</span>
+
 			</view>
 			<view class="info g-f-warp g-flex">
 				<view class="g-flex">
@@ -34,7 +36,7 @@
 		</view>
 
 		<view class="p-10">
-			<u-button type="error" shape="circle" @click.stop  @click="preview" style="margin-top: 30rpx;">立即预约</u-button>
+			<u-button type="error" shape="circle" @click.stop  @click="preview(id)" style="margin-top: 30rpx;">立即预约</u-button>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
@@ -62,7 +64,9 @@
 				contactsPhone: '',
 				beginDate: '',
 				endDate: '',
-				banner: []
+				banner: [],
+				id:"",
+				isFace:'',
 
 			}
 		},
@@ -87,6 +91,8 @@
 						this.days = res.data.data.days
 						this.address = res.data.data.address
 						this.contactsUser = res.data.data.contactsUser
+						this.id  = res.data.data.id
+						this.isFace =res.data.data.isFace
 						this.contactsPhone = res.data.data.contactsPhone,
 						this.date = this.beginDate + "至" + this.endDate
 						//查找图片
@@ -99,9 +105,9 @@
 
 				})
 			},
-			preview() {
+			preview(getId) {
 				uni.navigateTo({
-					url: '../grain/agriculturalAppointment'
+					url: '../grain/agriculturalAppointment?id='+getId
 				})
 			}
 		}

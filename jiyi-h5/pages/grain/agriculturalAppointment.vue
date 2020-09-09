@@ -101,8 +101,7 @@
 				sexShow: false,
 				value: '',
 				action: ApiPath.url.uploadImg,
-				fileList: [
-				],
+				fileList: [],
 				area:'',
 				workArea:'',
 				workPrice:'',
@@ -110,18 +109,23 @@
 				contactPhone:'',
 				beginDate: '',
 				endTime: '',
-				url:[]
+				url:[],
+				id:'',
 			}
 		},
-		onLoad() {
+		onLoad(e) {
 			// 设置干活时间选择日历的最小开始时间
 			this.currentDate = new Date().toISOString().slice(0,10)
 			// alert(uni.date)
 			setTimeout(() => {
 				this.$refs.region.getScreen();
 			}, 1000)
+			this.transKeyWordId(e.id)
 		},
 		methods:{
+			transKeyWordId(val) {
+				this.id=val
+			},
 			//图片
 			uploadSuccess(data, index, lists, name) {
 				this.url.push(data.url) 
@@ -174,6 +178,12 @@
 				if (this.area == '') {
 					uni.showToast({
 						title: "请输入面积"
+					})
+					return false;
+				}
+				if(!/^\d+(\.\d{2})?$/.test(this.area)){
+					uni.showToast({
+						title: "面积小数点后保留两位小数"
 					})
 					return false;
 				}
@@ -231,8 +241,8 @@
 			     add.push(this.url[i]);
 			 }
 			 addItem = add.join(",");
-			console.log("123"+addItem)
 			let param = {
+				id:this.id,
 				beginDate: this.beginDate,
 				endDate: this.endTime,
 				area:this.area,
@@ -240,8 +250,7 @@
 				workPrice:this.workPrice,
 				contactUser:this.contactUser,
 				contactPhone:this.contactPhone,
-				addItem:addItem
-				
+				addItem:addItem,
 			}
 			uni.request({
 				method: 'GET', //请求方式

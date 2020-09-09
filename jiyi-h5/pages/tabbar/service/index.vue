@@ -20,7 +20,7 @@
 							<view class="app-number">
 
 							</view>
-							<view @click.stop @click="jump" class="immediately g-flex g-a-c g-j-c c-f">
+							<view @click.stop @click="jump(item.id)" class="immediately g-flex g-a-c g-j-c c-f">
 								立即预约
 							</view>
 						</view>
@@ -224,9 +224,9 @@
 			    })
 			    
 			   },
-			jump() {
+			jump(getId) {
 				uni.navigateTo({
-					url: '../../grain/agriculturalAppointment'
+					url: '../../grain/agriculturalAppointment?id='+getId
 				})
 			}
 

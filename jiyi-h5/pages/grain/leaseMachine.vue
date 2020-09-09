@@ -91,19 +91,6 @@
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
-					标签
-				</view>
-				<view class="info g-f-1 g-flex g-j-s-b" style="position: relative;">
-					<u-radio-group v-model="labelCode" @change="radioGroupChange1">
-						<u-radio @change="radioChange1" v-for="(item, index) in list3" :key="index" :name="item.name" :disabled="item.disabled">
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
-				</view>
-			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #ff0000;">*</span>
-				<view class="title f-14" style=" width: 140rpx;">
 					联系人
 				</view>
 				<view class="info g-f-1" style="position: relative;">
@@ -165,12 +152,13 @@
 				contactsPhone: '',
 				address:'',
 				model:'',
-				price: '0.0',
+				price: '0',
 				transactionTypeCode:'0',
 				transactionCategoryCode:'1',
 				isFace:"面议",
 				isFaceCode: "",
-				labelCode:"全新",
+				createUser:"发布人",
+				createUserId:"402881e47457b3060174581e29f30000",
 				action: ApiPath.url.uploadImg,
 				fileList: [],
 				list: [{
@@ -186,19 +174,6 @@
 					{
 						value:'2',
 						name: '出租',
-						disabled: false
-					}
-				],
-				list3: [{
-						name: '九新',
-						disabled: false
-					},
-					{
-						name: '八新',
-						disabled: false
-					},
-					{
-						name: '全新',
 						disabled: false
 					}
 				],
@@ -253,26 +228,21 @@
 			},
 			change(e) {
 				this.purchaseDate=e.year+"-"+e.month+"-"+e.day;
-				// console.log(e);
 			},
 			radioChange1(index){
 				
 			},
 			radioChange(index) {
-				// console.log(e);
 			},
 			radioGroupChange1(e){
 				
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {
-				// console.log(e);
 			},
 			radioChangeP(index) {
-				// console.log(e);
 			},
 			radioGroupChangeP(e) {
-				// console.log(e);
 			},
 			cancel() {
 				this.regionaStatus = false;
@@ -344,9 +314,9 @@
 					return false;
 				}
 				
-				if(!/^\+?(\d*\.\d{1})$/.test(this.price)){
+				if(!/^\d+(\.\d{1})?$/.test(this.price)){
 					uni.showToast({
-						title: "请输入正确的价格"
+						title: "价格小数点后保留一位小数"
 					})
 					return false;
 				}
@@ -408,7 +378,6 @@
 					url:this.url,
 					machineType:this.machineType,
 					purchaseDate:this.purchaseDate,
-					labelCode:this.labelCode,
 					contactsUser: this.contactsUser,
 					contactsPhone: this.contactsPhone,
 					address:this.address,
@@ -417,6 +386,8 @@
 					model:this.model,
 					price:this.price,
 					transactionCategoryCode:this.transactionCategoryCode,
+					createUser:this.createUser,
+					createUserId:this.createUserId,
 					addItem:addItem,
 				}
 				uni.request({

@@ -20,13 +20,12 @@
 					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :clearable="false" v-model="descrip" height="200" />
 				</view>
 			</view>
-			<view class="setcover">
-				
-				<view class="f-14" style="line-height: 80rpx;">
-					<span style="color: #ff0000;">*</span>
+			<view class="g-flex p-y-10">
+				<span style="color: #FA3534;" >*</span>
+				<view class="title f-14" style="width: 140rpx;">
 					设置封面
 				</view>
-				<view class="img g-flex g-a-c g-j-c">
+				<view class="info g-f-1" style="position: relative;">
 					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
 					 :file-list="fileList" max-count="5"></u-upload>
 				</view>
@@ -99,11 +98,6 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-mask :show="show" @click="show = false">
-			<view class="warp">
-				<view class="rect" @tap.stop></view>
-			</view>
-		</u-mask>
 	</view>
 
 </template>
@@ -131,12 +125,14 @@
 				transactionTypeCode: '',
 				transactionTypeName: '收购',
 				transactionCategoryCode: '',
-				price: '0.0',
+				price: '0',
 				contactsUser: '',
 				contactsPhone: '',
 				address: '',
 				isFace: "面议",
 				isFaceCode: "",
+				createUser:"发布人",
+				createUserId:"402881e47457b3060174581e29f30000",
 				transactionCategoryName: '',
 				url:[],
 				list: [{
@@ -190,25 +186,20 @@
 			uploadSuccess(data, index, lists, name) {
 				this.url.push(data.url);
 				this.show = false;
-				// alert(JSON.stringify(data))
 			},
 			onChoose(lists, name) {
 				this.show = true;
 			},
 			radioChange(index) {
 				// this.transactionTypeCode = this.list[index].value
-				// console.log(e);
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {
-				// console.log(e);
 			},
 			radioChange1(index) {
-				// console.log(e);
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange1(e) {
-				// console.log(e);
 			},
 			cancel() {
 				this.regionaStatus = false;
@@ -257,9 +248,9 @@
 					return false;
 				}
 				
-				if(!/^\+?(\d*\.\d{1})$/.test(this.price)){
+				if(!/^\d+(\.\d{1})?$/.test(this.price)){
 					uni.showToast({
-						title: "请输入正确的价格"
+						title: "价格小数点后保留一位小数"
 					})
 					return false;
 				}
@@ -335,6 +326,8 @@
 					contactsPhone: this.contactsPhone,
 					address: this.address,
 					isFace: this.isFaceCode,
+					createUser:this.createUser,
+					createUserId:this.createUserId,
 					addItem:addItem
 				}
 
