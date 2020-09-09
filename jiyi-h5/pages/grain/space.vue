@@ -21,7 +21,7 @@
 				</view>
 				<view class="price f-16" style="margin: 10rpx 0;">
 					<span v-if="isFace=='0'">面议</span>
-					<span v-if="isFace=='1'">￥{{price}}/公斤</span>
+					<span v-if="isFace=='1'">￥{{price}}元/公斤</span>
 				</view>
 				<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
 					<span v-if="transactionTypeCode=='0'">类型：收购</span>
@@ -93,18 +93,18 @@
 			};
 		},
 		onLoad(e) {
-			this.transKeyWordId(e.id)
+			this.findMineId(e.id)
 		},
 		methods: {
 			//查看详情
-			transKeyWordId(val) {
+			findMineId(val) {
 				let param = {
 					id: val,
 				};
 				uni.request({
 					method: 'GET', //请求方式
 					data: param, //请求数据
-					url: ApiPath.url.transKeyWordId, //请求接口路径
+					url: ApiPath.url.findMineId, //请求接口路径
 					success: (res) => { //成功返回结果方法
 						this.transactionTypeCode = res.data.data.transactionTypeCode
 						this.transactionCategoryCode = res.data.data.transactionCategoryCode

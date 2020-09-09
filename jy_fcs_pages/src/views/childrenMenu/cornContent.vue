@@ -121,7 +121,7 @@
               <el-input v-model="agrForm.examineReason" type="textarea" size="small"></el-input>
             </span>
             <span
-              v-if="agrForm.status == '1' || agrForm.status=='2' || agrForm.status=='3' || agrForm.status=='4'"
+              v-if="agrForm.status == '1' || agrForm.status=='2'"
             >
               <el-input v-model="agrForm.examineReason" type="textarea" disabled size="small"></el-input>
             </span>

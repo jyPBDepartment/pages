@@ -15,7 +15,7 @@
 				<view class='toright' @click='toright()'></view>
 			</view>
 			<view class="p-x-10">
-				<view class="g-flex g-a-c" style="margin-top: 20rpx;">
+				<view class="g-flex g-a-c" style="margin: 20rpx 0;">
 					<view class="tag f-12">
 						<span v-if="transactionTypeCode=='0'">收购</span>
 						<span v-if="transactionTypeCode=='1'">出售</span>
@@ -29,15 +29,15 @@
 						<text class="f-12">分享</text>
 					</view>
 				</view>
-				<view class="price f-16" style="margin-top: 16rpx;">
+				<view class="price f-16" style="margin-bottom:20rpx;">
 					<span v-if="isFace=='0'">面议</span>
 					<span v-if="isFace=='1'">￥{{price}}/亩</span>
 				</view>
-				<view class="labels g-flex" style="margin:20rpx 0rpx;">
+				<!-- <view class="labels g-flex" style="margin:20rpx 0rpx;">
 					<view class="label f-12">
 						{{labelCode}}
 					</view>
-				</view>
+				</view> -->
 				<view class="info  g-flex ">
 				     <view class="text g-f-1  g-a-c g-flex g-j-s-b f-12" style="margin-bottom:20rpx;">
 					   <view>型号：{{model}}</view>
@@ -106,19 +106,20 @@
 				name:'',
 			};
 		},
+		//页面初始化
 		onLoad(e) {
-			this.transKeyWordId(e.id)
+			this.findMineId(e.id)
 		},
 		methods: {
 			//查看详情
-			transKeyWordId(val) {
+			findMineId(val) {
 				let param = {
 					id: val,
 				};
 				uni.request({
 					method: 'GET', //请求方式
 					data: param, //请求数据
-					url: ApiPath.url.transKeyWordId, //请求接口路径
+					url: ApiPath.url.findMineId, //请求接口路径
 					success: (res) => { //成功返回结果方法
 						this.transactionTypeCode = res.data.data.transactionTypeCode
 						this.machineType = res.data.data.machineType

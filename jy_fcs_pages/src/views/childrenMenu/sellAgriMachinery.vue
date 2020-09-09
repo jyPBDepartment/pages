@@ -117,8 +117,6 @@
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
           <span v-if="scope.row.status==2">审核拒绝</span>
-          <span v-if="scope.row.status==3">预约中</span>
-          <span v-if="scope.row.status==4">已完成</span>
         </template>
       </el-table-column>
         <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
@@ -192,9 +190,8 @@ export default {
         { value: "", label: "全部" },
         { value: "0", label: "待审核" },
         { value: "1", label: "审核通过" },
-        { value: "2", label: "审核拒绝" },
-        { value: "3", label: "预约中" },
-        { value: "4", label: "已完成" },
+        { value: "2", label: "审核拒绝" }
+        
       ],
     };
   },

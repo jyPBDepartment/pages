@@ -25,7 +25,7 @@
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
 						<p class="f-14 title">{{item.name}}</p>
-						<p class="f-12 address">{{item.workArea}}</p>
+						<p class="f-12 address">{{item.address}}</p>
 					</view>
 				</view>
 			</view>
@@ -145,14 +145,14 @@
 							this.nfList = res.data.data.map(item => {
 								if (item.workArea) {
 									let address
-									if (typeof(item.workArea) == "object") {
-										item.workArea = ''
-										address = item.workArea
+									if (typeof(item.address) == "object") {
+										item.address = ''
+										address = item.address
 									}
-									if (item.workArea.split('/').length > 1) {
-										address = `${item.workArea.split('/')[0]}/${item.workArea.split('/')[1]}`
+									if (item.address.split('/').length > 1) {
+										address = `${item.address.split('/')[0]}/${item.address.split('/')[1]}`
 									}
-									item.workArea = address
+									item.address = address
 								}
 								if (item.url != '') {
 									item.url = item.url.split(',')[0]

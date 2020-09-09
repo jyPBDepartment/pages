@@ -13,7 +13,7 @@
 							<view class="o-e" style="width: 300rpx;">
 								{{item.name}}
 							</view>
-							<view class="price f-14" >
+							<view class="price f-14">
 								<span v-if="item.isFace=='0'">面议</span>
 								<span v-if="item.isFace=='1'">￥{{item.price}}{{company}}</span>
 							</view>
@@ -29,10 +29,10 @@
 							地址：{{item.address}}
 						</view>
 						<!--粮食买卖 -->
-						 <view  v-if="index1==1" style="margin: 16rpx 0;">
+						<view v-if="index1==1" style="margin: 16rpx 0;">
 							<view>{{item.address}}</view>
 						</view>
-						<view  v-if="index1==1">
+						<view v-if="index1==1" style="margin: 16rpx 0;">
 							<view>{{item.createDate}}</view>
 						</view>
 						<!--农服发布-->
@@ -49,7 +49,7 @@
 						<view class="other g-a-c g-flex g-j-s-b" v-if="index1==2">
 							<span v-if="item.farmingMode=='0'">农活方式：整活</span>
 							<span v-if="item.farmingMode=='1'">农活方式：零活</span> </view>
-						<view class="reason" v-if="item.stateNum == 2">
+						<view class="reason" v-if="item.status == 2">
 							理由：{{item.examineReason}}
 						</view>
 					</view>
@@ -105,7 +105,7 @@
 				endDate: '',
 				transactionCategoryCode: '',
 				farmingMode: '',
-				company:'',
+				company: '',
 				index1: '',
 				condition: [{
 						code: 0,
@@ -145,34 +145,26 @@
 				listIndex: 3
 			}
 		},
+		//页面初始化
 		onLoad(e) {
+			//农机发布显示
 			if (e.index == 0) {
 				this.index1 = 0
+				this.title = "农机发布"
+				this.company = "元/亩"
 			}
+			//粮食买卖显示
 			if (e.index == 1) {
 				this.index1 = 1
+				this.title = "粮食买卖"
+				this.company = "元/公斤"
 			}
+			//农服发布显示
 			if (e.index == 2) {
 				this.index1 = 2
-			}
-			if (e.index == 0) {	
-				this.title = "农机发布"
-			}
-			if (e.index == 1) {
-				this.title = "粮食买卖"
-			}
-			if (e.index == 2) {
 				this.title = "农服发布 "
+				this.company = "元/天 "
 			}
-			if (e.index == 0) {
-			    this.company = "元/亩"
-			   }
-			   if (e.index == 1) {
-			    this.company = "元/公斤"
-			   }
-			   if (e.index == 2) {
-			    this.company = "元/天 "
-			   }
 		},
 		methods: {
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
@@ -188,7 +180,7 @@
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
 				// 第1种: 请求具体接口
-				console.log("aaa" + this.index1)
+				//农机发布列表显示
 				if (this.index1 == 0) {
 					uni.request({
 						url: ApiPath.url.findMyPublication,
@@ -220,6 +212,7 @@
 						}
 					});
 				}
+				//粮食买卖列表显示
 				if (this.index1 == 1) {
 					uni.request({
 						url: ApiPath.url.findMyPublication,
@@ -252,6 +245,7 @@
 						}
 					});
 				}
+				//农服发布列表显示
 				if (this.index1 == 2) {
 					uni.request({
 						url: ApiPath.url.findMyPublication,
@@ -289,22 +283,26 @@
 				}
 			},
 			jump(getId) {
+				//农机发布详情跳转
 				if (this.index1 == 0) {
 					uni.navigateTo({
 						url: '../grain/spaceCancel?id=' + getId
 					})
 				}
+				//粮食买卖详情跳转
 				if (this.index1 == 1) {
 					uni.navigateTo({
 						url: '../grain/space?id=' + getId
 					})
 				}
+				//农服发布详情跳转
 				if (this.index1 == 2) {
 					uni.navigateTo({
 						url: '../grain/spaceModify?id=' + getId
 					})
 				}
 			},
+			//状态滑块筛选
 			select(code) {
 				this.status = code
 				this.downCallback()
@@ -343,10 +341,11 @@
 			.title {
 				height: 76rpx;
 				color: #333;
+
 				.price {
 					width: 210rpx;
 					text-align: right;
-					margin-left: -30rpx;
+					margin-left: -20rpx;
 				}
 			}
 
@@ -354,8 +353,9 @@
 				line-height: 40rpx;
 			}
 		}
+
 		.reason {
-			text-align: right;
+			text-align: left;
 			color: #e51c2e;
 		}
 	}
