@@ -67,8 +67,14 @@
                         "^/api" : "/"
                     }
                 }
-            }
+            },
+            "port" : 8001
         },
-        "domain" : "localhost"
+        "domain" : "localhost",
+        "router" : {
+            "base" : "./",
+            "mode" : "hash"
+        },
+        "title" : "农服系统"
     }
 }

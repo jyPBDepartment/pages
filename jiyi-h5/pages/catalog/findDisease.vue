@@ -3,8 +3,8 @@
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
 		<Screen @screened="screened" @select="select" :screenList="screenList" :condition="condition"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="p-x-10 g-flex g-j-s-b g-f-row g-f-warp" @click="jump" style="margin-top: 30rpx;">
-				<view style="width: 324rpx;" v-for="(item, index) in dataList" :key="index">
+			<view class="p-x-10 g-flex g-j-s-b g-f-row g-f-warp"  style="margin-top: 30rpx;">
+				<view style="width: 324rpx;" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
 					<image style="width: 324rpx;height: 304rpx;" :src="item.url" mode=""></image>
 					<p class="f-14" style="line-height: 96rpx;">{{item.name}}</p>
 				</view>
@@ -94,9 +94,10 @@
 			removeSpaces(string) {
 				return string.replace(/\s*/g, '')
 			},
-			jump() {
+			// 跳转病虫害详情
+			jump(val) {
 				uni.navigateTo({
-					url: '../grain/richText'
+					url: '../grain/richText?id='+val
 				})
 			},
 			search(e) {

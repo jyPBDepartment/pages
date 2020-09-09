@@ -62,7 +62,6 @@
 			release() {
 				uni.request({
 					url: Interface.url.addPostInfo,
-					header: {},
 					method: "GET",
 					data: {
 						name: this.name,

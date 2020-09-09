@@ -4,7 +4,7 @@
 		<Screen @screened="screened" @select="select" :screenList="screenList" :condition="condition"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
-				<view class="app-modular g-flex" @click="jump" v-for="(item, index) in dataList" :key="index">
+				<view class="app-modular g-flex" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
 					<image class="app-img" :src="item.url" mode=""></image>
 					<view class="app-info g-flex g-f-1 g-f-column g-j-s-b">
 						<p class="title f-14">{{item.name}}</p>
@@ -104,9 +104,10 @@
 			removeSpaces(string) {
 				return string.replace(/\s*/g, '')
 			},
-			jump() {
+			// 跳转详情页面
+			jump(val) {
 				uni.navigateTo({
-					url: '../grain/space?index=0'
+					url: '../grain/space?id='+val
 				})
 			},
 			search(e) {

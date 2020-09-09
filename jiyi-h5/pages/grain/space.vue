@@ -1,7 +1,6 @@
 <template>
 	<view>
 		<HeaderSearch title="粮食买卖详情"></HeaderSearch>
-
 		<view class="init">
 			<view class="roll-out">
 				<swiper class="roll" :current="current" @change="getCurrent">

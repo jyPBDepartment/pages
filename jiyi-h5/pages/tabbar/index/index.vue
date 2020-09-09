@@ -18,9 +18,9 @@
 					<view class="f-14" @click="moreNf">更多</view>
 					<u-icon class="f-14" @click="moreNf" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview" @click="detailsNf">
+				<view class="preview" >
 					<view v-if="!nfList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
-					<view class="buju" v-for="(item, index) in nfList" :key="index">
+					<view class="buju" @click="detailsNf(item.id)" v-for="(item, index) in nfList" :key="index">
 						<view class="img">
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
@@ -35,9 +35,9 @@
 					<view class="f-14" @click="moreMm">更多</view>
 					<u-icon class="f-14" @click="moreMm" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview" @click="detailsMm">
+				<view class="preview" >
 					<view v-if="!mmList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
-					<view class="buju" v-for="(item, index) in mmList" :key="index">
+					<view class="buju" @click="detailsMm(item.id)" v-for="(item, index) in mmList" :key="index">
 						<view class="img">
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
@@ -51,9 +51,9 @@
 					<view class="f-14" @click="moreNj">更多</view>
 					<u-icon class="f-14" @click="moreNj" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview" @click="detailsNj">
+				<view class="preview" >
 					<view v-if="!NjList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
-					<view class="buju" v-for="(item, index) in NjList" :key="index">
+					<view class="buju" @click="detailsNj(item.id)" v-for="(item, index) in NjList" :key="index">
 						<view class="img">
 							<view class="tag f-12 t-c">{{item.transactionTypeCode}}</view>
 							<image class="preview-img" :src="item.url" mode=""></image>
@@ -68,9 +68,9 @@
 					<view class="f-14" @click="moreCh">更多</view>
 					<u-icon class="f-14" @click="moreCh" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview" @click="detailsCh">
+				<view class="preview" >
 					<view v-if="!ChList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
-					<view class="buju" v-for="(item, index) in ChList" :key="index">
+					<view class="buju" @click="detailsCh(item.id)" v-for="(item, index) in ChList" :key="index">
 						<view class="img">
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
@@ -101,124 +101,151 @@
 			};
 		},
 		onLoad() {
-			uni.request({
-				url: Interface.url.findModuleOn,
-				method: "GET",
-				data: {},
-				success: (res) => {
-					if (res.data.state == 0) {
-						this.btnList = res.data.data.map(item => {
-							if (item.url != '') {
-								item.url = item.url.split(',')[0]
-							}
-							return item
-						})
-					}
-				},
-				fail: (err) => {}
-			});
-			uni.request({
-				url: Interface.url.findNewInfo,
-				method: "GET",
-				data: {
-					type: 0
-				},
-				success: (res) => {
-					if (res.data.state == 0) {
-
-						console.log(res.data)
-						this.nfList = res.data.data.map(item => {
-							if (item.workArea) {
-								let address
-								if (typeof(item.workArea) == "object") {
-									item.workArea = ''
-									address = item.workArea
-								}
-								if (item.workArea.split('/').length > 1) {
-									address = `${item.workArea.split('/')[0]}/${item.workArea.split('/')[1]}`
-								}
-								item.workArea = address
-							}
-							if (item.url != '') {
-								item.url = item.url.split(',')[0]
-							}
-							return item
-						})
-					}
-				},
-				fail: (err) => {}
-			});
-			uni.request({
-				url: Interface.url.findNewInfo,
-				method: "GET",
-				data: {
-					type: 1
-				},
-				success: (res) => {
-					if (res.data.state == 0) {
-						this.mmList = res.data.data.map(item => {
-							if (item.url != '') {
-								item.url = item.url.split(',')[0]
-							}
-							return item
-						})
-					}
-				},
-				fail: (err) => {}
-			});
-			uni.request({
-				url: Interface.url.findNewInfo,
-				method: "GET",
-				data: {
-					type: 2
-				},
-				success: (res) => {
-					if (res.data.state == 0) {
-						this.NjList = res.data.data.map(item => {
-							if (item.transactionTypeCode == 0) {
-								item.transactionTypeCode = '收购'
-							} else if (item.transactionTypeCode == 1) {
-								item.transactionTypeCode = '出售'
-							} else if (item.transactionTypeCode == 2) {
-								item.transactionTypeCode = '出租'
-							} else if (item.transactionTypeCode == 3) {
-								item.transactionTypeCode = '播种'
-							} else if (item.transactionTypeCode == 4) {
-								item.transactionTypeCode = '植保'
-							} else if (item.transactionTypeCode == 5) {
-								item.transactionTypeCode = '收割'
-							}
-							if (item.url != '') {
-								item.url = item.url.split(',')[0]
-							}
-							return item
-						})
-					}
-				},
-				fail: (err) => {}
-			});
-			uni.request({
-				url: Interface.url.findLatestCaseInfo,
-				method: "GET",
-				data: {},
-				success: (res) => {
-					if (res.data.state == 0) {
-						this.ChList = res.data.data.map(item => {
-							if (item.url != '') {
-								item.url = item.url.split(',')[0]
-							}
-							return item
-						})
-					}
-				},
-				fail: (err) => {}
-			});
+			// 初始化加载模块信息
+			this.initModuleInfo();
+			// 初始化加载农服预约信息
+			this.initAgriInfo();
+			// 初始化加载粮食买卖信息
+			this.initGrainInfo();
+			// 初始化加载农机信息
+			this.initAgriMachineInfo();
+			// 初始化加载病虫害信息
+			this.initCaseInfo();
 		},
 		methods: {
+			// 初始化加载模块信息
+			initModuleInfo() {
+				uni.request({
+					url: Interface.url.findModuleOn,
+					method: "GET",
+					data: {},
+					success: (res) => {
+						if (res.data.state == 0) {
+							this.btnList = res.data.data.map(item => {
+								if (item.url != '') {
+									item.url = item.url.split(',')[0]
+								}
+								return item
+							})
+						}
+					},
+					fail: (err) => {}
+				});
+			},
+			// 初始化农服预约信息
+			initAgriInfo() {
+				uni.request({
+					url: Interface.url.findNewInfo,
+					method: "GET",
+					data: {
+						type: 0
+					},
+					success: (res) => {
+						if (res.data.state == 0) {
+							this.nfList = res.data.data.map(item => {
+								if (item.workArea) {
+									let address
+									if (typeof(item.workArea) == "object") {
+										item.workArea = ''
+										address = item.workArea
+									}
+									if (item.workArea.split('/').length > 1) {
+										address = `${item.workArea.split('/')[0]}/${item.workArea.split('/')[1]}`
+									}
+									item.workArea = address
+								}
+								if (item.url != '') {
+									item.url = item.url.split(',')[0]
+								}
+								return item
+							})
+						}
+					},
+					fail: (err) => {}
+				});
+			},
+			// 初始化加载粮食买卖信息
+			initGrainInfo() {
+				uni.request({
+					url: Interface.url.findNewInfo,
+					method: "GET",
+					data: {
+						type: 1
+					},
+					success: (res) => {
+						if (res.data.state == 0) {
+							this.mmList = res.data.data.map(item => {
+								if (item.url != '') {
+									item.url = item.url.split(',')[0]
+								}
+								return item
+							})
+						}
+					},
+					fail: (err) => {}
+				});
+			},
+			// 初始化加载农机信息
+			initAgriMachineInfo() {
+				uni.request({
+					url: Interface.url.findNewInfo,
+					method: "GET",
+					data: {
+						type: 2
+					},
+					success: (res) => {
+						if (res.data.state == 0) {
+							this.NjList = res.data.data.map(item => {
+								if (item.transactionTypeCode == 0) {
+									item.transactionTypeCode = '收购'
+								} else if (item.transactionTypeCode == 1) {
+									item.transactionTypeCode = '出售'
+								} else if (item.transactionTypeCode == 2) {
+									item.transactionTypeCode = '出租'
+								} else if (item.transactionTypeCode == 3) {
+									item.transactionTypeCode = '播种'
+								} else if (item.transactionTypeCode == 4) {
+									item.transactionTypeCode = '植保'
+								} else if (item.transactionTypeCode == 5) {
+									item.transactionTypeCode = '收割'
+								}
+								if (item.url != '') {
+									item.url = item.url.split(',')[0]
+								}
+								return item
+							})
+						}
+					},
+					fail: (err) => {}
+				});
+			},
+			// 初始化加载病虫害信息
+			initCaseInfo() {
+				uni.request({
+					url: Interface.url.findLatestCaseInfo,
+					method: "GET",
+					data: {},
+					success: (res) => {
+						if (res.data.state == 0) {
+							this.ChList = res.data.data.map(item => {
+								if (item.url != '') {
+									item.url = item.url.split(',')[0]
+								}
+								return item
+							})
+						}
+					},
+					fail: (err) => {}
+				});
+			},
 			//组件监听搜索内容方法
 			search(e) {
 				console.log(e)
 			},
+			/**
+			 * 模块功能跳转
+			 * 根据不同模块路径跳转相关主页
+			 * */ 
 			jump(item, index) {
 				if (item.tabMode != 0) {
 					uni.navigateTo({
@@ -250,24 +277,28 @@
 					url: '/pages/catalog/findDisease'
 				})
 			},
-			detailsNf() {
+			// 农服详情跳转
+			detailsNf(val) {
 				uni.navigateTo({
-					url: '/pages/grain/paddy'
+					url: '/pages/grain/paddy?id='+val
 				})
 			},
-			detailsMm() {
+			// 粮食买卖详情跳转
+			detailsMm(val) {
 				uni.navigateTo({
-					url: '/pages/grain/space?index=0'
+					url: '/pages/grain/space?id='+val
 				})
 			},
-			detailsNj() {
+			// 农机详情跳转
+			detailsNj(val) {
 				uni.navigateTo({
-					url: '/pages/grain/space?index=1'
+					url: '/pages/grain/spaceCancel?id='+val
 				})
 			},
-			detailsCh() {
+			// 病虫害详情跳转
+			detailsCh(val) {
 				uni.navigateTo({
-					url: '/pages/grain/richText'
+					url: '/pages/grain/richText?id='+val
 				})
 			},
 		}

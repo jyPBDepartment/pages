@@ -95,7 +95,9 @@
 				<view class="lineb">
 					<u-line></u-line>
 				</view>
-
+				<view>
+					<u-button @click="concat">联系客服</u-button>
+				</view>
 			</view>
 
 		</view>
@@ -123,6 +125,11 @@
 				console.log(url)
 				uni.navigateTo({
 					url: url
+				})
+			},
+			concat(){
+				uni.navigateTo({
+					url:"../../window/index/index?userId=123456"
 				})
 			}
 		}

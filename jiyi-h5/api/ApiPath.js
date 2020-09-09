@@ -1,7 +1,7 @@
 //配置后台接口
 //开发环境基础路径地址
-const URLHost = 'http://192.168.1.102:8080';
-// const URLHost = 'http://localhost:8080';
+// const URLHost = 'http://192.168.1.102:8080';
+const URLHost = 'http://localhost:8080';
 
 //生产环境基础路径地址
 // const URLHost = 'http://60.205.246.126/jy_fcs';
@@ -27,6 +27,9 @@ const url = {
 
 	//加载病虫害信息3条记录。
 	findLatestCaseInfo: URLHost + '/caseInfo/findLatestCaseInfo',
+	
+	// 根据id获取病虫害信息
+	findCaseInfoById :URLHost + '/caseInfo/findById',
 
 	//根据农服标题名称查询农服列表信息
 	findAgriInfo: URLHost + '/agricultural/findAgriInfo',
@@ -67,7 +70,7 @@ const url = {
 
 	//农服预约
 	appointment: URLHost + '/farmwork/save',
-	//加载农服列表
+	//加载我的农服发布列表
 	agrSearch: URLHost + '/agricultural/findAgriInfo',
 	//查询发布模块信息
 	moduleShow: URLHost + '/deployModuleInfo/findAllDeployModuleInfo',

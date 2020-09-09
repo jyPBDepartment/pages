@@ -1,6 +1,6 @@
 <template>
 	<view class="g-flex g-f-column">
-		<HeaderSearch title="详情页面"></HeaderSearch>
+		<HeaderSearch title="农服详情页面"></HeaderSearch>
 
 		<swiper class="circul" indicator-dots='true' autoplay='true' interval='3000' duration='1000' circular='true'>
 			<block v-for="(item,index) in banner" :key="index">
@@ -11,7 +11,6 @@
 		</swiper>
 		<view class="p-x-10">
 			<view class="g-flex g-a-c">
-
 				<view class="title g-f-1 f-16" style="padding:0rpx;">
 					{{name}}
 				</view>
@@ -54,7 +53,6 @@
 		data() {
 			return {
 				cencalIsShow: false,
-
 				name: "",
 				price: "",
 				date: "",
@@ -69,7 +67,6 @@
 			}
 		},
 		onLoad(e) {
-
 			this.transKeyWordId(e.id)
 		},
 		methods: {
