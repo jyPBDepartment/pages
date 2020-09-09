@@ -74,7 +74,6 @@
 			selected(index1, index) {
 				this.screenedIndex = index
 				this.screenedIndex1 = index1
-				this.confirm()
 			},
 			recharge() {
 				this.screenedIndex = null
@@ -84,13 +83,11 @@
 				this.$refs.drawer.close()
 			},
 			confirm(e) {
-				if (e) {
-					this.$refs.drawer.close()
-					return
-				}
 				if (this.screenedIndex !== null) {
 					this.screened = this.condition.findIndex(item => item.name == '筛选')
 					this.$emit("screened", this.screenList[this.screenedIndex1].category[this.screenedIndex].code)
+						this.$refs.drawer.close()
+						return
 				} else {
 					this.screenIndex = 0
 					this.$emit("screened", null)
