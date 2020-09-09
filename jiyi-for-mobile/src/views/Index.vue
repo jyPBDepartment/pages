@@ -6,7 +6,7 @@
           <div class="w">
             <el-row type="flex" align="middle">
               <el-col class="m_logo" :span="3" :offset="1" :xs="{span: 10, offset: 0}">
-                <img class="logo" @click="jumpHome" src="https://yanxuan.nosdn.127.net/91f69cd236a9a5869b641534edc92f26.png" alt />
+                <img class="logo" @click="jumpHome" src="http://60.205.246.126:8001/images/2020/09/09/1599641395348624.png" alt />
               </el-col>
               <el-col class="m_header_btn" :xs="{span:14}">
                 <a :href="'tel:4006840008'">

@@ -1,14 +1,14 @@
 <template>
   <div class="bg">
-    <img class="logo" src="../assets/icon.png" alt />
-    <h2>吉易慧农</h2>
+    <img class="logo" src="http://60.205.246.126:8001/images/2020/09/09/1599641425635996.png" alt />
+    <!-- <h2>吉易慧农</h2> -->
     <div class="btn" style="background:#FF5400;margin:150px 0 30px 0;">
       <a href="	
 http://60.205.246.126:8001/apk/jyhn.apk">吉易慧农安卓版本下载</a>
     </div>
     <div class="btn" style="background:#0B4EA7;">
       <a href="	
-http://60.205.246.126:8001/apk/jysk.apk">吉易掌柜安卓版本下载</a>
+http://60.205.246.126:8001/apk/jyzg.apk">吉易掌柜安卓版本下载</a>
     </div>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {};
   background-size: 100% 100%;
   .logo {
     width: 140px;
-    height: 140px;
+    height: 190px;
     margin-top: 80px;
   }
   h2 {
