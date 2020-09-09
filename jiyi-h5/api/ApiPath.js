@@ -27,9 +27,9 @@ const url = {
 
 	//加载病虫害信息3条记录。
 	findLatestCaseInfo: URLHost + '/caseInfo/findLatestCaseInfo',
-	
+
 	// 根据id获取病虫害信息
-	findCaseInfoById :URLHost + '/caseInfo/findById',
+	findCaseInfoById: URLHost + '/caseInfo/findById',
 
 	//根据农服标题名称查询农服列表信息
 	findAgriInfo: URLHost + '/agricultural/findAgriInfo',
@@ -67,6 +67,8 @@ const url = {
 	//加载回复列表
 	addReplyInfo: URLHost + '/replyInfo/addReplyInfo',
 
+	// 根据帖子id查询帖子信息
+	findPostInfoById: URLHost + '/postInfo/findById',
 
 	//农服预约
 	appointment: URLHost + '/farmwork/save',
@@ -76,8 +78,8 @@ const url = {
 	moduleShow: URLHost + '/deployModuleInfo/findAllDeployModuleInfo',
 	//农服预约详情页面
 	transKeyWordId: URLHost + '/agricultural/findId',
-	 //搜索我的农机发布
-    findMyPublication: URLHost + '/agricultural/findMyPublication',
+	//搜索我的农机发布
+	findMyPublication: URLHost + '/agricultural/findMyPublication',
 
 }
 export default {

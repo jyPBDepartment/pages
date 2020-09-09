@@ -1,14 +1,16 @@
 <template>
 	<view>
 		<HeaderSearch bold :title="param.name" @searchCallback="search"></HeaderSearch>
+
+		<view class="content f-14">
+			{{param.text}}
+		</view>
 		<view class="title f-14 g-flex g-f-warp">
 			<view class="f-16">{{param.author}}</view>
 			<view class="g-f-1">农业专家</view>
 			<view class="g-f-2 t-c">发布时间：{{param.createDate}}</view>
 		</view>
-		<view class="content f-14">
-			{{param.code}}
-		</view>
+
 		<view class="comment">
 			<view class="comments g-flex g-a-c">
 				<view class="g-f-1 f-14" style="color: #999999;">精选留言</view>
@@ -78,17 +80,26 @@
 				expandReplyIndex: null,
 				replyList: [],
 				param: {
-					name: ''
+					id: '',
+					name: '',
+					author: '',
+					text: '',
+					createDate: ''
 				},
-
+				postCommentInfoEntity: {
+					commentContent: '',
+					commentUserName: '',
+					commentUserId: '',
+					// commentDate: '',
+					postId: ''
+				}
 			}
 		},
 		onLoad(e) {
-			if (e) {
-				this.param = JSON.parse(e.params)
-				console.log(this.param)
-			}
-			this.request()
+			// 缓存帖子id
+			this.param.id = e.id;
+			// 根据Id获取帖子信息
+			this.getPostInfoById(e.id);
 		},
 		methods: {
 			replyComments(item) {
@@ -113,7 +124,6 @@
 					success: (res) => {
 						let index = this.commentList.findIndex(item => item.id == this.contentId)
 						this.commentList[index].getReplyList = res.data.data.content
-						console.log(res.data)
 					},
 					fail: (err) => {}
 				});
@@ -123,22 +133,21 @@
 			},
 			confirm(e) {
 				if (type == 1) {
+					this.postCommentInfoEntity.commentContent = e;
+					this.postCommentInfoEntity.postId = this.param.id;
 					uni.request({
 						url: Interface.url.addCommentInfo,
 						method: "GET",
-						data: {
-							commentContent: e,
-							commentUserName: 'ceshi',
-							postId: this.param.id
-						},
+						data: this.postCommentInfoEntity,
 						success: (res) => {
+							console.log(JSON.stringify(res))
 							if (res.data.state == 0) {
 								uni.showToast({
 									title: '发表成功',
 									icon: 'success',
 									duration: 2000
 								});
-								this.request()
+								this.findCommentInfoById(this.param.id);
 							} else {
 								uni.showToast({
 									title: '发表失败',
@@ -147,7 +156,6 @@
 								});
 							}
 							this.cencalIsShow = false
-					
 						},
 						fail: (err) => {
 							uni.showToast({
@@ -175,7 +183,7 @@
 									icon: 'success',
 									duration: 2000
 								});
-								this.request()
+								this.findCommentInfoById(this.param.id);
 							} else {
 								uni.showToast({
 									title: '发表失败',
@@ -184,7 +192,7 @@
 								});
 							}
 							this.cencalIsShow = false
-					
+
 						},
 						fail: (err) => {
 							uni.showToast({
@@ -196,7 +204,7 @@
 						}
 					});
 				}
-				
+
 
 			},
 			//时间戳转换方法    date:时间戳数字
@@ -213,24 +221,45 @@
 			getMoreComment() {
 				if (this.commentSize == 1) {
 					this.commentSize = 10
-					this.request()
+					this.findCommentInfoById(this.param.id);
 				} else {
 					this.commentPage += 1
-					this.request()
+					this.findCommentInfoById(this.param.id);
 				}
 
 			},
-			request() {
+			// 根据id获取帖子信息
+			getPostInfoById(val) {
+				uni.request({
+					method: 'GET',
+					url: Interface.url.findPostInfoById,
+					data: {
+						'id': val
+					},
+					success: (res) => {
+						if (res.data.status == 0) { //数据成功返回
+
+							this.param.name = res.data.data.name;
+							this.param.author = res.data.data.author;
+							this.param.text = res.data.data.code;
+							this.param.createDate = res.data.data.createDate;
+
+							this.findCommentInfoById(val);
+						}
+					}
+				})
+			},
+			// 根据postId获取评论回复信息
+			findCommentInfoById(val) {
 				uni.request({
 					url: Interface.url.findByPostId,
 					method: "GET",
 					data: {
-						postId: this.param.id,
+						postId: val,
 						page: this.commentPage,
 						size: this.commentSize
 					},
 					success: (res) => {
-						console.log(res.data.data)
 						this.totalPages = res.data.data.totalPages
 						this.totalElements = res.data.data.totalElements
 						let data = res.data.data.content.map(item => {
@@ -246,6 +275,7 @@
 					},
 					fail: (err) => {}
 				});
+
 			}
 
 		}

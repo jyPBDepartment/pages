@@ -6,7 +6,7 @@
 			 :key="index">{{item.name}}</view>
 		</view>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<CommunityInfo @click="jump" v-for="(item, index) in dataList" :key="index" :communityInfo="item" />
+			<CommunityInfo @click="jump(item.id)" v-for="(item, index) in dataList" :key="index" :communityInfo="item" />
 		</mescroll-body>
 
 		<uni-drawer ref="drawer" mode="right" :visible="true">
@@ -74,30 +74,34 @@
 			}
 		},
 		onLoad() {
-			uni.request({
-				url: Interface.url.getPostType,
-				method: "GET",
-				data: {},
-				success: (res) => {
-					this.tabsList.push({
-						name: "全部",
-						postType: null
-					})
-					res.data.data.forEach((item, index) => {
-						if (index <= 2) {
-							this.tabsList.push(item)
-						}
-					})
-					this.tabsList.push({
-						name: "筛选",
-						postType: null
-					})
-					this.categoryList = res.data.data
-				},
-				fail: (err) => {}
-			});
+			// 初始化帖子类型信息
+			this.initPostType();
 		},
 		methods: {
+			initPostType(){
+				uni.request({
+					url: Interface.url.getPostType,
+					method: "GET",
+					data: {},
+					success: (res) => {
+						this.tabsList.push({
+							name: "全部",
+							postType: null
+						})
+						res.data.data.forEach((item, index) => {
+							if (index <= 2) {
+								this.tabsList.push(item)
+							}
+						})
+						this.tabsList.push({
+							name: "筛选",
+							postType: null
+						})
+						this.categoryList = res.data.data
+					},
+					fail: (err) => {}
+				});
+			},
 			selectTab(item, index) {
 				if (item.name == "筛选") {
 					this.$refs.drawer.open()
@@ -114,9 +118,9 @@
 				this.mescroll.resetUpScroll();
 			},
 			jump(item) {
-				console.log(item)
 				uni.navigateTo({
-					url: `../../grain/article?params=${JSON.stringify(item)}`
+					// url: `../../grain/article?params=${JSON.stringify(item)}`
+					url: `../../grain/article?id=`+item
 				})
 			},
 			recharge() {
