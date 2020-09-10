@@ -63,7 +63,7 @@
 				</view>
 				<view class="btn g-flex" v-if="isDisplay!=0">
 					<view class="g-f-1">
-						<u-button @click="cencal(true)" shape="circle">取消</u-button>
+						<u-button @click="cencal(true)" shape="circle">取消发布</u-button>
 					</view>
 					<view  class="g-f-1">
 						<u-button type="error" shape="circle">修改信息</u-button>
@@ -122,6 +122,7 @@
 					data: param, //请求数据
 					url: ApiPath.url.findMineId, //请求接口路径
 					success: (res) => { //成功返回结果方法
+					console.log(res.data.data)
 						this.transactionTypeCode = res.data.data.transactionTypeCode
 						this.machineType = res.data.data.machineType
 						this.labelCode = res.data.data.labelCode
@@ -133,6 +134,10 @@
 						this.price = res.data.data.price
 						this.isFace = res.data.data.isFace
 						this.name = res.data.data.name
+						if(res.data.data.status!=0){
+							this.isDisplay=1
+						}
+						
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {
 							this.banner.push({

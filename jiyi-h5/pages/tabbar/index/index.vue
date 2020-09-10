@@ -18,7 +18,7 @@
 					<view class="f-14" @click="moreNf">更多</view>
 					<u-icon class="f-14" @click="moreNf" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview" >
+				<view class="preview">
 					<view v-if="!nfList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsNf(item.id)" v-for="(item, index) in nfList" :key="index">
 						<view class="img">
@@ -35,7 +35,7 @@
 					<view class="f-14" @click="moreMm">更多</view>
 					<u-icon class="f-14" @click="moreMm" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview" >
+				<view class="preview">
 					<view v-if="!mmList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsMm(item.id)" v-for="(item, index) in mmList" :key="index">
 						<view class="img">
@@ -51,7 +51,7 @@
 					<view class="f-14" @click="moreNj">更多</view>
 					<u-icon class="f-14" @click="moreNj" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview" >
+				<view class="preview">
 					<view v-if="!NjList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsNj(item.id)" v-for="(item, index) in NjList" :key="index">
 						<view class="img">
@@ -68,7 +68,7 @@
 					<view class="f-14" @click="moreCh">更多</view>
 					<u-icon class="f-14" @click="moreCh" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview" >
+				<view class="preview">
 					<view v-if="!ChList.length" style="width: 100%; line-height: 140rpx;" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsCh(item.id)" v-for="(item, index) in ChList" :key="index">
 						<view class="img">
@@ -86,6 +86,7 @@
 	import Interface from '@/api/ApiPath.js'
 	import FoodstuffPrice from '@/components/FoodstuffPrice/FoodstuffPrice.vue'
 	import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue'
+	import MD5 from '../../../utils/md5.js'
 	export default {
 		components: {
 			HeaderSearch,
@@ -100,8 +101,9 @@
 				ChList: []
 			};
 		},
-		onLoad() {
-			// 初始化加载模块信息
+		onLoad(e) {
+			// alert(e.id)
+			// 初始化加载模块信息	
 			this.initModuleInfo();
 			// 初始化加载农服预约信息
 			this.initAgriInfo();
@@ -111,6 +113,8 @@
 			this.initAgriMachineInfo();
 			// 初始化加载病虫害信息
 			this.initCaseInfo();
+			
+			// alert(MD5('gCQsGhuXt9OWD0iTPyyraEOZbUdtGzit').toUpperCase())
 		},
 		methods: {
 			// 初始化加载模块信息
@@ -142,19 +146,12 @@
 					},
 					success: (res) => {
 						if (res.data.state == 0) {
-							
-							console.log(JSON.stringify(res.data.data))
 							this.nfList = res.data.data.map(item => {
-								if (item.workArea) {
-									let address
-									if (typeof(item.address) == "object") {
-										item.address = ''
-										address = item.address
-									}
-									if (item.address.split('/').length > 1) {
-										address = `${item.address.split('/')[0]}/${item.address.split('/')[1]}`
-									}
-									item.address = address
+								if (item.address.indexOf("内蒙古") > -1) {
+									item.address = "内蒙古";
+								} else {
+									let address = item.address.split('/');
+									item.address = address[1] + "." + address[2];
 								}
 								if (item.url != '') {
 									item.url = item.url.split(',')[0]
@@ -247,7 +244,7 @@
 			/**
 			 * 模块功能跳转
 			 * 根据不同模块路径跳转相关主页
-			 * */ 
+			 * */
 			jump(item, index) {
 				if (item.tabMode != 0) {
 					uni.navigateTo({
@@ -282,25 +279,25 @@
 			// 农服详情跳转
 			detailsNf(val) {
 				uni.navigateTo({
-					url: '/pages/grain/paddy?id='+val
+					url: '/pages/grain/paddy?id=' + val
 				})
 			},
 			// 粮食买卖详情跳转
 			detailsMm(val) {
 				uni.navigateTo({
-					url: '/pages/grain/space?id='+val+'&isShow=0'
+					url: '/pages/grain/space?id=' + val + '&isShow=0'
 				})
 			},
 			// 农机详情跳转
 			detailsNj(val) {
 				uni.navigateTo({
-					url: '/pages/grain/spaceCancel?id='+val
+					url: '/pages/grain/spaceCancel?id=' + val
 				})
 			},
 			// 病虫害详情跳转
 			detailsCh(val) {
 				uni.navigateTo({
-					url: '/pages/grain/richText?id='+val
+					url: '/pages/grain/richText?id=' + val
 				})
 			},
 		}

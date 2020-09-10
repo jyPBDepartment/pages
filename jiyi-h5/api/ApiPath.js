@@ -1,10 +1,10 @@
 //配置后台接口
 //开发环境基础路径地址
-// const URLHost = 'http://192.168.1.102:8080';
-const URLHost = 'http://localhost:8080';
+// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+// const URLHost = 'http://localhost:8080';
 
 //生产环境基础路径地址
-// const URLHost = 'http://60.205.246.126/jy_fcs';
+const URLHost = 'http://182.92.77.60/jy_fcs';
 const url = {
 	// 首页
 	// 按照类型加载发布数据
@@ -80,7 +80,8 @@ const url = {
 	transKeyWordId: URLHost + '/agricultural/findId',
 	//搜索我的农机发布
 	findMyPublication: URLHost + '/agricultural/findMyPublication',
-
+	//我的页面中农机，农服，粮食买卖详情页面
+	findMineId: URLHost + '/agricultural/findMineId',
 }
 export default {
 	url
