@@ -75,7 +75,7 @@
 			},
 			jump(item) {
 				uni.navigateTo({
-					url: `../grain/space?index=1&id=${item.id}`
+					url: '../grain/space?id='+item.id+'&isShow=0'
 				})
 			},
 			search(e) {

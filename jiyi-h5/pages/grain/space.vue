@@ -45,7 +45,7 @@
 						描述：{{descrip}}
 					</view>
 				</view>
-				<view class="btn g-flex">
+				<view class="btn g-flex" v-if="isDisplay!=0">
 					<view class="g-f-1">
 						<u-button @click="cencal(true)" shape="circle">取消</u-button>
 					</view>
@@ -90,9 +90,11 @@
 				isFace:'',
 				url:'',
 				name:'',
+				isDisplay:0
 			};
 		},
 		onLoad(e) {
+			this.isDisplay=e.isShow;
 			this.findMineId(e.id)
 		},
 		methods: {

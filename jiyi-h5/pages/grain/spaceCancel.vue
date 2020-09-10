@@ -61,7 +61,7 @@
 						描述：{{descrip}}
 					</view>
 				</view>
-				<view class="btn g-flex">
+				<view class="btn g-flex" v-if="isDisplay!=0">
 					<view class="g-f-1">
 						<u-button @click="cencal(true)" shape="circle">取消</u-button>
 					</view>
@@ -104,6 +104,7 @@
 				descrip:'',
 				isFace:'',
 				name:'',
+				isDisplay:0
 			};
 		},
 		//页面初始化

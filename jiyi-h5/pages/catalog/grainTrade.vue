@@ -107,7 +107,7 @@
 			// 跳转详情页面
 			jump(val) {
 				uni.navigateTo({
-					url: '../grain/space?id='+val
+					url: '../grain/space?id='+val+"&isShow=0"
 				})
 			},
 			search(e) {

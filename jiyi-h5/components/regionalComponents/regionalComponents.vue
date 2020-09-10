@@ -53,8 +53,19 @@
 			}
 		},
 		mounted() {
-			this.provinceData = provinceData;
-			console.log(provinceData)
+			let result = [];
+			for(let i=0;i<provinceData.length;i++){
+				if(provinceData[i].label=='内蒙古自治区'
+				||provinceData[i].label=='辽宁省'
+				||provinceData[i].label=='吉林省'
+				||provinceData[i].label=='黑龙江省'){
+					
+					result.push(provinceData[i]);
+				}
+			}
+			this.provinceData = result;
+			console.log(result)
+			
 		},
 		methods: {
 			//组件高度自适应

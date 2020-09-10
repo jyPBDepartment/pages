@@ -142,6 +142,8 @@
 					},
 					success: (res) => {
 						if (res.data.state == 0) {
+							
+							console.log(JSON.stringify(res.data.data))
 							this.nfList = res.data.data.map(item => {
 								if (item.workArea) {
 									let address
@@ -286,7 +288,7 @@
 			// 粮食买卖详情跳转
 			detailsMm(val) {
 				uni.navigateTo({
-					url: '/pages/grain/space?id='+val
+					url: '/pages/grain/space?id='+val+'&isShow=0'
 				})
 			},
 			// 农机详情跳转
