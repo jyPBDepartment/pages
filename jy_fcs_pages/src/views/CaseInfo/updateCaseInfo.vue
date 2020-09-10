@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="60%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -115,6 +115,7 @@ import { quillEditor } from "vue-quill-editor";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
+import aes from "@/utils/aes.js";
 export default {
   inject: ["reload"],
   props: {
@@ -308,7 +309,9 @@ export default {
               }
             this.caseInfoForm.keyCodes = null;
             this.caseInfoForm.keys = keyArr.join()
-            let params = { caseInfoEntity: this.caseInfoForm };
+            let params = { 
+              caseInfoEntity:aes.encrypt(JSON.stringify(this.caseInfoForm) ) ,
+            };
             api
               .testAxiosGet(ApiPath.url.updateCaseInfo, params)
               .then((res) => {
