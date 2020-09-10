@@ -45,9 +45,9 @@
 						描述：{{descrip}}
 					</view>
 				</view>
-				<view class="btn g-flex">
+				<view class="btn g-flex" v-if="isDisplay!=0">
 					<view class="g-f-1">
-						<u-button @click="cencal(true)" shape="circle">取消</u-button>
+						<u-button @click="cencal(true)" shape="circle">取消发布</u-button>
 					</view>
 					<view class="g-f-1">
 						<u-button type="error" shape="circle">修改信息</u-button>
@@ -93,6 +93,7 @@
 				beginDate: '',
 				endDate: '',
 				days: '',
+				isDisplay:0
 			};
 		},
 		//页面初始化
@@ -126,6 +127,9 @@
 						this.beginDate = res.data.data.beginDate
 						this.endDate = res.data.data.endDate
 						this.days = res.data.data.days
+						if(res.data.data.status!=0){
+							this.isDisplay=1
+						}
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {
 							this.banner.push({

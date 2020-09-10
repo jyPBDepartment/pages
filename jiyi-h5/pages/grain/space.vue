@@ -94,7 +94,6 @@
 			};
 		},
 		onLoad(e) {
-			this.isDisplay=e.isShow;
 			this.findMineId(e.id)
 		},
 		methods: {
@@ -121,6 +120,9 @@
 						this.isFace = res.data.data.isFace
 						// this.url = res.data.data.url
 						this.name = res.data.data.name
+						if(res.data.data.status!=0){
+							this.isDisplay=1
+						}
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {
 							this.banner.push({
