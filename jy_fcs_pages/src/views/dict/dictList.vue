@@ -263,7 +263,7 @@ export default {
     this.search(this.formInline);
     getDictValue(dictTypeConst.enableStatus).then((res) => {
       //调用后台字典接口，返回码值集合
-      alert(JSON.stringify(res.data.data));
+      //alert(JSON.stringify(res.data.data));
     });
   },
   methods: {

@@ -20,9 +20,9 @@
             type="text"
             v-model="moduleInfoForm.routeUrl"
             size="small"
-            placeholder="请输入跳转路由(不能超过16个字符)"
+            placeholder="请输入跳转路由(不能超过60个字符)"
             style="width:80%"
-            maxlength="16"
+            maxlength="60"
           ></el-input>
         </el-form-item>
         <el-form-item label="跳转类型" prop="tabMode">
