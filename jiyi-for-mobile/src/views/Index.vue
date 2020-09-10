@@ -51,7 +51,7 @@
         </el-row>
         <el-row class="m_f_i">
           <p>合作咨询：400-684-0008</p>
-          <p>投诉反馈：jiyinongye@126.com</p>
+          <p>投诉反馈：jiyihuinong@163.com</p>
           <p>地址：长春市人力资源服务产业园C座12层</p>
           <p>Copyright © 2012-2018 All Rights Reserved.</p>
           <p>备案号：吉ICP备19004431号</p>
