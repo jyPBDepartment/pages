@@ -149,7 +149,7 @@
                <div class="f_2">
                   <div class="f_3">
                    合作咨询:400-684-0008<br>
-                   投诉反馈:jiyinongye@126.com<br>
+                   投诉反馈:jiyihuinong@163.com<br>
                    地址：长春市人力资源服务产业园<br/><span style="margin-left:40px;">C座12层</span>
                   </div>
                   <div class="article_content">
