@@ -170,8 +170,6 @@
 							for (var i = 0; i < res.data.data.content.length; i++) {
 								//curPageData[i].imageUrl = curPageData[i].url.split(",")[0];
 							}
-							
-							console.log(JSON.stringify(curPageData))
 							this.list = this.list.concat(curPageData); //追加新数据
 							this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
 						}
