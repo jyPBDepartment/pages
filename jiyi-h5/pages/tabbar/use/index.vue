@@ -3,20 +3,20 @@
 		<HeaderSearch hideBack title="我的"></HeaderSearch>
 		<view class="content">
 			<!-- 顶部 -->
-			<view class="first g-flex g-a-c">
-				<u-image src="https://cdn.uviewui.com/uview/example/fade.jpg" shape="circle" style="width: 132rpx;height: 132rpx;margin: 16rpx 0rpx 0rpx 0rpx;"></u-image>
-				<view class="name g-f-1 f-16">
-					小吉易
-				</view>
+			<!-- <view class="first g-flex g-a-c"> -->
+				<!-- <u-image src="https://cdn.uviewui.com/uview/example/fade.jpg" shape="circle" style="width: 132rpx;height: 132rpx;margin: 16rpx 0rpx 0rpx 0rpx;"></u-image> -->
+				<!-- <view class="name g-f-1 f-16">
+					{{nc}}
+				</view> -->
 				<!-- <view class="icon g-flex">
 					<text class="text1 f-16">进入</text>
 					<u-icon size="33" name="arrow-right" class="icon1" @click=""></u-icon>
 				</view> -->
-			</view>
+			<!-- </view> -->
 			<!-- 下划线 -->
-			<view class="line">
+			<!-- <view class="line">
 				<u-line></u-line>
-			</view>
+			</view> -->
 
 			<!-- 我的发布 -->
 			<view class="second">
@@ -107,14 +107,14 @@
 
 <script>
 	import HeaderSearch from '../../../components/HeaderSearch/HeaderSearch.vue'
-
+	import Interface from '@/api/ApiPath.js'
 	export default {
 		components: {
 			HeaderSearch
 		},
 		data() {
 			return {
-
+			nc:Interface.common.nc
 			}
 		},
 		onLoad() {
@@ -122,7 +122,6 @@
 		},
 		methods: {
 			jump(url) {
-				console.log(url)
 				uni.navigateTo({
 					url: url
 				})

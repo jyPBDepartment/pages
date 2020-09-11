@@ -161,7 +161,6 @@
 		},
 		data() {
 			return {
-
 				currentDate: "",
 				regionaStatus: false,
 				dateShow: false,
@@ -186,8 +185,8 @@
 				endTime: '',
 				url: [],
 				value: '',
-				createUser:"发布人",
-				createUserId:"402881e47457b3060174581e29f30000",
+				createUser:"",
+				createUserId:ApiPath.common.userId,
 				list: [{
 						value: '0',
 						name: '整活',
@@ -246,7 +245,6 @@
 			};
 		},
 		onLoad() {		
-
 			// 设置干活时间选择日历的最小开始时间
 			this.currentDate = new Date().toISOString().slice(0,10)
 			setTimeout(() => {
@@ -258,11 +256,9 @@
 			
 		},
 		methods: {
-		
 			uploadSuccess(data, index, lists, name) {
 				this.url.push(data.url) 
 				this.show = false;
-				
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -297,7 +293,6 @@
 			},
 			//区域
 			sure(data) {
-				console.log(data);
 				this.regionaStatus = false;
 				let map = '';
 				data.forEach(item => {
@@ -405,7 +400,7 @@
 				     add.push(this.url[i]);
 				 }
 				 addItem = add.join(",");
-				 
+				 // alert("农服>>发布人id"+ApiPath.common.userId)
 				let param = {
 					name: this.name,
 					descrip: this.descrip,

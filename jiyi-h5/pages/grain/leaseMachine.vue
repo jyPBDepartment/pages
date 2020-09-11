@@ -157,8 +157,8 @@
 				transactionCategoryCode:'1',
 				isFace:"面议",
 				isFaceCode: "",
-				createUser:"发布人",
-				createUserId:"402881e47457b3060174581e29f30000",
+				createUser:"",
+				createUserId:ApiPath.common.userId,
 				action: ApiPath.url.uploadImg,
 				fileList: [],
 				list: [{
@@ -371,7 +371,7 @@
 				     add.push(this.url[i]);
 				 }
 				 addItem = add.join(",");
-				 
+				 // alert("农机>>发布人id"+ApiPath.common.userId)
 				let param = {
 					name: this.name,
 					descrip: this.descrip,

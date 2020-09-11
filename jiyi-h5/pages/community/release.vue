@@ -69,8 +69,8 @@
 						parentCode: this.list.find(item => {
 							return item.name == this.parent
 						}).parentCode,
-						createUserId: '12487238461289',
-						createUser: "asdasdfasd"
+						createUserId: ApiPath.common.userId,
+						createUser: ""
 					},
 					success: (res) => {
 						if (res.data.state == 0) {

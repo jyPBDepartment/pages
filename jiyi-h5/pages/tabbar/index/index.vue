@@ -2,7 +2,7 @@
 	<view>
 		<!-- search 组件监听到得参数search方法获取 -->
 		<HeaderSearch disabled @searchCallback="search"></HeaderSearch>
-		<FoodstuffPrice></FoodstuffPrice>
+		<!-- <FoodstuffPrice></FoodstuffPrice> -->
 		<view class="p-x-10">
 			<view class="p-y-10 btn b-t">
 				<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">
@@ -102,7 +102,8 @@
 			};
 		},
 		onLoad(e) {
-			// alert(e.id)
+			// 从外部接口获取客户信息
+			this.initCustomerInfo(e);
 			// 初始化加载模块信息	
 			this.initModuleInfo();
 			// 初始化加载农服预约信息
@@ -113,10 +114,47 @@
 			this.initAgriMachineInfo();
 			// 初始化加载病虫害信息
 			this.initCaseInfo();
-			
-			// alert(MD5('gCQsGhuXt9OWD0iTPyyraEOZbUdtGzit').toUpperCase())
 		},
 		methods: {
+			// 从外部接口获取客户信息
+			initCustomerInfo(e) {
+				// alert("从app获取用户id=" + e.U + " sessionId=" + e.SI)
+				Interface.common.userId = e.U; //缓存用户id
+				Interface.common.sessionId = e.SI; //缓存sessionId
+				let s = e.U +"+"+ e.SI+"+" + Interface.md5.key;
+				let sign = MD5(s).toUpperCase()
+				let param = {
+					"PTN": "P101999",
+					"U": e.U,
+					"SI": e.SI,
+					"S": sign
+				}
+				uni.request({
+					method: 'POST',
+					url: Interface.extendUrl.findCustmerInfo,
+					data: param,
+					success: (res) => {
+						// alert(JSON.stringify(res))
+						let code = res.data.RETURNRESULT.RESULT;
+						let message = res.data.RETURNRESULT.RETCODE;
+						if(code=="1"){
+							// alert("成功返回")
+							// 昵称
+							Interface.common.nc = res.data.RETURNRESULT.NN;
+							// alert("昵称："+Interface.common.nc)
+						}
+						if(code=="-1"){
+							// alert("失败")
+						}
+						if(code=="0"){
+							// alert("处理中")
+						}
+						if(code=="2"){
+							// alert("异常")
+						}
+					}
+				})
+			},
 			// 初始化加载模块信息
 			initModuleInfo() {
 				uni.request({

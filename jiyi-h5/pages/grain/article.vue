@@ -89,7 +89,7 @@
 				postCommentInfoEntity: {
 					commentContent: '',
 					commentUserName: '',
-					commentUserId: '',
+					commentUserId: ApiPath.common.userId,
 					// commentDate: '',
 					postId: ''
 				}
@@ -140,7 +140,6 @@
 						method: "GET",
 						data: this.postCommentInfoEntity,
 						success: (res) => {
-							console.log(JSON.stringify(res))
 							if (res.data.state == 0) {
 								uni.showToast({
 									title: '发表成功',
