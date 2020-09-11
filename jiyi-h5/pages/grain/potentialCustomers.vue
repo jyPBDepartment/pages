@@ -108,7 +108,7 @@
 					success: (res) => {
 						if (res.data.state == 0) {
 							this.farmwork=res.data.data;
-							console.log('22'+res.data.dataFarmPic)
+							
 							//查找图片
 							for (var i = 0; i < res.data.dataFarmPic.length; i++) {
 								this.banner.push({
@@ -133,7 +133,7 @@
 			       uni.showToast({
 			        title: "确认成功",
 			       })
-				   console.log(11111)
+				
 			      }
 			     }
 			    })

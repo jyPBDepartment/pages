@@ -11,7 +11,7 @@
 		</swiper>
 		<view class="p-x-10">
 			<view class="tips f-12" style="color: #e51c2e;line-height: 60rpx;">
-				客户取消理由：<!-- {{farmwork.reason}} -->
+				客户取消理由：{{farmwork.reason}}
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style="width: 140rpx;">
@@ -103,14 +103,14 @@
 					success: (res) => {
 						if (res.data.state == 0) {
 							this.farmwork=res.data.data;
-							console.log("222"+ res.data.data)
+							
 							//查找图片
 							for (var i = 0; i < res.data.dataFarmPic.length; i++) {
 								this.banner.push({
 									'imgurl': res.data.dataFarmPic[i].picUrl
 								})
 							}
-							console.log("111"+ res.data.dataFarmPic.picUrl)
+							
 						}
 					}
 				})
