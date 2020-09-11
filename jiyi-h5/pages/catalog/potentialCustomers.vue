@@ -6,7 +6,7 @@
 			<view class="p-x-10">
 				<view @click="jump(item)" class="box box-border p-y-10 f-12 g-flex" v-for="(item, index) in list" :key="index">
 					<view class="image">
-						<image class="app-img" :src="item.imageUrl" style="width: 200rpx;height: 200rpx;"></image>
+						<image class="app-img" :src="item.url" style="width: 200rpx;height: 200rpx;"></image>
 					</view>
 					<view class="info g-f-1">
 						<view class="title f-14 g-flex">
@@ -35,7 +35,7 @@
 						 size="mini">联系客户</u-button>
 					</view>
 					<view class="reason1" v-if="item.status == 0">
-						<u-button class="btn" type="error" shape="circle" size="mini">确认</u-button>
+						<u-button class="btn" type="error" shape="circle" size="mini" @click="confirmBtn(item.id)">确认</u-button>
 					</view>
 				</view>
 			</view>
@@ -88,6 +88,7 @@
 				imageUrl:'',
 				agriName:'',
 				content: '',
+				id:'',
 				condition: [{
 						code: 0,
 						name: "待确认"
@@ -131,7 +132,7 @@
 			}
 		},
 		onLoad() {
-
+				
 			// this.select(this.listIndex)
 		},
 		methods: {
@@ -169,6 +170,8 @@
 							for (var i = 0; i < res.data.data.content.length; i++) {
 								//curPageData[i].imageUrl = curPageData[i].url.split(",")[0];
 							}
+							
+							console.log(JSON.stringify(curPageData))
 							this.list = this.list.concat(curPageData); //追加新数据
 							this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
 						}
@@ -182,19 +185,42 @@
 				});
 
 			},
+			confirmBtn(val) {
+			    let param = {
+			     id:val,
+			     status:this.status			     
+			    }			   
+			    uni.request({
+			     method: 'GET', //请求方式
+			     data: param, //请求数据
+			     url: ApiPath.url.userUpdateStatus,
+			     success: (res) => {
+			      if (res.data.state == 0) {
+			       uni.showToast({
+			        title: "确认成功",
+			       })
+			      }
+			     }
+			    })
+			    
+			   },
 			jump(item) {
 				let url='';
+				let isShow="0";
+				if(this.status=="1"||this.status=="2"||this.status=="3"){
+					isShow="1"
+				}
 				switch (item.status) {
 					case "0":
-						url = '../grain/potentialCustomersConfirm?id='+item.id
+						url = '../grain/potentialCustomersConfirm?id='+item.id+"&index="+isShow
 					case "1":
-						url = '../grain/potentialCustomers?id='+item.id
+						url = '../grain/potentialCustomers?id='+item.id+"&index="+isShow
 						break;
 					case "2":
-						url = '../grain/potentialCustomers?id='+item.id
+						url = '../grain/potentialCustomers?id='+item.id+"&index="+isShow
 						break;
 					case "3":
-						url = '../grain/potentialCustomersCancel?id='+item.id
+						url = '../grain/potentialCustomersCancel?id='+item.id+"&index="+isShow
 						break;
 					default:
 				}
@@ -206,18 +232,11 @@
 			select(code) {
 				this.status = code
 				this.downCallback()
-				// let arr
-				// if (e !== this.condition.length - 1) {
-				// 	arr = list.filter(value => value.st === e);
-				// } else {
-				// 	arr = list
-				// }
-				// this.list = arr
+			
 			},
-			call(phone) {
-				console.log(phone)
+			call(contactPhone) {
 				uni.makePhoneCall({
-					phoneNumber: phone //仅为示例
+					phoneNumber: contactPhone //仅为示例
 				});
 			}
 		}
