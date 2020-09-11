@@ -105,6 +105,16 @@ const url = {
 	 findFarmForMe: URLHost + '/farmwork/findFarmForMe',
 	 // 根据预约Id获取预约信息
 	 findFarmWorkById : URLHost + '/farmwork/findDetail', 
+	 //取消预约
+	 cancel: URLHost + '/farmwork/cancel', 
+	 //重新预约
+	 again: URLHost + '/farmwork/again', 
+	 //我的预约已完成
+	 finish: URLHost + '/farmwork/finish', 
+	 // 根据预约Id获取预约信息
+      findFarmWorkById: URLHost + '/farmwork/findDetail',
+      //意向用户待确认变确认
+      userUpdateStatus: URLHost + '/farmwork/confirm',
 }
 export default {
 	url,common,md5,extendUrl

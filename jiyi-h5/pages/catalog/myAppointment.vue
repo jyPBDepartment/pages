@@ -6,8 +6,7 @@
 		<view class="p-x-10">
 			<view @click="jump(item)" class="box box-border p-y-10 f-12 g-flex" v-for="(item, index) in list" :key="index">
 				<view class="image">
-					<!-- {{item.state}}-->
-					<image class="app-img" :src="item.imageUrl" style="width: 200rpx;height: 200rpx;"></image>
+					<image class="app-img" :src="item.url" style="width: 200rpx;height: 200rpx;"></image>
 				</view>
 				<view class="info g-f-1">
 					<view class="title f-14 g-flex">
@@ -31,15 +30,15 @@
 						商家取消理由：{{item.reason}}
 					</view>
 					<view class="reason" v-if="item.status == 2">
-						<u-button class="btn" type="error" shape="circle" @click="call(item.phone)" size="mini">联系商家</u-button>
+						<u-button class="btn" type="error" shape="circle" @click="call(item.contactPhone)" size="mini">联系商家</u-button>
 					</view>
 					<view class="reason" v-if="item.status == 1">
-						<u-button class="btn" type="error" shape="circle" @click="show = true" size="mini">已完成</u-button>
+						<u-button class="btn" type="error" shape="circle"  @click="finish(item.id)" size="mini">已完成</u-button>
 					</view>
 				</view>
 			</view>
 		</view>
-		<u-modal v-model="show" :show-title="false" show-cancel-button content="是否确认完成？"></u-modal>
+		<!-- <u-modal v-model="show" :show-title="false" show-cancel-button content="是否确认完成？" @click="finish"></u-modal> -->
 		</mescroll-body>
 	</view>
 </template>
@@ -83,6 +82,7 @@
 				endDate:'',
 				workArea:'',
 				status:'',
+				contactPhone:'',
 				id:'',
 				condition: [
 					{
@@ -147,7 +147,6 @@
 						url: ApiPath.url.findMyFarm,
 						method: "GET",
 						data: {
-							id:this.id,
 							status: this.status,
 							userId:this.userId,
 							user:this.user,
@@ -160,10 +159,6 @@
 								let curPageLen = curPageData.length;
 								//设置列表数据
 								if (page.num == 1) this.list = []; //如果是第一页需手动置空列表
-								// console.log("hhh"+res.data.data1.length)
-								// for (var i = 0; i < res.data.data.content.length; i++) {
-								// 	curPageData[i].imageUrl = curPageData[i].url.split(",")[0];
-								// }
 								this.list = this.list.concat(curPageData); //追加新数据
 								this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
 							}
@@ -176,20 +171,20 @@
 						}
 					});
 			},
-			jump(e) {
+			jump(item) {
 				let url
-				switch (e.status) {
-					case 0:
-						url = '../grain/paddyCancel'
+				switch (item.status) {
+					case "0":
+						url = '../grain/paddyCancel?id='+item.id
 						break;
-					case 1:
-						url = '../grain/paddyContact'
+					case "1":
+						url = '../grain/paddyContact?id='+item.id
 						break;
-					case 2:
-						url = '../grain/paddyAgain'
+					case "2":
+						url = '../grain/paddyContact?id='+item.id
 						break;
-					case 3:
-						url = '../grain/paddyContact'
+					case "3":
+						url = '../grain/paddyAgain?id='+item.id
 						break;
 					default:
 				}
@@ -200,18 +195,29 @@
 			select(code) {
 				this.status = code
 				this.downCallback()
-				// let arr
-				// if (e !== this.condition.length - 1) {
-				// 	arr = list.filter(value => value.stateNum === e);
-				// } else {
-				// 	arr = list
-				// }
-				// this.list = arr
 			},
-			call(phone) {
+			call(contactPhone) {
 				uni.makePhoneCall({
-					phoneNumber: phone //仅为示例
+					phoneNumber: contactPhone //仅为示例
 				});
+			},
+			finish(val){
+				let param = {
+					id:val,
+					status:this.status,
+				}
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.finish,
+					success: (res) => {
+						if (res.data.state == 0) {
+							uni.showToast({
+								title: "确认完成"
+							})
+						}
+					}
+				})
 			}
 		}
 	}

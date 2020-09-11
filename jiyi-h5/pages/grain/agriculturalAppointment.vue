@@ -110,7 +110,7 @@
 				beginDate: '',
 				endTime: '',
 				url:[],
-				id:'',
+				agrId:'',
 			}
 		},
 		onLoad(e) {
@@ -124,7 +124,7 @@
 		},
 		methods:{
 			transKeyWordId(val) {
-				this.id=val
+				this.agrId=val
 			},
 			//图片
 			uploadSuccess(data, index, lists, name) {
@@ -242,7 +242,7 @@
 			 }
 			 addItem = add.join(",");
 			let param = {
-				id:this.id,
+				agrId:this.agrId,
 				beginDate: this.beginDate,
 				endDate: this.endTime,
 				area:this.area,
