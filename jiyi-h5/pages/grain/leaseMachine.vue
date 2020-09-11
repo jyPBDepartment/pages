@@ -26,7 +26,7 @@
 					农机图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :file-list="fileList" max-count="5"></u-upload>
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -145,6 +145,7 @@
 				name: '',
 				descrip: '',
 				url: [],
+				u:[],
 				machineType:'',
 				machineTypeName:'',
 				purchaseDate:'',
@@ -218,10 +219,14 @@
 			}, 1000)
 		},
 		methods: {
+			remove(index, lists){
+				this.url.splice(index,1);
+			},
 			
 			uploadSuccess(data, index, lists, name) {
 				this.url.push(data.url) ;
 				this.show = false;
+				this.u=this.url;
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -363,19 +368,18 @@
 						this.isFace = this.list1[j].name;
 					}
 				}
-				
+				// alert(this.u.length)
 				//传递多个图片
 				let addItem = "";
 				let add = [];
-				for (let i = 0; i < this.url.length; i++) {
-				     add.push(this.url[i]);
+				for (let i = 0; i < this.u.length; i++) {
+				     add.push(this.u[i]);
 				 }
 				 addItem = add.join(",");
-				 // alert("农机>>发布人id"+ApiPath.common.userId)
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
-					url:this.url,
+					url:this.u,
 					machineType:this.machineType,
 					purchaseDate:this.purchaseDate,
 					contactsUser: this.contactsUser,

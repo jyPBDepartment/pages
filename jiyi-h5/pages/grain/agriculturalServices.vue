@@ -25,10 +25,8 @@
 				<view class="title f-14" style="width: 140rpx;">
 					农服图片
 				</view>
-				<!-- :action="action" -->
 				<view class="info g-f-1" style="position: relative;">
-					<!-- <image src="../../static/img/tabbar/addactive.png" mode=""></image> -->
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
 					 :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
@@ -184,6 +182,7 @@
 				beginDate: '',
 				endTime: '',
 				url: [],
+				u:[],
 				value: '',
 				createUser:"",
 				createUserId:ApiPath.common.userId,
@@ -256,9 +255,13 @@
 			
 		},
 		methods: {
+			remove(index, lists){
+				this.url.splice(index,1);
+			},
 			uploadSuccess(data, index, lists, name) {
 				this.url.push(data.url) 
 				this.show = false;
+				this.u=this.url;
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -396,8 +399,8 @@
 				//传递多个图片
 				let addItem = "";
 				let add = [];
-				for (let i = 0; i < this.url.length; i++) {
-				     add.push(this.url[i]);
+				for (let i = 0; i < this.u.length; i++) {
+				     add.push(this.u[i]);
 				 }
 				 addItem = add.join(",");
 				 // alert("农服>>发布人id"+ApiPath.common.userId)
@@ -413,7 +416,7 @@
 					contactsUser: this.contactsUser,
 					contactsPhone: this.contactsPhone,
 					address: this.address,
-					url: this.url,
+					url: this.u,
 					beginDate: this.beginDate,
 					endDate: this.endTime,
 					createUser:this.createUser,

@@ -26,7 +26,7 @@
 					设置封面
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
 					 :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
@@ -135,6 +135,7 @@
 				createUserId:ApiPath.common.userId,
 				transactionCategoryName: '',
 				url:[],
+				u:[],
 				list: [{
 						value: '0',
 						name: '收购',
@@ -183,9 +184,13 @@
 			}, 1000)
 		},
 		methods: {
+			remove(index, lists){
+				this.url.splice(index,1);
+			},
 			uploadSuccess(data, index, lists, name) {
 				this.url.push(data.url);
 				this.show = false;
+				this.u=this.url;
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -310,15 +315,15 @@
 				//传递多个图片
 				let addItem = [];
 				let add = [];
-				for (let i = 0; i < this.url.length; i++) {
-				     add.push(this.url[i]);
+				for (let i = 0; i < this.u.length; i++) {
+				     add.push(this.u[i]);
 				 }
 				 addItem = add.join(",");
 				// alert("粮食>>发布人id"+ApiPath.common.userId)
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
-					url: this.url,
+					url: this.u,
 					transactionTypeCode: this.transactionTypeCode,
 					transactionCategoryCode: this.transactionCategoryCode,
 					price: this.price,
