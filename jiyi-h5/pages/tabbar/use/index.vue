@@ -95,9 +95,9 @@
 				<view class="lineb">
 					<u-line></u-line>
 				</view>
-				<view>
+				<!-- <view>
 					<u-button @click="concat">联系客服</u-button>
-				</view>
+				</view> -->
 			</view>
 
 		</view>

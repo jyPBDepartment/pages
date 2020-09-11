@@ -15,12 +15,13 @@
 					干活时间
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-icon name="calendar" class="input-icon"></u-icon>
+					<!-- <u-icon name="calendar" class="input-icon"></u-icon>
 					<u-input @click="dateShow = true" disabled placeholder="请选择时间" :clearable="false" :focus="true" v-model="value"
-					 border height="64" />
+					 border height="64" /> -->
+					{{farmwork.beginDate}}至{{farmwork.beginDate}}
 				</view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
+			<!-- <view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style="width: 140rpx;">
 					农作物类型
 				</view>
@@ -37,13 +38,13 @@
 					<u-input placeholder="请选择" v-model="value" type="select" border @click="sexShow = true" />
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
-			</view>
+			</view> -->
 			<view class="g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					面积
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入面积" :clearable="false" :focus="true" v-model="value" border height="64" />
+					{{farmwork.area}}亩
 				</view>
 			</view>
 
@@ -52,8 +53,7 @@
 					干活地点
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="map" type="select" border @click="regionaStatus = true" />
-					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
+					{{farmwork.workArea}}
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -61,7 +61,7 @@
 					农活价格
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="value" border height="64" />
+					{{farmwork.workPrice}}元
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -69,7 +69,7 @@
 					联系人
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系人" :clearable="false" :focus="true" v-model="value" border height="64" />
+					{{farmwork.contactUser}}
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -77,8 +77,16 @@
 					联系电话
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系电话" :clearable="false" :focus="true" v-model="value" border height="64" />
+					{{farmwork.contactPhone}}
 				</view>
+			</view>
+			<view class="btn g-flex">
+				<view class="g-f-1">
+				</view>
+				<view class="g-f-1">
+					<u-button type="error" shape="circle">确认</u-button>
+				</view>
+
 			</view>
 		</view>
 	</view>
@@ -86,6 +94,8 @@
 
 <script>
 	import HeaderSearch from '../../components/HeaderSearch/HeaderSearch.vue'
+	//后台路径引用
+	import ApiPath from "@/api/ApiPath.js";
 	export default {
 		components: {
 			HeaderSearch
@@ -117,14 +127,11 @@
 					contactUser: '',
 					tel: ''
 				},
-				state:null
-
+				farmwork: []
 			}
 		},
 		onLoad(e) {
-			if(e.state){
-				this.state = e.state
-			}
+			this.loadPotentialCustomer(e.id);
 			this.info = {
 				area: '面积：100亩',
 				workArea: '干活地点：长春农安101号',
@@ -133,6 +140,20 @@
 			}
 		},
 		methods: {
+			loadPotentialCustomer(val) {
+				uni.request({
+					method: "GET",
+					data: {
+						"id": val
+					},
+					url: ApiPath.url.findFarmWorkById,
+					success: (res) => {
+						if (res.data.state == 0) {
+							this.farmwork=res.data.data;
+						}
+					}
+				})
+			},
 			cencal(e) {
 				this.cencalIsShow = e
 			},

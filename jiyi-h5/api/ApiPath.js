@@ -1,10 +1,10 @@
 //配置后台接口
 //开发环境基础路径地址
 // const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-// const URLHost = 'http://localhost:8080';
+const URLHost = 'http://localhost:8080';
 
 //生产环境基础路径地址
-const URLHost = 'http://182.92.77.60/jy_fcs';
+// const URLHost = 'http://182.92.77.60/jy_fcs';
 const url = {
 	// 首页
 	// 按照类型加载发布数据
@@ -86,6 +86,8 @@ const url = {
 	findMyFarm: URLHost + '/farmwork/findMyFarm',
 	//意向客户筛选列表显示
 	 findFarmForMe: URLHost + '/farmwork/findFarmForMe',
+	 // 根据预约Id获取预约信息
+	 findFarmWorkById : URLHost + '/farmwork/findDetail', 
 }
 export default {
 	url

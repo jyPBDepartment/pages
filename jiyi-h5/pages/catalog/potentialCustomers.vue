@@ -82,7 +82,7 @@
 				workArea: '',
 				status: '',
 				contactPhone: '',
-				userId: "12321342134",
+				userId: "20200909",
 				user: '',
 				agriculturalId: '',
 				imageUrl:'',
@@ -182,26 +182,26 @@
 				});
 
 			},
-			jump(e) {
-				let url
-				switch (e.stateNum) {
-					case 0:
-						url = '../grain/potentialCustomersConfirm'
+			jump(item) {
+				let url='';
+				switch (item.status) {
+					case "0":
+						url = '../grain/potentialCustomersConfirm?id='+item.id
+					case "1":
+						url = '../grain/potentialCustomers?id='+item.id
 						break;
-					case 1:
-						url = '../grain/potentialCustomers'
+					case "2":
+						url = '../grain/potentialCustomers?id='+item.id
 						break;
-					case 2:
-						url = '../grain/potentialCustomers'
-						break;
-					case 3:
-						url = '../grain/potentialCustomersCancel'
+					case "3":
+						url = '../grain/potentialCustomersCancel?id='+item.id
 						break;
 					default:
 				}
 				uni.navigateTo({
 					url: url
 				})
+				
 			},
 			select(code) {
 				this.status = code
