@@ -82,6 +82,10 @@ const url = {
 	findMyPublication: URLHost + '/agricultural/findMyPublication',
 	//我的页面中农机，农服，粮食买卖详情页面
 	findMineId: URLHost + '/agricultural/findMineId',
+	//我的预约列表
+	findMyFarm: URLHost + '/farmwork/findMyFarm',
+	//意向客户筛选列表显示
+	 findFarmForMe: URLHost + '/farmwork/findFarmForMe',
 }
 export default {
 	url
