@@ -5,7 +5,7 @@
     <div class="navigationFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">基础管理</el-breadcrumb-item>
+      <el-breadcrumb-item>基础管理</el-breadcrumb-item>
       <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
@@ -94,9 +94,10 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
-import AddNavigation from "./addNavigation.vue";
-import UpdateNavigation from "./updateNavigation.vue";
 import Pagination from "../../components/Pagination";
+import AddNavigation from "./addNavigation.vue";
+import UpdateNavigation from "./updatenavigation";
+
 
 export default {
   inject: ["reload"],

@@ -5,7 +5,7 @@
     <div class="ClassiFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>门户管理</el-breadcrumb-item>
       <el-breadcrumb-item>分类管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
