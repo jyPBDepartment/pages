@@ -146,7 +146,7 @@
 				</view>
 			</view>
 		</u-calendar>
-		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
+		<u-mask :show="show" :mask-click-able="maskAble" :zoom="true" :duration="500"></u-mask>
 	</view>
 </template>
 
@@ -176,7 +176,7 @@
 				machineNum: '',
 				isFace: "面议",
 				isFaceCode: "",
-				price: 0,
+				price: '',
 				farmingMode: '整活',
 				farmingModeCode: '',
 				contactsUser: '',
