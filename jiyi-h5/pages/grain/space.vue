@@ -30,29 +30,30 @@
 					<span v-if="transactionCategoryCode=='2'">类别：水稻</span>
 					<span v-if="transactionCategoryCode=='3'">类别：高粱</span>
 					<span v-if="transactionCategoryCode=='4'">类别：黄豆</span>
-				</view> 
-					<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
-						<view>联系人：{{contactsUser}}</view>
-						<view>联系电话：{{contactsPhone}}</view>
-					</view>
-					<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
-						<view>地址：{{address}}</view>
-					</view>
-					
+				</view>
+				<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
+					<view>联系人：{{contactsUser}}</view>
+					<view>联系电话：{{contactsPhone}}</view>
+				</view>
+				<view class="other g-a-c g-flex g-j-s-b f-12" style="margin: 10rpx 0;">
+					<view>地址：{{address}}</view>
+				</view>
+
 				<view class="space"></view>
 				<view class="info g-f-warp g-flex">
 					<view class="text g-f-1 f-14" style="color: #333;margin-top: 52rpx;">
 						描述：{{descrip}}
 					</view>
 				</view>
-				<view class="btn g-flex" v-if="isDisplay!=0">
+				<view v-if="isDisplay!==0" class="btn g-flex" >
 					<view class="g-f-1">
 						<u-button @click="cencal(true)" shape="circle">取消</u-button>
 					</view>
-					<view  class="g-f-1">
+					<view class="g-f-1">
 						<u-button type="error" shape="circle">修改信息</u-button>
 					</view>
 				</view>
+				<view v-else></view>
 			</view>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
@@ -78,22 +79,24 @@
 				company: '',
 				item: [],
 				banner: [],
-				transactionTypeCode:'',
-				transactionCategoryCode:'',
-				labelCode:'',
-				model:'',
-				articleNumber:'',
-				address:'',
-				contactsUser:'',
-				contactsPhone:'',
-				descrip:'',
-				isFace:'',
-				url:'',
-				name:'',
-				isDisplay:0
+				transactionTypeCode: '',
+				transactionCategoryCode: '',
+				labelCode: '',
+				model: '',
+				articleNumber: '',
+				address: '',
+				contactsUser: '',
+				contactsPhone: '',
+				descrip: '',
+				isFace: '',
+				url: '',
+				name: '',
+				isDisplay: 0,//默认不显示信息
+				isMain: "1"
 			};
 		},
 		onLoad(e) {
+			this.isMain = e.isMain;
 			this.findMineId(e.id)
 		},
 		methods: {
@@ -120,8 +123,10 @@
 						this.isFace = res.data.data.isFace
 						// this.url = res.data.data.url
 						this.name = res.data.data.name
-						if(res.data.data.status!=0){
-							this.isDisplay=1
+						if (this.isMain=='1') {
+							this.isDisplay = 1
+						} else {
+							this.isDisplay = 0
 						}
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {
@@ -240,15 +245,16 @@
 			background-color: rgba(229, 229, 229, 1);
 			margin: 26rpx 0rpx -26rpx -20rpx;
 		}
-	}.swiperImage {
-				width: 750rpx;
-				height: 750rpx;
-			}
+	}
+
+	.swiperImage {
+		width: 750rpx;
+		height: 750rpx;
+	}
 
 	.btn {
 		view {
 			padding: 20rpx;
 		}
 	}
-	
 </style>

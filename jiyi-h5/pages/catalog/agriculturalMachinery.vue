@@ -150,9 +150,6 @@
 		},
 		//页面初始化
 		onLoad(e) {
-			uni.navigateTo({
-				url: '../grain/space?id=1&isShow=1'
-			})
 			//农机发布显示
 			if (e.index == 0) {
 				this.index1 = 0
@@ -295,13 +292,13 @@
 				//农机发布详情跳转
 				if (this.index1 == 0) {
 					uni.navigateTo({
-						url: '../grain/spaceCancel?id=' + getId
+						url: '../grain/spaceCancel?id=' + getId+'&isMain=1'
 					})
 				}
 				//粮食买卖详情跳转
 				if (this.index1 == 1) {
 					uni.navigateTo({
-						url: '../grain/space?id=' + getId
+						url: '../grain/space?id=' + getId+'&isMain=1'
 					})
 				}
 				//农服发布详情跳转

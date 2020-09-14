@@ -118,7 +118,7 @@
 	.circul {
 		width: 750rpx;
 		height: 750rpx;
-		margin-top: 20rpx;
+		// margin-top: 20rpx;
 
 		.swiperItem {
 			width: 100%;

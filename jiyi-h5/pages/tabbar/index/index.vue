@@ -361,13 +361,13 @@
 			// 粮食买卖详情跳转
 			detailsMm(val) {
 				uni.navigateTo({
-					url: '/pages/grain/space?id=' + val
+					url: '/pages/grain/space?id=' + val +'&isMain=0'
 				})
 			},
 			// 农机详情跳转
 			detailsNj(val) {
 				uni.navigateTo({
-					url: '/pages/grain/spaceCancel?id=' + val
+					url: '/pages/grain/spaceCancel?id=' + val+'&isMain=0'
 				})
 			},
 			// 病虫害详情跳转

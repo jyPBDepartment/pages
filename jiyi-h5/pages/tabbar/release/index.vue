@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<HeaderSearch hideBack title="发布" @searchCallback="search"></HeaderSearch>
-		<view class="p-x-10  g-flex g-a-c " style="position: absolute; bottom: 40rpx;">
+		<view class="p-x-10  g-flex g-a-c " style="margin-top: 40rpx;">
 			<view class="btn f-12" v-for="(item, index) in btnList" @click="jump(item, index)" :key="index">
 				<view class="img g-flex g-a-c g-j-c m-c">
 					<image :src="item.src" mode=""></image>

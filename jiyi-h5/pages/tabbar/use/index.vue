@@ -80,7 +80,10 @@
 
 					<u-icon size="33" name="arrow-right" class="icon5" @click=""></u-icon>
 				</view>
-
+				<!-- 下划线 -->
+				<view class="lineContentDown">
+					<u-line></u-line>
+				</view>
 				<!-- 下划线 -->
 				<!-- <view class="lineb">
 					<u-line></u-line>

@@ -71,7 +71,7 @@
 					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
-			<u-button @click="appointment" style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
+			<u-button @click="appointment" style="margin: 40rpx;" shape="circle" type="error">预约</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
 		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change"
