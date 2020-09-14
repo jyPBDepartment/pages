@@ -54,6 +54,7 @@
       highlight-current-row
       row-key="id"
       default-expand-all
+      size="mini"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <!-- <el-table-column type="index" label="序号" align="center" style="width:40px;"></el-table-column> -->
@@ -90,7 +91,7 @@
           <el-button
             @click="openUpdateDialog(scope)"
             type="text"
-            size="medium"
+            size="large"
             class="up"
             icon="el-icon-edit"
           >编辑</el-button>
@@ -472,37 +473,6 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-.el-tooltip__popper {
-  font-size: 14px;
-  max-width: 150px;
-}
-.template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
-}
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
 
 .find {
   width: 82px;
@@ -529,14 +499,14 @@ export default {
 }
 .el-button.up {
   margin-right: 20px;
-  width: 50px;
+  width: 80px;
   background-color: #409eff;
   border-color: #409eff;
   color: #fff;
   font-size: 12px;
 }
 .el-button.del {
-  width: 50px;
+  width: 80px;
   background-color: #f56c6c;
   border-color: #f56c6c;
   color: white;

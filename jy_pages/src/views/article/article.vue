@@ -28,8 +28,8 @@
     <!--列表-->
     <el-table  size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="名称" align="center" width="100"></el-table-column>
-      <el-table-column  label="内容" align="center" width="100">
+      <el-table-column  prop="name" label="名称" align="center" width="150"></el-table-column>
+      <el-table-column  label="内容" align="center" width="150">
          <template slot-scope="scope">
             <el-button
             type="primary"
@@ -39,15 +39,15 @@
            <!-- <el-button type="primary" @click="contentShow(scope.row.content)">内容详情</el-button> -->
          </template>
       </el-table-column>
-      <el-table-column sortable prop="title" label="标题" align="center" width="100"></el-table-column>
-      <el-table-column sortable prop="classificationName" label="分类名称" align="center" width="120"></el-table-column>
-      <el-table-column sortable prop="author" label="作者" align="center" width="100"></el-table-column>
+      <el-table-column prop="title" label="标题" align="center" width="100"></el-table-column>
+      <el-table-column prop="classificationName" label="分类名称" align="center" width="100"></el-table-column>
+      <el-table-column prop="author" label="作者" align="center" width="100"></el-table-column>
       <el-table-column sortable prop="releaseDate" label="发布时间" align="center" width="150"></el-table-column>
       <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
-      <el-table-column sortable prop="hits" label="点击量" align="center" width="90"></el-table-column>
-      <el-table-column sortable prop="comments" label="评论量" align="center" width="90"></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" width="100">
+      <el-table-column sortable prop="hits" label="点击量" align="center" width="60"></el-table-column>
+      <el-table-column sortable prop="comments" label="评论量" align="center" width="60"></el-table-column>
+      <el-table-column align="center" label="状态" prop="status" width="70">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -60,7 +60,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="是否发布" prop="status" width="100">
+      <el-table-column align="center" label="是否发布" prop="status" width="70">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.isRelease"
@@ -73,7 +73,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="是否置顶" prop="status" width="100">
+      <el-table-column align="center" label="是否置顶" prop="status" width="70">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.isTopping"
@@ -85,7 +85,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="是否推荐" prop="status" width="100">
+      <el-table-column align="center" label="是否推荐" prop="status" width="70">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.isRecommend"
@@ -111,7 +111,7 @@
             type="text"
            class="del"
             @click="deleteUser(scope)"
-            align="left"
+            
              icon="el-icon-delete"
           >删除</el-button>
         </template>
@@ -357,30 +357,6 @@ export default {
 .user-search {
   margin-top: 20px;
 }
-.el-tooltip__popper{
-  font-size: 14px; 
-  max-width:100px;
-}
-.template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
-}
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
 .el-button.el-button--small {
   background-color: #409eff;
   border-color: #409eff;
@@ -388,7 +364,6 @@ export default {
   font-size: 12px;
   margin-top: 4px;
 }
-
 
 .find {
   width: 82px;
@@ -414,15 +389,15 @@ export default {
   margin-top: 4px;
 }
 .el-button.up {
-  margin-right: 20px;
-  width: 50px;
+ 
+  width: 70px;
   background-color: #409eff;
   border-color: #409eff;
   color: #fff;
   font-size: 12px;
 }
 .el-button.del {
-  width: 50px;
+  width: 70px;
   background-color: #f56c6c;
   border-color: #f56c6c;
   color: white;

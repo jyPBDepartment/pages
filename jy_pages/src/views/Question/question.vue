@@ -276,7 +276,7 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-.template {
+/* .template {
   size: medium;
   color: rgb(17, 17, 17);
   background-color: rgb(199, 215, 231);
@@ -319,7 +319,7 @@ export default {
   border-color:#84C1FF;
   color:white;
   font-size:12px;
-}
+} */
 .find {
   width: 82px;
   background-color:#e6a23c;

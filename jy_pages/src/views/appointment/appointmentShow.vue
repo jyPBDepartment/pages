@@ -153,27 +153,6 @@ export default {
   border-color: rgb(121, 212, 59);
   border-radius: 3px;
 }
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-
 .find {
   width: 82px;
   background-color:#e6a23c;
