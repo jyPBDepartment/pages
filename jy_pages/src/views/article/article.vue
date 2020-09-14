@@ -1,11 +1,11 @@
 /**
- * 基础管理  文章管理
+ * 门户管理  文章管理
  */
 <template>
   <div>
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">基础管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
       <el-breadcrumb-item>文章管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
@@ -324,7 +324,7 @@ export default {
       location.reload();
     },
 
-    // 删除角色
+    // 删除
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",

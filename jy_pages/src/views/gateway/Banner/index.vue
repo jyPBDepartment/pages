@@ -5,8 +5,8 @@
   <div>
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>门户管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>Banner图管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" :model="formInline" class="user-search">
@@ -36,6 +36,7 @@
           class="insert"
         >添加</el-button>
       </el-row>
+      <br>
     </el-form>
     <!--列表-->
     <el-table
@@ -78,15 +79,15 @@
       <el-table-column align="center" label="操作" min-width="20">
         <template slot-scope="scope">
           <el-button
-            size="medium"
-            type="text"
+            size="small"
+            type="primary"
             @click="handleEdit(scope.$index, scope.row)"
             class="up"
             icon="el-icon-edit"
           >编辑</el-button>
           <el-button
-            size="medium"
-            type="text"
+            size="small"
+            type="primary"
             @click="deleteUser(scope.$index, scope.row)"
             class="del"
             icon="el-icon-delete"
@@ -434,7 +435,7 @@ export default {
   border-color: rgb(121, 212, 59);
   border-radius: 3px;
 }
-.el-button {
+/* .el-button {
   display: inline-block;
   cursor: pointer;
   text-align: center;
@@ -446,7 +447,7 @@ export default {
 .el-button:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
-}
+} */
 .find {
   width: 82px;
   background-color: #e6a23c;
@@ -462,7 +463,7 @@ export default {
   font-size: 12px;
   margin-top: 4px;
 }
-.insert {
+/* .insert {
   width: 82px;
   background-color: #67c23a;
   border-color: #67c23a;
@@ -470,8 +471,8 @@ export default {
   font-size: 12px;
   margin-top: 4px;
   margin-bottom: 15px;
-}
-.el-button.up {
+} */
+/* .el-button.up {
   margin-right: 20px;
   width: 50px;
   background-color: #409eff;
@@ -485,7 +486,7 @@ export default {
   border-color: #f56c6c;
   color: white;
   font-size: 12px;
-}
+} */
 .icon {
   size: medium;
   border-radius: 0px;

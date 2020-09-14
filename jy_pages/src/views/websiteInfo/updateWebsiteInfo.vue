@@ -91,6 +91,7 @@
           </el-form-item>
         </el-col>
       </el-row>
+
        <el-row>
         <el-col :span="19">
           <el-form-item label="友情链接：" prop="linkAddress">
@@ -98,6 +99,7 @@
           </el-form-item>
         </el-col>
       </el-row>
+
        <el-row>
         <el-col :span="19">
           <el-form-item label="链接名称：" prop="linkName">
@@ -105,22 +107,11 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col>
-          <el-form-item></el-form-item>
-        </el-col>
-      </el-row>
 
       <el-row>
         <el-col :span="18" align="right">
           <span>
-            <el-button
-              size="small"
-              style="width:15% "
-              type="primary"
-              icon="el-icon-check"
-              @click="updateWebsiteInfo('websiteInfoForm')"
-            >提交</el-button>
+            <el-button size="small" style="width:15% " type="primary" icon="el-icon-check" @click="updateWebsiteInfo('websiteInfoForm')">提交</el-button>
           </span>
         </el-col>
       </el-row>
@@ -279,7 +270,6 @@ export default {
     handlePreviewUrl(file) {
       console.log(file);
     },
-
     //修改
     updateWebsiteInfo(editData) {
           this.$refs[editData].validate(valid => {
@@ -363,9 +353,9 @@ export default {
                         this.$message.error(err.data);
                       });
               }).catch(() => {
-          this.$message({ type: "info", message: "已取消修改" });
-          this.reload();
-        });
+                  this.$message({ type: "info", message: "已取消修改" });
+                  this.reload();
+                });
             } else {
               return false;
             }
