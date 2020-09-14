@@ -2,7 +2,7 @@
   <div>
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
+      <el-breadcrumb-item >门户管理</el-breadcrumb-item>
       <el-breadcrumb-item>预约讲解</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
@@ -15,7 +15,7 @@
         <el-input size="small" v-model="phoneNum" placeholder="输入电话"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="medium" type="text" icon="el-icon-search" @click="search" class="find">查询</el-button>
+        <el-button size="medium" type="text" icon="el-icon-search" @click="search('manual')" class="find">查询</el-button>
         <el-button
           size="medium"
           type="text"

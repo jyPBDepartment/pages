@@ -5,7 +5,7 @@
     <div class="adminFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
+      <el-breadcrumb-item >门户管理</el-breadcrumb-item>
       <el-breadcrumb-item>问卷调查管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
@@ -18,7 +18,7 @@
       <el-form-item label="手机号码" >
         <el-input v-model="phoneNum" type="text" placeholder="请输入手机号码" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button  type="text" @click="search" size="medium" class="find"  icon="el-icon-search" >查询</el-button>
+      <el-button  type="text" @click="search('manual')"  size="medium" class="find"  icon="el-icon-search" >查询</el-button>
        <el-button type="text" @click="resetRuleTag(search)"  size="medium" class="small"  icon="el-icon-close">重置</el-button>
         
     </el-form>
