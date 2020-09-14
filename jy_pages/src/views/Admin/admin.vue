@@ -15,7 +15,7 @@
       <el-form-item label="登录名称" >
         <el-input v-model="loginName" type="text" placeholder="请输入登录名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="text"  @click="search" size="medium" class="find" icon="el-icon-search" >查询</el-button>
+      <el-button type="text"  @click="search('manual')" size="medium" class="find" icon="el-icon-search" >查询</el-button>
        <el-button type="text"  @click="resetRuleTag(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
         <el-row>
            <el-button type="text"  @click="openRuleTag"  size="medium" class="insert"  icon="el-icon-plus">添加</el-button>
