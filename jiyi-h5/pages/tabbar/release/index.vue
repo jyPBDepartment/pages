@@ -11,6 +11,7 @@
 				</view>
 			</view>
 		</view>
+		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 	</view>
 </template>
 
@@ -23,7 +24,9 @@
 		},
 		data() {
 			return {
-				btnList: []
+				btnList: [],
+				show: true,
+				maskAble: false
 			};
 		},
 		onLoad() {
@@ -54,6 +57,10 @@
 							}
 							this.btnList = resp;
 						}
+						this.show = false;
+					},
+					fail: (err) => {
+						this.show = false;
 					}
 				})
 			},

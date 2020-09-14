@@ -79,6 +79,7 @@
 				</view>
 			</view>
 		</view>
+		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 	</view>
 </template>
 
@@ -98,7 +99,9 @@
 				nfList: [],
 				mmList: [],
 				NjList: [],
-				ChList: []
+				ChList: [],
+				show: true,
+				maskAble: false
 			};
 		},
 		onLoad(e) {
@@ -119,41 +122,46 @@
 			// 从外部接口获取客户信息
 			initCustomerInfo(e) {
 				// alert("从app获取用户id=" + e.U + " sessionId=" + e.SI)
-				Interface.common.userId = e.U; //缓存用户id
-				Interface.common.sessionId = e.SI; //缓存sessionId
-				let s = e.U +"+"+ e.SI+"+" + Interface.md5.key;
+				// Interface.common.userId = e.U; //缓存用户id
+				// Interface.common.sessionId = e.SI; //缓存sessionId
+				localStorage.setItem("userId", e.U);
+				// localStorage.setItem("userId", "1111");
+				localStorage.setItem("sessionId", e.SI);
+				let us = localStorage.getItem("userId");
+				let ss = localStorage.getItem("sessionId");
+				let s = us + "+" + ss + "+" + Interface.md5.key;
 				let sign = MD5(s).toUpperCase()
 				let param = {
 					"PTN": "P101999",
-					"U": e.U,
-					"SI": e.SI,
+					"U": us,
+					"SI": ss,
 					"S": sign
 				}
-				uni.request({
-					method: 'POST',
-					url: Interface.extendUrl.findCustmerInfo,
-					data: param,
-					success: (res) => {
-						// alert(JSON.stringify(res))
-						let code = res.data.RETURNRESULT.RESULT;
-						let message = res.data.RETURNRESULT.RETCODE;
-						if(code=="1"){
-							// alert("成功返回")
-							// 昵称
-							Interface.common.nc = res.data.RETURNRESULT.NN;
-							// alert("昵称："+Interface.common.nc)
-						}
-						if(code=="-1"){
-							// alert("失败")
-						}
-						if(code=="0"){
-							// alert("处理中")
-						}
-						if(code=="2"){
-							// alert("异常")
-						}
-					}
-				})
+				// uni.request({
+				// 	method: 'POST',
+				// 	url: Interface.extendUrl.findCustmerInfo,
+				// 	data: param,
+				// 	success: (res) => {
+				// 		// alert(JSON.stringify(res))
+				// 		let code = res.data.RETURNRESULT.RESULT;
+				// 		let message = res.data.RETURNRESULT.RETCODE;
+				// 		if (code == "1") {
+				// 			// alert("成功返回")
+				// 			// 昵称
+				// 			Interface.common.nc = res.data.RETURNRESULT.NN;
+				// 			// alert("昵称："+Interface.common.nc)
+				// 		}
+				// 		if (code == "-1") {
+				// 			// alert("失败")
+				// 		}
+				// 		if (code == "0") {
+				// 			// alert("处理中")
+				// 		}
+				// 		if (code == "2") {
+				// 			// alert("异常")
+				// 		}
+				// 	}
+				// })
 			},
 			// 初始化加载模块信息
 			initModuleInfo() {
@@ -169,9 +177,15 @@
 								}
 								return item
 							})
+							this.show = false;
 						}
 					},
-					fail: (err) => {}
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+						this.show = false;
+					}
 				});
 			},
 			// 初始化农服预约信息
@@ -196,9 +210,15 @@
 								}
 								return item
 							})
+							this.show = false;
 						}
 					},
-					fail: (err) => {}
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+						this.show = false;
+					}
 				});
 			},
 			// 初始化加载粮食买卖信息
@@ -217,9 +237,15 @@
 								}
 								return item
 							})
+							this.show = false;
 						}
 					},
-					fail: (err) => {}
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+						this.show = false;
+					}
 				});
 			},
 			// 初始化加载农机信息
@@ -251,9 +277,15 @@
 								}
 								return item
 							})
+							this.show = false;
 						}
 					},
-					fail: (err) => {}
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+						this.show = false;
+					}
 				});
 			},
 			// 初始化加载病虫害信息
@@ -271,8 +303,14 @@
 								return item
 							})
 						}
+						this.show = false;
 					},
-					fail: (err) => {}
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+						this.show = false;
+					}
 				});
 			},
 			//组件监听搜索内容方法
@@ -323,7 +361,7 @@
 			// 粮食买卖详情跳转
 			detailsMm(val) {
 				uni.navigateTo({
-					url: '/pages/grain/space?id=' + val + '&isShow=0'
+					url: '/pages/grain/space?id=' + val
 				})
 			},
 			// 农机详情跳转
@@ -342,7 +380,7 @@
 	};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.btn {
 		display: flex;
 		flex-wrap: wrap;

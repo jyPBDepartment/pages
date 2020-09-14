@@ -56,6 +56,7 @@
 				</view>
 			</view>
 		</mescroll-body>
+		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 	</view>
 </template>
 
@@ -142,11 +143,16 @@
 					}
 				},
 				list: [],
-				listIndex: 3
+				listIndex: 3,
+				show: false,
+				maskAble: false
 			}
 		},
 		//页面初始化
 		onLoad(e) {
+			uni.navigateTo({
+				url: '../grain/space?id=1&isShow=1'
+			})
 			//农机发布显示
 			if (e.index == 0) {
 				this.index1 = 0
@@ -187,6 +193,7 @@
 						method: "GET",
 						data: {
 							type: 2,
+							userId:localStorage.getItem("userId"),
 							status: this.status,
 							page: pageNum,
 							size: pageSize,
@@ -219,6 +226,7 @@
 						method: "GET",
 						data: {
 							type: 1,
+							userId:localStorage.getItem("userId"),
 							status: this.status,
 							page: pageNum,
 							size: pageSize,
@@ -252,6 +260,7 @@
 						method: "GET",
 						data: {
 							type: 0,
+							userId:localStorage.getItem("userId"),
 							status: this.status,
 							page: pageNum,
 							size: pageSize,

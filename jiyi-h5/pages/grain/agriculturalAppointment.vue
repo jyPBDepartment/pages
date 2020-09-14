@@ -3,8 +3,8 @@
 		<HeaderSearch @searchCallback="search" title="农服预约"></HeaderSearch>
 		<view class="p-10">
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
-				<view class="title f-14" >
+				<span style="color: #FA3534;">*</span>
+				<view class="title f-14">
 					日期
 				</view>
 				<view class="info g-f-1" style="position: relative;">
@@ -14,8 +14,8 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
-				<view class="title f-14" >
+				<span style="color: #FA3534;">*</span>
+				<view class="title f-14">
 					面积
 				</view>
 				<view class="info g-f-1" style="position: relative;">
@@ -24,8 +24,8 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
-				<view class="title f-14" >
+				<span style="color: #FA3534;">*</span>
+				<view class="title f-14">
 					干活地点
 				</view>
 				<view class="info g-f-1" style="position: relative;">
@@ -33,8 +33,8 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
-				<view class="title f-14" >
+				<span style="color: #FA3534;">*</span>
+				<view class="title f-14">
 					农活价格
 				</view>
 				<view class="info g-f-1" style="position: relative;">
@@ -43,8 +43,8 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
-				<view class="title f-14" >
+				<span style="color: #FA3534;">*</span>
+				<view class="title f-14">
 					联系人
 				</view>
 				<view class="info g-f-1" style="position: relative;">
@@ -52,34 +52,37 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
-				<view class="title f-14" >
+				<span style="color: #FA3534;">*</span>
+				<view class="title f-14">
 					联系电话
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input type="number" maxlength="11" placeholder="输入内容" :clearable="false" :focus="true" v-model="contactPhone" border height="64" />
+					<u-input type="number" maxlength="11" placeholder="输入内容" :clearable="false" :focus="true" v-model="contactPhone"
+					 border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10">
-				<span style="color: #FA3534;" >*</span>
-				<view class="title f-14" >
+				<span style="color: #FA3534;">*</span>
+				<view class="title f-14">
 					土地图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
-					 :file-list="fileList" max-count="5"></u-upload>
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess"
+					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 			<u-button @click="appointment" style="margin: 40rpx;" shape="circle" type="error">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-	<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01"  @change="change" active-bg-color="#42b983" btn-type="success">
-		<view slot="tooltip">
-			<view class=" t-c p-y-10" style="color: #2979FF">
-				请选择时间
+		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change"
+		 active-bg-color="#42b983" btn-type="success">
+			<view slot="tooltip">
+				<view class=" t-c p-y-10" style="color: #2979FF">
+					请选择时间
+				</view>
 			</view>
-		</view>
-	</u-calendar>
+		</u-calendar>
+		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 	</view>
 </template>
 
@@ -102,39 +105,41 @@
 				value: '',
 				action: ApiPath.url.uploadImg,
 				fileList: [],
-				area:'',
-				workArea:'',
-				workPrice:'',
-				contactUser:'',
-				contactPhone:'',
+				area: '',
+				workArea: '',
+				workPrice: '',
+				contactUser: '',
+				contactPhone: '',
 				beginDate: '',
 				endTime: '',
-				url:[],
-				u:'',
-				agrId:'',
+				url: [],
+				u: '',
+				agrId: '',
+				show: false,
+				maskAble: false
 			}
 		},
 		onLoad(e) {
 			// 设置干活时间选择日历的最小开始时间
-			this.currentDate = new Date().toISOString().slice(0,10)
+			this.currentDate = new Date().toISOString().slice(0, 10)
 			// alert(uni.date)
 			setTimeout(() => {
 				this.$refs.region.getScreen();
 			}, 1000)
 			this.transKeyWordId(e.id)
 		},
-		methods:{
-			remove(index, lists){
-				this.url.splice(index,1);
+		methods: {
+			remove(index, lists) {
+				this.url.splice(index, 1);
 			},
 			transKeyWordId(val) {
-				this.agrId=val
+				this.agrId = val
 			},
 			//图片
 			uploadSuccess(data, index, lists, name) {
-				this.url.push(data.url) 
+				this.url.push(data.url)
 				this.show = false;
-				this.u=this.url;
+				this.u = this.url;
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -166,13 +171,13 @@
 				this.endTime = e.endDate;
 			},
 			//跳转页面
-			release(){
+			release() {
 				uni.navigateTo({
-					url:'../response?state=1'
+					url: '../response?state=1'
 				})
 			},
 			//预约接口
-			appointment(){
+			appointment() {
 				if (this.value == '') {
 					uni.showToast({
 						title: "请选择日期"
@@ -185,7 +190,7 @@
 					})
 					return false;
 				}
-				if(!/^\d+(\.\d{2})?$/.test(this.area)){
+				if (!/^\d+(\.\d{2})?$/.test(this.area)) {
 					uni.showToast({
 						title: "面积小数点后保留两位小数"
 					})
@@ -197,16 +202,14 @@
 					})
 					return false;
 				}
-				if(this.workPrice =='')
-				{
+				if (this.workPrice == '') {
 					uni.showToast({
 						title: "请输入农活价格"
 					})
 					return false;
 				}
-				
-				if(!/^\d+(\.\d{1})?$/.test(this.workPrice))
-				{
+
+				if (!/^\d+(\.\d{1})?$/.test(this.workPrice)) {
 					uni.showToast({
 						title: "价格只允许一位小数"
 					})
@@ -230,51 +233,60 @@
 					})
 					return false;
 				}
-				if(this.url =='')
-				{
+				if (this.url == '') {
 					uni.showToast({
 						title: "请选择图片"
 					})
 					return false;
 				}
-			
-			//传递多个图片
-			let addItem = [];
-			let add = [];
-			for (let i = 0; i < this.u.length; i++) {
-			     add.push(this.u[i]);
-			 }
-			 addItem = add.join(",");
-			let param = {
-				agrId:this.agrId,
-				beginDate: this.beginDate,
-				endDate: this.endTime,
-				area:this.area,
-				workArea:this.workArea,
-				workPrice:this.workPrice,
-				contactUser:this.contactUser,
-				contactPhone:this.contactPhone,
-				addItem:addItem,
-			}
-			uni.request({
-				method: 'GET', //请求方式
-				data: param, //请求数据
-				url: ApiPath.url.appointment, //请求接口路径
-				success: (res) => { //成功返回结果方法
-					uni.showToast({
-						title: "发布信息成功"
-					})
-			
-					//发布成功返回发布主页面
-					setTimeout(function() {
-						//跳转page目录用navigateTo，跳转tabbar用switchTab
-						uni.switchTab({
-							url: "../tabbar/service/index"
-						})
-					}, 2000)
-			
+				this.show = true;
+				//传递多个图片
+				let addItem = [];
+				let add = [];
+				for (let i = 0; i < this.u.length; i++) {
+					add.push(this.u[i]);
 				}
-			})
+				addItem = add.join(",");
+				let param = {
+					agrId: this.agrId,
+					beginDate: this.beginDate,
+					endDate: this.endTime,
+					area: this.area,
+					workArea: this.workArea,
+					workPrice: this.workPrice,
+					contactUser: this.contactUser,
+					contactPhone: this.contactPhone,
+					addItem: addItem,
+					operateUserId: localStorage.getItem("userId")
+				}
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.appointment, //请求接口路径
+					success: (res) => { //成功返回结果方法
+						this.show = false;
+						if (res.data.state == 0) {
+							uni.showToast({
+								title: "发布信息成功"
+							})
+
+							//发布成功返回发布主页面
+							setTimeout(function() {
+								//跳转page目录用navigateTo，跳转tabbar用switchTab
+								uni.switchTab({
+									url: "../tabbar/service/index"
+								})
+							}, 2000)
+						} else {
+							uni.showToast({
+								title: "发布信息失败，请联系管理员或重新发布"
+							})
+						}
+					},
+					fail: (err) => {
+						this.show = false;
+					}
+				})
 			}
 		}
 	}

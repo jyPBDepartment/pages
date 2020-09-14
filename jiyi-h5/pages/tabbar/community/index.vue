@@ -24,6 +24,7 @@
 				<u-button class="btn" shape="circle" type="error">确认</u-button>
 			</view>
 		</uni-drawer>
+		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 	</view>
 </template>
 
@@ -61,7 +62,9 @@
 					}
 				},
 				// 列表数据
-				dataList: []
+				dataList: [],
+				show: true,
+				maskAble: false
 			}
 		},
 		watch: {
@@ -84,22 +87,29 @@
 					method: "GET",
 					data: {},
 					success: (res) => {
-						this.tabsList.push({
-							name: "全部",
-							postType: null
-						})
-						res.data.data.forEach((item, index) => {
-							if (index <= 2) {
-								this.tabsList.push(item)
-							}
-						})
-						this.tabsList.push({
-							name: "筛选",
-							postType: null
-						})
-						this.categoryList = res.data.data
+						if(res.data.state==0){
+							this.tabsList.push({
+								name: "全部",
+								postType: null
+							})
+							res.data.data.forEach((item, index) => {
+								if (index <= 2) {
+									this.tabsList.push(item)
+								}
+							})
+							this.tabsList.push({
+								name: "筛选",
+								postType: null
+							})
+							this.categoryList = res.data.data
+						}
+						
+						this.show=false;
+						
 					},
-					fail: (err) => {}
+					fail: (err) => {
+						this.show=false;
+					}
 				});
 			},
 			selectTab(item, index) {
@@ -156,7 +166,6 @@
 						postType: this.postType
 					},
 					success: (res) => {
-						console.log(res.data)
 						if (res.data.state == 0) {
 							let curPageData = res.data.data.content
 							let curPageLen = curPageData.length;
@@ -165,10 +174,12 @@
 							this.dataList = this.dataList.concat(curPageData); //追加新数据
 							this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
 						}
+						this.show=false;
 						// 请求成功,隐藏加载状态
 						this.mescroll.endSuccess()
 					},
 					fail: (err) => {
+						this.show=false;
 						// 请求失败,隐藏加载状态
 						this.mescroll.endErr()
 					}

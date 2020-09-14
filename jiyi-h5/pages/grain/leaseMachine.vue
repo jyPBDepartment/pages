@@ -159,7 +159,7 @@
 				isFace:"面议",
 				isFaceCode: "",
 				createUser:"",
-				createUserId:ApiPath.common.userId,
+				createUserId:localStorage.getItem("userId"),
 				action: ApiPath.url.uploadImg,
 				fileList: [],
 				list: [{
@@ -368,7 +368,7 @@
 						this.isFace = this.list1[j].name;
 					}
 				}
-				// alert(this.u.length)
+				
 				//传递多个图片
 				let addItem = "";
 				let add = [];
@@ -376,6 +376,7 @@
 				     add.push(this.u[i]);
 				 }
 				 addItem = add.join(",");
+				 // alert("农机>>发布人id"+ApiPath.common.userId)
 				let param = {
 					name: this.name,
 					descrip: this.descrip,

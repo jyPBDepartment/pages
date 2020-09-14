@@ -32,6 +32,16 @@
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
+				<view class="title f-14" style="width: 140rpx;">
+					粮食种类
+				</view>
+				<view class=" info g-f-1" style="position: relative;">
+					<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" border @click="sexShow = true" />
+					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
+				</view>
+			</view>
+			<view class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					类型
 				</view>
@@ -41,16 +51,6 @@
 							{{item.name}}
 						</u-radio>
 					</u-radio-group>
-				</view>
-			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #ff0000;">*</span>
-				<view class="title f-14" style="width: 140rpx;">
-					种类
-				</view>
-				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" border @click="sexShow = true" />
-					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -125,14 +125,14 @@
 				transactionTypeCode: '',
 				transactionTypeName: '收购',
 				transactionCategoryCode: '',
-				price: '0',
+				price: '',
 				contactsUser: '',
 				contactsPhone: '',
 				address: '',
 				isFace: "面议",
 				isFaceCode: "",
 				createUser:"",
-				createUserId:ApiPath.common.userId,
+				createUserId:localStorage.getItem("userId"),
 				transactionCategoryName: '',
 				url:[],
 				u:[],

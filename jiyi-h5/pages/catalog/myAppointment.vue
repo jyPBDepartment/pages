@@ -74,7 +74,7 @@
 					}
 				},
 				show: false,
-				userId:"20200909",
+				userId:localStorage.getItem("userId"),
 				user:'',
 				workPrice:'',
 				area:'',

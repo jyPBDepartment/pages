@@ -110,37 +110,37 @@
 	},
 	"tabBar": {
 		"borderStyle": "black",
-		"backgroundColor": "#333",
+		"backgroundColor": "#fffcf3",
 		"color": "#8F8F94",
 		"selectedColor": "#f33e54",
 		"list": [{
 				"pagePath": "pages/tabbar/index/index",
-				"iconPath": "static/img/tabbar/home.png",
-				"selectedIconPath": "static/img/tabbar/homeactive.png",
+				"iconPath": "static/img/tabbar/首页.png",
+				"selectedIconPath": "static/img/tabbar/首页-s-r.png",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/tabbar/service/index",
-				"iconPath": "static/img/tabbar/guanzhu.png",
-				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+				"iconPath": "static/img/tabbar/农服-grey.png",
+				"selectedIconPath": "static/img/tabbar/农服-r.png",
 				"text": "农服"
 			},
 			{
 				"pagePath": "pages/tabbar/release/index",
-				"iconPath": "static/img/tabbar/add.png",
-				"selectedIconPath": "static/img/tabbar/addactive.png",
+				"iconPath": "static/img/tabbar/发布.png",
+				"selectedIconPath": "static/img/tabbar/发布-s-r.png",
 				"text": "发布"
 			},
 			{
 				"pagePath": "pages/tabbar/community/index",
-				"iconPath": "static/img/tabbar/news.png",
-				"selectedIconPath": "static/img/tabbar/newsactive.png",
+				"iconPath": "static/img/tabbar/圈子.png",
+				"selectedIconPath": "static/img/tabbar/圈子-s-r.png",
 				"text": "圈子"
 			},
 			{
 				"pagePath": "pages/tabbar/use/index",
-				"iconPath": "static/img/tabbar/me.png",
-				"selectedIconPath": "static/img/tabbar/meactive.png",
+				"iconPath": "static/img/tabbar/我的.png",
+				"selectedIconPath": "static/img/tabbar/我的-s-r.png",
 				"text": "我的"
 			}
 		]

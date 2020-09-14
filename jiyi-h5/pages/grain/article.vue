@@ -89,7 +89,7 @@
 				postCommentInfoEntity: {
 					commentContent: '',
 					commentUserName: '',
-					commentUserId: ApiPath.common.userId,
+					commentUserId: localStorage.getItem("userId"),
 					// commentDate: '',
 					postId: ''
 				}

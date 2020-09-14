@@ -1,38 +1,39 @@
 <template>
 	<view>
-		<HeaderSearch title="农服发布" @searchCallback="search"></HeaderSearch>
+		<HeaderSearch title="农服" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10">
 			<view class="g-flex p-y-10 g-a-c" style="border-bottom: 1rpx solid #999;">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14">
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容(最多输入20字)" :clearable="false" v-model="name" maxlength="20" height="64"/>
+					<u-input placeholder="输入内容(最多输入20字)" :clearable="false" v-model="name" maxlength="20" height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
-				<span style="color: #fff;" >*</span>
+				<span style="color: #fff;">*</span>
 				<view class="title f-14" style="padding: 10rpx 0;">
 					描述
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" maxlength="500" :clearable="false" v-model="descrip" height="200" />
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" maxlength="500" :clearable="false" v-model="descrip"
+					 height="200" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					农服图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
-					 :file-list="fileList" max-count="5"></u-upload>
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess"
+					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					干活时间
 				</view>
@@ -44,9 +45,9 @@
 			</view>
 
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
-					农作物类型
+					劳务类型
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
 					<view class=" info g-f-1" style="position: relative;">
@@ -56,9 +57,9 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
-					农作物类别
+					作物类型
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
 					<view class=" info g-f-1" style="position: relative;">
@@ -67,18 +68,18 @@
 					</view>
 				</view>
 			</view>
-			
+
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					农机台数
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="machineNum" border height="64" maxlength="10"/>
+					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="machineNum" border height="64" maxlength="10" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					农活价格
 				</view>
@@ -89,12 +90,13 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
-				<u-input type="number" v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="true" v-model="price" height="64"/>
+				<u-input type="number" v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="true"
+				 v-model="price" height="64" />
 				<view v-if="isFace == '定价'" style="font-size: 32rpx;margin-left: 10rpx;">元</view>
-				</view>
-			
+			</view>
+
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					农活方式
 				</view>
@@ -107,7 +109,7 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					联系人
 				</view>
@@ -116,16 +118,17 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					联系电话
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input type="number" maxlength="11" placeholder="请输入联系电话,仅限数字" :clearable="false" :focus="true" v-model="contactsPhone" border height="64"  />
+					<u-input type="number" maxlength="11" placeholder="请输入联系电话,仅限数字" :clearable="false" :focus="true" v-model="contactsPhone"
+					 border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style=" width: 140rpx;">
 					区域
 				</view>
@@ -136,15 +139,15 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01"  @change="change">
+		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change">
 			<view slot="tooltip">
 				<view class=" t-c p-y-10" style="color: #2979FF">
 					请选择时间
 				</view>
 			</view>
 		</u-calendar>
+		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 	</view>
-
 </template>
 
 <script>
@@ -166,8 +169,8 @@
 				fileList: [],
 				name: '',
 				descrip: '',
-				transactionTypeName:'',
-				transactionTypeCode:'',
+				transactionTypeName: '',
+				transactionTypeCode: '',
 				transactionCategoryCode: '',
 				transactionCategoryName: '',
 				machineNum: '',
@@ -182,10 +185,10 @@
 				beginDate: '',
 				endTime: '',
 				url: [],
-				u:[],
+				u: [],
 				value: '',
-				createUser:"",
-				createUserId:ApiPath.common.userId,
+				createUser: "",
+				createUserId: localStorage.getItem("userId"),
 				list: [{
 						value: '0',
 						name: '整活',
@@ -210,8 +213,7 @@
 				],
 				sexShow: false,
 				sexShow1: false,
-				agriCategory: [
-					{
+				agriCategory: [{
 						value: '3',
 						text: '播种'
 					},
@@ -241,27 +243,30 @@
 						text: '黄豆'
 					}
 				],
+				show: false,
+				maskAble: false
 			};
 		},
-		onLoad() {		
+		onLoad() {
+			// alert(localStorage.getItem("userId"))
 			// 设置干活时间选择日历的最小开始时间
-			this.currentDate = new Date().toISOString().slice(0,10)
+			this.currentDate = new Date().toISOString().slice(0, 10)
 			setTimeout(() => {
 				this.$refs.region.getScreen();
 			}, 1000)
-			
+
 		},
 		onReady() {
-			
+
 		},
 		methods: {
-			remove(index, lists){
-				this.url.splice(index,1);
+			remove(index, lists) {
+				this.url.splice(index, 1);
 			},
 			uploadSuccess(data, index, lists, name) {
-				this.url.push(data.url) 
+				this.url.push(data.url)
 				this.show = false;
-				this.u=this.url;
+				this.u = this.url;
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -282,15 +287,11 @@
 				this.transactionTypeName = this.agriCategory[index].text;
 				this.transactionTypeCode = this.agriCategory[index].value;
 			},
-			radioChange(index) {
-			},
+			radioChange(index) {},
 			// 选中任一radio时，由radio-group触发
-			radioGroupChange(e) {
-			},
-			radioChange1(index) {
-			},
-			radioGroupChange1(e){
-			},
+			radioGroupChange(e) {},
+			radioChange1(index) {},
+			radioGroupChange1(e) {},
 			cancel() {
 				this.regionaStatus = false;
 			},
@@ -317,14 +318,14 @@
 						title: "请输入标题"
 					})
 					return false;
-				}				
+				}
 				if (this.url == '') {
 					uni.showToast({
 						title: "请选择图片"
 					})
 					return false;
 				}
-				
+
 				if (this.value == '') {
 					uni.showToast({
 						title: "请选择干活时间"
@@ -349,8 +350,7 @@
 					})
 					return false;
 				}
-				if(!/^\d+(\.\d{1})?$/.test(this.price))
-				{
+				if (!/^\d+(\.\d{1})?$/.test(this.price)) {
 					uni.showToast({
 						title: "价格只允许一位小数"
 					})
@@ -395,19 +395,20 @@
 						this.isFace = this.list1[j].name;
 					}
 				}
-				
+				this.show = true;
 				//传递多个图片
 				let addItem = "";
 				let add = [];
 				for (let i = 0; i < this.u.length; i++) {
-				     add.push(this.u[i]);
-				 }
-				 addItem = add.join(",");
-				 // alert("农服>>发布人id"+ApiPath.common.userId)
+					add.push(this.u[i]);
+				}
+				addItem = add.join(",");
+				// alert("农服>>发布人id"+ApiPath.common.userId)
+				this.show = true;
 				let param = {
 					name: this.name,
 					descrip: this.descrip,
-					transactionTypeCode:this.transactionTypeCode,
+					transactionTypeCode: this.transactionTypeCode,
 					transactionCategoryCode: this.transactionCategoryCode,
 					machineNum: this.machineNum,
 					isFace: this.isFaceCode,
@@ -419,27 +420,36 @@
 					url: this.u,
 					beginDate: this.beginDate,
 					endDate: this.endTime,
-					createUser:this.createUser,
-					createUserId:this.createUserId,
-					addItem:addItem,
+					createUser: this.createUser,
+					createUserId: this.createUserId,
+					addItem: addItem,
 				}
 				uni.request({
 					method: 'GET', //请求方式
 					data: param, //请求数据
 					url: ApiPath.url.deploy, //请求接口路径
 					success: (res) => { //成功返回结果方法
-						uni.showToast({
-							title: "发布信息成功"
-						})
-
-						//发布成功返回发布主页面
-						setTimeout(function() {
-							//跳转page目录用navigateTo，跳转tabbar用switchTab
-							uni.switchTab({
-								url: "../tabbar/release/index"
+						this.show = false
+						if (res.data.state == 0) {
+							uni.showToast({
+								title: "发布信息成功,等待审核通过"
 							})
-						}, 2000)
 
+							//发布成功返回发布主页面
+							setTimeout(function() {
+								//跳转page目录用navigateTo，跳转tabbar用switchTab
+								uni.switchTab({
+									url: "../tabbar/release/index"
+								})
+							}, 2000)
+						} else {
+							uni.showToast({
+								title: "发布信息失败,联系管理或重新发布"
+							})
+						}
+					},
+					fail: (err) => {
+						this.show = false;
 					}
 				})
 			}

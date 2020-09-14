@@ -82,7 +82,7 @@
 				workArea: '',
 				status: '',
 				contactPhone: '',
-				userId: "20200909",
+				userId: localStorage.getItem("userId"),
 				user: '',
 				agriculturalId: '',
 				imageUrl:'',

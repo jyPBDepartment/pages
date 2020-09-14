@@ -5,7 +5,7 @@
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
 				<view class="app-modular g-flex" v-for="(item,index) in btnList" :key="index" @click="jumpInfo(item.id)">
-					<image class="app-img" :src="item.imageUrl"></image> 
+					<image class="app-img" :src="item.imageUrl"></image>
 
 					<view class="app-info g-f-1">
 						<p class="title f-14">{{item.name}}</p>
@@ -26,9 +26,10 @@
 						</view>
 					</view>
 				</view>
-				
+
 			</view>
 		</mescroll-body>
+		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 	</view>
 </template>
 
@@ -44,7 +45,7 @@
 		components: {
 			Screen,
 			HeaderSearch
-		
+
 		},
 		data() {
 			return {
@@ -78,48 +79,47 @@
 					total: 10,
 				},
 				btnList: [],
-				condition: [
-					{
-						code:"",
-						name:"综合"
+				condition: [{
+						code: "",
+						name: "综合"
 					},
 					{
-						code:3,
+						code: 3,
 						name: "播种"
-					},{
-						code:4,
+					}, {
+						code: 4,
 						name: "植保"
-					}, 
+					},
 					{
-						code:5,
+						code: 5,
 						name: "收割"
 					},
 					{
-						code:0,
+						code: 0,
 						name: "筛选"
-					}, 
+					},
 				],
 				screenList: [{
 					title: '农作物类别',
 					category: [{
-						code:0,
-						name:"玉米"
-					},{
-						code:2,
-						name: "水稻"
-					}, 
-					{
-						code:3,
-						name: "高粱"
-					}, 
-					{
-						code:4,
-						name: "黄豆"
-					}]
+							code: 0,
+							name: "玉米"
+						}, {
+							code: 2,
+							name: "水稻"
+						},
+						{
+							code: 3,
+							name: "高粱"
+						},
+						{
+							code: 4,
+							name: "黄豆"
+						}
+					]
 
-					},
-				],
-				transactionTypeCode:null,
+				}, ],
+				transactionTypeCode: null,
 				transactionCategoryCode: null,
 				// 上拉加载的配置(可选, 绝大部分情况无需配置)
 				upOption: {
@@ -131,6 +131,8 @@
 						tip: '暂无相关数据'
 					}
 				},
+				show: true,
+				maskAble: false
 			}
 		},
 		onLoad() {
@@ -154,14 +156,17 @@
 				return string.replace(/\s*/g, '')
 			},
 			search(e) {
+				this.show = true;
 				this.searchName = this.removeSpaces(e)
 				this.downCallback()
 			},
 			select(code) {
+				this.show = true;
 				this.transactionTypeCode = code
 				this.downCallback()
 			},
 			screened(code) {
+				this.show = true;
 				this.transactionCategoryCode = code
 				this.downCallback()
 			},
@@ -171,11 +176,13 @@
 			},
 			/*下拉刷新的回调, 有三种处理方式:*/
 			downCallback() {
+				this.show = true;
 				this.mescroll.resetUpScroll();
 			},
-			
+
 			/*上拉加载的回调*/
 			upCallback(page) {
+				this.show = true;
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
 				// 第1种: 请求具体接口
@@ -188,30 +195,26 @@
 						page: pageNum,
 						size: pageSize,
 						transactionCategoryCode: this.transactionCategoryCode,
-						transactionTypeCode:this.transactionTypeCode,
+						transactionTypeCode: this.transactionTypeCode,
 					},
 					success: (res) => {
-						
 						if (res.data.state == 0) {
-							
 							let curPageData = res.data.data.content
 							let curPageLen = curPageData.length;
-						
 							//设置列表数据
 							if (page.num == 1) this.btnList = []; //如果是第一页需手动置空列表
-							
 							for (var i = 0; i < res.data.data.content.length; i++) {
 								curPageData[i].imageUrl = curPageData[i].url.split(",")[0];
 							}
-							
 							this.btnList = this.btnList.concat(curPageData); //追加新数据
-							
 							this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
 						}
+						this.show = false;
 						// 请求成功,隐藏加载状态
 						this.mescroll.endSuccess()
 					},
 					fail: (err) => {
+						this.show = false;
 						// 请求失败,隐藏加载状态
 						this.mescroll.endErr()
 					}
@@ -219,14 +222,14 @@
 
 			},
 			jumpInfo(getId) {
-			    uni.navigateTo({
-			     url: '../../grain/paddy?id='+getId
-			    })
-			    
-			   },
+				uni.navigateTo({
+					url: '../../grain/paddy?id=' + getId
+				})
+
+			},
 			jump(getId) {
 				uni.navigateTo({
-					url: '../../grain/agriculturalAppointment?id='+getId
+					url: '../../grain/agriculturalAppointment?id=' + getId
 				})
 			}
 
