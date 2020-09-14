@@ -252,14 +252,14 @@
 					})
 					return false;
 				}
-				
-				if(!/^\d+(\.\d{1})?$/.test(this.price)){
-					uni.showToast({
-						title: "价格小数点后保留一位小数"
-					})
-					return false;
+				if(this.isFace=="定价"){
+					if(!/^\d+(\.\d{1})?$/.test(this.price)){
+						uni.showToast({
+							title: "价格小数点后保留一位小数"
+						})
+						return false;
+					}
 				}
-
 				if (this.contactsUser == '') {
 					uni.showToast({
 						title: "请输入联系人"
@@ -342,7 +342,7 @@
 					url: ApiPath.url.deploy, //请求接口路径
 					success: (res) => { //成功返回结果方法
 						uni.showToast({
-							title: "发布信息成功"
+							title: "发布信息成功,等待审核通过"
 						})
 
 						//发布成功返回发布主页面

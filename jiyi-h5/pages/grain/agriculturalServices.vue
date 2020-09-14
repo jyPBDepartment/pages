@@ -350,12 +350,15 @@
 					})
 					return false;
 				}
-				if (!/^\d+(\.\d{1})?$/.test(this.price)) {
-					uni.showToast({
-						title: "价格只允许一位小数"
-					})
-					return false;
+				if(this.isFace=="定价"){
+					if (!/^\d+(\.\d{1})?$/.test(this.price)) {
+						uni.showToast({
+							title: "价格只允许一位小数"
+						})
+						return false;
+					}
 				}
+				
 				if (this.contactsUser == '') {
 					uni.showToast({
 						title: "请输入联系人"
