@@ -9,7 +9,7 @@ const URLHost = 'http://60.205.246.126/jy_system'
 const url = {
 
   //登录
-  login: URLHost + '/user/login',
+  login: URLHost + '/admin/login',
 
   //Banner图管理
   //新增Banner图
