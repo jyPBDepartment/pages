@@ -30,9 +30,7 @@
       size="mini"
       :data="listData"
       highlight-current-row
-     
       border
-     
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
@@ -168,6 +166,5 @@ export default {
   font-size: 12px;
   margin-top: 4px;
 }
-
 
 </style>

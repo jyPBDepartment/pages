@@ -20,7 +20,6 @@
       </el-form-item>
       <el-button  type="text" @click="search('manual')"  size="medium" class="find"  icon="el-icon-search" >查询</el-button>
        <el-button type="text" @click="resetRuleTag(search)"  size="medium" class="small"  icon="el-icon-close">重置</el-button>
-        
     </el-form>
 
     <!-- 展示的表单 -->
@@ -34,7 +33,6 @@
       <el-table-column prop="expectaion" label="合作期望" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="recommended" label="推荐人" align="center" ></el-table-column>
       <el-table-column sortable prop="questionScore" label="问卷得分" align="center"  width="100"></el-table-column>
-     
       <el-table-column sortable  prop="createDate" label="创建时间" align="center"  width="200">
       </el-table-column>
 
@@ -43,8 +41,6 @@
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     <br />
     <br />
-
-
     </div>
     
 </template>
@@ -58,7 +54,6 @@ import UpdateQuestion from "./updateQuestion.vue";
 import Pagination from "../../components/Pagination";
 
 export default {
- 
   inject: ["reload"],
   props: {
     show: {
@@ -143,7 +138,6 @@ export default {
         });
     },
     
-
     closeUpdateQuestionDialog: function() {
       this.updateQuestionFlag = false;
     },
@@ -276,50 +270,6 @@ export default {
 .el-form-item {
   font-size: 14px;
 }
-/* .template {
-  size: medium;
-  color: rgb(17, 17, 17);
-  background-color: rgb(199, 215, 231);
-  border-color: rgb(121, 212, 59);
-  border-radius: 3px;
-}
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-
-.el-button.up{
-  margin-right: 20px;
-  width:50px;
-  background-color:white;
-  border-color:#DCDFE6;
-  color:black;
-  font-size:12px;
-}
-.el-button.del{
-  width:50px;
-  background-color:#84C1FF;
-  border-color:#84C1FF;
-  color:white;
-  font-size:12px;
-} */
 .find {
   width: 82px;
   background-color:#e6a23c;
@@ -349,8 +299,6 @@ export default {
 .el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
   border-top-color: pink;
 }
-
-
 </style>
 
 

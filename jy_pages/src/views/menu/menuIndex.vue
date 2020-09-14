@@ -15,10 +15,10 @@
       <el-form-item label="导航名称" >
         <el-input v-model="name" type="text" placeholder="请输入导航名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
-      <el-button type="text"  @click="search" size="medium" class="find"  icon="el-icon-search" >查询</el-button>
-       <el-button type="text"  @click="resetRuleTag(search)"  size="medium" class="small" icon="el-icon-close">重置</el-button>
+      <el-button type="warning"  @click="search" size="small" icon="el-icon-search" >查询</el-button>
+       <el-button type="info"  @click="resetRuleTag(search)"  size="small" icon="el-icon-close">重置</el-button>
         <el-row>
-           <el-button type="text"  @click="openRuleTag"  size="medium" class="insert"  icon="el-icon-plus">添加</el-button>
+           <el-button type="primary"  @click="openRuleTag"  size="small" icon="el-icon-plus">添加</el-button>
         </el-row>
     </el-form>
 
@@ -65,8 +65,8 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)" type="text" size="medium" class="up" icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteNavigation(scope)" type="text" size="medium" class="del" icon="el-icon-delete">删除</el-button>
+           <el-button @click="openUpdateDialog(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
+          <el-button @click="deleteNavigation(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
          
        </template>
    </el-table-column>
@@ -331,65 +331,6 @@ export default {
   border-color: rgb(121, 212, 59);
   border-radius: 3px;
 }
-.el-button {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  outline: none;
-  color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px #999;
-}
-.el-button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-.el-button.el-button--small {
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.find {
-  width: 82px;
-  background-color:#e6a23c;
-  color: #fff;
-  border-color: #e6a23c;
-  font-size: 12px;
-}
-.small {
-  width: 82px;
-  background-color: #909399;
-  border-color: #909399;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.insert{
-  width: 82px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.up {
-  margin-right: 20px;
-  width: 50px;
-  background-color: #409eff;
-  border-color: #409eff;
-  color: #fff;
-  font-size: 12px;
-}
-.el-button.del {
-  width: 50px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
-}
-
 </style>
 
 
