@@ -2,7 +2,7 @@
   <div>
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">基础信息</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
       <el-breadcrumb-item>预约讲解</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
@@ -27,27 +27,27 @@
     </el-form>
     <!--列表-->
     <el-table
-      size="small"
+      size="mini"
       :data="listData"
       highlight-current-row
-      v-loading="loading"
+     
       border
-      element-loading-text="拼命加载中"
+     
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column sortable prop="name" label="姓名" align="center"></el-table-column>
-      <el-table-column sortable prop="phoneNum" label="电话" align="center"></el-table-column>
-      <el-table-column sortable prop="companyName" label="公司地址" align="center"></el-table-column>
-      <el-table-column sortable prop="email" label="邮箱" align="center"></el-table-column>
-      <el-table-column sortable prop="solution" label="意向解决方案" align="center">
+      <el-table-column prop="name" label="姓名" align="center" ></el-table-column>
+      <el-table-column prop="phoneNum" label="电话" align="center" ></el-table-column>
+      <el-table-column prop="companyName" label="公司地址" align="center" ></el-table-column>
+      <el-table-column prop="email" label="邮箱" align="center" ></el-table-column>
+      <el-table-column prop="solution" label="意向解决方案" align="center" >
         <template slot-scope="scope">
           <span v-if="scope.row.solution == 1">农资经销商解决方案用</span>
           <span v-else>农资供应商解决方案用</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="address" label="所在地区" align="center"></el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center">
+      <el-table-column prop="address" label="所在地区" align="center"  width="350"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center"  width="228">
         <template slot-scope="scope">
           <div>{{scope.row.createDate|timestampToTime}}</div>
         </template>
@@ -70,7 +70,6 @@ export default {
     return {
       name: "",
       phoneNum: "",
-      loading: false, //是显示加载
       formInline: {
         page: 1,
         limit: 10,
@@ -83,8 +82,7 @@ export default {
       },
       // 选择数据
       selectdata: [],
-      userparm: [], //搜索权限
-      listData: [] //用户数据
+      listData:[]
     };
   },
   // 注册组件
@@ -102,8 +100,12 @@ export default {
       this.formInline.limit = parm.pageSize;
       this.search(this.formInline);
     },
-    // 分页查询
+    // 查询方法
     search: function(parameter) {
+       if (parameter == "manual") {
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         name: this.name,
         phoneNum: this.phoneNum,
@@ -115,7 +117,6 @@ export default {
         .then(res => {
           let code = res.status;
           if (code == "0") {
-            this.loading = false;
             this.listData = res.data.content;
             this.formInline.currentPage = res.data.number + 1;
             this.formInline.pageSize = res.data.size;
@@ -131,7 +132,9 @@ export default {
     resetForm(search) {
       this.name = "";
       this.phoneNum = "";
-      location.reload();
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     }
   }
 };

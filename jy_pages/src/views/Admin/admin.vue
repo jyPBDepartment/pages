@@ -5,7 +5,7 @@
     <div class="adminFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">基础管理</el-breadcrumb-item>
       <el-breadcrumb-item>管理员管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
@@ -23,21 +23,21 @@
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row>
+    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row size="mini" >
       <el-table-column type="index" label="序号"  align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="loginName" label="登录名称" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="password" label="密码" align="center"></el-table-column>
-      <el-table-column sortable prop="roleName" label="角色" align="center"></el-table-column>
-      <el-table-column sortable prop="createDateTime" label="创建时间" align="center">
+      <el-table-column prop="loginName" label="登录名称" align="center" style="width:40px;"></el-table-column>
+      <!-- <el-table-column sortable prop="password" label="密码" align="center"></el-table-column> -->
+      <el-table-column prop="roleName" label="角色" align="center"></el-table-column>
+      <el-table-column sortable prop="createDateTime" label="创建时间" align="center"  width="300">
        
       </el-table-column>
-       <el-table-column sortable prop="updateTime" label="修改时间" align="center">
+       <el-table-column sortable prop="updateTime" label="修改时间" align="center"  width="300">
        
       </el-table-column>
      <el-table-column fixed="right" label="操作" width="220px" align="center">
         <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)" class="up" type="text" size="medium"  icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteAdmin(scope)" class="del" type="text" size="medium"  icon="el-icon-delete">删除</el-button>
+           <el-button @click="openUpdateDialog(scope)" class="up" type="text" size="medium"  icon="el-icon-edit" style="height:100%">编辑</el-button>
+          <el-button @click="deleteAdmin(scope)" class="del" type="text" size="medium"  icon="el-icon-delete"  style="height:100%">删除</el-button>
          
        </template>
    </el-table-column>
@@ -131,6 +131,10 @@ export default {
     },
 //查询方法
     search: function(parameter) {
+       if (parameter == "manual") {
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         loginName: this.loginName,
        
@@ -142,8 +146,6 @@ export default {
         .then(res => {
           let code = res.status;
           if (code == "0") {
-
-              console.log(res.data.content)
            this.tableData = res.data.content;
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
@@ -161,7 +163,7 @@ export default {
       this.updateAdminFlag = false;
     },
     updateAdmin: function() {},
-    
+    //管理员删除
     deleteAdmin: function(scope) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -180,9 +182,9 @@ export default {
                 type: "success",
                 message: "删除成功!"
               });
-              this.reload();
+              this.tableData.splice(scope.$index, 1);
             } else {
-              this.$message.success(res.message);
+              this.$message.error(res.message);
             }
           });
         })
@@ -218,7 +220,9 @@ export default {
     
     resetRuleTag(search) {
       this.loginName = "";
-     
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
     closeRuleTagDialog() {
       this.addAdminFlag = false;

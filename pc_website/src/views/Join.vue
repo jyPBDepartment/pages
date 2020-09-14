@@ -51,22 +51,6 @@
         </div>
 
         <div class="info">
-          <!-- <el-row class="box" v-for="(item, index) in Input" :key="index">
-            <el-col class="title" :span="8" :offset="1">
-              {{ item.title }}
-              <div>
-                <span v-show="item.mandatory">*</span>
-              </div>
-            </el-col>
-            <el-col :span="8" :offset="1">
-              <el-input
-                :type=" index == 5 ? 'textarea' : ''"
-                :rows=" index == 5 && 5"
-                v-model="item.content"
-                :placeholder="index == 5 ? '500字以内' : item.title"
-              ></el-input>
-            </el-col>
-          </el-row>-->
 
           <!-- 连接后端方法的表单 -->
           <el-form :rules="rules" ref="editForm" :model="editForm">
@@ -110,7 +94,7 @@
           </el-form>
           <el-row>
             <el-col :span="8" :offset="10">
-              <el-button type="primary" @click="save">提交申请</el-button>
+              <el-button type="primary" @click="save" :disabled="isDisable">提交申请</el-button>
             </el-col>
           </el-row>
         </div>
@@ -243,6 +227,7 @@ export default {
   data() {
     return {
       isShow: false,
+      isDisable: false,
       editForm: {
         name: "",
         post: "",
@@ -276,43 +261,6 @@ export default {
         email: [{ required: true, message: "请输入邮箱", trigger: "blur" }]
       },
       bannerHeight: 0,
-      // Input: [
-      //   {
-      //     title: "联系人姓名",
-      //     content: "",
-      //     mandatory: true
-      //   },
-      //   {
-      //     title: "联系人职务详情",
-      //     content: "",
-      //     mandatory: true
-      //   },
-      //   {
-      //     title: "联系人手机",
-      //     content: "",
-      //     mandatory: true
-      //   },
-      //   {
-      //     title: "联系人邮箱",
-      //     content: "",
-      //     mandatory: true
-      //   },
-      //   {
-      //     title: "公司名称",
-      //     content: "",
-      //     mandatory: false
-      //   },
-      //   {
-      //     title: "合作期望",
-      //     content: "",
-      //     mandatory: false
-      //   },
-      //   {
-      //     title: "推荐人姓名",
-      //     content: "",
-      //     mandatory: false
-      //   }
-      // ],
       topicList: [
         {
           num: "01",
@@ -602,6 +550,7 @@ export default {
         this.topicList[4]["checkedCities"].length > 0 &&
         this.topicList[5]["checkedCities"].length > 0
       ) {
+         this.isDisable = true;
         //2.整合数据
         //params  **Entity
         let paramList = [];
@@ -646,8 +595,6 @@ export default {
           }
         }
         this.editForm.questionAnswer = aes.encrypt(JSON.stringify(paramList));
-
-        // console.log(aes.decrypt(aes.encrypt(JSON.stringify(paramList))))
         //评分+表单数据
         let params = {
           questionEntity: this.editForm
@@ -666,10 +613,10 @@ export default {
               this.$message.success(res.tips);
             }
           })
-          .catch(function(error) {
-            console.log(error);
+          .catch(function(err) {
+            console.log(err);
+            this.isDisable = false;
           });
-        //editForm
       } else {
         this.$alert("选项不能为空！", "提示", {
           confirmButtonText: "确定"

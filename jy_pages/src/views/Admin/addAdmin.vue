@@ -14,10 +14,10 @@
       <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="100px">
        
         <el-form-item label="登录姓名" prop="loginName">
-          <el-input type="text" v-model="editForm.loginName"  placeholder="请输入姓名" style="width:70%;" @change="name"></el-input>
+          <el-input type="text" v-model="editForm.loginName"  placeholder="请输入姓名,最多12位" maxlength="12" style="width:70%;"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password" >
-          <el-input type="password" v-model="editForm.password" placeholder="请输入密码 " style="width:70%;" show-password   @change="password"></el-input>
+          <el-input type="password" v-model="editForm.password" placeholder="请输入密码,最多16位" style="width:70%;" show-password maxlength="16"  @change="password"></el-input>
           
         </el-form-item>
 
@@ -99,22 +99,12 @@ export default {
     this.findContext();
   },
   methods: {
-    // 输入姓名正则验证
-    name: function() {
-      var name =  /^[a-zA-Z\u4E00-\uFA29]*$/;
-      if (!name.test(this.editForm.loginName)) {
-       this.$alert('请输入正确的姓名，只能为字母或汉字！', '提示', {
-          confirmButtonText: '确定',
-        });
-        this.editForm.loginName= "";
-       
-      }
-    },
-    // 输入密码正则验证
+    
+     // 输入密码正则验证
     password: function() {
-      var password =  /^[0-9A-Za-z]{6,16}$/;
+      var password = /^.*(?=.{6})(?=.*\d)(?=.*[a-z]).*$/;
       if (!password.test(this.editForm.password)) {
-       this.$alert('请输入正确的密码，只能为6-16位的字母或数字！', '提示', {
+       this.$alert('请输入正确的密码，最少6位，格式为小写字母+数字组合', '提示', {
           confirmButtonText: '确定',
         });
         this.editForm.password= "";
@@ -154,12 +144,15 @@ export default {
         if (code == "0") {
            this.$message.success(res.message);
           
-        } else {
-          this.$alert('"'+this.editForm.loginName+'"' +'名字不能重复,添加失败！', '提示', {
-          confirmButtonText: '确定',
-        });
-        }
-         
+        } 
+        // else {
+        //   this.$alert('"'+this.editForm.loginName+'"' +'名字不能重复,添加失败！', '提示', {
+        //   confirmButtonText: '确定',
+        // });
+        // }
+         else{
+           this.$message.error(res.message);
+         }
         
        
         this.reload();

@@ -5,7 +5,7 @@
     <div class="adminFunction">
           <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">门户管理</el-breadcrumb-item>
       <el-breadcrumb-item>问卷调查管理</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
@@ -24,27 +24,19 @@
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row>
+    <el-table :data="tableData" border style="width: 100%;"  highlight-current-row size="mini" > 
       <el-table-column type="index" label="序号"  align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="name" label="姓名" align="center" style="width:40px;"></el-table-column>
-      <el-table-column sortable prop="post" label="职务" align="center"></el-table-column>
-      <el-table-column sortable prop="phoneNum" label="手机号码" align="center"></el-table-column>
-      <el-table-column sortable prop="companyName" label="公司名称" align="center"></el-table-column>
-      <el-table-column sortable prop="email" label="邮箱" align="center"></el-table-column>
-      <el-table-column sortable prop="expectaion" label="合作期望" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column sortable prop="recommended" label="推荐人" align="center" ></el-table-column>
-      <el-table-column sortable prop="questionScore" label="问卷得分" align="center"></el-table-column>
+      <el-table-column prop="name" label="姓名" align="center" style="width:40px;"></el-table-column>
+      <el-table-column prop="post" label="职务" align="center"></el-table-column>
+      <el-table-column prop="phoneNum" label="手机号码" align="center"></el-table-column>
+      <el-table-column prop="companyName" label="公司名称" align="center"></el-table-column>
+      <el-table-column prop="email" label="邮箱" align="center"></el-table-column>
+      <el-table-column prop="expectaion" label="合作期望" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="recommended" label="推荐人" align="center" ></el-table-column>
+      <el-table-column sortable prop="questionScore" label="问卷得分" align="center"  width="100"></el-table-column>
      
-      <el-table-column  prop="createDate" label="创建时间" align="center">
+      <el-table-column sortable  prop="createDate" label="创建时间" align="center"  width="200">
       </el-table-column>
-      
-     <!-- <el-table-column fixed="right" label="操作" width="220px" align="center">
-        <template slot-scope="scope">
-           <el-button @click="openUpdateDialog(scope)" class="up" type="text" size="medium"  icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteQuestion(scope)" class="del" type="text" size="medium"  icon="el-icon-delete">删除</el-button>
-         
-       </template>
-   </el-table-column> -->
 
   </el-table>
     <!-- 分页组件 -->
@@ -52,14 +44,7 @@
     <br />
     <br />
 
- <!-- <update-question
-      :show="updateQuestionFlag"
-      :transQuestionId="transQuestionId"
-      title="修改"
-      @close="closeUpdateQuestionDialog"
-      @save="updateQuestion"
-    ></update-question> -->
-    
+
     </div>
     
 </template>
@@ -131,6 +116,10 @@ export default {
     },
 //查询方法
     search: function(parameter) {
+        if (parameter == "manual") {
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
       let params = {
         name: this.name,
         phoneNum:this.phoneNum,
@@ -142,7 +131,6 @@ export default {
         .then(res => {
           let code = res.status;
           if (code == "0") {
-
            this.tableData = res.data.content;
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
@@ -217,7 +205,10 @@ export default {
     
     resetRuleTag(search) {
       this.name = "";
-        this.phoneNum="";
+      this.phoneNum="";
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
     },
     closeRuleTagDialog() {
       this.addQuestionFlag = false;

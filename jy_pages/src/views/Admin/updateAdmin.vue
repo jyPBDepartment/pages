@@ -14,13 +14,11 @@
       <el-form :rules="rules" ref="AdminForm" :model="AdminForm" label-width="100px">
        
         <el-form-item label="登录名称" prop="loginName">
-          <el-input type="text" v-model="AdminForm.loginName" placeholder="请输入姓名" style=" width:70%;" @change="name"></el-input>
+          <el-input type="text" v-model="AdminForm.loginName" placeholder="请输入姓名,最多12位。" maxlength="12" style=" width:70%;"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="AdminForm.password" placeholder="请输入密码" style=" width:70%;" show-password  @change="password"></el-input>
-        </el-form-item>
-       
-       
+          <el-input type="password" v-model="AdminForm.password" placeholder="请输入密码,最多16位。" style=" width:70%;" show-password maxlength="16" @change="password"></el-input>
+        </el-form-item>       
            <el-form-item label="角色" prop="roleId" >
             <el-select v-model="AdminForm.roleId" placeholder="请输入角色" clearable style=" width:70%;">
               <el-option
@@ -36,8 +34,8 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="success" icon="el-icon-check" @click="updateAdmin()" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px;width:105px;height:42px;">保存</el-button>
-      <el-button type="danger" icon="el-icon-close" @click="close"  size="medium" style="background-color:white;border-color:#fff;color:black;font-size:12px;width:105px;height:42px;">关闭</el-button>
+      <el-button type="success" icon="el-icon-check" @click="updateAdmin()" class="saveBtn">保存</el-button>
+      <el-button type="danger" icon="el-icon-close" @click="close"  size="medium" class="closeBtn" >关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -78,8 +76,7 @@ export default {
       rules: {
         loginName: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         password: [
-        { required: true, message: "请输入密码", trigger: "blur" },
-          {pattern:/^.*(?=.{6,16})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])6.*$/,message: "最少6位,最多16位，至少1个大写字母，1个小写字母，1个数字", trigger: "blur"}
+        { required: true, message: "请输入密码", trigger: "blur" }
         ],
         roleId: [{ required: true, message: "请输入角色", trigger: "blur" }]
       }
@@ -108,25 +105,15 @@ export default {
     this.findContext();
   },
   methods: {
-     // 输入姓名正则验证
-    name: function() {
-      var name =  /^[a-zA-Z\u4E00-\uFA29]*$/;
-      if (!name.test(this.editForm.loginName)) {
-       this.$alert('请输入正确的姓名，只能为字母或汉字！', '提示', {
-          confirmButtonText: '确定',
-        });
-        this.editForm.loginName= "";
-       
-      }
-    },
+    
     // 输入密码正则验证
     password: function() {
-      var password =  /^[0-9A-Za-z]{6,16}$/;
-      if (!password.test(this.editForm.password)) {
-       this.$alert('请输入正确的密码，只能为6-16位的字母或数字！', '提示', {
+      var password = /^.*(?=.{6})(?=.*\d)(?=.*[a-z]).*$/;
+      if (!password.test(this.AdminForm.password)) {
+       this.$alert('请输入正确的密码，最少6位，格式为小写字母+数字组合', '提示', {
           confirmButtonText: '确定',
         });
-        this.editForm.password= "";
+        this.AdminForm.password= "";
        
       }
     },
@@ -151,17 +138,29 @@ export default {
           });
     },
 
-    //修改用户信息
+    //修改管理员信息
     updateAdmin: function() {
+       if (this.AdminForm.loginName != "" && this.AdminForm.password != "" && this.AdminForm.roleId != "") {
       let params = {
         adminEntity: this.AdminForm
-      };
-
+      };     
       api.testAxiosGet(ApiPath.url.updateAdmin, params).then(res => {
-        this.$message.success(res.message);
+      let code = res.status;
+        if (code == "0") {
+           this.$message.success(res.message);
+        }
+        else {
+           this.$message.success(res.message);
+         }
         this.reload();
         this.close();
-      });
+      })
+    }else {
+            this.$alert('登录名称，密码，角色不能为空！', '提示', {
+          confirmButtonText: '确定',
+        });
+        }
+        
     },
     close: function() {
       this.$emit("close");
@@ -176,5 +175,21 @@ export default {
 <style scoped>
 .el-form {
   padding-left: 115px;
+}
+.saveBtn{
+  background-color:#409EFF;
+  border-color:#409EFF;
+  color:white;
+  font-size:12px;
+  width:105px;
+  height:42px;
+}
+.closeBtn{
+  background-color:white;
+  border-color:#fff;
+  color:black;
+  font-size:12px;
+  width:105px;
+  height:42px;
 }
 </style>
