@@ -90,7 +90,7 @@ Vue.use(Router);
 
 // 导出路由 
 export default new Router({
-    mode:'history',
+    mode:'hash',
     routes: [{
         path: '/',
         name: '',

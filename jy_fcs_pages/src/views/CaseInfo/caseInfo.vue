@@ -315,6 +315,7 @@ export default {
     },
     closeRuleTagDialog() {
       this.addCaseInfoFlag = false;
+      this.search(this.formInline);
     },
     modifyRuleTag() {
       this.updateRuleTag = false;

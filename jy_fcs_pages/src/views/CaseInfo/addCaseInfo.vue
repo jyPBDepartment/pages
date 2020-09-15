@@ -306,14 +306,14 @@ export default {
               this.editForm.keyCodes = null
               this.editForm.keys = keyArr.join()
               let params = {
-                caseInfoEntity:aes.encrypt(JSON.stringify(this.editForm) ) ,
+                caseInfoEntity:JSON.stringify(this.editForm) ,
               };
               api
                 .testAxiosGet(ApiPath.url.saveCaseInfo, params)
                 .then((res) => {
                   let code = res.state;
                   this.$message.success(res.message);
-                  this.reload();
+                  // this.reload();
                   this.close();
                 })
                 .catch(function (err) {
