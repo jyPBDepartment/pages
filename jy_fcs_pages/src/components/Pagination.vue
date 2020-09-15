@@ -45,6 +45,13 @@ export default {
        */
       this.pageparm.currentPage = val;
       this.$emit("callFather", this.pageparm);
+    },
+    /**
+     *  父传子，重置分页组件的pageSize
+     *  参数pageSize -- 每页显示条数
+     */
+    initPaginationSize(pageSize){
+      this.pageparm.pageSize = pageSize;
     }
   }
 };
