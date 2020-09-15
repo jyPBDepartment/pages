@@ -39,7 +39,6 @@
         :show-overflow-tooltip="true"
         min-width="80px"
       ></el-table-column>
-      <el-table-column prop="parentCode" label="分类id" align="center" min-width="90px"></el-table-column>
       <el-table-column prop="author" label="作者" align="center" min-width="90px"></el-table-column>
       <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="90px">
         <template slot-scope="scope">
@@ -51,12 +50,6 @@
       <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="140px"></el-table-column>
       <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px"></el-table-column>
       <el-table-column prop="auditUser" label="审核人" align="center" min-width="100px"></el-table-column>
-      <el-table-column prop="visibility" label="可见程度" align="center" min-width="90px">
-        <template slot-scope="scope">
-          <span v-if="scope.row.visibility==0">自己可见</span>
-          <span v-if="scope.row.visibility==1">全部可见</span>
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="状态" prop="status" min-width="65px">
         <template slot-scope="scope">
           <el-switch
@@ -69,7 +62,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="200px">
+      <el-table-column align="center" label="操作" min-width="120px">
         <template slot-scope="scope">
           <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small">信息审核</el-button>
         </template>

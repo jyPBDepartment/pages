@@ -37,8 +37,8 @@
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column  prop="name" label="角色名称" align="center"></el-table-column>
       <el-table-column show-overflow-tooltip  prop="remark" label="角色备注" align="center"></el-table-column>
-      <el-table-column sortable prop="addDate" width="200px" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updDate" width="200px" label="修改时间" align="center"></el-table-column>
+      <el-table-column sortable prop="addDate" label="创建时间" align="center"></el-table-column>
+      <el-table-column sortable prop="updDate" label="修改时间" align="center"></el-table-column>
       <el-table-column align="center" label="状态" prop="state">
         <template slot-scope="scope">
           <el-switch
@@ -51,7 +51,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="400px">
+      <el-table-column align="center" label="操作"  width="500px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateRole(scope)"

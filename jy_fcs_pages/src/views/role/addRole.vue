@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="30%"
+    width="40%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -23,7 +23,7 @@
             type="text"
             v-model="editForm.name"
             size="small"
-            placeholder="请输入角色名称"
+            placeholder="请输入角色名称（不超过18个字符）"
             style="width:80%"
             maxlength="18"
           ></el-input>
@@ -33,7 +33,7 @@
             type="textarea"
             v-model="editForm.remark"
             size="small"
-            placeholder="请输入角色名称"
+            placeholder="请输入角色备注"
             style="width:80%"
             maxlength="255"
           ></el-input>
@@ -103,7 +103,19 @@ export default {
     },
     //新增保存
     saveRoles: function() {
-      if(this.editForm.name!=""){
+      // if(this.editForm.name!=""){
+         if (this.editForm.name == "") {
+          this.$alert("角色名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
+        if (this.editForm.remark == "") {
+          this.$alert("角色备注不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
         this.saveFlag = true;
 
         let params = {
@@ -114,9 +126,9 @@ export default {
           this.close();
           this.reload();
         }).catch(function(error) {this.saveFlag = false;});
-     }else{
-       this.$alert('角色名称、权限名称不能为空！', '提示', {confirmButtonText: '确定',});
-     }
+    //  }else{
+    //    this.$alert('角色名称、权限名称不能为空！', '提示', {confirmButtonText: '确定',});
+    //  }
 
     },
   }

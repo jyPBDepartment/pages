@@ -49,8 +49,8 @@
         :show-overflow-tooltip="true"
         min-width="85px"
       ></el-table-column>
-      <el-table-column prop="url" label="模块图片" align="center" min-width="130px">
-        <template slot-scope="scope">
+      <el-table-column prop="url" label="模块图片" align="center" min-width="75px">
+        <template slot-scope="scope" style="height:120px">
           <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
         </template>
       </el-table-column>
@@ -63,13 +63,12 @@
           <el-tag v-if="scope.row.tabMode == 1" type="info">导航</el-tag>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="sort" label="排序" align="center" min-width="100px"></el-table-column> -->
-      <el-table-column  align="center" label="排序" width="200px" prop="sort">
+      <el-table-column  align="center" label="排序" width="220px" prop="sort">
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="100px">
+      <el-table-column align="center" label="状态" prop="status" min-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"

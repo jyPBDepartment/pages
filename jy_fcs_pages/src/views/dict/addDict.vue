@@ -106,9 +106,19 @@ export default {
 
     //添加字典方法
     saveDictType: function () {
-     
-      if (this.editForm.dictName != "" && this.editForm.dictType != "") {
-         this.isDisable = true;
+      if (this.editForm.dictName == "") {
+          this.$alert("字典名称不能为空！", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
+        if (this.editForm.dictType == "") {
+          this.$alert("字典编码不能为空！", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
+        this.isDisable = true;
         let params = {
           typeEntity: this.editForm,
         };
@@ -122,11 +132,6 @@ export default {
           .catch(function (err) {
             this.isDisable = false;
           });
-      } else {
-        this.$alert("字典名称，字典编码不能为空！", "提示", {
-          confirmButtonText: "确定",
-        });
-      }
     },
     close: function () {
       this.$emit("close");

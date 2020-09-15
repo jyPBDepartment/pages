@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="30%"
+    width="40%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -13,7 +13,7 @@
     <slot>
       <el-form :model="roleForm" :rules="rules" ref="roleForm" :label-position="labelPosition">
         <el-form-item label="角色名称" prop="name">
-          <el-input type="text" v-model="roleForm.name" style="width:75%" size="small" maxlength="18"></el-input>
+          <el-input type="text" v-model="roleForm.name" style="width:75%" size="small" maxlength="18"  placeholder="请输入角色名称（不超过18个字符）"></el-input>
 
         </el-form-item>
         <el-form-item label="角色备注" prop="name">
@@ -21,8 +21,8 @@
             type="textarea"
             v-model="roleForm.remark"
             size="small"
-            placeholder="请输入角色名称"
-            style="width:80%"
+            placeholder="请输入角色备注"
+            style="width:75%"
             maxlength="255"
           ></el-input>
         </el-form-item>
@@ -87,6 +87,18 @@ export default {
   },
   methods: {
     saveRoles: function() {
+       if (this.roleForm.name == "") {
+          this.$alert("角色名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
+        if (this.roleForm.remark == "") {
+          this.$alert("角色备注不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
       this.saveFlag = true;
       let params = {
         roleEntity: aes.encrypt(JSON.stringify(this.roleForm) )

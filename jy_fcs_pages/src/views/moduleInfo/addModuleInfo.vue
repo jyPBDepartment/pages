@@ -33,9 +33,8 @@
             type="text"
             v-model="editForm.routeUrl"
             size="small"
-            placeholder="请输入跳转路由(不能超过60个字符)"
+            placeholder="请输入跳转路由"
             style="width:80%"
-            maxlength="60"
           ></el-input>
         </el-form-item>
         <el-form-item label="跳转类型" prop="tabMode">
@@ -121,6 +120,8 @@ export default {
 
       rules: {
         name: [{ required: true, message: "请输入模块名称", trigger: "blur" }],
+        routeUrl: [{ required: true, message: "请输入跳转路由", trigger: "blur" }],
+        tabMode: [{ required: true, message: "请选择跳转类型", trigger: "blur" }],
       },
     };
   },
@@ -175,6 +176,12 @@ export default {
       this.$refs[editData].validate((valid) => {
         if (this.editForm.name == "") {
           this.$alert("模块名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
+        if (this.editForm.routeUrl == "") {
+          this.$alert("跳转路由不能为空", "提示", {
             confirmButtonText: "确定",
           });
           return false;

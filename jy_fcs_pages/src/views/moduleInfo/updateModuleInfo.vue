@@ -13,16 +13,15 @@
     <slot>
       <el-form :rules="rules" ref="moduleInfoForm" :model="moduleInfoForm" label-width="100px" :label-position="labelPosition">
         <el-form-item label="模块名称" prop="name">
-          <el-input size="small" type="text" v-model="moduleInfoForm.name" placeholder="请输入名称(不能超过16个字符)" style=" width:75%;" maxlength="16"></el-input>
+          <el-input size="small" type="text" v-model="moduleInfoForm.name" placeholder="请输入模块名称(不能超过16个字符)" style=" width:75%;" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="跳转路由" prop="routeUrl">
           <el-input
             type="text"
             v-model="moduleInfoForm.routeUrl"
             size="small"
-            placeholder="请输入跳转路由(不能超过60个字符)"
+            placeholder="请输入跳转路由"
             style="width:80%"
-            maxlength="60"
           ></el-input>
         </el-form-item>
         <el-form-item label="跳转类型" prop="tabMode">
@@ -111,6 +110,8 @@ export default {
       //rules表单验证
       rules: {
         name: [{ required: true, message: "请输入模块名称", trigger: "blur" }],
+        routeUrl: [{ required: true, message: "请输入跳转路由", trigger: "blur" }],
+        tabMode: [{ required: true, message: "请选择跳转类型", trigger: "blur" }],
       },
     };
   },
@@ -179,6 +180,12 @@ export default {
       this.$refs[editData].validate((valid) => {
         if (this.moduleInfoForm.name == "") {
           this.$alert("模块名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
+        if (this.moduleInfoForm.routeUrl == "") {
+          this.$alert("跳转路由不能为空", "提示", {
             confirmButtonText: "确定",
           });
           return false;

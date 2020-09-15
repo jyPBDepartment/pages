@@ -110,7 +110,18 @@ export default {
   methods: {
     //修改分类信息
     updateClassification: function () {
-       if (this.classiForm.dictName != "" && this.classiForm.dictType != "") {
+       if (this.classiForm.dictName == "") {
+          this.$alert("字典名称不能为空！", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
+        if (this.classiForm.dictType == "") {
+          this.$alert("字典编码不能为空！", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
       let params = {
         typeEntity: this.classiForm,
       };
@@ -127,15 +138,6 @@ export default {
           this.$message.error(err.data);
         });
       this.classiForm.updateUser = localStorage.getItem("userInfo");
-      }else {
-        this.$alert(
-          "名称，编码不能为空！",
-          "提示",
-          {
-            confirmButtonText: "确定",
-          }
-        );
-      }
     },
     close: function () {
       this.$emit("close");
