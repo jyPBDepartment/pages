@@ -52,7 +52,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
+    <Pagination ref="Pagination" v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
   </div>
 </template>
 
@@ -132,8 +132,9 @@ export default {
       this.phoneNum = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
+      this.$refs.Pagination.initPaginationSize(10);
       this.search(this.formInline);
-      location.reload();
+      //location.reload();
     }
   }
 };

@@ -34,6 +34,7 @@ export default {
        * 参数1 父元素方法
        * 参数2 数据
        */
+      console.log("分页组件handleSizeChange：   "+val);
       this.pageparm.pageSize = val;
       this.$emit("callFather", this.pageparm);
     },
@@ -45,6 +46,20 @@ export default {
        */
       this.pageparm.currentPage = val;
       this.$emit("callFather", this.pageparm);
+    },
+    /**
+     *  父传子，初始化分页组件的pageSize
+     *  参数pageSize -- 每页显示条数
+     */
+    initPaginationSize(pageSize){
+      this.pageparm.pageSize = pageSize;
+    },
+    /**
+     *  父传子，初始化分页组件的currentPage
+     *  参数currentPage -- 当前页
+     */
+    initCurrentPage(currentPage){
+      this.pageparm.currentPage = currentPage;
     }
   }
 };
