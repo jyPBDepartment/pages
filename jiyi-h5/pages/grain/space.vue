@@ -46,11 +46,11 @@
 					</view>
 				</view>
 				<view v-if="isDisplay!==0" class="btn g-flex" >
-					<view class="g-f-1">
+					<!-- <view class="g-f-1">
 						<u-button @click="cencal(true)" shape="circle">取消</u-button>
-					</view>
+					</view> -->
 					<view class="g-f-1">
-						<u-button type="error" shape="circle">修改信息</u-button>
+						<u-button @click="update" type="error" shape="circle">修改信息</u-button>
 					</view>
 				</view>
 				<view v-else></view>
@@ -92,11 +92,13 @@
 				url: '',
 				name: '',
 				isDisplay: 0,//默认不显示信息
-				isMain: "1"
+				isMain: "1",
+				id:''
 			};
 		},
 		onLoad(e) {
 			this.isMain = e.isMain;
+			this.id=e.id;
 			this.findMineId(e.id)
 		},
 		methods: {
@@ -118,7 +120,12 @@
 						this.address = res.data.data.address
 						this.contactsUser = res.data.data.contactsUser
 						this.contactsPhone = res.data.data.contactsPhone
-						this.descrip = res.data.data.descrip
+						if(res.data.data.descrip!=''){
+							this.descrip = res.data.data.descrip
+						}else{
+							this.descrip='无';
+						}
+						
 						this.price = res.data.data.price
 						this.isFace = res.data.data.isFace
 						// this.url = res.data.data.url
@@ -135,6 +142,11 @@
 							})
 						}
 					}
+				})
+			},
+			update(){
+				uni.navigateTo({
+					url: '/pages/grain/grainTrade?id=' +this.id
 				})
 			},
 			//先获取当前的current

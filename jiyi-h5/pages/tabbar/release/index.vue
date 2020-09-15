@@ -12,6 +12,16 @@
 			</view>
 		</view>
 		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
+		<u-popup mode="center" width="400" height="360" v-model="isShow" :closeable="isClose" @close="close">
+			<view class="content">
+				<view>请选择身份</view>
+				<view class="confrim-btn">
+					<u-button @click="link('1')">农户</u-button>
+					<u-button @click="link('2')">粮贩</u-button>
+					<u-button @click="link('3')">粮库</u-button>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -26,8 +36,17 @@
 			return {
 				btnList: [],
 				show: true,
-				maskAble: false
-			};
+				maskAble: false,
+				isCancel: true,
+				isShow: false,
+				form: {
+					name: '',
+					intro: '',
+					sex: ''
+				},
+				isClose:false,
+				url:""
+			}
 		},
 		onLoad() {
 			this.moduleShow();
@@ -65,15 +84,29 @@
 				})
 			},
 			jump(item) {
+				this.url = item.url;
+				if (item.name == '粮食买卖') {
+					this.isShow = true;
+				} else {
+					uni.navigateTo({
+						url: item.url //跳转地址
+					})
+				}
+
+			},
+			link(val){
 				uni.navigateTo({
-					url: item.url //跳转地址
+					url: this.url+"?type="+val //跳转地址
 				})
+			},
+			close(){
+				this.url="";//关闭时清空路径
 			}
 		}
 	};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.btn {
 		width: 120rpx;
 		margin-left: 40rpx;
@@ -99,4 +132,8 @@
 			color: #505050;
 		}
 	}
+	.content {
+			padding: 24rpx;
+			text-align: center;
+		}
 </style>

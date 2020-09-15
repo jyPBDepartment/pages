@@ -5,7 +5,7 @@
 				<u-input v-model="value" type="textarea " />
 			</view>
 			<view class="btn g-flex g-j-e">
-				<u-button @click="confirm" size="mini" class="confirm f-12 " shape="circle" type="error">{{name}}</u-button>
+				<u-button @click="confirm" size="mini" class="confirm f-12 " shape="circle" type="error">确认</u-button>
 			</view>
 		</view>
 	</view>
@@ -41,6 +41,13 @@
 				this.$emit('isShow', false)
 			},
 			confirm() {
+				// if(this.value=''){
+				// 	uni.showToast({
+				// 		title: "取消理由不能为空",
+				// 		index:"1000"
+				// 	})
+				// 	return 
+				// }
 				this.$emit('confirm', this.value)
 			}
 		}

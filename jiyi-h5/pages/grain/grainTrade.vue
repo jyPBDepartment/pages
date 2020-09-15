@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderSearch title="粮食买卖" @searchCallback="search"></HeaderSearch>
+		<HeaderSearch :title="title" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10">
 			<view class="g-flex p-y-10 g-a-c" style="border-bottom: 1rpx solid #999;">
 				<span style="color: #ff0000;">*</span>
@@ -40,7 +40,7 @@
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
+			<!-- <view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					类型
@@ -52,21 +52,31 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
-			</view>
+			</view> -->
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
 					价格
 				</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="isFace" @change="radioGroupChange1">
-						<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
-				</view>
-				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="price"
-				 height="64" />
+				<u-row :gutter="6">
+					<u-col>
+						<view class="info g-f-1" style="position: relative;">
+							<u-radio-group v-model="isFace" @change="radioGroupChange1">
+								<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
+									{{item.name}}
+								</u-radio>
+							</u-radio-group>
+						</view>
+					</u-col>
+					<u-col>
+						<view v-if="isFace == '定价'">
+							<u-input style="width: 220rpx;" placeholder="输入价格" border="" v-model="price" height="64" />
+							<view style="font-size: 16rpx;">元/斤</view>
+						</view>
+					</u-col>
+				</u-row>
+
+
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
@@ -176,9 +186,22 @@
 						text: '黄豆'
 					}
 				],
+				title: ''
 			};
 		},
-		onLoad() {
+		onLoad(e) {
+			// 1.农户 2.粮贩 3.粮库
+			if (e.type == "1") {
+				this.title = "粮食出售";
+				this.transactionTypeCode = "1";
+			} else {
+				this.title = "粮食收购";
+				this.transactionTypeCode = "0";
+			}
+
+			if (typeof e.id === 'undefined') {
+				this.findInfoById(e.id);
+			}
 			setTimeout(() => {
 				this.$refs.region.getScreen();
 			}, 1000)
@@ -243,12 +266,12 @@
 					return false;
 				}
 
-				if (this.transactionCategoryCode == '') {
-					uni.showToast({
-						title: "请选择种类"
-					})
-					return false;
-				}
+				// if (this.transactionCategoryCode == '') {
+				// 	uni.showToast({
+				// 		title: "请选择种类"
+				// 	})
+				// 	return false;
+				// }
 				if (this.isFace == "定价") {
 					if (!/^\d+(\.\d{1})?$/.test(this.price)) {
 						uni.showToast({
@@ -273,12 +296,6 @@
 					return false;
 				}
 
-				// if (this.contactsPhone == '') {
-				// 	uni.showToast({
-				// 		title: "请输入联系电话"
-				// 	})
-				// 	return false;
-				// }
 				if (!/^1[345789]\d{9}$/.test(this.contactsPhone)) {
 					uni.showToast({
 						title: "请输入正确的联系电话"
@@ -296,12 +313,12 @@
 
 
 				//判断类型，并解析码值
-				for (let i = 0; i < this.list.length; i++) {
-					if (this.list[i].name == this.transactionTypeName) {
-						this.transactionTypeCode = this.list[i].value;
-						this.transactionTypeName = this.list[i].name;
-					}
-				}
+				// for (let i = 0; i < this.list.length; i++) {
+				// 	if (this.list[i].name == this.transactionTypeName) {
+				// 		this.transactionTypeCode = this.list[i].value;
+				// 		this.transactionTypeName = this.list[i].name;
+				// 	}
+				// }
 
 				//判断是否面议，并解析码值
 				for (let j = 0; j < this.list1.length; j++) {
@@ -352,6 +369,7 @@
 									url: "../tabbar/release/index"
 								})
 							}, 2000)
+
 						} else {
 							uni.showToast({
 								title: "发布信息失败,联系管理或重新发布"
@@ -360,6 +378,21 @@
 					}
 				})
 
+			},
+			findInfoById(val) {
+				uni.request({
+					method: "GET",
+					data: {
+						id: val
+					},
+					url: ApiPath.url.findMineId,
+					success: (res) => {
+						console.log(res);
+					},
+					fail: (err) => {
+
+					}
+				})
 			}
 		}
 	}
