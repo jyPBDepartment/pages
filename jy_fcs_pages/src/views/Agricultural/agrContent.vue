@@ -32,13 +32,13 @@
         <el-row :gutter="60">
           <el-col :span="10">
             <el-form-item label="开始时间:">
-              <!-- <el-date-picker v-model="agrForm.beginDate" type="date" readonly></el-date-picker> -->
+           
                <span>{{agrForm.beginDate}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label="结束时间:">
-              <!-- <el-date-picker type="date" v-model="agrForm.endDate" readonly></el-date-picker> -->
+            
                 <span>{{agrForm.endDate}}</span>
             </el-form-item>
           </el-col>
@@ -47,13 +47,13 @@
           <el-col :span="10">
             <el-form-item label="天数:">
              
-                <span>{{agrForm.days}}</span>
+                <span>{{agrForm.days}}天</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="价格(元):">
+            <el-form-item label="价格:">
 
-               <span>{{agrForm.price}}</span>
+               <span>{{agrForm.price}}元</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -78,7 +78,7 @@
           <el-col :span="10">
             <el-form-item label="农机台数:">
              
-               <span>{{agrForm.machineNum}}</span>
+               <span>{{agrForm.machineNum}}台</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
@@ -119,13 +119,13 @@
         <el-row :gutter="60">
           <el-col :span="10">
             <el-form-item label="发布时间:">
-              <!-- <el-date-picker v-model="agrForm.createDate" type="datetime" readonly></el-date-picker> -->
+    
                <span>{{agrForm.createDate}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label="修改时间:">
-              <!-- <el-date-picker v-model="agrForm.updateDate" type="datetime" readonly></el-date-picker> -->
+  
                <span>{{agrForm.updateDate}}</span>
             </el-form-item>
           </el-col>

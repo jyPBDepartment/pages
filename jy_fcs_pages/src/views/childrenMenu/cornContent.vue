@@ -53,9 +53,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="价格(元):">
+            <el-form-item label="价格:">
 
-               <span>{{agrForm.price}}</span>
+               <span>{{agrForm.price}}元</span>
             </el-form-item>
           </el-col>
         </el-row>
