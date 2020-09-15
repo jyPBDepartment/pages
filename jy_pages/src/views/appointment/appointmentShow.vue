@@ -133,6 +133,7 @@ export default {
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
+      location.reload();
     }
   }
 };

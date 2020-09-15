@@ -80,7 +80,7 @@
 
         <el-form-item label="文章内容" prop="describetion">
           <div class="edit_container">
-            <el-card style="height: 610px;width:85%">
+            <el-card style="height: 510px;width:70%">
               <quill-editor
                 v-model="editForm.describetion"
                 ref="myQuillEditor"
@@ -270,13 +270,30 @@ export default {
 
     //添加看图识病方法
     saveCaseInfo(editData) {
-      
-      if (
-        this.editForm.name != "" &&
-        this.imgUrl != "" &&
-        this.editForm.classiCode != "" &&
-        this.editForm.classiDipCode != ""
-      ) {
+      if(this.editForm.name  == ""){
+          this.$alert("名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
+       if(this.imgUrl  == ""){
+          this.$alert("图片不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
+       if(this.editForm.classiCode  == ""){
+          this.$alert("农作物种类编码不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
+       if(this.editForm.classiDipCode  == ""){
+          this.$alert("病虫害种类编码不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
         this.isDisable = true;
         this.$refs[editData].validate((valid) => {
           if (valid) {
@@ -310,15 +327,6 @@ export default {
             return false;
           }
         });
-      } else {
-        this.$alert(
-          "名称，图片，农作物种类编码，病虫害种类编码不能为空！",
-          "提示",
-          {
-            confirmButtonText: "确定",
-          }
-        );
-      }
     },
     close: function () {
       this.$emit("close");

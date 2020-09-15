@@ -76,7 +76,7 @@
         </el-form-item>
         <el-form-item label="描述" prop="describetion">
           <div class="edit_container">
-            <el-card style="height: 610px;width:85%">
+            <el-card style="height: 510px;width:70%">
               <quill-editor
                 v-model="caseInfoForm.describetion"
                 ref="myQuillEditor"
@@ -293,12 +293,36 @@ export default {
     },
     // 修改
     updateCaseInfo(editData) {
-       if (
-        this.caseInfoForm.name != "" &&
-        this.caseInfoForm.imgUrl != "" &&
-        this.caseInfoForm.classiCode != "" &&
-        this.caseInfoForm.classiDipCode != ""
-      ) {
+      //  if (
+      //   this.caseInfoForm.name != "" &&
+      //   this.caseInfoForm.imgUrl != "" &&
+      //   this.caseInfoForm.classiCode != "" &&
+      //   this.caseInfoForm.classiDipCode != ""
+      // ) {
+         if(this.caseInfoForm.name  == ""){
+          this.$alert("名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
+       if(this.caseInfoForm.imgUrl  == ""){
+          this.$alert("图片不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
+       if(this.caseInfoForm.classiCode  == ""){
+          this.$alert("农作物种类编码不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
+       if(this.caseInfoForm.classiDipCode  == ""){
+          this.$alert("病虫害种类编码不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
       this.$refs[editData].validate((valid) => {
         if (valid) {
           if (this.imgUrl != "") {
@@ -329,15 +353,15 @@ export default {
           return false;
         }
       });
-      } else {
-        this.$alert(
-          "名称，图片，农作物种类编码，病虫害种类编码不能为空！",
-          "提示",
-          {
-            confirmButtonText: "确定",
-          }
-        );
-      }
+      // } else {
+      //   this.$alert(
+      //     "名称，图片，农作物种类编码，病虫害种类编码不能为空！",
+      //     "提示",
+      //     {
+      //       confirmButtonText: "确定",
+      //     }
+      //   );
+      // }
     },
     close: function () {
        this.fileList=[];

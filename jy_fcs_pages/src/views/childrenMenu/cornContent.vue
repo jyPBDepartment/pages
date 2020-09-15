@@ -31,35 +31,25 @@
         </el-form-item>
        <el-row :gutter="60">
           <el-col :span="10">
-            <el-form-item label="交易类型:"></el-form-item>
-            <el-radio-group
-              v-model="agrForm.transactionTypeCode"
-              style="padding-left:98px;margin-top:-104px;"
-            >
-              <el-radio label="0">收购</el-radio>
-              <el-radio label="1">出售</el-radio>
-            </el-radio-group>
+            <el-form-item label="交易类型:">
+              <span v-if="agrForm.transactionTypeCode == '0'" >收购</span>
+              <span v-if="agrForm.transactionTypeCode == '1'" >出售</span>
+            </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="交易类别:"></el-form-item>
-            <el-radio-group
-              v-model="agrForm.transactionCategoryCode"
-              style="padding-left:98px;margin-top:-104px;"
-            >
-              <el-radio label="0">玉米</el-radio>
-              <el-radio label="2">水稻</el-radio>
-              <el-radio label="3">高粱</el-radio>
-              <el-radio label="4">黄豆</el-radio>
-            </el-radio-group>
+            <el-form-item label="交易类别:">
+              <span v-if="agrForm.transactionCategoryCode == '0'" >玉米</span>
+              <span v-if="agrForm.transactionCategoryCode == '2'" >水稻</span>
+              <span v-if="agrForm.transactionCategoryCode == '3'" >高粱</span>
+              <span v-if="agrForm.transactionCategoryCode == '4'" >黄豆</span>
+            </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="60">
           <el-col :span="10">
             <el-form-item label="是否面议:">
-              <el-radio-group v-model="agrForm.isFace">
-                <el-radio label="0">是</el-radio>
-                <el-radio label="1">否</el-radio>
-              </el-radio-group>
+              <span v-if="agrForm.isFace == '0'" >是</span>
+              <span v-if="agrForm.isFace == '1'" >否</span>
             </el-form-item>
           </el-col>
           <el-col :span="10">

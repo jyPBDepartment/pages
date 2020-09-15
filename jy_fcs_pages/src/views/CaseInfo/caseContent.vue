@@ -25,7 +25,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item label="状态:">
+            <el-form-item label="病虫害状态:">
               <span v-if="caseInfoForm.auditStatus=='1'">启用</span>
               <span v-if="caseInfoForm.auditStatus=='0'">禁用</span>
             </el-form-item>
@@ -47,8 +47,8 @@
           <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url" readonly></el-image>
         </el-form-item>
 
-        <el-form-item label="描述" class="bottom" style="margin-left:-80px;">
-          <el-card style="height: 350px;width:85%">
+        <el-form-item label="描述" class="bottom" >
+          <el-card style="height: 510px;width:70%">
             <quill-editor
               v-model="caseInfoForm.describetion"
               ref="myQuillEditor"

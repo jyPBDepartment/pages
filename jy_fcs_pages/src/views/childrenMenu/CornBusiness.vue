@@ -37,8 +37,8 @@
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
-      <el-table-column type="index" label="序号" align="center" min-width="5%" max-width="5%"></el-table-column>
-      <el-table-column prop="name" label="标题" align="center" min-width="45%" max-width="50%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
+      <el-table-column prop="name" label="标题" align="center" width="250"></el-table-column>
       <el-table-column
         prop="transactionTypeCode"
         label="交易类型"
@@ -65,14 +65,9 @@
           <span v-if="scope.row.transactionCategoryCode==4">黄豆</span>
         </template>
       </el-table-column>
-      <el-table-column prop="price" label="价格" align="center" min-width="45%" max-width="50%"></el-table-column>
-       <el-table-column prop="isFace" label="是否面议" align="center" min-width="45%" max-width="50%">
-           <template slot-scope="scope">
-          <span v-if="scope.row.isFace==0">是</span>
-          <span v-if="scope.row.isFace==1">否</span>          
-        </template>
-      </el-table-column>
-       <el-table-column
+    
+      
+       <!-- <el-table-column
         prop="contactsUser"
         label="联系人"
         align="center"
@@ -85,7 +80,7 @@
         align="center"
         min-width="60%"
         max-width="65%"
-      ></el-table-column>
+      ></el-table-column> -->
        <el-table-column
         prop="address"
         label="区域"
@@ -104,7 +99,7 @@
       </el-table-column>
       <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
       <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
-       <el-table-column fixed="right" label="操作" align="center" style="width:70%">
+       <el-table-column fixed="right" label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button @click="cornContent(scope)" type="primary"  size="small"
             style="padding:9px 6px;"

@@ -130,8 +130,18 @@ export default {
 
     //添加分类方法
     saveClassification: function () {
-     
-      if (this.editForm.name != "" && this.editForm.code != "") {
+      if(this.editForm.name  == ""){
+          this.$alert("分类名称不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
+      if(this.editForm.code  == ""){
+          this.$alert("分类编码不能为空", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
          this.isDisable = true;
         let params = {
           classificationEntity: this.editForm,
@@ -146,11 +156,6 @@ export default {
           .catch(function (err) {
             this.isDisable = false;
           });
-      } else {
-        this.$alert("分类名称，分类编码不能为空！", "提示", {
-          confirmButtonText: "确定",
-        });
-      }
     },
     close: function () {
       this.$emit("close");
