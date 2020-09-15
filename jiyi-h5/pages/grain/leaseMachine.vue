@@ -326,6 +326,8 @@
 						})
 						return false;
 					}
+				}else{
+					this.price ="0"
 				}
 				if (this.contactsUser == '') {
 					uni.showToast({
@@ -401,6 +403,7 @@
 					data:param,//请求数据
 					url:ApiPath.url.deploy,//请求接口路径
 					success: (res) => {//成功返回结果方法
+					if (res.data.state == 0) {
 						uni.showToast({
 							title: "发布信息成功,等待审核通过"
 						})
@@ -412,6 +415,11 @@
 								url: "../tabbar/release/index"
 							})
 						}, 2000)
+						}else {
+							uni.showToast({
+								title: "发布信息失败,联系管理或重新发布"
+							})
+						}
 					}
 				})
 				

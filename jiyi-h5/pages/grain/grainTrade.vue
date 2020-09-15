@@ -8,7 +8,7 @@
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容" :clearable="false" v-model="name" height="64" />
+					<u-input placeholder="输入内容(最多输入20字)" maxlength="20" :clearable="false" v-model="name" height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
@@ -21,13 +21,13 @@
 				</view>
 			</view>
 			<view class="g-flex p-y-10">
-				<span style="color: #FA3534;" >*</span>
+				<span style="color: #FA3534;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
 					设置封面
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :max-size="5 * 1024 * 1024"
-					 :file-list="fileList" max-count="5"></u-upload>
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess"
+					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -131,11 +131,11 @@
 				address: '',
 				isFace: "面议",
 				isFaceCode: "",
-				createUser:"",
-				createUserId:localStorage.getItem("userId"),
+				createUser: "",
+				createUserId: localStorage.getItem("userId"),
 				transactionCategoryName: '',
-				url:[],
-				u:[],
+				url: [],
+				u: [],
 				list: [{
 						value: '0',
 						name: '收购',
@@ -184,13 +184,13 @@
 			}, 1000)
 		},
 		methods: {
-			remove(index, lists){
-				this.url.splice(index,1);
+			remove(index, lists) {
+				this.url.splice(index, 1);
 			},
 			uploadSuccess(data, index, lists, name) {
 				this.url.push(data.url);
 				this.show = false;
-				this.u=this.url;
+				this.u = this.url;
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -199,13 +199,10 @@
 				// this.transactionTypeCode = this.list[index].value
 			},
 			// 选中任一radio时，由radio-group触发
-			radioGroupChange(e) {
-			},
-			radioChange1(index) {
-			},
+			radioGroupChange(e) {},
+			radioChange1(index) {},
 			// 选中任一radio时，由radio-group触发
-			radioGroupChange1(e) {
-			},
+			radioGroupChange1(e) {},
 			cancel() {
 				this.regionaStatus = false;
 			},
@@ -238,7 +235,7 @@
 					return false;
 				}
 
-				
+
 				if (this.url == '') {
 					uni.showToast({
 						title: "请上传图片"
@@ -252,13 +249,15 @@
 					})
 					return false;
 				}
-				if(this.isFace=="定价"){
-					if(!/^\d+(\.\d{1})?$/.test(this.price)){
+				if (this.isFace == "定价") {
+					if (!/^\d+(\.\d{1})?$/.test(this.price)) {
 						uni.showToast({
 							title: "价格小数点后保留一位小数"
 						})
 						return false;
 					}
+				} else {
+					this.price = "0"
 				}
 				if (this.contactsUser == '') {
 					uni.showToast({
@@ -274,17 +273,17 @@
 					return false;
 				}
 
-				if (this.contactsPhone == '') {
+				// if (this.contactsPhone == '') {
+				// 	uni.showToast({
+				// 		title: "请输入联系电话"
+				// 	})
+				// 	return false;
+				// }
+				if (!/^1[345789]\d{9}$/.test(this.contactsPhone)) {
 					uni.showToast({
-						title: "请输入联系电话"
+						title: "请输入正确的联系电话"
 					})
 					return false;
-				}
-				if (!/^1[345789]\d{9}$/.test(this.contactsPhone)) {
-				     uni.showToast({
-				      title: "请输入正确的联系电话"
-				     })
-				     return false;
 				}
 
 				if (this.address == '') {
@@ -316,9 +315,9 @@
 				let addItem = [];
 				let add = [];
 				for (let i = 0; i < this.u.length; i++) {
-				     add.push(this.u[i]);
-				 }
-				 addItem = add.join(",");
+					add.push(this.u[i]);
+				}
+				addItem = add.join(",");
 				// alert("粮食>>发布人id"+ApiPath.common.userId)
 				let param = {
 					name: this.name,
@@ -331,9 +330,9 @@
 					contactsPhone: this.contactsPhone,
 					address: this.address,
 					isFace: this.isFaceCode,
-					createUser:this.createUser,
-					createUserId:this.createUserId,
-					addItem:addItem
+					createUser: this.createUser,
+					createUserId: this.createUserId,
+					addItem: addItem
 				}
 
 				uni.request({
@@ -341,18 +340,23 @@
 					data: param, //请求数据
 					url: ApiPath.url.deploy, //请求接口路径
 					success: (res) => { //成功返回结果方法
-						uni.showToast({
-							title: "发布信息成功,等待审核通过"
-						})
-
-						//发布成功返回发布主页面
-						setTimeout(function() {
-							//跳转page目录用navigateTo，跳转tabbar用switchTab
-							uni.switchTab({
-								url: "../tabbar/release/index"
+						if (res.data.state == 0) {
+							uni.showToast({
+								title: "发布信息成功,等待审核通过"
 							})
-						}, 2000)
 
+							//发布成功返回发布主页面
+							setTimeout(function() {
+								//跳转page目录用navigateTo，跳转tabbar用switchTab
+								uni.switchTab({
+									url: "../tabbar/release/index"
+								})
+							}, 2000)
+						} else {
+							uni.showToast({
+								title: "发布信息失败,联系管理或重新发布"
+							})
+						}
 					}
 				})
 

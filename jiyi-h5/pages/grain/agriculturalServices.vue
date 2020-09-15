@@ -357,6 +357,8 @@
 						})
 						return false;
 					}
+				}else{
+					this.price ="0"
 				}
 				
 				if (this.contactsUser == '') {
