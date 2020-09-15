@@ -37,7 +37,7 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
-      <el-table-column prop="name" label="标题名称" align="center" width="250"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" width="280"></el-table-column>
      
        <el-table-column
         prop="transactionTypeCode"
@@ -68,24 +68,6 @@
        </template>
       </el-table-column>
        <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
-      
-       
-    
-         <!-- <el-table-column
-        prop="contactsUser"
-        label="联系人"
-        align="center"
-        min-width="45%"
-        max-width="50%"
-      ></el-table-column>
-      <el-table-column
-        prop="contactsPhone"
-        label="联系方式"
-        align="center"
-        min-width="60%"
-        max-width="65%"
-        :show-overflow-tooltip="true"
-      ></el-table-column> -->
       <el-table-column
         prop="address"
         label="区域"
@@ -94,8 +76,6 @@
         max-width="50%"
         :show-overflow-tooltip="true"
       ></el-table-column>
-     
-       
   <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>

@@ -44,7 +44,7 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
-      <el-table-column prop="name" label="标题名称" align="center" width="250"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" width="280"></el-table-column>
 
       <el-table-column
         prop="transactionTypeCode"
@@ -73,21 +73,6 @@
           <span v-if="scope.row.transactionCategoryCode==4">黄豆</span>
         </template>
       </el-table-column>
-    
-      <!-- <el-table-column
-        prop="contactsUser"
-        label="联系人"
-        align="center"
-        min-width="45%"
-        max-width="50%"
-      ></el-table-column>
-      <el-table-column
-        prop="contactsPhone"
-        label="联系电话"
-        align="center"
-        min-width="60%"
-        max-width="65%"
-      ></el-table-column> -->
       <el-table-column
         prop="address"
         label="干活地点"
