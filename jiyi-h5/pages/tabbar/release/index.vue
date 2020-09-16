@@ -48,6 +48,13 @@
 				url:""
 			}
 		},
+		watch:{
+		  $route(to,from){
+			if(to.path.indexOf("release")>-1){
+				this.isShow=false;
+			}
+		  }
+		},
 		onLoad() {
 			this.moduleShow();
 		},

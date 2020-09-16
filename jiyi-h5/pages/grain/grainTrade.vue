@@ -144,6 +144,9 @@
 				createUser: "",
 				createUserId: localStorage.getItem("userId"),
 				transactionCategoryName: '',
+				identityCode:'',//身份编码
+				
+				
 				url: [],
 				u: [],
 				list: [{
@@ -194,7 +197,13 @@
 			if (e.type == "1") {
 				this.title = "粮食出售";
 				this.transactionTypeCode = "1";
+				this.identityCode="1";
 			} else {
+				if(e.type=="2"){
+					this.identityCode="2";
+				}else{
+					this.identityCode="3";
+				}
 				this.title = "粮食收购";
 				this.transactionTypeCode = "0";
 			}
@@ -349,7 +358,8 @@
 					isFace: this.isFaceCode,
 					createUser: this.createUser,
 					createUserId: this.createUserId,
-					addItem: addItem
+					addItem: addItem,
+					identityCode:this.identityCode
 				}
 
 				uni.request({

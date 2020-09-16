@@ -1,18 +1,36 @@
 <template>
 	<view class="b-f">
 		<view class="screen g-flex g-a-c f-14">
-			<view class="sort g-f-1 g-flex g-a-c g-j-c" :style="item.name == '筛选' && 'border-left: 1rpx solid #e5e5e5;'" @click="selectLabel(item, index)"
-			 :class="(index == screenIndex || index == screened) && 'screen-select'" v-for="(item, index) in condition" :key="index">{{item.name}}</view>
+			<view class="sort g-f-1 g-flex g-a-c g-j-c" :style="item.name == '筛选' && 'border-left: 1rpx solid #e5e5e5;'" @click="selectLabel(item, index0)"
+			 :class="(index0 == screenIndex || index0 == screened) && 'screen-select'" v-for="(item, index0) in condition" :key="index0">{{item.name}}</view>
 		</view>
-		<uni-drawer ref="drawer" mode="right" :visible="true">
+		<uni-drawer ref="drawer" mode="right" :visible="true" :width="360">
 			<view style="padding:46rpx 20rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
 					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item.title}}</view>
-					<view class="categorys g-flex g-f-warp g-j-s-b">
-						<view class="f-14 t-c category" :class="(screenedIndex1 == index1 && screenedIndex == index) && ' screened'"
-						 @click="selected(index1,index)" v-for="(item, index) in item.category" :key="index">
-							{{item.name}}
-						</view>
+					<view>
+						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
+							<u-col :span="2" v-for="(item, index) in item.category" :key="index" :class="(screenedIndex1 == index1 && screenedIndex == index) && ' screened'"
+							 @click="selected(index1,index)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f8fff3;opacity:0.9;">
+								<view style="text-align: center;">
+									{{item.name}}
+								</view>
+							</u-col>
+						</u-row>
+					</view>
+				</view>
+
+				<view v-if="selectType=='1'" v-for="(item1, index2) in screenL" :key="index2+1" style="margin-top:20rpx;">
+					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item1.title}}</view>
+					<view>
+						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
+							<u-col :span="3" v-for="(item2, index3) in item1.category" :key="index3" :class="(screenedIndex2 == index2 && screenedIndex3 == index3) && ' screened'"
+							 @click="selected1(index2,index3)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f8fff3;opacity:0.9;">
+								<view style="text-align: center;">
+									{{item2.name}}
+								</view>
+							</u-col>
+						</u-row>
 					</view>
 				</view>
 			</view>
@@ -39,6 +57,12 @@
 					return []
 				}
 			},
+			screenL: {
+				type: Array,
+				default: () => {
+					return []
+				}
+			},
 			screenList: {
 				type: Array,
 				default: () => {
@@ -48,6 +72,10 @@
 			listIndex: {
 				type: Number,
 				default: 0
+			},
+			selectType: {
+				type: String,
+				default: ""
 			}
 		},
 		data() {
@@ -55,44 +83,57 @@
 				screenIndex: 0,
 				screened: null,
 				screenedIndex: null,
-				screenedIndex1: null
+				screenedIndex1: null,
+				screenedIndex2: null,
+				screenedIndex3: null
 			}
 		},
 		created() {
-			this.screenIndex = this.listIndex
+			this.screenIndex = this.listIndex;
 		},
 		methods: {
 			selectLabel(item, index) {
-
 				if (item.name == '筛选') {
-					this.$refs.drawer.open()
+					this.$refs.drawer.open();
 				} else {
-					this.screenIndex = index
-					this.$emit("select", item.code)
+					this.screenIndex = index;
+					this.$emit("select", item.code);
 				}
 			},
 			selected(index1, index) {
-				this.screenedIndex = index
-				this.screenedIndex1 = index1
+				this.screenedIndex = index;
+				this.screenedIndex1 = index1;
+			},
+			selected1(m, n) {
+				this.screenedIndex2 = m;
+				this.screenedIndex3 = n;
 			},
 			recharge() {
-				this.screenedIndex = null
-				this.screenedIndex1 = null
-				this.screened = null
-				this.$emit("screened", null)
-				this.$refs.drawer.close()
+				this.screenedIndex = null;
+				this.screenedIndex1 = null;
+				this.screenedIndex2 = null;
+				this.screenedIndex3 = null;
+				this.screened = null;
+				this.$emit("screened", null);
+				// this.$refs.drawer.close();
 			},
 			confirm(e) {
-				if (this.screenedIndex !== null) {
-					this.screened = this.condition.findIndex(item => item.name == '筛选')
-					this.$emit("screened", this.screenList[this.screenedIndex1].category[this.screenedIndex].code)
-						this.$refs.drawer.close()
-						return
+				let params = "";
+				if (this.selectType == "1") { //存在2组选择框
+					if (this.screenedIndex !== null) {
+						params = this.screenList[this.screenedIndex1].category[this.screenedIndex].code+"";
+					}
+					if (this.screenedIndex2 !== null) {
+						params = params + "," + this.screenL[this.screenedIndex2].category[this.screenedIndex3].name;
+					}
 				} else {
-					this.screenIndex = 0
-					this.$emit("screened", null)
+					if (this.screenedIndex !== null) {
+						params = this.screenList[this.screenedIndex1].category[this.screenedIndex].code+"";
+					}
 				}
-
+				
+				this.$emit("screened", params);
+				this.$refs.drawer.close();
 			}
 		}
 	}
@@ -110,6 +151,7 @@
 	}
 
 	.screened {
+		width: 30rpx;
 		background-color: #e51c2e !important;
 		color: #fff !important;
 	}
@@ -135,5 +177,9 @@
 		.btn {
 			width: 192rpx;
 		}
+	}
+
+	.st {
+		justify-content: space-between !important
 	}
 </style>

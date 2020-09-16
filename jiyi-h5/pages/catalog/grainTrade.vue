@@ -1,7 +1,8 @@
 <template>
 	<view class="service">
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
-		<Screen @screened="screened" @select="select" :screenList="screenList" :condition="condition"></Screen>
+		<Screen @screened="screened" :selectType="type" @select="select" :screenList="screenList" :screenL="screenList1"
+		 :condition="condition"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
 				<view class="app-modular g-flex" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
@@ -51,11 +52,14 @@
 					name: "全部",
 					code: null
 				}, {
-					name: "出售",
+					name: "农户",
 					code: 1
 				}, {
-					name: "收购",
-					code: 0
+					name: "粮贩",
+					code: 2
+				}, {
+					name: "粮库",
+					code: 3
 				}, {
 					name: "筛选",
 					code: null
@@ -76,8 +80,25 @@
 						name: "黄豆"
 					}]
 				}],
+				screenList1: [{
+					title: '省份',
+					category: [{
+						code: 0,
+						name: "吉林省"
+					}, {
+						code: 1,
+						name: "黑龙江省"
+					}, {
+						code: 2,
+						name: "辽宁省"
+					}, {
+						code: 3,
+						name: "内蒙古"
+					}]
+				}],
 				transactionTypeCode: null,
 				transactionCategoryCode: null,
+				identityCode: "",
 				mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
 				// 下拉刷新的配置(可选, 绝大部分情况无需配置)
 				downOption: {
@@ -94,7 +115,9 @@
 					}
 				},
 				// 列表数据
-				dataList: []
+				dataList: [],
+				type: "1",
+				address: ""
 			}
 		},
 		onLoad() {
@@ -107,7 +130,7 @@
 			// 跳转详情页面
 			jump(val) {
 				uni.navigateTo({
-					url: '../grain/space?id='+val+"&isShow=0"
+					url: '../grain/space?id=' + val + "&isShow=0"
 				})
 			},
 			search(e) {
@@ -115,11 +138,21 @@
 				this.downCallback()
 			},
 			select(code) {
-				this.transactionTypeCode = code
+				this.identityCode = code;
 				this.downCallback()
 			},
-			screened(code) {
-				this.transactionCategoryCode = code
+			screened(e) {
+				this.address = "";
+				this.transactionCategoryCode = "";
+				if (e !== null) {
+					if (e.indexOf(",") > -1) { //如果包含，,说明是选择多组条件
+						let val = e.split(",");
+						this.transactionCategoryCode = val[0];
+						this.address = val[1];
+					} else {
+						this.transactionCategoryCode = e;
+					}
+				}
 				this.downCallback()
 			},
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
@@ -140,6 +173,7 @@
 			request(page, url) {
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
+
 				// 第1种: 请求具体接口
 				uni.request({
 					url: url,
@@ -150,12 +184,13 @@
 						page: pageNum,
 						size: pageSize,
 						transactionTypeCode: this.transactionTypeCode,
-						transactionCategoryCode: this.transactionCategoryCode
-
+						transactionCategoryCode: this.transactionCategoryCode,
+						identityCode: this.identityCode,
+						address: this.address
 					},
 					success: (res) => {
 						if (res.data.state == 0) {
-							let curPageData = res.data.data.content.map(item =>{
+							let curPageData = res.data.data.content.map(item => {
 								if (item.url != '') {
 									item.url = item.url.split(',')[0]
 								}
