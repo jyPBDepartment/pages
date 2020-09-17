@@ -1,36 +1,21 @@
 <template>
   <div>
-    <!-- 面包屑导航 -->
-    <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">账户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>账户管理</el-breadcrumb-item>
-    </el-breadcrumb> -->
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="账户名称">
-        <el-input size="small" v-model="name" placeholder="输入账户名称"></el-input>
+        <el-input size="small" v-model="name" placeholder="输入账户名称" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item label="手机号码">
-        <el-input size="small" v-model="phone" placeholder="输入手机号码"></el-input>
+        <el-input size="small" v-model="phone" placeholder="输入手机号码" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item label="账户状态" prop="auditStatus">
-          <el-select v-model="auditStatus" style="width:80%" size="small">
-            <el-option
-              v-for="item in auditStatusOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
+          <el-select v-model="auditStatus" style="width:35%" size="small">
+            <el-option v-for="item in auditStatusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" >查询</el-button>
-        <el-button
-          size="small"
-          type="info"
-          icon="el-icon-close"
-          @click="resetForm('search')"
-        >重置</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
+        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
       <br/>
       <el-row>
@@ -39,23 +24,15 @@
       <br>
     </el-form>
     <!--列表-->
-    <el-table
-      size="mini"
-      :data="listData"
-      highlight-current-row
-      v-loading="loading"
-      border
-      element-loading-text="拼命加载中"
-      style="width: 100%;"
-    >
-      <el-table-column type="index" label="序号" min-width="20" align="center"></el-table-column>
-      <el-table-column prop="name" min-width="105" label="账户名称" align="center"></el-table-column>
-      <el-table-column prop="phone" min-width="95" label="手机号码" align="center"></el-table-column>
-      <el-table-column prop="createDate" min-width="135" label="创建时间" align="center" sortable></el-table-column>
-      <el-table-column prop="updateDate" min-width="135" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column prop="createUser" min-width="90" label="创建人" align="center"></el-table-column>
-      <el-table-column prop="updateUser" min-width="90" label="修改人" align="center"></el-table-column>
-      <el-table-column align="center" min-width="70" label="状态" prop="auditStatus">
+    <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
+      <el-table-column type="index" label="序号" min-width="20" max-width="60px" align="center"></el-table-column>
+      <el-table-column prop="name" min-width="80px" max-width="220px" label="账户名称" align="center"></el-table-column>
+      <el-table-column prop="phone" min-width="95px" max-width="220px" label="手机号码" align="center"></el-table-column>
+      <el-table-column prop="createDate" min-width="135px" max-width="220px" label="创建时间" align="center" sortable></el-table-column>
+      <el-table-column prop="updateDate" min-width="135px" max-width="220px" label="修改时间" align="center" sortable></el-table-column>
+      <el-table-column prop="createUser" min-width="80px" max-width="220px" label="创建人" align="center"></el-table-column>
+      <el-table-column prop="updateUser" min-width="80px" max-width="220px" label="修改人" align="center"></el-table-column>
+      <el-table-column align="center" min-width="63px" max-width="220px" label="状态" prop="auditStatus">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -67,34 +44,16 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="权限设置" min-width="110" >
+      <el-table-column align="center" label="权限设置" min-width="105px" max-width="220px" >
         <template slot-scope="scope">
-           <el-button
-           @click="openUpdatePower(scope)"
-            type="primary"
-            size="small"
-          >权限设置</el-button>
+           <el-button @click="openUpdatePower(scope)" type="primary" size="small">权限设置</el-button>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="291px">
+      <el-table-column align="center" label="操作" min-width="220px" max-width="300px">
         <template slot-scope="scope">
-           <el-button
-           @click="openUpdateAccountInfo(scope)"
-            type="primary"
-            size="small"
-            icon="el-icon-edit"
-          >编辑</el-button>
-          <el-button
-           @click="updatePass(scope)"
-            type="primary"
-            size="small"
-          >修改密码</el-button>
-           <el-button
-           @click="deleteUser(scope)"
-            type="danger"
-            size="small"
-            icon="el-icon-delete"
-          >删除</el-button>
+           <el-button @click="openUpdateAccountInfo(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
+           <el-button @click="deleteUser(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
+           <el-button @click="updatePass(scope)" type="primary" size="small" style="margin-top:8px;">修改密码</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -222,12 +181,14 @@ export default {
       this.addAccountInfo = false;
     },
     closeAccountInfoDialog() {
+      this.search(this.formInline);
       this.addAccountInfo = false;
     },
     addAccountInfos() {
       this.addAccountInfo = true;
     },
     closeUpdateAccountInfoDialog() {
+      this.search(this.formInline);
       this.updateAccountInfoFlag = false;
     },
     upAccountInfo() {
@@ -320,5 +281,9 @@ export default {
 }
 .userAccountInfo {
   width: 100%;
+}
+.height {
+  margin-top: 5px;
+  margin-left: -125px;
 }
 </style>

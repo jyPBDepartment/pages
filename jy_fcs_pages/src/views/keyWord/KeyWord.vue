@@ -3,10 +3,10 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="关键词名称">
-        <el-input size="small" v-model="name" placeholder="输入关键词名称"></el-input>
+        <el-input size="small" v-model="name" placeholder="输入关键词名称" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
         <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
       <br />
@@ -25,15 +25,15 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" min-width="60" align="center"></el-table-column>
-      <el-table-column prop="name" label="名称" align="center" min-width="100px"></el-table-column>
-      <el-table-column prop="code" label="编码" align="center"></el-table-column>
-      <el-table-column prop="parentName" label="分类名称" align="center" min-width="100px"></el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="150px"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="150px"></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center" min-width="100px"></el-table-column>
-      <el-table-column prop="updateUser" label="修改人" align="center" min-width="100px"></el-table-column>
-      <el-table-column align="center" label="状态" prop="auditStatus" min-width="100px">
+      <el-table-column type="index" label="序号" min-width="50" max-width="80px" align="center"></el-table-column>
+      <el-table-column prop="name" label="名称" align="center" min-width="100px" max-width="220px"></el-table-column>
+      <el-table-column prop="code" label="编码" align="center" min-width="100px" max-width="220px"></el-table-column>
+      <el-table-column prop="parentName" label="分类名称" align="center" min-width="110px" max-width="220px"></el-table-column>
+      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center" min-width="80px" max-width="220px"></el-table-column>
+      <el-table-column prop="updateUser" label="修改人" align="center" min-width="80px" max-width="220px"></el-table-column>
+      <el-table-column align="center" label="状态" prop="auditStatus" min-width="80px" max-width="220px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -45,7 +45,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="200px">
+      <el-table-column align="center" label="操作" min-width="190px" max-width="220px">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateKeyWord(scope)"
@@ -155,12 +155,14 @@ export default {
       this.addKeyWord = false;
     },
     closeKeyWordDialog() {
+      this.search(this.formInline);
       this.addKeyWord = false;
     },
     addKeyWords() {
       this.addKeyWord = true;
     },
     closeUpdateKeyWordDialog() {
+      this.search(this.formInline);
       this.updateKeyWordFlag = false;
     },
     upKeyWord() {
@@ -234,5 +236,9 @@ export default {
 }
 .userKeyWord {
   width: 100%;
+}
+.height {
+  margin-top: 5px;
+  margin-left: 12px;
 }
 </style>

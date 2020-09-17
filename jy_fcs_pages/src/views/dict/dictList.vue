@@ -40,7 +40,6 @@
         @click="resetRuleTag(search)"
         size="small"
         icon="el-icon-close"
-        class="height"
       >重置</el-button>
       <el-row>
         <el-button type="success" @click="openDictTag" size="small" icon="el-icon-plus">添加</el-button>
@@ -58,7 +57,7 @@
       size="mini"
     >
       <el-table-column prop="dictType" label="字典编码" align="center" min-width="80px" max-width="110px"></el-table-column>
-      <el-table-column prop="dictName" label="字典名称" align="center" min-width="80px" max-width="110px"></el-table-column>
+      <el-table-column prop="dictName" label="字典名称" align="center" min-width="90px" max-width="110px"></el-table-column>
       <!--switch开关（表单）-->
       <el-table-column align="center" prop="status" label="状态" min-width="50px" max-width="80px">
         <template slot-scope="scope">
@@ -72,8 +71,8 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="180"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="180"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="140"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="140"></el-table-column>
       <el-table-column
         prop="createBy"
         label="创建人"
@@ -352,6 +351,7 @@ export default {
         .catch(function (error) {});
     },
     closeUpdateClassificationDialog: function () {
+      this.search(this.formInline);
       this.updateClassificationFlag = false;
     },
     updateClassification: function () {},
@@ -455,13 +455,14 @@ export default {
     },
     // 重置
     resetRuleTag(search) {
-      this.dictName = "";
+      this.name = "";
       this.status = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
     closeRuleTagDialog() {
+      this.search(this.formInline);
       this.addClassificationFlag = false;
     },
 
@@ -509,7 +510,8 @@ export default {
   max-width: 150px;
 }
 .height {
-  margin-top: 6px;
+  margin-top: 5px;
+  margin-left: -30px;
 }
  .el-table >.el-table__fixed-right {
     height: 100% !important;

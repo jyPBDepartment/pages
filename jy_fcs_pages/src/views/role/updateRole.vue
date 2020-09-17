@@ -11,9 +11,9 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="roleForm" :rules="rules" ref="roleForm" :label-position="labelPosition">
+      <el-form :model="roleForm" :rules="rules" ref="roleForm" :label-position="labelPosition" style="margin-left:-85px">
         <el-form-item label="角色名称" prop="name">
-          <el-input type="text" v-model="roleForm.name" style="width:75%" size="small" maxlength="18"  placeholder="请输入角色名称（不超过18个字符）"></el-input>
+          <el-input type="text" v-model="roleForm.name" style="width:80%" size="small" maxlength="18"  placeholder="请输入角色名称（不超过18个字符）"></el-input>
 
         </el-form-item>
         <el-form-item label="角色备注" prop="name">
@@ -22,7 +22,7 @@
             v-model="roleForm.remark"
             size="small"
             placeholder="请输入角色备注"
-            style="width:75%"
+            style="width:80%"
             maxlength="255"
           ></el-input>
         </el-form-item>
@@ -30,8 +30,8 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button :disabled="saveFlag" type="primary" icon="el-icon-check" @click="saveRoles">保存</el-button>
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="saveRoles" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
+      <el-button icon="el-icon-close" @click="close" type="info">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -57,7 +57,7 @@ export default {
   data() {
     
     return {
-      saveFlag:false,
+      fullscreenLoading: false,
       labelPosition: "right",
       localShow: this.show,
       roleForm: {
@@ -99,7 +99,6 @@ export default {
           });
           return false;
         }
-      this.saveFlag = true;
       let params = {
         roleEntity: aes.encrypt(JSON.stringify(this.roleForm) )
       };
@@ -107,8 +106,11 @@ export default {
       api.testAxiosGet(ApiPath.url.saveRole, params).then(res => {
         this.$message.success(res.message);
         this.close();
-        this.reload();
-      }).catch(function(error) {this.saveFlag = false;});
+      }).catch(function(error) {});
+        this.fullscreenLoading = true;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+        }, 500);
     },
     close: function() {
       this.$emit("close");

@@ -5,54 +5,29 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
+    width="35%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form
-        :model="keyWordForm"
-        :rules="rules"
-        ref="keyWordForm"
-        :label-position="labelPosition"
-        label-width="100px"
-      >
+      <el-form :model="keyWordForm" :rules="rules" ref="keyWordForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
         <el-form-item label="关键字名称" prop="name">
-          <el-input
-            type="text"
-            v-model="keyWordForm.name"
-            size="small"
-            placeholder="请输入关键字名称(不能超过16个字符)"
-            style="width:80%"
-            maxlength="16"
-          ></el-input>
+          <el-input type="text" v-model="keyWordForm.name" size="small" placeholder="请输入关键字名称(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="关键字编码" prop="code">
-          <el-input
-            type="text"
-            v-model="keyWordForm.code"
-            size="small"
-            placeholder="请输入关键字编码(不能超过16个字符)"
-            style="width:80%"
-            maxlength="16"
-          ></el-input>
+          <el-input type="text" v-model="keyWordForm.code" size="small" placeholder="请输入关键字编码(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="分类" prop="parentCode">
-          <el-select v-model="keyWordForm.parentCode" style="width:80%" size="small">
-            <el-option
-              v-for="item in parentCodeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
+          <el-select v-model="keyWordForm.parentCode" style="width:90%" size="small">
+            <el-option v-for="item in parentCodeOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button :disabled="isDisable" type="primary" icon="el-icon-check" @click="updateKeyWord">保存</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="updateKeyWord" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -77,7 +52,7 @@ export default {
   },
   data() {
     return {
-      isDisable: false,
+      fullscreenLoading: false,
       labelPosition: "right",
       keyWordForm: {
         name: "",
@@ -151,24 +126,23 @@ export default {
         this.$alert("分类编码不能为空", "提示", { confirmButtonText: "确定" });
         return false;
       }
-      this.isDisable = true;
       let params = {
         keyWordEntity: this.keyWordForm,
       };
       //修改用户信息
-      api
-        .testAxiosGet(ApiPath.url.updateKeyWord, params)
+      api.testAxiosGet(ApiPath.url.updateKeyWord, params)
         .then((res) => {
           let code = res.status;
           if (code == "0") {
             this.$message.success(res.message);
             this.close();
-            this.reload();
           }
         })
-        .catch(function (err) {
-          this.isDisable = false;
-        });
+        .catch(function (err) {});
+          this.fullscreenLoading = true;
+          setTimeout(() => {
+            this.fullscreenLoading = false;
+          }, 500);
       this.keyWordForm.updateUser = localStorage.getItem("userInfo");
     },
     close: function () {

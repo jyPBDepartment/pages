@@ -11,103 +11,67 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="postInfoForm" :label-position="labelPosition" label-width="100px">
-
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="标题名称：">
-              <span>{{postInfoForm.name}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="审核状态:">
+      <table border="1" :data="postInfoForm" align="center" class="table">
+        <tbody>
+          <tr border="1">
+            <td style="width:100px;" align="center">标题名称</td>
+            <td align="left" style="width:340px;">{{postInfoForm.name}}</td>
+            <td align="center" style="width:100px;">审核状态</td>
+            <td align="left" style="width:340px;">
               <span v-if="postInfoForm.auditStatus==0">未审核</span>
               <span v-if="postInfoForm.auditStatus==1">审核通过</span>
               <span v-if="postInfoForm.auditStatus==2">审核驳回</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            </td>
+        </tr>
 
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="分类:">
-              <span>{{postInfoForm.parentCode}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="作者:">
-              <span>{{postInfoForm.author}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <tr>
+          <td align="center">分类</td>
+          <td align="left">{{postInfoForm.parentCode}}</td>
+          <td align="center">作者</td>
+          <td align="left">{{postInfoForm.author}}</td>
+        </tr>
 
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="发布人:">
-              <span>{{postInfoForm.createUser}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="审核人:">
-              <span>{{postInfoForm.auditUser}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <tr>
+          <td align="center">发布人</td>
+          <td align="left">{{postInfoForm.createUser}}</td>
+          <td align="center">审核人</td>
+          <td align="left">{{postInfoForm.auditUser}}</td>
+        </tr>
 
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="发布时间:">
-              <span>{{postInfoForm.createDate}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="修改时间:">
-              <span>{{postInfoForm.updateDate}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <tr>
+          <td align="center">发布时间</td>
+          <td align="left">{{postInfoForm.createDate}}</td>
+          <td align="center">修改时间</td>
+          <td align="left">{{postInfoForm.updateDate}}</td>
+        </tr>
 
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="审核意见:">
-              <span>{{postInfoForm.auditOptinion}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="圈子内容:">
-              <span>{{postInfoForm.code}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="可见程度:">
-              <span v-if="postInfoForm.visibility==1">全部可见</span>
+        <tr>
+          <td align="center">审核意见</td>
+          <td align="left">{{postInfoForm.auditOptinion}}</td>
+          <td align="center">可见程度</td>
+          <td align="left">
+            <span v-if="postInfoForm.visibility==1">全部可见</span>
               <span v-if="postInfoForm.visibility==0">自己可见</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="审核原因:">
-              <span v-if="postInfoForm.auditStatus==0">
-                <el-input
-                  type="textarea"
-                  :rows="3"
-                  v-model="postInfoForm.reason"
-                  size="small"
-                  style="width:100%"
-                ></el-input>
-              </span>
-              <span
-                v-if="postInfoForm.auditStatus==1||postInfoForm.auditStatus==2"
-              >{{postInfoForm.reason}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-    </slot>
-    <!-- 按钮区 -->
-    <span slot="footer">
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center">帖子内容</td>
+          <td colspan="3" align="left">{{postInfoForm.code}}</td>
+        </tr>
+        
+        <tr>
+           <td align="center">审核原因</td>
+          <td colspan="3" align="left">
+            <span v-if="postInfoForm.auditStatus==0">
+              <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:100%"></el-input>
+            </span>
+            <span v-if="postInfoForm.auditStatus==1||postInfoForm.auditStatus==2">{{postInfoForm.reason}}</span>
+          </td>
+        </tr>
+       </tbody>
+      </table>
+      <span slot="footer">
       <span v-if="postInfoForm.auditStatus==0">
         <el-button type="primary" icon="el-icon-check" @click="passPostInfo()" class="insert">通过审核</el-button>
       </span>
@@ -116,6 +80,7 @@
       </span>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
+   </slot>
   </el-dialog>
 </template>
 <script>
@@ -243,5 +208,11 @@ export default {
   border-color: #f56c6c;
   color: white;
   font-size: 12px;
+}
+.table{
+  height: 400px;
+  width: 900px;
+  
+
 }
 </style>

@@ -4,13 +4,13 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="名称">
-        <el-input type="text" size="small" v-model="name" placeholder="输入名称"></el-input>
+        <el-input type="text" size="small" v-model="name" placeholder="输入名称" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item label="发布人">
-        <el-input type="text" size="small" v-model="createUser" placeholder="输入发布人"></el-input>
+        <el-input type="text" size="small" v-model="createUser" placeholder="输入发布人" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
         <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -24,13 +24,14 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" min-width="30" align="center"></el-table-column>
+      <el-table-column type="index" label="序号" min-width="30" max-width="80px" align="center"></el-table-column>
       <el-table-column
         prop="name"
         label="标题名称"
         align="center"
         :show-overflow-tooltip="true"
         min-width="110px"
+        max-width="220px"
       ></el-table-column>
       <el-table-column
         prop="code"
@@ -38,19 +39,20 @@
         align="center"
         :show-overflow-tooltip="true"
         min-width="80px"
+        max-width="220px"
       ></el-table-column>
-      <el-table-column prop="author" label="作者" align="center" min-width="90px"></el-table-column>
-      <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="90px">
+      <el-table-column prop="author" label="作者" align="center" min-width="90px" max-width="220px"></el-table-column>
+      <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="90px" max-width="220px">
         <template slot-scope="scope">
           <span v-if="scope.row.auditStatus==0">未审核</span>
           <span v-if="scope.row.auditStatus==1">审核通过</span>
           <span v-if="scope.row.auditStatus==2">审核驳回</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="140px"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px"></el-table-column>
-      <el-table-column prop="auditUser" label="审核人" align="center" min-width="100px"></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="65px">
+      <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column prop="auditUser" label="审核人" align="center" min-width="100px" max-width="220px"></el-table-column>
+      <el-table-column align="center" label="状态" prop="status" min-width="65px" max-width="220px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -62,7 +64,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="120px">
+      <el-table-column align="center" label="操作" min-width="110px" max-width="220px">
         <template slot-scope="scope">
           <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small">信息审核</el-button>
         </template>
@@ -225,6 +227,10 @@ export default {
 }
 .userPostInfo {
   width: 100%;
+}
+.height {
+  margin-top: 5px;
+  margin-left: 12px;
 }
 </style>
 

@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="35%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -17,31 +17,35 @@
         :model="editForm"
         :label-position="labelPosition"
         label-width="100px"
+        style="margin-left:-100px"
       >
         <el-form-item label="字典名称" prop="dictName">
           <el-input
+          size="small"
             type="text"
             v-model="editForm.dictName"
             placeholder="请输入字典名称（不超过15个字符）"
-            style="width:70%;"
+            style="width:90%;"
             :maxLength="15"
           ></el-input>
         </el-form-item>
         <el-form-item label="字典编码" prop="dictType">
           <el-input
+          size="small"
             type="text"
             v-model="editForm.dictType"
-            placeholder="请输入分类编码（不超过15个字符）"
-            style="width:70%;"
+            placeholder="请输入字典编码（不超过15个字符）"
+            style="width:90%;"
             :maxLength="15"
           ></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input
+          size="small"
             type="text"
             v-model="editForm.remark"
             placeholder="请输入字典简述（不超过20个字符）"
-            style="width:70%;"
+            style="width:90%;"
             :maxLength="20"
           ></el-input>
         </el-form-item>
@@ -54,7 +58,7 @@
         icon="el-icon-check"
         @click="saveDictType()"
         size="medium"
-        :disabled="isDisable"
+        v-loading.fullscreen.lock="fullscreenLoading"
       >保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
@@ -81,7 +85,7 @@ export default {
   },
   data() {
     return {
-      isDisable: false,
+      fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
         dictName: "",
@@ -118,7 +122,6 @@ export default {
           });
           return false;
         }
-        this.isDisable = true;
         let params = {
           typeEntity: this.editForm,
         };
@@ -126,12 +129,17 @@ export default {
           .testAxiosGet(ApiPath.url.saveDictType, params)
           .then((res) => {
             this.$message.success(res.message);
-            this.reload();
             this.close();
           })
           .catch(function (err) {
-            this.isDisable = false;
           });
+          this.fullscreenLoading = true;
+          setTimeout(() => {
+            this.editForm.dictName="";
+            this.editForm.dictType="";
+            this.editForm.remark="";
+            this.fullscreenLoading = false;
+          }, 500);
     },
     close: function () {
       this.$emit("close");

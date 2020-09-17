@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
+    width="40%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -17,14 +17,16 @@
         ref="editForm"
         :label-position="labelPosition"
         label-width="100px"
+        style="margin-left:-85px"
       >
         <el-form-item label="发布模块" prop="deployModuleName">
           <el-input
             type="text"
             v-model="editForm.deployModuleName"
             size="small"
-            placeholder="请输入发布模块名称"
-            style="width:80%"
+            placeholder="请输入发布模块名称(不超过16个字)"
+            style="width:90%"
+            maxlength="16"
           ></el-input>
         </el-form-item>
         <el-form-item label="连接路径" prop="linkUrl">
@@ -33,13 +35,13 @@
             v-model="editForm.linkUrl"
             size="small"
             placeholder="请输入连接路径"
-            style="width:80%"
+            style="width:90%"
           ></el-input>
         </el-form-item>
         <el-form-item label="模块图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-            style="width:80%;margin-top:-38px;"
+            style="width:90%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -60,7 +62,7 @@
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button :disabled="isDisable" type="primary" icon="el-icon-check" @click="saveDeployModule('editForm')" >保存</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="saveDeployModule('editForm')" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -84,7 +86,7 @@ export default {
   },
   data() {
     return {
-      isDisable: false,
+      fullscreenLoading: false,
       labelPosition: "right",
       upload: ApiPath.url.uploadImg,
       fileList: [],
@@ -98,12 +100,8 @@ export default {
       },
       localShow: this.show,
       rules: {
-        deployModuleName: [
-          { required: true, message: "请输入发布模块名称", trigger: "blur" },
-        ],
-        linkUrl: [
-          { required: true, message: "请输入连接路径", trigger: "blur" },
-        ],
+        deployModuleName: [{ required: true, message: "请输入发布模块名称", trigger: "blur" },],
+        linkUrl: [{ required: true, message: "请输入连接路径", trigger: "blur" },],
       },
     };
   },
@@ -176,7 +174,7 @@ export default {
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.picUrl = this.imgUrl;
-            this.isDisable = true;
+            // this.isDisable = true;
             let params = {
               deployModuleEntity: this.editForm,
             };
@@ -185,16 +183,21 @@ export default {
               .then((res) => {
                 let code = res.state;
                 if (code == "0") {
-                  this.reload();
+                  // this.reload();
+                  this.close();
                   this.$message.success(res.message);
-                  this.loading = false;
+                  // this.loading = false;
                 } else {
                   this.$message.error(res.message);
                 }
-              })
-              .catch(function (err) {
-                this.isDisable = false;
-              });
+              }).catch(function (err) {});
+              this.fullscreenLoading = true;
+              setTimeout(() => {
+                this.editForm.deployModuleName="";
+                this.editForm.linkUrl="";
+                this.fileList=[];
+                this.fullscreenLoading = false;
+              }, 500);
           } else {
             this.$message.error("请上传图片");
             return;

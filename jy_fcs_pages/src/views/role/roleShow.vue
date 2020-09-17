@@ -10,7 +10,7 @@
         <el-input size="small" v-model="name" placeholder="输入角色名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search" >查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search" class="height" >查询</el-button>
         <el-button
           size="small"
           type="info"
@@ -34,12 +34,12 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column  prop="name" label="角色名称" align="center"></el-table-column>
-      <el-table-column show-overflow-tooltip  prop="remark" label="角色备注" align="center"></el-table-column>
-      <el-table-column sortable prop="addDate" label="创建时间" align="center"></el-table-column>
-      <el-table-column sortable prop="updDate" label="修改时间" align="center"></el-table-column>
-      <el-table-column align="center" label="状态" prop="state">
+      <el-table-column type="index" label="序号" min-width="50px" max-width="100px" align="center"></el-table-column>
+      <el-table-column  prop="name" label="角色名称" align="center" min-width="90px" max-width="220px"></el-table-column>
+      <el-table-column show-overflow-tooltip  prop="remark" label="角色备注" align="center" min-width="90px" max-width="220px"></el-table-column>
+      <el-table-column sortable prop="addDate" label="创建时间" align="center" min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column sortable prop="updDate" label="修改时间" align="center" min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column align="center" label="状态" prop="state" min-width="80px" max-width="220px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -51,7 +51,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作"  width="500px">
+      <el-table-column align="center" label="操作"  min-width="400px" max-width="600px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateRole(scope)"
@@ -199,6 +199,7 @@ export default {
       this.addAuth = false;
     },
     closeRoleDialog() {
+      this.search(this.formInline);
       this.addRole = false;
     },
     openAddAuth(scope){
@@ -209,6 +210,7 @@ export default {
       this.addRole = true;
     },
     closeUpdateRoleDialog() {
+      this.search(this.formInline);
       this.updateRoleFlag = false;
     },
     upRole() {
@@ -310,5 +312,9 @@ export default {
   color: #fff;
   font-size: 12px;
   margin-top: 4px;
+}
+.height{
+  margin-top: 5px;
+  margin-left: 12px;
 }
 </style>

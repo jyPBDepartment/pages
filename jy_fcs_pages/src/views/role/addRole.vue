@@ -17,6 +17,7 @@
         ref="editForm"
         :label-position="labelPosition"
         label-width="100px"
+        style="margin-left:-85px"
       >
         <el-form-item label="角色名称" prop="name">
           <el-input
@@ -24,7 +25,7 @@
             v-model="editForm.name"
             size="small"
             placeholder="请输入角色名称（不超过18个字符）"
-            style="width:80%"
+            style="width:90%"
             maxlength="18"
           ></el-input>
         </el-form-item>
@@ -34,18 +35,17 @@
             v-model="editForm.remark"
             size="small"
             placeholder="请输入角色备注"
-            style="width:80%"
+            style="width:90%"
             maxlength="255"
           ></el-input>
         </el-form-item>
       </el-form>
-        
     </slot>
 
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button :disabled="saveFlag" type="primary" icon="el-icon-check" @click="saveRoles()">保存</el-button>
-      <el-button icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="saveRoles()" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
+      <el-button icon="el-icon-close" @click="close" type="info">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -69,7 +69,7 @@ export default {
   },
   data() {
     return {
-      saveFlag:false,
+      fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
         name: "",
@@ -103,7 +103,6 @@ export default {
     },
     //新增保存
     saveRoles: function() {
-      // if(this.editForm.name!=""){
          if (this.editForm.name == "") {
           this.$alert("角色名称不能为空", "提示", {
             confirmButtonText: "确定",
@@ -116,20 +115,19 @@ export default {
           });
           return false;
         }
-        this.saveFlag = true;
-
         let params = {
           roleEntity: aes.encrypt(JSON.stringify(this.editForm) )
         };
         api.testAxiosGet(ApiPath.url.saveRole, params).then(res => {
           this.$message.success(res.message);
           this.close();
-          this.reload();
         }).catch(function(error) {this.saveFlag = false;});
-    //  }else{
-    //    this.$alert('角色名称、权限名称不能为空！', '提示', {confirmButtonText: '确定',});
-    //  }
-
+           this.fullscreenLoading = true;
+            setTimeout(() => {
+              this.editForm.name="";
+              this.editForm.remark="";
+              this.fullscreenLoading = false;
+            }, 500);
     },
   }
 };

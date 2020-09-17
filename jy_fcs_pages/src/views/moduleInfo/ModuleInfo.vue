@@ -3,31 +3,20 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="模块名称">
-        <el-input size="small" v-model="name" placeholder="输入模块名称"></el-input>
+        <el-input size="small" v-model="name" placeholder="输入模块名称" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="status" style="width:80%" size="small">
-          <el-option
-            v-for="item in statusOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
+        <el-select v-model="status" style="width:37%" size="small">
+          <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
         <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
       <br />
       <el-row>
-        <el-button
-          size="small"
-          type="success"
-          icon="el-icon-plus"
-          @click="addModuleInfos()"
-          class="insert"
-        >添加</el-button>
+        <el-button size="small" type="success" icon="el-icon-plus" @click="addModuleInfos()" class="insert">添加</el-button>
       </el-row>
       <br />
     </el-form>
@@ -42,33 +31,27 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" min-width="60" align="center"></el-table-column>
-      <el-table-column
-        prop="name"
-        label="模块名称"
-        align="center"
-        :show-overflow-tooltip="true"
-        min-width="85px"
-      ></el-table-column>
-      <el-table-column prop="url" label="模块图片" align="center" min-width="75px">
+      <el-table-column prop="name" label="模块名称" align="center" :show-overflow-tooltip="true" min-width="85px" max-width="220px"></el-table-column>
+      <el-table-column prop="url" label="模块图片" align="center" min-width="105px" max-width="220px" >
         <template slot-scope="scope" style="height:120px">
-          <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
+          <el-image :src="scope.row.url" style="width:80px;height:80px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="100px"></el-table-column>
-      <el-table-column prop="routeUrl" :show-overflow-tooltip="true" label="跳转路由" align="center" sortable min-width="100px"></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center" min-width="90px"></el-table-column>
-      <el-table-column  label="跳转类型" align="center">
+      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column prop="routeUrl" :show-overflow-tooltip="true" label="跳转路由" align="center" min-width="80px" max-width="220px"></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center" min-width="80px" max-width="220px"></el-table-column>
+      <el-table-column  label="跳转类型" align="center" min-width="70px" max-width="220px">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.tabMode == 0" type="success">标签</el-tag>
           <el-tag v-if="scope.row.tabMode == 1" type="info">导航</el-tag>
         </template>
       </el-table-column>
-      <el-table-column  align="center" label="排序" width="220px" prop="sort">
+      <el-table-column  align="center" label="排序" min-width="220px" prop="sort" max-width="220px">
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="80px">
+      <el-table-column align="center" label="状态" prop="status" min-width="70px" max-width="220px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -80,20 +63,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="200px">
+      <el-table-column align="center" label="操作" min-width="190px" max-width="220px">
         <template slot-scope="scope">
-          <el-button
-            @click="openUpdateModuleInfo(scope)"
-            type="primary"
-            size="small"
-            icon="el-icon-edit"
-          >编辑</el-button>
-          <el-button
-            @click="deleteModuleInfo(scope)"
-            type="danger"
-            size="small"
-            icon="el-icon-delete"
-          >删除</el-button>
+          <el-button @click="openUpdateModuleInfo(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
+          <el-button @click="deleteModuleInfo(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -201,12 +174,14 @@ export default {
       this.addModuleInfo = false;
     },
     closeModuleInfoDialog() {
+      this.search(this.formInline);
       this.addModuleInfo = false;
     },
     addModuleInfos() {
       this.addModuleInfo = true;
     },
     closeUpdateModuleInfoDialog() {
+      this.search(this.formInline);
       this.updateModuleInfoFlag = false;
     },
     upModuleInfo() {
@@ -259,7 +234,7 @@ export default {
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
-    // 删除角色
+    // 删除
     deleteModuleInfo(scope) {
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
@@ -295,6 +270,10 @@ export default {
 }
 .userModuleInfo {
   width: 100%;
+}
+.height {
+  margin-top: 5px;
+  margin-left: -125px;
 }
 </style>
 <style>

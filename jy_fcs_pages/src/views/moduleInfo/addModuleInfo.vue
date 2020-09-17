@@ -5,37 +5,18 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
+    width="35%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form
-        :model="editForm"
-        :rules="rules"
-        ref="editForm"
-        :label-position="labelPosition"
-        label-width="100px"
-      >
+      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
         <el-form-item label="模块名称" prop="name">
-          <el-input
-            type="text"
-            v-model="editForm.name"
-            size="small"
-            placeholder="请输入模块名称(不能超过16个字符)"
-            style="width:80%"
-            maxlength="16"
-          ></el-input>
+          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入模块名称(不能超过16个字符)" style="width:92%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="跳转路由" prop="routeUrl">
-          <el-input
-            type="text"
-            v-model="editForm.routeUrl"
-            size="small"
-            placeholder="请输入跳转路由"
-            style="width:80%"
-          ></el-input>
+          <el-input type="text" v-model="editForm.routeUrl" size="small" placeholder="请输入跳转路由" style="width:92%"></el-input>
         </el-form-item>
         <el-form-item label="跳转类型" prop="tabMode">
          <template>
@@ -48,7 +29,7 @@
         <el-form-item label="模块图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-            style="width:80%;margin-top:-38px;"
+            style="width:92%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -66,15 +47,9 @@
         </el-form-item>
       </el-form>
     </slot>
-
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button
-        :disabled="isDisable"
-        type="primary"
-        icon="el-icon-check"
-        @click="saveModuleInfo('editForm')"
-      >保存</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="saveModuleInfo('editForm')" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -98,7 +73,7 @@ export default {
   },
   data() {
     return {
-      isDisable: false,
+      fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
         name: "",
@@ -117,7 +92,6 @@ export default {
       fileList: [],
       upload: ApiPath.url.uploadImg,
       localShow: this.show,
-
       rules: {
         name: [{ required: true, message: "请输入模块名称", trigger: "blur" }],
         routeUrl: [{ required: true, message: "请输入跳转路由", trigger: "blur" }],
@@ -189,25 +163,28 @@ export default {
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;
-            this.isDisable = true;
             let params = {
               moduleInfoEntity: this.editForm,
             };
-            api
-              .testAxiosGet(ApiPath.url.addModule, params)
+            api.testAxiosGet(ApiPath.url.addModule, params)
               .then((res) => {
                 let code = res.status;
                 if (code == "0") {
-                  this.reload();
+                  this.close();
                   this.$message.success(res.message);
-                  this.loading = false;
                 } else {
                   this.$message.error(res.message);
                 }
-              })
-              .catch(function (err) {
-                this.isDisable = false;
-              });
+              }).catch(function (err) {});
+                this.fullscreenLoading = true;
+                setTimeout(() => {
+                  this.fullscreenLoading = false;
+                  this.editForm.name="";
+                  this.editForm.url="";
+                  this.editForm.routeUrl="";
+                  this.editForm.tabMode="0";
+                  this.fileList=[];
+                }, 500);
           } else {
             this.$message.error("请上传图片");
             return;

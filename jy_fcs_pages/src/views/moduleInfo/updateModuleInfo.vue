@@ -5,24 +5,18 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
+    width="35%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :rules="rules" ref="moduleInfoForm" :model="moduleInfoForm" label-width="100px" :label-position="labelPosition">
+      <el-form :rules="rules" ref="moduleInfoForm" :model="moduleInfoForm" label-width="100px" :label-position="labelPosition" style="margin-left:-100px">
         <el-form-item label="模块名称" prop="name">
-          <el-input size="small" type="text" v-model="moduleInfoForm.name" placeholder="请输入模块名称(不能超过16个字符)" style=" width:75%;" maxlength="16"></el-input>
+          <el-input size="small" type="text" v-model="moduleInfoForm.name" placeholder="请输入模块名称(不能超过16个字符)" style=" width:90%;" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="跳转路由" prop="routeUrl">
-          <el-input
-            type="text"
-            v-model="moduleInfoForm.routeUrl"
-            size="small"
-            placeholder="请输入跳转路由"
-            style="width:80%"
-          ></el-input>
+          <el-input type="text" v-model="moduleInfoForm.routeUrl" size="small" placeholder="请输入跳转路由" style="width:90%"></el-input>
         </el-form-item>
         <el-form-item label="跳转类型" prop="tabMode">
          <template>
@@ -35,7 +29,7 @@
         <el-form-item label="模块图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-            style="width:75%;margin-top:-38px;"
+            style="width:90%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -55,17 +49,8 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button
-      :disabled="saveFlag"
-        type="primary"
-        icon="el-icon-check"
-        @click="updateModule('moduleInfoForm')"
-      >保存</el-button>
-      <el-button
-        type="info"
-        icon="el-icon-close"
-        @click="close"
-      >关闭</el-button>
+      <el-button v-loading.fullscreen.lock="fullscreenLoading" type="primary" icon="el-icon-check" @click="updateModule('moduleInfoForm')">保存</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -91,7 +76,7 @@ export default {
   },
   data() {
     return {
-      saveFlag:false,
+      fullscreenLoading: false,
       localShow: this.show,
       isShow: false,
       limit: 1,
@@ -126,7 +111,6 @@ export default {
       //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.moduleFindById, params).then((res) => {
         this.moduleInfoForm = res.data;
-        console.log(this.moduleInfoForm.tabMode);
         let url = res.data.url;
         let urlArry = url.split("/");
         let urlName = urlArry[urlArry.length - 1];
@@ -193,18 +177,19 @@ export default {
         if (valid) {
           if (this.imgUrl != "") {
             this.moduleInfoForm.url = this.imgUrl;
-            this.saveFlag = true;
             let params = { moduleInfoEntity: this.moduleInfoForm };
             api
               .testAxiosGet(ApiPath.url.updateModuleInfo, params)
               .then((res) => {
                 this.$message.success(res.message);
-                this.reload();
-              })
-              .catch(function(err) {
-                this.saveFlag = false;
+                this.close();
+              }).catch(function(err) {
                 this.$message.error(err.data);
-              });
+              })
+              this.fullscreenLoading = true;
+              setTimeout(() => {
+                this.fullscreenLoading = false;
+              }, 500);
             this.moduleInfoForm.updateUser = localStorage.getItem("userInfo");
           } else {
             this.$message.error("请上传图片");

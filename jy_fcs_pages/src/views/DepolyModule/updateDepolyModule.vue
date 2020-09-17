@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
+    width="40%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -17,29 +17,25 @@
         :model="deployModuleForm"
         label-width="100px"
         :label-position="labelPosition"
+        style="margin-left:-85px"
       >
         <el-form-item label="发布模块" prop="deployModuleName">
           <el-input
             type="text"
             v-model="deployModuleForm.deployModuleName"
             size="small"
-            placeholder="请输入发布模块名称"
-            style="width:80%"
+            placeholder="请输入发布模块名称(不超过16个字)"
+            style="width:90%"
+            maxlength="16"
           ></el-input>
         </el-form-item>
         <el-form-item label="连接路径" prop="linkUrl">
-          <el-input
-            type="text"
-            v-model="deployModuleForm.linkUrl"
-            size="small"
-            placeholder="请输入连接路径"
-            style="width:80%"
-          ></el-input>
+          <el-input type="text" v-model="deployModuleForm.linkUrl" size="small" placeholder="请输入连接路径" style="width:90%"></el-input>
         </el-form-item>
         <el-form-item label="模块图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-            style="width:75%;margin-top:-38px;"
+            style="width:90%;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -59,7 +55,7 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button :disabled="saveFlag" type="primary" icon="el-icon-check" @click="updateModule('deployModuleForm')">保存</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="updateModule('deployModuleForm')"  v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -86,7 +82,7 @@ export default {
   },
   data() {
     return {
-      saveFlag: false,
+      fullscreenLoading: false,
       localShow: this.show,
       isShow: false,
       limit: 1,
@@ -102,13 +98,8 @@ export default {
       },
       //rules表单验证
       rules: {
-        deployModuleName: [
-          { required: true, message: "请输入发布模块名称", trigger: "blur" },
-        ],
-        linkUrl: [
-          { required: true, message: "请输入连接路径", trigger: "blur" },
-        ],
-
+        deployModuleName: [{ required: true, message: "请输入发布模块名称", trigger: "blur" },],
+        linkUrl: [{ required: true, message: "请输入连接路径", trigger: "blur" },],
       },
     };
   },
@@ -123,7 +114,7 @@ export default {
       //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.depolyModuleFindId, params).then((res) => {
         this.deployModuleForm = res.data;
-         let url = res.data.picUrl;
+        let url = res.data.picUrl;
         let urlArry = url.split("/");
         let urlName = urlArry[urlArry.length - 1];
         this.fileList.push({ name: urlName, url: url });
@@ -133,7 +124,6 @@ export default {
   },
 
   mounted() {},
-
   methods: {
     handle() {
       this.isShow = true;
@@ -198,18 +188,20 @@ export default {
         if (valid) {
           if (this.imgUrl != "") {
             this.deployModuleForm.picUrl = this.imgUrl;
-            this.saveFlag = true;
             let params = { deployModuleEntity: this.deployModuleForm };
             api
               .testAxiosGet(ApiPath.url.updateDeployModule, params)
               .then((res) => {
                 this.$message.success(res.message);
-                this.reload();
+                this.close();
               })
               .catch(function (err) {
-                this.saveFlag = false;
                 this.$message.error(err.data);
               });
+              this.fullscreenLoading = true;
+              setTimeout(() => {
+                this.fullscreenLoading = false;
+              }, 500);
             this.deployModuleForm.updateUser = localStorage.getItem("userInfo");
           } else {
             this.$message.error("请上传图片");
@@ -221,6 +213,7 @@ export default {
       });
     },
     close: function () {
+      this.fileList=[];
       this.$emit("close");
     },
     beforeClose: function () {

@@ -10,7 +10,7 @@
         <el-input v-model="name" type="text" placeholder="请输入菜单名称" class="el-input el-input--small" clearable ></el-input>
       </el-form-item>
        <el-form-item>
-      <el-button type="warning"  @click="search" size="small"  icon="el-icon-search" >查询</el-button>
+      <el-button type="warning"  @click="search" size="small"  icon="el-icon-search" class="height" >查询</el-button>
        <el-button type="info"  @click="resetForm(search)"  size="small"  icon="el-icon-close">重置</el-button>
        </el-form-item>
         <el-row>
@@ -31,13 +31,13 @@
       row-key="id"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column  prop="name" label="菜单名称" align="center" width="300px"></el-table-column>
-      <el-table-column  prop="icon" label="菜单图标" align="center" width="100px">
+      <el-table-column  prop="name" label="菜单名称" align="center" min-width="90px" max-width="220px"></el-table-column>
+      <el-table-column  prop="icon" label="菜单图标" align="center" min-width="90px" max-width="220px">
         <template slot-scope="scope">
           <i :class="scope.row.icon"></i>
         </template>
       </el-table-column>
-      <el-table-column  label="类型" align="center">
+      <el-table-column  label="类型" align="center" min-width="90px" max-width="220px">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.menuType == 1 && scope.row.only == 'Y'">独立目录</el-tag>
           <el-tag v-if="scope.row.menuType == 1 && scope.row.only != 'Y'">目录</el-tag>
@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
       
-      <el-table-column  align="center" label="状态" prop="state">
+      <el-table-column  align="center" label="状态" prop="state" min-width="90px" max-width="220px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -58,14 +58,14 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column  align="center" label="排序" prop="sort">
+      <el-table-column  align="center" label="排序" prop="sort" min-width="170px" max-width="220px">
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column  prop="url" label="菜单路由" align="center"></el-table-column>
-      <el-table-column  prop="perssions" label="权限标识" align="center"></el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column  prop="url" label="菜单路由" :show-overflow-tooltip="true" align="center" min-width="90px" max-width="220px"></el-table-column>
+      <el-table-column  prop="perssions" label="权限标识" align="center" min-width="90px" max-width="220px"></el-table-column>
+      <el-table-column align="center" label="操作" min-width="190px" max-width="220px">
         <template slot-scope="scope">
            <el-button
            @click="openUpdateRole(scope)"
@@ -90,17 +90,9 @@
    
     <br />
     <br />
-<add-navigation :show="addNavigationFlag" title="添加菜单信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
-<update-menu
-      :show="updateMenuFlag"
-      :transRoleId="transRoleId"
-      title="修改"
-      @close="closeUpdateRoleDialog"
-      @save="upRole"
-    ></update-menu>
-
-    
-    </div>
+    <add-navigation :show="addNavigationFlag" title="添加菜单信息"  @close="closeRuleTagDialog" @save="saveRuleTag"></add-navigation> 
+    <update-menu :show="updateMenuFlag" :transRoleId="transRoleId" title="修改" @close="closeUpdateRoleDialog" @save="upRole" ></update-menu>
+   </div>
     
 </template>
 
@@ -110,7 +102,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import AddNavigation from "./addNavigation.vue";
-import UpdateMenu from "./updateNavigation.vue";
+import UpdateMenu from "./updatenavigation";
 export default {
   inject: ["reload"],
   props: {
@@ -348,7 +340,10 @@ export default {
 .el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
   border-top-color: pink;
 }
-
+.height{
+  margin-top: 5px;
+  margin-left: 12px;
+}
 </style>
 
 

@@ -5,66 +5,30 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
+    width="40%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form
-        :model="editForm"
-        :rules="rules"
-        ref="editForm"
-        :label-position="labelPosition"
-        label-width="100px"
-      >
+      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
         <el-form-item label="账户名称" prop="name">
-          <el-input
-            type="text"
-            v-model="editForm.name"
-            size="small"
-            placeholder="请输入账户名称(不能超过16个字符)"
-            style="width:80%"
-            maxlength="16"
-          ></el-input>
+          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入账户名称(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="账户密码" prop="password">
-          <el-input
-            type="password"
-            v-model="editForm.password"
-            size="small"
-            placeholder="请输入账户密码(不能超过16个字符)"
-            style="width:80%"
-            maxlength="16"
-          ></el-input>
+          <el-input type="password" v-model="editForm.password" size="small" placeholder="请输入账户密码(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="newPassword">
-          <el-input
-            type="password"
-            placeholder="请确认密码(不能超过16个字符)"
-            v-model="editForm.newPassword"
-            size="small"
-            style="width:80%"
-            maxlength="16"
-          ></el-input>
+          <el-input type="password" placeholder="请确认密码(不能超过16个字符)" v-model="editForm.newPassword" size="small" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
-          <el-input
-            type="text"
-            v-model="editForm.phone"
-            size="small"
-            placeholder="请输入十一位手机号码"
-            style="width:80%"
-            @change="telPhone"
-            maxlength="11"
-          ></el-input>
+          <el-input type="text" v-model="editForm.phone" size="small" placeholder="请输入十一位手机号码" style="width:90%" @change="telPhone" maxlength="11"></el-input>
         </el-form-item>
       </el-form>
     </slot>
-
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button :disabled="isDisable" type="primary" icon="el-icon-check" @click="saveAccountInfo()">保存</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="saveAccountInfo()" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
       <el-button  type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
@@ -95,7 +59,7 @@ export default {
       }
     };
     return {
-      isDisable:false,
+      fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
         name: "",
@@ -142,7 +106,6 @@ export default {
         this.$alert("请输入正确的手机号！", "提示", {
           confirmButtonText: "确定",
         });
-
         this.editForm.phone = "";
       }
     },
@@ -167,26 +130,29 @@ export default {
         this.$alert("手机号不能为空", "提示", { confirmButtonText: "确定" });
         return false;
       }
-        if (this.editForm.password == this.editForm.newPassword) {
-          this.isDisable=true
+      if (this.editForm.password != this.editForm.newPassword) {
+          this.$alert("两次输入的密码不一致！", "提示", {confirmButtonText: "确定",});
+          return false;
+       }
           let params = {
             accountInfoEntity: this.editForm,
           };
           api.testAxiosGet(ApiPath.url.addAccountInfo, params).then((res) => {
             let code = res.status;
             if (code == "0") {
-              this.$message.success(res.message);
               this.close();
-              this.reload();
+              this.$message.success(res.message);
             }
-          }).catch(function(err) {
-                this.isDisable=false
-           });
-        } else {
-          this.$alert("两次输入的密码不一致！", "提示", {
-            confirmButtonText: "确定",
-          });
-        }
+          }).catch(function(err) {});
+           this.fullscreenLoading = true;
+            setTimeout(() => {
+              this.editForm.name="";
+              this.editForm.password="";
+              this.editForm.newPassword="";
+              this.editForm.phone="";
+              this.fullscreenLoading = false;
+            }, 500);
+        
     },
   },
 };

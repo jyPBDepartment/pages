@@ -11,7 +11,7 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="120px" @submit.native.prevent>
+      <el-form :rules="rules" ref="editForm" :model="editForm" :label-position="labelPosition" label-width="120px" style="margin-left:-105px" @submit.native.prevent>
        <el-form-item label="菜单类型" prop="menuType">
          <template>
             <el-radio-group v-model="editForm.menuType" @change="selectType">
@@ -22,14 +22,13 @@
           </template>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name">
-          <el-input type="text" v-model="editForm.name" placeholder="请输入名称"  maxlength="8" style=" width:70%;" ></el-input>
+          <el-input type="text" v-model="editForm.name" placeholder="请输入名称"  maxlength="8" style=" width:90%;" ></el-input>
         </el-form-item>
         <el-form-item label="排序" prop="sort" >
-          <el-input-number v-model="editForm.sort" :step=5 style="width:70%;" step-strictly></el-input-number>
+          <el-input-number v-model="editForm.sort" :step=5 style="width:90%;" step-strictly></el-input-number>
         </el-form-item>
-        
         <el-form-item label="图标" prop="icon" v-if="iconShow" >
-          <e-icon-picker v-model="editForm.icon" style="width:70%;"/>
+          <e-icon-picker v-model="editForm.icon" style="width:90%;"/>
         </el-form-item>
         <el-form-item label="父级菜单" prop="parentId" v-if="parentShow" :required="parentShow">
           <selectTree
@@ -37,11 +36,11 @@
             :defaultProps="{children:'children',label:'name',id:'id'}"
             :filterable="editForm.id"
             v-model="editForm.parentId"
-            style="width:70%;">
+            style="width:90%;">
         </selectTree>
         </el-form-item>
         <el-form-item label="菜单路由" prop="url" v-if="urlShow" :required="urlFlag">
-          <el-input type="text" v-model="editForm.url" placeholder="请输入菜单路由"  maxlength="64" style=" width:70%;" ></el-input>
+          <el-input type="text" v-model="editForm.url" placeholder="请输入菜单路由"  maxlength="64" style=" width:90%;" ></el-input>
         </el-form-item>
         <el-form-item label="是否独立目录" prop="only" v-if="onlyShow" :required="onlyShow" >
           <el-radio-group v-model="editForm.only">
@@ -50,16 +49,15 @@
             </el-radio-group>
         </el-form-item>
         <el-form-item label="权限标识" prop="perssions" v-if="perssionsShow" :required="perssionsShow">
-          <el-input type="text" v-model="editForm.perssions" placeholder="请输入权限标识"  maxlength="64" style=" width:70%;" ></el-input>
+          <el-input type="text" v-model="editForm.perssions" placeholder="请输入权限标识"  maxlength="64" style=" width:90%;" ></el-input>
         </el-form-item>
-       
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
      
-      <el-button type="success" icon="el-icon-check" @click="saveNavigation()" size="medium" style="background-color:#409EFF;border-color:#409EFF;color:white;font-size:12px">保存</el-button>
-       <el-button type="danger" icon="el-icon-close" @click="close" size="medium" style="background-color:white;border-color:black;color:black;font-size:12px">关闭</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="saveNavigation()">保存</el-button>
+       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -121,12 +119,11 @@ export default {
        localShow: this.show,
        //rules表单验证
       rules: {
-        name: [
-          { required: true, message: '请输入名称', trigger: 'blur' }
-        ],
-        sort: [
-          { required: true, message: '请输入排序', trigger: 'blur' }
-        ]
+        name: [{ required: true, message: '请输入名称', trigger: 'blur'}],
+        sort: [{ required: true, message: '请输入排序', trigger: 'blur'}],
+        menuType: [{ required: true, message: '请选择菜单类型', trigger: 'blur'}],
+        icon: [{ required: true, message: '请选择图标', trigger: 'blur'}],
+        url: [{ required: true, message: '请输入路由地址', trigger: 'blur'}],
       },
     };
   },
@@ -343,23 +340,4 @@ selectType(result){
   padding-left: 115px;
  
 }
-.el-button{
-    
-    border: none;
-    
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-   
-    margin: 4px 2px;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s; 
-    transition-duration: 0.4s;
-} 
-
-.el-button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-}
- 
 </style>

@@ -3,10 +3,10 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="发布模块名称">
-        <el-input size="small" v-model="deployModuleName" placeholder="输入发布模块名称"></el-input>
+        <el-input size="small" v-model="deployModuleName" placeholder="输入发布模块名称" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
         <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
       <br />
@@ -31,19 +31,20 @@
         label="发布模块名称"
         align="center"
         :show-overflow-tooltip="true"
-        min-width="85px"
+        min-width="100px"
+        max-width="220px"
       ></el-table-column>
-       <el-table-column prop="linkUrl" label="连接路径" align="center" sortable min-width="140px"></el-table-column>
-        <el-table-column prop="picUrl" label="图片" align="center" min-width="130px">
+       <el-table-column prop="linkUrl" :show-overflow-tooltip="true" label="连接路径" align="center" min-width="100px" max-width="220px"></el-table-column>
+        <el-table-column prop="picUrl" label="图片" align="center" min-width="110px" max-width="220px">
         <template slot-scope="scope">
-          <el-image :src="scope.row.picUrl" style="width:100px;height:100px;"></el-image>
+          <el-image :src="scope.row.picUrl" style="width:80px;height:80px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px"></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center" min-width="90px"></el-table-column>
-      <el-table-column prop="updateUser" label="修改人" align="center" min-width="90px"></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="100px">
+      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center" min-width="80px" max-width="220px"></el-table-column>
+      <el-table-column prop="updateUser" label="修改人" align="center" min-width="80px" max-width="220px"></el-table-column>
+      <el-table-column align="center" label="状态" prop="status" min-width="80px" max-width="220px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -55,7 +56,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="200px">
+      <el-table-column align="center" label="操作" min-width="190px" max-width="220px">
         <template slot-scope="scope">
           <el-button @click="openUpdateModuleInfo(scope)"
             type="primary"
@@ -165,12 +166,14 @@ export default {
       this.addModuleInfo = false;
     },
     closeModuleInfoDialog() {
+      this.search(this.formInline);
       this.addModuleInfo = false;
     },
     addModuleInfos() {
       this.addModuleInfo = true;
     },
     closeUpdateModuleInfoDialog() {
+      this.search(this.formInline);
       this.updateModuleInfoFlag = false;
     },
     upModuleInfo() {
@@ -244,6 +247,10 @@ export default {
 }
 .userModuleInfo {
   width: 100%;
+}
+.height {
+  margin-top: 5px;
+  margin-left: 12px;
 }
 </style>
 <style>

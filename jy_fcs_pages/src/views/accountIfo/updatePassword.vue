@@ -11,12 +11,13 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form class="user-account-key" ref="form" :model="form" :rules="rules" label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px" :label-position="labelPosition" style="padding-right: 29px;margin-left:-85px">
         <el-form-item label="原密码" prop="pass">
           <el-input
             type="text"
             placeholder="请输入原密码(不能超过16个字符)"
             v-model="form.pass"
+            style="width:100%"
             maxlength="16"
             clearable
           ></el-input>
@@ -26,6 +27,7 @@
             type="password"
             placeholder="请设置新密码(不能超过16个字符)"
             v-model="form.password"
+            style="width:100%"
             maxlength="16"
             clearable
           ></el-input>
@@ -35,6 +37,7 @@
             type="password"
             placeholder="请确认新密码(不能超过16个字符)"
             v-model="form.newPassword2"
+            style="width:100%"
             maxlength="16"
             clearable
           ></el-input>
@@ -97,6 +100,7 @@ export default {
     return {
       isDisable: false,
       localShow: this.show,
+      labelPosition: "right",
       oldPass: "",
       rules: {
         pass: [
