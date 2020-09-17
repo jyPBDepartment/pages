@@ -4,120 +4,89 @@
     :title="title"
     append-to-body
     modal-append-to-body
-    width="60%"
+    width="1024.5px"
     :before-close="beforeClose"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <slot>
-      <el-form ref="agrForm" :model="agrForm" label-width="100px" :label-position="labelPosition">
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="标题名称:" class="tableType">
-               <span>{{agrForm.name}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="描述:" class="tableType">
-           
-                <span>{{agrForm.descrip}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item label="图片:">
-          <span v-for="item in agrList" :key="item">
-            <el-image style="width: 100px; height: 100px;margin-right:15px;" :src="item" readonly></el-image>
-          </span>
-        </el-form-item>
-       <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="交易类型:">
-              <span v-if="agrForm.transactionTypeCode == '0'" >收购</span>
-              <span v-if="agrForm.transactionTypeCode == '1'" >出售</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="交易类别:">
-              <span v-if="agrForm.transactionCategoryCode == '0'" >玉米</span>
-              <span v-if="agrForm.transactionCategoryCode == '2'" >水稻</span>
-              <span v-if="agrForm.transactionCategoryCode == '3'" >高粱</span>
-              <span v-if="agrForm.transactionCategoryCode == '4'" >黄豆</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="是否面议:">
-              <span v-if="agrForm.isFace == '0'" >是</span>
-              <span v-if="agrForm.isFace == '1'" >否</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="价格:">
+      <table border="2" :data="agrForm" align="center" class="table">
+        <tbody>
+          <tr>
+            <td class="title">标题名称</td>
+            <td class="content" colspan="3">{{agrForm.name}}</td>
+          </tr>
+          <tr>
+            <td class="title">图片</td>
+            <td align="left">
+              <span v-for="item in agrList" :key="item">
+                <el-image style="width: 90px; height: 90px;margin:5px;" :src="item" readonly></el-image>
+              </span>
+            </td>
+            <td class="title">描述</td>
+            <td class="content" style="width:340px;">{{agrForm.descrip}}</td>
+          </tr>
+          <tr>
+            <td class="title">区域</td>
+            <td class="content" colspan="3">{{agrForm.address}}</td>
+          </tr>
+          <tr>
+            <td class="title">交易类型</td>
+            <td class="content">
+              <span v-if="agrForm.transactionTypeCode == '0'">收购</span>
+              <span v-if="agrForm.transactionTypeCode == '1'">出售</span>
+            </td>
+            <td class="title">交易类别</td>
+            <td class="content">
+              <span v-if="agrForm.transactionCategoryCode == '0'">玉米</span>
+              <span v-if="agrForm.transactionCategoryCode == '2'">水稻</span>
+              <span v-if="agrForm.transactionCategoryCode == '3'">高粱</span>
+              <span v-if="agrForm.transactionCategoryCode == '4'">黄豆</span>
+            </td>
+          </tr>
 
-               <span>{{agrForm.price}}元</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="联系人:">
-             
-               <span>{{agrForm.contactsUser}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="联系方式:">
-            
-              <span>{{agrForm.contactsPhone}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-         <el-form-item label="区域:">
-            
-                <span>{{agrForm.address}}</span>
-            </el-form-item>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="发布时间:">
-             
-               <span>{{agrForm.createDate}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="修改时间:">
-              
-               <span>{{agrForm.updateDate}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="发布人:">
-              
-                <span>{{agrForm.createUser}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="审核人:">
-             
-                <span>{{agrForm.updateUser}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="30">
-          <el-form-item label="审核理由:" style="width: 60%; padding-left: 15px;">
-            <span v-if="agrForm.status == '0'" >
-              <el-input v-model="agrForm.examineReason" type="textarea" size="small"></el-input>
-            </span>
-            <span
-              v-if="agrForm.status == '1' || agrForm.status=='2'"
-            >
-              <el-input v-model="agrForm.examineReason" type="textarea" disabled size="small"></el-input>
-            </span>
-          </el-form-item>
-        </el-row>
-      </el-form>
+          <tr>
+            <td class="title">价格</td>
+            <td class="content">{{agrForm.price}}元</td>
+            <td class="title">是否面议</td>
+            <td class="content">
+              <span v-if="agrForm.isFace == '0'">是</span>
+              <span v-if="agrForm.isFace == '1'">否</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="title">联系人</td>
+            <td class="content">{{agrForm.contactsUser}}</td>
+            <td class="title">联系方式</td>
+            <td class="content">{{agrForm.contactsPhone}}</td>
+          </tr>
+
+          <tr>
+            <td class="title">发布时间</td>
+            <td class="content">{{agrForm.createDate}}</td>
+            <td class="title">修改时间</td>
+            <td class="content">{{agrForm.updateDate}}</td>
+          </tr>
+          <tr>
+            <td class="title">发布人</td>
+            <td class="content">{{agrForm.createUser}}</td>
+            <td class="title">审核人</td>
+            <td class="content">{{agrForm.updateUser}}</td>
+          </tr>
+          <tr>
+            <td class="title">审核理由</td>
+            <td colspan="3" class="content">
+              <span v-if="agrForm.status == '0'">
+                <el-input v-model="agrForm.examineReason" type="textarea" size="small"></el-input>
+              </span>
+              <span v-if="agrForm.status == '1' || agrForm.status=='2'">
+                <el-input v-model="agrForm.examineReason" type="textarea" disabled size="small"></el-input>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </slot>
     <span slot="footer">
       <span v-if="agrForm.status == '0' ">
@@ -235,7 +204,20 @@ export default {
   padding-left: 80px;
   width: 100%;
 }
-.el-input__inner{
-  border:0px solid #fff !important;
+.el-input__inner {
+  border: 0px solid #fff !important;
+}
+.table {
+  height: 600px;
+  width: 900px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2)
+}
+
+.title {
+  width: 100px;
+  text-align: center;
+}
+.content {
+  text-align: center;
 }
 </style>

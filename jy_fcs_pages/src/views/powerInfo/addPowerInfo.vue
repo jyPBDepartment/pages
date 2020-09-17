@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="500px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -17,32 +17,36 @@
         :model="editForm"
         :label-position="labelPosition"
         label-width="100px"
+        style="margin-left:-48px;"
       >
         <el-form-item label="权限名称" prop="jurName">
           <el-input
             type="text"
             v-model="editForm.jurName"
-            placeholder="请输入权限名称（不超过15个字符）"
+            placeholder="请输入权限名称"
             :maxLength="15"
-            style="width:70%;"
+            size="small"
+           
           ></el-input>
         </el-form-item>
         <el-form-item label="权限编码" prop="jurCode">
           <el-input
             type="text"
             v-model="editForm.jurCode"
-            placeholder="请输入权限编码（不超过15个字符）"
+            placeholder="请输入权限编码"
             :maxLength="15"
-            style="width:70%;"
+             size="small"
+           
           ></el-input>
         </el-form-item>
         <el-form-item label="上级权限编码" prop="subJurCode">
-          <el-select v-model="editForm.subJurCode" placeholder="请输入上级权限编码" style="width:70%;">
+          <el-select v-model="editForm.subJurCode" placeholder="请选择"  size="small" >
             <el-option
               v-for="item in powerOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
+              class="option"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -55,7 +59,7 @@
         icon="el-icon-check"
         @click="savePowerInfo()"
         size="medium"
-        :disabled="isDisable"
+         v-loading.fullscreen.lock="fullscreenLoading"
       >保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
@@ -82,7 +86,7 @@ export default {
   },
   data() {
     return {
-      isDisable: false,
+     fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
         jurName: "",
@@ -120,7 +124,7 @@ export default {
         .testAxiosGet(ApiPath.url.findAllPower, params)
         .then((res) => {
           if (res.status == "0") {
-            this.powerOptions.push({ value: "", label: "请选择" });
+            // this.powerOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
               this.powerOptions.push({
                 value: res.data[i]["id"],
@@ -154,12 +158,20 @@ export default {
           .testAxiosGet(ApiPath.url.savePowerInfo, params)
           .then((res) => {
             this.$message.success(res.message);
-            this.reload();
+           
             this.close();
           })
           .catch(function (err) {
             this.isDisable = false;
           });
+          this.fullscreenLoading = true;
+          setTimeout(() => {
+            this.editForm.jurName="";
+            this.editForm.jurCode="";
+            this.editForm.subJurCode="";
+            this.fullscreenLoading = false;
+
+        }, 500);
     },
     close: function () {
       this.$emit("close");
@@ -202,5 +214,14 @@ export default {
   margin-right: 2px;
   line-height: 20px;
   text-align: center;
+}
+.option{
+  text-align: center;
+}
+.el-input{
+  width: 200px;
+}
+.el-select{
+  width: 200px;
 }
 </style>

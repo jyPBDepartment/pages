@@ -15,6 +15,7 @@
           :maxlength="10"
           placeholder="请输入权限名称"
           class="el-input el-input--small"
+          style="width:200px;"
           clearable
         ></el-input>
       </el-form-item>
@@ -25,6 +26,7 @@
           :maxlength="10"
           placeholder="请输入权限编码"
           class="el-input el-input--small"
+           style="width:200px;"
           clearable
         ></el-input>
       </el-form-item>
@@ -39,7 +41,7 @@
         type="info"
         size="small"
         @click="resetRuleTag(search)"
-        class="height"
+       
         icon="el-icon-close"
       >重置</el-button>
       <el-row>
@@ -72,7 +74,7 @@
         max-width="115px"
       ></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center" prop="auditStatus" label="状态" min-width="50" max-width="80px">
+      <el-table-column align="center" prop="auditStatus" label="状态" min-width="60px" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -84,8 +86,8 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="180"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="180"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" min-width="120px" max-width="150px"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" min-width="120px" max-width="150px"></el-table-column>
       <el-table-column
         prop="createUser"
         label="创建人"
@@ -100,7 +102,7 @@
         min-width="80px"
         max-width="115px"
       ></el-table-column>
-      <el-table-column fixed="right" label="操作" width="320px" align="center">
+      <el-table-column fixed="right" label="操作" min-width="220px" max-width="250px" align="center">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
@@ -160,16 +162,15 @@
           prop="jurName"
           label="权限名称"
           align="center"
-          min-width="80px"
-          max-width="115px"
+          min-width="100px"
+          max-width="130px"
         ></el-table-column>
         <!--switch开关（表单）-->
         <el-table-column
           align="center"
           prop="auditStatus"
           label="状态"
-          min-width="80"
-          max-width="100px"
+         min-width="80px" max-width="90px"
         >
           <template slot-scope="scope">
             <el-switch
@@ -182,8 +183,8 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
-        <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
+        <el-table-column sortable prop="createDate" label="创建时间" align="center"  min-width="150px" max-width="180px"></el-table-column>
+        <el-table-column sortable prop="updateDate" label="修改时间" align="center"  min-width="150px" max-width="180px"></el-table-column>
         <el-table-column
           prop="createUser"
           label="创建人"
@@ -198,7 +199,7 @@
           min-width="80px"
           max-width="115px"
         ></el-table-column>
-        <el-table-column fixed="right" label="操作" width="220px" align="center">
+        <el-table-column fixed="right" label="操作"  min-width="200px" max-width="220px" align="center">
           <template slot-scope="scope">
             <el-button
               @click="openUpdateDialog(scope)"
@@ -414,6 +415,7 @@ export default {
     },
     closeRuleTagDialog() {
       this.addPowerInfoFlag = false;
+       this.search(this.formInline);
     },
 
     closeModifyRuleTagDialog() {
@@ -455,6 +457,7 @@ export default {
 }
 .height {
   margin-top: 6px;
+  margin-left: 10px;
 }
 </style>
 

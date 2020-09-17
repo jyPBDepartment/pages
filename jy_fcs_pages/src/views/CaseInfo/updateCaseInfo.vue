@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="60%"
+    width="640px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -15,17 +15,58 @@
         :rules="rules"
         ref="caseInfoForm"
         :model="caseInfoForm"
-        label-width="130px"
+        label-width="100px"
+        class="form"
         :label-position="labelPosition"
         @submit.native.prevent
       >
         <el-form-item label="名称" prop="name">
-          <el-input type="text" v-model="caseInfoForm.name" placeholder="请输入名称（不超过10个字符）" style=" width:70%;" :maxlength="10"></el-input>
+          <el-input
+            type="text"
+            v-model="caseInfoForm.name"
+            placeholder="请输入名称"
+            :maxlength="10"
+            size="small"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="关键词" prop="keyCodes" class="second">
+          <el-select v-model="caseInfoForm.keyCodes" multiple placeholder="请选择" size="small">
+            <el-option
+              v-for="item in keyOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="option"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="农作物种类" prop="classiCode">
+          <el-select v-model="caseInfoForm.classiCode" placeholder="请选择" size="small">
+            <el-option
+              v-for="item in cropsOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="option"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="病虫害种类" prop="classiDipCode" class="second">
+          <el-select v-model="caseInfoForm.classiDipCode" placeholder="请选择" size="small">
+            <el-option
+              v-for="item in dipOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="option"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-            style="width:81%;margin-top:-38px;"
+            style="width:398px;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -37,50 +78,17 @@
             :on-exceed="uploadExceed"
           >
             <el-button size="small" type="primary" style="width:150%;" icon="el-icon-plus">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1M</div>
+            <div slot="tip" class="tips">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="农作物种类编码" prop="classiCode">
-          <el-select v-model="caseInfoForm.classiCode" placeholder="请输入农作物种类编码" style="width:70%;">
-            <el-option
-              v-for="item in cropsOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="病虫害种类编码" prop="classiDipCode">
-          <el-select
-            v-model="caseInfoForm.classiDipCode"
-            placeholder="请输入病虫害种类编码"
-            style="width:70%;"
-          >
-            <el-option
-              v-for="item in dipOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="关键词" prop="keyCodes">
-          <el-select v-model="caseInfoForm.keyCodes" multiple  placeholder="请选择关键词" style="width:70%;">
-            <el-option
-              v-for="item in keyOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="描述" prop="describetion">
+        <el-form-item label="文章内容" prop="describetion" class="article"></el-form-item>
+        <el-form-item style="margin-left:-75px;">
           <div class="edit_container">
-            <el-card style="height: 510px;width:70%">
+            <el-card style="height: 355px;width:508px;">
               <quill-editor
                 v-model="caseInfoForm.describetion"
                 ref="myQuillEditor"
-                style="height: 500px;width:100%"
+                style="height: 280px;width:100%"
                 :options="editorOption"
               ></quill-editor>
             </el-card>
@@ -95,14 +103,9 @@
         icon="el-icon-check"
         size="medium"
         @click="updateCaseInfo('caseInfoForm')"
+        v-loading.fullscreen.lock="fullscreenLoading"
       >保存</el-button>
-      <el-button
-        type="info"
-        icon="el-icon-close"
-        @click="close"
-        size="medium"
-       
-      >关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -133,6 +136,7 @@ export default {
   },
   data() {
     return {
+      fullscreenLoading: false,
       localShow: this.show,
       isShow: false,
       limit: 1,
@@ -150,27 +154,26 @@ export default {
       },
       cropsOptions: [],
       dipOptions: [],
-      keyOptions:[],
+      keyOptions: [],
       //rules表单验证
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
         classiCode: [
-          { required: true, message: "请输入农作物种类编码", trigger: "blur" },
+          { required: true, message: "请选择农作物种类", trigger: "blur" },
         ],
         classiDipCode: [
           {
             required: true,
-            message: "请输入请输入病虫害种类编码",
+            message: "请选择病虫害种类",
             trigger: "blur",
           },
         ],
-        
       },
-      editorOption: {}
+      editorOption: {},
     };
   },
   components: {
-    quillEditor
+    quillEditor,
   },
   watch: {
     show(val) {
@@ -184,10 +187,10 @@ export default {
       api.testAxiosGet(ApiPath.url.caseInfoFindById, params).then((res) => {
         this.caseInfoForm = res.data;
         //重新组装数据
-        let keyArr = []
-					for(var i = 0; i < res.data.keyCodes.length; i++) {
-						keyArr.push(this.caseInfoForm.keyCodes[i]["id"])
-					}
+        let keyArr = [];
+        for (var i = 0; i < res.data.keyCodes.length; i++) {
+          keyArr.push(this.caseInfoForm.keyCodes[i]["id"]);
+        }
         this.caseInfoForm.keyCodes = keyArr;
         let url = res.data.url;
         let urlArry = url.split("/");
@@ -203,32 +206,32 @@ export default {
     this.fandKeyWord();
   },
   methods: {
-     beforeAvatarUpload(file) {                
-      var testmsg=file.name.substring(file.name.lastIndexOf('.')+1)                 
-      const extension = testmsg === 'jpg'  
-      const extension2 = testmsg === 'png'  
-      const isLt2M = file.size / 1024 / 1024 < 1 
-      if(!extension && !extension2) {  
-          this.$message({  
-              message: '上传文件只能是 jpg、png格式!',  
-              type: 'warning'  
-          });  
-      }  
-      if(!isLt2M) {  
-          this.$message({  
-              message: '上传文件大小不能超过 1M!',  
-              type: 'warning'  
-          });  
-      }  return extension || extension2 && isLt2M  
-} ,
+    beforeAvatarUpload(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension = testmsg === "jpg";
+      const extension2 = testmsg === "png";
+      const isLt2M = file.size / 1024 / 1024 < 1;
+      if (!extension && !extension2) {
+        this.$message({
+          message: "上传文件只能是 jpg、png格式!",
+          type: "warning",
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: "上传文件大小不能超过 1M!",
+          type: "warning",
+        });
+      }
+      return extension || (extension2 && isLt2M);
+    },
     //展示关键词下拉列表（多选）
-    fandKeyWord:function () {
-      let params = { };
+    fandKeyWord: function () {
+      let params = {};
       api
         .testAxiosGet(ApiPath.url.findCaseKeyword, params)
         .then((res) => {
           if (res.state == "0") {
-           // this.keyOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
               this.keyOptions.push({
                 value: res.data[i]["id"],
@@ -285,86 +288,66 @@ export default {
       this.imgUrl = response.url;
     },
     handleRemove(file, fileList) {
-      this.imgUrl="",
-      console.log(file, fileList);
+      (this.imgUrl = ""), console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
     },
     // 修改
     updateCaseInfo(editData) {
-      //  if (
-      //   this.caseInfoForm.name != "" &&
-      //   this.caseInfoForm.imgUrl != "" &&
-      //   this.caseInfoForm.classiCode != "" &&
-      //   this.caseInfoForm.classiDipCode != ""
-      // ) {
-         if(this.caseInfoForm.name  == ""){
-          this.$alert("名称不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
+      if (this.caseInfoForm.name == "") {
+        this.$alert("名称不能为空", "提示", {
+          confirmButtonText: "确定",
+        });
+        return false;
       }
-       if(this.caseInfoForm.imgUrl  == ""){
-          this.$alert("图片不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
+
+      if (this.caseInfoForm.classiCode == "") {
+        this.$alert("农作物种类不能为空", "提示", {
+          confirmButtonText: "确定",
+        });
+        return false;
       }
-       if(this.caseInfoForm.classiCode  == ""){
-          this.$alert("农作物种类编码不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
+      if (this.caseInfoForm.classiDipCode == "") {
+        this.$alert("病虫害种类不能为空", "提示", {
+          confirmButtonText: "确定",
+        });
+        return false;
       }
-       if(this.caseInfoForm.classiDipCode  == ""){
-          this.$alert("病虫害种类编码不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
+      if (this.caseInfoForm.imgUrl == "") {
+        this.$alert("图片不能为空", "提示", {
+          confirmButtonText: "确定",
+        });
+        return false;
       }
-      this.$refs[editData].validate((valid) => {
-        if (valid) {
-          if (this.imgUrl != "") {
-            this.caseInfoForm.url = this.imgUrl;
-            let keyArr = []
-						  for(var i = 0; i < this.caseInfoForm.keyCodes.length; i++) {
-							  keyArr.push(this.caseInfoForm.keyCodes[i])
-              }
-            this.caseInfoForm.keyCodes = null;
-            this.caseInfoForm.keys = keyArr.join()
-            let params = { 
-              caseInfoEntity:aes.encrypt(JSON.stringify(this.caseInfoForm) ) ,
-            };
-            api
-              .testAxiosGet(ApiPath.url.updateCaseInfo, params)
-              .then((res) => {
-                this.$message.success(res.message);
-                this.reload();
-              })
-              .catch((err) => {
-                this.$message.error(err.data);
-              });
-          } else {
-            this.$message.error("请上传图片");
-            return;
-          }
-        } else {
-          return false;
-        }
-      });
-      // } else {
-      //   this.$alert(
-      //     "名称，图片，农作物种类编码，病虫害种类编码不能为空！",
-      //     "提示",
-      //     {
-      //       confirmButtonText: "确定",
-      //     }
-      //   );
-      // }
+
+      this.caseInfoForm.url = this.imgUrl;
+      let keyArr = [];
+      for (var i = 0; i < this.caseInfoForm.keyCodes.length; i++) {
+        keyArr.push(this.caseInfoForm.keyCodes[i]);
+      }
+      this.caseInfoForm.keyCodes = null;
+      this.caseInfoForm.keys = keyArr.join();
+      let params = {
+        caseInfoEntity: aes.encrypt(JSON.stringify(this.caseInfoForm)),
+      };
+      api
+        .testAxiosGet(ApiPath.url.updateCaseInfo, params)
+        .then((res) => {
+          this.$message.success(res.message);
+          this.close();
+        })
+        .catch((err) => {
+          this.$message.error(err.data);
+        });
+      this.caseInfoForm.updateUser = localStorage.getItem("userInfo");
+      this.fullscreenLoading = true;
+      setTimeout(() => {
+        this.fullscreenLoading = false;
+      }, 500);
     },
     close: function () {
-       this.fileList=[];
+      this.fileList = [];
       this.$emit("close");
     },
     beforeClose: function () {
@@ -378,8 +361,34 @@ export default {
 .el-form {
   padding-left: 115px;
 }
+.form {
+  padding-left: 20px;
+  padding-right: 0px;
+}
 .required {
   color: red;
   margin-left: -52px;
+}
+.el-input {
+  width: 120px;
+}
+.el-select {
+  width: 120px;
+}
+.second {
+  margin-left: 280px;
+  margin-top: -62px;
+}
+.option {
+  text-align: center;
+}
+.tips {
+  width: 198px;
+  margin-top: -41px;
+  margin-left: 166px;
+  font-size: 12px;
+}
+.article {
+  margin: -16px 0px -16px 216px;
 }
 </style>

@@ -5,13 +5,44 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="55%"
+    width="1024.5px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form
+           <table border="2" :data="caseInfoForm" align="center" class="table">
+        <tbody>
+          <tr>
+            <td class="title">病虫害名称</td>
+            <td class="content">{{caseInfoForm.name}}</td>
+            <td class="title">病虫害状态</td>
+            <td class="content" style="width:340px;">
+              <span v-if="caseInfoForm.auditStatus=='1'">启用</span>
+              <span v-if="caseInfoForm.auditStatus=='0'">禁用</span>
+            </td>
+          </tr>
+         
+          <tr>
+            <td class="title">农作物种类</td>
+            <td class="content">{{caseInfoForm.cropsTypeCode}}</td>
+            <td class="title">病虫害种类</td>
+            <td class="content">{{caseInfoForm.dipTypeCode}}</td>
+          </tr>
+           <tr>
+            <td class="title">图片</td>
+            <td class="content">
+                <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url"></el-image>
+            </td>
+            <td class="title">描述</td>
+            <td class="content">
+                {{caseInfoForm.describetion}}
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+      <!-- <el-form
         ref="caseInfoForm"
         :model="caseInfoForm"
         label-width="120px"
@@ -57,7 +88,7 @@
             ></quill-editor>
           </el-card>
         </el-form-item>
-      </el-form>
+      </el-form> -->
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
@@ -168,6 +199,18 @@ export default {
   position: relative;
   z-index: 100;
 }
+.table {
+  height: 400px;
+  width: 900px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2)
+}
+.title {
+  width: 100px;
+  text-align: center;
+}
+.content {
+  text-align: center;
+}
 </style>
 <style>
 .el-input.is-disabled .el-input__inner {
@@ -175,4 +218,5 @@ export default {
   background-color: #fff;
   scrollbar-arrow-color: #fff;
 }
+
 </style>

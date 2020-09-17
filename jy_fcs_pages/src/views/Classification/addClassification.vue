@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="500px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -16,33 +16,36 @@
         ref="editForm"
         :model="editForm"
         :label-position="labelPosition"
-        label-width="100px"
+         label-width="100px"
+        style="margin-left:-48px;"
       >
         <el-form-item label="分类名称" prop="name">
           <el-input
             type="text"
             v-model="editForm.name"
-            placeholder="请输入分类名称（不超过15个字符）"
-            style="width:70%;"
+            placeholder="请选择"
+            
             :maxLength="15"
+            size="small"
           ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="code">
           <el-input
             type="text"
             v-model="editForm.code"
-            placeholder="请输入分类编码（不超过15个字符）"
-            style="width:70%;"
+            placeholder="请选择"
             :maxLength="15"
+            size="small"
           ></el-input>
         </el-form-item>
         <el-form-item label="上级分类编码" prop="parentCode">
-          <el-select v-model="editForm.parentCode" placeholder="请输入上级分类编码" style="width:70%;">
+          <el-select v-model="editForm.parentCode" placeholder="请选择" size="small">
             <el-option
               v-for="item in classiOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
+              class="option"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -55,7 +58,7 @@
         icon="el-icon-check"
         @click="saveClassification()"
         size="medium"
-        :disabled="isDisable"
+        v-loading.fullscreen.lock="fullscreenLoading"
       >保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
@@ -82,7 +85,7 @@ export default {
   },
   data() {
     return {
-      isDisable: false,
+       fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
         name: "",
@@ -116,7 +119,7 @@ export default {
         .testAxiosGet(ApiPath.url.findAllClass, params)
         .then((res) => {
           if (res.state == "0") {
-            this.classiOptions.push({ value: "", label: "请选择" });
+            // this.classiOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
               this.classiOptions.push({
                 value: res.data[i]["id"],
@@ -150,12 +153,20 @@ export default {
           .testAxiosGet(ApiPath.url.saveClassification, params)
           .then((res) => {
             this.$message.success(res.message);
-            this.reload();
+           
             this.close();
           })
           .catch(function (err) {
             this.isDisable = false;
           });
+          this.fullscreenLoading = true;
+          setTimeout(() => {
+            this.editForm.name="";
+            this.editForm.code="";
+            this.editForm.parentCode="";
+            this.fullscreenLoading = false;
+
+        }, 500);
     },
     close: function () {
       this.$emit("close");
@@ -198,5 +209,14 @@ export default {
   margin-right: 2px;
   line-height: 20px;
   text-align: center;
+}
+.option{
+  text-align: center;
+}
+.el-input{
+  width: 200px;
+}
+.el-select{
+  width: 200px;
 }
 </style>

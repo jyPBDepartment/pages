@@ -5,29 +5,31 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+     width="500px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :rules="rules" ref="powerInfoForm" :model="powerInfoForm" label-width="100px">
+      <el-form :rules="rules" ref="powerInfoForm" :model="powerInfoForm" label-width="100px"  style="margin-left:-48px;">
         <el-form-item label="权限名称" prop="jurName">
           <el-input
             type="text"
             v-model="powerInfoForm.jurName"
-            placeholder="请输入权限名称（不超过15个字符）"
+            placeholder="请输入权限名称"
             :maxLength="15"
-            style=" width:70%;"
+             size="small"
+           
           ></el-input>
         </el-form-item>
         <el-form-item label="权限编码" prop="jurCode">
           <el-input
             type="text"
             v-model="powerInfoForm.jurCode"
-            placeholder="请输入权限编码（不超过15个字符）"
+            placeholder="请输入权限编码"
             :maxLength="15"
-            style=" width:70%;"
+             size="small"
+            
           ></el-input>
         </el-form-item>
         <el-form-item label="上级权限编码" prop="subJurCode" v-if="isShow">
@@ -35,14 +37,14 @@
             type="text"
             v-model="powerInfoForm.subJurCode"
             placeholder="请输入上级权限编码"
-            style=" width:70%;"
-            
+             size="small"
           >
             <el-option
               v-for="item in powerOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
+               class="option"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -50,7 +52,7 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" size="medium" @click="updatePowerInfo()">保存</el-button>
+      <el-button type="primary" icon="el-icon-check" size="medium" @click="updatePowerInfo()"  v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
@@ -76,6 +78,7 @@ export default {
   },
   data() {
     return {
+      fullscreenLoading: false,
       localShow: this.show,
       powerInfoForm: {
         jurName: "",
@@ -145,6 +148,7 @@ export default {
           }
         })
         .catch(function (error) {});
+         
     },
 
     //修改权限信息
@@ -169,15 +173,19 @@ export default {
         .testAxiosGet(ApiPath.url.updatePowerInfo, params)
         .then((res) => {
           let code = res.status;
-
           this.$message.success(res.message);
-          this.reload();
           this.close();
         })
         .catch((err) => {
           this.$message.error(err.data);
         });
       this.powerInfoForm.updateUser = localStorage.getItem("userInfo");
+      
+      this.fullscreenLoading = true;
+          setTimeout(() => {
+            this.fullscreenLoading = false;
+
+        }, 500);
     },
     close: function () {
       this.$emit("close");
@@ -195,5 +203,14 @@ export default {
 }
 .el-button {
   border: none;
+}
+.option{
+  text-align: center;
+}
+.el-input{
+  width: 200px;
+}
+.el-select{
+  width: 200px;
 }
 </style>

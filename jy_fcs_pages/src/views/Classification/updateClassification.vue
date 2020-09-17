@@ -5,38 +5,39 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="500px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :rules="rules" ref="classiForm" :model="classiForm" label-width="100px">
+      <el-form :rules="rules" ref="classiForm" :model="classiForm" label-width="100px"  style="margin-left:-48px;">
         <el-form-item label="分类名称" prop="name">
           <el-input
             type="text"
             v-model="classiForm.name"
-            placeholder="请输入分类名称（不超过15个字符）"
+            placeholder="请选择"
             :maxLength="15"
-            style=" width:70%;"
+             size="small"
           ></el-input>
         </el-form-item>
         <el-form-item label="分类编码" prop="code">
           <el-input
             type="text"
             v-model="classiForm.code"
-            placeholder="请输入分类编码（不超过15个字符）"
+            placeholder="请选择"
             :maxLength="15"
-            style="width:70%;"
+             size="small"
           ></el-input>
         </el-form-item>
         <el-form-item label="上级分类编码" prop="parentCode" v-if="isShow">
-          <el-select v-model="classiForm.parentCode" placeholder="请输入上级分类编码" style="width:70%;">
+          <el-select v-model="classiForm.parentCode" placeholder="请选择"  size="small">
             <el-option
               v-for="item in classiOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
+              class="option"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -49,6 +50,7 @@
         icon="el-icon-check"
         @click="updateClassification()"
         size="medium"
+         v-loading.fullscreen.lock="fullscreenLoading"
       >保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
@@ -75,6 +77,7 @@ export default {
   },
   data() {
     return {
+       fullscreenLoading: false,
       isShow: true,
       localShow: this.show,
       classiForm: {
@@ -158,13 +161,18 @@ export default {
           let code = res.state;
 
           this.$message.success(res.message);
-          this.reload();
+          
           this.close();
         })
         .catch((err) => {
           this.$message.error(err.data);
         });
       this.classiForm.updateUser = localStorage.getItem("userInfo");
+       this.fullscreenLoading = true;
+          setTimeout(() => {
+            this.fullscreenLoading = false;
+
+        }, 500);
     },
     close: function () {
       this.$emit("close");
@@ -183,5 +191,14 @@ export default {
 }
 .el-button {
   border: none;
+}
+.option{
+  text-align: center;
+}
+.el-input{
+  width: 200px;
+}
+.el-select{
+  width: 200px;
 }
 </style>

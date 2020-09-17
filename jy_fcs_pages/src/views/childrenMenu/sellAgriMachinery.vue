@@ -15,36 +15,40 @@
           :maxlength="10"
           placeholder="请输入标题名称"
           class="el-input el-input--small"
+          style="width:200px;"
           clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="审核状态">
-        <el-select v-model="status" style="width:80%" size="small" clearable>
+        <el-select v-model="status" style="width:48%;height:100px;" size="small" clearable>
           <el-option
             v-for="item in statusOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
+
           ></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item>
       <el-button
         type="warning" @click="search('manual')"  size="small" icon="el-icon-search" class="height">查询</el-button>
       <el-button
-        type="info" @click="resetRuleTag(search)" size="small" icon="el-icon-close" class="height">重置</el-button>
+        type="info" @click="resetRuleTag(search)" size="small" icon="el-icon-close">重置</el-button>
+      </el-form-item>
     </el-form>
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
-      <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
-      <el-table-column prop="name" label="标题名称" align="center" width="280"></el-table-column>
+      <el-table-column type="index" label="序号" align="center" min-width="48px" max-width="48px"></el-table-column>
+      <el-table-column prop="name" label="标题名称" align="center" min-width="80px" max-width="120px" :show-overflow-tooltip="true"></el-table-column>
      
        <el-table-column
         prop="transactionTypeCode"
         label="交易类型"
         align="center"
-        min-width="45%"
-        max-width="50%"
+        min-width="60px"
+        max-width="100px"
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionTypeCode==0">收购</span>
@@ -56,8 +60,8 @@
         prop="machineType"
         label="机器类型"
         align="center"
-        min-width="45%"
-        max-width="50%"
+        min-width="60px"
+        max-width="100px"
       >
        <template slot-scope="scope">
         <span v-if="scope.row.machineType==0">玉米收割机</span>
@@ -67,26 +71,27 @@
         <span v-if="scope.row.machineType==4">无人机喷药</span>
        </template>
       </el-table-column>
-       <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" width="135"></el-table-column>
+      
       <el-table-column
         prop="address"
         label="区域"
         align="center"
-        min-width="45%"
-        max-width="50%"
+        min-width="100px"
+        max-width="120px"
         :show-overflow-tooltip="true"
       ></el-table-column>
-  <el-table-column align="center" prop="status" label="审核状态" min-width="45%" max-width="50%">
+  <el-table-column align="center" prop="status" label="审核状态" min-width="60px" max-width="80px">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
           <span v-if="scope.row.status==2">审核拒绝</span>
         </template>
       </el-table-column>
-        <el-table-column sortable prop="createDate" label="发布时间" align="center" width="135"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="135"></el-table-column>
+       <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" min-width="80px" max-width="100px"></el-table-column>
+      <el-table-column sortable prop="createDate" label="发布时间" align="center" min-width="100px" max-width="120px"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" min-width="100px" max-width="120px"></el-table-column>
     
-    <el-table-column fixed="right" label="操作" align="center" width="200">
+    <el-table-column fixed="right" label="操作" align="center" min-width="80px" max-width="100px">
         <template slot-scope="scope">
           <el-button @click="machineContent(scope)" type="primary"  size="small"
             style="padding:9px 6px;"
@@ -279,7 +284,8 @@ export default {
   font-size: 14px;
 }
 .height {
-  margin-top: 6px;
+  margin-top: 5px;
+  margin-left: -90px;
 }
 </style>
 
