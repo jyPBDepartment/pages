@@ -149,7 +149,7 @@ export default {
           type: "warning",
         });
       }
-      return extension || (extension2 && isLt2M);
+      return (extension || extension2) && isLt2M;
     },
     uploadExceed(files, fileList) {
       this.$message.error("只能上传一个图片，如需修改请先删除图片！");

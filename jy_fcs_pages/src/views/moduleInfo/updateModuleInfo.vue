@@ -138,7 +138,8 @@ export default {
               message: '上传文件大小不能超过 1M!',  
               type: 'warning'  
           });  
-      }  return extension || extension2 && isLt2M  
+      }  
+      return (extension || extension2) && isLt2M;
 } ,
     handle() {
       this.isShow = true;
