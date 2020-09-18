@@ -58,9 +58,9 @@
         max-width="100px"
       >
         <template slot-scope="scope">
-          <span v-if="scope.row.transactionTypeCode==3">播种</span>
-          <span v-if="scope.row.transactionTypeCode==4">植保</span>
-          <span v-if="scope.row.transactionTypeCode==5">收割</span>
+          <span v-if="scope.row.transactionTypeCode=='3'">播种</span>
+          <span v-if="scope.row.transactionTypeCode=='4'">植保</span>
+          <span v-if="scope.row.transactionTypeCode=='5'">收割</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -71,10 +71,10 @@
         max-width="100px"
       >
         <template slot-scope="scope">
-          <span v-if="scope.row.transactionCategoryCode==0">玉米</span>
-          <span v-if="scope.row.transactionCategoryCode==2">水稻</span>
-          <span v-if="scope.row.transactionCategoryCode==3">高粱</span>
-          <span v-if="scope.row.transactionCategoryCode==4">黄豆</span>
+          <span v-if="scope.row.transactionCategoryCode=='0'">玉米</span>
+          <span v-if="scope.row.transactionCategoryCode=='2'">水稻</span>
+          <span v-if="scope.row.transactionCategoryCode=='3'">高粱</span>
+          <span v-if="scope.row.transactionCategoryCode=='4'">黄豆</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -90,6 +90,7 @@
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
           <span v-if="scope.row.status==2">审核拒绝</span>
+          <span v-if="scope.row.status==3">已取消</span>
         </template>
       </el-table-column>
 

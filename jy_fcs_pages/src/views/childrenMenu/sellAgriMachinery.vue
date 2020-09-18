@@ -64,11 +64,11 @@
         max-width="100px"
       >
        <template slot-scope="scope">
-        <span v-if="scope.row.machineType==0">玉米收割机</span>
-        <span v-if="scope.row.machineType==1">水稻收割机</span>
-        <span v-if="scope.row.machineType==2">玉米播种机</span>
-        <span v-if="scope.row.machineType==3">水稻插秧机</span>
-        <span v-if="scope.row.machineType==4">无人机喷药</span>
+        <span v-if="scope.row.machineType=='0'">玉米收割机</span>
+        <span v-if="scope.row.machineType=='1'">水稻收割机</span>
+        <span v-if="scope.row.machineType=='2'">玉米播种机</span>
+        <span v-if="scope.row.machineType=='3'">水稻插秧机</span>
+        <span v-if="scope.row.machineType=='4'">无人机喷药</span>
        </template>
       </el-table-column>
       
@@ -85,6 +85,7 @@
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
           <span v-if="scope.row.status==2">审核拒绝</span>
+          <span v-if="scope.row.status==3">已取消</span>
         </template>
       </el-table-column>
        <el-table-column sortable prop="purchaseDate" label="购买时间" align="center" min-width="80px" max-width="100px"></el-table-column>
