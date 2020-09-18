@@ -288,7 +288,7 @@
 				this.regionaStatus = false;
 				let map = '';
 				data.forEach(item => {
-					console.log('data', item);
+					// console.log('data', item);
 					if (item != '' && item != '请选择') {
 						if (map != '') {
 							map = map + '/' + item
@@ -434,7 +434,7 @@
 					createUserId:this.machine.createUserId,
 					addItem:addItem,
 					status:this.machine.status,
-					// createDate:this.createDate
+				
 				}
 				// console.log("222"+JSON.stringify(param) )
 				// return;

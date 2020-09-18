@@ -210,7 +210,7 @@
 					createUser: "",
 					createUserId: localStorage.getItem("userId"),
 				},
-				// createDate:'',
+				
 				
 				list: [{
 						value: '0',
@@ -330,7 +330,7 @@
 				this.regionaStatus = false;
 				let map = '';
 				data.forEach(item => {
-					console.log('data', item);
+					// console.log('data', item);
 					if (item != '' && item != '请选择') {
 						if (map != '') {
 							map = map + '/' + item
@@ -360,7 +360,7 @@
 									this.transactionTypeCode = this.agriCategory[i].value;
 								}
 							}
-							// this.transactionCategoryName = this.agriType[result.transactionCategoryCode].text;
+							
 							for(let i =0 ; i<this.agriType.length;i++){
 								if(this.agriType[i].value == result.transactionCategoryCode){
 									this.transactionCategoryName  = this.agriType[i].text;
@@ -370,7 +370,6 @@
 							this.value = result.beginDate +"至"+ result.endDate
 							this.beginDate = result.beginDate 
 							this.endTime = result.endDate 
-							// this.createDate=result.createDate
 							if(result.isFace == "0"){
 								this.agr.isFace ='面议';
 							}else{
@@ -525,14 +524,14 @@
 					id:this.id,
 					status:this.agr.status,
 					days:this.agr.days,
-					// createDate:this.createDate
+					
 				}
 				uni.request({
 					method: 'GET', //请求方式
 					data: param, //请求数据
 					url: ApiPath.url.updateMachine, //请求接口路径
 					success: (res) => { //成功返回结果方法
-					alert(1111)
+					
 						this.show = false
 						if (res.data.state == 0) {
 							uni.showToast({

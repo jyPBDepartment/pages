@@ -302,7 +302,7 @@
 				//粮食买卖详情跳转
 				if (this.index1 == 1) {
 					uni.navigateTo({
-						url: '../grain/space?id=' + getId+'&isMain=1'
+						url: '../grain/space?id=' + getId
 					})
 				}
 				//农服发布详情跳转

@@ -108,6 +108,9 @@
 		},
 		{
 			"path": "pages/grain/agrUpdateInfo"  //农服修改信息
+		},
+		{
+			"path": "pages/grain/cornUpdateInfo"  //农服修改信息
 		}
 		
 

@@ -47,10 +47,10 @@
 				</view>
 				<view v-if="isDisplay!==0" class="btn g-flex" >
 					<view class="g-f-1">
-						<u-button @click="cencal(true)" shape="circle">取消</u-button>
+						<u-button @click="cencal(true)" shape="circle">取消发布</u-button>
 					</view>
 					<view class="g-f-1">
-						<u-button @click="update" type="error" shape="circle">修改信息</u-button>
+						<u-button @click="updateInfo(id)" type="error" shape="circle">修改信息</u-button>
 					</view>
 				</view>
 				<view v-else></view>
@@ -92,14 +92,18 @@
 				url: '',
 				name: '',
 				isDisplay: 0,//默认不显示信息
-				isMain: "1",
-				id:''
+				// isMain: "1",
+				id:'',
+				status:'',
+				reason:''
 			};
 		},
+		//页面初始化
 		onLoad(e) {
-			this.isMain = e.isMain;
+			// this.isMain = e.isMain;
+			
+			this.findMineId(e.id);
 			this.id=e.id;
-			this.findMineId(e.id)
 		},
 		methods: {
 			//查看详情
@@ -147,9 +151,9 @@
 					}
 				})
 			},
-			update(){
+			updateInfo(getId){
 				uni.navigateTo({
-					url: '/pages/grain/grainTrade?id=' +this.id
+					url: '/pages/grain/cornUpdateInfo?id=' +getId
 				})
 			},
 			//先获取当前的current
@@ -175,9 +179,43 @@
 			cencal(e) {
 				this.cencalIsShow = e
 			},
-			confirm(e) {
-				console.log(e)
-			},
+			//取消发布
+			confirm(val) {
+				if(val =='')
+				{
+					uni.showModal({
+						title: "请输入取消原因"
+					})
+					return false;
+				}
+				let param = {
+					id:this.id,
+					status:this.status,
+					reason:val
+				}
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.cancelPub,
+					success: (res) => {
+						if (res.data.state == 0) {
+							uni.showToast({
+								title: "取消发布成功！"
+							})
+							//取消跳转
+							uni.navigateTo({
+								url: "../catalog/agriculturalMachinery"
+							})
+						}else{
+							uni.showToast({
+								title: "取消发布失败，请联系管理员！"
+							})
+						}
+					}
+				})
+				this.cencalIsShow=false
+			}
+		
 		}
 	}
 </script>
