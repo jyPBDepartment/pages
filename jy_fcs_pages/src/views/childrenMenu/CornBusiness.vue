@@ -158,8 +158,8 @@ export default {
         { value: "", label: "全部" },
         { value: "0", label: "待审核" },
         { value: "1", label: "审核通过" },
-        { value: "2", label: "审核拒绝" }
-       
+        { value: "2", label: "审核拒绝" },
+        { value: "3", label: "已取消" }
       ],
     };
   },

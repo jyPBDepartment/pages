@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="60%"
+    width="640px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -16,21 +16,58 @@
         ref="editForm"
         :model="editForm"
         :label-position="labelPosition"
-        label-width="130px"
+        label-width="100px"
+        class="form"
       >
         <el-form-item label="名称" prop="name">
           <el-input
             type="text"
             v-model="editForm.name"
-            placeholder="请输入名称（不超过10个字符）"
-            style="width:70%;"
+            placeholder="请输入名称"
+             size="small"
             :maxlength="10"
           ></el-input>
         </el-form-item>
+          <el-form-item label="关键词" prop="keyCodes" class="second">
+          <el-select v-model="editForm.keyCodes" multiple  placeholder="请选择" size="small">
+            <el-option
+              v-for="item in keyOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="option"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+          <el-form-item label="农作物种类" prop="classiCode">
+          <el-select v-model="editForm.classiCode" placeholder="请选择" size="small">
+            <el-option
+              v-for="item in cropsOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="option"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="病虫害种类" prop="classiDipCode" class="second">
+          <el-select v-model="editForm.classiDipCode" placeholder="请选择" size="small">
+            <el-option
+              v-for="item in dipOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="option"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="图片" prop="imgUrl">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
-            style="width:81%;margin-top:-38px;"
+            style="width:398px;margin-top:-38px;"
             class="upload-demo"
             :action="upload"
             :on-preview="handlePreview"
@@ -43,44 +80,14 @@
             :beforeUpload="beforeAvatarUpload"
           >
             <el-button size="small" type="primary" style="width:150%;" icon="el-icon-plus">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1M</div>
+            <div slot="tip" class="tips">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="农作物种类编码" prop="classiCode">
-          <el-select v-model="editForm.classiCode" placeholder="请输入农作物种类编码" style="width:70%;">
-            <el-option
-              v-for="item in cropsOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="病虫害种类编码" prop="classiDipCode">
-          <el-select v-model="editForm.classiDipCode" placeholder="请输入病虫害种类编码" style="width:70%;">
-            <el-option
-              v-for="item in dipOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="关键词" prop="keyCodes">
-          <el-select v-model="editForm.keyCodes" multiple  placeholder="请选择关键词" style="width:70%;">
-            <el-option
-              v-for="item in keyOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="文章内容" prop="describetion">
+      
+        <el-form-item label="文章内容" prop="describetion" class="article"></el-form-item>
+          <el-form-item style="margin-left:-75px;">
           <div class="edit_container">
-            <el-card style="height: 510px;width:70%">
+            <el-card style="height: 450px;width:508px;">
               <!-- 图片上传组件辅助-->
               <el-upload
                   class="avatar-uploader quill-img"
@@ -93,7 +100,7 @@
               <quill-editor
                 v-model="editForm.describetion"
                 ref="myQuillEditor"
-                style="height: 500px;width:100%"
+                style="height: 280px;width:100%"
                 :options="editorOption"
               ></quill-editor>
             </el-card>
@@ -108,7 +115,7 @@
         icon="el-icon-check"
         @click="saveCaseInfo('editForm')"
         size="medium"
-        :disabled="isDisable"
+        v-loading.fullscreen.lock="fullscreenLoading"
       >保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
@@ -139,8 +146,8 @@ export default {
   },
   data() {
     return {
-      isDisable: false,
       labelPosition: "right",
+       fullscreenLoading: false,
       editForm: {
         name: "",
         url: "",
@@ -162,12 +169,12 @@ export default {
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
         classiCode: [
-          { required: true, message: "请输入农作物种类编码", trigger: "blur" },
+          { required: true, message: "请选择农作物种类", trigger: "blur" },
         ],
         classiDipCode: [
           {
             required: true,
-            message: "请输入请输入病虫害种类编码",
+            message: "请选择病虫害种类",
             trigger: "blur",
           },
         ],
@@ -278,7 +285,7 @@ export default {
         .testAxiosGet(ApiPath.url.findAllCaseInfo, params)
         .then((res) => {
           if (res.state == "0") {
-            this.cropsOptions.push({ value: "", label: "请选择" });
+            // this.cropsOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
               this.cropsOptions.push({
                 value: res.data[i]["id"],
@@ -296,7 +303,7 @@ export default {
         .testAxiosGet(ApiPath.url.findAllCase, params)
         .then((res) => {
           if (res.state == "0") {
-            this.dipOptions.push({ value: "", label: "请选择" });
+            // this.dipOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
               this.dipOptions.push({
                 value: res.data[i]["id"],
@@ -334,10 +341,6 @@ export default {
           });
           return false;
       }
-        this.isDisable = true;
-        this.$refs[editData].validate((valid) => {
-          if (valid) {
-            if (this.imgUrl != "") {
               this.editForm.url = this.imgUrl;
               let keyArr = []
 						  for(var i = 0; i < this.editForm.keyCodes.length; i++) {
@@ -352,23 +355,23 @@ export default {
                 .testAxiosGet(ApiPath.url.saveCaseInfo, params)
                 .then((res) => {
                   let code = res.state;
-                  this.caseInfoForm.keyCodes = keyArr;
+                  this.editForm.keyCodes = keyArr;
                   this.$message.success(res.message);
                   // this.reload();
                   this.close();
                 })
                 .catch(function (err) {
-                  this.caseInfoForm.keyCodes = keyArr;
-                  this.isDisable = false;
+                  this.editForm.keyCodes = keyArr;
                 });
-            } else {
-              this.$message.error("请上传图片");
-              return;
-            }
-          } else {
-            return false;
-          }
-        });
+             this.fullscreenLoading = true;
+                setTimeout(() => {
+                this.editForm.name="";
+                this.editForm.classiCode="";
+                this.editForm.classiDipCode="";
+                this.fileList=[];
+                this.editForm.describetion="";
+                this.fullscreenLoading = false;
+              }, 500);
     },
     close: function () {
       this.$emit("close");
@@ -415,5 +418,31 @@ export default {
 .required {
   color: red;
   margin-left: -52px;
+}
+.option {
+  text-align: center;
+}
+.form {
+  padding-left: 20px;
+  padding-right: 0px;
+}
+.el-input {
+  width: 120px;
+}
+.el-select {
+  width: 120px;
+}
+.second {
+  margin-left: 280px;
+  margin-top: -62px;
+}
+.tips {
+  width: 198px;
+  margin-top: -41px;
+  margin-left: 166px;
+  font-size: 12px;
+}
+.article {
+  margin: -16px 0px -16px 216px;
 }
 </style>

@@ -35,7 +35,7 @@
                 <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url"></el-image>
             </td>
             <td class="title">描述</td>
-            <td class="content">
+            <td class="content" v-html="caseInfoForm.describetion">
                 {{caseInfoForm.describetion}}
             </td>
           </tr>

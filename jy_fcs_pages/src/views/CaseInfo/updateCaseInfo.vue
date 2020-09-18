@@ -85,7 +85,7 @@
         <el-form-item label="文章内容" prop="describetion" class="article"></el-form-item>
         <el-form-item style="margin-left:-75px;">
           <div class="edit_container">
-            <el-card style="height: 355px;width:508px;">
+            <el-card style="height: 450px;width:508px;">
               <!-- 图片上传组件辅助-->
               <el-upload
                   class="avatar-uploader quill-img"
@@ -98,7 +98,7 @@
               <quill-editor
                 v-model="caseInfoForm.describetion"
                 ref="myQuillEditor"
-                style="height: 280px;width:100%"
+                 style="height: 280px;width:100%"
                 :options="editorOption"
               ></quill-editor>
             </el-card>

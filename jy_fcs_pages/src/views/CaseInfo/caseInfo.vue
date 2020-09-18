@@ -15,27 +15,30 @@
           :maxlength="10"
           placeholder="请输入名称"
           class="el-input el-input--small"
+          style="width:200px;"
           clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="状态">
-        <el-select v-model="auditStatus" style="width:80%" size="small" clearable>
+        <el-select v-model="auditStatus" style="width:40%" size="small" clearable>
           <el-option
             v-for="item in statusOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
+             class="option"
           ></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item>
       <el-button type="warning" @click="search('manual')" size="small" icon="el-icon-search" class="height">查询</el-button>
       <el-button
         type="info"
         @click="resetRuleTag(search)"
         size="small"
         icon="el-icon-close"
-        class="height"
       >重置</el-button>
+      </el-form-item>
       <el-row>
         <el-button type="success" @click="openRuleTag" size="small" icon="el-icon-plus">添加</el-button>
       </el-row>
@@ -47,7 +50,7 @@
       <el-table-column prop="name" label="名称" align="center" min-width="100px" max-width="139px"></el-table-column>
       <el-table-column prop="url" label="图片" align="center" min-width="100px" max-width="135px">
         <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:100px;height:100px;"></el-image>
+          <el-image :src="scope.row.url" style="width:80px;height:80px;"></el-image>
         </template>
       </el-table-column>
       <el-table-column
@@ -65,7 +68,7 @@
         max-width="135px"
       ></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center" prop="auditStatus" label="状态" min-width="50" max-width="80px">
+      <el-table-column align="center" prop="auditStatus" label="状态" min-width="60" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -77,37 +80,37 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" width="150"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" width="150"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" min-width="120px" max-width="130px"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" min-width="120px" max-width="130px"></el-table-column>
       <el-table-column
         prop="createUser"
         label="创建人"
         align="center"
-        min-width="100px"
-        max-width="135px"
+        min-width="80px"
+        max-width="100px"
       ></el-table-column>
 
-      <el-table-column fixed="right" label="操作" align="center" style="width:120%">
+      <el-table-column fixed="right" label="操作" align="center" min-width="100px" max-width="120px">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
             type="primary"
             size="small"
             icon="el-icon-edit"
-            style="margin-bottom:5px"
+           
           >编辑</el-button>
           <el-button
             @click="deleteCase(scope)"
             type="danger"
             size="small"
             icon="el-icon-delete"
-            style="margin-left:0px;margin-bottom:5px"
+            
           >删除</el-button>
           <el-button
             @click="caseContent(scope)"
             type="primary"
             size="small"
-            style="margin-left:0px"
+            style="width:73px;text-align: center;"
           >查看详情</el-button>
         </template>
       </el-table-column>
@@ -361,6 +364,9 @@ export default {
 .el-table {
   background-color: #fff;
 }
+.el-button{
+  margin: 5px;
+}
 .el-row {
   margin-top: 2px;
   margin-bottom: 15px;
@@ -369,7 +375,12 @@ export default {
   font-size: 14px;
 }
 .height {
-  margin-top: 6px;
+  margin-top: 5px;
+  margin-left: -120px;
+}
+.option{
+ width:80px;
+ text-align:center;
 }
 </style>
 
