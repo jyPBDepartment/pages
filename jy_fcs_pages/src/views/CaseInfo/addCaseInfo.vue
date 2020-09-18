@@ -231,7 +231,7 @@ export default {
           type: "warning",
         });
       }
-      return extension || (extension2 && isLt2M);
+      return (extension || extension2) && isLt2M;
     },
     //logo图片
     uploadExceed(files, fileList) {
