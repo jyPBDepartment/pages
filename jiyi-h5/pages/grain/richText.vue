@@ -3,7 +3,7 @@
 		<HeaderSearch @searchCallback="search" :title="title"></HeaderSearch>
 		
 		<view>
-			<image :src="url"></image>
+			<image :src="url" style="width: 750rpx;height: 750rpx;"></image>
 		</view>
 		<view class="p-x-10" style="margin-top: 30rpx;">
 			<view v-html="demoHtml"></view>

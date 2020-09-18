@@ -102,7 +102,14 @@
 		},
 		{
 			"path": "pages/tabbar/use/index"  //我的页面
+		},
+		{
+			"path": "pages/grain/machineUpdateInfo"  //农机修改信息
+		},
+		{
+			"path": "pages/grain/agrUpdateInfo"  //农服修改信息
 		}
+		
 
 	],
 	"globalStyle": {

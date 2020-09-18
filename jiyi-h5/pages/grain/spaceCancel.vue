@@ -33,11 +33,6 @@
 					<span v-if="isFace=='0'">面议</span>
 					<span v-if="isFace=='1'">￥{{price}}/亩</span>
 				</view>
-				<!-- <view class="labels g-flex" style="margin:20rpx 0rpx;">
-					<view class="label f-12">
-						{{labelCode}}
-					</view>
-				</view> -->
 				<view class="info  g-flex ">
 				     <view class="text g-f-1  g-a-c g-flex g-j-s-b f-12" style="margin-bottom:20rpx;">
 					   <view>型号：{{model}}</view>
@@ -66,7 +61,7 @@
 						<u-button @click="cencal(true)" shape="circle">取消发布</u-button>
 					</view>
 					<view  class="g-f-1">
-						<u-button type="error" shape="circle">修改信息</u-button>
+						<u-button type="error" shape="circle"  @click="updateInfo(id)">修改信息</u-button>
 					</view>
 				</view>
 			</view>
@@ -104,14 +99,18 @@
 				descrip:'',
 				isFace:'',
 				name:'',
+				reason:'',
+				id:'',
+				status:'',
 				isDisplay: 0,//默认不显示信息
-				isMain: "1"
+				// isMain: "1"
 			};
 		},
 		//页面初始化
 		onLoad(e) {
-			this.isMain = e.isMain;
+			// this.isMain = e.isMain;
 			this.findMineId(e.id)
+			this.id=e.id
 		},
 		methods: {
 			//查看详情
@@ -124,7 +123,6 @@
 					data: param, //请求数据
 					url: ApiPath.url.findMineId, //请求接口路径
 					success: (res) => { //成功返回结果方法
-					console.log(res.data.data)
 						this.transactionTypeCode = res.data.data.transactionTypeCode
 						this.machineType = res.data.data.machineType
 						this.labelCode = res.data.data.labelCode
@@ -136,12 +134,14 @@
 						this.price = res.data.data.price
 						this.isFace = res.data.data.isFace
 						this.name = res.data.data.name
-						if (this.isMain=='1') {
-							this.isDisplay = 1
-						} else {
-							this.isDisplay = 0
+						// if (this.isMain=='1') {
+						// 	this.isDisplay = 1
+						// } else {
+						// 	this.isDisplay =0
+						// }
+						if(res.data.data.status!=0 && res.data.data.status!=3){
+							this.isDisplay=1
 						}
-						
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {
 							this.banner.push({
@@ -154,9 +154,53 @@
 			cencal(e) {
 				this.cencalIsShow = e
 			},
-			confirm(e) {
-				console.log(e)
+			//取消发布
+			confirm(val) {
+				if(val =='')
+				{
+					uni.showModal({
+						title: "请输入取消原因"
+					})
+					return false;
+				}
+				let param = {
+					id:this.id,
+					status:this.status,
+					reason:val
+				}
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.cancelPub,
+					success: (res) => {
+						if (res.data.state == 0) {
+							uni.showToast({
+								title: "取消发布成功！"
+							})
+							//取消跳转
+							uni.navigateTo({
+								url: "../catalog/agriculturalMachinery"
+							})
+						}else{
+							uni.showToast({
+								title: "取消发布失败，请联系管理员！"
+							})
+						}
+					}
+				})
+				this.cencalIsShow=false
 			},
+			//修改信息跳转
+		updateInfo(getId) {			
+				
+				uni.navigateTo({
+					
+					url: '/pages/grain/machineUpdateInfo?id=' +getId
+				})
+				
+			
+			},
+			
 			//先获取当前的current
 			getCurrent: function(e) {
 				this.current = e.detail.current

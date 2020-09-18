@@ -8,7 +8,7 @@
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容(最多输入20字)" maxlength="20" :clearable="false" v-model="name" height="64" />
+					<u-input placeholder="输入内容(最多输入10字)" maxlength="10" :clearable="false" v-model="name" height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
@@ -40,19 +40,7 @@
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
-			<!-- <view class="g-flex p-y-10 g-a-c">
-				<span style="color: #ff0000;">*</span>
-				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
-					类型
-				</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="transactionTypeName" @change="radioGroupChange">
-						<u-radio @change="radioChange(index)" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
-				</view>
-			</view> -->
+		
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
@@ -71,7 +59,7 @@
 					<u-col>
 						<view v-if="isFace == '定价'">
 							<u-input style="width: 220rpx;" placeholder="输入价格" border="" v-model="price" height="64" />
-							<view style="font-size: 16rpx;">元/斤</view>
+							<view style="font-size:13px;margin-top: -52rpx;margin-left: 200rpx;color: #cdc4d7;">元/斤</view>
 						</view>
 					</u-col>
 				</u-row>

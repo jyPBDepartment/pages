@@ -8,12 +8,12 @@
 					<view class="image" :class="`${item.stateNum == 1 && 'green' } ${item.stateNum == 2 && ' red'}`">
 						<image class="app-img" :src="item.imageUrl" style="width: 200rpx;height: 200rpx;"></image>
 					</view>
-					<view class="info g-f-1">
-						<view class="title f-14 g-flex" style="margin-bottom: -20rpx;">
-							<view class="o-e" style="width: 300rpx;">
+					<view class="info g-f-1"  >
+						<view class=" f-12  other g-a-c g-flex g-j-s-b">
+							<view class="o-e" >
 								{{item.name}}
 							</view>
-							<view class="price f-14">
+							<view class="price f-12 other g-a-c g-flex g-j-s-b">
 								<span v-if="item.isFace=='0'">面议</span>
 								<span v-if="item.isFace=='1'">￥{{item.price}}{{company}}</span>
 							</view>
@@ -25,7 +25,7 @@
 							</view>
 						</view>
 						<!-- 农机地址 -->
-						<view class="other g-a-c g-flex g-j-s-b " style="font-size: smaller;" v-if="index1==0">
+						<view class="other g-a-c g-flex g-j-s-b " v-if="index1==0">
 							地址：{{item.address}}
 						</view>
 						<!--粮食买卖 -->
@@ -120,6 +120,10 @@
 						name: "拒绝通过"
 					},
 					{
+						code: 3,
+						name: "已取消"
+					},
+					{
 						code: "",
 						name: "全部"
 					},
@@ -143,7 +147,7 @@
 					}
 				},
 				list: [],
-				listIndex: 3,
+				listIndex: 4,
 				show: false,
 				maskAble: false
 			}
@@ -292,7 +296,7 @@
 				//农机发布详情跳转
 				if (this.index1 == 0) {
 					uni.navigateTo({
-						url: '../grain/spaceCancel?id=' + getId+'&isMain=1'
+						url: '../grain/spaceCancel?id=' + getId
 					})
 				}
 				//粮食买卖详情跳转
@@ -357,6 +361,7 @@
 
 			.other {
 				line-height: 40rpx;
+				margin-bottom: 10rpx;
 			}
 		}
 

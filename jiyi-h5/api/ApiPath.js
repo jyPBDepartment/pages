@@ -115,6 +115,10 @@ const url = {
       findFarmWorkById: URLHost + '/farmwork/findDetail',
       //意向用户待确认变确认
       userUpdateStatus: URLHost + '/farmwork/confirm',
+	  //我的页面农机取消发布
+	  cancelPub:URLHost + '/agricultural/unpublish',
+	  //农机修改
+	  updateMachine:URLHost + '/agricultural/update',
 }
 export default {
 	url,common,md5,extendUrl

@@ -46,9 +46,9 @@
 					</view>
 				</view>
 				<view v-if="isDisplay!==0" class="btn g-flex" >
-					<!-- <view class="g-f-1">
+					<view class="g-f-1">
 						<u-button @click="cencal(true)" shape="circle">取消</u-button>
-					</view> -->
+					</view>
 					<view class="g-f-1">
 						<u-button @click="update" type="error" shape="circle">修改信息</u-button>
 					</view>
@@ -130,10 +130,13 @@
 						this.isFace = res.data.data.isFace
 						// this.url = res.data.data.url
 						this.name = res.data.data.name
-						if (this.isMain=='1') {
-							this.isDisplay = 1
-						} else {
-							this.isDisplay = 0
+						// if (this.isMain=='1') {
+						// 	this.isDisplay = 1
+						// } else {
+						// 	this.isDisplay = 0
+						// }
+						if(res.data.data.status!=0 && res.data.data.status!=3){
+							this.isDisplay=1
 						}
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {

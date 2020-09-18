@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderSearch title="农服" @searchCallback="search"></HeaderSearch>
+		<HeaderSearch title="农服详情修改" @searchCallback="search"></HeaderSearch>
 		<view class="p-x-10">
 			<view class="g-flex p-y-10 g-a-c" style="border-bottom: 1rpx solid #999;">
 				<span style="color: #FA3534;">*</span>
@@ -8,7 +8,7 @@
 					标题
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容(最多输入10字)" :clearable="false" v-model="name" maxlength="10" height="64" />
+					<u-input placeholder="输入内容(最多输入10字)" :clearable="false" v-model="agr.name" maxlength="10" height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
@@ -17,7 +17,7 @@
 					描述
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" maxlength="500" :clearable="false" v-model="descrip"
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" maxlength="500" :clearable="false" v-model="agr.descrip"
 					 height="200" />
 				</view>
 			</view>
@@ -27,7 +27,7 @@
 					农服图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess"
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" list-type="picture" :on-exceed="uploadExceed"
 					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
@@ -75,7 +75,7 @@
 					农机台数
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="machineNum" border height="64" maxlength="10" />
+					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="agr.machineNum" border height="64" maxlength="10" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -86,7 +86,7 @@
 				<u-row :gutter="6">
 					<u-col>
 						<view class="info g-f-1" style="position: relative;margin-bottom: 10rpx;">
-							<u-radio-group v-model="isFace" @change="radioGroupChange1">
+							<u-radio-group v-model="agr.isFace" @change="radioGroupChange1">
 								<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
 									{{item.name}}
 								</u-radio>
@@ -94,8 +94,8 @@
 						</view>
 					</u-col>
 					<u-col>
-						<view v-if="isFace == '定价'">
-							<u-input style="width: 220rpx;" placeholder="输入价格" border="" v-model="price" height="64" />
+						<view v-if="agr.isFace == '定价'">
+							<u-input style="width: 220rpx;" placeholder="输入价格" border="" v-model="agr.price" height="64" />
 							<view style="font-size:13px;margin-top: -52rpx;margin-left: 200rpx;color: #cdc4d7;">元/天</view>
 						</view>
 					</u-col>
@@ -110,7 +110,7 @@
 					农活方式
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="farmingMode" @change="radioGroupChange">
+					<u-radio-group v-model="agr.farmingMode" @change="radioGroupChange">
 						<u-radio @change="radioChange(index)" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
 							{{item.name}}
 						</u-radio>
@@ -123,7 +123,7 @@
 					联系人
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系人" :clearable="false" :focus="true" v-model="contactsUser" border height="64" />
+					<u-input placeholder="请输入联系人" :clearable="false" :focus="true" v-model="agr.contactsUser" border height="64" />
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
@@ -132,7 +132,7 @@
 					联系电话
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-input type="number" maxlength="11" placeholder="请输入联系电话,仅限数字" :clearable="false" :focus="true" v-model="contactsPhone"
+					<u-input type="number" maxlength="11" placeholder="请输入联系电话,仅限数字" :clearable="false" :focus="true" v-model="agr.contactsPhone"
 					 border height="64" />
 				</view>
 			</view>
@@ -142,13 +142,13 @@
 					区域
 				</view>
 				<view class=" info g-f-1" style="position: relative;">
-					<u-input placeholder="请选择" v-model="address" type="select" border @click="regionaStatus = true" />
+					<u-input placeholder="请选择" v-model="agr.address" type="select" border @click="regionaStatus = true" />
 				</view>
 			</view>
-			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
+			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="updateMachine">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change">
+		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change" active-bg-color="#42b983" btn-type="success">
 			<view slot="tooltip">
 				<view class=" t-c p-y-10" style="color: #2979FF">
 					请选择时间
@@ -176,28 +176,42 @@
 				dateShow: false,
 				action: ApiPath.url.uploadImg,
 				fileList: [],
-				name: '',
-				descrip: '',
 				transactionTypeName: '',
-				transactionTypeCode: '',
-				transactionCategoryCode: '',
 				transactionCategoryName: '',
-				machineNum: '',
-				isFace: "面议",
 				isFaceCode: "",
-				price: '',
-				farmingMode: '整活',
 				farmingModeCode: '',
-				contactsUser: '',
-				contactsPhone: '',
-				address: '',
 				beginDate: '',
 				endTime: '',
-				url: [],
-				u: [],
 				value: '',
-				createUser: "",
-				createUserId: localStorage.getItem("userId"),
+				id:'',
+				url: [],
+				u:[],
+				agr:{
+					name: '',
+					descrip: '',
+					
+					transactionTypeCode: '',
+					transactionCategoryCode: '',
+				
+					machineNum: '',
+					isFace: "面议",
+					
+					price: '',
+					farmingMode: "整活",
+					
+					contactsUser: '',
+					contactsPhone: '',
+					address: '',
+					days:'',
+					url: [],
+					u: [],
+					// path:[],
+					status:'',
+					createUser: "",
+					createUserId: localStorage.getItem("userId"),
+				},
+				// createDate:'',
+				
 				list: [{
 						value: '0',
 						name: '整活',
@@ -256,26 +270,32 @@
 				maskAble: false
 			};
 		},
-		onLoad() {
+		onLoad(e) {
 			// alert(localStorage.getItem("userId"))
 			// 设置干活时间选择日历的最小开始时间
 			this.currentDate = new Date().toISOString().slice(0, 10)
 			setTimeout(() => {
 				this.$refs.region.getScreen();
 			}, 1000)
-
+			this.findMineId(e.id);
+			this.id=e.id;
 		},
 		onReady() {
 
 		},
 		methods: {
 			remove(index, lists) {
-				this.url.splice(index, 1);
+				this.u.splice(index, 1);
 			},
 			uploadSuccess(data, index, lists, name) {
+			
 				this.url.push(data.url)
-				this.show = false;
 				this.u = this.url;
+				this.show = false;
+			},
+			uploadExceed(files, fileList) {
+			    this.$message.error("只能上传五张图片，如需修改请先删除图片！");
+			    return;
 			},
 			onChoose(lists, name) {
 				this.show = true;
@@ -295,6 +315,7 @@
 			actionSheetCallback1(index) {
 				this.transactionTypeName = this.agriCategory[index].text;
 				this.transactionTypeCode = this.agriCategory[index].value;
+				
 			},
 			radioChange(index) {},
 			// 选中任一radio时，由radio-group触发
@@ -318,11 +339,74 @@
 						}
 					}
 				});
-				this.address = map;
+				this.agr.address = map;
 			},
-			//发布方法
-			deploy() {
-				if (this.name == '') {
+			//修改前查询
+			findMineId(val) {				
+				uni.request({
+					method: "GET",
+					data: {
+						"id": val
+					},
+					url: ApiPath.url.findMineId,
+					success: (res) => {
+					
+						if(res.data.state == 0){
+							let result = res.data.data;
+							this.agr = result;
+							for(let i =0 ; i<this.agriCategory.length;i++){
+								if(this.agriCategory[i].value == result.transactionTypeCode){
+									this.transactionTypeName  = this.agriCategory[i].text;
+									this.transactionTypeCode = this.agriCategory[i].value;
+								}
+							}
+							// this.transactionCategoryName = this.agriType[result.transactionCategoryCode].text;
+							for(let i =0 ; i<this.agriType.length;i++){
+								if(this.agriType[i].value == result.transactionCategoryCode){
+									this.transactionCategoryName  = this.agriType[i].text;
+									this.transactionCategoryCode = this.agriType[i].value;
+								}
+							}
+							this.value = result.beginDate +"至"+ result.endDate
+							this.beginDate = result.beginDate 
+							this.endTime = result.endDate 
+							// this.createDate=result.createDate
+							if(result.isFace == "0"){
+								this.agr.isFace ='面议';
+							}else{
+								this.agr.isFace ='定价';
+								this.agr.price =result.price;								
+							}
+							if(result.farmingMode == "0"){
+								this.agr.farmingMode ='整活';
+							}else{
+								this.agr.farmingMode ='零活';						
+							}
+							
+							let url = [];
+							let path = "";
+							for(let i=0;i<res.data.dataPic.length;i++){
+								url.push({'url':res.data.dataPic[i]['picUrl']});
+								if(i==res.data.dataPic.length){
+									path=path+","+res.data.dataPic[i]['picUrl'];
+								}else{
+									path=path+res.data.dataPic[i]['picUrl'];
+								}
+								
+							}
+							this.fileList=url;
+							this.u = path
+							
+						}
+					},
+					fail: (err) => {
+			
+					}
+				})
+			},
+			//修改方法
+			updateMachine() {
+				if (this.agr.name == '') {
 					uni.showToast({
 						title: "请输入标题"
 					})
@@ -341,54 +425,54 @@
 					})
 					return false;
 				}
-				if (this.transactionTypeCode == '') {
+				if (this.agr.transactionTypeCode == '') {
 					uni.showToast({
 						title: "请选择农作物类型"
 					})
 					return false;
 				}
-				if (this.transactionCategoryCode == '') {
+				if (this.agr.transactionCategoryCode == '') {
 					uni.showToast({
 						title: "请选择农作物类别"
 					})
 					return false;
 				}
-				if (this.machineNum == '') {
+				if (this.agr.machineNum == '') {
 					uni.showToast({
 						title: "请输入农机台数"
 					})
 					return false;
 				}
-				if(this.isFace=="定价"){
-					if (!/^\d+(\.\d{1})?$/.test(this.price)) {
+				if(this.agr.isFace=="定价"){
+					if (!/^\d+(\.\d{1})?$/.test(this.agr.price)) {
 						uni.showToast({
 							title: "价格只允许一位小数"
 						})
 						return false;
 					}
 				}else{
-					this.price ="0"
+					this.agr.price ="0"
 				}
 				
-				if (this.contactsUser == '') {
+				if (this.agr.contactsUser == '') {
 					uni.showToast({
 						title: "请输入联系人"
 					})
 					return false;
 				}
-				if (this.contactsPhone == '') {
+				if (this.agr.contactsPhone == '') {
 					uni.showToast({
 						title: "请输入联系电话"
 					})
 					return false;
 				}
-				if (this.contactsPhone == '' || !/^1[345789]\d{9}$/.test(this.contactsPhone)) {
+				if (this.agr.contactsPhone == '' || !/^1[345789]\d{9}$/.test(this.agr.contactsPhone)) {
 					uni.showToast({
 						title: "请输入正确的联系电话"
 					})
 					return false;
 				}
-				if (this.address == '') {
+				if (this.agr.address == '') {
 					uni.showToast({
 						title: "请选择干活区域"
 					})
@@ -397,22 +481,23 @@
 
 				//判断农活方式，并解析码值
 				for (let i = 0; i < this.list.length; i++) {
-					if (this.list[i].name == this.farmingMode) {
+					if (this.list[i].name == this.agr.farmingMode) {
 						this.farmingModeCode = this.list[i].name;
-						this.farmingMode = this.list[i].value;
+						this.agr.farmingMode = this.list[i].value;
 					}
 				}
 				//判断是否面议，并解析码值
 				for (let j = 0; j < this.list1.length; j++) {
-					if (this.list1[j].name == this.isFace) {
+					if (this.list1[j].name == this.agr.isFace) {
 						this.isFaceCode = this.list1[j].value;
-						this.isFace = this.list1[j].name;
+						this.agr.isFace = this.list1[j].name;
 					}
 				}
-				this.show = true;
+				// this.show = true;
 				//传递多个图片
 				let addItem = "";
 				let add = [];
+			
 				for (let i = 0; i < this.u.length; i++) {
 					add.push(this.u[i]);
 				}
@@ -420,29 +505,34 @@
 				// alert("农服>>发布人id"+ApiPath.common.userId)
 				this.show = true;
 				let param = {
-					name: this.name,
-					descrip: this.descrip,
+					name: this.agr.name,
+					descrip: this.agr.descrip,
 					transactionTypeCode: this.transactionTypeCode,
 					transactionCategoryCode: this.transactionCategoryCode,
-					machineNum: this.machineNum,
+					machineNum: this.agr.machineNum,
 					isFace: this.isFaceCode,
-					price: this.price,
-					farmingMode: this.farmingMode,
-					contactsUser: this.contactsUser,
-					contactsPhone: this.contactsPhone,
-					address: this.address,
+					price: this.agr.price,
+					farmingMode: this.agr.farmingMode,
+					contactsUser: this.agr.contactsUser,
+					contactsPhone: this.agr.contactsPhone,
+					address: this.agr.address,
 					url: this.u,
 					beginDate: this.beginDate,
 					endDate: this.endTime,
-					createUser: this.createUser,
-					createUserId: this.createUserId,
+					createUser: this.agr.createUser,
+					createUserId: this.agr.createUserId,
 					addItem: addItem,
+					id:this.id,
+					status:this.agr.status,
+					days:this.agr.days,
+					// createDate:this.createDate
 				}
 				uni.request({
 					method: 'GET', //请求方式
 					data: param, //请求数据
-					url: ApiPath.url.deploy, //请求接口路径
+					url: ApiPath.url.updateMachine, //请求接口路径
 					success: (res) => { //成功返回结果方法
+					alert(1111)
 						this.show = false
 						if (res.data.state == 0) {
 							uni.showToast({
@@ -462,9 +552,9 @@
 							})
 						}
 					},
-					fail: (err) => {
-						this.show = false;
-					}
+					// fail: (err) => {
+					// 	this.show = false;
+					// }
 				})
 			}
 		}
