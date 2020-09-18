@@ -381,6 +381,7 @@ export default {
 .option{
  width:80px;
  text-align:center;
+ height:30px;
 }
 </style>
 
