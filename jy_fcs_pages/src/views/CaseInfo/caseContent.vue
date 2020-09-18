@@ -42,53 +42,6 @@
           
         </tbody>
       </table>
-      <!-- <el-form
-        ref="caseInfoForm"
-        :model="caseInfoForm"
-        label-width="120px"
-        :label-position="labelPosition"
-        @submit.native.prevent
-      >
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="病虫害名称:" style=" width:70%;">
-              <span>{{caseInfoForm.name}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="病虫害状态:">
-              <span v-if="caseInfoForm.auditStatus=='1'">启用</span>
-              <span v-if="caseInfoForm.auditStatus=='0'">禁用</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="60">
-          <el-col :span="10">
-            <el-form-item label="农作物种类:">
-              <span>{{caseInfoForm.cropsTypeCode}}</span>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="病虫害种类:">
-              <span>{{caseInfoForm.dipTypeCode}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item label="病虫害图片:">
-          <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url" readonly></el-image>
-        </el-form-item>
-
-        <el-form-item label="描述" class="bottom" >
-          <el-card style="height: 510px;width:70%">
-            <quill-editor
-              v-model="caseInfoForm.describetion"
-              ref="myQuillEditor"
-              style="height: 500px;width:100%"
-              disabled
-            ></quill-editor>
-          </el-card>
-        </el-form-item>
-      </el-form> -->
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
