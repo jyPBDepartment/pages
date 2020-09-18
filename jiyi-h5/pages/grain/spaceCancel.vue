@@ -179,7 +179,7 @@
 							})
 							//取消跳转
 							uni.navigateTo({
-								url: "../catalog/agriculturalMachinery"
+								url: "../catalog/agriculturalMachinery?index=0"
 							})
 						}else{
 							uni.showToast({
