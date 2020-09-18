@@ -3,9 +3,9 @@
 		<HeaderSearch hideBack title="我的"></HeaderSearch>
 		<view class="content">
 			<!-- 顶部 -->
-			<!-- <view class="first g-flex g-a-c"> -->
-			<!-- <u-image src="https://cdn.uviewui.com/uview/example/fade.jpg" shape="circle" style="width: 132rpx;height: 132rpx;margin: 16rpx 0rpx 0rpx 0rpx;"></u-image> -->
-			<!-- <view class="name g-f-1 f-16">
+			<!-- <view class="first g-flex g-a-c">
+			<u-image src="https://cdn.uviewui.com/uview/example/fade.jpg" shape="circle" style="width: 132rpx;height: 132rpx;margin: 16rpx 0rpx 0rpx 0rpx;"></u-image>
+			<view class="name g-f-1 f-16">
 					{{nc}}
 				</view> -->
 			<!-- <view class="icon g-flex">
@@ -132,11 +132,11 @@
 					url: url
 				})
 			},
-			concat() {
-				uni.navigateTo({
-					url: "../../window/index/index?userId=123456"
-				})
-			}
+			// concat() {
+			// 	uni.navigateTo({
+			// 		url: "../../window/index/index?userId=123456"
+			// 	})
+			// }
 		}
 	}
 </script>

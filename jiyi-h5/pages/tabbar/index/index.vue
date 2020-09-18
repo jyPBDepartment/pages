@@ -137,31 +137,36 @@
 					"SI": ss,
 					"S": sign
 				}
-				// uni.request({
-				// 	method: 'POST',
-				// 	url: Interface.extendUrl.findCustmerInfo,
-				// 	data: param,
-				// 	success: (res) => {
-				// 		// alert(JSON.stringify(res))
-				// 		let code = res.data.RETURNRESULT.RESULT;
-				// 		let message = res.data.RETURNRESULT.RETCODE;
-				// 		if (code == "1") {
-				// 			// alert("成功返回")
-				// 			// 昵称
-				// 			Interface.common.nc = res.data.RETURNRESULT.NN;
-				// 			// alert("昵称："+Interface.common.nc)
-				// 		}
-				// 		if (code == "-1") {
-				// 			// alert("失败")
-				// 		}
-				// 		if (code == "0") {
-				// 			// alert("处理中")
-				// 		}
-				// 		if (code == "2") {
-				// 			// alert("异常")
-				// 		}
-				// 	}
-				// })
+				uni.request({
+					method: 'POST',
+					url: Interface.extendUrl.findCustmerInfo,
+					// url: Interface.ProxyHost,
+					data: param,
+					header: {
+						"Content-Security-Policy": "upgrade-insecure-requests"
+					},
+					success: (res) => {
+						alert(JSON.stringify(res))
+						let code = res.data.RETURNRESULT.RESULT;
+						let message = res.data.RETURNRESULT.RETCODE;
+						
+						if (code == "1") {
+							// alert("成功返回")
+							// 昵称
+							Interface.common.nc = res.data.RETURNRESULT.NN;
+							// alert("昵称："+Interface.common.nc)
+						}
+						if (code == "-1") {
+							// alert("失败")
+						}
+						if (code == "0") {
+							// alert("处理中")
+						}
+						if (code == "2") {
+							// alert("异常")
+						}
+					}
+				})
 			},
 			// 初始化加载模块信息
 			initModuleInfo() {
@@ -361,13 +366,13 @@
 			// 粮食买卖详情跳转
 			detailsMm(val) {
 				uni.navigateTo({
-					url: '/pages/grain/space?id=' + val +'&isMain=0'
+					url: '/pages/grain/space?id=' + val + '&isMain=0'
 				})
 			},
 			// 农机详情跳转
 			detailsNj(val) {
 				uni.navigateTo({
-					url: '/pages/grain/spaceCancel?id=' + val+'&isMain=0'
+					url: '/pages/grain/spaceCancel?id=' + val + '&isMain=0'
 				})
 			},
 			// 病虫害详情跳转

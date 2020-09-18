@@ -51,7 +51,8 @@
 		watch:{
 		  $route(to,from){
 			if(to.path.indexOf("release")>-1){
-				this.isShow=false;
+				// this.moduleShow();
+				// this.isShow=false;
 			}
 		  }
 		},
@@ -103,8 +104,9 @@
 			},
 			link(val){
 				uni.navigateTo({
-					url: this.url+"?type="+val //跳转地址
-				})
+					url: this.url+"?type="+val ,//跳转地址
+				});
+				this.isShow=false;
 			},
 			close(){
 				this.url="";//关闭时清空路径
