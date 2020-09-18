@@ -58,23 +58,27 @@
     },
     "h5" : {
         "devServer" : {
+            "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
-                    "target" : "https://www.ucharts.cn",
+                    "target" : "http://112.126.103.106:16302",
                     "changeOrigin" : true, //是否跨域
-                    "secure" : true, // 设置支持https协议的代理
+                    "secure" : false, // 设置支持https协议的代理
                     "pathRewrite" : {
-                        "^/api" : "/"
+                        "^/api" : ""
                     }
                 }
             },
-            "port" : 8001
+            "port" : 80
         },
-        "domain" : "112.126.103.106:16302",
+        "domain" : "hnser.jiyinongye.com/hn",
         "router" : {
             "base" : "./",
             "mode" : "hash"
         },
-        "title" : "农服系统"
+        "title" : "农服系统",
+        "uniStatistics" : {
+            "enable" : false
+        }
     }
 }

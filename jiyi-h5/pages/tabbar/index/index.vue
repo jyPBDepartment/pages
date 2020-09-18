@@ -137,16 +137,18 @@
 					"SI": ss,
 					"S": sign
 				}
+				
+				console.log(JSON.stringify(param))
 				uni.request({
 					method: 'POST',
-					url: Interface.extendUrl.findCustmerInfo,
+					url: '/api/jyhn-frontend/webHttpServlet',
 					// url: Interface.ProxyHost,
 					data: param,
 					header: {
 						"Content-Security-Policy": "upgrade-insecure-requests"
 					},
 					success: (res) => {
-						alert(JSON.stringify(res))
+						// alert(JSON.stringify(res))
 						let code = res.data.RETURNRESULT.RESULT;
 						let message = res.data.RETURNRESULT.RETCODE;
 						
