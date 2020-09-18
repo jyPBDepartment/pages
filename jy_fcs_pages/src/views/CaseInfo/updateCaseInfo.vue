@@ -76,6 +76,7 @@
             :on-success="uploadSuccess"
             :limit="limit"
             :on-exceed="uploadExceed"
+            :beforeUpload="beforeAvatarUpload"
           >
             <el-button size="small" type="primary" style="width:150%;" icon="el-icon-plus">点击上传</el-button>
             <div slot="tip" class="tips">只能上传jpg/png文件，且不超过1M</div>
@@ -85,6 +86,15 @@
         <el-form-item style="margin-left:-75px;">
           <div class="edit_container">
             <el-card style="height: 355px;width:508px;">
+              <!-- 图片上传组件辅助-->
+              <el-upload
+                  class="avatar-uploader quill-img"
+                  :action="upload"
+                  :show-file-list="false"
+                  :on-success="quillUploadSuccess"
+                  :beforeUpload="beforeAvatarUpload"
+                  >
+              </el-upload>
               <quill-editor
                 v-model="caseInfoForm.describetion"
                 ref="myQuillEditor"
@@ -169,9 +179,35 @@ export default {
           },
         ],
       },
-      editorOption: {},
-    };
-  },
+      editorOption: { // 富文本框配置
+      placeholder: '',
+      theme: 'snow',  // or 'bubble'
+      modules: {
+          toolbar: {
+              container: [['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+              ['blockquote', 'code-block'],
+              [{'list': 'ordered'}, {'list': 'bullet'}],
+              [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+              [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+              [{'direction': 'rtl'}],                         // text direction
+              [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+              [{'align': []}],
+              ['image'],
+              ['clean']],
+              handlers: {
+                  'image': function (value) {
+                  if (value) {
+                          document.querySelector('.quill-img input').click()
+                      } else {
+                          this.quill.format('image', false);
+                      }
+                  }
+                }
+              }
+            },
+          },
+        };
+      },
   components: {
     quillEditor,
   },
@@ -223,7 +259,7 @@ export default {
           type: "warning",
         });
       }
-      return extension || (extension2 && isLt2M);
+      return (extension || extension2) && isLt2M;
     },
     //展示关键词下拉列表（多选）
     fandKeyWord: function () {
@@ -287,6 +323,12 @@ export default {
     uploadSuccess(response, file, fileList) {
       this.imgUrl = response.url;
     },
+    quillUploadSuccess(res){
+        //res返回的格式是{url:"图片的路径"}，这个是后台接口返回的
+        let quill = this.$refs.myQuillEditor.quill
+        quill.focus();
+        quill.insertEmbed(quill.getSelection().index, 'image', res.url);
+    },
     handleRemove(file, fileList) {
       (this.imgUrl = ""), console.log(file, fileList);
     },
@@ -328,16 +370,19 @@ export default {
       }
       this.caseInfoForm.keyCodes = null;
       this.caseInfoForm.keys = keyArr.join();
+      //console.log(this.caseInfoForm.describetion);
       let params = {
         caseInfoEntity: aes.encrypt(JSON.stringify(this.caseInfoForm)),
       };
       api
         .testAxiosGet(ApiPath.url.updateCaseInfo, params)
         .then((res) => {
+          this.caseInfoForm.keyCodes = keyArr;
           this.$message.success(res.message);
           this.close();
         })
         .catch((err) => {
+          this.caseInfoForm.keyCodes = keyArr;
           this.$message.error(err.data);
         });
       this.caseInfoForm.updateUser = localStorage.getItem("userInfo");

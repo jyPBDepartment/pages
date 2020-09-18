@@ -81,6 +81,15 @@
         <el-form-item label="文章内容" prop="describetion">
           <div class="edit_container">
             <el-card style="height: 510px;width:70%">
+              <!-- 图片上传组件辅助-->
+              <el-upload
+                  class="avatar-uploader quill-img"
+                  :action="upload"
+                  :show-file-list="false"
+                  :on-success="quillUploadSuccess"
+                  :beforeUpload="beforeAvatarUpload"
+                  >
+              </el-upload>
               <quill-editor
                 v-model="editForm.describetion"
                 ref="myQuillEditor"
@@ -163,7 +172,32 @@ export default {
           },
         ],
       },
-      editorOption: {}
+      editorOption: { // 富文本框配置
+      placeholder: '',
+      theme: 'snow',  // or 'bubble'
+      modules: {
+          toolbar: {
+              container: [['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+              ['blockquote', 'code-block'],
+              [{'list': 'ordered'}, {'list': 'bullet'}],
+              [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+              [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+              [{'direction': 'rtl'}],                         // text direction
+              [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+              [{'align': []}],
+              ['image'],
+              ['clean']],
+              handlers: {
+                  'image': function (value) {
+                  if (value) {
+                          document.querySelector('.quill-img input').click()
+                      } else {
+                          this.quill.format('image', false);
+                      }
+                  }
+                }
+              }
+            },}
     };
   },
   components: {
@@ -206,6 +240,12 @@ export default {
     },
     uploadSuccess(response, file, fileList) {
       this.imgUrl = response.url;
+    },
+    quillUploadSuccess(res){
+        //res返回的格式是{url:"图片的路径"}，这个是后台接口返回的
+        let quill = this.$refs.myQuillEditor.quill
+        quill.focus();
+        quill.insertEmbed(quill.getSelection().index, 'image', res.url);
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -312,11 +352,13 @@ export default {
                 .testAxiosGet(ApiPath.url.saveCaseInfo, params)
                 .then((res) => {
                   let code = res.state;
+                  this.caseInfoForm.keyCodes = keyArr;
                   this.$message.success(res.message);
                   // this.reload();
                   this.close();
                 })
                 .catch(function (err) {
+                  this.caseInfoForm.keyCodes = keyArr;
                   this.isDisable = false;
                 });
             } else {
