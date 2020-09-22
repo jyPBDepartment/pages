@@ -161,7 +161,9 @@ export default {
       api.testAxiosGet(ApiPath.url.agriFindById, params).then((res) => {
         if (res.state == 0) {
           this.agrForm = res.data;
-          this.agrList = res.data1;
+          for(let i=0;i<res.data1.length;i++){
+            this.agrList[i] = res.data1[i].picUrl;
+           }
         }
       });
     },
@@ -208,6 +210,7 @@ export default {
       this.agrForm.updateUser = localStorage.getItem("userInfo");
     },
     close: function () {
+      this.reload();
       this.$emit("close");
     },
     beforeClose: function () {

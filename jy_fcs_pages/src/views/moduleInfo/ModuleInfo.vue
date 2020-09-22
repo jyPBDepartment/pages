@@ -6,7 +6,7 @@
         <el-input size="small" v-model="name" placeholder="输入模块名称" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="status" style="width:37%" size="small">
+        <el-select v-model="status" style="width:37%;height:30px" size="small">
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
         </el-select>
       </el-form-item>
