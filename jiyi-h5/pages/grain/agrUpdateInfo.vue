@@ -27,8 +27,10 @@
 					农服图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" list-type="picture" :on-exceed="uploadExceed"
-					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
+					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" list-type="picture" :on-exceed="uploadExceed" :lazy-load="true"
+ :before-remove="beforeRemove" :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5">
+					 <u-loading slot="loading">图片正在加载中。。。</u-loading>
+					 </u-upload>
 				</view>
 			</view>
 
@@ -203,9 +205,6 @@
 					contactsPhone: '',
 					address: '',
 					days:'',
-					url: [],
-					u: [],
-					// path:[],
 					status:'',
 					createUser: "",
 					createUserId: localStorage.getItem("userId"),
@@ -284,13 +283,47 @@
 
 		},
 		methods: {
+			beforeRemove(index, list) {
+				// 返回一个promise
+				return new Promise((resolve, reject) => {
+				this.$u.post('url').then(res => {
+				// resolve()之后，将会进入promise的组件内部的then回调，相当于返回true
+				resolve();
+				}).catch(err => {
+				// reject()之后，将会进入promise的组件内部的catch回调，相当于返回false
+				reject();
+				})
+					})
+				},
 			remove(index, lists) {
-				this.u.splice(index, 1);
+				console.log('图片已被移除')
+				let param = {
+					url:this.url[index]
+				}	
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.deleteMachine, //请求接口路径
+					success: (res) => { //成功返回结果方法
+					
+						this.show = false
+						
+							uni.showToast({
+								title: "图片删除成功"
+							})
+							for(let x=0;x<this.u.length;x++){
+								if(this.u[x] == this.url[index]){
+									this.u.splice(x,1);
+								}
+							}
+							this.url.splice(index, 1);
+					},
+					
+				})
 			},
 			uploadSuccess(data, index, lists, name) {
-			
-				this.url.push(data.url)
-				this.u = this.url;
+				this.url.push(data.url);
+				this.u.push(data.url);
 				this.show = false;
 			},
 			uploadExceed(files, fileList) {
@@ -330,7 +363,6 @@
 				this.regionaStatus = false;
 				let map = '';
 				data.forEach(item => {
-					// console.log('data', item);
 					if (item != '' && item != '请选择') {
 						if (map != '') {
 							map = map + '/' + item
@@ -382,19 +414,19 @@
 								this.agr.farmingMode ='零活';						
 							}
 							
-							let url = [];
+							let url2 = [];
 							let path = "";
 							for(let i=0;i<res.data.dataPic.length;i++){
-								url.push({'url':res.data.dataPic[i]['picUrl']});
-								if(i==res.data.dataPic.length){
-									path=path+","+res.data.dataPic[i]['picUrl'];
-								}else{
+								url2.push({'url':res.data.dataPic[i]['picUrl']});
+								this.url.push(res.data.dataPic[i]['picUrl']);
+								if(i==0){
 									path=path+res.data.dataPic[i]['picUrl'];
+								}else {
+									path=path+","+res.data.dataPic[i]['picUrl'];
 								}
-								
 							}
-							this.fileList=url;
-							this.u = path
+							this.fileList=url2;
+							//this.u = path
 							
 						}
 					},

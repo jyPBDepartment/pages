@@ -132,8 +132,11 @@
 			       uni.showToast({
 			        title: "确认成功",
 			       })
-				   console.log(11111)
 			      }
+				  //确认跳转
+				  uni.navigateTo({
+				  	url: "../catalog/potentialCustomers"
+				  })
 			     }
 			    })
 			    

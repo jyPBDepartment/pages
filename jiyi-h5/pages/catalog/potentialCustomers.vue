@@ -198,6 +198,10 @@
 			        title: "确认成功",
 			       })
 			      }
+				  //确认跳转
+				  uni.navigateTo({
+				  	url: "../catalog/potentialCustomers"
+				  })
 			     }
 			    })
 			    

@@ -1,10 +1,10 @@
 //配置后台接口
 //开发环境基础路径地址
 // const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-const URLHost = 'http://192.168.1.107:8080';
+// const URLHost = 'http://192.168.1.107:8080';
 
 //生产环境基础路径地址
-// const URLHost = 'http://182.92.77.60/jy_fcs';
+const URLHost = 'http://182.92.77.60/jy_fcs';
 
 let common = {
 	userId:'',
@@ -119,6 +119,8 @@ const url = {
 	  cancelPub:URLHost + '/agricultural/unpublish',
 	  //农机修改
 	  updateMachine:URLHost + '/agricultural/update',
+	  //农机，农服，粮食买卖图片删除
+	  deleteMachine:URLHost + '/agricultural/deletePic',
 }
 export default {
 	url,common,md5,extendUrl

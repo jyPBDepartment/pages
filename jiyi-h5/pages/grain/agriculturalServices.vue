@@ -28,7 +28,7 @@
 				</view>
 				<view class="info g-f-1" style="position: relative;">
 					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess"
-					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
+					 :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 
