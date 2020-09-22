@@ -30,6 +30,19 @@
 					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
+			<view v-if="identityCode=='2'" class="g-flex p-y-10 g-a-c">
+				<span style="color: #ff0000;">*</span>
+				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
+					类型
+				</view>
+				<view class="info g-f-1" style="position: relative;">
+					<u-radio-group v-model="transactionTypeName" @change="radioGroupChange">
+						<u-radio @change="radioChange(index)" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
+							{{item.name}}
+						</u-radio>
+					</u-radio-group>
+				</view>
+			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="width: 140rpx;">
@@ -40,7 +53,6 @@
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
-		
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
@@ -63,8 +75,6 @@
 						</view>
 					</u-col>
 				</u-row>
-
-
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
@@ -97,7 +107,6 @@
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
 	</view>
-
 </template>
 
 <script>
@@ -132,9 +141,7 @@
 				createUser: "",
 				createUserId: localStorage.getItem("userId"),
 				transactionCategoryName: '',
-				identityCode:'',//身份编码
-				
-				
+				identityCode: '', //身份编码
 				url: [],
 				u: [],
 				list: [{
@@ -185,17 +192,17 @@
 			if (e.type == "1") {
 				this.title = "粮食出售";
 				this.transactionTypeCode = "1";
-				this.identityCode="1";
+				this.identityCode = "1";
 			} else {
-				if(e.type=="2"){
-					this.identityCode="2";
-				}else{
-					this.identityCode="3";
+				if (e.type == "2") {
+					this.identityCode = "2";
+					this.title = "粮食买卖";
+				} else {
+					this.identityCode = "3";
+					this.title = "粮食收购";
+					this.transactionTypeCode = "0";
 				}
-				this.title = "粮食收购";
-				this.transactionTypeCode = "0";
 			}
-
 			if (typeof e.id === 'undefined') {
 				this.findInfoById(e.id);
 			}
@@ -216,7 +223,7 @@
 				this.show = true;
 			},
 			radioChange(index) {
-				// this.transactionTypeCode = this.list[index].value
+				this.transactionTypeCode = this.list[index].value
 			},
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {},
@@ -247,14 +254,12 @@
 			},
 			//发布方法
 			deploy() {
-
 				if (this.name == '') {
 					uni.showToast({
 						title: "请输入标题"
 					})
 					return false;
 				}
-
 
 				if (this.url == '') {
 					uni.showToast({
@@ -263,12 +268,15 @@
 					return false;
 				}
 
-				// if (this.transactionCategoryCode == '') {
-				// 	uni.showToast({
-				// 		title: "请选择种类"
-				// 	})
-				// 	return false;
+				// if(this.identityCode=="2"){
+				// 	if (this.transactionCategoryCode == '') {
+				// 		uni.showToast({
+				// 			title: "请选择种类"
+				// 		})
+				// 		return false;
+				// 	}
 				// }
+
 				if (this.isFace == "定价") {
 					if (!/^\d+(\.\d{1})?$/.test(this.price)) {
 						uni.showToast({
@@ -279,6 +287,7 @@
 				} else {
 					this.price = "0"
 				}
+
 				if (this.contactsUser == '') {
 					uni.showToast({
 						title: "请输入联系人"
@@ -307,15 +316,15 @@
 					return false;
 				}
 
-
-
-				//判断类型，并解析码值
-				// for (let i = 0; i < this.list.length; i++) {
-				// 	if (this.list[i].name == this.transactionTypeName) {
-				// 		this.transactionTypeCode = this.list[i].value;
-				// 		this.transactionTypeName = this.list[i].name;
-				// 	}
-				// }
+				//如果身份是粮贩，判断类型，并解析码值
+				if (this.identityCode == "2") {
+					for (let i = 0; i < this.list.length; i++) {
+						if (this.list[i].name == this.transactionTypeName) {
+							this.transactionTypeCode = this.list[i].value;
+							this.transactionTypeName = this.list[i].name;
+						}
+					}
+				}
 
 				//判断是否面议，并解析码值
 				for (let j = 0; j < this.list1.length; j++) {
@@ -347,7 +356,7 @@
 					createUser: this.createUser,
 					createUserId: this.createUserId,
 					addItem: addItem,
-					identityCode:this.identityCode
+					identityCode: this.identityCode
 				}
 
 				uni.request({
@@ -367,7 +376,6 @@
 									url: "../tabbar/release/index"
 								})
 							}, 2000)
-
 						} else {
 							uni.showToast({
 								title: "发布信息失败,联系管理或重新发布"
