@@ -1,10 +1,9 @@
-//正式服务器地址
-// const URLHost = 'http://127.0.0.1:8080'
-// //测试服务器地址
-// const URLHost = 'http://127.0.0.1:8080'
-//开发服务器地址
-// const URLHost = 'http://60.205.246.126/jy_fcs'
-const URLHost = 'http://localhost:8080'
+// 本地环境地址
+// const URLHost = 'http://localhost:8080';
+// 开发环境基础路径地址
+// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+// 生产环境基础路径地址
+const URLHost = 'http://182.92.77.60/jy_fcs';
 
 const url = {
 
@@ -196,45 +195,45 @@ const url = {
   //分类子菜单查询
   menuClassification: URLHost + '/classification/findListById',
   //日志查询
-  findLogList:URLHost + '/dbLogInfo/findByName',
+  findLogList: URLHost + '/dbLogInfo/findByName',
   //日志删除
-  deleteLogInfo:URLHost + '/dbLogInfo/delete',
+  deleteLogInfo: URLHost + '/dbLogInfo/delete',
   //日志清空
-  deleteAllLog:URLHost + '/dbLogInfo/deleteAll',
+  deleteAllLog: URLHost + '/dbLogInfo/deleteAll',
   //获取导航栏菜单
-  getNavMenuList:URLHost + '/menu/getNavData',
+  getNavMenuList: URLHost + '/menu/getNavData',
   //修改模块排序
-  changeModuleSort:URLHost + '/moduleInfo/changeSort',
+  changeModuleSort: URLHost + '/moduleInfo/changeSort',
   //获取字典类型分页数据
-  findDictType:URLHost + '/dict/findTypeByName',
+  findDictType: URLHost + '/dict/findTypeByName',
   //保存字典类别
-  saveDictType:URLHost + '/dict/addType',
+  saveDictType: URLHost + '/dict/addType',
   //保存字典键值
-  saveDictData:URLHost + '/dict/addData',
+  saveDictData: URLHost + '/dict/addData',
   //启用禁用字典类型
-  dictTypeEnable:URLHost + '/dict/enableType',
+  dictTypeEnable: URLHost + '/dict/enableType',
   //启用禁用字典键值
-  dictDataEnable:URLHost + '/dict/enableData',
+  dictDataEnable: URLHost + '/dict/enableData',
   //删除字典类别
-  deleteDictType:URLHost + '/dict/deleteDictType',
+  deleteDictType: URLHost + '/dict/deleteDictType',
   //删除字典键值
-  deleteDictData:URLHost + '/dict/deleteDictData',
+  deleteDictData: URLHost + '/dict/deleteDictData',
   //根据id获取字典类别信息
-  findDictTypeById:URLHost + '/dict/findTypeById',
+  findDictTypeById: URLHost + '/dict/findTypeById',
   //根据id获取字典键值信息
-  findDictDataById:URLHost + '/dict/findDataById',
+  findDictDataById: URLHost + '/dict/findDataById',
   //修改字典类别
-  updateDictType:URLHost + '/dict/updateType',
+  updateDictType: URLHost + '/dict/updateType',
   //修改字典键值
-  updateDictData:URLHost + '/dict/updateData',
+  updateDictData: URLHost + '/dict/updateData',
   //根据类别获取所有键值
-  findDataByType:URLHost + '/dict/findDataByType',
+  findDataByType: URLHost + '/dict/findDataByType',
   //根据类别清空所有键值
-  removeDataByType:URLHost + '/dict/removeData',
+  removeDataByType: URLHost + '/dict/removeData',
   //根据字典类型获取对应所有生效键值
-  getDictValue:URLHost + '/dict/getDictValue',
+  getDictValue: URLHost + '/dict/getDictValue',
   //农服列表删除
-  deleteAgricultural:URLHost + '/agricultural/delete',
+  deleteAgricultural: URLHost + '/agricultural/delete',
 }
 export default {
   url
