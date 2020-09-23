@@ -233,6 +233,8 @@ const url = {
   removeDataByType:URLHost + '/dict/removeData',
   //根据字典类型获取对应所有生效键值
   getDictValue:URLHost + '/dict/getDictValue',
+  //农服列表删除
+  deleteAgricultural:URLHost + '/agricultural/delete',
 }
 export default {
   url

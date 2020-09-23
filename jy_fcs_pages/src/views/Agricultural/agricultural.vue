@@ -100,8 +100,15 @@
       <el-table-column fixed="right" label="操作" align="center" min-width="80px" max-width="100px" >
         <template slot-scope="scope">
           <el-button @click="agrContent(scope)" type="primary"  size="small"
-            style="padding:9px 6px;"
+            style="padding:9px 6px;margin-bottom:5px;"
           >信息审核</el-button>
+            <el-button
+            @click="deleteCase(scope)"
+            type="danger"
+            size="small"
+            style="padding:9px 10px; margin-left:0px;"
+            icon="el-icon-delete"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -222,7 +229,39 @@ export default {
         })
         .catch(function (error) {});
     },
+        // 删除
+    deleteCase: function (scope) {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          let params = {
+            id: scope.row.id,
+          };
+          api.testAxiosGet(ApiPath.url.deleteAgricultural, params).then((res) => {
+            let code = res.state;
 
+            if (code == "0") {
+              this.$message({
+                type: "success",
+                message: "删除成功!",
+              });
+             
+               this.tableData.splice(scope.$index, 1);
+            } else {
+              this.$message.success(res.message);
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
     closeUpdateAgriculturalDialog: function () {
       this.updateAgriculturalFlag = false;
     },
