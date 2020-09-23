@@ -98,7 +98,7 @@
 					<u-col>
 						<view v-if="agr.isFace == '定价'">
 							<u-input style="width: 220rpx;" placeholder="输入价格" border="" v-model="agr.price" height="64" />
-							<view style="font-size:13px;margin-top: -52rpx;margin-left: 200rpx;color: #cdc4d7;">元/天</view>
+							<view style="font-size:13px;margin-top: -52rpx;margin-left: 150rpx;color: #cdc4d7;">元/天</view>
 						</view>
 					</u-col>
 				</u-row>
@@ -188,6 +188,7 @@
 				id:'',
 				url: [],
 				u:[],
+				deleteItem:[],
 				agr:{
 					name: '',
 					descrip: '',
@@ -270,7 +271,6 @@
 			};
 		},
 		onLoad(e) {
-			// alert(localStorage.getItem("userId"))
 			// 设置干活时间选择日历的最小开始时间
 			this.currentDate = new Date().toISOString().slice(0, 10)
 			setTimeout(() => {
@@ -283,43 +283,15 @@
 
 		},
 		methods: {
-			beforeRemove(index, list) {
-				// 返回一个promise
-				return new Promise((resolve, reject) => {
-				this.$u.post('url').then(res => {
-				// resolve()之后，将会进入promise的组件内部的then回调，相当于返回true
-				resolve();
-				}).catch(err => {
-				// reject()之后，将会进入promise的组件内部的catch回调，相当于返回false
-				reject();
-				})
-					})
-				},
+			beforeRemove(index, list) {},
 			remove(index, lists) {
-				console.log('图片已被移除')
-				let param = {
-					url:this.url[index]
-				}	
-				uni.request({
-					method: 'GET', //请求方式
-					data: param, //请求数据
-					url: ApiPath.url.deleteMachine, //请求接口路径
-					success: (res) => { //成功返回结果方法
-					
-						this.show = false
-						
-							uni.showToast({
-								title: "图片删除成功"
-							})
-							for(let x=0;x<this.u.length;x++){
-								if(this.u[x] == this.url[index]){
-									this.u.splice(x,1);
-								}
-							}
-							this.url.splice(index, 1);
-					},
-					
-				})
+				this.deleteItem.push(this.url[index]);
+				for(let x=0;x<this.u.length;x++){
+					if(this.u[x] == this.url[index]){
+						this.u.splice(x,1);
+					}
+				}
+				this.url.splice(index, 1);
 			},
 			uploadSuccess(data, index, lists, name) {
 				this.url.push(data.url);
@@ -556,6 +528,7 @@
 					id:this.id,
 					status:this.agr.status,
 					days:this.agr.days,
+					deleteItem:this.deleteItem,
 					
 				}
 				uni.request({

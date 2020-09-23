@@ -96,7 +96,7 @@
 					<u-col>
 						<view v-if="isFace == '定价'">
 							<u-input style="width: 220rpx;" placeholder="输入价格" border="" v-model="price" height="64" />
-							<view style="font-size:13px;margin-top: -52rpx;margin-left: 200rpx;color: #cdc4d7;">元/天</view>
+							<view style="font-size:13px;margin-top: -52rpx;margin-left: 150rpx;color: #cdc4d7;">元/天</view>
 						</view>
 					</u-col>
 				</u-row>
