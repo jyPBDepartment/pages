@@ -6,7 +6,7 @@
 		<view class="b-f">
 			<u-row>
 				<u-col>
-					<u-dropdown ref="uDropdown" @open="open" @close="close">
+					<u-dropdown ref="uDropdown" @open="open" @close="close" >
 						<u-dropdown-item title="区域">
 							<view class="slot-content" style="background-color: #FFFFFF;">
 								<scroll-view scroll-y="true" style="height: 900rpx;">
@@ -34,6 +34,7 @@
 				</u-col>
 			</u-row>
 		</view>
+		<u-line></u-line>
 		<!-- 列表数据显示 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
