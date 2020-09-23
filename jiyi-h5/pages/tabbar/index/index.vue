@@ -437,7 +437,7 @@
 		flex-wrap: wrap;
 
 		.buju {
-			width: 210rpx;
+			// width: 210rpx;
 			padding-bottom: 20rpx;
 			padding-left: 10rpx;
 			padding-right: 16rpx;

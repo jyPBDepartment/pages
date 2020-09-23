@@ -4,7 +4,7 @@
 			<view class="sort g-f-1 g-flex g-a-c g-j-c" :style="item.name == '筛选' && 'border-left: 1rpx solid #e5e5e5;'" @click="selectLabel(item, index0)"
 			 :class="(index0 == screenIndex || index0 == screened) && 'screen-select'" v-for="(item, index0) in condition" :key="index0">{{item.name}}</view>
 		</view>
-		<uni-drawer ref="drawer" mode="right" :visible="true" :width="360">
+		<uni-drawer ref="drawer" mode="right" :visible="true" :width="320">
 			<view style="padding:46rpx 20rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
 					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item.title}}</view>

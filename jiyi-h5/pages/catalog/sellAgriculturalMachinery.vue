@@ -2,7 +2,8 @@
 	<view>
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
 		<Screen @select="select" :condition="condition" :type="2"></Screen>
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"
+		 style="background-color: #fff!important">
 			<view class="p-x-10  g-flex g-f-warp g-f-row g-j-s-b" style="margin:20rpx 0;">
 				<view @click="jump(item)" class="commodity b-f" v-for="(item, index) in dataList" :key="index">
 					<view class="label f-12">{{item.labelCode}}</view>
@@ -75,7 +76,7 @@
 			},
 			jump(item) {
 				uni.navigateTo({
-					url: '../grain/space?id='+item.id+'&isShow=0'
+					url: '../grain/space?id=' + item.id + '&isShow=0'
 				})
 			},
 			search(e) {
@@ -119,7 +120,7 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.state == 0) {
-							let curPageData = res.data.data.content.map(item =>{
+							let curPageData = res.data.data.content.map(item => {
 								if (item.url != '') {
 									item.url = item.url.split(',')[0]
 								}
@@ -151,10 +152,12 @@
 	}
 
 	.commodity {
-		width: 316rpx;
+		// width: 316rpx;
 		padding: 12rpx;
 		margin-bottom: 20rpx;
 		position: relative;
+		position: relative;
+		border: 1px solid #e5e5e5;
 	}
 
 

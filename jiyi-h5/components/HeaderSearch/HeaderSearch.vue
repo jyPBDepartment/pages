@@ -99,7 +99,8 @@
 
 <style lang="scss">
 	.HeaderSearch {
-		width: calc(100% - 40rpx);
+		// width: calc(100% - 40rpx);
+		width: 100%;
 		height: 88rpx;
 		background: $header-search-background;
 		position: fixed;

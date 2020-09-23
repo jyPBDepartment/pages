@@ -60,7 +60,7 @@
 				</view>
 			</view>
 		</mescroll-body>
-		<uni-drawer ref="drawer" mode="right" :visible="true" :width="360" @close="drawerClose" @change="drawerChange">
+		<uni-drawer ref="drawer" mode="right" :visible="true" :width="320" @close="drawerClose" @change="drawerChange">
 			<view style="padding:46rpx 20rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
 					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item.title}}</view>
