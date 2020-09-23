@@ -65,7 +65,7 @@
 	}
 
 	.cancel {
-		width: calc(100% - 40rpx);
+		width: calc(100% - 0rpx);
 		z-index: 999;
 		background-color: #fff;
 		position: absolute;

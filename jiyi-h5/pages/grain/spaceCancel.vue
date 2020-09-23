@@ -103,12 +103,12 @@
 				id:'',
 				status:'',
 				isDisplay: 0,//默认不显示信息
-				// isMain: "1"
+				isMain: "1"
 			};
 		},
 		//页面初始化
 		onLoad(e) {
-			// this.isMain = e.isMain;
+			this.isMain = e.isMain;
 			this.findMineId(e.id)
 			this.id=e.id
 		},
@@ -134,14 +134,14 @@
 						this.price = res.data.data.price
 						this.isFace = res.data.data.isFace
 						this.name = res.data.data.name
-						// if (this.isMain=='1') {
-						// 	this.isDisplay = 1
-						// } else {
-						// 	this.isDisplay =0
-						// }
-						if(res.data.data.status!=0 && res.data.data.status!=3){
-							this.isDisplay=1
+						if (this.isMain=='1') {
+							if(res.data.data.status!=0 || res.data.data.status!=3){
+								this.isDisplay=1
+							}
+						} else {
+							this.isDisplay =0
 						}
+						
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {
 							this.banner.push({

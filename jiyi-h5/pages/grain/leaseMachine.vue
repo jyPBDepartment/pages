@@ -73,21 +73,7 @@
 					 border height="64" />
 				</view>
 			</view>
-			<!-- <view class="g-flex p-y-10 g-a-c">
-				<span style="color: #ff0000;">*</span>
-				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
-					价格
-				</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="isFace" @change="radioGroupChangeP">
-						<u-radio @change="radioChangeP" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
-				</view>
-				<u-input v-if="isFace == '定价'" style="width: 240rpx;" placeholder="输入价格" border="" :clearable="false" v-model="price" height="64" />
-				<view v-if="isFace == '定价'" style="font-size: 32rpx;margin-left: 10rpx;">元</view>
-			</view> -->
+			
 			<view class="g-flex p-y-10 g-a-c">
 				<span style="color: #ff0000;">*</span>
 				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">
@@ -106,7 +92,7 @@
 					<u-col>
 						<view v-if="isFace == '定价'">
 							<u-input style="width: 220rpx;" placeholder="输入价格" border="" v-model="price" height="64" />
-							<view style="font-size:13px;margin-top: -52rpx;margin-left: 200rpx;color: #cdc4d7;">元/亩</view>
+							<view style="font-size:13px;margin-top: -52rpx;margin-left: 150rpx;color: #cdc4d7;">元/亩</view>
 						</view>
 					</u-col>
 				</u-row>

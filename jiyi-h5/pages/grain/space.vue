@@ -46,7 +46,7 @@
 					</view>
 				</view>
 				<view v-if="isDisplay!==0" class="btn g-flex" >
-					<view class="g-f-1">
+					<view class="g-f-1" >
 						<u-button @click="cencal(true)" shape="circle">取消发布</u-button>
 					</view>
 					<view class="g-f-1">
@@ -92,7 +92,7 @@
 				url: '',
 				name: '',
 				isDisplay: 0,//默认不显示信息
-				// isMain: "1",
+				isMain: "1",
 				id:'',
 				status:'',
 				reason:''
@@ -100,7 +100,7 @@
 		},
 		//页面初始化
 		onLoad(e) {
-			// this.isMain = e.isMain;
+			this.isMain = e.isMain;
 			
 			this.findMineId(e.id);
 			this.id=e.id;
@@ -134,14 +134,17 @@
 						this.isFace = res.data.data.isFace
 						// this.url = res.data.data.url
 						this.name = res.data.data.name
-						// if (this.isMain=='1') {
-						// 	this.isDisplay = 1
-						// } else {
-						// 	this.isDisplay = 0
-						// }
-						if(res.data.data.status!=0 && res.data.data.status!=3){
-							this.isDisplay=1
+						if (this.isMain=='1') {
+							if(res.data.data.status!=0 || res.data.data.status!=3){
+								this.isDisplay=1
+							}
+							
+						} else {
+							this.isDisplay = 0
 						}
+						// if(res.data.data.status!=0 && res.data.data.status!=3){
+						// 	this.isDisplay=1
+						// }
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {
 							this.banner.push({
