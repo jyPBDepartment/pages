@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="640px"
+    width="670px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -85,39 +85,68 @@
         </el-form-item>
       
         <el-form-item label="文章内容" prop="describetion" class="article"></el-form-item>
-          <el-form-item style="margin-left:-75px;">
+          <el-form-item style="margin-left:-85px;">
           <div class="edit_container">
-            <el-card style="height: 450px;width:508px;">
-              <!-- 图片上传组件辅助-->
+            <el-card style="height: 450px;width:560px;">
+              <!-- 富文本上传图片 -->
               <el-upload
-                  class="avatar-uploader quill-img"
-                  :action="upload"
-                  :show-file-list="false"
-                  :on-success="quillUploadSuccess"
-                  :beforeUpload="beforeAvatarUpload"
-                  >
+                class="avatar-uploader quill-img"
+                :action="upload"
+                :show-file-list="false"
+                :on-success="quillUploadSuccess"
+                :beforeUpload="beforeAvatarUpload"
+              >
               </el-upload>
-              <quill-editor
-                v-model="editForm.describetion"
-                ref="myQuillEditor"
-                style="height: 280px;width:100%"
-                :options="editorOption"
-              ></quill-editor>
-            </el-card>
+        <quill-editor v-model="editForm.describetion" ref="myQuillEditor" style="height: 345px;margin-top: -40px" :options="editorOption">
+        <!-- 自定义toolar -->
+        <div id="toolbar" slot="toolbar">
+          <!-- Add a bold button -->
+          <button class="ql-bold" title="加粗">Bold</button>
+          <button class="ql-italic" title="斜体">Italic</button>
+          <button class="ql-underline" title="下划线">underline</button>
+          <button class="ql-strike" title="删除线">strike</button>
+          <button class="ql-blockquote" title="引用"></button>
+          <button class="ql-code-block" title="代码"></button>
+          <button class="ql-header" value="1" title="标题1"></button>
+          <button class="ql-header" value="2" title="标题2"></button>
+          <!--Add list -->
+          <button class="ql-list" value="ordered" title="有序列表"></button>
+          <button class="ql-list" value="bullet" title="无序列表"></button>
+          <!-- Add font size dropdown -->
+          <select class="ql-header" title="段落格式">
+            <option selected>段落</option>
+            <option value="1">标题1</option>
+            <option value="2">标题2</option>
+            <option value="3">标题3</option>
+            <option value="4">标题4</option>
+            <option value="5">标题5</option>
+            <option value="6">标题6</option>
+          </select>
+          <select class="ql-size" title="字体大小">
+            <option value="14px">14px</option>
+            <option value="16px">16px</option>
+            <option value="18px">18px</option>
+            <option value="20px">20px</option>
+            <option value="22px">22px</option>
+            <option value="24px">24px</option>
+            <option value="26px">26px</option>
+          </select>
+          <select class="ql-color" value="color" title="字体颜色"></select>
+          <select class="ql-background" value="background" title="背景颜色"></select>
+          <select class="ql-align" value="align" title="对齐"></select>
+          <button class="ql-clean" title="还原"></button>
+          <button class="ql-link" title="超链接"></button>
+          <button class="ql-image" title="照片"></button>
+        </div>
+      </quill-editor>
+    </el-card>
           </div>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button
-        type="primary"
-        icon="el-icon-check"
-        @click="saveCaseInfo('editForm')"
-        size="medium"
-        v-loading.fullscreen.lock="fullscreenLoading"
-      >保存</el-button>
-      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
+      <el-button type="primary" icon="el-icon-check" @click="saveCaseInfo('editForm')" size="medium" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button> <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -127,10 +156,14 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
-import { quillEditor } from "vue-quill-editor";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
+import {Quill,quillEditor} from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+// 自定义字体大小
+let Size = Quill.import('attributors/style/size')
+Size.whitelist = ['14px', '16px', '18px', '20px','22px','24px','26px']
+Quill.register(Size, true)
 import aes from "@/utils/aes.js";
 export default {
   inject: ["reload"],
@@ -168,43 +201,27 @@ export default {
       // rules表单验证
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
-        classiCode: [
-          { required: true, message: "请选择农作物种类", trigger: "blur" },
-        ],
-        classiDipCode: [
-          {
-            required: true,
-            message: "请选择病虫害种类",
-            trigger: "blur",
-          },
-        ],
+        classiCode: [{ required: true, message: "请选择农作物种类", trigger: "blur" }],
+        classiDipCode: [{required: true,message: "请选择病虫害种类",trigger: "blur",}],
       },
       editorOption: { // 富文本框配置
-      placeholder: '',
-      theme: 'snow',  // or 'bubble'
-      modules: {
-          toolbar: {
-              container: [['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-              ['blockquote', 'code-block'],
-              [{'list': 'ordered'}, {'list': 'bullet'}],
-              [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-              [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-              [{'direction': 'rtl'}],                         // text direction
-              [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-              [{'align': []}],
-              ['image'],
-              ['clean']],
+      placeholder: "请输入...",
+          theme: "snow", 
+          modules: {
+            toolbar: {
+              container: '#toolbar',
               handlers: {
-                  'image': function (value) {
-                  if (value) {
-                          document.querySelector('.quill-img input').click()
-                      } else {
-                          this.quill.format('image', false);
-                      }
-                  }
+                'image': function (value) {
+                if (value) {
+                        document.querySelector('.quill-img input').click()
+                    } else {
+                        this.quill.format('image', false);
+                    }
                 }
               }
-            },}
+            }
+          }
+      }
     };
   },
   components: {
@@ -357,7 +374,6 @@ export default {
                   let code = res.state;
                   this.editForm.keyCodes = keyArr;
                   this.$message.success(res.message);
-                  // this.reload();
                   this.close();
                 })
                 .catch(function (err) {
@@ -374,6 +390,7 @@ export default {
               }, 500);
     },
     close: function () {
+      this.reload();
       this.$emit("close");
     },
     beforeClose: function () {

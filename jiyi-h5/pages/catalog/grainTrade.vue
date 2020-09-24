@@ -34,7 +34,7 @@
 				</u-col>
 			</u-row>
 		</view>
-		<u-line></u-line>
+		<u-line color="black"></u-line>
 		<!-- 列表数据显示 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
