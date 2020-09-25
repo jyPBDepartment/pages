@@ -1,6 +1,5 @@
 <template>
   <div class="login">
- 
     <div class="login-form">
       <div class="f">用户名密码登录</div>
       <el-form
@@ -8,7 +7,7 @@
         :rules="rules"
         ref="ruleForm"
         :label-position="labelPosition"
-        style="margin-top: 21px;padding-left:19px;"
+        style="margin-top: 21px; padding-left: 19px"
         class="form1"
       >
         <el-form-item prop="name" style="margin-left: 20px; margin-bottom: 0px">
@@ -77,7 +76,7 @@
     </div>
 
     <div class="link">
-      <el-row :gutter="6" >
+      <el-row :gutter="6">
         <el-col :span="3">
           <a title="测试11">关于我们</a>
         </el-col>
@@ -191,7 +190,9 @@ export default {
             .then((res) => {
               let code = res.status;
               if (code == "0") {
-                if (this.ruleForm.code == this.checkCode) {
+                let c = this.ruleForm.code.toLowerCase(); //小写转换
+                let cc = this.checkCode.toLowerCase(); //小写转换
+                if (c == cc) {
                   this.$message.success(res.message);
                   // 测试通道，不为空直接登录
                   setTimeout(() => {
@@ -379,7 +380,7 @@ export default {
   top: 83%;
   left: 21%;
   width: 900px;
-  margin-left:1%;
+  margin-left: 1%;
 }
 .rights {
   margin-left: 20%;

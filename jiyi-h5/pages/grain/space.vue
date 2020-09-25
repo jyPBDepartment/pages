@@ -135,10 +135,9 @@
 						// this.url = res.data.data.url
 						this.name = res.data.data.name
 						if (this.isMain=='1') {
-							if(res.data.data.status!=0 || res.data.data.status!=3){
+							if(res.data.data.status!=0 && res.data.data.status!=3){
 								this.isDisplay=1
 							}
-							
 						} else {
 							this.isDisplay = 0
 						}

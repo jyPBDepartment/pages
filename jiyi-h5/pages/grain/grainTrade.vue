@@ -106,6 +106,7 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -215,6 +216,10 @@
 				this.url.splice(index, 1);
 			},
 			uploadSuccess(data, index, lists, name) {
+				this.$refs.uToast.show({
+					title: '上传成功',
+					type: 'success',
+				})
 				this.url.push(data.url);
 				this.show = false;
 				this.u = this.url;
@@ -255,8 +260,9 @@
 			//发布方法
 			deploy() {
 				if (this.name == '') {
-					uni.showToast({
-						title: "请输入标题"
+					this.$refs.uToast.show({
+						title: '请输入标题',
+						type: 'error',
 					})
 					return false;
 				}
