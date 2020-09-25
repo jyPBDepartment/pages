@@ -1,12 +1,6 @@
 <template>
-  <div id="login">
-    <div class="title">
-      <img src="../../static/title.png" />
-    </div>
-    <div class="content">
-      <img src="../../static/background.png" />
-    </div>
-
+  <div class="login">
+ 
     <div class="login-form">
       <div class="f">用户名密码登录</div>
       <el-form
@@ -14,17 +8,17 @@
         :rules="rules"
         ref="ruleForm"
         :label-position="labelPosition"
-        style="margin-top:21px;"
+        style="margin-top: 21px"
         class="form1"
       >
-        <el-form-item prop="name" style="margin-left:20px;margin-bottom: 0px;">
+        <el-form-item prop="name" style="margin-left: 20px; margin-bottom: 0px">
           <el-row>
             <el-col :span="4">
               <img class="i" src="../../static/loginUser.png" />
             </el-col>
             <el-col :span="17">
               <el-input
-                style="height:42px"
+                style="height: 42px"
                 v-model="ruleForm.name"
                 type="text"
                 auto-complete="off"
@@ -33,14 +27,17 @@
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item prop="password" style="margin-left:20px;margin-top:4px; margin-bottom: 0px;">
+        <el-form-item
+          prop="password"
+          style="margin-left: 20px; margin-top: 4px; margin-bottom: 0px"
+        >
           <el-row>
             <el-col :span="4">
               <img class="i" src="../../static/passwd.png" />
             </el-col>
             <el-col :span="17">
               <el-input
-                style="height:42px"
+                style="height: 42px"
                 v-model="ruleForm.password"
                 type="password"
                 auto-complete="off"
@@ -51,14 +48,20 @@
         </el-form-item>
         <el-form-item
           prop="verificationCode"
-          style="margin-left:36px;margin-top:10px;margin-left:20px;"
+          style="margin-left: 36px; margin-top: 10px; margin-left: 20px"
         >
           <el-row>
             <el-col :span="12">
-              <el-input class="l" v-model="ruleForm.code" placeholder="请输入验证码"></el-input>
+              <el-input
+                class="l"
+                v-model="ruleForm.code"
+                placeholder="请输入验证码"
+              ></el-input>
             </el-col>
             <el-col :span="12">
-              <div class="bottom" @click="createCode()" size="mini">{{checkCode}}</div>
+              <div class="bottom" @click="createCode()" size="mini">
+                {{ checkCode }}
+              </div>
             </el-col>
           </el-row>
         </el-form-item>
@@ -67,26 +70,27 @@
             class="b"
             @click="submitForm('ruleForm')"
             @keyup.enter="submitForm('ruleForm')"
-          >登录</el-button>
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
 
     <div class="link">
-      <el-row>
+      <el-row :gutter="6" >
         <el-col :span="3">
           <a title="测试11">关于我们</a>
         </el-col>
         <el-col :span="3">
           <a title="测试22">联系我们</a>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <a title="测试33">经销商店铺</a>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <a title="测试22">经销商掌柜</a>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <a title="测试22">供应商店铺</a>
         </el-col>
         <el-col :span="3">
@@ -96,15 +100,19 @@
           <a title="测试22">APP下载</a>
         </el-col>
       </el-row>
-      <div class="rights">Copyright © 2012-2020 All Rights Reserved 备案号：吉ICP备19004431号</div>
+      <div class="rights">
+        Copyright © 2012-2020 All Rights Reserved 备案号：吉ICP备19004431号
+      </div>
     </div>
   </div>
 </template>
+
 <script type="text/ecmascript-6">
 //后台路径引用
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
+
 export default {
   inject: ["reload"],
   name: "login",
@@ -323,154 +331,62 @@ export default {
 </script>
 
 <style scoped >
-#login {
-  /* width: 100%;  height: 100%; */
-  width: 1366px;
-  height: 700px;
-
-  text-align: center;
-}
-/* .login-wrap { */
-/* box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  padding-top: 89px;
-  margin-top: 89px;
-  background-image: url(../../static/background.png);
-  background-color: #112346;
+.login {
+  background-image: url(../../static/logo.jpg);
   background-repeat: no-repeat;
   background-position: center right;
   background-size: 100%;
-  lang="less" */
-/* } */
-
-.title {
-   /*// position: relative;
-  // left: 0;
-  // top: 0;
-  // position: absolute;
- 
-  // margin-top: 14px;
-  box-sizing: border-box;
   width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-image: url(../../static/title.png);
-  margin-left: 360px;
-  background-position: left top; */
-   /* margin-left: -40%; */
-   margin-left: -1032px;
-   margin-top: 4px;
-
+  height: 80%;
 }
-.content {
-  position: absolute;
-  box-sizing: border-box;
-  margin-top: 15px;
 
-  /* // background-image: url(../../static/background.png);
-  // background-repeat: no-repeat;
-  // background-position: left top;
-  // background-size: 100%; */
-}
- .img {
-    /* // margin-top: 14px;
-    // min-width: 1528px;
-    // height: 480px; */
-
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-  }
 .login-form {
   position: absolute;
-  /* // width: 350px;
-  // height: 325px; */
-
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  background: #ffffff;
-  /* // z-index: 999; */
-  margin-left: 1191px;
-  /* background-position: left top;  */
-  margin-top: 165px;
-}
-.i {
-  width: 42px;
-  height: 42px;
-}
-.l {
-  width: 145px;
-  height: 42px;
-  background: #ffffff;
-  /* border: 1px solid #f1eeee; */
-}
-.bottom {
-  width: 137px;
-  /* height: 42px; */
-  border: 0px solid #f1eeee;
-  text-align: center;
-  background-color: #d8d0d0;
+  left: 56%;
+  top: 24%;
+  max-width: 23rem;
+  max-height: 20rem;
+  background-color: #fff;
 }
 .f {
-  margin-top: 31px;
-  /* // margin-left: 20px; */
-  height: 13px;
   font-size: 14px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: #333333;
+  margin-top: 42px;
+  text-align: center;
+}
+.bottom {
+  width: 123px;
+  height: 40px;
+  border: 0px solid #f1eeee;
+  text-align: center;
+  background-color: #d8d0d0;
+  margin-left: 5px;
 }
 .b {
   width: 300px;
   height: 42px;
   background: #c21828;
   font-size: 16px;
-  /* // margin-left: 20px; */
+  margin-left: 20px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: #ffffff;
 }
-
-.form1 {
-  width: 350px;
-  height:260px;
-  
-}
-.el-form-item__content > .el-form-item__error {
-    font-size: 10px !important;
-    margin-top: -14px !important;
-    margin-left: 60px !important;
-  }
 .link {
-  /* // position: absolute; */
-  margin-left: 441px;
-  margin-top: 713px;
-  /* // margin:0 auto; */
-  width: 1054px;
-  height: 120px;
-  /* // border:1px solid #000;
-  // background-color: #ddd; */
-
-  font-size: 16px;
-  font-family: Microsoft YaHei;
-  font-weight: 400;
-  color: #333333;
-  /* position: fixed; */
-  /* bottom: 0; */
+  position: absolute;
+  top: 83%;
+  left: 21%;
+  width: 900px;
+  margin-left:1%;
 }
 .rights {
-  margin-left: 180px;
-  margin-top: 12px;
-  width: 555px;
-  height: 18px;
+  margin-left: 20%;
+  margin-top: 16px;
   font-size: 16px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: #333333;
-  margin-bottom: -100px;
 }
 </style>
