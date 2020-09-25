@@ -8,7 +8,7 @@
         :rules="rules"
         ref="ruleForm"
         :label-position="labelPosition"
-        style="margin-top: 21px"
+        style="margin-top: 21px;padding-left:19px;"
         class="form1"
       >
         <el-form-item prop="name" style="margin-left: 20px; margin-bottom: 0px">
@@ -344,7 +344,7 @@ export default {
   position: absolute;
   left: 56%;
   top: 24%;
-  max-width: 23rem;
+  max-width: 22rem;
   max-height: 20rem;
   background-color: #fff;
 }
@@ -353,11 +353,11 @@ export default {
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: #333333;
-  margin-top: 42px;
+  margin-top: 21px;
   text-align: center;
 }
 .bottom {
-  width: 123px;
+  width: 112px;
   height: 40px;
   border: 0px solid #f1eeee;
   text-align: center;
@@ -369,7 +369,7 @@ export default {
   height: 42px;
   background: #c21828;
   font-size: 16px;
-  margin-left: 20px;
+  margin-left: 7px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: #ffffff;
