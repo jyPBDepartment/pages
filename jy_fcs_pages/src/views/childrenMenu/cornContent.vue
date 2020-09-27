@@ -181,7 +181,7 @@ export default {
     },
 
     close: function () {
-      
+       this.reload();
       this.$emit("close");
     },
     closeUpdateExamineDialog() {
