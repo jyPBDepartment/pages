@@ -61,7 +61,7 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column prop="code" label="分类编码" align="center" min-width="80px" max-width="110px"></el-table-column>
-      <el-table-column prop="name" label="分类名称" align="center" min-width="80px" max-width="110px"></el-table-column>
+      <el-table-column prop="name" label="分类名称" align="center" min-width="80px" max-width="110px" :show-overflow-tooltip="true"></el-table-column>
       <!--switch开关（表单）-->
       <el-table-column align="center" prop="status" label="状态" min-width="100px" max-width="120px">
         <template slot-scope="scope">
@@ -106,11 +106,12 @@
             icon="el-icon-delete"
           >删除</el-button>
           <el-button
-            type="primary"
+            type="success"
             size="small"
             @click="table = true,check(scope)"
             icon="el-icon-view"
-          >查看</el-button>
+            style="width:71px; padding-left:7px;"
+          >子菜单</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -133,7 +134,7 @@
       @save="updateClassification"
     ></update-classification>
 
-    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl" size="40%">
+    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl" size="68%">
       <el-table
         :data="gridData"
         border
@@ -323,6 +324,7 @@ export default {
     },
     closeUpdateClassificationDialog: function () {
       this.updateClassificationFlag = false;
+      this.search(this.formInline);
     },
     updateClassification: function () {},
     //删除
@@ -385,16 +387,15 @@ export default {
     },
     closeRuleTagDialog() {
       this.addClassificationFlag = false;
-       this.search(this.formInline);
+      this.search(this.formInline);
     },
 
-    closeModifyRuleTagDialog() {
-      this.updateRuleTag = false;
-    },
+    
     beforeClose() {
       this.close();
     },
     close() {
+      
       this.$emit("close");
     },
     save() {
@@ -435,6 +436,7 @@ export default {
 }
  .el-table >.el-table__fixed-right {
     height: 100% !important;
+   
   }
 </style>
 

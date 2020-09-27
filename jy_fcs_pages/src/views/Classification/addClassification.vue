@@ -5,10 +5,11 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="500px"
+    width="400px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
+   
     <!-- 插槽区 -->
     <slot>
       <el-form
@@ -16,14 +17,14 @@
         ref="editForm"
         :model="editForm"
         :label-position="labelPosition"
-         label-width="100px"
-        style="margin-left:-48px;"
+         label-width="80px"
+      
       >
         <el-form-item label="分类名称" prop="name">
           <el-input
             type="text"
             v-model="editForm.name"
-            placeholder="请选择"
+            placeholder="请选择(限15字)"
             
             :maxLength="15"
             size="small"
@@ -33,12 +34,12 @@
           <el-input
             type="text"
             v-model="editForm.code"
-            placeholder="请选择"
+            placeholder="请选择(限15字)"
             :maxLength="15"
             size="small"
           ></el-input>
         </el-form-item>
-        <el-form-item label="上级分类编码" prop="parentCode">
+        <el-form-item label="上级分类" prop="parentCode">
           <el-select v-model="editForm.parentCode" placeholder="请选择" size="small">
             <el-option
               v-for="item in classiOptions"
@@ -57,10 +58,10 @@
         type="primary"
         icon="el-icon-check"
         @click="saveClassification()"
-        size="medium"
+        size="small"
         v-loading.fullscreen.lock="fullscreenLoading"
       >保存</el-button>
-      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="small">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -180,7 +181,8 @@ export default {
 
 <style scoped>
 .el-form {
-  padding-left: 115px;
+  padding-left: 35px;
+  margin: -20px 0px;
 }
 .input {
   float: left;
@@ -219,4 +221,5 @@ export default {
 .el-select{
   width: 200px;
 }
+
 </style>

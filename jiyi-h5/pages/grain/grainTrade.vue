@@ -268,26 +268,32 @@
 				}
 
 				if (this.url == '') {
-					uni.showToast({
-						title: "请上传图片"
+					this.$refs.uToast.show({
+						title: '请上传图片',
+						type: 'error',
 					})
+				
 					return false;
 				}
 
 				// if(this.identityCode=="2"){
-				// 	if (this.transactionCategoryCode == '') {
-				// 		uni.showToast({
-				// 			title: "请选择种类"
-				// 		})
-				// 		return false;
-				// 	}
+					if (this.transactionCategoryCode == '') {
+						this.$refs.uToast.show({
+							title: '请选择粮食种类',
+							type: 'error',
+						})
+						
+						return false;
+					}
 				// }
 
 				if (this.isFace == "定价") {
 					if (!/^\d+(\.\d{1})?$/.test(this.price)) {
-						uni.showToast({
-							title: "价格小数点后保留一位小数"
+						this.$refs.uToast.show({
+							title: '价格小数点后保留一位小数',
+							type: 'error',
 						})
+						
 						return false;
 					}
 				} else {
@@ -295,30 +301,38 @@
 				}
 
 				if (this.contactsUser == '') {
-					uni.showToast({
-						title: "请输入联系人"
+					this.$refs.uToast.show({
+						title: '请输入联系人',
+						type: 'error',
 					})
+				
 					return false;
 				}
 
 				if (this.contactsPhone == '') {
-					uni.showToast({
-						title: "请输入联系电话"
+					this.$refs.uToast.show({
+						title: '请输入联系电话',
+						type: 'error',
 					})
+				
 					return false;
 				}
 
 				if (!/^1[345789]\d{9}$/.test(this.contactsPhone)) {
-					uni.showToast({
-						title: "请输入正确的联系电话"
+					this.$refs.uToast.show({
+						title: '请输入正确的联系电话',
+						type: 'error',
 					})
+				
 					return false;
 				}
 
 				if (this.address == '') {
-					uni.showToast({
-						title: "请选择区域"
+					this.$refs.uToast.show({
+						title: '请选择区域',
+						type: 'error',
 					})
+					
 					return false;
 				}
 
@@ -399,7 +413,10 @@
 					},
 					url: ApiPath.url.findMineId,
 					success: (res) => {
-						console.log(res);
+						if (res.data.state == 0) {
+							console.log(res);
+						}
+						
 					},
 					fail: (err) => {
 

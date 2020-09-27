@@ -84,6 +84,7 @@
 					data: param, //请求数据
 					url: ApiPath.url.transKeyWordId, //请求接口路径
 					success: (res) => { //成功返回结果方法
+					if (res.data.state == 0) {
 						this.name = res.data.data.name
 						this.price = res.data.data.price
 						this.beginDate = res.data.data.beginDate
@@ -101,6 +102,7 @@
 								'url': res.data.dataPic[i].picUrl
 							})
 						}
+					}
 					}
 
 				})

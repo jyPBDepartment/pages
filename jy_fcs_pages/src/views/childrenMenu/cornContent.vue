@@ -77,12 +77,7 @@
           <tr>
             <td class="title">审核理由</td>
             <td colspan="3" class="content">
-              <span v-if="agrForm.status == '0'">
-                <el-input v-model="agrForm.examineReason" type="textarea" size="small"></el-input>
-              </span>
-              <span v-if="agrForm.status == '1' || agrForm.status=='2'">
-                <el-input v-model="agrForm.examineReason" type="textarea" disabled size="small"></el-input>
-              </span>
+                {{ agrForm.examineReason }}
             </td>
           </tr>
         </tbody>
@@ -93,11 +88,17 @@
         <el-button type="success" icon="el-icon-check" @click="updateStatus()">审核通过</el-button>
       </span>
       <span v-if="agrForm.status == '0' ">
-        <el-button type="danger" icon="el-icon-close" @click="refusePostInfo()">审核驳回</el-button>
+        <el-button type="danger" icon="el-icon-close" @click="examine(agrForm.id)">审核驳回</el-button>
       </span>
 
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
+      <examine
+      :show="examineFlag"
+      :examineId="examineId"
+      title="信息审核"
+      @close="closeUpdateExamineDialog"
+    ></examine>
   </el-dialog>
 </template>
 <script>
@@ -105,6 +106,7 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import examine from '@/views/Agricultural/examine'
 
 export default {
   inject: ["reload"],
@@ -125,6 +127,8 @@ export default {
     return {
       labelPosition: "right",
       localShow: this.show,
+      examineFlag: false,
+      examineId: "",
       agrForm: {
         status: "",
         examineReason: "",
@@ -151,7 +155,15 @@ export default {
       });
     },
   },
+   components: {
+    examine
+  },
   methods: {
+     // 查看详情
+    examine(val) {
+      this.examineFlag = true;
+      this.examineId = val;
+    },
     //审核结果
     updateStatus: function (val) {
       let params = {
@@ -167,34 +179,13 @@ export default {
       });
       this.agrForm.updateUser = localStorage.getItem("userInfo");
     },
-    //驳回
-    refusePostInfo: function () {
-      if (
-        this.agrForm.examineReason == "" ||
-        this.agrForm.examineReason == null
-      ) {
-        this.$alert("请填写拒绝理由！", "提示", {
-          confirmButtonText: "确定",
-        });
-        return false;
-      }
 
-      let params = {
-        agriculturalEntity: this.agrForm,
-      };
-      api.testAxiosGet(ApiPath.url.updateRefuse, params).then((res) => {
-        let code = res.state;
-        if (code == "0") {
-          this.$message.success(res.message);
-          this.close();
-          this.reload();
-        }
-      });
-      this.agrForm.updateUser = localStorage.getItem("userInfo");
-    },
     close: function () {
-      this.reload();
+      
       this.$emit("close");
+    },
+    closeUpdateExamineDialog() {
+      this.examineFlag = false;
     },
     beforeClose: function () {
       this.close();

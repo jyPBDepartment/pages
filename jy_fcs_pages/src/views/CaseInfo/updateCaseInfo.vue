@@ -24,7 +24,7 @@
           <el-input
             type="text"
             v-model="caseInfoForm.name"
-            placeholder="请输入名称"
+            placeholder="请输入(限10字)"
             :maxlength="10"
             size="small"
           ></el-input>
@@ -82,28 +82,7 @@
             <div slot="tip" class="tips">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
-        <!-- <el-form-item label="文章内容" prop="describetion" class="article"></el-form-item> -->
-        <!-- <el-form-item style="margin-left:-75px;">
-          <div class="edit_container">
-            <el-card style="height: 450px;width:508px;">
-              图片上传组件辅助
-              <el-upload
-                  class="avatar-uploader quill-img"
-                  :action="upload"
-                  :show-file-list="false"
-                  :on-success="quillUploadSuccess"
-                  :beforeUpload="beforeAvatarUpload"
-                  >
-              </el-upload>
-              <quill-editor
-                v-model="caseInfoForm.describetion"
-                ref="myQuillEditor"
-                 style="height: 280px;width:100%"
-                :options="editorOption"
-              ></quill-editor>
-            </el-card>
-          </div>
-        </el-form-item> -->
+        
         <el-form-item label="文章内容" prop="describetion" class="article"></el-form-item>
           <el-form-item style="margin-left:-85px;">
           <div class="edit_container">

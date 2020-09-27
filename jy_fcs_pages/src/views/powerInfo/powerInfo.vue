@@ -141,7 +141,7 @@
       @save="updatePowerInfo"
     ></update-power-info>
 
-    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl" size="50%" >
+    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl" size="69%" >
       <el-table
         :data="gridData"
         border

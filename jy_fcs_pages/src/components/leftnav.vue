@@ -83,7 +83,7 @@ export default {
 </script>
 <style>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 240px;
+  width: 220px;
   min-height: 400px;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
@@ -91,7 +91,8 @@ export default {
   text-align: left;
 }
 .el-menu-item-group__title {
-  padding: 0px;
+  /* padding: 0px; */
+  margin: -10px 0px;
 }
 .el-menu-bg {
   background-color: #1f2d3d !important;

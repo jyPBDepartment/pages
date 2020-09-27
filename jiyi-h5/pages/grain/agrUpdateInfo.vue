@@ -158,6 +158,7 @@
 			</view>
 		</u-calendar>
 		<u-mask :show="show" :mask-click-able="maskAble" :zoom="true" :duration="500"></u-mask>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -285,6 +286,7 @@
 		methods: {
 			beforeRemove(index, list) {},
 			remove(index, lists) {
+				
 				this.deleteItem.push(this.url[index]);
 				for(let x=0;x<this.u.length;x++){
 					if(this.u[x] == this.url[index]){
@@ -410,47 +412,61 @@
 			//修改方法
 			updateMachine() {
 				if (this.agr.name == '') {
-					uni.showToast({
-						title: "请输入标题"
+					this.$refs.uToast.show({
+						title: '请输入标题',
+						type: 'error',
 					})
+					
 					return false;
 				}
 				if (this.url == '') {
-					uni.showToast({
-						title: "请选择图片"
+					this.$refs.uToast.show({
+						title: '请选择图片',
+						type: 'error',
 					})
+					
 					return false;
 				}
 
 				if (this.value == '') {
-					uni.showToast({
-						title: "请选择干活时间"
+					this.$refs.uToast.show({
+						title: '请选择干活时间',
+						type: 'error',
 					})
+					
 					return false;
 				}
 				if (this.agr.transactionTypeCode == '') {
-					uni.showToast({
-						title: "请选择农作物类型"
+					this.$refs.uToast.show({
+						title: '请选择劳务类型',
+						type: 'error',
 					})
+				
 					return false;
 				}
 				if (this.agr.transactionCategoryCode == '') {
-					uni.showToast({
-						title: "请选择农作物类别"
+					this.$refs.uToast.show({
+						title: '请选择作物类型',
+						type: 'error',
 					})
+					
 					return false;
 				}
 				if (this.agr.machineNum == '') {
-					uni.showToast({
-						title: "请输入农机台数"
+					this.$refs.uToast.show({
+						title: '请输入农机台数',
+						type: 'error',
 					})
+				
 					return false;
 				}
 				if(this.agr.isFace=="定价"){
 					if (!/^\d+(\.\d{1})?$/.test(this.agr.price)) {
-						uni.showToast({
-							title: "价格只允许一位小数"
+						this.$refs.uToast.show({
+							title: '价格只允许一位小数',
+							type: 'error',
 						})
+						
 						return false;
 					}
 				}else{
@@ -458,27 +474,35 @@
 				}
 				
 				if (this.agr.contactsUser == '') {
-					uni.showToast({
-						title: "请输入联系人"
+					this.$refs.uToast.show({
+						title: '请输入联系人',
+						type: 'error',
 					})
+					
 					return false;
 				}
 				if (this.agr.contactsPhone == '') {
-					uni.showToast({
-						title: "请输入联系电话"
+					this.$refs.uToast.show({
+						title: '请输入联系电话',
+						type: 'error',
 					})
+					
 					return false;
 				}
 				if (this.agr.contactsPhone == '' || !/^1[345789]\d{9}$/.test(this.agr.contactsPhone)) {
-					uni.showToast({
-						title: "请输入正确的联系电话"
+					this.$refs.uToast.show({
+						title: '请输入正确的联系电话',
+						type: 'error',
 					})
+					
 					return false;
 				}
 				if (this.agr.address == '') {
-					uni.showToast({
-						title: "请选择干活区域"
+					this.$refs.uToast.show({
+						title: '请选择干活区域',
+						type: 'error',
 					})
+					
 					return false;
 				}
 
@@ -540,7 +564,7 @@
 						this.show = false
 						if (res.data.state == 0) {
 							uni.showToast({
-								title: "发布信息成功,等待审核通过"
+								title: "修改信息成功,等待审核通过"
 							})
 
 							//发布成功返回发布主页面
@@ -552,7 +576,7 @@
 							}, 2000)
 						} else {
 							uni.showToast({
-								title: "发布信息失败,联系管理或重新发布"
+								title: "修改信息失败,联系管理或重新发布"
 							})
 						}
 					},

@@ -24,8 +24,8 @@
 						<view class="img">
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-14 title">{{item.name}}</p>
-						<p class="f-12 address">{{item.address}}</p>
+						<p class="text f-14">{{item.name}}</p>
+						<p class="text f-12 address">{{item.address}}</p>
 					</view>
 				</view>
 			</view>
@@ -41,7 +41,7 @@
 						<view class="img">
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-12 o-e" style="line-height: 32rpx;margin-top: 20rpx;">{{item.name}}</p>
+						<p class="text f-12 o-e" style="line-height: 32rpx;margin-top: 20rpx;">{{item.name}}</p>
 					</view>
 				</view>
 			</view>
@@ -58,7 +58,7 @@
 							<view class="tag f-12 t-c">{{item.transactionTypeCode}}</view>
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-12 o-e" style="line-height: 32rpx;margin-top: 20rpx;">{{item.name}}</p>
+						<p class="text f-12 o-e" style="line-height: 32rpx;margin-top: 20rpx;">{{item.name}}</p>
 					</view>
 				</view>
 			</view>
@@ -74,7 +74,7 @@
 						<view class="img">
 							<image class="preview-img" :src="item.url" mode=""></image>
 						</view>
-						<p class="f-14 title g-j-c">{{item.name}}</p>
+						<p class="text f-14">{{item.name}}</p>
 					</view>
 				</view>
 			</view>
@@ -137,7 +137,7 @@
 					"SI": ss,
 					"S": sign
 				}
-				
+
 				console.log(JSON.stringify(param))
 				uni.request({
 					method: 'POST',
@@ -151,7 +151,7 @@
 						// alert(JSON.stringify(res))
 						let code = res.data.RETURNRESULT.RESULT;
 						let message = res.data.RETURNRESULT.RETCODE;
-						
+
 						if (code == "1") {
 							// alert("成功返回")
 							// 昵称
@@ -441,6 +441,19 @@
 			padding-bottom: 20rpx;
 			padding-left: 10rpx;
 			padding-right: 16rpx;
+
+			.text {
+				white-space: nowrap;
+				max-width: 210rpx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				margin-bottom: -15rpx;
+			}
+
+			.text:hover {
+				text-overflow: inherit;
+				overflow: visible;
+			}
 
 			.img {
 				width: 210rpx;

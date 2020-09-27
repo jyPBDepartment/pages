@@ -8,12 +8,12 @@
     <br />
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
-      <el-form-item label="标题名称">
+      <el-form-item label="标题">
         <el-input
           v-model="name"
           type="text"
           :maxlength="10"
-          placeholder="请输入标题名称"
+          placeholder="请输入标题"
           class="el-input el-input--small"
           style="width:200px;"
           clearable
@@ -40,14 +40,15 @@
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
-      <el-table-column type="index" label="序号" align="center" min-width="48px" max-width="48px"></el-table-column>
-      <el-table-column prop="name" label="标题" align="center" min-width="80px" max-width="120px" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column type="index" label="序号" align="center" min-width="4%" ></el-table-column>
+      <el-table-column prop="name" label="标题" align="center" min-width="12%" 
+         :show-overflow-tooltip="true"></el-table-column>
       <el-table-column
         prop="transactionTypeCode"
         label="交易类型"
         align="center"
-        min-width="60px"
-        max-width="100px"
+        min-width="6%" 
+       
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionTypeCode==0">收购</span>
@@ -58,8 +59,8 @@
         prop="transactionCategoryCode"
         label="交易类别"
         align="center"
-        min-width="60px"
-        max-width="100px"
+        min-width="6%" 
+       
       >
         <template slot-scope="scope">
           <span v-if="scope.row.transactionCategoryCode=='0'">玉米</span>
@@ -72,12 +73,12 @@
         prop="address"
         label="区域"
         align="center"
-        min-width="100px"
-        max-width="120px"
+        min-width="20%" 
+       
         :show-overflow-tooltip="true"
       ></el-table-column>
 
-      <el-table-column align="center" prop="status" label="审核状态" min-width="60px" max-width="80px">
+      <el-table-column align="center" prop="status" label="审核状态" min-width="6%" >
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">待审核</span>
           <span v-if="scope.row.status==1">审核通过</span>
@@ -85,9 +86,9 @@
           <span v-if="scope.row.status==3">已取消</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="发布时间" align="center" min-width="80px" max-width="100px"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"  min-width="80px" max-width="100px"></el-table-column>
-       <el-table-column fixed="right" label="操作" align="center" min-width="80px" max-width="100px">
+      <el-table-column sortable prop="createDate" label="发布时间" align="center" min-width="12" ></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center"  min-width="12" ></el-table-column>
+       <el-table-column fixed="right" label="操作" align="center" min-width="16%">
         <template slot-scope="scope">
           <el-button @click="cornContent(scope)" type="primary"  size="small"
             style="padding:9px 6px;margin-bottom:5px;"

@@ -5,18 +5,18 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="500px"
+    width="400px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :rules="rules" ref="classiForm" :model="classiForm" label-width="100px"  style="margin-left:-48px;">
+      <el-form :rules="rules" ref="classiForm" :model="classiForm" label-width="80px"  >
         <el-form-item label="分类名称" prop="name">
           <el-input
             type="text"
             v-model="classiForm.name"
-            placeholder="请选择"
+            placeholder="请选择(限15字)"
             :maxLength="15"
              size="small"
           ></el-input>
@@ -25,12 +25,12 @@
           <el-input
             type="text"
             v-model="classiForm.code"
-            placeholder="请选择"
+            placeholder="请选择(限15字)"
             :maxLength="15"
              size="small"
           ></el-input>
         </el-form-item>
-        <el-form-item label="上级分类编码" prop="parentCode" v-if="isShow">
+        <el-form-item label="上级分类" prop="parentCode" v-if="isShow">
           <el-select v-model="classiForm.parentCode" placeholder="请选择"  size="small">
             <el-option
               v-for="item in classiOptions"
@@ -159,9 +159,11 @@ export default {
         .testAxiosGet(ApiPath.url.updateClassification, params)
         .then((res) => {
           let code = res.state;
-
+          if (code == "0") {
           this.$message.success(res.message);
           
+          
+          }
           this.close();
         })
         .catch((err) => {
@@ -187,7 +189,8 @@ export default {
 
 <style scoped>
 .el-form {
-  padding-left: 115px;
+  padding-left: 35px;
+  margin: -20px 0px;
 }
 .el-button {
   border: none;

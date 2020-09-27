@@ -23,7 +23,7 @@
           <el-input
             type="text"
             v-model="editForm.name"
-            placeholder="请输入名称"
+            placeholder="请输入(限10字)"
              size="small"
             :maxlength="10"
           ></el-input>

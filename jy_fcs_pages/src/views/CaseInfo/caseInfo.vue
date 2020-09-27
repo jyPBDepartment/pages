@@ -46,29 +46,29 @@
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border style="width: 100%;" highlight-current-row size="mini">
-      <el-table-column type="index" label="序号" align="center" min-width="48px" max-width="48px"></el-table-column>
-      <el-table-column prop="name" label="名称" align="center" min-width="100px" max-width="139px"></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="100px" max-width="135px">
+      <el-table-column type="index" label="序号" align="center" min-width="3%" ></el-table-column>
+      <el-table-column prop="name" label="名称" align="center" min-width="7%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="url" label="图片" align="center" min-width="7%" >
         <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:80px;height:80px;"></el-image>
+          <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
         </template>
       </el-table-column>
       <el-table-column
         prop="cropsTypeCode"
         label="农作物种类"
         align="center"
-        min-width="100px"
-        max-width="135px"
+        min-width="6%"
+       
       ></el-table-column>
       <el-table-column
         prop="dipTypeCode"
         label="病虫害种类"
         align="center"
-        min-width="100px"
-        max-width="135px"
+        min-width="6%"
+       
       ></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center" prop="auditStatus" label="状态" min-width="60" max-width="80px">
+      <el-table-column align="center" prop="auditStatus" label="状态" min-width="5%" >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -80,17 +80,17 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" min-width="120px" max-width="130px"></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" min-width="120px" max-width="130px"></el-table-column>
+      <el-table-column sortable prop="createDate" label="创建时间" align="center" min-width="10%" ></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" min-width="10%" ></el-table-column>
       <el-table-column
         prop="createUser"
         label="创建人"
         align="center"
-        min-width="80px"
-        max-width="100px"
+        min-width="5%"
+       
       ></el-table-column>
 
-      <el-table-column fixed="right" label="操作" align="center" min-width="100px" max-width="120px">
+      <el-table-column fixed="right" label="操作" align="center" min-width="20%">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
@@ -108,10 +108,10 @@
           >删除</el-button>
           <el-button
             @click="caseContent(scope)"
-            type="primary"
+            type="success"
             size="small"
-            style="width:73px;text-align: center;"
-          >查看详情</el-button>
+            icon="el-icon-view"
+          >查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -365,7 +365,7 @@ export default {
   background-color: #fff;
 }
 .el-button{
-  margin: 5px;
+  /* margin:2px 4px 2px 4px; */
 }
 .el-row {
   margin-top: 2px;

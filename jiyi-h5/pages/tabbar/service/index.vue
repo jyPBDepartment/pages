@@ -136,20 +136,7 @@
 			}
 		},
 		onLoad() {
-			// uni.request({
-			// 	url: ApiPath.url.getCaseList,
-			// 	method: "GET",
-			// 	data: {},
-			// 	success: (res) => {
-			// 		if (res.data.state == 0) {
-			// 			let data = res.data.data.map(item => {
-			// 				item.code = item.id
-			// 				return item
-			// 			})
-			// 			this.screenList[0].category = data
-			// 		}
-			// 	}
-			// });
+		
 		},
 		methods: {
 			removeSpaces(string) {

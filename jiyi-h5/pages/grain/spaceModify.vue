@@ -56,6 +56,7 @@
 			</view>
 		</view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -115,6 +116,7 @@
 					data: param, //请求数据
 					url: ApiPath.url.findMineId, //请求接口路径
 					success: (res) => { //成功返回结果方法
+					if (res.data.state == 0) {
 						this.transactionTypeCode = res.data.data.transactionTypeCode
 						this.machineType = res.data.data.machineType
 						this.labelCode = res.data.data.labelCode
@@ -139,7 +141,7 @@
 							this.banner.push({
 								'url': res.data.dataPic[i].picUrl
 							})
-						}
+						}}
 					}
 				})
 			},
@@ -150,8 +152,9 @@
 			confirm(val) {
 				if(val =='')
 				{
-					uni.showModal({
-						title: "请输入取消原因"
+					this.$refs.uToast.show({
+						title: '请输入取消原因',
+						type: 'error',
 					})
 					return false;
 				}
@@ -175,7 +178,7 @@
 							})
 						}else{
 							uni.showToast({
-								title: "取消发布失败，请联系管理员！"
+								title: "取消发布失败，请联系管理员或重新发布！"
 							})
 						}
 					}

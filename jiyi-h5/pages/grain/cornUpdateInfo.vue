@@ -94,6 +94,7 @@
 			<u-button style="margin: 40rpx;" shape="circle" type="error" @click="updateMachine">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
+		<u-toast ref="uToast" />
 	</view>
 
 </template>
@@ -261,61 +262,77 @@
 			updateMachine() {
 
 				if (this.corn.name == '') {
-					uni.showToast({
-						title: "请输入标题"
+					this.$refs.uToast.show({
+						title: "请输入标题",
+						type: 'error'
 					})
+					
 					return false;
 				}
 
 
 				if (this.url == '') {
-					uni.showToast({
-						title: "请上传图片"
+					this.$refs.uToast.show({
+						title: "请上传图片",
+						type: 'error'
 					})
+				
 					return false;
 				}
 
 				if (this.corn.transactionCategoryCode == '') {
-					uni.showToast({
-						title: "请选择粮食种类"
+					this.$refs.uToast.show({
+						title: "请选择粮食种类",
+						type: 'error'
 					})
+				
 					return false;
 				}
 				if (this.corn.isFace == "定价") {
 					if (!/^\d+(\.\d{1})?$/.test(this.corn.price)) {
-						uni.showToast({
-							title: "价格小数点后保留一位小数"
+						this.$refs.uToast.show({
+							title: "价格小数点后保留一位小数",
+							type: 'error'
 						})
+						
 						return false;
 					}
 				} else {
 					this.corn.price = "0"
 				}
 				if (this.corn.contactsUser == '') {
-					uni.showToast({
-						title: "请输入联系人"
+					this.$refs.uToast.show({
+						title: "请输入联系人",
+						type: 'error'
 					})
+					
 					return false;
 				}
 
 				if (this.corn.contactsPhone == '') {
-					uni.showToast({
-						title: "请输入联系电话"
+					this.$refs.uToast.show({
+						title: "请输入联系电话",
+						type: 'error'
 					})
+				
 					return false;
 				}
 
 				if (!/^1[345789]\d{9}$/.test(this.corn.contactsPhone)) {
-					uni.showToast({
-						title: "请输入正确的联系电话"
+					this.$refs.uToast.show({
+						title: "请输入正确的联系电话",
+						type: 'error'
 					})
+				
 					return false;
 				}
 
 				if (this.corn.address == '') {
-					uni.showToast({
-						title: "请选择区域"
+					this.$refs.uToast.show({
+						title: "请选择区域",
+						type: 'error'
 					})
+				
 					return false;
 				}
 
@@ -361,7 +378,7 @@
 					
 						if (res.data.state == 0) {
 							uni.showToast({
-								title: "发布信息成功,等待审核通过"
+								title: "修改信息成功,等待审核通过"
 							})
 
 							//发布成功返回发布主页面
@@ -374,7 +391,7 @@
 
 						} else {
 							uni.showToast({
-								title: "发布信息失败,联系管理或重新发布"
+								title: "修改信息失败,联系管理或重新发布"
 							})
 						}
 					}
@@ -410,19 +427,6 @@
 							this.corn.price =result.price;								
 						}
 						
-						// let url = [];
-						// let path = "";
-						// for(let i=0;i<res.data.dataPic.length;i++){
-						// 	url.push({'url':res.data.dataPic[i]['picUrl']});
-						// 	if(i==res.data.dataPic.length){
-						// 		path=path+","+res.data.dataPic[i]['picUrl'];
-						// 	}else{
-						// 		path=path+res.data.dataPic[i]['picUrl'];
-						// 	}
-							
-						// }
-						// this.fileList=url;
-						// this.u = path
 						let url2 = [];
 						let path = "";
 						for(let i=0;i<res.data.dataPic.length;i++){

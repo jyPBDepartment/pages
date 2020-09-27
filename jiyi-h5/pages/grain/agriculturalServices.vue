@@ -156,6 +156,7 @@
 			</view>
 		</u-calendar>
 		<u-mask :show="show" :mask-click-able="maskAble" :zoom="true" :duration="500"></u-mask>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -171,6 +172,7 @@
 		},
 		data() {
 			return {
+				show: false,
 				currentDate: "",
 				regionaStatus: false,
 				dateShow: false,
@@ -252,7 +254,7 @@
 						text: '黄豆'
 					}
 				],
-				show: false,
+				
 				maskAble: false
 			};
 		},
@@ -273,6 +275,10 @@
 				this.url.splice(index, 1);
 			},
 			uploadSuccess(data, index, lists, name) {
+				this.$refs.uToast.show({
+					title: '上传成功',
+					type: 'success',
+				})
 				this.url.push(data.url)
 				this.show = false;
 				this.u = this.url;
@@ -323,47 +329,61 @@
 			//发布方法
 			deploy() {
 				if (this.name == '') {
-					uni.showToast({
-						title: "请输入标题"
-					})
+					this.$refs.uToast.show(
+					{
+						title: "请输入标题",
+						type: 'error',
+					}
+					)
 					return false;
 				}
 				if (this.url == '') {
-					uni.showToast({
-						title: "请选择图片"
+					this.$refs.uToast.show({
+						title: "请选择图片",
+						type: 'error'
 					})
 					return false;
 				}
 
 				if (this.value == '') {
-					uni.showToast({
-						title: "请选择干活时间"
+					this.$refs.uToast.show({
+						title: "请选择干活时间",
+						type: 'error'
 					})
+					
 					return false;
 				}
 				if (this.transactionTypeCode == '') {
-					uni.showToast({
-						title: "请选择农作物类型"
+					this.$refs.uToast.show({
+						title: "请选择劳务类型",
+						type: 'error'
 					})
+				
 					return false;
 				}
 				if (this.transactionCategoryCode == '') {
-					uni.showToast({
-						title: "请选择农作物类别"
+					this.$refs.uToast.show({
+						title: "请选择作物类型",
+						type: 'error'
 					})
+					
 					return false;
 				}
 				if (this.machineNum == '') {
-					uni.showToast({
-						title: "请输入农机台数"
+					this.$refs.uToast.show({
+						title: "请输入农机台数",
+						type: 'error'
 					})
+					
 					return false;
 				}
 				if(this.isFace=="定价"){
 					if (!/^\d+(\.\d{1})?$/.test(this.price)) {
-						uni.showToast({
-							title: "价格只允许一位小数"
+						this.$refs.uToast.show({
+							title: "价格只允许一位小数",
+							type: 'error'
 						})
+						
 						return false;
 					}
 				}else{
@@ -371,27 +391,34 @@
 				}
 				
 				if (this.contactsUser == '') {
-					uni.showToast({
-						title: "请输入联系人"
+					this.$refs.uToast.show({
+						title: "请输入联系人",
+						type: 'error'
 					})
+					
 					return false;
 				}
 				if (this.contactsPhone == '') {
-					uni.showToast({
-						title: "请输入联系电话"
+					this.$refs.uToast.show({
+						title: "请输入联系电话",
+						type: 'error'
 					})
 					return false;
 				}
 				if (this.contactsPhone == '' || !/^1[345789]\d{9}$/.test(this.contactsPhone)) {
-					uni.showToast({
-						title: "请输入正确的联系电话"
+					this.$refs.uToast.show({
+						title: "请输入正确的联系电话",
+						type: 'error'
 					})
+				
 					return false;
 				}
 				if (this.address == '') {
-					uni.showToast({
-						title: "请选择干活区域"
+					this.$refs.uToast.show({
+						title: "请选择干活区域",
+						type: 'error'
 					})
+				
 					return false;
 				}
 
@@ -458,7 +485,7 @@
 							}, 2000)
 						} else {
 							uni.showToast({
-								title: "发布信息失败,联系管理或重新发布"
+								title: "发布信息失败,联系管理或重新发布！"
 							})
 						}
 					},
