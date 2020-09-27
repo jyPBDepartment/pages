@@ -3,7 +3,7 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="发布模块名称">
-        <el-input size="small" v-model="deployModuleName" placeholder="输入发布模块名称" style="width:200px"></el-input>
+        <el-input size="small" v-model="deployModuleName" placeholder="输入发布模块名称" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
@@ -35,9 +35,9 @@
         max-width="220px"
       ></el-table-column>
        <el-table-column prop="linkUrl" :show-overflow-tooltip="true" label="连接路径" align="center" min-width="100px" max-width="220px"></el-table-column>
-        <el-table-column prop="picUrl" label="图片" align="center" min-width="110px" max-width="220px">
+        <el-table-column prop="picUrl" label="图片" align="center" min-width="65px" max-width="120px">
         <template slot-scope="scope">
-          <el-image :src="scope.row.picUrl" style="width:80px;height:80px;"></el-image>
+          <el-image :src="scope.row.picUrl" style="width:45px;height:45px;"></el-image>
         </template>
       </el-table-column>
       <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>

@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="35%"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -19,7 +19,7 @@
           <el-input type="text" v-model="keyWordForm.code" size="small" placeholder="请输入关键字编码(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="分类" prop="parentCode">
-          <el-select v-model="keyWordForm.parentCode" style="width:90%" size="small">
+          <el-select v-model="keyWordForm.parentCode" style="width:50%" size="small">
             <el-option v-for="item in parentCodeOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>

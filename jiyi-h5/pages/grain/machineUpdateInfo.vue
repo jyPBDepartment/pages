@@ -135,7 +135,7 @@
 				</view>
 			</view>
 		</u-calendar>
-		
+		<u-toast ref="uToast" />
 	</view>
 
 </template>
@@ -257,6 +257,10 @@
 			    return;
 			},
 			uploadSuccess(data, index, lists, name) {
+				this.$refs.uToast.show({
+					title: '上传成功',
+					type: 'success',
+				})
 				this.url.push(data.url);
 				this.u.push(data.url);
 				this.show = false;
@@ -313,55 +317,63 @@
 			updateMachine(){		
 				
 				if (this.machine.name == '') {
-					uni.showModal({
-						title: "请输入标题"
+					this.$refs.uToast.show({
+						title: "请输入标题",
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.url == '') {
-					uni.showToast({
-						title: "请上传图片"
+					this.$refs.uToast.show({
+						title: "请上传图片",
+						type: 'error',
 					})
 					return false;
 				}
 				
 				if (this.machine.transactionTypeCode == '') {
-					uni.showToast({
-						title: "请选择交易类型"
+					this.$refs.uToast.show({
+						title: "请选择交易类型",
+						type: 'error',
 					})
 					return false;
 				}
 				
 				if (this.machine.machineType == '') {
-					uni.showToast({
-						title: "请选择机器类型"
+					this.$refs.uToast.show({
+						title: "请选择机器类型",
+						type: 'error',
 					})
 					return false;
 				}
 				
 				if (this.machine.model == '') {
-					uni.showToast({
-						title: "请输入机器型号"
+					this.$refs.uToast.show({
+						title: "请输入机器型号",
+						type: 'error',
 					})
 					return false;
 				}
 				if(!/[0-9]+[a-zA-Z]+[0-9a-zA-Z]*|[a-zA-Z]+[0-9]+[0-9a-zA-Z]*/g.test(this.machine.model)){
-					uni.showToast({
-						title: "请输入正确的机器型号"
+					this.$refs.uToast.show({
+						title: "请输入正确的机器型号",
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.machine.purchaseDate == '') {
-					uni.showToast({
-						title: "请输入购买时间"
+					this.$refs.uToast.show({
+						title: "请输入购买时间",
+						type: 'error',
 					})
 					return false;
 				}
 				
 				if(this.machine.isFace=="定价"){
 					if(!/^\d+(\.\d{1})?$/.test(this.machine.price)){
-						uni.showToast({
-							title: "价格小数点后保留一位小数"
+						this.$refs.uToast.show({
+							title: "价格小数点后保留一位小数",
+							type: 'error',
 						})
 						return false;
 					}
@@ -369,28 +381,32 @@
 					this.machine.price ="0"
 				}
 				if (this.machine.contactsUser == '') {
-					uni.showToast({
-						title: "请输入联系人"
+					this.$refs.uToast.show({
+						title: "请输入联系人",
+						type: 'error',
 					})
 					return false;
 				}
 				
 				if (this.machine.contactsPhone == '') {
-					uni.showToast({
-						title: "请输入联系电话"
+					this.$refs.uToast.show({
+						title: "请输入联系电话",
+						type: 'error',
 					})
 					return false;
 				}
 				if (!/^1[345789]\d{9}$/.test(this.machine.contactsPhone)) {
-				     uni.showToast({
-				      title: "请输入正确的联系电话"
+				     this.$refs.uToast.show({
+				      title: "请输入正确的联系电话",
+					  type: 'error',
 				     })
 				     return false;
 				    }
 				
 				if (this.machine.address == '') {
-					uni.showToast({
-						title: "请选择区域"
+					this.$refs.uToast.show({
+						title: "请选择区域",
+						type: 'error',
 					})
 					return false;
 				}
@@ -510,6 +526,10 @@
 							}
 							this.fileList=url2;
 							
+						}else{
+							uni.showToast({
+								title: "查询信息失败,联系管理或重新发布"
+							})
 						}
 						
 				

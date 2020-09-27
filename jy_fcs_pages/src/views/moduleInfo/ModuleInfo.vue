@@ -3,10 +3,10 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="模块名称">
-        <el-input size="small" v-model="name" placeholder="输入模块名称" style="width:200px"></el-input>
+        <el-input size="small" v-model="name" placeholder="输入模块名称" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="status" style="width:37%;height:30px" size="small">
+        <el-select v-model="status" style="width:40%;height:30px" size="small">
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
         </el-select>
       </el-form-item>
@@ -32,9 +32,9 @@
     >
       <el-table-column type="index" label="序号" min-width="60" align="center"></el-table-column>
       <el-table-column prop="name" label="模块名称" align="center" :show-overflow-tooltip="true" min-width="85px" max-width="220px"></el-table-column>
-      <el-table-column prop="url" label="模块图片" align="center" min-width="105px" max-width="220px" >
+      <el-table-column prop="url" label="图片" align="center" min-width="60px" max-width="100px" >
         <template slot-scope="scope" style="height:120px">
-          <el-image :src="scope.row.url" style="width:80px;height:80px;"></el-image>
+          <el-image :src="scope.row.url" style="width:40px;height:40px;"></el-image>
         </template>
       </el-table-column>
       <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
@@ -46,7 +46,7 @@
           <el-tag v-if="scope.row.tabMode == 1" type="info">导航</el-tag>
         </template>
       </el-table-column>
-      <el-table-column  align="center" label="排序" min-width="220px" prop="sort" max-width="220px">
+      <el-table-column  align="center" label="排序" min-width="210px" prop="sort" max-width="220px">
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
         </template>
@@ -216,8 +216,12 @@ export default {
       api
         .testAxiosGet(ApiPath.url.changeModuleSort, params)
         .then(res => {
-           this.$message.success(res.message);
-          // this.reload();
+          let code = res.state;
+          if(code == "1"){
+              this.$message.error(res.message);
+          }else{
+            this.$message.success(res.message);
+          }
         })
         .catch(function(error) {});
     },
@@ -273,7 +277,7 @@ export default {
 }
 .height {
   margin-top: 5px;
-  margin-left: -125px;
+  margin-left: -120px;
 }
 </style>
 <style>

@@ -83,6 +83,7 @@
 			</view>
 		</u-calendar>
 		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -137,6 +138,10 @@
 			},
 			//图片
 			uploadSuccess(data, index, lists, name) {
+				this.$refs.uToast.show({
+					title: '上传成功',
+					type: 'success',
+				})
 				this.url.push(data.url)
 				this.show = false;
 				this.u = this.url;
@@ -179,63 +184,73 @@
 			//预约接口
 			appointment() {
 				if (this.value == '') {
-					uni.showToast({
-						title: "请选择日期"
+					this.$refs.uToast.show({
+						title: '请选择日期',
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.area == '') {
-					uni.showToast({
-						title: "请输入面积"
+					this.$refs.uToast.show({
+						title: "请输入面积",
+						type: 'error',
 					})
 					return false;
 				}
 				if (!/^\d+(\.\d{2})?$/.test(this.area)) {
-					uni.showToast({
-						title: "面积小数点后保留两位小数"
+					this.$refs.uToast.show({
+						title: "面积小数点后保留两位小数",
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.workArea == '') {
-					uni.showToast({
-						title: "请输入干活地点"
+					this.$refs.uToast.show({
+						title: "请输入干活地点",
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.workPrice == '') {
-					uni.showToast({
-						title: "请输入农活价格"
+					this.$refs.uToast.show({
+						title: "请输入农活价格",
+						type: 'error',
 					})
 					return false;
 				}
 
 				if (!/^\d+(\.\d{1})?$/.test(this.workPrice)) {
-					uni.showToast({
-						title: "价格只允许一位小数"
+					this.$refs.uToast.show({
+						title: "价格只允许一位小数",
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.contactUser == '') {
-					uni.showToast({
-						title: "请输入联系人"
+					this.$refs.uToast.show({
+						title: "请输入联系人",
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.contactPhone == '') {
-					uni.showToast({
-						title: "请输入联系电话"
+					this.$refs.uToast.show({
+						title: "请输入联系电话",
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.contactPhone == '' || !/^1[345789]\d{9}$/.test(this.contactPhone)) {
-					uni.showToast({
-						title: "请输入正确的联系电话"
+					this.$refs.uToast.show({
+						title: "请输入正确的联系电话",
+						type: 'error',
 					})
 					return false;
 				}
 				if (this.url == '') {
-					uni.showToast({
-						title: "请选择图片"
+					this.$refs.uToast.show({
+						title: "请选择图片",
+						type: 'error',
 					})
 					return false;
 				}

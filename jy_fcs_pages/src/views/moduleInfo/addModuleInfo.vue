@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="35%"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -13,7 +13,7 @@
     <slot>
       <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
         <el-form-item label="模块名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入模块名称(不能超过16个字符)" style="width:92%" maxlength="16"></el-input>
+          <el-input type="text" v-model="editForm.name" size="small" placeholder="不超过16个字" style="width:92%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="跳转路由" prop="routeUrl">
           <el-input type="text" v-model="editForm.routeUrl" size="small" placeholder="请输入跳转路由" style="width:92%"></el-input>

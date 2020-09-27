@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -16,10 +16,13 @@
           <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入账户名称(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="账户密码" prop="password">
-          <el-input type="password" v-model="editForm.password" size="small" placeholder="请输入账户密码(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
+          <el-input type="password" v-model="editForm.password" size="small" placeholder="请输入账户密码(5-16个字符)" style="width:90%" minlength="6" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="newPassword">
           <el-input type="password" placeholder="请确认密码(不能超过16个字符)" v-model="editForm.newPassword" size="small" style="width:90%" maxlength="16"></el-input>
+        </el-form-item>
+        <el-form-item label="昵称" prop="nickName">
+          <el-input type="text" v-model="editForm.nickName" size="small" placeholder="请输入昵称(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
           <el-input type="text" v-model="editForm.phone" size="small" placeholder="请输入十一位手机号码" style="width:90%" @change="telPhone" maxlength="11"></el-input>
@@ -63,6 +66,7 @@ export default {
       labelPosition: "right",
       editForm: {
         name: "",
+        nickName:"",
         id: "",
         password:"",
         newPassword:"",
@@ -78,6 +82,7 @@ export default {
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入账户名称", trigger: "blur" }],
+        nickName: [{ required: true, message: "请输入昵称", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
         newPassword: [
           { required: true, message: "请确认新密码", trigger: "blur" },
@@ -121,8 +126,18 @@ export default {
         return false;
       }
 
+      if (this.editForm.password.length<6) {
+        this.$alert("密码不能少于6位", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+
       if (this.editForm.newPassword == "") {
         this.$alert("确认密码不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+
+      if (this.editForm.nickName == "") {
+        this.$alert("昵称不能为空", "提示", { confirmButtonText: "确定" });
         return false;
       }
 
@@ -147,6 +162,7 @@ export default {
            this.fullscreenLoading = true;
             setTimeout(() => {
               this.editForm.name="";
+              this.editForm.nickName="";
               this.editForm.password="";
               this.editForm.newPassword="";
               this.editForm.phone="";

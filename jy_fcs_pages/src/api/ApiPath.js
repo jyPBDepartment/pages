@@ -20,6 +20,8 @@ const url = {
   //账户修改
   findAccountInfoId: URLHost + '/accountInfo/findById',
   updateAccountInfo: URLHost + '/accountInfo/update',
+  //重置密码
+  resetPass: URLHost + '/accountInfo/resetPass',
   //关联权限修改
   updateAccountPower: URLHost + '/accountInfo/updatePower',
   //权限设置移除
@@ -93,6 +95,8 @@ const url = {
   //圈子审核驳回
   refusePostInfo: URLHost + '/postInfo/refusePostInfo',
   findAccountId: URLHost + '/accountInfo/findAccountId',
+  //圈子删除
+  deletePostinfo: URLHost + '/postInfo/delete',
 
   //图片上传地址
   uploadImg: URLHost + '/upload/uploadImg',

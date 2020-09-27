@@ -3,13 +3,13 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="账户名称">
-        <el-input size="small" v-model="name" placeholder="输入账户名称" style="width:200px"></el-input>
+        <el-input size="small" v-model="name" placeholder="输入账户名称" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item label="手机号码">
-        <el-input size="small" v-model="phone" placeholder="输入手机号码" style="width:200px"></el-input>
+        <el-input size="small" v-model="phone" placeholder="输入手机号码" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item label="账户状态" prop="auditStatus">
-          <el-select v-model="auditStatus" style="width:35%" size="small">
+          <el-select v-model="auditStatus" style="width:40%" size="small">
             <el-option v-for="item in auditStatusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
@@ -26,8 +26,9 @@
     <!--列表-->
     <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" min-width="20" max-width="60px" align="center"></el-table-column>
-      <el-table-column prop="name" min-width="80px" max-width="220px" label="账户名称" align="center"></el-table-column>
+      <el-table-column prop="name" min-width="110px" max-width="220px" label="账户名称" align="center"></el-table-column>
       <el-table-column prop="phone" min-width="95px" max-width="220px" label="手机号码" align="center"></el-table-column>
+      <el-table-column prop="nickName" min-width="80px" max-width="220px" label="昵称" align="center"></el-table-column>
       <el-table-column prop="createDate" min-width="135px" max-width="220px" label="创建时间" align="center" sortable></el-table-column>
       <el-table-column prop="updateDate" min-width="135px" max-width="220px" label="修改时间" align="center" sortable></el-table-column>
       <el-table-column prop="createUser" min-width="80px" max-width="220px" label="创建人" align="center"></el-table-column>
@@ -44,16 +45,17 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="权限设置" min-width="105px" max-width="220px" >
+      <!-- <el-table-column align="center" label="权限设置" min-width="105px" max-width="220px" >
         <template slot-scope="scope">
            <el-button @click="openUpdatePower(scope)" type="primary" size="small">权限设置</el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column align="center" label="操作" min-width="220px" max-width="300px">
         <template slot-scope="scope">
            <el-button @click="openUpdateAccountInfo(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
            <el-button @click="deleteUser(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
-           <el-button @click="updatePass(scope)" type="primary" size="small" style="margin-top:8px;">修改密码</el-button>
+           <el-button @click="updatePass(scope)" type="primary" size="small" style="margin-top:8px;width:75px; margin-left:2px">修改密码</el-button>
+           <el-button @click="resetPass(scope)" type="primary" size="small" style="width:75px">重置密码</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -99,6 +101,7 @@ export default {
   data() {
     return {
       name: "",
+      nickName:"",
       phone:"",
       auditStatus:"",
       updateUser:"",
@@ -247,6 +250,24 @@ export default {
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
+    resetPass(scope){
+       let params = {
+        id: scope.row.id,
+      };
+      //修改用户信息
+      api.testAxiosGet(ApiPath.url.resetPass, params).then(res => {
+        let code = res.status;
+          if(code == "0") {
+            this.$message.success(res.message);
+            this.$confirm("重置成功，重置密码为：123456", "信息", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "success"
+            })
+            this.close();
+          }
+      });
+    },
     // 删除
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {
@@ -284,6 +305,6 @@ export default {
 }
 .height {
   margin-top: 5px;
-  margin-left: -125px;
+  margin-left: -120px;
 }
 </style>

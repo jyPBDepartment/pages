@@ -63,29 +63,34 @@
         <tr>
            <td align="center">审核原因</td>
           <td colspan="3" align="left">
-            <span v-if="postInfoForm.auditStatus==0">
-              <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:100%"></el-input>
-            </span>
-            <span v-if="postInfoForm.auditStatus==1||postInfoForm.auditStatus==2">{{postInfoForm.reason}}</span>
+            {{postInfoForm.reason}}
           </td>
         </tr>
        </tbody>
       </table>
       <span slot="footer">
       <span v-if="postInfoForm.auditStatus==0">
-        <el-button type="primary" icon="el-icon-check" @click="passPostInfo()" class="insert">通过审核</el-button>
+        <el-button type="primary" icon="el-icon-check" @click="passPostInfo()" size="small">通过审核</el-button>
       </span>
       <span v-if="postInfoForm.auditStatus==0">
-        <el-button type="primary" icon="el-icon-close" @click="refusePostInfo()" class="del">拒绝审核</el-button>
+        <el-button type="danger" icon="el-icon-close" @click="refusePostInfo(postInfoForm.id)" size="small">拒绝审核</el-button>
       </span>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
    </slot>
+     <examine
+      :show="refusePostInfoFlag"
+      :refuseId="refuseId"
+      title="审核驳回理由"
+      @close="closerefuseDialog"
+      @save="refuse"
+    ></examine>
   </el-dialog>
 </template>
 <script>
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
+import examine from "./examine"
 export default {
   inject: ["reload"],
   props: {
@@ -104,6 +109,8 @@ export default {
   data() {
     return {
       labelPosition: "right",
+      refusePostInfoFlag: false,
+      refuseId:"",
       postInfoForm: {
         code: "",
         parentCode: "",
@@ -122,6 +129,10 @@ export default {
       },
       localShow: this.show,
     };
+  },
+   // 注册组件
+  components: {
+    examine
   },
   watch: {
     show(val) {
@@ -158,25 +169,15 @@ export default {
       this.postInfoForm.auditUser = localStorage.getItem("userInfo");
     },
     //审核拒绝
-    refusePostInfo: function () {
-      if (this.postInfoForm.reason == "" || this.postInfoForm.reason == null) {
-        this.$alert("请填写拒绝理由！", "提示", {
-          confirmButtonText: "确定",
-        });
-        return false;
-      }
-      let params = {
-        postInfoEntity: this.postInfoForm,
-      };
-      api.testAxiosGet(ApiPath.url.refusePostInfo, params).then((res) => {
-        let code = res.state;
-        if (code == "0") {
-          this.$message.success(res.message);
-          this.close();
-          this.reload();
-        }
-      });
-      this.postInfoForm.auditUser = localStorage.getItem("userInfo");
+    refusePostInfo(val) {
+      this.refuseId = val;
+      this.refusePostInfoFlag = true;
+    },
+    closerefuseDialog(){
+      this.refusePostInfoFlag = false;
+    },
+    refuse(){
+      this.refusePostInfoFlag = false;
     },
     close: function () {
       this.$emit("close");
@@ -191,28 +192,8 @@ export default {
 .el-form {
   padding-left: 100px;
 }
-.el-button {
-  border: none;
-}
-.insert {
-  width: 100px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.del {
-  width: 100px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
-}
 .table{
   height: 400px;
   width: 900px;
-  
-
 }
 </style>

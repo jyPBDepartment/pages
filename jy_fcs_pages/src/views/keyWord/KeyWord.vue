@@ -3,7 +3,7 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="关键词名称">
-        <el-input size="small" v-model="name" placeholder="输入关键词名称" style="width:200px"></el-input>
+        <el-input size="small" v-model="name" placeholder="输入关键词名称" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>

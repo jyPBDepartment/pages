@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="35%"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escap3="false"
   >
@@ -14,6 +14,9 @@
       <el-form :model="accountInfoForm" :rules="rules" ref="accountInfoForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
         <el-form-item label="账户名称" prop="name">
           <el-input type="text" v-model="accountInfoForm.name" size="small" placeholder="请输入账户名称(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
+        </el-form-item>
+        <el-form-item label="昵称" prop="nickName">
+          <el-input type="text" v-model="accountInfoForm.nickName" size="small" placeholder="请输入昵称(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
           <el-input type="text" v-model="accountInfoForm.phone" size="small" placeholder="请输入11位手机号码" style="width:90%" @change="telPhone" maxlength="11"></el-input>
@@ -51,6 +54,7 @@ export default {
       labelPosition: "right",
       accountInfoForm: {
         name: "",
+        nickName:"",
         id:"",
         phone:"",
         jurId:"",
@@ -60,6 +64,7 @@ export default {
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+        nickName: [{ required: true, message: "请输入昵称", trigger: "blur" }],
         phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
       }
     };
@@ -93,6 +98,12 @@ export default {
         this.$alert("账户名称不能为空", "提示", { confirmButtonText: "确定" });
         return false;
       }
+
+      if (this.accountInfoForm.nickName == "") {
+        this.$alert("昵称不能为空", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
+
       if (this.accountInfoForm.phone == "") {
         this.$alert("手机号不能为空", "提示", { confirmButtonText: "确定" });
         return false;

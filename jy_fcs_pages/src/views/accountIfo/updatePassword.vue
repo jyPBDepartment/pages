@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="35%"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -28,6 +28,7 @@
             placeholder="请设置新密码(不能超过16个字符)"
             v-model="form.password"
             style="width:100%"
+            minlength="6"
             maxlength="16"
             clearable
           ></el-input>
@@ -38,6 +39,7 @@
             placeholder="请确认新密码(不能超过16个字符)"
             v-model="form.newPassword2"
             style="width:100%"
+            minlength="6"
             maxlength="16"
             clearable
           ></el-input>
@@ -143,6 +145,10 @@ export default {
       this.$refs.form.resetFields();
     },
     onSubmit(formName) {
+    if (this.form.password.length<6) {
+        this.$alert("新密码不能少于6位", "提示", { confirmButtonText: "确定" });
+        return false;
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.formOld.passWord = this.form.password;

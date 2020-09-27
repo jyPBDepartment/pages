@@ -14,9 +14,7 @@
     </el-button>
     <el-submenu index="2" class="submenu">
       <!-- <template slot="title">{{user.userRealName}}</template> -->
-      <template slot="title">超级管理员</template>
-      <el-menu-item index="2-1">设置</el-menu-item>
-      <el-menu-item @click="content()" index="2-2">个人中心</el-menu-item>
+      <template slot="title">{{name}}</template>
       <el-menu-item @click="exit()" index="2-3">退出</el-menu-item>
     </el-submenu>
   </el-menu>
@@ -30,7 +28,8 @@ export default {
       collapsed: true,
       imgshow: require("../assets/img/show.png"),
       imgsq: require("../assets/img/sq.png"),
-      user: {}
+      user: {},
+      name:localStorage.getItem("userInfo"),
     };
   },
   // 创建完毕状态(里面是操作)

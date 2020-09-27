@@ -4,10 +4,10 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="名称">
-        <el-input type="text" size="small" v-model="name" placeholder="输入名称" style="width:200px"></el-input>
+        <el-input type="text" size="small" v-model="name" placeholder="输入名称" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item label="发布人">
-        <el-input type="text" size="small" v-model="createUser" placeholder="输入发布人" style="width:200px"></el-input>
+        <el-input type="text" size="small" v-model="createUser" placeholder="输入发布人" style="width:150px"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
@@ -30,7 +30,7 @@
         label="标题名称"
         align="center"
         :show-overflow-tooltip="true"
-        min-width="110px"
+        min-width="105px"
         max-width="220px"
       ></el-table-column>
       <el-table-column
@@ -38,21 +38,21 @@
         label="内容"
         align="center"
         :show-overflow-tooltip="true"
-        min-width="80px"
+        min-width="75px"
         max-width="220px"
       ></el-table-column>
-      <el-table-column prop="author" label="作者" align="center" min-width="90px" max-width="220px"></el-table-column>
-      <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="90px" max-width="220px">
+      <el-table-column prop="author" :show-overflow-tooltip="true" label="作者" align="center" min-width="80px" max-width="220px"></el-table-column>
+      <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="65px" max-width="220px">
         <template slot-scope="scope">
           <span v-if="scope.row.auditStatus==0">未审核</span>
           <span v-if="scope.row.auditStatus==1">审核通过</span>
           <span v-if="scope.row.auditStatus==2">审核驳回</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
-      <el-table-column prop="auditUser" label="审核人" align="center" min-width="100px" max-width="220px"></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="65px" max-width="220px">
+      <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="135px" max-width="220px"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="135px" max-width="220px"></el-table-column>
+      <el-table-column prop="auditUser" label="审核人" align="center" min-width="80px" max-width="220px"></el-table-column>
+      <el-table-column align="center" label="状态" prop="status" min-width="60px" max-width="220px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -64,9 +64,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="110px" max-width="220px">
+      <el-table-column align="center" label="操作" min-width="200px" max-width="220px">
         <template slot-scope="scope">
-          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small">信息审核</el-button>
+          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small" style="width:75px"><span align="center">信息审核</span></el-button>
+          <el-button @click="deletePost(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -217,6 +218,31 @@ export default {
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
+    deletePost(scope){
+       this.$confirm("确定要删除吗?", "信息", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          let params = {
+            id: scope.row.id,
+          };
+          api.testAxiosGet(ApiPath.url.deletePostinfo, params).then((res) => {
+            let code = res.state;
+            if (code == "0") {
+              this.$message.success(res.message);
+              this.reload();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    }
   },
 };
 </script>

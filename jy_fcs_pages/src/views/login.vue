@@ -177,6 +177,18 @@ export default {
         self.clearCookie();
       }
       this.$refs[formName].validate((valid) => {
+         if(this.ruleForm.name == ""){
+            this.$message.error("请输入用户名！");
+            return false;
+         }
+        if(this.ruleForm.password == ""){
+          this.$message.error("请输入密码！");
+          return false;
+        }
+        if(this.ruleForm.code == ""){
+          this.$message.error("请输入验证码！");
+          return false;
+        }
         if (valid) {
           let params = {
             id: this.ruleForm.id,
@@ -200,9 +212,8 @@ export default {
                     this.$router.push({ path: "/charts/statistics" });
                   }, 1000);
                 } else {
-                  this.$alert("验证码输入错误请重新输入！", "提示", {
-                    confirmButtonText: "确定",
-                  });
+                   this.ruleForm.code="";
+                   this.$message.error("验证码输入错误请重新输入！");
                 }
               } else {
                 this.$message.error(res.message);
@@ -211,9 +222,6 @@ export default {
             .catch(function (err) {
               this.$message.error("登录失败");
             });
-        } else {
-          this.$message.error("请输入用户名,密码,验证码！");
-          return false;
         }
       });
     },

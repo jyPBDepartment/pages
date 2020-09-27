@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -174,7 +174,6 @@ export default {
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.picUrl = this.imgUrl;
-            // this.isDisable = true;
             let params = {
               deployModuleEntity: this.editForm,
             };
@@ -183,10 +182,8 @@ export default {
               .then((res) => {
                 let code = res.state;
                 if (code == "0") {
-                  // this.reload();
                   this.close();
                   this.$message.success(res.message);
-                  // this.loading = false;
                 } else {
                   this.$message.error(res.message);
                 }

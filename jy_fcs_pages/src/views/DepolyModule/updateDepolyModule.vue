@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="40%"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >

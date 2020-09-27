@@ -5,24 +5,22 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
+    width="30%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form  ref="postInfoForm" :model="postInfoForm" :label-position="labelPosition" label-width="100px">
+      <el-form  ref="postInfoForm" :model="postInfoForm" :label-position="labelPosition" label-width="100px" style="margin-left:-135px">
          <el-form-item label="审核原因" >
-          <span v-if="postInfoForm.auditStatus==0"><el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%"></el-input></span>
-          <span v-if="postInfoForm.auditStatus==1||postInfoForm.auditStatus==2"><el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:80%" readonly></el-input></span>
+          <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:95%"></el-input>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <span v-if="postInfoForm.auditStatus==0"><el-button type="primary" icon="el-icon-check" @click="passPostInfo()" class="insert">通过审核</el-button></span>
-      <span v-if="postInfoForm.auditStatus==0"><el-button type="primary" icon="el-icon-close" @click="refusePostInfo()" class="del">拒绝审核</el-button></span>
-      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
+      <el-button type="danger" icon="el-icon-close" @click="refusePostInfo()" size="small">拒绝审核</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="small">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -42,7 +40,7 @@ export default {
       type: String,
       default: "对话框"
     },
-    examineId: {
+    refuseId: {
       type: String
     }
   },
@@ -61,7 +59,7 @@ export default {
     show(val) {
       this.localShow = val;
     },
-    examineId(val) {
+    refuseId(val) {
       let params = {
         id: val
       };
@@ -73,21 +71,6 @@ export default {
   },
    mounted() {},
   methods: {
-      //审核通过
-    passPostInfo: function() {
-      let params = {
-        postInfoEntity: this.postInfoForm
-      };
-      api.testAxiosGet(ApiPath.url.passPostInfo, params).then(res => {
-        let code = res.state;
-          if(code == "0") {
-            this.$message.success(res.message);
-            this.close();
-            this.reload();
-          }
-      }).catch(function(error) {});
-      this.postInfoForm.auditUser =localStorage.getItem("userInfo");
-    },
     //审核拒绝
     refusePostInfo: function(){
       if (          
@@ -124,23 +107,5 @@ export default {
 <style scoped>
 .el-form {
   padding-left: 100px;
-}
-.el-button{
-  border: none;
-}
-.insert{
-  width: 100px;
-  background-color: #67c23a;
-  border-color: #67c23a;
-  color: #fff;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.el-button.del {
-  width: 100px;
-  background-color: #f56c6c;
-  border-color: #f56c6c;
-  color: white;
-  font-size: 12px;
 }
 </style> 
