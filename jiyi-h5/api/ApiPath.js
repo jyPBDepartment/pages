@@ -1,24 +1,24 @@
 //配置后台接口
 //开发环境基础路径地址
 // const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-// const URLHost = 'http://192.168.1.107:8080';
+const URLHost = 'http://localhost:8080';
 
 //生产环境基础路径地址
-const URLHost = 'http://182.92.77.60/jy_fcs';
+// const URLHost = 'http://182.92.77.60/jy_fcs';
 
 let common = {
-	userId:'',
-	sesssionId:'',
-	nc:''
+	userId: '',
+	sesssionId: '',
+	nc: ''
 }
 
 const md5 = {
-	key:'gCQsGhuXt9OWD0iTPyyraEOZbUdtGzit'
+	key: 'gCQsGhuXt9OWD0iTPyyraEOZbUdtGzit'
 }
 
-const extendUrl={
+const extendUrl = {
 	// 测试环境
-	findCustmerInfo:'http://112.126.103.106:16302/jyhn-frontend/webHttpServlet'
+	findCustmerInfo: 'http://112.126.103.106:16302/jyhn-frontend/webHttpServlet'
 	// 生产环境
 	// findCustmerInfo:'http://112.126.103.48:16302/jyhn-frontend/webHttpServlet'
 }
@@ -102,26 +102,31 @@ const url = {
 	//我的预约列表
 	findMyFarm: URLHost + '/farmwork/findMyFarm',
 	//意向客户筛选列表显示
-	 findFarmForMe: URLHost + '/farmwork/findFarmForMe',
-	 // 根据预约Id获取预约信息
-	 findFarmWorkById : URLHost + '/farmwork/findDetail', 
-	 //取消预约
-	 cancel: URLHost + '/farmwork/cancel', 
-	 //重新预约
-	 again: URLHost + '/farmwork/again', 
-	 //我的预约已完成
-	 finish: URLHost + '/farmwork/finish', 
-	 // 根据预约Id获取预约信息
-      findFarmWorkById: URLHost + '/farmwork/findDetail',
-      //意向用户待确认变确认
-      userUpdateStatus: URLHost + '/farmwork/confirm',
-	  //我的页面农机取消发布
-	  cancelPub:URLHost + '/agricultural/unpublish',
-	  //农机修改
-	  updateMachine:URLHost + '/agricultural/update',
-	  //农机，农服，粮食买卖图片删除
-	  deleteMachine:URLHost + '/agricultural/deletePic',
+	findFarmForMe: URLHost + '/farmwork/findFarmForMe',
+	// 根据预约Id获取预约信息
+	findFarmWorkById: URLHost + '/farmwork/findDetail',
+	//取消预约
+	cancel: URLHost + '/farmwork/cancel',
+	//重新预约
+	again: URLHost + '/farmwork/again',
+	//我的预约已完成
+	finish: URLHost + '/farmwork/finish',
+	// 根据预约Id获取预约信息
+	findFarmWorkById: URLHost + '/farmwork/findDetail',
+	//意向用户待确认变确认
+	userUpdateStatus: URLHost + '/farmwork/confirm',
+	//我的页面农机取消发布
+	cancelPub: URLHost + '/agricultural/unpublish',
+	//农机修改
+	updateMachine: URLHost + '/agricultural/update',
+	//农机，农服，粮食买卖图片删除
+	deleteMachine: URLHost + '/agricultural/deletePic',
+	//根据筛选类型查询粮价信息
+	findGrainPricesByType:URLHost + '/grainPrices/findListByType'
 }
 export default {
-	url,common,md5,extendUrl
+	url,
+	common,
+	md5,
+	extendUrl
 }

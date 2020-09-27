@@ -1,9 +1,9 @@
 // 本地环境地址
-// const URLHost = 'http://localhost:8080';
+const URLHost = 'http://localhost:8080';
 // 开发环境基础路径地址
 // const URLHost = 'http://192.168.1.106:8080/jy_fcs';
 // 生产环境基础路径地址
-const URLHost = 'http://182.92.77.60/jy_fcs';
+// const URLHost = 'http://182.92.77.60/jy_fcs';
 
 const url = {
 
@@ -234,6 +234,16 @@ const url = {
   getDictValue: URLHost + '/dict/getDictValue',
   //农服列表删除
   deleteAgricultural: URLHost + '/agricultural/delete',
+  //查询粮价信息列表
+  findGrainPricesList: URLHost + '/grainPrices/findPageByParam',
+  //保存粮价信息
+  saveGrainPrices:URLHost+ '/grainPrices/saveOrUpdate',
+  //根据id查询粮价信息
+  findGrainPricesInfoById:URLHost+ '/grainPrices/findById',
+  //根据id删除粮价信息
+  deleteGrainPricesInfoById:URLHost+ '/grainPrices/delete',
+  //验证粮价日期是否重复
+  checkPriceDate:URLHost+ '/grainPrices/checkPriceDate'
 }
 export default {
   url

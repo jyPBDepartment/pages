@@ -85,6 +85,9 @@ import dbLog from '@/views/dbLog/logShow';
 //字典管理
 import dict from '@/views/dict/dictList';
 
+import GrainPrices from '@/views/grainPrices/grainPricesInfo';
+
+
 // 启用路由
 Vue.use(Router);
 
@@ -259,6 +262,13 @@ export default new Router({
             path: '/dict/dictList',
             name: '日志管理',
             component: dict,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/grainPrices/grainPricesInfo',
+            name: '粮价管理',
+            component: GrainPrices,
             meta: {
                 requireAuth: true
             }

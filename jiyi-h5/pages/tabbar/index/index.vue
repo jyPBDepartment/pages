@@ -2,7 +2,7 @@
 	<view>
 		<!-- search 组件监听到得参数search方法获取 -->
 		<HeaderSearch disabled @searchCallback="search"></HeaderSearch>
-		<!-- <FoodstuffPrice></FoodstuffPrice> -->
+		<FoodstuffPrice></FoodstuffPrice>
 		<view class="p-x-10">
 			<view class="p-y-10 btn b-t">
 				<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">

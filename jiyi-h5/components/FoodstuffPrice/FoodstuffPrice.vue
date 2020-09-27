@@ -1,14 +1,27 @@
 <template>
 	<view class="qiun-columns">
-		<view class="t-c f-14">近半月粮食价格趋势图</view>
+		<view class="t-c f-14" style="text-align: left;margin-left: 10px;">玉米价格行情(元/斤)</view>
+		<view class="f-1" style="">说明：该数据来源于大商所最近一个合约的前一日收盘价，仅供参考。</view>
+		<view style="text-align: center;">
+			<u-row :gutter="6">
+				<u-col :span="2" style="text-align: center;">
+					<u-tag text="7日" shape="circle" :type="tagClick == '0'?'error':'info'" @click="getServerData('0')"></u-tag>
+				</u-col>
+				<u-col :span="2" style="text-align: center;">
+					<u-tag text="30日" shape="circle" :type="tagClick == '1'?'error':'info'" @click="getServerData('1')"></u-tag>
+				</u-col>
+			</u-row>
+		</view>
 		<view class="qiun-charts">
 			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
 		</view>
+
 	</view>
 </template>
 
 <script>
 	import uCharts from '@/u-charts/u-charts.js';
+	import ApiPath from '@/api/ApiPath.js'
 	var _self;
 	var canvaLineA = null;
 	export default {
@@ -17,32 +30,76 @@
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
+				tagClick: 0
 			}
 		},
 		created() {
 			_self = this;
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
-			this.getServerData();
+			this.getServerData("0");
 		},
 		methods: {
-			getServerData() {
+			getServerData(val) {
+				if(val=="0"){
+					this.tagClick='0';
+				}
+				if(val=="1"){
+					this.tagClick='1';
+				}
+				let param = {
+					type: val
+				}
+
 				uni.request({
-					url: '/api/data.json',
-					data: {},
-					success: function(res) {
-						let LineA = {
-							categories: [],
-							series: []
-						};
-						//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-						LineA.categories = res.data.data.LineA.categories;
-						LineA.series = res.data.data.LineA.series;
-						_self.showLineA("canvasLineA", LineA);
+					url: ApiPath.url.findGrainPricesByType,
+					method: "GET",
+					data: param,
+					success: (res) => {
+						if (res.data.state == 0) {
+							let LineA = {
+								categories: [],
+								series: []
+							};
+							let categories = [];
+							let seriesData = [];
+							let series = [{
+								name: "",
+								legendShape: "",
+								pointShape: "",
+								show: "",
+								type: "",
+								color: "",
+								data: [],
+							}];
+							let result = res.data.data;
+							for (let i = 0; i < result.length; i++) {
+								categories.push(result[i].priceDate.substring(5,10));
+								seriesData.push(result[i].price)
+							}
+
+							series[0].name = '玉米价格';
+							series[0].legendShape = 'line';
+							series[0].pointShape = 'circle';
+							series[0].show = true;
+							series[0].type = 'line';
+							series[0].color = '#1890ff';
+							series[0].data = seriesData;
+							LineA.categories = categories;
+							LineA.series = series;
+							// console.log(LineA)
+							//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
+							// LineA.categories = ['09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28'];
+							// LineA.series = [{'name':'玉米价格','data':[1,1.2,1.3,0.9,1,1.2,1.3,0.9,1,1.2,1.3,0.9],'legendShape': "line",'pointShape': "circle",'show': true,'type': "line",'color': "#1890ff"}];
+							_self.showLineA("canvasLineA", LineA);
+						}
 					},
-					fail: () => {
-						_self.tips = "网络错误，小程序端请检查合法域名";
-					},
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+						this.show = false;
+					}
 				});
 			},
 			showLineA(canvasId, chartData) {
@@ -64,18 +121,29 @@
 					xAxis: {
 						type: 'grid',
 						gridColor: '#CCCCCC',
-						gridType: 'dash',
-						dashLength: 8
+						gridType: 'solid',
+						dashLength: 2,
+						boundaryGap: 'justify',
+						fontSize: 7,
+						gridEval: 1,
+						// disableGrid:true
 					},
 					yAxis: {
+						title: '元/斤',
 						gridType: 'dash',
 						gridColor: '#CCCCCC',
-						dashLength: 8,
-						splitNumber: 5,
-						min: 10,
-						max: 180,
+						dashLength: 4,
+						splitNumber: 4,
+						// disableGrid:true,
+						min: 0,
+						max: 1,
+						fontSize: 8,
 						format: (val) => {
-							return val.toFixed(0) + '元'
+							if(val==0){
+								return 0;
+							}else{
+								return val.toFixed(1);
+							}
 						}
 					},
 					width: _self.cWidth * _self.pixelRatio,
@@ -91,7 +159,7 @@
 			touchLineA(e) {
 				canvaLineA.showToolTip(e, {
 					format: function(item, category) {
-						return category + ' ' + item.name + ':' + item.data
+						return category + "\n" + item.name + ":" + item.data
 					}
 				});
 			}
@@ -115,5 +183,14 @@
 		width: 750upx;
 		height: 500upx;
 		background-color: #FFFFFF;
+	}
+
+	.f-1 {
+		font-size: 10px;
+		background-color: #f2f2f2;
+		margin: 10px;
+		height: 14px;
+		text-align: center;
+		border-radius: 3px;
 	}
 </style>
