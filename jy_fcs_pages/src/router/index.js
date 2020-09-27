@@ -87,6 +87,7 @@ import dict from '@/views/dict/dictList';
 
 import GrainPrices from '@/views/grainPrices/grainPricesInfo';
 
+import GrainPricesHistory from '@/views/grainPrices/grainPricesHistoryInfo'
 
 // 启用路由
 Vue.use(Router);
@@ -269,6 +270,14 @@ export default new Router({
             path: '/grainPrices/grainPricesInfo',
             name: '粮价管理',
             component: GrainPrices,
+            meta: {
+                requireAuth: true
+            }
+        },
+        , {
+            path: '/grainPrices/grainPricesHistoryInfo',
+            name: '粮价历史',
+            component: GrainPricesHistory,
             meta: {
                 requireAuth: true
             }

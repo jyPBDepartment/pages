@@ -247,7 +247,9 @@ const url = {
   //根据id删除粮价信息
   deleteGrainPricesInfoById:URLHost+ '/grainPrices/delete',
   //验证粮价日期是否重复
-  checkPriceDate:URLHost+ '/grainPrices/checkPriceDate'
+  checkPriceDate:URLHost+ '/grainPrices/checkPriceDate',
+  //查询粮价操作历史信息列表
+  findGrainPricesHistoryList: URLHost + '/grainPricesHistory/findPageByParam',
 }
 export default {
   url
