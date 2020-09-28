@@ -5,15 +5,15 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="35%"
+    width="28%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
+      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px">
         <el-form-item label="价格" prop="price">
-          <el-input type="text" v-model="editForm.price" size="small" placeholder="请输入价格" style="width:60%"></el-input>
+          <el-input type="text" v-model="editForm.price" placeholder="请输入价格" style="width:60%"></el-input>
         </el-form-item>
         <el-form-item label="日期" prop="priceDate">
           <el-date-picker type="date" placeholder="选择日期" format="yyyy年MM月dd日"
@@ -133,14 +133,11 @@ export default {
 </script>
 
 <style scoped>
-.el-form {
-  padding-left: 115px;
-}
 .el-button {
   border: none;
 }
 .required {
   color: red;
-  margin-left: -79px;
+  /* margin-left: -79px; */
 }
 </style>

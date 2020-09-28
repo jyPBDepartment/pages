@@ -35,13 +35,13 @@
           >重置</el-button
         >
       </el-form-item>
-      <br />
+      <!-- <br />
       <el-row>
         <el-button type="success" icon="el-icon-plus" @click="addGrainPrices()"
           >添加</el-button
         >
       </el-row>
-      <br />
+      <br /> -->
     </el-form>
 
     <!--列表-->
