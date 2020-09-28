@@ -194,6 +194,7 @@ export default {
                 this.editForm.linkUrl="";
                 this.fileList=[];
                 this.fullscreenLoading = false;
+                this.imgUrl="";
               }, 500);
           } else {
             this.$message.error("请上传图片");

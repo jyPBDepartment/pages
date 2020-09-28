@@ -25,15 +25,15 @@
     </el-form>
     <!--列表-->
     <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
-      <el-table-column type="index" label="序号" min-width="20" max-width="60px" align="center"></el-table-column>
-      <el-table-column prop="name" min-width="110px" max-width="220px" label="账户名称" align="center"></el-table-column>
-      <el-table-column prop="phone" min-width="95px" max-width="220px" label="手机号码" align="center"></el-table-column>
-      <el-table-column prop="nickName" min-width="80px" max-width="220px" label="昵称" align="center"></el-table-column>
-      <el-table-column prop="createDate" min-width="135px" max-width="220px" label="创建时间" align="center" sortable></el-table-column>
-      <el-table-column prop="updateDate" min-width="135px" max-width="220px" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column prop="createUser" min-width="80px" max-width="220px" label="创建人" align="center"></el-table-column>
-      <el-table-column prop="updateUser" min-width="80px" max-width="220px" label="修改人" align="center"></el-table-column>
-      <el-table-column align="center" min-width="63px" max-width="220px" label="状态" prop="auditStatus">
+      <el-table-column type="index" label="序号" min-width="8%" align="center"></el-table-column>
+      <el-table-column prop="name" min-width="8%" label="账户名称" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="phone" min-width="9%" label="手机号码" align="center" ></el-table-column>
+      <el-table-column prop="nickName" min-width="7%" label="昵称" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
+      <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
+      <el-table-column prop="createUser" min-width="9%" label="创建人" align="center"></el-table-column>
+      <el-table-column prop="updateUser" min-width="9%" label="修改人" align="center"></el-table-column>
+      <el-table-column align="center" min-width="6%" label="状态" prop="auditStatus">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -50,12 +50,12 @@
            <el-button @click="openUpdatePower(scope)" type="primary" size="small">权限设置</el-button>
         </template>
       </el-table-column> -->
-      <el-table-column align="center" label="操作" min-width="220px" max-width="300px">
+      <el-table-column align="center" label="操作" min-width="19%">
         <template slot-scope="scope">
            <el-button @click="openUpdateAccountInfo(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
            <el-button @click="deleteUser(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
            <el-button @click="updatePass(scope)" type="primary" size="small" style="margin-top:8px;width:75px; margin-left:2px">修改密码</el-button>
-           <el-button @click="resetPass(scope)" type="primary" size="small" style="width:75px">重置密码</el-button>
+           <el-button @click="resetPass(scope)" type="primary" size="small" style="margin-top:8px;width:75px">重置密码</el-button>
         </template>
       </el-table-column>
     </el-table>

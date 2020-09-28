@@ -184,6 +184,7 @@ export default {
                   this.editForm.routeUrl="";
                   this.editForm.tabMode="0";
                   this.fileList=[];
+                  this.imgUrl="";
                 }, 500);
           } else {
             this.$message.error("请上传图片");

@@ -30,28 +30,28 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" min-width="60" align="center"></el-table-column>
-      <el-table-column prop="name" label="模块名称" align="center" :show-overflow-tooltip="true" min-width="85px" max-width="220px"></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="60px" max-width="100px" >
+      <el-table-column type="index" label="序号" min-width="8%" align="center"></el-table-column>
+      <el-table-column prop="name" label="模块名称" align="center" :show-overflow-tooltip="true" min-width="8%" ></el-table-column>
+      <el-table-column prop="url" label="图片" align="center" min-width="6%"  >
         <template slot-scope="scope" style="height:120px">
           <el-image :src="scope.row.url" style="width:40px;height:40px;"></el-image>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
-      <el-table-column prop="routeUrl" :show-overflow-tooltip="true" label="跳转路由" align="center" min-width="80px" max-width="220px"></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center" min-width="80px" max-width="220px"></el-table-column>
-      <el-table-column  label="跳转类型" align="center" min-width="70px" max-width="220px">
+      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="12%"  ></el-table-column>
+      <el-table-column prop="routeUrl" :show-overflow-tooltip="true" label="跳转路由" align="center" min-width="10%"  ></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center" min-width="8%"  ></el-table-column>
+      <el-table-column  label="跳转类型" align="center" min-width="8%"  >
         <template slot-scope="scope">
           <el-tag v-if="scope.row.tabMode == 0" type="success">标签</el-tag>
           <el-tag v-if="scope.row.tabMode == 1" type="info">导航</el-tag>
         </template>
       </el-table-column>
-      <el-table-column  align="center" label="排序" min-width="210px" prop="sort" max-width="220px">
+      <el-table-column  align="center" label="排序" min-width="14%" prop="sort" >
         <template slot-scope="scope">
-          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
+          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly size="small"></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="70px" max-width="220px">
+      <el-table-column align="center" label="状态" prop="status" min-width="7%">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -63,7 +63,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="190px" max-width="220px">
+      <el-table-column align="center" label="操作" min-width="19%">
         <template slot-scope="scope">
           <el-button @click="openUpdateModuleInfo(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
           <el-button @click="deleteModuleInfo(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>

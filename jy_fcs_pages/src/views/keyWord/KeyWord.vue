@@ -25,15 +25,15 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" min-width="50" max-width="80px" align="center"></el-table-column>
-      <el-table-column prop="name" label="名称" align="center" min-width="100px" max-width="220px"></el-table-column>
-      <el-table-column prop="code" label="编码" align="center" min-width="100px" max-width="220px"></el-table-column>
-      <el-table-column prop="parentName" label="分类名称" align="center" min-width="110px" max-width="220px"></el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="140px" max-width="220px"></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center" min-width="80px" max-width="220px"></el-table-column>
-      <el-table-column prop="updateUser" label="修改人" align="center" min-width="80px" max-width="220px"></el-table-column>
-      <el-table-column align="center" label="状态" prop="auditStatus" min-width="80px" max-width="220px">
+      <el-table-column type="index" label="序号" min-width="8%" align="center"></el-table-column>
+      <el-table-column prop="name" label="名称" align="center" min-width="8%"></el-table-column>
+      <el-table-column prop="code" label="编码" align="center" min-width="8%"></el-table-column>
+      <el-table-column prop="parentName" label="分类名称" align="center" min-width="8%"></el-table-column>
+      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="12%"></el-table-column>
+      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="12%"></el-table-column>
+      <el-table-column prop="createUser" label="创建人" align="center" min-width="10%"></el-table-column>
+      <el-table-column prop="updateUser" label="修改人" align="center" min-width="10%"></el-table-column>
+      <el-table-column align="center" label="状态" prop="auditStatus" min-width="7%">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -45,7 +45,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="190px" max-width="220px">
+      <el-table-column align="center" label="操作" min-width="17%">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateKeyWord(scope)"
