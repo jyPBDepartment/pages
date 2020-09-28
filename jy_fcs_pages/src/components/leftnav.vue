@@ -14,7 +14,7 @@
     active-text-color="#ffd04b"
   >
     <div class="logobox">
-      <img class="logoimg" style="background-color:#f2f2f2;width:auto;border-radius: 6px;" src="../assets/img/title.png" alt />
+      <img :class="logo" style="background-color:#f2f2f2;width:auto;border-radius: 8px;" :src="logoImg" alt />
     </div>
     <div v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
       <div v-if="menu.only=='Y'">
@@ -48,9 +48,12 @@ import api from "@/axios/api.js";
 export default {
   name: "leftnav",
   data() {
+
     return {
+      logo:"e-log",
       collapsed: false,
       allmenu: [],
+      logoImg:"http://60.205.246.126:8001/images/2020/09/28/1601263959763498.png"
     };
   },
   // 创建完毕状态(里面是操作)
@@ -67,6 +70,12 @@ export default {
     // 监听
     this.$root.Bus.$on("toggle", (value) => {
       this.collapsed = !value;
+      if(value){
+         this.logoImg="http://60.205.246.126:8001/images/2020/09/28/1601263959763498.png"
+      }else{
+        this.logoImg="http://60.205.246.126:8001/images/2020/09/28/1601263888633033.png"
+      }
+        
     });
   },
   methods: {
@@ -108,7 +117,12 @@ export default {
   text-align: center;
   padding: 20px 0px;
 }
-.logoimg {
+/* .logoimg {
   height: 40px;
+} */
+.e-log{
+  margin-left: -9px;
+  height: 41px;
 }
+
 </style>

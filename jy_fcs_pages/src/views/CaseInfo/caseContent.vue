@@ -11,7 +11,7 @@
   >
     <!-- 插槽区 -->
     <slot>
-           <table border="2" :data="caseInfoForm" align="center" class="table">
+           <table border="2"  :data="caseInfoForm" align="center" class="table">
         <tbody>
           <tr>
             <td class="title">病虫害名称</td>
@@ -32,10 +32,10 @@
            <tr>
             <td class="title">图片</td>
             <td class="content">
-                <el-image style="width: 100px; height: 100px" :src="caseInfoForm.url"></el-image>
+                <el-image class="image" :src="caseInfoForm.url"></el-image>
             </td>
             <td class="title">描述</td>
-            <td class="content" v-html="caseInfoForm.describetion">
+            <td class="contentText" v-html="caseInfoForm.describetion">
                 {{caseInfoForm.describetion}}
             </td>
           </tr>
@@ -87,6 +87,7 @@ export default {
       caseInfoForm: {},
       cropsOptions: [],
       dipOptions: [],
+    
     };
   },
   watch: {
@@ -163,6 +164,18 @@ export default {
 }
 .content {
   text-align: center;
+}
+.image{
+ width: 200px; 
+ height: 200px
+}
+.contentText{
+  text-align: center;
+}
+.contentText >>> img{
+  width:300px;
+  height: 300px;
+  margin: 0px 10px 10px 9px;
 }
 </style>
 <style>
