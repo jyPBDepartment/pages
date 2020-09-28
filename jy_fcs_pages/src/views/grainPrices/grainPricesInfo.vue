@@ -1,39 +1,36 @@
 <template>
   <div>
     <!-- 搜索筛选 -->
-<!-- <el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item label="生成类型" prop="priceDefinedType">
-    <el-select v-model="priceDefinedType" placeholder="请选择">
-      <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item>
-    <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
-        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
-  </el-form-item>
-  <br />
+    <el-form :inline="true" class="demo-form-inline">
+      <el-form-item label="生成类型">
+        <el-select v-model="priceDefinedType" placeholder="请选择" style="width:142px;">
+          <el-option
+            v-for="item in statusOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="warning"
+          icon="el-icon-search"
+          @click="search('manual')"
+          >查询</el-button
+        >
+        <el-button type="info" icon="el-icon-close" @click="resetForm('search')"
+          >重置</el-button
+        >
+      </el-form-item>
+      <br />
       <el-row>
-        <el-button size="small" type="success" icon="el-icon-plus" @click="addGrainPrices()" class="insert">添加</el-button>
+        <el-button type="success" icon="el-icon-plus" @click="addGrainPrices()"
+          >添加</el-button
+        >
       </el-row>
       <br />
-</el-form> -->
-
-<el-form :inline="true" class="demo-form-inline">
-  <el-form-item label="生成类型">
-    <el-select v-model="priceDefinedType" placeholder="请选择">
-      <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item>
-     <el-button  type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
-      <el-button  type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
-  </el-form-item>
-   <br />
-      <el-row>
-        <el-button type="success" icon="el-icon-plus" @click="addGrainPrices()">添加</el-button>
-      </el-row>
-      <br />
-</el-form>
+    </el-form>
 
     <!--列表-->
     <el-table
@@ -43,21 +40,64 @@
       v-loading="loading"
       border
       element-loading-text="拼命加载中"
-      style="width: 100%;"
+      style="width: 100%"
     >
-      <el-table-column type="index" label="序号" min-width="6" align="center"></el-table-column>
-      <el-table-column prop="price" label="价格(元/斤)" align="center" min-width="8"></el-table-column>
-      <el-table-column prop="priceDate" label="价格时间" align="center" sortable min-width="10" ></el-table-column>
-      <el-table-column prop="priceDefinedType" label="生成类型" align="center" min-width="10">
+      <el-table-column
+        type="index"
+        label="序号"
+        min-width="6"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="price"
+        label="价格(元/斤)"
+        align="center"
+        min-width="8"
+      ></el-table-column>
+      <el-table-column
+        prop="priceDate"
+        label="价格时间"
+        align="center"
+        sortable
+        min-width="10"
+      ></el-table-column>
+      <el-table-column
+        prop="priceDefinedType"
+        label="生成类型"
+        align="center"
+        min-width="10"
+      >
         <template slot-scope="scope">
-          <div v-if="scope.row.priceDefinedType==0">手动输入</div>
+          <div v-if="scope.row.priceDefinedType == 0">手动输入</div>
           <div v-else>自动生成</div>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="10" ></el-table-column>
-      <el-table-column prop="createUser" label="创建人" align="center" min-width="10" ></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="10" ></el-table-column>
-      <el-table-column prop="updateUser" label="修改人" align="center" min-width="10" ></el-table-column>
+      <el-table-column
+        prop="createDate"
+        label="创建时间"
+        align="center"
+        sortable
+        min-width="10"
+      ></el-table-column>
+      <el-table-column
+        prop="createUser"
+        label="创建人"
+        align="center"
+        min-width="10"
+      ></el-table-column>
+      <el-table-column
+        prop="updateDate"
+        label="修改时间"
+        align="center"
+        sortable
+        min-width="10"
+      ></el-table-column>
+      <el-table-column
+        prop="updateUser"
+        label="修改人"
+        align="center"
+        min-width="10"
+      ></el-table-column>
       <!-- <el-table-column align="center" label="状态" prop="status" min-width="70px" max-width="220px">
         <template slot-scope="scope">
           <el-switch
@@ -70,15 +110,30 @@
           ></el-switch>
         </template>
       </el-table-column> -->
-      <el-table-column align="center" label="操作" min-width="14" >
+      <el-table-column align="center" label="操作" min-width="14">
         <template slot-scope="scope">
-          <el-button @click="openUpdateModuleInfo(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteModuleInfo(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
+          <el-button
+            @click="openUpdateModuleInfo(scope)"
+            type="primary"
+            size="small"
+            icon="el-icon-edit"
+            >编辑</el-button
+          >
+          <el-button
+            @click="deleteModuleInfo(scope)"
+            type="danger"
+            size="small"
+            icon="el-icon-delete"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
+    <Pagination
+      v-bind:child-msg="formInline"
+      @callFather="callFather"
+    ></Pagination>
     <add-grain-prices
       :show="addGrainPricesShow"
       title="添加"
@@ -107,9 +162,9 @@ export default {
   inject: ["reload"],
   data() {
     return {
-      priceDefinedType:"",
+      priceDefinedType: "",
       url: "",
-      updateUser:"",
+      updateUser: "",
       loading: false, //是显示加载
       editFormVisible: false, //控制编辑页面显示与隐藏
       menuAccessshow: false, //控制数据权限显示与隐藏
@@ -200,7 +255,7 @@ export default {
       let params = {
         id: scope.row.id,
         status: scope.row.status,
-        updateUser: localStorage.getItem("userInfo")
+        updateUser: localStorage.getItem("userInfo"),
       };
       api
         .testAxiosGet(ApiPath.url.moduleInfoEnable, params)
@@ -216,18 +271,18 @@ export default {
         .catch(function (error) {});
     },
     //修改菜单排序
-    sortChange: function(scope) {
+    sortChange: function (scope) {
       let params = {
         id: scope.row.id,
-        sort: scope.row.sort
+        sort: scope.row.sort,
       };
       api
         .testAxiosGet(ApiPath.url.changeModuleSort, params)
-        .then(res => {
-           this.$message.success(res.message);
+        .then((res) => {
+          this.$message.success(res.message);
           // this.reload();
         })
-        .catch(function(error) {});
+        .catch(function (error) {});
     },
     //显示编辑界面
     openUpdateModuleInfo(scope) {
@@ -251,15 +306,17 @@ export default {
         .then(() => {
           let params = {
             id: scope.row.id,
-            currentUser:localStorage.getItem("userInfo")
+            currentUser: localStorage.getItem("userInfo"),
           };
-          api.testAxiosGet(ApiPath.url.deleteGrainPricesInfoById, params).then((res) => {
-            let code = res.status;
-            if (code == "0") {
-              this.$message.success(res.message);
-              this.reload();
-            }
-          });
+          api
+            .testAxiosGet(ApiPath.url.deleteGrainPricesInfoById, params)
+            .then((res) => {
+              let code = res.status;
+              if (code == "0") {
+                this.$message.success(res.message);
+                this.reload();
+              }
+            });
         })
         .catch(() => {
           this.$message({

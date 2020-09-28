@@ -14,7 +14,7 @@
     active-text-color="#ffd04b"
   >
     <div class="logobox">
-      <img class="logoimg" src="../assets/img/logo.png" alt />
+      <img class="logoimg" style="background-color:#f2f2f2;width:auto;border-radius: 6px;" src="../assets/img/title.png" alt />
     </div>
     <div v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
       <div v-if="menu.only=='Y'">
