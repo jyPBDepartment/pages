@@ -1,0 +1,21 @@
+{
+  "name": "jiyi-learnCenter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "sass-loader": "^10.0.2",
+    "uniapp": "0.1.0-dev.1",
+    "uview-ui": "^1.7.3",
+    "webpack": "^4.44.2"
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
