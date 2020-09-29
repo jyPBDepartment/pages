@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="500px"
+    width="400px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -17,13 +17,13 @@
         :model="editForm"
         :label-position="labelPosition"
         label-width="100px"
-        style="margin-left:-48px;"
+       
       >
         <el-form-item label="权限名称" prop="jurName">
           <el-input
             type="text"
             v-model="editForm.jurName"
-            placeholder="请输入权限名称"
+            placeholder="请输入权限名称(限15字)"
             :maxLength="15"
             size="small"
            
@@ -33,13 +33,13 @@
           <el-input
             type="text"
             v-model="editForm.jurCode"
-            placeholder="请输入权限编码"
+            placeholder="请输入权限编码(限15字)"
             :maxLength="15"
              size="small"
            
           ></el-input>
         </el-form-item>
-        <el-form-item label="上级权限编码" prop="subJurCode">
+        <el-form-item label="上级权限" prop="subJurCode">
           <el-select v-model="editForm.subJurCode" placeholder="请选择"  size="small" >
             <el-option
               v-for="item in powerOptions"
@@ -185,7 +185,8 @@ export default {
 
 <style scoped>
 .el-form {
-  padding-left: 115px;
+  padding-left: 13px;
+  margin: -20px 0px;
 }
 .input {
   float: left;

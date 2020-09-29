@@ -5,18 +5,18 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-     width="500px"
+    width="400px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :rules="rules" ref="powerInfoForm" :model="powerInfoForm" label-width="100px"  style="margin-left:-48px;">
+      <el-form :rules="rules" ref="powerInfoForm" :model="powerInfoForm" label-width="80px">
         <el-form-item label="权限名称" prop="jurName">
           <el-input
             type="text"
             v-model="powerInfoForm.jurName"
-            placeholder="请输入权限名称"
+            placeholder="请输入权限名称(限15字)"
             :maxLength="15"
              size="small"
            
@@ -26,17 +26,17 @@
           <el-input
             type="text"
             v-model="powerInfoForm.jurCode"
-            placeholder="请输入权限编码"
+            placeholder="请输入权限编码(限15字)"
             :maxLength="15"
              size="small"
             
           ></el-input>
         </el-form-item>
-        <el-form-item label="上级权限编码" prop="subJurCode" v-if="isShow">
+        <el-form-item label="上级权限" prop="subJurCode" v-if="isShow">
           <el-select
             type="text"
             v-model="powerInfoForm.subJurCode"
-            placeholder="请输入上级权限编码"
+            placeholder="请输入上级权限"
              size="small"
           >
             <el-option
@@ -173,7 +173,10 @@ export default {
         .testAxiosGet(ApiPath.url.updatePowerInfo, params)
         .then((res) => {
           let code = res.status;
-          this.$message.success(res.message);
+          if(code == "0"){
+               this.$message.success(res.message);
+          }
+         
           this.close();
         })
         .catch((err) => {
@@ -199,7 +202,8 @@ export default {
 
 <style scoped>
 .el-form {
-  padding-left: 115px;
+ padding-left: 35px;
+  margin: -20px 0px;
 }
 .el-button {
   border: none;

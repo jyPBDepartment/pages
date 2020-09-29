@@ -9,7 +9,6 @@
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
-   
     <!-- 插槽区 -->
     <slot>
       <el-form
@@ -17,10 +16,10 @@
         ref="editForm"
         :model="editForm"
         :label-position="labelPosition"
-         label-width="80px"
-      
+        label-width="100px"
+       
       >
-        <el-form-item label="分类名称" prop="name">
+         <el-form-item label="分类名称" prop="name">
           <el-input
             type="text"
             v-model="editForm.name"
@@ -58,10 +57,10 @@
         type="primary"
         icon="el-icon-check"
         @click="saveClassification()"
-        size="small"
-        v-loading.fullscreen.lock="fullscreenLoading"
+        size="medium"
+         v-loading.fullscreen.lock="fullscreenLoading"
       >保存</el-button>
-      <el-button type="info" icon="el-icon-close" @click="close" size="small">关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
     </span>
   </el-dialog>
 </template>
@@ -86,12 +85,13 @@ export default {
   },
   data() {
     return {
-       fullscreenLoading: false,
+     fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
-        name: "",
+         name: "",
         code: "",
         parentCode: "",
+
 
         createUser: localStorage.getItem("userInfo"),
       },
@@ -120,7 +120,7 @@ export default {
         .testAxiosGet(ApiPath.url.findAllClass, params)
         .then((res) => {
           if (res.state == "0") {
-            // this.classiOptions.push({ value: "", label: "请选择" });
+            // this.powerOptions.push({ value: "", label: "请选择" });
             for (let i = 0; i < res.data.length; i++) {
               this.classiOptions.push({
                 value: res.data[i]["id"],
@@ -132,9 +132,9 @@ export default {
         .catch(function (error) {});
     },
 
-    //添加分类方法
+    //添加权限方法
     saveClassification: function () {
-      if(this.editForm.name  == ""){
+       if(this.editForm.name  == ""){
           this.$alert("分类名称不能为空", "提示", {
             confirmButtonText: "确定",
           });
@@ -146,9 +146,8 @@ export default {
           });
           return false;
       }
-         this.isDisable = true;
         let params = {
-          classificationEntity: this.editForm,
+         classificationEntity: this.editForm,
         };
         api
           .testAxiosGet(ApiPath.url.saveClassification, params)
@@ -158,7 +157,7 @@ export default {
             this.close();
           })
           .catch(function (err) {
-            this.isDisable = false;
+            // this.isDisable = false;
           });
           this.fullscreenLoading = true;
           setTimeout(() => {
@@ -181,7 +180,7 @@ export default {
 
 <style scoped>
 .el-form {
-  padding-left: 35px;
+  padding-left: 13px;
   margin: -20px 0px;
 }
 .input {
@@ -221,5 +220,4 @@ export default {
 .el-select{
   width: 200px;
 }
-
 </style>

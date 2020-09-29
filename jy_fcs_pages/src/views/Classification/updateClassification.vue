@@ -177,6 +177,7 @@ export default {
         }, 500);
     },
     close: function () {
+      // this.reload();
       this.$emit("close");
     },
     beforeClose: function () {

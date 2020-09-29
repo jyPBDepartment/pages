@@ -336,6 +336,7 @@ export default {
     },
     closeUpdateCaseInfoDialog: function () {
       this.updateCaseInfoFlag = false;
+      this.search(this.formInline);
     },
     updateCaseInfo: function () {},
     closeModifyRuleTagDialog() {

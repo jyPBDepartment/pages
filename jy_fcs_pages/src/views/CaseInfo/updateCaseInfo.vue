@@ -161,10 +161,6 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
-// import { quillEditor } from "vue-quill-editor";
-// import "quill/dist/quill.core.css";
-// import "quill/dist/quill.snow.css";
-// import "quill/dist/quill.bubble.css";
 import aes from "@/utils/aes.js";
 import {Quill,quillEditor} from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
@@ -241,29 +237,7 @@ export default {
                 }
             }
         }
-      // modules: {
-      //     toolbar: {
-      //         container: [['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-      //         ['blockquote', 'code-block'],
-      //         [{'list': 'ordered'}, {'list': 'bullet'}],
-      //         [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-      //         [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-      //         [{'direction': 'rtl'}],                         // text direction
-      //         [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-      //         [{'align': []}],
-      //         ['image'],
-      //         ['clean']],
-      //         handlers: {
-      //             'image': function (value) {
-      //             if (value) {
-      //                     document.querySelector('.quill-img input').click()
-      //                 } else {
-      //                     this.quill.format('image', false);
-      //                 }
-      //             }
-      //           }
-      //         }
-      //       },
+      
           },
         };
       },
