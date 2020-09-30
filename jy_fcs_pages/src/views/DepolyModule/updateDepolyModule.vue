@@ -24,7 +24,7 @@
             type="text"
             v-model="deployModuleForm.deployModuleName"
             size="small"
-            placeholder="请输入发布模块名称(不超过16个字)"
+            placeholder="请输入发布模块名称(限16个字)"
             style="width:90%"
             maxlength="16"
           ></el-input>

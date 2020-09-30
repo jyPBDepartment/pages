@@ -15,9 +15,10 @@
         <el-form-item label="原密码" prop="pass">
           <el-input
             type="text"
-            placeholder="请输入原密码(不能超过16个字符)"
+            placeholder="请输入原密码(6-16个字符)"
             v-model="form.pass"
             style="width:100%"
+            minlength="6"
             maxlength="16"
             clearable
           ></el-input>
@@ -25,7 +26,7 @@
         <el-form-item label="新密码" prop="password">
           <el-input
             type="password"
-            placeholder="请设置新密码(不能超过16个字符)"
+            placeholder="请设置新密码(6-16个字符)"
             v-model="form.password"
             style="width:100%"
             minlength="6"
@@ -36,7 +37,7 @@
         <el-form-item label="确认密码" prop="newPassword2">
           <el-input
             type="password"
-            placeholder="请确认新密码(不能超过16个字符)"
+            placeholder="请确认新密码(6-16个字符)"
             v-model="form.newPassword2"
             style="width:100%"
             minlength="6"

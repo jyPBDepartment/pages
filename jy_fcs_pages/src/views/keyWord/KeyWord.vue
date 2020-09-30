@@ -26,7 +26,7 @@
       style="width: 100%;"
     >
       <el-table-column type="index" label="序号" min-width="8%" align="center"></el-table-column>
-      <el-table-column prop="name" label="名称" align="center" min-width="8%"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" align="center" min-width="8%"></el-table-column>
       <el-table-column prop="code" label="编码" align="center" min-width="8%"></el-table-column>
       <el-table-column prop="parentName" label="分类名称" align="center" min-width="8%"></el-table-column>
       <el-table-column prop="createDate" label="创建时间" align="center" sortable min-width="12%"></el-table-column>

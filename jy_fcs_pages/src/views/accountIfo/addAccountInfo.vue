@@ -13,16 +13,16 @@
     <slot>
       <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
         <el-form-item label="账户名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入账户名称(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
+          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入账户名称(限16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="账户密码" prop="password">
-          <el-input type="password" v-model="editForm.password" size="small" placeholder="请输入账户密码(5-16个字符)" style="width:90%" minlength="6" maxlength="16"></el-input>
+          <el-input type="password" v-model="editForm.password" size="small" placeholder="请输入账户密码(6-16个字符)" style="width:90%" minlength="6" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="newPassword">
-          <el-input type="password" placeholder="请确认密码(不能超过16个字符)" v-model="editForm.newPassword" size="small" style="width:90%" maxlength="16"></el-input>
+          <el-input type="password" placeholder="请确认密码(6-16个字符)" v-model="editForm.newPassword" size="small" style="width:90%" minlength="6" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="昵称" prop="nickName">
-          <el-input type="text" v-model="editForm.nickName" size="small" placeholder="请输入昵称(不能超过16个字符)" style="width:90%" maxlength="16"></el-input>
+          <el-input type="text" v-model="editForm.nickName" size="small" placeholder="请输入昵称(限16个字符)" style="width:90%" maxlength="16"></el-input>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
           <el-input type="text" v-model="editForm.phone" size="small" placeholder="请输入十一位手机号码" style="width:90%" @change="telPhone" maxlength="11"></el-input>
@@ -106,6 +106,7 @@ export default {
     close() {
       this.$emit("close");
     },
+    //手机号判断
     telPhone: function () {
       if (!/^1[345789]\d{9}$/.test(this.editForm.phone)) {
         this.$alert("请输入正确的手机号！", "提示", {

@@ -250,11 +250,11 @@ export default {
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
+    //重置密码
     resetPass(scope){
        let params = {
         id: scope.row.id,
       };
-      //修改用户信息
       api.testAxiosGet(ApiPath.url.resetPass, params).then(res => {
         let code = res.status;
           if(code == "0") {
