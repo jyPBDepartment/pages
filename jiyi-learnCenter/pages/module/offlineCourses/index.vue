@@ -3,8 +3,11 @@
 		<u-row style="background-color: #f2f2f2;height: 60rpx;">
 			<u-col span="1">
 				<view class="title" @click="backTo">
-					< </view> </u-col> <u-col span="11">
-						<view class="title">线下课程</view>
+					<u-icon name="arrow-left"></u-icon>
+				</view>
+			</u-col>
+			<u-col span="11">
+				<view class="title">线下课程</view>
 			</u-col>
 		</u-row>
 		<u-row class="oc-row">
@@ -46,7 +49,9 @@
 		},
 		methods: {
 			linkTo(val) {
-				alert('跳转对应考试页面' + val)
+				uni.navigateTo({
+					url: '../offlineCourses/offlineDetails?id=' + val
+				})
 			},
 			backTo() {
 				uni.navigateBack({
