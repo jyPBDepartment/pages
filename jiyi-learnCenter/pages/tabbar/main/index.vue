@@ -33,24 +33,38 @@
 				<view style="text-align: right;" @click="rmMore">更多>>></view>
 			</u-col>
 		</u-row>
-		<u-row class="rm-row">
-			<u-col span="4" @click="rmDetail('111')">
+		<view class="list" v-for="(item, index) in hotCourseList" :key="index"  @click="rmDetail">
+			<view class="listOne">
+				<view class="img">
+					<image class="listImg" :src="item.url"></image>
+				</view>
+				<view class="listText">{{item.word}}</view>
+			</view>
+			<view class="listSen">
+				<view class="bride">{{item.sum}}人已读</view>
+			</view>
+				<view>
+					<u-line class="underline"></u-line>
+				</view>
+		</view>
+<!-- 		<u-row class="rm-row"  @click="rmDetail('')">
+			<u-col span="4">
 				<u-image class="rm-image" width="220rpx" height="160rpx" src="http://60.205.246.126:8001/images/2020/09/29/1601345920052441.jpg"></u-image>
 			</u-col>
-			<u-col span="8" @click="rmDetail('111')">
+			<u-col span="8">
 				<view>通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)</view>
 				<view class="rm-font">200人已读</view>
 			</u-col>
 		</u-row>
 		<u-row class="rm-row">
-			<u-col span="4" @click="rmDetail('1111')">
+			<u-col span="4" @click="rmDetail">
 				<u-image class="rm-image" width="220rpx" height="160rpx" src="http://60.205.246.126:8001/images/2020/09/29/1601345997114502.jpg"></u-image>
 			</u-col>
-			<u-col span="8" @click="rmDetail('1111')">
+			<u-col span="8" @click="rmDetail">
 				<view>显示列表信息展示内容</view>
 				<view class="rm-font">134人已读</view>
 			</u-col>
-		</u-row>
+		</u-row> -->
 
 		<!--  行业案例 -->
 		<u-row style="background-color: #f2f2f2;font-size: 24rpx;">
@@ -61,7 +75,7 @@
 				<view style="text-align: right;" @click="hyMore">更多>>></view>
 			</u-col>
 		</u-row>
-		<u-row class="rm-row">
+		<!-- <u-row class="rm-row">
 			<u-col span="4" @click="hyDetail('111')">
 				<u-image width="220rpx" height="160rpx" src="http://60.205.246.126:8001/images/2020/09/29/1601345920052441.jpg"></u-image>
 			</u-col>
@@ -78,7 +92,21 @@
 				<view>显示列表信息展示内容</view>
 				<view class="rm-font">134人已读</view>
 			</u-col>
-		</u-row>
+		</u-row> -->
+		<view class="list" v-for="(item, index) in industryCaseList" :key="'list'+index"  @click="hyDetail">
+			<view class="listOne">
+				<view class="img">
+					<image class="listImg" :src="item.url"></image>
+				</view>
+				<view class="listText">{{item.word}}</view>
+			</view>
+			<view class="listSen">
+				<view class="bride">{{item.sum}}人已读</view>
+			</view>
+				<view>
+					<u-line class="underline"></u-line>
+				</view>
+		</view>
 	</view>
 </template>
 
@@ -98,6 +126,14 @@
 				// 		time: 3
 				// 	}
 				// ],
+				hotCourseList:[
+					{url:"http://60.205.246.126:8001/images/2020/09/29/1601345920052441.jpg",word:"通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)",sum:"200"},
+					{url:"http://60.205.246.126:8001/images/2020/09/29/1601345997114502.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"300"}
+				],
+				industryCaseList:[
+					{url:"http://60.205.246.126:8001/images/2020/09/29/1601345920052441.jpg",word:"通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)",sum:"500"},
+					{url:"http://60.205.246.126:8001/images/2020/09/29/1601345997114502.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"1314"}
+				]
 			}
 		},
 		onReady: function(res) {
@@ -132,11 +168,17 @@
 			hyMore() {
 				alert("进入行业案例列表页面")
 			},
-			rmDetail(val) {
-				alert("进入热门详情页面" + val);
+			rmDetail() {
+				
+				uni.navigateTo({
+					url: "../../detailsPages/hotCourseDetail/index"
+				})
 			},
 			hyDetail(val) {
-				alert("进入行业详情页面" + val);
+				
+				uni.navigateTo({
+					url: "../../detailsPages/IndustryCaseDetail/index"
+				})
 			},
 			initDate() {
 				uni.request({
@@ -217,6 +259,38 @@
 
 		.u-row {
 			margin: 40rpx 0;
+		}
+		.list{
+			display: flex;
+			flex-direction: column;
+			background-color: #fff;
+			.listOne{
+				display: flex;
+				margin-top: 10rpx;
+				.img{
+					.listImg{
+						width: 220rpx;
+						height: 160rpx;
+						margin: 10rpx 10rpx;
+					}
+				}
+				.listText{
+					font-size: 26rpx;
+					margin:15rpx 10rpx 0rpx 20rpx;
+				}
+			}
+			.listSen{
+				
+				.bride{
+					font-size: 22rpx;
+					color: #BFBFBF;
+					margin-left: 600rpx;
+					margin-top: -50rpx;
+				}
+			}
+			.underline{
+				border:0px solid #d3d3d3;
+			}
 		}
 	}
 </style>

@@ -3,12 +3,101 @@
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	
+		  {
+		   "path": "pages/module/offlineCourses/offlineDetails"    //线下课程详情
+		  },
+		  {
+		   "path": "pages/module/offlineCourses/offlineSignUp"     //线下课程立即报名
+		  },
+		  {
+		   "path": "pages/module/offlineCourses/offlineSignUpShow"  //线下课程报名展示页
+		  },
+		// 热门课程内容详情
+		{
+			"path": "pages/detailsPages/hotCourseDetail/index"
+		},
+		// 行业案例内容详情
+		{
+			"path": "pages/detailsPages/IndustryCaseDetail/index"
+		},
+		// 经销商文章内容详情
+		{
+			"path": "pages/detailsPages/supplyDetail/supplyArticleContent"
+		},
+		// 经销商视频内容详情
+		{
+			"path": "pages/detailsPages/supplyDetail/supplyVideoContent"
+		},
+		// 经销商文章内容详情
+		{
+			"path": "pages/detailsPages/agentDetail/agentArticleContent"
+		},
+		// 经销商视频内容详情
+		{
+			"path": "pages/detailsPages/agentDetail/agentVideoContent"
+		},
+		// 经理人文章内容详情
+		{
+			"path": "pages/detailsPages/managerDetail/manArticleContent"
+		},
+		// 供应商视频内容详情
+		{
+			"path": "pages/detailsPages/managerDetail/manVideoContent"
+		},
+		// 供应商文章列表详情
+		{
+			"path": "pages/detailsPages/supplyDetail/supplyArticle"
+		},
+		// 供应商视频列表详情
+		{
+			"path": "pages/detailsPages/supplyDetail/supplyVideo"
+		},
+		// 经销商文章列表详情
+		{
+			"path": "pages/detailsPages/agentDetail/agentArticle"
+		},
+		// 经销商视频列表详情
+		{
+			"path": "pages/detailsPages/agentDetail/agentVideo"
+		},
+		// 初级经理人功能列表
+		{
+			"path": "pages/module/managerClassification/juniorManagerManual"
+		},
+		// 中级经理人功能列表
+		{
+			"path": "pages/module/managerClassification/middleManagerManual"
+		},
+		// 高级经理人功能列表
+		{
+			"path": "pages/module/managerClassification/seniorManagerManual"
+		},
+		// 经理人视频列表详情
+		{
+			"path": "pages/detailsPages/managerDetail/managerVideo"
+		},
+		// 经理人文章列表详情
+		{
+			"path": "pages/detailsPages/managerDetail/managerArticle"
+		},
+		// 供应商功能列表
+		{
+			"path": "pages/module/supplyFunctions/index"
+		},
+		// 经销商功能列表
+		{
+			"path": "pages/module/agentFunctions/index"
+		},
+		// 首页列表
 		{
 			"path": "pages/tabbar/main/index"
 		},
+		// 我的页面
 		{
 			"path": "pages/tabbar/my/index"
 		},
+		// 学习手册列表
 		{
 			"path": "pages/module/learningManual/index"
 		},
