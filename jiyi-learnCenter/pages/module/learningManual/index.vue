@@ -50,15 +50,13 @@
 		<!-- 弹出层 -->
 		<u-popup v-model="show" mode="center" width="400" height="400" >
 				<view class="content">
-					<view>请选择身份</view>
 					<view class="confrim-btn">
-						<u-button class="btnDistance" @click="linkJunior">初级经理人</u-button>
-						<u-button class="btnDistance" @click="linkMiddle">中级经理人</u-button>
-						<u-button class="btnDistance" @click="linkSenior">高级经理人</u-button>
+						<u-button class="btnDistance" @click="linkJunior(show=false)">初级经理人</u-button>
+						<u-button class="btnDistance" @click="linkMiddle(show=false)">中级经理人</u-button>
+						<u-button class="btnDistance" @click="linkSenior(show=false)">高级经理人</u-button>
 					</view>
 				</view>
 			</u-popup>
-			
 	</view>
 </template>
 
@@ -80,21 +78,21 @@
 			// 经理人跳转
 			linkJunior(){
 				uni.navigateTo({
-					url: "../managerClassification/juniorManagerManual",//跳转地址
+					url: "./juniorManagerManual",//跳转地址
 				});
 				this.Show=false;
 				this.$emit("close");
 			},
 			linkMiddle(){
 				uni.navigateTo({
-					url: "../managerClassification/middleManagerManual",//跳转地址
+					url: "./middleManagerManual",//跳转地址
 				});
 				this.Show=false;
 				this.$emit("close");
 			},
 			linkSenior(){
 				uni.navigateTo({
-					url: "../managerClassification/seniorManagerManual",//跳转地址
+					url: "./seniorManagerManual",//跳转地址
 				});
 				this.Show=false;
 				this.$emit("close");
@@ -102,13 +100,13 @@
 			// 供应商跳转
 			suuplyJump(){
 				uni.navigateTo({
-					url:"../supplyFunctions/index"
+					url:"./supplyFunctions"
 				})
 			},
 			// 经销商跳转
 			agentJump(){
 				uni.navigateTo({
-					url:"../agentFunctions/index"
+					url:"./agentFunctions"
 				})
 			}
 			
@@ -147,14 +145,12 @@
 					margin-top: 70rpx;
 				}
 			}
-			
-			
 		}
 		.content {
 			padding: 24rpx;
 			text-align: center;
 			.confrim-btn{
-				margin-top: 20rpx;
+				margin-top: 40rpx;
 				.btnDistance{
 					margin-bottom: 20rpx;
 				}

@@ -129,21 +129,24 @@
 			rmMore() {
 				alert("进入热门课程列表页面")
 			},
+			// 行业案例更多
 			hyMore() {
 				uni.navigateTo({
-					url: "../../detailsPages/industryCaseMore/industryCaseMore"
+					url: "../../module/IndustryCase/industryCaseMore"
 				})
 			},
+			// 热门课程详情
 			rmDetail() {
 				
 				uni.navigateTo({
-					url: "../../detailsPages/hotCourseDetail/index"
+					url: "../../module/hotCourse/index"
 				})
 			},
+			// 行业案例详情
 			hyDetail(val) {
 				
 				uni.navigateTo({
-					url: "../../detailsPages/IndustryCaseDetail/index"
+					url: "../../module/IndustryCase/index"
 				})
 			},
 			initDate() {

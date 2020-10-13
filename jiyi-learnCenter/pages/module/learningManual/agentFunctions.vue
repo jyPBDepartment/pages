@@ -3,14 +3,15 @@
 		<view class="head">
 			<view class="backArrow" @click="backTo">
 				<u-icon name="arrow-left" color="#333" size="32"></u-icon> 
-			</view> <view class="title">高级经理人手册
+			</view> 
+			<view class="title">经销商手册
 			</view>
 		</view>
 		<view>
 			<u-line class="line"></u-line>
 		</view>
 		<view class="bottom">
-			<view class="article" @click="jump('../../detailsPages/managerDetail/managerArticle')">
+			<view class="article" @click="jump('./agentArticle')">
 				<view class="left">
 					<u-icon size="58" name="http://60.205.246.126:8001/images/2020/10/10/1602294129370420.png" class="icon4"></u-icon>
 					<text class="articleText"> 文章</text>
@@ -24,7 +25,7 @@
 			<view>
 				<u-line></u-line>
 			</view>
-			<view class="article" @click="jump('../../detailsPages/managerDetail/managerVideo')" style="margin-top: 20rpx;">
+			<view class="article" @click="jump('./agentVideo')" style="margin-top: 20rpx;">
 				<view class="left">
 					<u-icon size="58" name="http://60.205.246.126:8001/images/2020/10/10/1602294206658703.png" class="icon4"></u-icon>
 					<text class="articleText"> 视频</text>

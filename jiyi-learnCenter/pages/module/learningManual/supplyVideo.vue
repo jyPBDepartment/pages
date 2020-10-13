@@ -12,10 +12,8 @@
 		<!-- 搜索 -->
 		<view class="select">
 			<view>
-				<u-icon size="40" name="search" class="iconSearch"></u-icon>
-				<u-input class="input" placeholder="搜索标题或标签" type="text"  :clearable="true"  border height="64" input-align="center" maxlength="10" v-model="title" />
+				<u-search placeholder="搜索标题或标签" bg-color="#fff" :show-action="false" input-align="left" shape="square" margin="30rpx 0rpx 0rpx 20rpx"  maxlength="16" class="input" v-model="title"></u-search>
 			</view>
-			<view class="textBtn">Cancle</view>
 		</view>
 
 		<!-- 列表详情 -->
@@ -112,21 +110,12 @@
 			height: 120rpx;
 			background-color: #C9C9CE;
 			margin-top: 20rpx;
-			.iconSearch{
-				margin:43rpx 0rpx 0rpx 40rpx;
-				position: relative;
-				z-index: 1;
-			}
 			.input{
-				background-color: #fff;
-				margin:-55rpx 0rpx 0rpx 20rpx;
-				width: 600rpx;
-				input-align: center;
+				width: 700rpx;
+				
 			}
-			.textBtn {
-				margin-top: 40rpx;
-				margin-left: 30rpx;
-				color: #318BF6;
+			.uni-input-placeholder{
+				margin-left: 200rpx;
 			}
 		}
 
