@@ -13,7 +13,7 @@
 		</u-row>
 		
 		<u-row style="padding-top: 5rpx;">
-			<u-image src="../../../static/54.jpg" mode="widthFix"></u-image>
+			<u-image :src="image" mode="widthFix"></u-image>
 		</u-row>
 		
 		<u-row class="row1">
@@ -79,12 +79,13 @@
 		data() {
 			return {
 				cencalIsShow: false,
+				id:'',
 				title:'供应商入驻平台服务讲解',
 				beginDate:'2020-10-09 17:33:00',
 				name:'张三',
 				courseIntroduction:'这里是课程介绍',
 				courseGuide:'课程时间：2020-10-09 13:00 至 2020-10-09 16:00 显示主要课程公告与位置、报名须知等信息，后台自定义编辑。',
-				id:'',
+				image:'../../../static/54.jpg'
 			}
 		},
 		
@@ -111,10 +112,9 @@
 			// 	})
 			},
 			
-			//返回
+			//返回列表
 			backTo() {
-				uni.navigateTo({
-					url: "../offlineCourses/index"
+				uni.navigateBack({
 				})
 			},
 			

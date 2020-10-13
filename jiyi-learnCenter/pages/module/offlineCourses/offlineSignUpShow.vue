@@ -93,23 +93,27 @@
 		methods: {
 			offlineSignUpId(val) {
 			},
+			
 			//重新编辑跳转
 			reEdit(val){
 				uni.navigateTo({
 					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+'&id=' + val
 				})
 			},
-			//弹出层关闭跳转课程列表页
+			
+			//弹出层关闭跳转到课程列表页
 			close(){
 				uni.navigateTo({
 					url: '../offlineCourses/index'
 				})
 			},
+			
 			//返回
 			backTo() {
 				uni.navigateBack({
 				})
 			}
+			
 		}
 	}
 </script>

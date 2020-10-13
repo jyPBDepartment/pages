@@ -100,6 +100,7 @@
 			
 			//立即报名
 			signUp(val){
+				//不为空判断
 				if (this.name == '') {
 					this.$refs.uToast.show({
 						title: "请输入姓名",
