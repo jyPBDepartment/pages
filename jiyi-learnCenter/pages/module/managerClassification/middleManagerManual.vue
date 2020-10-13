@@ -2,7 +2,9 @@
 	<view class="containt">
 		<view class="head">
 			<view class="backArrow" @click="backTo">
-				< </view> <view class="title">中级经理人手册
+					<u-icon name="arrow-left" color="#333" size="32"></u-icon> 
+			</view>
+			<view class="title">中级经理人手册
 			</view>
 		</view>
 		<view>

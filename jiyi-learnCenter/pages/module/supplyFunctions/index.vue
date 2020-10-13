@@ -2,8 +2,9 @@
 	<view class="containt">
 		<view class="head">
 			<view class="backArrow" @click="backTo">
-				< </view> <view class="title">供应商手册
-			</view>
+				<u-icon name="arrow-left" color="#333" size="32"></u-icon>
+			</view> 
+			<view class="title">供应商手册</view>
 		</view>
 		<view>
 			<u-line class="line"></u-line>

@@ -2,7 +2,9 @@
 	<view class="content">
 		<!-- 头部 -->
 		<view class="head">
-				<view class="backArrow" @click="backTo"> < </view> 
+				<view class="backArrow" @click="backTo"> 
+				 <u-icon name="arrow-left" color="#333" size="32"></u-icon> 
+				 </view> 
 				<view class="title">手册内容</view>
 		</view>
 		
@@ -76,7 +78,7 @@
 			margin-left: 20rpx;
 			
 			.backArrow{
-				font-weight: bold;
+				margin-top: 6rpx;
 			}
 			.title{
 				margin-left: 250rpx;
@@ -116,7 +118,7 @@
 					.listImg{
 						width: 220rpx;
 						height: 160rpx;
-						margin: 10rpx 10rpx;
+						margin: 10rpx;
 					}
 				}
 				.listText{

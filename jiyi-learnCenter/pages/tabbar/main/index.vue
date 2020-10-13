@@ -47,24 +47,6 @@
 					<u-line class="underline"></u-line>
 				</view>
 		</view>
-<!-- 		<u-row class="rm-row"  @click="rmDetail('')">
-			<u-col span="4">
-				<u-image class="rm-image" width="220rpx" height="160rpx" src="http://60.205.246.126:8001/images/2020/09/29/1601345920052441.jpg"></u-image>
-			</u-col>
-			<u-col span="8">
-				<view>通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)</view>
-				<view class="rm-font">200人已读</view>
-			</u-col>
-		</u-row>
-		<u-row class="rm-row">
-			<u-col span="4" @click="rmDetail">
-				<u-image class="rm-image" width="220rpx" height="160rpx" src="http://60.205.246.126:8001/images/2020/09/29/1601345997114502.jpg"></u-image>
-			</u-col>
-			<u-col span="8" @click="rmDetail">
-				<view>显示列表信息展示内容</view>
-				<view class="rm-font">134人已读</view>
-			</u-col>
-		</u-row> -->
 
 		<!--  行业案例 -->
 		<u-row style="background-color: #f2f2f2;font-size: 24rpx;">
@@ -75,24 +57,6 @@
 				<view style="text-align: right;" @click="hyMore">更多>>></view>
 			</u-col>
 		</u-row>
-		<!-- <u-row class="rm-row">
-			<u-col span="4" @click="hyDetail('111')">
-				<u-image width="220rpx" height="160rpx" src="http://60.205.246.126:8001/images/2020/09/29/1601345920052441.jpg"></u-image>
-			</u-col>
-			<u-col span="8" @click="hyDetail('111')">
-				<view>通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)</view>
-				<view class="rm-font">200人已读</view>
-			</u-col>
-		</u-row>
-		<u-row class="rm-row">
-			<u-col span="4" @click="hyDetail('111')">
-				<u-image width="220rpx" height="160rpx" src="http://60.205.246.126:8001/images/2020/09/29/1601345997114502.jpg"></u-image>
-			</u-col>
-			<u-col span="8" @click="hyDetail('111')">
-				<view>显示列表信息展示内容</view>
-				<view class="rm-font">134人已读</view>
-			</u-col>
-		</u-row> -->
 		<view class="list" v-for="(item, index) in industryCaseList" :key="'list'+index"  @click="hyDetail">
 			<view class="listOne">
 				<view class="img">
@@ -166,7 +130,9 @@
 				alert("进入热门课程列表页面")
 			},
 			hyMore() {
-				alert("进入行业案例列表页面")
+				uni.navigateTo({
+					url: "../../detailsPages/industryCaseMore/industryCaseMore"
+				})
 			},
 			rmDetail() {
 				

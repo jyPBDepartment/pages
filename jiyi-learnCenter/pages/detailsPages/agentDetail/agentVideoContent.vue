@@ -2,7 +2,9 @@
 	<view class="container">
 		<!-- 头部 -->
 		<view class="head">
-				<view class="backArrow" @click="backTo"> < </view> 
+				<view class="backArrow" @click="backTo">
+					<u-icon name="arrow-left" color="#333" size="32"></u-icon> 
+				</view> 
 				<view class="title">文章详情</view>
 		</view>
 		
@@ -67,7 +69,7 @@
 			margin:15rpx 0rpx 10rpx 20rpx ;
 			
 			.backArrow{
-				font-weight: bold;
+				margin-top: 6rpx;
 			}
 			.title{
 				margin-left: 250rpx;

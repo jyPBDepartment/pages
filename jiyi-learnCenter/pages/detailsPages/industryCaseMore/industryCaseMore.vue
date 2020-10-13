@@ -2,8 +2,10 @@
 	<view class="content">
 		<!-- 头部 -->
 		<view class="head">
-				<view class="backArrow" @click="backTo"> <u-icon name="arrow-left" color="#333" size="32"></u-icon> </view> 
-				<view class="title">手册内容</view>
+				<view class="backArrow" @click="backTo">
+					<u-icon name="arrow-left" color="#333" size="32"></u-icon>
+				</view> 
+				<view class="title">更多</view>
 		</view>
 		
 		<!-- 搜索 -->
@@ -16,7 +18,7 @@
 		</view>
 		
 		<!-- 列表详情 -->
-		<view class="list" v-for="(item, index) in agentList" :key="index"  @click="agentArticleJump('./agentArticleContent')">
+		<view class="list" v-for="(item, index) in industryCaseList" :key="index"  @click="industryCaseJump('../IndustryCaseDetail/index')">
 			<view class="listOne">
 				<view class="img">
 					<image class="listImg" :src="item.url"></image>
@@ -39,7 +41,7 @@
 		data(){
 			return{
 				title:'',
-				agentList:[
+				industryCaseList:[
 					{url:"http://60.205.246.126:8001/images/2020/10/12/1602481525521725.jpg",word:"人的欲望永无止尽 就像我一开始 只是想要知道你的名字",sum:"1314"},
 					{url:"http://60.205.246.126:8001/images/2020/10/12/1602481589403089.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"1314"},
 					{url:"http://60.205.246.126:8001/images/2020/10/12/1602481543327363.jpg",word:"刮奖刮出一个谢字就足够了。",sum:"1314"},
@@ -58,7 +60,7 @@
 			
 				})
 			},
-			agentArticleJump(url){
+			industryCaseJump(url){
 				uni.navigateTo({
 					url: url
 				})
@@ -77,13 +79,12 @@
 			display: flex;
 			margin-top: 15rpx;
 			margin-left: 20rpx;
-			
 			.backArrow{
 				margin-top: 6rpx;
 			}
 			.title{
-				margin-left: 250rpx;
-				font-size: 35rpx;
+				margin-left: 300rpx;
+				font-size: 32rpx;
 			}
 		}
 		.select{

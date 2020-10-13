@@ -3,8 +3,9 @@
 		<!-- 头部 -->
 		<view class="head">
 			<view class="backArrow" @click="backTo">
-				< </view> <view class="title">手册内容
-			</view>
+				<u-icon name="arrow-left" color="#333" size="32"></u-icon> 
+			</view> 
+			<view class="title">手册内容</view>
 		</view>
 
 		<!-- 搜索 -->
@@ -96,7 +97,7 @@
 			margin-left: 20rpx;
 
 			.backArrow {
-				font-weight: bold;
+				margin-top: 6rpx;
 			}
 
 			.title {

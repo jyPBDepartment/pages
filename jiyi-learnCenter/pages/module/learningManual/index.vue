@@ -3,8 +3,11 @@
 		<u-row style="background-color: #ffffff;height: 60rpx;">
 			<u-col span="1">
 				<view class="backArrow" @click="backTo">
-					< </view> </u-col> <u-col span="11">
-						<view class="title">学习手册</view>
+					<u-icon name="arrow-left" color="#333" size="32"></u-icon>  
+				</view> 
+			</u-col>
+			<u-col span="11">
+				<view class="title">学习手册</view>
 			</u-col>
 		</u-row>
 		<!--  背景图 -->
@@ -80,18 +83,21 @@
 					url: "../managerClassification/juniorManagerManual",//跳转地址
 				});
 				this.Show=false;
+				this.$emit("close");
 			},
 			linkMiddle(){
 				uni.navigateTo({
 					url: "../managerClassification/middleManagerManual",//跳转地址
 				});
 				this.Show=false;
+				this.$emit("close");
 			},
 			linkSenior(){
 				uni.navigateTo({
 					url: "../managerClassification/seniorManagerManual",//跳转地址
 				});
 				this.Show=false;
+				this.$emit("close");
 			},
 			// 供应商跳转
 			suuplyJump(){
@@ -114,9 +120,8 @@
 	#learningManual {
 		background-color: #ffffff;
 		.backArrow {
-			margin-left: 20rpx;
+			margin-left: 10rpx;
 			
-			font-weight: bold;
 		}
 		.title {
 			text-align: center;
