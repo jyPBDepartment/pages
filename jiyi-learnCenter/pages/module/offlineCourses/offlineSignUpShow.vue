@@ -62,7 +62,7 @@
 				</u-col>
 				<u-col span="1">
 					<view style="text-align: center;margin-top: 20rpx;">
-						<u-button type="primary" size="mini" @click="reEdit(id)">重新编辑</u-button>
+						<u-button type="primary" size="mini" @click="reEdit()">重新编辑</u-button>
 					</view>
 				</u-col>
 			</u-row>
@@ -84,8 +84,8 @@
 			}
 		},
 		onLoad(e) {
-			this.offlineSignUpId(e.id);
-			this.id=e.id;
+			this.offlineSignUpId();
+			// this.id=e.id;
 			this.name=e.name;
 			this.idCard=e.idCard;
 			this.phone=e.phone;
@@ -95,9 +95,9 @@
 			},
 			
 			//重新编辑跳转
-			reEdit(val){
+			reEdit(){
 				uni.navigateTo({
-					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+'&id=' + val
+					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+''
 				})
 			},
 			

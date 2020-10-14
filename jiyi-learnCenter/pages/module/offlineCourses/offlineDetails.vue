@@ -112,7 +112,7 @@
 			// 	})
 			},
 			
-			//返回列表
+			//返回
 			backTo() {
 				uni.navigateBack({
 				})

@@ -59,7 +59,7 @@
 			<u-row style="padding-top: 80rpx;">
 				<u-col>
 					<view style="text-align: center;margin-top: 20rpx;">
-						<u-button type="primary" size="mini" @click="signUp(id)">立即报名</u-button>
+						<u-button type="primary" size="mini" @click="signUp()">立即报名</u-button>
 					</view>
 				</u-col>
 			</u-row>
@@ -86,7 +86,7 @@
 			this.offlineSignUpId(e.id);
 			//index=1编辑
 			if(e.index=='1'){
-				this.searchSignUpId(e.id)
+				this.searchSignUpId()
 				this.name=e.name;
 				this.idCard=e.idCard;
 				this.phone=e.phone;
@@ -99,7 +99,7 @@
 			},
 			
 			//立即报名
-			signUp(val){
+			signUp(){
 				//不为空判断
 				if (this.name == '') {
 					this.$refs.uToast.show({
@@ -141,7 +141,7 @@
 				}
 				
 				uni.navigateTo({
-					url: '../offlineCourses/offlineSignUpShow?name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+'&id='+val
+					url: '../offlineCourses/offlineSignUpShow?name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+''
 				})
 			},
 			
