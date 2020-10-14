@@ -48,14 +48,12 @@
 			}
 		},
 		methods:{
-			clear(){
-				
-			},
 			backTo() {
 				uni.navigateBack({
 			
 				})
 			},
+			// 经销商文章跳转详情页面
 			agentArticleJump(url){
 				uni.navigateTo({
 					url: url
@@ -73,9 +71,7 @@
 		background-color: #F8F8F8;
 		.head{
 			display: flex;
-			margin-top: 15rpx;
-			margin-left: 20rpx;
-			
+			margin: 15rpx 0rpx 0rpx 20rpx;
 			.backArrow{
 				margin-top: 6rpx;
 			}

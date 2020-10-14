@@ -63,6 +63,7 @@
 		        // #endif
 		    },
 		methods: {
+			// 经理人视频详情跳转
 			managerVideoJump(url) {
 				uni.navigateTo({
 					url: "./manVideoContent"
@@ -73,6 +74,7 @@
 
 				})
 			},
+			// 视频错误回馈
 			videoErrorCallback: function(e) {
 			       uni.showModal({
 			            content: e.target.errMsg,
@@ -92,9 +94,7 @@
 
 		.head {
 			display: flex;
-			margin-top: 15rpx;
-			margin-left: 20rpx;
-
+			margin: 15rpx 0rpx 0rpx 20rpx;
 			.backArrow {
 				margin-top: 6rpx;
 			}

@@ -253,8 +253,7 @@
 				.bride{
 					font-size: 22rpx;
 					color: #BFBFBF;
-					margin-left: 600rpx;
-					margin-top: -50rpx;
+					margin: -50rpx 0rpx 0rpx 600rpx;
 				}
 			}
 			.underline{

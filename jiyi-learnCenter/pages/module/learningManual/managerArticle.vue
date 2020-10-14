@@ -55,6 +55,7 @@
 			
 				})
 			},
+			// 经理人文章跳转
 			managerArticleJump(url){
 				uni.navigateTo({
 					url: url
@@ -72,9 +73,7 @@
 		background-color: #F8F8F8;
 		.head{
 			display: flex;
-			margin-top: 15rpx;
-			margin-left: 20rpx;
-			
+			margin:15rpx 0rpx 0rpx 20rpx;
 			.backArrow{
 				margin-top: 6rpx;
 			}
@@ -122,8 +121,7 @@
 				.bride{
 					font-size: 22rpx;
 					color: #BFBFBF;
-					margin-left: 600rpx;
-					margin-top: -50rpx;
+					margin: -50rpx 0rpx 0rpx 600rpx;
 				}
 			}
 			.underline{

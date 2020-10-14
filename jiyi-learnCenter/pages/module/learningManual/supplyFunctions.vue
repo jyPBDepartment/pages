@@ -1,14 +1,20 @@
 <template>
 	<view class="containt">
+		
+		<!-- 头部 -->
 		<view class="head">
 			<view class="backArrow" @click="backTo">
 				<u-icon name="arrow-left" color="#333" size="32"></u-icon>
 			</view> 
 			<view class="title">供应商手册</view>
 		</view>
+		
+		<!-- 下划线 -->
 		<view>
 			<u-line class="line"></u-line>
 		</view>
+		
+		<!-- 内容 -->
 		<view class="bottom">
 			<view class="article" @click="jump('./supplyArticle')">
 				<view class="left">
@@ -16,21 +22,23 @@
 					<text class="articleText"> 文章</text>
 				</view>
 				<view class="right">
-					<u-icon size="33" name="arrow-right" class="icon1" @click=""></u-icon>
+					<u-icon size="33" name="arrow-right"></u-icon>
 				</view>
 
 			</view>
+			
 			<!-- 下划线 -->
 			<view>
 				<u-line></u-line>
 			</view>
+			
 			<view class="article" @click="jump('./supplyVideo')" style="margin-top: 20rpx;">
 				<view class="left">
 					<u-icon size="58" name="http://60.205.246.126:8001/images/2020/10/10/1602294206658703.png" class="icon4"></u-icon>
 					<text class="articleText"> 视频</text>
 				</view>
 				<view class="right">
-					<u-icon size="33" name="arrow-right" class="icon1" @click=""></u-icon>
+					<u-icon size="33" name="arrow-right"></u-icon>
 				</view>
 			</view>
 			<view>
@@ -55,6 +63,7 @@
 
 		},
 		methods: {
+			// 供应商功能跳转
 			jump(url) {
 				uni.navigateTo({
 					url: url
@@ -76,8 +85,7 @@
 		margin-top: 20rpx;
 
 		.backArrow {
-			margin-left: 20rpx;
-			margin-right: 260rpx;
+			margin: 0rpx 260rpx 0rpx 20rpx;
 			font-weight: bold;
 		}
 
@@ -97,8 +105,7 @@
 
 		.article {
 			display: flex;
-			margin-left: 20rpx;
-			margin-bottom: 10rpx;
+			margin: 0rpx 0rpx 10rpx 20rpx;
 			justify-content: space-between;
 
 			.left {
@@ -112,10 +119,7 @@
 			}
 
 			.right {
-				margin-right: 20rpx;
-				margin-top: 5rpx;
-
-				.icon1 {}
+				margin: 5rpx 20rpx 0rpx 0rpx;
 			}
 
 		}

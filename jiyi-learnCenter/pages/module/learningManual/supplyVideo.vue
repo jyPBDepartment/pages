@@ -68,12 +68,14 @@
 
 				})
 			},
+			// 视频播放错误回馈
 			videoErrorCallback: function(e) {
 			       uni.showModal({
 			            content: e.target.errMsg,
 			            showCancel: false
 			       })
 			  },
+			  // 供应商视频跳转
 			  supplyVideoJump(url){
 			  	uni.navigateTo({
 			  		url:url
@@ -92,9 +94,7 @@
 
 		.head {
 			display: flex;
-			margin-top: 15rpx;
-			margin-left: 20rpx;
-
+			margin: 15rpx 0rpx 0rpx 20rpx;
 			.backArrow {
 				margin-top: 6rpx;
 			}
