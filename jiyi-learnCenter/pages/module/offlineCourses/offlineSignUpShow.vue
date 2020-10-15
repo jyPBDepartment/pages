@@ -57,7 +57,7 @@
 								<u-button type="primary" size="mini" @click="close(show = false)">关闭</u-button>
 							</view>
 						</u-popup>
-						<u-button type="primary" size="mini" @click="show = true">确定报名</u-button>
+						<u-button type="primary" size="mini" @click="confirm(show = true)">确定报名</u-button>
 					</view>
 				</u-col>
 				<u-col span="1">
@@ -85,7 +85,6 @@
 		},
 		onLoad(e) {
 			this.offlineSignUpId();
-			// this.id=e.id;
 			this.name=e.name;
 			this.idCard=e.idCard;
 			this.phone=e.phone;
@@ -93,6 +92,9 @@
 		methods: {
 			offlineSignUpId(val) {
 			},
+			
+			//确认报名
+			confirm(){},
 			
 			//重新编辑跳转
 			reEdit(){
