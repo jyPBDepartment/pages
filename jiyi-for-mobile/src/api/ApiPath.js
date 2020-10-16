@@ -1,6 +1,6 @@
 //云开发服务器地址
-const URLHost = 'http://60.205.246.126/jy_system'
-// const URLHost = 'http://localhost:8080'
+// const URLHost = 'http://60.205.246.126/jy_system'
+const URLHost = 'http://localhost:8080'
 
 const url = {
 
@@ -25,6 +25,10 @@ const url = {
   showPhone:URLHost + '/websiteInfo/findById',
   //首页轮播图
   findRotation:URLHost + '/banner/findAll',
+  // 增加下载统计量
+  addDownloadStatistics:URLHost + '/downloadStatistics/add',
+  // 查询下载数量
+  queryStatistics:URLHost + '/downloadStatistics/queryStatistics'
 }
 export default {
   url

@@ -19,17 +19,29 @@
         <div class="botton">
           <div class="b-box">
             <img src="../assets/ewm.png" alt />
-            <div class="btn">
-              <a href="	
-http://60.205.246.126:8001/apk/jyhn.apk">吉易慧农安卓版本下载</a>
+            <div class="btn" @click="bindDownload('hn')">
+              <a
+                href="	
+http://60.205.246.126:8001/apk/jyhn.apk"
+                >吉易慧农安卓版本下载</a
+              >
             </div>
+            <div>已有{{ hnStatistics }}人下载</div>
           </div>
           <div class="b-box">
             <img src="../assets/ewm.png" alt />
-            <div class="btn" style="background:#3377bd">
-              <a href="	
-http://60.205.246.126:8001/apk/jysk.apk">吉易掌柜安卓版本下载</a>
+            <div
+              class="btn"
+              style="background: #3377bd"
+              @click="bindDownload('zg')"
+            >
+              <a
+                href="	
+http://60.205.246.126:8001/apk/jyzg.apk"
+                >吉易掌柜安卓版本下载</a
+              >
             </div>
+            <div>已有{{ zgStatistics }}人下载</div>
           </div>
         </div>
       </div>
@@ -38,7 +50,49 @@ http://60.205.246.126:8001/apk/jysk.apk">吉易掌柜安卓版本下载</a>
 </template>
 
 <script>
-export default {};
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
+export default {
+  data() {
+    return {
+      hnStatistics: 0,
+      zgStatistics: 0,
+    };
+  },
+  created() {
+    this.queryStatistics();
+  },
+  methods: {
+    queryStatistics() {
+      let params = {};
+      api.testAxiosGet(ApiPath.url.queryStatistics, params).then((res) => {
+        console.log(JSON.stringify(res));
+        if (res.status == "200") {
+          this.hnStatistics = res.hnCount;
+          this.zgStatistics = res.zgCount;
+        }
+      });
+    },
+    bindDownload(val) {
+      let type = "";
+      if (val == "hn") {
+        type = "hn";
+      } else {
+        type = "zg";
+      }
+      let params = {
+        type: type,
+      };
+      api
+        .testAxiosGet(ApiPath.url.addDownloadStatistics, params)
+        .then((res) => {
+          if (res.status == "200") {
+            this.queryStatistics();
+          }
+        });
+    },
+  },
+};
 </script>
 
 
