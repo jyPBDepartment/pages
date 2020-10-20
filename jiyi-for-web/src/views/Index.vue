@@ -6,15 +6,21 @@
         <div class="nav">
           <div class="w">
             <el-row type="flex" align="middle">
-
               <el-col class="m_logo" :span="3">
-                <img class="logo" @click="jumpHome" src="https://yanxuan.nosdn.127.net/91f69cd236a9a5869b641534edc92f26.png" alt />
-
+                <img
+                  class="logo"
+                  @click="jumpHome"
+                  src="https://yanxuan.nosdn.127.net/91f69cd236a9a5869b641534edc92f26.png"
+                  alt
+                />
               </el-col>
-              <el-col :span="21" style="display:flex;justify-content:flex-end">
+              <el-col
+                :span="21"
+                style="display: flex; justify-content: flex-end"
+              >
                 <el-menu
                   :default-active="activeIndex"
-                  style="height:100px"
+                  style="height: 100px"
                   class="el-menu-demo"
                   mode="horizontal"
                   text-color="#fff"
@@ -28,9 +34,13 @@
                   <el-menu-item index="/introduce">
                     <span class="pd">吉易慧农</span>
                   </el-menu-item>
-                  <el-submenu index="/dealer_shop" :show-timeout="50" :hide-timeout="50">
+                  <el-submenu
+                    index="/dealer_shop"
+                    :show-timeout="50"
+                    :hide-timeout="50"
+                  >
                     <template slot="title">
-                      <span class="pd" style="font-size:20px">产品</span>
+                      <span class="pd" style="font-size: 20px">产品</span>
                     </template>
                     <el-menu-item index="/dealer_shop">
                       <div>
@@ -38,22 +48,30 @@
                         <div class="c_2">电商加身，销售倍增</div>
                       </div>
                     </el-menu-item>
-                    <el-menu-item index="/dealer_manager">经销商掌柜</el-menu-item>
-                    <el-menu-item index="/supplier_shops">供应商店铺</el-menu-item>
+                    <el-menu-item index="/dealer_manager"
+                      >经销商掌柜</el-menu-item
+                    >
+                    <el-menu-item index="/supplier_shops"
+                      >供应商店铺</el-menu-item
+                    >
                   </el-submenu>
                   <el-submenu index="4" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
-                      <span class="pd" style="font-size: 20px;">解决方案</span>
+                      <span class="pd" style="font-size: 20px">解决方案</span>
                     </template>
-                    <el-menu-item index="/dealer_program">农资经销商解决方案</el-menu-item>
-                    <el-menu-item index="/supplier_program">农资供应商解决方案</el-menu-item>
+                    <el-menu-item index="/dealer_program"
+                      >农资经销商解决方案</el-menu-item
+                    >
+                    <el-menu-item index="/supplier_program"
+                      >农资供应商解决方案</el-menu-item
+                    >
                   </el-submenu>
                   <el-menu-item index="/guarantee">
                     <span class="pd">服务保障</span>
                   </el-menu-item>
                   <el-submenu index="5" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
-                      <span class="pd" style="font-size:20px">合作伙伴</span>
+                      <span class="pd" style="font-size: 20px">合作伙伴</span>
                     </template>
                     <el-menu-item index="/partner">合作伙伴</el-menu-item>
                     <el-menu-item index="/join">加入我们</el-menu-item>
@@ -62,14 +80,13 @@
                     <span class="pd">下载app</span>
                   </el-menu-item>
                 </el-menu>
-                
               </el-col>
             </el-row>
           </div>
         </div>
       </el-header>
-      <el-main style="padding:0;">
-        <router-view id="boxFixed" v-if="isRouterAlive"/>
+      <el-main style="padding: 0">
+        <router-view id="boxFixed" v-if="isRouterAlive" />
         <FixedNavRight
           @backtop="backtop"
           :isFixed="isFixed"
@@ -78,7 +95,7 @@
         />
       </el-main>
       <div class="footer">
-        <div class="w" style="color:#fff">
+        <div class="w" style="color: #fff">
           <el-row :gutter="20">
             <el-col :span="4" :offset="2">
               <div class="f_1">
@@ -127,17 +144,37 @@
                 <h4>/ PLATFORM CONSULTING</h4>
               </div>
               <div class="f_2">
-                <el-row >
-                  <a style="color: #ababab;font-size: 13px;" target="view_window" href="http://www.jiyinongye.cn/portal/article/index/id/17/cid/1.html">吉林省现代农业企业协会参观考察</a>
+                <el-row>
+                  <a
+                    style="color: #ababab; font-size: 13px"
+                    target="view_window"
+                    href="http://www.jiyinongye.cn/portal/article/index/id/17/cid/1.html"
+                    >吉林省现代农业企业协会参观考察</a
+                  >
                 </el-row>
-                <el-row >
-                  <a style="color: #ababab;font-size: 13px;" target="view_window" href="http://www.jiyinongye.cn/portal/article/index/id/19/cid/1.html">何为平台经济？平台经济健康发展又为何要做好政策加减法</a>
+                <el-row>
+                  <a
+                    style="color: #ababab; font-size: 13px"
+                    target="view_window"
+                    href="http://www.jiyinongye.cn/portal/article/index/id/19/cid/1.html"
+                    >何为平台经济？平台经济健康发展又为何要做好政策加减法</a
+                  >
                 </el-row>
-                <el-row >
-                  <a style="color: #ababab;font-size: 13px;" target="view_window" href="http://www.jiyinongye.cn/portal/article/index/id/51/cid/1.html">获中央电视台关注，上央视CCTV-2频道《经济信息联播》</a>
+                <el-row>
+                  <a
+                    style="color: #ababab; font-size: 13px"
+                    target="view_window"
+                    href="http://www.jiyinongye.cn/portal/article/index/id/51/cid/1.html"
+                    >获中央电视台关注，上央视CCTV-2频道《经济信息联播》</a
+                  >
                 </el-row>
-                <el-row >
-                  <a style="color: #ababab;font-size: 13px;" target="view_window" href="http://www.jiyinongye.cn/portal/article/index/id/52/cid/1.html">【吉易·云备耕】再次被关注，上《吉林新闻联播》啦</a>
+                <el-row>
+                  <a
+                    style="color: #ababab; font-size: 13px"
+                    target="view_window"
+                    href="http://www.jiyinongye.cn/portal/article/index/id/52/cid/1.html"
+                    >【吉易·云备耕】再次被关注，上《吉林新闻联播》啦</a
+                  >
                 </el-row>
               </div>
             </el-col>
@@ -146,16 +183,19 @@
                 <h2>联系我们</h2>
                 <h4>/ Contact US</h4>
               </div>
-               <div class="f_2">
-                  <div class="f_3">
-                   合作咨询:400-684-0008<br>
-                   投诉反馈:jiyihuinong@163.com<br>
-                   地址：长春市人力资源服务产业园<br/><span style="margin-left:40px;">C座12层</span>
-                  </div>
-                  <div class="article_content">
-                    <p v-html="ariContent">{{ariContent}}</p>
-                  </div>
+              <div class="f_2">
+                <div class="f_3">
+                  合作咨询:400-684-0008<br />
+                  投诉反馈:jiyihuinong@163.com<br />
+                  地址：长春市人力资源服务产业园<br /><span
+                    style="margin-left: 40px"
+                    >C座12层</span
+                  >
                 </div>
+                <div class="article_content">
+                  <p v-html="ariContent">{{ ariContent }}</p>
+                </div>
+              </div>
             </el-col>
           </el-row>
         </div>
@@ -164,7 +204,10 @@
         <div class="w">
           <el-row>
             <el-col :span="20" :offset="2">
-              <p class="f2_1">Copyright ©  2012-2018 All Rights Reserved. 备案号：吉ICP备19004431号</p>
+              <p class="f2_1">
+                Copyright © 2012-2018 All Rights Reserved.
+                备案号：吉ICP备19004431号
+              </p>
               <p class="f2_1">
                 友情链接：
                 <a :href="linkAddress" target="view_window">吉林农业大学</a>
@@ -184,27 +227,27 @@ export default {
   name: "Index",
   components: {
     FixedNavRight,
-    Float
+    Float,
   },
   provide() {
     return {
-      reload: this.reload
+      reload: this.reload,
     };
   },
   data() {
     return {
-      hotline:"",
-      email:"",
-      address:"",
-      copyRight:"",
-      recordNo:"",
-      logoUrl:"",
-      linkAddressL:"",
-      linkAddress:"",
-      linkName:"",
-      ariContent:"",
+      hotline: "",
+      email: "",
+      address: "",
+      copyRight: "",
+      recordNo: "",
+      logoUrl: "",
+      linkAddressL: "",
+      linkAddress: "https://www.jlau.edu.cn/",
+      linkName: "",
+      ariContent: "",
       isRouterAlive: true,
-      id:"",
+      id: "",
       articleList: [],
       activeIndex: "/",
       isFixed: false,
@@ -212,50 +255,50 @@ export default {
       offsetTop: 640,
       ejectMenus: false,
       isMenu: false,
-      contentList:[],
+      contentList: [],
       m_fotterList: [
         {
           name: "首页",
-          routerPath: ""
+          routerPath: "",
         },
         {
           name: "吉易慧农",
-          routerPath: "introduce"
+          routerPath: "introduce",
         },
         {
           name: "经销商店铺",
-          routerPath: "dealer_shop"
+          routerPath: "dealer_shop",
         },
         {
           name: "经销商掌柜",
-          routerPath: "dealer_manager"
+          routerPath: "dealer_manager",
         },
         {
           name: "供应商店铺",
-          routerPath: "supplier_shops"
+          routerPath: "supplier_shops",
         },
 
         {
           name: "农资经销商解决方案",
-          routerPath: "dealer_program"
+          routerPath: "dealer_program",
         },
         {
           name: "农资供应商解决方案",
-          routerPath: "supplier_program"
+          routerPath: "supplier_program",
         },
         {
           name: "加入我们",
-          routerPath: "join"
-        }
+          routerPath: "join",
+        },
       ],
       mMenus: [
         {
           name: "首页",
-          routerPath: ""
+          routerPath: "",
         },
         {
           name: "吉易惠农",
-          routerPath: "introduce"
+          routerPath: "introduce",
         },
         {
           name: "产品",
@@ -263,17 +306,17 @@ export default {
           secondLevel: [
             {
               name: "经销商店铺",
-              routerPath: "dealer_shop"
+              routerPath: "dealer_shop",
             },
             {
               name: "经销商掌柜",
-              routerPath: "dealer_manager"
+              routerPath: "dealer_manager",
             },
             {
               name: "供应商店铺",
-              routerPath: "supplier_shops"
-            }
-          ]
+              routerPath: "supplier_shops",
+            },
+          ],
         },
         {
           name: "解决方案",
@@ -281,17 +324,17 @@ export default {
           secondLevel: [
             {
               name: "农资经销商解决方案",
-              routerPath: "dealer_program"
+              routerPath: "dealer_program",
             },
             {
               name: "农资供应商解决方案",
-              routerPath: "supplier_program"
-            }
-          ]
+              routerPath: "supplier_program",
+            },
+          ],
         },
         {
           name: "服务保障",
-          routerPath: "guarantee"
+          routerPath: "guarantee",
         },
         {
           name: "合作伙伴",
@@ -299,22 +342,21 @@ export default {
           secondLevel: [
             {
               name: "合作伙伴",
-              routerPath: "partner"
+              routerPath: "partner",
             },
             {
               name: "加入我们",
-              routerPath: "join"
-            }
-          ]
-        }
-      ]
+              routerPath: "join",
+            },
+          ],
+        },
+      ],
     };
   },
   created() {
     // this.activeIndex = `/${window.location.href.split("/", 4)[3]}`;
-
     // this.initArticle();
-  //  this.transJurisdictionId();
+    //  this.transJurisdictionId();
   },
   mounted() {
     window.addEventListener("scroll", this.initTop);
@@ -322,24 +364,22 @@ export default {
   watch: {
     $route(to) {
       this.activeIndex = to.path;
-    }
-    
+    },
   },
   methods: {
-
-    jumpHome(){
-      this.$router.push({path:'/'})
+    jumpHome() {
+      this.$router.push({ path: "/" });
     },
     link(item) {
       this.$router.push({ name: "article", query: { id: item } });
       this.isRouterAlive = false;
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.isRouterAlive = true;
       });
     },
 
     backtop() {
-      var timer = setInterval(function() {
+      var timer = setInterval(function () {
         let osTop =
           document.documentElement.scrollTop || document.body.scrollTop;
         let ispeed = Math.floor(-osTop / 5);
@@ -374,7 +414,7 @@ export default {
     routerJump(item) {
       this.$router.push({ path: `/${item.routerPath}` });
       let arr = [];
-      this.mMenus.forEach(value => {
+      this.mMenus.forEach((value) => {
         value.state = false;
         arr.push(value);
       });
@@ -384,12 +424,12 @@ export default {
     },
     isMenus() {
       this.isMenu = !this.isMenu;
-    }
+    },
   },
   //回调中移除监听
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
-  }
+  },
 };
 </script>
 
@@ -497,5 +537,4 @@ export default {
     }
   }
 }
-
 </style>

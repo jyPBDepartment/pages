@@ -2,24 +2,30 @@
   <div class="Home">
     <img
       class="top_img"
-      src="https://s1.ax1x.com/2020/07/24/Ujd5WR.jpg"
-      style="height:640px;"
+      src="http://60.205.246.126:8001/images/2020/10/20/1603152814093695.jpg"
+      style="height: 640px"
     />
     <div class="banner-font" style>
-      <h2 class="css2215ee06652225e">专注为农资经销商提供助力方<span class="css22917b201a2225e">案</span></h2>
+      <h2 class="css2215ee06652225e">
+        专注为农资经销商提供助力方<span class="css22917b201a2225e">案</span>
+      </h2>
       <p class="css2215f1c4942225e">农业种植全产业链互联网服务平台</p>
     </div>
     <!-- <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav> -->
     <Fast
-      :class=" marginTOP ? 'move':'move2' "
+      :class="marginTOP ? 'move' : 'move2'"
       title="更适合农资行业的移动端"
       :id="modelName[0].id"
       sTitle="每一屏都是为农资行业专属设计开发，助力经销商领跑行业"
     >
-      <Rotation style="margin-top:112px" :banner="banner" :height="410" />
+      <Rotation style="margin-top: 112px" :banner="banner" :height="410" />
     </Fast>
-    <Fast title="丰富的营销拓客工具" :id="modelName[1].id" sTitle="多种营销玩法帮助你助你更好地拓、锁、留、升客" 
-      background="rgb(246, 247, 252)">
+    <Fast
+      title="丰富的营销拓客工具"
+      :id="modelName[1].id"
+      sTitle="多种营销玩法帮助你助你更好地拓、锁、留、升客"
+      background="rgb(246, 247, 252)"
+    >
       <el-row class="i" type="flex">
         <el-col class="i_c" v-for="(item, index) in iList" :key="index">
           <img :src="item.src" alt />
@@ -33,8 +39,11 @@
       :id="modelName[2].id"
       sTitle="三条渠道齐发力，连接你的经营网络，发挥渠道聚合效能"
     >
-      <img src="https://s1.ax1x.com/2020/07/24/UjP2yF.png" alt class="top_img" />
-
+      <img
+        src="http://60.205.246.126:8001/images/2020/10/20/1603152989367869.png"
+        alt
+        class="top_img"
+      />
     </Fast>
     <Fast
       title="轻松管理经营数据"
@@ -43,7 +52,11 @@
       :allScreen="true"
       background="rgb(246, 247, 252)"
     >
-      <img src="https://s1.ax1x.com/2020/07/24/UjvYe1.png" alt style="max-width:64%;" />
+      <img
+        src="http://60.205.246.126:8001/images/2020/10/20/1603153054659943.png"
+        alt
+        style="max-width: 64%"
+      />
     </Fast>
     <Callcontact />
   </div>
@@ -57,7 +70,7 @@ export default {
   components: {
     Fast,
     Rotation,
-    Callcontact
+    Callcontact,
   },
   data() {
     return {
@@ -68,33 +81,40 @@ export default {
         { title: "移动端", id: "1" },
         { title: "拓客工具", id: "2" },
         { title: "销售场景", id: "3" },
-        { title: "经营数据", id: "4" }
+        { title: "经营数据", id: "4" },
       ],
       banner: [
-        { src: "https://s1.ax1x.com/2020/07/24/UjPRL4.png"}
+        {
+          src:
+            "http://60.205.246.126:8001/images/2020/10/20/1603152862166692.png",
+        },
       ],
       iList: [
         {
-          src: "https://yanxuan.nosdn.127.net/b40d6ba84c3e89a66a8b3b0470c20530.jpg",
+          src:
+            "https://yanxuan.nosdn.127.net/b40d6ba84c3e89a66a8b3b0470c20530.jpg",
           title: "经理人推荐",
-          content: "扫描推荐二维码轻松发展营销团队"
+          content: "扫描推荐二维码轻松发展营销团队",
         },
         {
-          src: "https://yanxuan.nosdn.127.net/53783318e0fe232f6c56737617786b62.jpg",
+          src:
+            "https://yanxuan.nosdn.127.net/53783318e0fe232f6c56737617786b62.jpg",
           title: "满减/满送",
-          content: "扩大销售 刺激消费利润率自由控制"
+          content: "扩大销售 刺激消费利润率自由控制",
         },
         {
-          src: "https://yanxuan.nosdn.127.net/ebb6d806a4592fa4201d47311d11a667.jpg",
+          src:
+            "https://yanxuan.nosdn.127.net/ebb6d806a4592fa4201d47311d11a667.jpg",
           title: "抵扣活动",
-          content: "指定客户精准营销锁住老客户"
+          content: "指定客户精准营销锁住老客户",
         },
         {
-          src: "https://yanxuan.nosdn.127.net/8353f3e7957c3bc8ab27a14bd7241919.jpg",
+          src:
+            "https://yanxuan.nosdn.127.net/8353f3e7957c3bc8ab27a14bd7241919.jpg",
           title: "限时折扣",
-          content: "饥饿营销立竿见影生效快"
-        }
-      ]
+          content: "饥饿营销立竿见影生效快",
+        },
+      ],
     };
   },
   mounted() {
@@ -112,8 +132,8 @@ export default {
     },
     screenChanges() {
       this.bannerHeight = document.documentElement.clientHeight - 100;
-    }
-  }
+    },
+  },
 };
 </script>
 

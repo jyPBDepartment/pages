@@ -2,8 +2,8 @@
   <div class="Home">
     <img
       class="top_img"
-      src="https://s1.ax1x.com/2020/07/24/UjdWo4.jpg"
-      style="height:640px;"
+      src="http://60.205.246.126:8001/images/2020/10/20/1603154925487908.jpg"
+      style="height: 640px"
     />
     <Fast title="申请加入吉易慧农合作伙伴" background="#F0EEED">
       <div class="questionnaire">
@@ -21,26 +21,39 @@
               v-if="item.max !== 1"
             >
               <div v-for="(option, index1) in item.answer" :key="index1">
-                <el-checkbox :label="option.id" :key="index1">{{option.name}}</el-checkbox>
+                <el-checkbox :label="option.id" :key="index1">{{
+                  option.name
+                }}</el-checkbox>
               </div>
             </el-checkbox-group>
-            <el-radio-group v-model="item.checkedCities" :min="item.min" :max="item.max" v-else>
+            <el-radio-group
+              v-model="item.checkedCities"
+              :min="item.min"
+              :max="item.max"
+              v-else
+            >
               <el-radio
                 v-for="(option, index4) in item.answer"
                 :label="option.id"
                 :key="index4"
-              >{{option.name}}</el-radio>
+                >{{ option.name }}</el-radio
+              >
             </el-radio-group>
           </div>
           <div class="answers" v-else>
-            <div class="box" v-for="(items, index2) in item.answers" :key="index2">
+            <div
+              class="box"
+              v-for="(items, index2) in item.answers"
+              :key="index2"
+            >
               <div class="type">{{ items.title }}</div>
               <el-radio-group v-model="items.checkedCities">
                 <el-radio
                   v-for="(option, index3) in items.list"
                   :key="index3"
                   :label="option.id"
-                >{{ option.name }}</el-radio>
+                  >{{ option.name }}</el-radio
+                >
               </el-radio-group>
             </div>
           </div>
@@ -67,10 +80,20 @@
           <!-- 连接后端方法的表单 -->
           <el-form :rules="rules" ref="editForm" :model="editForm">
             <el-form-item label="联系人姓名" prop="name">
-              <el-input type="text" v-model="editForm.name" placeholder="请输入联系人姓名" @change="name"></el-input>
+              <el-input
+                type="text"
+                v-model="editForm.name"
+                placeholder="请输入联系人姓名"
+                @change="name"
+              ></el-input>
             </el-form-item>
             <el-form-item label="联系人职务" prop="post">
-              <el-input type="text" v-model="editForm.post" placeholder="请输入联系人职务 " @change="post"></el-input>
+              <el-input
+                type="text"
+                v-model="editForm.post"
+                placeholder="请输入联系人职务 "
+                @change="post"
+              ></el-input>
             </el-form-item>
             <el-form-item label="联系人手机" prop="phoneNum">
               <el-input
@@ -81,27 +104,48 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="联系人邮箱" prop="email">
-              <el-input type="text" v-model="editForm.email" placeholder="请输入联系人邮箱" @change="email"></el-input>
+              <el-input
+                type="text"
+                v-model="editForm.email"
+                placeholder="请输入联系人邮箱"
+                @change="email"
+              ></el-input>
             </el-form-item>
             <el-form-item label="公司名称">
-              <el-input type="text" v-model="editForm.companyName" placeholder="请输入公司名称"></el-input>
+              <el-input
+                type="text"
+                v-model="editForm.companyName"
+                placeholder="请输入公司名称"
+              ></el-input>
             </el-form-item>
             <el-form-item label="合作期望">
               <el-input
                 type="textarea"
                 v-model="editForm.expectaion"
                 placeholder="请输入合作期望,500字以内。"
-                style=" width: 33%; margin-left: 20px;min-height:99px;"
+                style="width: 33%; margin-left: 20px; min-height: 99px"
               ></el-input>
             </el-form-item>
             <el-form-item label="推荐人姓名">
-              <el-input type="text" v-model="editForm.recommended" placeholder="请输入推荐人姓名"></el-input>
+              <el-input
+                type="text"
+                v-model="editForm.recommended"
+                placeholder="请输入推荐人姓名"
+              ></el-input>
             </el-form-item>
             <el-form-item label="问卷答案" v-if="isShow">
-              <el-input type="text" v-model="editForm.questionAnswer" placeholder="请输入问卷答案"></el-input>
+              <el-input
+                type="text"
+                v-model="editForm.questionAnswer"
+                placeholder="请输入问卷答案"
+              ></el-input>
             </el-form-item>
             <el-form-item label="问卷得分" v-if="isShow">
-              <el-input type="text" v-model="editForm.questionScore" placeholder="请输入问卷得分"></el-input>
+              <el-input
+                type="text"
+                v-model="editForm.questionScore"
+                placeholder="请输入问卷得分"
+              ></el-input>
             </el-form-item>
           </el-form>
           <el-row>
@@ -139,7 +183,7 @@ export default {
         expectaion: "",
         recommended: "",
         questionAnswer: "",
-        questionScore: ""
+        questionScore: "",
       },
       // rules表单验证
       rules: {
@@ -147,20 +191,20 @@ export default {
           {
             required: true,
             message: "请输入您的姓名，只能为字母或汉字。",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         post: [
           {
             required: true,
             message: "请输入您的职务，只能为字母或汉字。",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         phoneNum: [
-          { required: true, message: "请输入手机号码", trigger: "blur" }
+          { required: true, message: "请输入手机号码", trigger: "blur" },
         ],
-        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }]
+        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
       },
       bannerHeight: 0,
       // Input: [
@@ -210,9 +254,9 @@ export default {
           answer: [
             { id: "A", name: "有其他网店经营经验" },
             { id: "B", name: "有实体门店经营经验" },
-            { id: "C", name: "没有任何开店经验" }
+            { id: "C", name: "没有任何开店经验" },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "02",
@@ -227,9 +271,9 @@ export default {
             { id: "D", name: "农技推广人员/农技服务人员" },
             { id: "E", name: "村屯里有职称的人（村书记、大队书记等）" },
             { id: "F", name: "具有一定组织/领头能力的农民" },
-            { id: "G", name: "其他" }
+            { id: "G", name: "其他" },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "03",
@@ -240,9 +284,9 @@ export default {
           answer: [
             { id: "A", name: "主营批发，少量零售" },
             { id: "B", name: "主营零售" },
-            { id: "C", name: "其他" }
+            { id: "C", name: "其他" },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "04",
@@ -252,9 +296,9 @@ export default {
           mandatory: true,
           answer: [
             { id: "A", name: "农资类商品生产者/代理者/经营者" },
-            { id: "B", name: "种植大户/农机大户/养殖大户" }
+            { id: "B", name: "种植大户/农机大户/养殖大户" },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "05",
@@ -272,9 +316,9 @@ export default {
             { id: "G", name: "独资" },
             { id: "H", name: "私营" },
             { id: "I", name: "个体户" },
-            { id: "J", name: "其他" }
+            { id: "J", name: "其他" },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "06",
@@ -286,9 +330,9 @@ export default {
             { id: "A", name: "省级及以下" },
             { id: "B", name: "市级及以下" },
             { id: "C", name: "县级及以下" },
-            { id: "D", name: "村屯级" }
+            { id: "D", name: "村屯级" },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "07",
@@ -304,9 +348,9 @@ export default {
             { id: "E", name: "牛/羊/猪/禽类" },
             { id: "F", name: "土地托管" },
             { id: "G", name: "粮食收/储/销售" },
-            { id: "H", name: "私营" }
+            { id: "H", name: "私营" },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "08",
@@ -321,9 +365,9 @@ export default {
             { id: "D", name: "运营技巧的培训" },
             { id: "E", name: "了解平台入驻规则" },
             { id: "F", name: "线上、线下服务指导" },
-            { id: "G", name: "提供农技服务支持" }
+            { id: "G", name: "提供农技服务支持" },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "09",
@@ -340,8 +384,8 @@ export default {
                 { id: "B", name: "10万袋以上" },
                 { id: "C", name: "5—10万袋" },
                 { id: "D", name: "1-5万袋" },
-                { id: "E", name: "1万袋以下" }
-              ]
+                { id: "E", name: "1万袋以下" },
+              ],
             },
             {
               title: "农药",
@@ -351,8 +395,8 @@ export default {
                 { id: "B", name: "5000—1万垧地" },
                 { id: "C", name: "2000—3000垧地" },
                 { id: "D", name: "1000—2000垧地" },
-                { id: "E", name: "1000垧地以下" }
-              ]
+                { id: "E", name: "1000垧地以下" },
+              ],
             },
             {
               title: "化肥",
@@ -362,11 +406,11 @@ export default {
                 { id: "B", name: "5—10万吨" },
                 { id: "C", name: "1-5万吨" },
                 { id: "D", name: "5000—1万吨" },
-                { id: "E", name: "5000吨以下" }
-              ]
-            }
+                { id: "E", name: "5000吨以下" },
+              ],
+            },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "10",
@@ -383,8 +427,8 @@ export default {
                 { id: "B", name: "10万袋以上" },
                 { id: "C", name: "5—10万袋" },
                 { id: "D", name: "1-5万袋" },
-                { id: "E", name: "1万袋以下" }
-              ]
+                { id: "E", name: "1万袋以下" },
+              ],
             },
             {
               title: "农药",
@@ -394,8 +438,8 @@ export default {
                 { id: "B", name: "5000—1万垧地" },
                 { id: "C", name: "2000—3000垧地" },
                 { id: "D", name: "1000—2000垧地" },
-                { id: "E", name: "1000垧地以下" }
-              ]
+                { id: "E", name: "1000垧地以下" },
+              ],
             },
             {
               title: "化肥",
@@ -405,11 +449,11 @@ export default {
                 { id: "B", name: "5—10万吨" },
                 { id: "C", name: "1-5万吨" },
                 { id: "D", name: "5000—1万吨" },
-                { id: "E", name: "5000吨以下" }
-              ]
-            }
+                { id: "E", name: "5000吨以下" },
+              ],
+            },
           ],
-          checkedCities: []
+          checkedCities: [],
         },
         {
           num: "11",
@@ -422,11 +466,11 @@ export default {
             { id: "B", name: "101-500垧" },
             { id: "C", name: "11-100垧" },
             { id: "D", name: "1-10垧" },
-            { id: "E", name: "1垧地以下" }
+            { id: "E", name: "1垧地以下" },
           ],
-          checkedCities: []
-        }
-      ]
+          checkedCities: [],
+        },
+      ],
     };
   },
   mounted() {
@@ -437,40 +481,40 @@ export default {
   },
   methods: {
     // 输入姓名正则验证
-    name: function() {
+    name: function () {
       var name = /^[a-zA-Z\u4E00-\uFA29]*$/;
       if (!name.test(this.editForm.name)) {
         this.$alert("请输入正确的姓名，只能为字母或汉字！", "提示", {
-          confirmButtonText: "确定"
+          confirmButtonText: "确定",
         });
         this.editForm.name = "";
       }
     },
     // 输入职务正则验证
-    post: function() {
+    post: function () {
       var post = /^[a-zA-Z\u4E00-\uFA29]*$/;
       if (!post.test(this.editForm.post)) {
         this.$alert("请输入正确的姓名，只能为字母或汉字！", "提示", {
-          confirmButtonText: "确定"
+          confirmButtonText: "确定",
         });
         this.editForm.post = "";
       }
     },
     // 输入邮箱正则验证
-    email: function() {
+    email: function () {
       var email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
       if (!email.test(this.editForm.email)) {
         this.$alert("请输入正确的邮箱！", "提示", {
-          confirmButtonText: "确定"
+          confirmButtonText: "确定",
         });
         this.editForm.email = "";
       }
     },
     // 输入手机号码正则验证
-    tel: function() {
+    tel: function () {
       if (!/^1[345789]\d{9}$/.test(this.editForm.phoneNum)) {
         this.$alert("请输入正确的手机号！", "提示", {
-          confirmButtonText: "确定"
+          confirmButtonText: "确定",
         });
 
         this.editForm.phoneNum = "";
@@ -479,7 +523,7 @@ export default {
     screenChanges() {
       this.bannerHeight = document.documentElement.clientHeight - 100;
     },
-    save: function() {
+    save: function () {
       //1.验证
       if (
         this.topicList[0]["checkedCities"].length > 0 &&
@@ -502,7 +546,7 @@ export default {
                     value:
                       "[{" +
                       this.topicList[i]["answers"][j]["checkedCities"] +
-                      "}]"
+                      "}]",
                   });
                 }
               }
@@ -513,7 +557,7 @@ export default {
                     value:
                       "[{" +
                       this.topicList[i]["answers"][j]["checkedCities"] +
-                      "}]"
+                      "}]",
                   });
                 }
               }
@@ -522,12 +566,12 @@ export default {
             if (i == 10) {
               paramList.push({
                 num: i + 1,
-                value: "[{" + this.topicList[i]["checkedCities"] + "}]"
+                value: "[{" + this.topicList[i]["checkedCities"] + "}]",
               });
             } else {
               paramList.push({
                 num: i + 1,
-                value: "[{" + this.topicList[i]["checkedCities"] + "}]"
+                value: "[{" + this.topicList[i]["checkedCities"] + "}]",
               });
             }
           }
@@ -537,11 +581,11 @@ export default {
         // console.log(aes.decrypt(aes.encrypt(JSON.stringify(paramList))))
         //评分+表单数据
         let params = {
-          questionEntity: this.editForm
+          questionEntity: this.editForm,
         };
         api
           .testAxiosGet(ApiPath.url.saveQuestion, params)
-          .then(res => {
+          .then((res) => {
             //  判断身份
             if (res.status == "0") {
               this.$message.success(res.tips);
@@ -553,17 +597,17 @@ export default {
               this.$message.success(res.tips);
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
         //editForm
       } else {
         this.$alert("选项不能为空！", "提示", {
-          confirmButtonText: "确定"
+          confirmButtonText: "确定",
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -688,7 +732,7 @@ export default {
   width: 272px;
   text-align: center;
 }
-.el-textarea__inner{
+.el-textarea__inner {
   min-height: 99px !important;
 }
 </style>

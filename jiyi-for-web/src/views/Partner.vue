@@ -1,6 +1,10 @@
 <template>
   <div class="Home">
-    <img class="top_img" src="https://s1.ax1x.com/2020/07/24/UjdcLT.jpg" style="height:640px" />
+    <img
+      class="top_img"
+      src="http://60.205.246.126:8001/images/2020/10/20/1603155029277541.jpg"
+      style="height: 640px"
+    />
     <div class="banner-font">
       <h2 class="css2215ee06652225e">
         为合作伙<span class="css221a45fbb02225e">伴</span>提供全方位的合作
@@ -10,8 +14,8 @@
       <el-row class="model" type="flex" justify="space-around">
         <el-col class="box" v-for="(item, index) in bModel" :key="index">
           <img :src="item.src" alt />
-          <h2>{{item.title}}</h2>
-          <p>{{item.content}}</p>
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.content }}</p>
         </el-col>
       </el-row>
     </Fast>
@@ -22,7 +26,7 @@
             <img :src="item.src" alt />
           </div>
           <div class="s_circular yuan"></div>
-          <h2>{{item.title}}</h2>
+          <h2>{{ item.title }}</h2>
         </el-col>
         <div class="Dividing"></div>
       </el-row>
@@ -180,7 +184,7 @@ export default {
     h2 {
       margin-top: 40px;
     }
-    p{
+    p {
       color: #92909b;
     }
   }

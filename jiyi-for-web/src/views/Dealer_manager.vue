@@ -1,43 +1,80 @@
 <template>
   <div class="Home">
-    <img class="top_img" src="https://s1.ax1x.com/2020/07/24/Ujd4Y9.jpg" style="height:640px;" />
+    <img
+      class="top_img"
+      src="http://60.205.246.126:8001/images/2020/10/19/1603086741648414.jpg"
+      style="height: 640px"
+    />
     <div class="banner-font" style>
       <h2 class="css2215ee06652225e">吉易掌柜</h2>
       <p class="css2215f1c4942225e">全用户场景解决方案</p>
     </div>
-    <FixedNav @chage="navMove($event)" :modelName="modelName" @jump="specifyElement"></FixedNav>
+    <FixedNav
+      @chage="navMove($event)"
+      :modelName="modelName"
+      @jump="specifyElement"
+    ></FixedNav>
     <Fast
-      :class=" marginTOP  ? 'move':'move2' "
+      :class="marginTOP ? 'move' : 'move2'"
       :title="modelName[0].title"
       :id="modelName[0].id"
       :allScreen="true"
     >
-      <Tabs :tabPane="tabPane" :tabList="tabList" :tabIndex="tabIndex" :type="false" />
+      <Tabs
+        :tabPane="tabPane"
+        :tabList="tabList"
+        :tabIndex="tabIndex"
+        :type="false"
+      />
     </Fast>
-    <div style="width:100%;height:2px;background:#f6f7fc;"></div>
-    <Fast :title="modelName[1].title" :id="modelName[1].id" sTitle="农资销售随即搞定、销售数据尽在掌握、团队管理轻松实现">
+    <div style="width: 100%; height: 2px; background: #f6f7fc"></div>
+    <Fast
+      :title="modelName[1].title"
+      :id="modelName[1].id"
+      sTitle="农资销售随即搞定、销售数据尽在掌握、团队管理轻松实现"
+    >
       <el-row class="h_1">
-        <el-col class="h_2" :span="8" v-for="(item, index) in advantageList" :key="index">
+        <el-col
+          class="h_2"
+          :span="8"
+          v-for="(item, index) in advantageList"
+          :key="index"
+        >
           <img :src="item.src" alt />
-          <p>{{item.content}}</p>
+          <p>{{ item.content }}</p>
         </el-col>
       </el-row>
     </Fast>
-    <Fast :title="modelName[2].title" :id="modelName[2].id" background="rgb(246, 247, 252)">
+    <Fast
+      :title="modelName[2].title"
+      :id="modelName[2].id"
+      background="rgb(246, 247, 252)"
+    >
       <el-row class="b" type="flex" justify="center">
-        <el-col class="b_f1" :span="12" v-for="(item, index) in bottonList" :key="index">
+        <el-col
+          class="b_f1"
+          :span="12"
+          v-for="(item, index) in bottonList"
+          :key="index"
+        >
           <el-col class="icon" :span="10">
             <img :src="item.src" alt />
           </el-col>
           <el-col class="content" :span="14">
-            <h2>{{item.title}}</h2>
+            <h2>{{ item.title }}</h2>
             <ul>
-              <li v-for="liContent in item.li" :key="liContent">{{liContent}}</li>
+              <li v-for="liContent in item.li" :key="liContent">
+                {{ liContent }}
+              </li>
             </ul>
           </el-col>
         </el-col>
       </el-row>
-      <FullFunctionality class="wz_btn" :isMobile="false" :functionList="functionList" />
+      <FullFunctionality
+        class="wz_btn"
+        :isMobile="false"
+        :functionList="functionList"
+      />
     </Fast>
     <Callcontact />
   </div>
@@ -193,8 +230,8 @@ export default {
         },
       ],
       tabPane: [
-        "https://s1.ax1x.com/2020/08/14/dPQYvD.jpg",
-        "https://s1.ax1x.com/2020/07/24/UvQ1pD.jpg",
+        "http://60.205.246.126:8001/images/2020/10/19/1603093213626237.jpg",
+        "http://60.205.246.126:8001/images/2020/10/19/1603093241880426.jpg",
       ],
       tabIndex: 0,
       advantageList: [

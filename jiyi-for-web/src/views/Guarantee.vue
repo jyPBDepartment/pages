@@ -2,14 +2,17 @@
   <div class="Home">
     <img
       class="top_img"
-      src="https://s1.ax1x.com/2020/07/24/UjwKXV.jpg"
-      style="height:640px;"
+      src="http://60.205.246.126:8001/images/2020/10/20/1603155638208797.jpg"
+      style="height: 640px"
     />
     <div class="banner-font">
       <h2 class="css2215ee06652225e">帮用户做管理 为用户做服务</h2>
     </div>
     <div class="g_img">
-      <img src="https://s1.ax1x.com/2020/07/24/UjqUnP.jpg" alt />
+      <img
+        src="http://60.205.246.126:8001/images/2020/10/20/1603155690172539.jpg"
+        alt
+      />
       <div class="title">
         <h2>客户顾问版块</h2>
         <p>
@@ -19,19 +22,24 @@
       </div>
     </div>
     <div class="g_img">
-      <img src="https://s1.ax1x.com/2020/07/24/Ujqd78.jpg" alt />
-      <div class="title" style="color:#fff;">
+      <img
+        src="http://60.205.246.126:8001/images/2020/10/20/1603155720179851.jpg"
+        alt
+      />
+      <div class="title" style="color: #fff">
         <h2>农技顾问板块</h2>
         <p>
           实战派 + 技术交流
-          <br />背靠吉林农业大学专家顾问团队
-          <br />农技服务线上线下双管齐下
+          <br />背靠吉林农业大学专家顾问团队 <br />农技服务线上线下双管齐下
         </p>
       </div>
     </div>
     <div class="g_img">
-      <img src="https://s1.ax1x.com/2020/07/24/Ujq0AS.jpg" alt />
-      <div class="title" style="color:#fff;">
+      <img
+        src="http://60.205.246.126:8001/images/2020/10/20/1603155758082825.jpg"
+        alt
+      />
+      <div class="title" style="color: #fff">
         <h2>技术团队</h2>
         <p>
           以用户需求为核心
@@ -47,7 +55,7 @@ export default {
   components: {},
   data() {
     return {
-      bannerHeight: document.body.clientWidth / 3.31
+      bannerHeight: document.body.clientWidth / 3.31,
     };
   },
   mounted() {
@@ -59,8 +67,8 @@ export default {
   methods: {
     screenChanges() {
       this.bannerHeight = document.documentElement.clientHeight - 100;
-    }
-  }
+    },
+  },
 };
 </script>
 

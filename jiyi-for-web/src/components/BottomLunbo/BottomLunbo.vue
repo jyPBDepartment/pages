@@ -27,13 +27,22 @@
     <div class="right">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
         <van-swipe-item>
-          <img src="https://s1.ax1x.com/2020/08/14/dPlSG6.jpg" alt />
+          <img
+            src="http://60.205.246.126:8001/images/2020/10/19/1603084732315174.jpg"
+            alt
+          />
         </van-swipe-item>
         <van-swipe-item>
-          <img src="https://s1.ax1x.com/2020/08/14/dPlpRK.jpg" alt />
+          <img
+            src="http://60.205.246.126:8001/images/2020/10/19/1603084667456721.jpg"
+            alt
+          />
         </van-swipe-item>
         <van-swipe-item>
-          <img src="https://s1.ax1x.com/2020/08/14/dPl9xO.jpg" alt />
+          <img
+            src=" http://60.205.246.126:8001/images/2020/10/19/1603084550104511.jpg"
+            alt
+          />
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -45,7 +54,7 @@ import { Swipe, SwipeItem } from "vant";
 export default {
   components: {
     [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem
+    [SwipeItem.name]: SwipeItem,
   },
   name: "BottomLunbo",
   props: {},
@@ -58,7 +67,7 @@ export default {
       this.$router.push({ name: "guarantee" });
     },
     backtop() {
-      var timer = setInterval(function() {
+      var timer = setInterval(function () {
         let osTop =
           document.documentElement.scrollTop || document.body.scrollTop;
         let ispeed = Math.floor(-osTop / 5);
@@ -69,8 +78,8 @@ export default {
           clearInterval(timer);
         }
       }, 5);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -93,15 +102,15 @@ export default {
 .van-swipe__indicators--vertical {
   display: none;
 }
-.van-swipe__indicators{
+.van-swipe__indicators {
   display: none;
 }
 .my-swipe .van-swipe-item {
   display: flex;
   justify-content: center;
-  img{
-      width: 100%;
-      height: 460px;
+  img {
+    width: 100%;
+    height: 460px;
   }
 }
 .van-swipe__track--vertical {
