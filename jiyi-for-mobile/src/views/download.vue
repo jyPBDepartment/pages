@@ -1,6 +1,10 @@
 <template>
   <div class="bg">
-    <img class="logo" src="../assets/icon.png" alt />
+    <img
+      class="logo"
+      src="http://60.205.246.126/images/2020/10/20/1603183170707073.png"
+      alt
+    />
     <h2>吉易慧农</h2>
     <div
       class="btn"
