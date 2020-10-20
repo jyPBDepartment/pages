@@ -4,9 +4,12 @@
     <Fast title="农资行业全场景的互联网解决方案">
       <el-row class="m_w">
         <div class="m_l_box m_l_box_t">
-          <img src="https://yanxuan.nosdn.127.net/e8cf3a88fef52852d155a2071962b3a0.png" alt />
+          <img
+            src="https://yanxuan.nosdn.127.net/e8cf3a88fef52852d155a2071962b3a0.png"
+            alt
+          />
           <ul>
-            <li v-for="(item, index) in title" :key="index">{{item.p}}</li>
+            <li v-for="(item, index) in title" :key="index">{{ item.p }}</li>
           </ul>
         </div>
       </el-row>
@@ -15,16 +18,19 @@
       <el-row class="m_w m_f_b">
         <div class="m_f_b_s" v-for="(item, index) in botton" :key="index">
           <img :src="item.src" alt />
-          <h2>{{item.h2}}</h2>
-          <p>{{item.p}}</p>
+          <h2>{{ item.h2 }}</h2>
+          <p>{{ item.p }}</p>
         </div>
       </el-row>
     </Fast>
     <el-row class="hidden-md-and-up m_w">
       <div class="m_l_box m_l_box_b">
-        <img src="https://yanxuan.nosdn.127.net/d937a42de6dcafb6cb8efe36b832178c.jpg" alt />
+        <img
+          src="http://60.205.246.126:8001/images/2020/10/20/1603172906048973.jpg"
+          alt
+        />
         <ul>
-          <li v-for="(item, index) in m_b_text" :key="index">{{item}}</li>
+          <li v-for="(item, index) in m_b_text" :key="index">{{ item }}</li>
         </ul>
       </div>
     </el-row>
