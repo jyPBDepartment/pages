@@ -2,7 +2,7 @@
   <div class="Home">
     <img
       class="top_img"
-      src="http://60.205.246.126:8001/images/2020/10/20/1603155565410409.jpg"
+      src="http://60.205.246.126/images/2020/10/20/1603155565410409.jpg"
       style="height: 640px"
     />
     <div class="banner-font" style>
@@ -99,12 +99,10 @@ export default {
       marginTOP: false,
       banner: [
         {
-          src:
-            "http://60.205.246.126:8001/images/2020/10/20/1603155412586590.png",
+          src: "http://60.205.246.126/images/2020/10/20/1603155412586590.png",
         },
         {
-          src:
-            "http://60.205.246.126:8001/images/2020/10/20/1603155382347530.png",
+          src: "http://60.205.246.126/images/2020/10/20/1603155382347530.png",
         },
       ],
       functionList: [

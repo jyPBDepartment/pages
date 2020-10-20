@@ -9,7 +9,7 @@
     >
       <a
         href="	
-http://60.205.246.126:8001/apk/jyhn.apk"
+http://60.205.246.126/apk/jyhn.apk"
         >吉易慧农安卓版本下载</a
       >
     </div>
@@ -17,7 +17,7 @@ http://60.205.246.126:8001/apk/jyhn.apk"
     <div class="btn" style="background: #0b4ea7" @click="bindDownload('zg')">
       <a
         href="	
-http://60.205.246.126:8001/apk/jysk.apk"
+http://60.205.246.126/apk/jyzg.apk"
         >吉易掌柜安卓版本下载</a
       >
     </div>

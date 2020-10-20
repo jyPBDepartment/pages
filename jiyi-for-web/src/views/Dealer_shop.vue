@@ -2,7 +2,7 @@
   <div class="Home">
     <img
       class="top_img"
-      src="http://60.205.246.126:8001/images/2020/10/19/1603086715775059.jpg"
+      src="http://60.205.246.126/images/2020/10/19/1603086715775059.jpg"
       style="height: 640px"
     />
     <div class="banner-font" style>
@@ -77,7 +77,7 @@
       <div class="w">
         <img
           class="top_img top"
-          src="http://60.205.246.126:8001/images/2020/10/19/1603092977144204.png"
+          src="http://60.205.246.126/images/2020/10/19/1603092977144204.png"
           :style="{ height: `${541}px` }"
         />
       </div>
@@ -189,11 +189,11 @@ export default {
       bannerBottom: [
         {
           src:
-            "http://60.205.246.126:8001/images/2020/10/19/1603087019056653.jpg",
+            "http://60.205.246.126/images/2020/10/19/1603087019056653.jpg",
         },
         {
           src:
-            "http://60.205.246.126:8001/images/2020/10/19/1603087051490294.jpg",
+            "http://60.205.246.126/images/2020/10/19/1603087051490294.jpg",
         },
       ],
       bottonList: [

@@ -2,7 +2,7 @@
   <div class="Home">
     <img
       class="top_img"
-      src="http://60.205.246.126:8001/images/2020/10/20/1603155638208797.jpg"
+      src="http://60.205.246.126/images/2020/10/20/1603155638208797.jpg"
       style="height: 640px"
     />
     <div class="banner-font">
@@ -10,7 +10,7 @@
     </div>
     <div class="g_img">
       <img
-        src="http://60.205.246.126:8001/images/2020/10/20/1603155690172539.jpg"
+        src="http://60.205.246.126/images/2020/10/20/1603155690172539.jpg"
         alt
       />
       <div class="title">
@@ -23,7 +23,7 @@
     </div>
     <div class="g_img">
       <img
-        src="http://60.205.246.126:8001/images/2020/10/20/1603155720179851.jpg"
+        src="http://60.205.246.126/images/2020/10/20/1603155720179851.jpg"
         alt
       />
       <div class="title" style="color: #fff">
@@ -36,7 +36,7 @@
     </div>
     <div class="g_img">
       <img
-        src="http://60.205.246.126:8001/images/2020/10/20/1603155758082825.jpg"
+        src="http://60.205.246.126/images/2020/10/20/1603155758082825.jpg"
         alt
       />
       <div class="title" style="color: #fff">

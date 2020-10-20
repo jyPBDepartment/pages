@@ -2,7 +2,7 @@
   <div class="Home">
     <img
       class="top_img"
-      src="http://60.205.246.126:8001/images/2020/10/20/1603152814093695.jpg"
+      src="http://60.205.246.126/images/2020/10/20/1603152814093695.jpg"
       style="height: 640px"
     />
     <div class="banner-font" style>
@@ -40,7 +40,7 @@
       sTitle="三条渠道齐发力，连接你的经营网络，发挥渠道聚合效能"
     >
       <img
-        src="http://60.205.246.126:8001/images/2020/10/20/1603152989367869.png"
+        src="http://60.205.246.126/images/2020/10/20/1603152989367869.png"
         alt
         class="top_img"
       />
@@ -53,7 +53,7 @@
       background="rgb(246, 247, 252)"
     >
       <img
-        src="http://60.205.246.126:8001/images/2020/10/20/1603153054659943.png"
+        src="http://60.205.246.126/images/2020/10/20/1603153054659943.png"
         alt
         style="max-width: 64%"
       />
@@ -85,8 +85,7 @@ export default {
       ],
       banner: [
         {
-          src:
-            "http://60.205.246.126:8001/images/2020/10/20/1603152862166692.png",
+          src: "http://60.205.246.126/images/2020/10/20/1603152862166692.png",
         },
       ],
       iList: [

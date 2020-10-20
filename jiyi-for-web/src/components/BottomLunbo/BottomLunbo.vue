@@ -28,19 +28,19 @@
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
         <van-swipe-item>
           <img
-            src="http://60.205.246.126:8001/images/2020/10/19/1603084732315174.jpg"
+            src="http://60.205.246.126/images/2020/10/19/1603084732315174.jpg"
             alt
           />
         </van-swipe-item>
         <van-swipe-item>
           <img
-            src="http://60.205.246.126:8001/images/2020/10/19/1603084667456721.jpg"
+            src="http://60.205.246.126/images/2020/10/19/1603084667456721.jpg"
             alt
           />
         </van-swipe-item>
         <van-swipe-item>
           <img
-            src=" http://60.205.246.126:8001/images/2020/10/19/1603084550104511.jpg"
+            src=" http://60.205.246.126/images/2020/10/19/1603084550104511.jpg"
             alt
           />
         </van-swipe-item>

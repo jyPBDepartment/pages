@@ -2,7 +2,7 @@
   <div class="Home">
     <img
       class="top_img"
-      src="http://60.205.246.126:8001/images/2020/10/19/1603086741648414.jpg"
+      src="http://60.205.246.126/images/2020/10/19/1603086741648414.jpg"
       style="height: 640px"
     />
     <div class="banner-font" style>
@@ -230,8 +230,8 @@ export default {
         },
       ],
       tabPane: [
-        "http://60.205.246.126:8001/images/2020/10/19/1603093213626237.jpg",
-        "http://60.205.246.126:8001/images/2020/10/19/1603093241880426.jpg",
+        "http://60.205.246.126/images/2020/10/19/1603093213626237.jpg",
+        "http://60.205.246.126/images/2020/10/19/1603093241880426.jpg",
       ],
       tabIndex: 0,
       advantageList: [

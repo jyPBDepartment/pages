@@ -26,7 +26,7 @@
     <el-row class="hidden-md-and-up m_w">
       <div class="m_l_box m_l_box_b">
         <img
-          src="http://60.205.246.126:8001/images/2020/10/20/1603172906048973.jpg"
+          src="http://60.205.246.126/images/2020/10/20/1603172906048973.jpg"
           alt
         />
         <ul>

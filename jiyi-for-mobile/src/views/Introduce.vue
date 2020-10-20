@@ -4,12 +4,12 @@
       class="hidden-md-and-up"
       m_content="农业种植全产业链互联网服务平台"
       m_title="吉易慧农"
-      m_banner="http://60.205.246.126:8001/images/2020/10/20/1603173103316784.jpg"
+      m_banner="http://60.205.246.126/images/2020/10/20/1603173103316784.jpg"
     />
     <Fast title="吉易慧农平台简介">
       <img
         class="m_info_img"
-        src="http://60.205.246.126:8001/images/2020/10/20/1603173154768109.jpg"
+        src="http://60.205.246.126/images/2020/10/20/1603173154768109.jpg"
         alt
       />
       <el-row class="text m_text" style="padding: 0 50px">

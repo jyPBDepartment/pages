@@ -4,7 +4,7 @@
       class="hidden-md-and-up"
       m_content="全用户场景解决方案"
       m_title="吉易掌柜"
-      m_banner="http://60.205.246.126:8001/images/2020/10/20/1603173217920637.jpg"
+      m_banner="http://60.205.246.126/images/2020/10/20/1603173217920637.jpg"
     />
     <Fast class="hidden-md-and-up" title="应用场景">
       <Slider

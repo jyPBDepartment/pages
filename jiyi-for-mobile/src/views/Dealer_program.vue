@@ -4,7 +4,7 @@
       class="hidden-md-and-up"
       m_content="农业种植全产业链互联网服务平台"
       m_title="专注为农资经销商提供助力方"
-      m_banner="http://60.205.246.126:8001/images/2020/10/20/1603173296886941.jpg"
+      m_banner="http://60.205.246.126/images/2020/10/20/1603173296886941.jpg"
     />
     <Fast class="hidden-md-and-up" title="丰富的营销拓客工具">
       <Slider class="m_slider" category="tool" id="tool" :list="iList"></Slider>

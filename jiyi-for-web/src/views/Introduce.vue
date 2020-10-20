@@ -1,9 +1,9 @@
 <template>
   <div class="Home">
-    <!-- http://60.205.246.126:8001/images/2020/10/19/1603086264302972.jpg -->
+    <!-- http://60.205.246.126/images/2020/10/19/1603086264302972.jpg -->
     <img
       class="top_img"
-      src="http://60.205.246.126:8001/images/2020/10/19/1603086349849218.jpg"
+      src="http://60.205.246.126/images/2020/10/19/1603086349849218.jpg"
       style="height: 640px"
     />
     <div class="banner-font" style>
