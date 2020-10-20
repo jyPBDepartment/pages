@@ -1,6 +1,9 @@
 <template>
   <div class="bg">
-    <img src="../assets/3.jpg" alt />
+    <img
+      src="http://60.205.246.126/images/2020/10/20/1603183082056960.jpg"
+      alt
+    />
     <div class="w">
       <div class="down-info">
         <h2>全新上线，等你下载</h2>
@@ -9,7 +12,11 @@
           吉林吉易互联网平台发展有限公司
         </p>
         <div class="info">
-          <img class="icon" src="../assets/icon.png" alt />
+          <img
+            class="icon"
+            src="http://60.205.246.126/images/2020/10/20/1603183170707073.png"
+            alt
+          />
           <div>
             <h2>吉易慧农APP上线啦！</h2>
             <p>软件大小14M</p>
@@ -18,7 +25,10 @@
         </div>
         <div class="botton">
           <div class="b-box">
-            <img src="../assets/ewm.png" alt />
+            <img
+              src="http://60.205.246.126/images/2020/10/20/1603183114913008.png"
+              alt
+            />
             <div class="btn" @click="bindDownload('hn')">
               <a
                 href="	
@@ -29,7 +39,10 @@ http://60.205.246.126/apk/jyhn.apk"
             <div>已有{{ hnStatistics }}人下载</div>
           </div>
           <div class="b-box">
-            <img src="../assets/ewm.png" alt />
+            <img
+              src="http://60.205.246.126/images/2020/10/20/1603183114913008.png"
+              alt
+            />
             <div
               class="btn"
               style="background: #3377bd"
