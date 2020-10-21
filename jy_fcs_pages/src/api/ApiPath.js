@@ -1,5 +1,6 @@
 // 本地环境地址
 const URLHost = 'http://localhost:8080';
+const EDUHost = 'http://localhost:8083';
 // 开发环境基础路径地址
 // const URLHost = 'http://192.168.1.106:8080/jy_fcs';
 // 生产环境基础路径地址
