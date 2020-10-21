@@ -30,11 +30,7 @@
               alt
             />
             <div class="btn" @click="bindDownload('hn')">
-              <a
-                href="	
-http://60.205.246.126/apk/jyhn.apk"
-                >吉易慧农安卓版本下载</a
-              >
+              吉易慧农安卓版本下载
             </div>
             <div>已有{{ hnStatistics }}人下载</div>
           </div>
@@ -48,11 +44,7 @@ http://60.205.246.126/apk/jyhn.apk"
               style="background: #3377bd"
               @click="bindDownload('zg')"
             >
-              <a
-                href="	
-http://60.205.246.126/apk/jyzg.apk"
-                >吉易掌柜安卓版本下载</a
-              >
+              吉易掌柜安卓版本下载
             </div>
             <div>已有{{ zgStatistics }}人下载</div>
           </div>
@@ -90,8 +82,10 @@ export default {
       let type = "";
       if (val == "hn") {
         type = "hn";
+        window.open("http://60.205.246.126/apk/jyhn.apk");
       } else {
         type = "zg";
+        window.open("http://60.205.246.126/apk/jyzg.apk");
       }
       let params = {
         type: type,
@@ -161,10 +155,7 @@ export default {
         border-radius: 40px;
         background: #ff7d0a;
         cursor: pointer;
-
-        a {
-          color: #fff;
-        }
+        color: #fff;
       }
     }
   }

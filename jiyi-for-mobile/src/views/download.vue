@@ -11,21 +11,17 @@
       style="background: #ff5400; margin: 150px 0 10px 0"
       @click="bindDownload('hn')"
     >
-      <a
-        href="	
-http://60.205.246.126/apk/jyhn.apk"
-        >吉易慧农安卓版本下载</a
-      >
+      吉易慧农安卓版本下载
     </div>
     <div style="color: grey">已有{{ hnStatistics }}人下载</div>
     <div class="btn" style="background: #0b4ea7" @click="bindDownload('zg')">
-      <a
-        href="	
-http://60.205.246.126/apk/jyzg.apk"
-        >吉易掌柜安卓版本下载</a
-      >
+      吉易掌柜安卓版本下载
     </div>
     <div style="color: grey">已有{{ zgStatistics }}人下载</div>
+
+    <div class="bg-bottom" v-show="showmask">
+      <img src="http://60.205.246.126/images/2020/10/21/1603264208498464.png" />
+    </div>
   </div>
 </template>
 
@@ -37,12 +33,35 @@ export default {
     return {
       hnStatistics: 0,
       zgStatistics: 0,
+      showmask: false,
     };
   },
   created() {
     this.queryStatistics();
   },
   methods: {
+    downloadFun(val) {
+      var USER_Agent = navigator.userAgent;
+      var MOBILE_IOS = /(iPhone|iPad|iPod|iOS)/i;
+      var MOBILE_Android = /(Android)/i;
+      var WX = /(micromessenger)/i;
+      console.log(WX.test(USER_Agent));
+      if (WX.test(USER_Agent)) {
+        this.showmask = true;
+        //如果在微信中打开则只显示一个提示用户的罩层
+        return;
+      } else if (MOBILE_IOS.test(USER_Agent)) {
+        this.showmask = false;
+        alert("IOS暂时无法下载");
+      } else if (MOBILE_Android.test(USER_Agent)) {
+        this.showmask = false;
+        if (val == "hn") {
+          window.location.href = "http://60.205.246.126/apk/jyhn.apk";
+        } else {
+          window.location.href = "http://60.205.246.126/apk/jyzg.apk";
+        }
+      }
+    },
     queryStatistics() {
       let params = {};
       api.testAxiosGet(ApiPath.url.queryStatistics, params).then((res) => {
@@ -54,22 +73,24 @@ export default {
       });
     },
     bindDownload(val) {
-      let type = "";
-      if (val == "hn") {
-        type = "hn";
+      var USER_Agent = navigator.userAgent;
+      var MOBILE_IOS = /(iPhone|iPad|iPod|iOS)/i;
+      if (MOBILE_IOS.test(USER_Agent)) {
+        this.showmask = false;
+        alert("IOS暂时无法下载");
       } else {
-        type = "zg";
+        this.downloadFun(val);
+        let params = {
+          type: val,
+        };
+        api
+          .testAxiosGet(ApiPath.url.addDownloadStatistics, params)
+          .then((res) => {
+            if (res.status == "200") {
+              this.queryStatistics();
+            }
+          });
       }
-      let params = {
-        type: type,
-      };
-      api
-        .testAxiosGet(ApiPath.url.addDownloadStatistics, params)
-        .then((res) => {
-          if (res.status == "200") {
-            this.queryStatistics();
-          }
-        });
     },
   },
 };
@@ -99,8 +120,22 @@ export default {
     border-radius: 30px;
     text-align: center;
     font-weight: bold;
-    a {
-      color: #fff;
+    color: #fff;
+  }
+
+  .bg-bottom {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 888;
+    background: rgba(51, 51, 51, 1);
+    img {
+      width: 100%;
+      height: auto;
+      margin-top: -5%;
+      opacity: 0.85;
     }
   }
 }
