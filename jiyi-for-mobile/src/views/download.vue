@@ -8,19 +8,19 @@
     <h2>吉易慧农</h2>
     <div
       class="btn"
-      style="background: #ff5400; margin: 150px 0 10px 0"
+      style="background: #ff5400; margin: 150px 0 0 0"
       @click="bindDownload('hn')"
     >
       吉易慧农安卓版本下载
     </div>
-    <div style="color: grey">已有{{ hnStatistics }}人下载</div>
+    <div class="count">已有{{ hnStatistics }}人下载</div>
     <div class="btn" style="background: #0b4ea7" @click="bindDownload('zg')">
       吉易掌柜安卓版本下载
     </div>
-    <div style="color: grey">已有{{ zgStatistics }}人下载</div>
+    <div class="count">已有{{ zgStatistics }}人下载</div>
 
     <div class="bg-bottom" v-show="showmask">
-      <img src="http://60.205.246.126/images/2020/10/21/1603264208498464.png" />
+      <img src="http://60.205.246.126/images/2020/10/21/1603266042788506.png" />
     </div>
   </div>
 </template>
@@ -122,6 +122,10 @@ export default {
     font-weight: bold;
     color: #fff;
   }
+  .count {
+    color: #999;
+    margin: 10px 0;
+  }
 
   .bg-bottom {
     position: fixed;
@@ -130,11 +134,11 @@ export default {
     bottom: 0;
     left: 0;
     z-index: 888;
-    background: rgba(51, 51, 51, 1);
+    background: rgba(0, 0, 0, 0.85);
+    padding: 5px 5px 5px 20px;
     img {
       width: 100%;
       height: auto;
-      margin-top: -5%;
       opacity: 0.85;
     }
   }

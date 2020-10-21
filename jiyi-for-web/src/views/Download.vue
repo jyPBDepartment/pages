@@ -19,8 +19,8 @@
           />
           <div>
             <h2>吉易慧农APP上线啦！</h2>
-            <p>软件大小14M</p>
-            <p>APP发布时间:2020-8-26</p>
+            <p style="font-size: 14px">软件大小14M</p>
+            <p style="font-size: 14px">APP发布时间:2020-8-26</p>
           </div>
         </div>
         <div class="botton">
@@ -32,7 +32,7 @@
             <div class="btn" @click="bindDownload('hn')">
               吉易慧农安卓版本下载
             </div>
-            <div>已有{{ hnStatistics }}人下载</div>
+            <div style="margin-top: 5px">已有{{ hnStatistics }}人下载</div>
           </div>
           <div class="b-box">
             <img
@@ -46,7 +46,7 @@
             >
               吉易掌柜安卓版本下载
             </div>
-            <div>已有{{ zgStatistics }}人下载</div>
+            <div style="margin-top: 5px">已有{{ zgStatistics }}人下载</div>
           </div>
         </div>
       </div>
@@ -105,6 +105,9 @@ export default {
 
 
 <style  lang="scss">
+p {
+  font-size: 14px;
+}
 .bg {
   width: 100%;
   img {

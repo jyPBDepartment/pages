@@ -40,7 +40,7 @@
                     :hide-timeout="50"
                   >
                     <template slot="title">
-                      <span class="pd" style="font-size: 20px">产品</span>
+                      <span class="pd" style="font-size: 18px">产品</span>
                     </template>
                     <el-menu-item index="/dealer_shop">
                       <div>
@@ -57,7 +57,7 @@
                   </el-submenu>
                   <el-submenu index="4" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
-                      <span class="pd" style="font-size: 20px">解决方案</span>
+                      <span class="pd" style="font-size: 18px">解决方案</span>
                     </template>
                     <el-menu-item index="/dealer_program"
                       >农资经销商解决方案</el-menu-item
@@ -71,7 +71,7 @@
                   </el-menu-item>
                   <el-submenu index="5" :show-timeout="50" :hide-timeout="50">
                     <template slot="title">
-                      <span class="pd" style="font-size: 20px">合作伙伴</span>
+                      <span class="pd" style="font-size: 18px">合作伙伴</span>
                     </template>
                     <el-menu-item index="/partner">合作伙伴</el-menu-item>
                     <el-menu-item index="/join">加入我们</el-menu-item>
@@ -452,9 +452,9 @@ export default {
   }
   .pd {
     padding: 0 30px;
-    font-size: 20px;
+    font-size: 18px;
     .c_1 {
-      font-size: 20px;
+      font-size: 18px;
     }
   }
 }
@@ -467,7 +467,7 @@ export default {
   .el-menu .el-submenu__title {
     background: #fff !important;
     color: #0e1021 !important;
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 .el-menu--popup {
