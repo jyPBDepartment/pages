@@ -87,7 +87,10 @@ import dict from '@/views/dict/dictList';
 
 import GrainPrices from '@/views/grainPrices/grainPricesInfo';
 
-import GrainPricesHistory from '@/views/grainPrices/grainPricesHistoryInfo'
+import GrainPricesHistory from '@/views/grainPrices/grainPricesHistoryInfo';
+
+//线下课程
+import EduLessonInfo from '@/views/lesson/lessonList'
 
 // 启用路由
 Vue.use(Router);
@@ -273,11 +276,17 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        },
-        , {
+        }, {
             path: '/grainPrices/grainPricesHistoryInfo',
             name: '粮价历史',
             component: GrainPricesHistory,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/lesson/lessonList',
+            name: '线下课程',
+            component: EduLessonInfo,
             meta: {
                 requireAuth: true
             }

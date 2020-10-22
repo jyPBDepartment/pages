@@ -251,6 +251,12 @@ const url = {
   checkPriceDate:URLHost+ '/grainPrices/checkPriceDate',
   //查询粮价操作历史信息列表
   findGrainPricesHistoryList: URLHost + '/grainPricesHistory/findPageByParam',
+  //查询课程信息分页列表
+  findLessonPage:EDUHost+'/lesson/findPage',
+  //切换线下课程报名状态
+  changeLessonEnroll:EDUHost+'/lesson/enrollSwitch',
+  //切换线下课程生效状态
+  changeLessonStatus:EDUHost+'/lesson/enableSwitch',
 }
 export default {
   url
