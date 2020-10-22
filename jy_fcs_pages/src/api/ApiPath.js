@@ -257,6 +257,14 @@ const url = {
   changeLessonEnroll:EDUHost+'/lesson/enrollSwitch',
   //切换线下课程生效状态
   changeLessonStatus:EDUHost+'/lesson/enableSwitch',
+  //根据id获取线下课程信息
+  findLessonById:EDUHost+'/lesson/findById',
+  //根据id删除线下课程信息
+  deleteLessonById:EDUHost+'/lesson/delete',
+  //新增线下课程信息
+  addLesson:EDUHost+'/lesson/add',
+  //保存线下课程信息
+  updateLesson:EDUHost+'/lesson/update',
 }
 export default {
   url
