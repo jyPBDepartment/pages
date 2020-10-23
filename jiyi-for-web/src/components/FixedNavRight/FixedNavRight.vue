@@ -11,7 +11,10 @@
           </div>
         </div>
         <el-row slot="reference" class="box">
-          <img src="https://yanxuan.nosdn.127.net/a6463043b87b19100b27952fc9dbed01.png" alt />
+          <img
+            src="https://yanxuan.nosdn.127.net/a6463043b87b19100b27952fc9dbed01.png"
+            alt
+          />
         </el-row>
       </el-popover>
       <el-popover placement="left" width="400" trigger="hover">
@@ -26,20 +29,32 @@
           <div class="y_w" @click="userInfo()">与我联系</div>
         </div>
         <el-row slot="reference" class="box">
-          <img src="https://yanxuan.nosdn.127.net/ddf0340a72a7358e94ca0a1b3152b66d.png" alt />
+          <img
+            src="https://yanxuan.nosdn.127.net/ddf0340a72a7358e94ca0a1b3152b66d.png"
+            alt
+          />
         </el-row>
       </el-popover>
       <el-popover placement="left" width="150" trigger="hover">
-       
-       <img class="erweima" :src="url" alt />
+        <img class="erweima" :src="url" alt />
         <p class="title">扫码关注吉易慧云</p>
         <el-row slot="reference" class="box">
-          <img src="https://yanxuan.nosdn.127.net/4743ece30c6fab4dcd584fd22055f3f6.png" alt />
+          <img
+            src="https://yanxuan.nosdn.127.net/4743ece30c6fab4dcd584fd22055f3f6.png"
+            alt
+          />
         </el-row>
       </el-popover>
       <transition name="el-zoom-in-top">
-        <el-row class="box transition-box" v-show="isFixed" @click.native="backtop()">
-          <img src="https://yanxuan.nosdn.127.net/306a2892765d35782cf8b5f8dbc1c09b.png" alt />
+        <el-row
+          class="box transition-box"
+          v-show="isFixed"
+          @click.native="backtop()"
+        >
+          <img
+            src="https://yanxuan.nosdn.127.net/306a2892765d35782cf8b5f8dbc1c09b.png"
+            alt
+          />
         </el-row>
       </transition>
     </div>
@@ -54,25 +69,22 @@ export default {
   props: {
     isFixed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isShow: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       info: false,
-      url:"https://yanxuan.nosdn.127.net/52e87332b3ed02a5ec1a71911272337b.png",
-    
+      url: "https://yanxuan.nosdn.127.net/52e87332b3ed02a5ec1a71911272337b.png",
     };
   },
   mounted() {},
-  created(){
-  },
+  created() {},
   methods: {
-   
     backtop() {
       this.$emit("backtop");
     },
@@ -81,8 +93,7 @@ export default {
         this.$emit("chickCallMe", true);
       }
     },
- 
-  }
+  },
 };
 </script>
 
@@ -98,6 +109,7 @@ export default {
 }
 .right_nav {
   margin: 0 20px;
+
   .call {
     width: 33.33% !important;
     text-align: center;
@@ -111,10 +123,10 @@ export default {
   .title {
     padding: 0;
     margin: 0;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 40px;
     color: rgb(35, 142, 250);
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #eee;
   }
   .sBatton {
     display: flex;
@@ -132,9 +144,9 @@ export default {
   }
   .y_w {
     margin: 20px auto;
-    width: 165px;
-    font-size: 18px;
-    line-height: 50px;
+    width: 145px;
+    font-size: 14px;
+    line-height: 40px;
     text-align: center;
     color: #fff;
     border-radius: 10px;
@@ -148,15 +160,15 @@ export default {
 }
 .fixedNav {
   position: fixed;
-  top: 300px;
-  right: 0;
+  bottom: 200px;
+  right: 24px;
   z-index: 9999999999;
   cursor: pointer;
 
   .box {
     margin: 1px;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background: rgba(47, 118, 227, 0.77);
     border-radius: 10px;
     display: flex;

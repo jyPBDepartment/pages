@@ -1,13 +1,29 @@
 <template>
   <div class="Rotation">
-    <el-carousel class="hidden-md-and-down" :height="`${height}px`" arrow="hover" :interval="2000">
+    <el-carousel
+      class="hidden-md-and-down"
+      :height="`${height}px`"
+      arrow="hover"
+      :interval="2000"
+    >
       <el-carousel-item v-for="(item, index) in banner" :key="index">
         <div class="content" v-if="item.title !== ''">
-          <h2 :class="index == 2?'title1':'title'">{{item.title}}</h2>
-          <p :class="index == 2?'explain1':'explain'">{{item.content}}</p>
-          <div @click="jump(item)" :class="index== 2?'learn_more1':'learn_more'">{{item.botton}}</div>
+          <h2 :class="index == 2 ? 'title1' : 'title'">{{ item.title }}</h2>
+          <p :class="index == 2 ? 'explain1' : 'explain'">{{ item.content }}</p>
+          <div
+            @click="jump(item)"
+            :class="index == 2 ? 'learn_more learn_more1' : 'learn_more'"
+          >
+            {{ item.botton }}
+          </div>
         </div>
-        <img style="background:#fff;" class="b_1" :src="item.src" :style="{height:`${height}px`}" alt />
+        <img
+          style="background: #fff"
+          class="b_1"
+          :src="item.src"
+          :style="{ height: `${height}px` }"
+          alt
+        />
       </el-carousel-item>
     </el-carousel>
     <!-- <van-swipe class="my-swipe hidden-md-and-up" :autoplay="3000" indicator-color="white">
@@ -51,8 +67,10 @@ export default {
         }
       }, 5);
       // this.$router.push({ name: item.router });
-      if (item == this.banner[0])this.$router.push({ name: "supplier_program" });
-      if (item == this.banner[1]) this.$router.push({ name: "supplier_program" });
+      if (item == this.banner[0])
+        this.$router.push({ name: "supplier_program" });
+      if (item == this.banner[1])
+        this.$router.push({ name: "supplier_program" });
       if (item == this.banner[2]) this.$router.push({ name: "partner" });
     },
   },
@@ -93,17 +111,11 @@ export default {
     text-align: center;
     margin-top: 150px;
     cursor: pointer;
+    font-size: 14px;
   }
   .learn_more1 {
-    width: 163px;
-    line-height: 47px;
     color: rgb(12, 12, 12);
-    font-size: 18px;
     background: rgb(240, 219, 22);
-    border-radius: 4px;
-    text-align: center;
-    margin-top: 150px;
-    cursor: pointer;
   }
 }
 .b_1 {

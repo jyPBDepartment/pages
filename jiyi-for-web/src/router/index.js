@@ -8,8 +8,7 @@ const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Home',
     component: Home
@@ -22,26 +21,41 @@ const routes = [
   {
     path: '/dealer_shop',
     name: 'dealer_shop',
+    meta: {
+      title: '经销商店铺',
+    },
     component: resolve => require(['../views/Dealer_shop.vue'], resolve)
   },
   {
     path: '/dealer_manager',
     name: 'dealer_manager',
+    meta: {
+      title: '经销商掌柜',
+    },
     component: resolve => require(['../views/Dealer_manager.vue'], resolve)
   },
   {
     path: '/supplier_shops',
     name: 'supplier_shops',
+    meta: {
+      title: '供应商店铺',
+    },
     component: resolve => require(['../views/Supplier_shop.vue'], resolve)
   },
   {
     path: '/dealer_program',
     name: 'dealer_program',
+    meta: {
+      title: '农资经销商解决方案',
+    },
     component: resolve => require(['../views/Dealer_program.vue'], resolve)
   },
   {
     path: '/supplier_program',
     name: 'supplier_program',
+    meta: {
+      title: '农资供应商解决方案',
+    },
     component: resolve => require(['../views/Supplier_program.vue'], resolve)
   },
   {

@@ -2,12 +2,18 @@
   <transition name="el-fade-in">
     <div v-show="ejectMenus" class="transition-box record_info">
       <h2>预约讲解</h2>
-      <img
-        class="close"
+      <i
+        style="
+          position: absolute;
+          right: 20px;
+          top: 20px;
+          font-size: 25px;
+          cursor: pointer;
+        "
+        class="el-icon-close"
         @click="closeMenu"
-        src="https://yanxuan.nosdn.127.net/cd0598b389bf9e3b3d655c9f5b7ba19d.png"
-        alt=""
-      />
+      ></i>
+
       <el-row class="r_i_box">
         <el-col class="r_i_input" :span="12">
           <el-input
@@ -166,10 +172,15 @@ export default {
   left: 50%;
   margin-left: -470px;
   top: 50%;
-  padding: 30px 0;
+  padding: 20px 0;
   margin-top: -285px;
+  border-radius: 5px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
   z-index: 1999;
+  h2 {
+    font-size: 18px;
+    color: #333;
+  }
   .close {
     width: 30px;
     height: 30px;
@@ -191,13 +202,15 @@ export default {
   .r_i_box {
     padding-top: 31px;
     .botton {
-      width: 310px;
-      line-height: 63px;
+      width: 200px;
+      line-height: 50px;
       background: rgb(47, 118, 227);
       text-align: center;
       color: #fff;
       margin: 0 auto;
       cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
     }
     .r_i_input {
       padding: 0 62px;
@@ -209,5 +222,8 @@ export default {
 }
 .cascader-menu-list-wrap {
   top: 92px !important;
+}
+.el-icon-close:hover {
+  color: #ff0000;
 }
 </style>

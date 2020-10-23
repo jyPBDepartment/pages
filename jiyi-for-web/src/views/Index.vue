@@ -20,11 +20,11 @@
               >
                 <el-menu
                   :default-active="activeIndex"
-                  style="height: 100px"
+                  style="height: 70px"
                   class="el-menu-demo"
                   mode="horizontal"
                   text-color="#fff"
-                  background-color="#000930"
+                  background-color="#000826"
                   active-text-color="#238efa"
                   router
                 >
@@ -40,41 +40,50 @@
                     :hide-timeout="50"
                   >
                     <template slot="title">
-                      <span class="pd" style="font-size: 18px">产品</span>
+                      <span class="pd">产品</span>
                     </template>
                     <el-menu-item index="/dealer_shop">
-                      <div>
-                        <div class="c_1">经销商店铺</div>
-                        <div class="c_2">电商加身，销售倍增</div>
-                      </div>
+                      <span class="pd submenu-bg">经销商店铺</span>
                     </el-menu-item>
-                    <el-menu-item index="/dealer_manager"
-                      >经销商掌柜</el-menu-item
-                    >
-                    <el-menu-item index="/supplier_shops"
-                      >供应商店铺</el-menu-item
-                    >
+                    <el-menu-item index="/dealer_manager">
+                      <span class="pd submenu-bg">经销商掌柜</span>
+                    </el-menu-item>
+                    <el-menu-item index="/supplier_shops">
+                      <span class="pd submenu-bg">供应商店铺</span>
+                    </el-menu-item>
                   </el-submenu>
-                  <el-submenu index="4" :show-timeout="50" :hide-timeout="50">
+                  <el-submenu
+                    index="/dealer_program"
+                    :show-timeout="50"
+                    :hide-timeout="50"
+                  >
                     <template slot="title">
-                      <span class="pd" style="font-size: 18px">解决方案</span>
+                      <span class="pd">解决方案</span>
                     </template>
-                    <el-menu-item index="/dealer_program"
-                      >农资经销商解决方案</el-menu-item
-                    >
-                    <el-menu-item index="/supplier_program"
-                      >农资供应商解决方案</el-menu-item
-                    >
+                    <el-menu-item index="/dealer_program">
+                      <span class="pd submenu-bg">农资经销商解决方案</span>
+                    </el-menu-item>
+                    <el-menu-item index="/supplier_program">
+                      <span class="pd submenu-bg">农资供应商解决方案</span>
+                    </el-menu-item>
                   </el-submenu>
                   <el-menu-item index="/guarantee">
                     <span class="pd">服务保障</span>
                   </el-menu-item>
-                  <el-submenu index="5" :show-timeout="50" :hide-timeout="50">
+                  <el-submenu
+                    index="/partner"
+                    :show-timeout="50"
+                    :hide-timeout="50"
+                  >
                     <template slot="title">
-                      <span class="pd" style="font-size: 18px">合作伙伴</span>
+                      <span class="pd">合作伙伴</span>
                     </template>
-                    <el-menu-item index="/partner">合作伙伴</el-menu-item>
-                    <el-menu-item index="/join">加入我们</el-menu-item>
+                    <el-menu-item index="/partner">
+                      <span class="pd submenu-bg">合作伙伴</span>
+                    </el-menu-item>
+                    <el-menu-item index="/join">
+                      <span class="pd submenu-bg">加入我们</span>
+                    </el-menu-item>
                   </el-submenu>
                   <el-menu-item index="/download">
                     <span class="pd">下载app</span>
@@ -436,7 +445,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 .header {
-  height: 100px !important;
+  height: 70px !important;
   background-color: rgb(0, 9, 48);
 }
 .el-submenu__title i {
@@ -444,25 +453,26 @@ export default {
 }
 .nav {
   width: 100%;
-  height: 100px;
-  background: #000930;
+  height: 70px;
+  background: #000826;
+  user-select: none;
   .logo {
-    max-width: 80%;
+    max-width: 78%;
     cursor: pointer;
   }
   .pd {
     padding: 0 30px;
     font-size: 18px;
+
     .c_1 {
       font-size: 18px;
     }
   }
 }
 .el-menu--horizontal > .el-submenu {
-  height: 100px;
+  height: 70px;
 }
 .el-menu--horizontal {
-  background: #197afc;
   .el-menu .el-menu-item,
   .el-menu .el-submenu__title {
     background: #fff !important;
@@ -474,8 +484,7 @@ export default {
   background: #fff !important;
 }
 .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
-  line-height: 100px;
-  height: 100px;
+  height: 70px;
 }
 [class*=" el-icon-"],
 [class^="el-icon-"] {
@@ -491,13 +500,12 @@ export default {
 .el-menu--horizontal > .el-menu-item {
   border-bottom: none;
   font-size: 15px;
-  line-height: 100px;
   padding: 0 10px;
+  height: 70px !important;
 }
 .el-menu--horizontal > .el-submenu .el-submenu__title {
   font-size: 15px !important;
-  line-height: 100px;
-  height: 100px;
+  height: 70px;
 }
 
 .footer {
@@ -536,5 +544,20 @@ export default {
       text-decoration: none;
     }
   }
+}
+.submenu-bg {
+  display: block;
+  width: 100%;
+}
+.submenu-bg:hover {
+  color: #409eff;
+}
+
+.el-menu--collapse .el-menu .el-submenu,
+.el-menu--popup {
+  min-width: 180px;
+}
+.el-header {
+  padding: 0 !important;
 }
 </style>

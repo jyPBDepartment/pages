@@ -149,6 +149,7 @@ export default {
   line-height: 44px;
   color: #fff;
   cursor: pointer;
+  font-size: 14px;
 }
 .join {
   position: relative;
