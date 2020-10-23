@@ -265,6 +265,39 @@ const url = {
   addLesson:EDUHost+'/lesson/add',
   //保存线下课程信息
   updateLesson:EDUHost+'/lesson/update',
+
+
+  //设置管理
+  //职业类别分页查询
+  vocationInfoSearch: EDUHost + '/vocationInfo/findByName',
+  //职业类别新增
+  addEduVocationInfo: EDUHost + '/vocationInfo/add',
+  //职业类别删除
+  deleteVocationInfo: EDUHost + '/vocationInfo/delete',
+  //通过id查询
+  vocationInfoFindId: EDUHost + '/vocationInfo/findById',
+  //职业类别修改
+  updateEduVocationInfo: EDUHost + '/vocationInfo/update',
+  //修改状态
+  vocationInfoEnable: EDUHost + '/vocationInfo/enable',
+  //修改排序
+  changeVocationSort: EDUHost + '/vocationInfo/changeSort',
+
+  //图片设置
+  //分页查询
+  pictureInfoSearch: EDUHost + '/pictureInfo/findByName',
+  //添加
+  addPictureInfo: EDUHost + '/pictureInfo/add',
+  //通过id查询
+  pictureFindById: EDUHost + '/pictureInfo/findById',
+  //修改
+  updatePictureInfo: EDUHost + '/pictureInfo/update',
+  //删除
+  deletePictureInfo: EDUHost + '/pictureInfo/delete',
+  //修改状态
+  pictureInfoEnable: EDUHost + '/pictureInfo/enable',
+  //修改排序
+  changePictureSort: EDUHost + '/pictureInfo/changeSort',
 }
 export default {
   url
