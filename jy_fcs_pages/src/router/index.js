@@ -89,8 +89,15 @@ import GrainPrices from '@/views/grainPrices/grainPricesInfo';
 
 import GrainPricesHistory from '@/views/grainPrices/grainPricesHistoryInfo';
 
+
+//职业类别
+import VocationInfo from '@/views/eduVocation/vocationInfo';
+
+//图片设置
+import EduPictureInfo from '@/views/eduPicture/eduPictureInfo'
+
 //线下课程
-import EduLessonInfo from '@/views/lesson/lessonList'
+// import EduLessonInfo from '@/views/lesson/lessonList'
 
 // 启用路由
 Vue.use(Router);
@@ -283,14 +290,31 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        }, {
-            path: '/lesson/lessonList',
-            name: '线下课程',
-            component: EduLessonInfo,
-            meta: {
-                requireAuth: true
+        },
+        //  {
+        //     path: '/lesson/lessonList',
+        //     name: '线下课程',
+        //     component: EduLessonInfo,
+        //     meta: {
+        //         requireAuth: true
+        //     }
+        //     }
+            , {
+                path: '/eduVocation/vocationInfo',
+                name: '职业类别',
+                component: VocationInfo,
+                meta: {
+                    requireAuth: true
+                }
             }
-        }
+             ,{
+                path: '/eduPicture/eduPictureInfo',
+                name: '图片设置',
+                component: EduPictureInfo,
+                meta: {
+                    requireAuth: true
+                }
+            }
     ]
     }]
 })
