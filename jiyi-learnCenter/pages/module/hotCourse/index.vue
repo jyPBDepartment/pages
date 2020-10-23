@@ -10,7 +10,6 @@
 					<u-icon :name="name" size="38" :style="style" @click="collection"></u-icon>
 				</view>
 		</view>
-		
 		<!-- 内容 -->
 		<view class="content" v-for="(item,index) in articleList" :key="index">
 			<view class="title">

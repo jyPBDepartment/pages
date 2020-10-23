@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import uView from "uview-ui";
 
-// 注册全局组件
+// 注册加载全局组件
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
 Vue.component('mescroll-body', MescrollBody)

@@ -56,6 +56,7 @@
 			
 				})
 			},
+			// 收藏
 			collection(){
 				if(this.name=="heart"){
 					this.name = "heart-fill";

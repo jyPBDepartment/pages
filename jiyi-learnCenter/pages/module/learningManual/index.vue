@@ -14,7 +14,6 @@
 		<u-image width="100%" height="190rpx" :src="src"></u-image>
 		<!-- 学习手册 -->
 		<view class="rm-list">
-			
 			<!-- 初级经理人学习手册 -->
 			<view class="rm-manager" @click="juniorManager">
 				<view class="rm-img">

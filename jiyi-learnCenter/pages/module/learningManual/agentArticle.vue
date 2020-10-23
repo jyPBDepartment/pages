@@ -5,7 +5,6 @@
 				<view class="backArrow" @click="backTo"> <u-icon name="arrow-left" color="#333" size="32"></u-icon> </view> 
 				<view class="title">手册内容</view>
 		</view>
-		
 		<!-- 搜索 -->
 		<view class="select">
 			<view>

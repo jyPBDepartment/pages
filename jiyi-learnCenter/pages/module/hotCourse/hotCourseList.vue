@@ -126,7 +126,6 @@
 			},
 			backTo() {
 				uni.navigateBack({
-			
 				})
 			},
 			// 行业案例跳转详情页面

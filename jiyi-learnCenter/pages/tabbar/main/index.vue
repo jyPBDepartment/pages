@@ -94,7 +94,6 @@
 					{
 						url:'http://60.205.246.126/images/2020/09/29/1601345831839353.png'
 					}
-					
 				],
 				hotCourseList:[
 					{url:"http://60.205.246.126/images/2020/09/29/1601345920052441.jpg",word:"通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)",sum:"200"},

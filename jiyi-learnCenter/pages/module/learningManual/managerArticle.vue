@@ -15,6 +15,7 @@
 			</view>
 		</view>
 		
+		<!-- 页签 -->
 			<Screen :listIndex="listIndex" @select="select" :condition="condition" ></Screen>
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 		<!-- 列表详情 -->
