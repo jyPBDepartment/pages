@@ -5,7 +5,13 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 
 		{
-			"path": "pages/module/IndustryCase/industryCaseMore" //行业案例更多
+			"path": "pages/module/components/screen" //页签
+		},
+		{
+			"path": "pages/module/hotCourse/hotCourseList" //热门课程更多
+		},
+		{
+			"path": "pages/module/offlineCourses/offlineCourseMore" //线下课程更多
 		},
 		{
 			"path": "pages/module/offlineCourses/offlineDetails" //线下课程详情
@@ -20,79 +26,33 @@
 		{
 			"path": "pages/module/hotCourse/index" // 热门课程内容详情
 		},
-
-		{
-			"path": "pages/module/IndustryCase/index" // 行业案例内容详情
-		},
-
 		{
 			"path": "pages/module/learningManual/supplyArticleContent" // 供应商文章内容详情
 		},
 
-		{
-			"path": "pages/module/learningManual/supplyVideoContent" // 供应商视频内容详情
-		},
+		
 
 		{
 			"path": "pages/module/learningManual/agentArticleContent" // 经销商文章内容详情
 		},
 
-		{
-			"path": "pages/module/learningManual/agentVideoContent" // 经销商视频内容详情
-		},
+		
 
 		{
 			"path": "pages/module/learningManual/manArticleContent" // 经理人文章内容详情
 		},
 
-		{
-			"path": "pages/module/learningManual/manVideoContent" // 经理人视频内容详情
-		},
+		
 
 		{
 			"path": "pages/module/learningManual/supplyArticle" // 供应商文章列表详情
 		},
-
-		{
-			"path": "pages/module/learningManual/supplyVideo" // 供应商视频列表详情
-		},
-
 		{
 			"path": "pages/module/learningManual/agentArticle" // 经销商文章列表详情
 		},
-
-		{
-			"path": "pages/module/learningManual/agentVideo" // 经销商视频列表详情
-		},
-
-		{
-			"path": "pages/module/learningManual/juniorManagerManual" // 初级经理人功能列表
-		},
-
-		{
-			"path": "pages/module/learningManual/middleManagerManual" // 中级经理人功能列表
-		},
-
-		{
-			"path": "pages/module/learningManual/seniorManagerManual" // 高级经理人功能列表
-		},
-
-		{
-			"path": "pages/module/learningManual/managerVideo" // 经理人视频列表详情
-		},
-
 		{
 			"path": "pages/module/learningManual/managerArticle" // 经理人文章列表详情
 		},
-
-		{
-			"path": "pages/module/learningManual/supplyFunctions" // 供应商功能列表
-		},
-
-		{
-			"path": "pages/module/learningManual/agentFunctions" // 经销商功能列表
-		},
-
 		{
 			"path": "pages/tabbar/main/index" // 首页列表
 		},

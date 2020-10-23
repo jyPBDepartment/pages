@@ -14,5 +14,6 @@
 
 <style lang="scss">
 	@import "uview-ui/index.scss";
+	@import url("./node_modules/animate.css");
 	/*每个页面公共css */
 </style>

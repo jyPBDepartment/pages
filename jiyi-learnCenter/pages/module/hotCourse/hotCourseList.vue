@@ -5,7 +5,7 @@
 				<view class="backArrow" @click="backTo">
 					<u-icon name="arrow-left" color="#333" size="32"></u-icon>
 				</view> 
-				<view class="title">手册内容</view>
+				<view class="title">热门课程</view>
 		</view>
 		
 		<!-- 搜索 -->
@@ -14,11 +14,10 @@
 				<u-search placeholder="搜索标题或标签" bg-color="#fff" :show-action="false" input-align="left" shape="square" margin="30rpx 0rpx 0rpx 20rpx"  maxlength="16" class="input" v-model="title"></u-search>
 			</view>
 		</view>
-		
-			<Screen :listIndex="listIndex" @select="select" :condition="condition" ></Screen>
-			<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<Screen :listIndex="listIndex" @select="select" :condition="condition" ></Screen>	
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 		<!-- 列表详情 -->
-		<view class="list" v-for="(item, index) in bookList" :key="index" @click="managerArticleJump('./manArticleContent')">
+		<view class="list" v-for="(item, index) in industryCaseList" :key="index"  @click="industryCaseJump('./index')">
 			<view class="listOne">
 				<view class="img">
 					<image class="listImg" :src="item.url"></image>
@@ -70,35 +69,46 @@
 					{code:3,name: '推广'}
 					],
 					listIndex:0,
-				title:'',
-				bookList:[
-					{url:"http://60.205.246.126/images/2020/10/12/1602482016341534.jpg",word:"来日方长何惧车遥马慢.",sum:"1314"},
-					{url:"http://60.205.246.126/images/2020/10/12/1602482016341534.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"1314"},
-					{url:"http://60.205.246.126/images/2020/10/15/1602729030693081.jpg",word:"不如做自己的宇宙.",sum:"1314"},
-					{url:"http://60.205.246.126/images/2020/10/12/1602482016341534.jpg",word:"又等來了一個秋天.",sum:"1314"},
-					{url:"http://60.205.246.126/images/2020/10/12/1602482016341534.jpg",word:"凡事有交代 事事有着落 件件有回应",sum:"1314"},
-					{url:"http://60.205.246.126/images/2020/10/15/1602729030693081.jpg",word:"保持熱愛 奔赴山海.",sum:"1314"}
-				],
-				formInline: {
-					page: 1,
-					limit: 10,
-					varLable: "",
-					varName: "",
-					currentPage: 1,
-					pageSize: 10,
-					total: 10,
-				},
-				upOption: {
-					page: {
-						size: 10 // 每页数据的数量,默认10
+					
+					title:'',
+					industryCaseList:[
+						{url:"http://60.205.246.126/images/2020/10/12/1602481525521725.jpg",word:"人的欲望永无止尽 就像我一开始 只是想要知道你的名字",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481543327363.jpg",word:"刮奖刮出一个谢字就足够了。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"你眼里有全宇宙 胜过我见过的所有山川河流",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481564370430.jpg",word:"孺子含辛，隐忍不嗔。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"},						
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"},
+						{url:"http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",word:"加油呀,你是比自己想象的要好得多的人。",sum:"1314"}
+						
+					],
+					formInline: {
+						page: 1,
+						limit: 10,
+						varLable: "",
+						varName: "",
+						currentPage: 1,
+						pageSize: 10,
+						total: 10,
 					},
-					noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
-					empty: {
-						tip: '暂无相关数据'
-					}
-				},
-			}
+					upOption: {
+						page: {
+							size: 10 // 每页数据的数量,默认10
+						},
+						noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+						empty: {
+							tip: '暂无相关数据'
+						}
+					},
+				}
 		},
+		
 		methods:{
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
 			mescrollInit(mescroll) {
@@ -119,8 +129,8 @@
 			
 				})
 			},
-			// 经理人文章跳转
-			managerArticleJump(url){
+			// 行业案例跳转详情页面
+			industryCaseJump(url){
 				uni.navigateTo({
 					url: url
 				})
@@ -142,13 +152,14 @@
 		background-color: #F8F8F8;
 		.head{
 			display: flex;
-			margin:15rpx 0rpx 0rpx 20rpx;
+			margin-top: 15rpx;
+			margin-left: 20rpx;
 			.backArrow{
 				margin-top: 6rpx;
 			}
 			.title{
 				margin-left: 250rpx;
-				font-size: 35rpx;
+				font-size: 32rpx;
 			}
 		}
 		.select{
@@ -156,7 +167,6 @@
 			height: 120rpx;
 			background-color:#C9C9CE;
 			margin-top: 20rpx;
-			
 			.input{
 				width: 700rpx;
 				
@@ -164,7 +174,6 @@
 			.uni-input-placeholder{
 				margin-left: 200rpx;
 			}
-			
 		}
 		.list{
 			display: flex;
@@ -190,7 +199,8 @@
 				.bride{
 					font-size: 22rpx;
 					color: #BFBFBF;
-					margin: -50rpx 0rpx 0rpx 600rpx;
+					margin-left: 600rpx;
+					margin-top: -50rpx;
 				}
 			}
 			.underline{

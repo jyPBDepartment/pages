@@ -1,25 +1,28 @@
 <template>
+	
 	<view id="main">
 		<!--  标题 -->
 		<view class="title">学习中心</view>
-		<!--  背景图 -->
-		<u-image width="100%" height="320rpx" :src="src"></u-image>
+		<!--  轮播图 -->
+		<swiper class="circul" indicator-dots='true' autoplay='true' interval='3000' duration='1000' circular='true'>
+			<block v-for="(item,index) in banner" :key="index">
+				<swiper-item class="swiperItem">
+					<image :src="item.url" mode='aspectFill' class="swiperImage"></image>
+				</swiper-item>
+			</block>
+		</swiper>
 		<!--  模块 -->
-		<u-grid class="grid" :col="4">
-			<u-grid-item @click="learningManual">
-				<u-icon name="https://cdn.uviewui.com/uview/example/button.png" :size="46"></u-icon>
-				<view class="grid-text">学习手册</view>
+		<u-grid class="grid" :col="3" :border="border">
+			<u-grid-item @click="learningManual" >
+				<u-icon name="http://60.205.246.126/images/2020/10/22/1603328600738326.png" :size="40" class="icon" ></u-icon>
+				<view class="grid-text" >学习手册</view>
 			</u-grid-item>
 			<u-grid-item @click="studyExamination">
-				<u-icon name="lock" :size="46"></u-icon>
+				<u-icon name="http://60.205.246.126/images/2020/10/22/1603329404636433.png" :size="40" class="icon1"></u-icon>
 				<view class="grid-text">学习考试</view>
 			</u-grid-item>
-			<u-grid-item @click="onlineTraining">
-				<u-icon name="hourglass" :size="46"></u-icon>
-				<view class="grid-text">在线培训</view>
-			</u-grid-item>
 			<u-grid-item @click="offlineCourses">
-				<u-icon name="hourglass" :size="46"></u-icon>
+				<u-icon name="http://60.205.246.126/images/2020/10/22/1603329324137893.png" :size="40" class="icon2"></u-icon>
 				<view class="grid-text">线下课程</view>
 			</u-grid-item>
 		</u-grid>
@@ -41,35 +44,37 @@
 				<view class="listText">{{item.word}}</view>
 			</view>
 			<view class="listSen">
-				<view class="bride">{{item.sum}}人已读</view>
+				<view class="bride">{{item.sum}}人已学</view>
 			</view>
 				<view>
 					<u-line class="underline"></u-line>
 				</view>
 		</view>
 
-		<!--  行业案例 -->
+		<!--  线下课程 -->
 		<u-row style="background-color: #f2f2f2;font-size: 24rpx;">
 			<u-col span="9">
-				<view>行业案例</view>
+				<view>线下课程</view>
 			</u-col>
 			<u-col span="3">
 				<view style="text-align: right;" @click="hyMore">更多>>></view>
 			</u-col>
 		</u-row>
-		<view class="list" v-for="(item, index) in industryCaseList" :key="'list'+index"  @click="hyDetail">
-			<view class="listOne">
-				<view class="img">
-					<image class="listImg" :src="item.url"></image>
+		<view class="offlineCourse animate__animated animate__fadeIn " v-for="(item, index) in offlineCourseList" :key="'list'+index"  @click="hyDetail">
+			<view class="background" :style="item.bgColor">				
+				<view class="logo">
+					<image class="courseImg" :src="item.url"></image>
 				</view>
-				<view class="listText">{{item.word}}</view>
-			</view>
-			<view class="listSen">
-				<view class="bride">{{item.sum}}人已读</view>
-			</view>
-				<view>
-					<u-line class="underline"></u-line>
+				<view class="title1">
+					{{item.title}}
 				</view>
+				<view class="content">
+					{{item.content}}
+				</view>
+				<view class="courseTime">
+					开课时间：{{item.courseTime}}
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -78,32 +83,28 @@
 	export default {
 		data() {
 			return {
-				src: 'http://60.205.246.126:8001/images/2020/09/29/1601345831839353.png',
-				// danmuList: [{
-				// 		text: '第 1s 出现的弹幕',
-				// 		color: '#ff0000',
-				// 		time: 1
-				// 	},
-				// 	{
-				// 		text: '第 3s 出现的弹幕',
-				// 		color: '#ff00ff',
-				// 		time: 3
-				// 	}
-				// ],
-				hotCourseList:[
-					{url:"http://60.205.246.126:8001/images/2020/09/29/1601345920052441.jpg",word:"通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)",sum:"200"},
-					{url:"http://60.205.246.126:8001/images/2020/09/29/1601345997114502.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"300"}
+				border:false,
+				banner:[
+					{
+						url:'http://60.205.246.126/images/2020/09/29/1601345831839353.png'
+					},
+					{
+						url:'http://60.205.246.126/images/2020/09/29/1601345831839353.png'
+					},
+					{
+						url:'http://60.205.246.126/images/2020/09/29/1601345831839353.png'
+					}
+					
 				],
-				industryCaseList:[
-					{url:"http://60.205.246.126:8001/images/2020/09/29/1601345920052441.jpg",word:"通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)",sum:"500"},
-					{url:"http://60.205.246.126:8001/images/2020/09/29/1601345997114502.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"1314"}
+				hotCourseList:[
+					{url:"http://60.205.246.126/images/2020/09/29/1601345920052441.jpg",word:"通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)",sum:"200"},
+					{url:"http://60.205.246.126/images/2020/09/29/1601345997114502.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"300"}
+				],
+				offlineCourseList:[
+					{bgColor:'background-color:#91D5FF',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
+					{bgColor:'background-color:#9C9E0D',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"农技知识",courseTime:"2020-12-12 09:00"},
 				]
 			}
-		},
-		onReady: function(res) {
-			// #ifndef MP-ALIPAY
-			// this.videoContext = uni.createVideoContext('myVideo')
-			// #endif
 		},
 		methods: {
 			offlineCourses() {
@@ -121,18 +122,22 @@
 					url: "../../module/studyExamination/index"
 				})
 			},
+			// 学习手册
 			learningManual() {
 				uni.navigateTo({
 					url: "../../module/learningManual/index"
 				})
 			},
+			// 热门课程更多
 			rmMore() {
-				alert("进入热门课程列表页面")
+				uni.navigateTo({
+					url: "../../module/hotCourse/hotCourseList"
+				})
 			},
-			// 行业案例更多
+			// 线下课程更多
 			hyMore() {
 				uni.navigateTo({
-					url: "../../module/IndustryCase/industryCaseMore"
+					url: "../../module/offlineCourses/offlineCourseMore"
 				})
 			},
 			// 热门课程详情
@@ -142,11 +147,11 @@
 					url: "../../module/hotCourse/index"
 				})
 			},
-			// 行业案例详情
+			// 线下课程详情
 			hyDetail(val) {
 				
 				uni.navigateTo({
-					url: "../../module/IndustryCase/index"
+					url: "../../module/offlineCourses/offlineDetails"
 				})
 			},
 			initDate() {
@@ -158,23 +163,49 @@
 
 					}
 				})
-			},
-			// videoErrorCallback: function(e) {
-
-			// 	alert(JSON.stringify(e.target))
-			// 	uni.showModal({
-			// 		content: e.target.errMsg,
-			// 		showCancel: false
-			// 	})
-			// },
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+	
 	#main {
 		background-color: lightgray;
-
+		.circul {
+			width: 750rpx;
+			height: 320rpx;
+			.swiperItem {
+				width: 100%;
+				height: 100%;
+		
+				.swiperImage {
+					width: 750rpx;
+					height: 320rpx;
+				}
+			}
+		}
+		.icon{
+			width: 75rpx;
+			height: 75rpx;
+			background-color: #009688;
+			border-radius: 50%;
+			padding-left: 17rpx;
+		}
+		.icon1{
+			width: 75rpx;
+			height: 75rpx;
+			background-color: #FCCA00;
+			border-radius: 50%;
+			padding-left: 17rpx;
+		}
+		.icon2{
+			width: 75rpx;
+			height: 75rpx;
+			background-color: #3291F8;
+			border-radius: 50%;
+			padding-left: 17rpx;
+		}
 		.title {
 			text-align: center;
 			height: 32rpx;
@@ -218,12 +249,14 @@
 
 		.grid {
 			// margin-top: 10px;
+			
 		}
 
 		.grid-text {
 			font-size: 24rpx;
-			margin-top: 4rpx;
-			color: $u-type-info;
+			margin-top: 10rpx;
+			color: #333;
+			margin-bottom: -10rpx;
 		}
 
 		.u-row {
@@ -259,6 +292,40 @@
 			.underline{
 				border:0px solid #d3d3d3;
 			}
+		}
+		.offlineCourse{
+			display: flex;
+			flex-direction: column;
+			background-color: #fff;
+			
+			.background{
+				height: 260rpx;
+				margin-top: 20rpx;
+				font-weight: bold;
+				color: #fff;
+				.logo{
+					.courseImg{
+						width: 140rpx;
+						height: 60rpx;
+						margin: 20rpx 0rpx 0rpx 20rpx;
+					}
+				}
+				.title1{
+					font-size: 36rpx;
+					text-align: center;
+				}
+				.content{
+					font-size: 20rpx;
+					text-align: center;
+					margin-top: 20rpx;
+				}
+				.courseTime{
+					font-size: 16rpx;
+					text-align: center;
+					margin-top: 20rpx;
+				}
+			}
+			
 		}
 	}
 </style>

@@ -24,7 +24,7 @@
 	export default {
 		data() {
 			return {
-				src: 'http://60.205.246.126:8001/images/2020/09/29/1601348332838540.png',
+				src: 'http://60.205.246.126/images/2020/09/29/1601348332838540.png',
 				studyExaminationList: [{
 						levelCode:'0',
 						levelName: '初级',

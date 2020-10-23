@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+    "animate.css": "^4.1.1",
     "sass-loader": "^10.0.2",
     "uniapp": "0.1.0-dev.1",
     "uview-ui": "^1.7.3",

@@ -15,20 +15,38 @@
 		<!-- 学习手册 -->
 		<view class="rm-list">
 			
-			<!-- 经理人学习手册 -->
-			<view class="rm-manager" @click="show = true">
+			<!-- 初级经理人学习手册 -->
+			<view class="rm-manager" @click="juniorManager">
 				<view class="rm-img">
-					<image class="rm-cover" src="http://60.205.246.126:8001/images/2020/09/29/1601345831839353.png"></image>
+					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
 				</view>
 				<view class="rm-font">
-					经理人学习手册
+					初级经理人学习手册
+				</view>
+			</view>
+			<!-- 初级经理人学习手册 -->
+			<view class="rm-manager" @click="middleManager">
+				<view class="rm-img">
+					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
+				</view>
+				<view class="rm-font">
+					中级经理人学习手册
+				</view>
+			</view>
+			<!-- 初级经理人学习手册 -->
+			<view class="rm-manager" @click="seniorManager">
+				<view class="rm-img">
+					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
+				</view>
+				<view class="rm-font">
+					高级经理人学习手册
 				</view>
 			</view>
 			
 			<!-- 供应商学习手册 -->
 			<view class="rm-manager" @click="suuplyJump">
 				<view class="rm-img">
-					<image class="rm-cover" src="http://60.205.246.126:8001/images/2020/09/29/1601345831839353.png"></image>
+					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
 				</view>
 				<view class="rm-font">
 					供应商学习手册
@@ -38,7 +56,7 @@
 			<!-- 经销商学习手册 -->
 			<view class="rm-manager" @click="agentJump">
 				<view class="rm-img">
-					<image class="rm-cover" src="http://60.205.246.126:8001/images/2020/09/29/1601345831839353.png"></image>
+					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
 				</view>
 				<view class="rm-font">
 					经销商学习手册
@@ -46,17 +64,6 @@
 			</view>
 			
 		</view>
-		
-		<!-- 弹出层 -->
-		<u-popup v-model="show" mode="center" width="400" height="400" >
-				<view class="content">
-					<view class="confrim-btn">
-						<u-button class="btnDistance" @click="linkJunior(show=false)">初级经理人</u-button>
-						<u-button class="btnDistance" @click="linkMiddle(show=false)">中级经理人</u-button>
-						<u-button class="btnDistance" @click="linkSenior(show=false)">高级经理人</u-button>
-					</view>
-				</view>
-			</u-popup>
 	</view>
 </template>
 
@@ -64,7 +71,7 @@
 	export default {
 		data() {
 			return {
-				src: 'http://60.205.246.126:8001/images/2020/09/29/1601348332838540.png',
+				src: 'http://60.205.246.126/images/2020/09/29/1601348332838540.png',
 				show: false
 			}
 		},
@@ -76,37 +83,33 @@
 				})
 			},
 			// 经理人跳转
-			linkJunior(){
+			juniorManager(){
 				uni.navigateTo({
-					url: "./juniorManagerManual",//跳转地址
+					url: "./managerArticle",//跳转地址
 				});
-				this.Show=false;
-				this.$emit("close");
+				
 			},
-			linkMiddle(){
+			middleManager(){
 				uni.navigateTo({
-					url: "./middleManagerManual",//跳转地址
+					url: "./managerArticle",//跳转地址
 				});
-				this.Show=false;
-				this.$emit("close");
 			},
-			linkSenior(){
+			seniorManager(){
 				uni.navigateTo({
-					url: "./seniorManagerManual",//跳转地址
+					url: "./managerArticle",//跳转地址
 				});
-				this.Show=false;
-				this.$emit("close");
+				
 			},
 			// 供应商跳转
 			suuplyJump(){
 				uni.navigateTo({
-					url:"./supplyFunctions"
+					url:"./supplyArticle"
 				})
 			},
 			// 经销商跳转
 			agentJump(){
 				uni.navigateTo({
-					url:"./agentFunctions"
+					url:"./agentArticle"
 				})
 			}
 			

@@ -6,6 +6,9 @@
 				 <u-icon name="arrow-left" color="#333" size="32"></u-icon> 
 				 </view> 
 				<view class="title">文章详情</view>
+				<view class="star">
+					<u-icon :name="name" size="38" :style="style" @click="collection"></u-icon>
+				</view>
 		</view>
 		
 		<!-- 内容 -->
@@ -31,6 +34,7 @@
 				{{item.articleContent}}
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 	
 </template>
@@ -39,8 +43,10 @@
 	export default {
 		data() {
 			return {
+				name:'heart',
+				style:'color:#333333',
 				articleList:[
-					{title:"小孩子在很多时候比大人还爱面子，因为世界小，所以，所有的小事都不小。",read:"300",publicTime:"2020-02-19 12:23:46",readGuide:"小院闲窗春色深。重帘未卷影沈沈。倚楼无语理瑶琴。远岫出山催薄暮，细风吹雨弄轻阴。梨花欲谢恐难禁。供应商。",url:"http://60.205.246.126:8001/images/2020/09/29/1601371541428254.jpg",articleContent:"人生若只如初见，何事秋风悲画扇？等闲变却故人心，却道故人心易变。骊山语罢清宵半，泪雨霖铃终不怨。何如薄幸锦衣郎，比翼连枝当日愿。春花春月年年客，怜春又怕春离别。只为晓风愁，催花扑玉钩。娟娟双蛱蝶，宛转飞花侧。花底一声歌，疼花花奈何。"}
+					{title:"小孩子在很多时候比大人还爱面子，因为世界小，所以，所有的小事都不小。",read:"300",publicTime:"2020-02-19 12:23:46",readGuide:"小院闲窗春色深。重帘未卷影沈沈。倚楼无语理瑶琴。远岫出山催薄暮，细风吹雨弄轻阴。梨花欲谢恐难禁。供应商。",url:"http://60.205.246.126/images/2020/09/29/1601371541428254.jpg",articleContent:"人生若只如初见，何事秋风悲画扇？等闲变却故人心，却道故人心易变。骊山语罢清宵半，泪雨霖铃终不怨。何如薄幸锦衣郎，比翼连枝当日愿。春花春月年年客，怜春又怕春离别。只为晓风愁，催花扑玉钩。娟娟双蛱蝶，宛转飞花侧。花底一声歌，疼花花奈何。"}
 				]
 			}
 		},
@@ -50,6 +56,23 @@
 			
 				})
 			},
+			collection(){
+				if(this.name=="heart"){
+					this.name = "heart-fill";
+					this.style="color:red";
+					this.$refs.uToast.show({
+						title: '收藏成功，请到我的收藏查看手册。',
+						type: 'success'
+					});
+				}else{
+					this.name = "heart";
+					this.style="color:#333";
+					this.$refs.uToast.show({
+						title: '已取消收藏',
+						type: 'info'
+					});
+				}
+			}
 		}
 		}
 </script>
@@ -69,6 +92,10 @@
 			.title{
 				margin-left: 250rpx;
 				font-size: 35rpx;
+			}
+			.star{
+				margin-left: 250rpx;
+				margin-top: 2rpx;
 			}
 		}
 		.content{
