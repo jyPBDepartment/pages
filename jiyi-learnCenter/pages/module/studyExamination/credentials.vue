@@ -74,6 +74,13 @@
 				{name:""},
 				],
 			}
+		},
+		methods:{
+			backTo() {
+				uni.navigateBack({
+			
+				})
+			}
 		}
 	}
 </script>

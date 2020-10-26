@@ -59,7 +59,9 @@
 		methods: {
 			linkTo(val,pass) {
 				if(pass=='1'){
-					alert('跳转对应考试页面' + val)
+					uni.navigateTo({
+						url: "./credentials"
+					})
 				}
 				
 			},
