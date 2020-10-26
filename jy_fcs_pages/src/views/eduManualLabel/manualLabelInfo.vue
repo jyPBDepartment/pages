@@ -5,6 +5,9 @@
       <el-form-item label="创建人">
         <el-input size="small" v-model="createBy" placeholder="输入创建人" style="width:150px"></el-input>
       </el-form-item>
+      <el-form-item label="标签名称">
+        <el-input size="small" v-model="name" placeholder="输入标签名称" style="width:150px"></el-input>
+      </el-form-item>
       <el-form-item label="状态" prop="status">
           <el-select v-model="status" style="width:40%" size="small">
             <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -15,20 +18,19 @@
         <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
       <el-row>
-        <el-button size="small" type="success" icon="el-icon-plus" @click="addVocationInfos()">添加</el-button>
+        <el-button size="small" type="success" icon="el-icon-plus" @click="addManualLabels()">添加</el-button>
       </el-row>
       <br>
     </el-form>
     <!--列表-->
     <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
-      <el-table-column type="index" label="序号" min-width="7%" align="center"></el-table-column>
-      <el-table-column prop="name" min-width="6%" label="职业名称" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="vocationCode" min-width="8%" label="职业编码" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column type="index" label="序号" min-width="10%" align="center"></el-table-column>
+      <el-table-column prop="name" min-width="10%" label="标签名称" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
       <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column prop="createBy" min-width="6%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="updateBy" min-width="6%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column align="center" min-width="5.5%" label="状态" prop="status">
+      <el-table-column prop="createBy" min-width="10%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="updateBy" min-width="10%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column align="center" min-width="10%" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -36,42 +38,29 @@
             :inactive-value="1"
             active-color="#13ce66"
             inactive-color="#ff4949"
-            @change="vocationInfoEnable(scope)"
+            @change="manualLabelInfoEnable(scope)"
           ></el-switch>
         </template>
       </el-table-column>
-       <el-table-column  align="center" label="排序" min-width="13.5%" prop="sort" >
+      <el-table-column align="center" label="操作" min-width="26%">
         <template slot-scope="scope">
-          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=1 step-strictly size="small"></el-input-number>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="操作" min-width="24%">
-        <template slot-scope="scope">
-           <el-button @click="openUpdateVocationInfo(scope)" type="primary" size="small" icon="el-icon-edit" style="width:73px;">编辑</el-button>
-           <el-button @click="deleteUser(scope)" type="danger" size="small" icon="el-icon-delete" style="width:73px;">删除</el-button>
-           <el-button @click="openDetails(scope)" type="primary" size="small" style="width:70px;">详情</el-button>
+           <el-button @click="openUpdateManualLabel(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
+           <el-button @click="deleteUser(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
     <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
     <!-- 新增 -->
-    <add-vocationInfo :show="addVocationInfo" title="添加" @close="closeVocationInfoDialog" @save="saveVocationInfo"></add-vocationInfo>
+    <add-manualLabel :show="addManualLabel" title="添加" @close="closeManualLabelDialog" @save="saveManualLabel"></add-manualLabel>
     <!-- 修改 -->
-    <update-vocationInfo
-      :show="updateVocationInfoFlag"
-      :transVocationInfoId="transVocationInfoId"
+    <update-manualLabel
+      :show="updateManualLabelFlag"
+      :transManualLabelId="transManualLabelId"
       title="修改"
-      @close="closeUpdateVocationInfoDialog"
-      @save="upVocationInfo"
-    ></update-vocationInfo>
-    <!-- 详情 -->
-    <details-vocationInfo
-      :show="detailsVocationInfoFlag"
-      :detailsTransVocationInfoId="detailsTransVocationInfoId"
-      title="详情"
-      @close="closedetailsVocationInfoDialog"
-    ></details-vocationInfo>
+      @close="closeUpdateManualLabelDialog"
+      @save="upManualLabel"
+    ></update-manualLabel>
   </div>
 </template>
 
@@ -81,22 +70,20 @@ import Pagination from "../../components/Pagination";
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
-import AddVocationInfo from "./addVocationInfo";
-import UpdateVocationInfo from "./updateVocationInfo";
-import DetailsVocationInfo from "./detailsVocationInfo";
+import AddManualLabel from "./addManualLabel";
+import UpdateManualLabel from "./updateManualLabel";
 export default {
   inject: ["reload"],
   data() {
     return {
       createBy: "",
+      name:"",
       status:"",
       updateUser:"",
       loading: false, //显示加载
-      addVocationInfo: false,
-      updateVocationInfoFlag: false,
-      detailsVocationInfoFlag: false,
-      transVocationInfoId: "",
-      detailsTransVocationInfoId:"",
+      addManualLabel: false,
+      updateManualLabelFlag: false,
+      transManualLabelId: "",
       formInline: {
         page: 1,
         limit: 10,
@@ -118,9 +105,8 @@ export default {
   },
   // 注册组件
   components: {
-    AddVocationInfo,
-    UpdateVocationInfo,
-    DetailsVocationInfo,
+    AddManualLabel,
+    UpdateManualLabel,
     Pagination,
   },
   watch: {},
@@ -142,12 +128,13 @@ export default {
         this.formInline.limit = 10;
       }
       let params = {
+        name:this.name,  
         createBy: this.createBy,
         status:this.status,
         page: this.formInline.page,
         size: this.formInline.limit
       };
-      api.testAxiosGet(ApiPath.url.vocationInfoSearch, params).then(res => {
+      api.testAxiosGet(ApiPath.url.manualLabelInfoSearch, params).then(res => {
         let code = res.state;
         if (code == "0") {
           this.loading = false;
@@ -158,35 +145,32 @@ export default {
         }
       });
     },
-    saveVocationInfo() {
-      this.addVocationInfo = false;
+    saveManualLabel() {
+      this.addManualLabel = false;
     },
-    closeVocationInfoDialog() {
+    closeManualLabelDialog() {
       this.search(this.formInline);
-      this.addVocationInfo = false;
+      this.addManualLabel = false;
     },
-    addVocationInfos() {
-      this.addVocationInfo = true;
+    addManualLabels() {
+      this.addManualLabel = true;
     },
-    closeUpdateVocationInfoDialog() {
+    closeUpdateManualLabelDialog() {
       this.search(this.formInline);
-      this.updateVocationInfoFlag = false;
+      this.updateManualLabelFlag = false;
     },
-    upVocationInfo() {
-      this.updateVocationInfoFlag = false;
-    },
-    closedetailsVocationInfoDialog(){
-        this.detailsVocationInfoFlag = false;
+    upManualLabel() {
+      this.updateManualLabelFlag = false;
     },
     
     //启用/禁用
-    vocationInfoEnable: function(scope) {
+    manualLabelInfoEnable: function(scope) {
       let params = {
         id: scope.row.id,
         status: scope.row.status,
         updateUser:localStorage.getItem("userInfo")
       };
-      api.testAxiosGet(ApiPath.url.vocationInfoEnable, params).then(res => {
+      api.testAxiosGet(ApiPath.url.manualLabelInfoEnable, params).then(res => {
         let code = res.state;
         if (code == "0") {
           this.$message.success(res.message);
@@ -197,39 +181,15 @@ export default {
       }).catch(function(error) {});
     },
 
-     //修改排序
-    sortChange: function(scope) {
-      let params = {
-        id: scope.row.id,
-        sort: scope.row.sort
-      };
-      api
-        .testAxiosGet(ApiPath.url.changeVocationSort, params)
-        .then(res => {
-          let code = res.state;
-          if(code == "1"){
-              this.$message.error(res.message);
-          }else{
-            this.$message.success(res.message);
-          }
-        })
-        .catch(function(error) {});
-    },
-
     //显示编辑界面
-    openUpdateVocationInfo(scope) {
-      this.transVocationInfoId = scope.row.id;
-      this.updateVocationInfoFlag = true;
-    },
-
-    //显示详情页面
-    openDetails(scope){
-        this.detailsTransVocationInfoId = scope.row.id;
-        this.detailsVocationInfoFlag = true;
+    openUpdateManualLabel(scope) {
+      this.transManualLabelId = scope.row.id;
+      this.updateManualLabelFlag = true;
     },
 
     //重置
     resetForm(search) {
+      this.name = "",
       this.createBy = "";
       this.status="",
       this.formInline.page = 1;
@@ -254,7 +214,7 @@ export default {
         let params = {
           id: scope.row.id,
           };
-        api.testAxiosGet(ApiPath.url.deleteVocationInfo, params).then(res => {
+        api.testAxiosGet(ApiPath.url.deleteManualLabel, params).then(res => {
           let code = res.state;
           if(code == "0") {
             this.$message.success(res.message);

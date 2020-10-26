@@ -268,6 +268,14 @@ export default {
     },
     // 删除
     deletePictureInfo(scope) {
+      //状态为0不能被删除
+      if(scope.row.status == 0){
+        this.$alert("数据状态生效不能被删除！", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+      }
+      
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -282,9 +290,6 @@ export default {
             if (code == "0") {
               this.$message.success(res.message);
               this.reload();
-            }
-            if(code == "1"){
-              this.$message.error(res.message);
             }
           });
         })

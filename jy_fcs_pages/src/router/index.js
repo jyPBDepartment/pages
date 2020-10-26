@@ -94,10 +94,13 @@ import GrainPricesHistory from '@/views/grainPrices/grainPricesHistoryInfo';
 import VocationInfo from '@/views/eduVocation/vocationInfo';
 
 //图片设置
-import EduPictureInfo from '@/views/eduPicture/eduPictureInfo'
-
+import EduPictureInfo from '@/views/eduPicture/eduPictureInfo';
+//标签管理
+import EduManualLabel from '@/views/eduManualLabel/manualLabelInfo';
+//手册列表
+// import ManualInfo from '@/views/eduManualInfo/manualInfo';
 //线下课程
-// import EduLessonInfo from '@/views/lesson/lessonList'
+import EduLessonInfo from '@/views/lesson/lessonList'
 
 // 启用路由
 Vue.use(Router);
@@ -291,14 +294,14 @@ export default new Router({
                 requireAuth: true
             }
         },
-        //  {
-        //     path: '/lesson/lessonList',
-        //     name: '线下课程',
-        //     component: EduLessonInfo,
-        //     meta: {
-        //         requireAuth: true
-        //     }
-        //     }
+         {
+            path: '/lesson/lessonList',
+            name: '线下课程',
+            component: EduLessonInfo,
+            meta: {
+                requireAuth: true
+            }
+        }
             , {
                 path: '/eduVocation/vocationInfo',
                 name: '职业类别',
@@ -314,7 +317,22 @@ export default new Router({
                 meta: {
                     requireAuth: true
                 }
+            },{
+                path: '/eduManualLabel/manualLabelInfo',
+                name: '标签管理',
+                component: EduManualLabel,
+                meta: {
+                    requireAuth: true
+                }
             }
+            // ,{
+            //      path: '/eduManualInfo/manualInfo',
+            //     name: '手册列表',
+            //      component: ManualInfo,
+            //     meta: {
+            //         requireAuth: true
+            //     }
+            // }
     ]
     }]
 })

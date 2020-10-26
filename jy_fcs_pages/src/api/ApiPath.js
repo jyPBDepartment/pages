@@ -298,6 +298,30 @@ const url = {
   pictureInfoEnable: EDUHost + '/pictureInfo/enable',
   //修改排序
   changePictureSort: EDUHost + '/pictureInfo/changeSort',
+
+  //学习手册
+  //标签管理
+  //分页查询
+  manualLabelInfoSearch: EDUHost + '/manualLabel/findByName',
+  //添加
+  addManualLabel: EDUHost + '/manualLabel/add',
+  //修改
+  updateManualLabel: EDUHost + '/manualLabel/update',
+  //通过id查询
+  manualLabelFindId: EDUHost + '/manualLabel/findById',
+  //删除
+  deleteManualLabel: EDUHost + '/manualLabel/delete',
+  //修改状态
+  manualLabelInfoEnable: EDUHost + '/manualLabel/enable',
+  //手册列表
+  //分页查询
+  manualInfoSearch: EDUHost + '/manualInfo/findByName',
+  // 添加
+  addManualInfo: EDUHost + '/manualInfo/add',
+  //职业类别下拉列表
+  findVocationId: EDUHost + '/manualInfo/occupation',
+  // 标签下拉列表
+  findLabelId: EDUHost + '/manualInfo/label',
 }
 export default {
   url
