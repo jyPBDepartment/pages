@@ -204,11 +204,16 @@ export default {
               if (code == "0") {
                 let c = this.ruleForm.code.toLowerCase(); //小写转换
                 let cc = this.checkCode.toLowerCase(); //小写转换
+                let loginForm = {
+                  loginName:this.ruleForm.name,
+                  accountId:res.accountId,
+                  roleId:res.roleId
+                }
                 if (c == cc) {
                   this.$message.success(res.message);
                   // 测试通道，不为空直接登录
                   setTimeout(() => {
-                    this.$store.commit("login", this.ruleForm.name);
+                    this.$store.commit("login", loginForm);
                     this.$router.push({ path: "/charts/statistics" });
                   }, 1000);
                 } else {

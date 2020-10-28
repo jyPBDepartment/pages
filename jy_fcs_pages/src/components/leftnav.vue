@@ -53,7 +53,7 @@ export default {
       logo:"e-log",
       collapsed: false,
       allmenu: [],
-      logoImg:"http://60.205.246.126:8001/images/2020/09/28/1601263959763498.png"
+      logoImg:"http://60.205.246.126/images/2020/09/28/1601263959763498.png"
     };
   },
   // 创建完毕状态(里面是操作)
@@ -71,16 +71,19 @@ export default {
     this.$root.Bus.$on("toggle", (value) => {
       this.collapsed = !value;
       if(value){
-         this.logoImg="http://60.205.246.126:8001/images/2020/09/28/1601263959763498.png"
+         this.logoImg="http://60.205.246.126/images/2020/09/28/1601263959763498.png"
       }else{
-        this.logoImg="http://60.205.246.126:8001/images/2020/09/28/1601263888633033.png"
+        this.logoImg="http://60.205.246.126/images/2020/09/28/1601263888633033.png"
       }
         
     });
   },
   methods: {
     search: function(parameter) {
-      let params = {};
+      let roleId = localStorage.getItem("roleId");
+      let params = {
+        roleId:localStorage.getItem("roleId")
+      };
       api.testAxiosGet(ApiPath.url.getNavMenuList, params).then(res => {
         let code = res.state;
         //console.log(JSON.stringify(res.data));

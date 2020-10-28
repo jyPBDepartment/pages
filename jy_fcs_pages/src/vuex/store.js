@@ -10,13 +10,17 @@ export default new Vuex.Store({
     mutations: {
         // 登录
         login(state, user) {
-            state.user = user;
-            localStorage.setItem("userInfo", user);
+            state.user = user.loginName;
+            localStorage.setItem("userInfo", user.loginName);
+            localStorage.setItem("accountId", user.accountId);
+            localStorage.setItem("roleId", user.roleId);
         },
         // 退出
         logout(state, user) {
             state.user = "";
             localStorage.setItem("userInfo", "");
+            localStorage.setItem("accountId", "");
+            localStorage.setItem("roleId", "");
         }
     }
 })

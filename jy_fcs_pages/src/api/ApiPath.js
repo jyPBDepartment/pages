@@ -21,6 +21,8 @@ const url = {
   //账户修改
   findAccountInfoId: URLHost + '/accountInfo/findById',
   updateAccountInfo: URLHost + '/accountInfo/update',
+  //绑定角色
+  bindingRole:URLHost + '/accountInfo/bindingRole',
   //重置密码
   resetPass: URLHost + '/accountInfo/resetPass',
   //关联权限修改
