@@ -31,6 +31,17 @@
             <div slot="tip">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
+        <el-form-item label="职业类别" prop="vocationId">
+          <el-select v-model="editForm.vocationId" placeholder="请选择" size="small" style="width:92%">
+            <el-option
+              v-for="item in vocationOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="option"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="课程名称" prop="title">
           <el-input type="text" v-model="editForm.title" size="small" placeholder="不超过32个字" style="width:92%" maxlength="32"></el-input>
         </el-form-item>
@@ -44,15 +55,28 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="上课时间" prop="lessonTime">
-          <el-time-picker
-            is-range size="small" style="width:92%" 
-            v-model="editForm.lessonTime" format="HH:mm" 
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            placeholder="选择时间范围">
-          </el-time-picker>
+        <el-form-item label="上课开始时间" prop="beginDate">
+            <el-time-select
+              placeholder="开始时间" style="width:92%"
+              v-model="editForm.beginDate"
+              :picker-options="{
+                start: '08:30',
+                step: '00:15',
+                end: '18:30'
+              }">
+            </el-time-select>
+        </el-form-item>
+        <el-form-item label="上课结束时间" prop="endDate">
+          <el-time-select
+              placeholder="结束时间" style="width:92%"
+              v-model="editForm.endDate"
+              :picker-options="{
+                start: '08:30',
+                step: '00:15',
+                end: '18:30',
+                minTime: editForm.beginDate
+              }">
+          </el-time-select>
         </el-form-item>
         <el-form-item label="人数限制" prop="stuLimit">
           <el-input type="number" v-model="editForm.stuLimit" size="small" style="width:92%"></el-input>
@@ -95,19 +119,23 @@ export default {
       fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
-        name: "",
-        id: "",
-        url: "",
-        routeUrl:"",
-        tabMode:"0",
-        createUser: localStorage.getItem("userInfo"),
+        title: "",
+        vocationId:"",
+        address:"",
+        content:"",
+        createBy: localStorage.getItem("userInfo"),
+        lessonDay:"",
+        beginDate:"",
+        endDate:"",
+        stuLimit:"",
+        remark:"",
+        beginDate:"",
+        endDate:"",
+        url:""
       },
-      stateOptions: [
-        { value: "0", label: "启用" },
-        { value: "1", label: "禁用" },
-      ],
-      limit: 1,
-      imgUrl: "",
+      limit:1,
+      imgUrl:"",
+      vocationOptions: [],
       fileList: [],
       upload: ApiPath.url.uploadImg,
       localShow: this.show,
@@ -123,8 +151,29 @@ export default {
       this.localShow = val;
     },
   },
-  mounted() {},
+  mounted() {
+    this.findContext();
+  },
   methods: {
+    //下拉列表显示
+    findContext: function () {
+      let params = {};
+      api
+        .testAxiosGet(ApiPath.url.findVocationOptions, params)
+        .then((res) => {
+          if (res.state == "0") {
+            // this.powerOptions.push({ value: "", label: "请选择" });
+            for (let i = 0; i < res.data.length; i++) {
+              this.vocationOptions.push({
+                value: res.data[i]["id"],
+                label: res.data[i]["name"],
+              });
+            }
+          }
+        })
+        .catch(function (error) {});
+    },
+
     beforeAvatarUpload(file) {
       var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
       const extension = testmsg === "jpg";
@@ -167,27 +216,16 @@ export default {
     //新增保存
     saveModuleInfo(editData) {
       this.$refs[editData].validate((valid) => {
-        if (this.editForm.name == "") {
-          this.$alert("模块名称不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.routeUrl == "") {
-          this.$alert("跳转路由不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
+
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;
             let params = {
-              moduleInfoEntity: this.editForm,
+              lessonEntity: this.editForm,
             };
-            api.testAxiosGet(ApiPath.url.addModule, params)
+            api.testAxiosGet(ApiPath.url.addLesson, params)
               .then((res) => {
-                let code = res.status;
+                let code = res.state;
                 if (code == "0") {
                   this.close();
                   this.$message.success(res.message);
@@ -196,15 +234,7 @@ export default {
                 }
               }).catch(function (err) {});
                 this.fullscreenLoading = true;
-                setTimeout(() => {
-                  this.fullscreenLoading = false;
-                  this.editForm.name="";
-                  this.editForm.url="";
-                  this.editForm.routeUrl="";
-                  this.editForm.tabMode="0";
-                  this.fileList=[];
-                  this.imgUrl="";
-                }, 500);
+                setTimeout(() => {this.fullscreenLoading = false}, 500);
           } else {
             this.$message.error("请上传图片");
             return;

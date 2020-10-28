@@ -273,7 +273,7 @@ export default {
     },
     // 删除
     deleteCase: function (scope) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -282,7 +282,7 @@ export default {
           let params = {
             id: scope.row.id,
           };
-          api.testAxiosGet(ApiPath.url.deleteCaseInfo, params).then((res) => {
+          api.testAxiosGet(ApiPath.url.deleteLessonById, params).then((res) => {
             let code = res.state;
 
             if (code == "0") {

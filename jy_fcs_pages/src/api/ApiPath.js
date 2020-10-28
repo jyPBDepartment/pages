@@ -267,7 +267,8 @@ const url = {
   addLesson:EDUHost+'/lesson/add',
   //保存线下课程信息
   updateLesson:EDUHost+'/lesson/update',
-
+  //获取所有职业类别信息
+  findVocationOptions:EDUHost+'/option/findVocation',
 
   //设置管理
   //职业类别分页查询
