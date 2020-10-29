@@ -22,13 +22,13 @@
     <!--列表-->
     <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" min-width="7%" align="center"></el-table-column>
-      <el-table-column prop="name" min-width="6%" label="职业名称" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="vocationCode" min-width="8%" label="职业编码" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="name" min-width="9%" label="职业名称" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="vocationCode" min-width="9%" label="职业编码" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="createBy" min-width="9%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
+      <el-table-column prop="updateBy" min-width="9%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column prop="createBy" min-width="6%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="updateBy" min-width="6%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column align="center" min-width="5.5%" label="状态" prop="status">
+      <el-table-column align="center" min-width="7%" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -40,12 +40,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-       <el-table-column  align="center" label="排序" min-width="13.5%" prop="sort" >
-        <template slot-scope="scope">
-          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=1 step-strictly size="small"></el-input-number>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="操作" min-width="24%">
+      <el-table-column align="center" label="操作" min-width="26%">
         <template slot-scope="scope">
            <el-button @click="openUpdateVocationInfo(scope)" type="primary" size="small" icon="el-icon-edit" style="width:73px;">编辑</el-button>
            <el-button @click="deleteUser(scope)" type="danger" size="small" icon="el-icon-delete" style="width:73px;">删除</el-button>
@@ -178,7 +173,6 @@ export default {
     closedetailsVocationInfoDialog(){
         this.detailsVocationInfoFlag = false;
     },
-    
     //启用/禁用
     vocationInfoEnable: function(scope) {
       let params = {
@@ -196,38 +190,16 @@ export default {
         this.reload();
       }).catch(function(error) {});
     },
-
-     //修改排序
-    sortChange: function(scope) {
-      let params = {
-        id: scope.row.id,
-        sort: scope.row.sort
-      };
-      api
-        .testAxiosGet(ApiPath.url.changeVocationSort, params)
-        .then(res => {
-          let code = res.state;
-          if(code == "1"){
-              this.$message.error(res.message);
-          }else{
-            this.$message.success(res.message);
-          }
-        })
-        .catch(function(error) {});
-    },
-
     //显示编辑界面
     openUpdateVocationInfo(scope) {
       this.transVocationInfoId = scope.row.id;
       this.updateVocationInfoFlag = true;
     },
-
     //显示详情页面
     openDetails(scope){
         this.detailsTransVocationInfoId = scope.row.id;
         this.detailsVocationInfoFlag = true;
     },
-
     //重置
     resetForm(search) {
       this.createBy = "";
@@ -236,15 +208,14 @@ export default {
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
-
     // 删除
     deleteUser(scope) {
       //状态为0不能被删除
       if(scope.row.status == 0){
         this.$alert("数据状态生效不能被删除！", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
+          confirmButtonText: "确定",
+        });
+        return false;
       }
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
@@ -259,9 +230,10 @@ export default {
           if(code == "0") {
             this.$message.success(res.message);
             this.reload();
-          }
-          if(code == "1"){
-            this.$message.error(res.message);
+          }else{
+            this.$alert("删除失败，请先解除关联关系！", "提示", {
+                confirmButtonText: "确定",
+            });
           }
         });
       }).catch(() => {
@@ -269,7 +241,7 @@ export default {
             type: "info",
             message: "已取消删除",
           });
-        });
+      });
     }
   }
 };

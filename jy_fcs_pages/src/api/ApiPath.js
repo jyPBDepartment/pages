@@ -321,6 +321,14 @@ const url = {
   manualInfoSearch: EDUHost + '/manualInfo/findByName',
   // 添加
   addManualInfo: EDUHost + '/manualInfo/add',
+  // 通过id查询
+  manualFindById: EDUHost + '/manualInfo/findById',
+  //修改
+  updateManualInfo: EDUHost + '/manualInfo/update',
+  //删除
+  deleteManualInfo: EDUHost + '/manualInfo/delete',
+  // 修改状态
+  manualInfoEnable: EDUHost + '/manualInfo/enable',
   //职业类别下拉列表
   findVocationId: EDUHost + '/manualInfo/occupation',
   // 标签下拉列表

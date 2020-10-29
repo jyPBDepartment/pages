@@ -98,7 +98,7 @@ import EduPictureInfo from '@/views/eduPicture/eduPictureInfo';
 //标签管理
 import EduManualLabel from '@/views/eduManualLabel/manualLabelInfo';
 //手册列表
-// import ManualInfo from '@/views/eduManualInfo/manualInfo';
+import ManualInfo from '@/views/eduManualInfo/manualInfo';
 //线下课程
 import EduLessonInfo from '@/views/lesson/lessonList'
 
@@ -325,14 +325,14 @@ export default new Router({
                     requireAuth: true
                 }
             }
-            // ,{
-            //      path: '/eduManualInfo/manualInfo',
-            //     name: '手册列表',
-            //      component: ManualInfo,
-            //     meta: {
-            //         requireAuth: true
-            //     }
-            // }
+            ,{
+                 path: '/eduManualInfo/manualInfo',
+                name: '手册列表',
+                 component: ManualInfo,
+                meta: {
+                    requireAuth: true
+                }
+            }
     ]
     }]
 })

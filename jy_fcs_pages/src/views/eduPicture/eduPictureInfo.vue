@@ -40,10 +40,10 @@
           <span v-if="scope.row.picType == '2'">考试</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
-      <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
       <el-table-column prop="createBy" min-width="7%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
       <el-table-column prop="updateBy" min-width="7%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
       <el-table-column align="center" min-width="6%" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch

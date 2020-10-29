@@ -26,10 +26,10 @@
     <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" min-width="10%" align="center"></el-table-column>
       <el-table-column prop="name" min-width="10%" label="标签名称" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
-      <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
       <el-table-column prop="createBy" min-width="10%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
       <el-table-column prop="updateBy" min-width="10%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
       <el-table-column align="center" min-width="10%" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
@@ -213,15 +213,16 @@ export default {
       }).then(() => {
         let params = {
           id: scope.row.id,
-          };
+        };
         api.testAxiosGet(ApiPath.url.deleteManualLabel, params).then(res => {
           let code = res.state;
           if(code == "0") {
             this.$message.success(res.message);
             this.reload();
-          }
-          if(code == "1"){
-            this.$message.error(res.message);
+          }else{
+            this.$alert("删除失败，请先解除关联关系！", "提示", {
+                confirmButtonText: "确定",
+            });
           }
         });
       }).catch(() => {

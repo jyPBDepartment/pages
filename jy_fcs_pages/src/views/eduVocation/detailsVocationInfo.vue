@@ -5,47 +5,45 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="50%"
+    width="700px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <table border="1" :data="editForm" align="center" class="table">
-        <tbody>
-          <tr>
-            <td style="width:100px;" align="center">职业类别名称</td>
-            <td align="left" style="width:340px;">{{editForm.name}}</td>
-            <td align="center" style="width:100px;">职业编码</td>
-            <td align="left" style="width:340px;">{{editForm.vocationCode}}</td>
-        </tr>
-        <tr>
-          <td align="center">创建人</td>
-          <td align="left">{{editForm.createBy}}</td>
-          <td align="center">创建时间</td>
-          <td align="left">{{editForm.createDate}}</td>
-        </tr>
-        <tr>
-          <td align="center">修改人</td>
-          <td align="left">{{editForm.updateBy}}</td>
-          <td align="center">修改时间</td>
-          <td align="left">{{editForm.updateDate}}</td>
-        </tr>
-        <tr>
-          <td align="center">排序</td>
-          <td align="left">{{editForm.sort}}</td>
-          <td align="center" style="width:100px;">状态</td>
-            <td align="left" style="width:340px;">
-              <span v-if="editForm.status==0">启用</span>
-              <span v-if="editForm.status==1">禁用</span>
-            </td>
-        </tr>
-        <tr>
-          <td align="center">描述</td>
-          <td colspan="3" align="left">{{editForm.description}}</td>
-        </tr>
-       </tbody>
-      </table>
+      <el-form :model="editForm" :label-position="labelPosition" label-width="100px" >
+        <el-row>
+          <el-col :span="4">职业类别名称:</el-col>
+          <el-col :span="4">{{editForm.name}}</el-col>
+          <el-col :span="3">职业编码:</el-col>
+          <el-col :span="5">{{editForm.vocationCode}}</el-col>
+          <el-col :span="3">状态:</el-col>
+          <el-col :span="3">
+            <span v-if="editForm.status == '0'">启用</span>
+            <span v-if="editForm.status == '1'">禁用</span>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="4">创建人:</el-col>
+          <el-col :span="9">{{editForm.createBy}}</el-col>
+          <el-col :span="3">创建时间:</el-col>
+          <el-col :span="6">{{editForm.createDate}}</el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="4">修改人:</el-col>
+          <el-col :span="9">{{editForm.updateBy}}</el-col>
+          <el-col :span="3">修改时间:</el-col>
+          <el-col :span="6">{{editForm.updateDate}}</el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="4">描述:</el-col>
+          <el-col :span="18">{{editForm.description}}</el-col>
+        </el-row>
+        <el-divider></el-divider>
+      </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
@@ -75,7 +73,6 @@ export default {
   },
   data() {
     return {
-      fullscreenLoading: false,
       labelPosition: "right",
       editForm: {
         name: "",
