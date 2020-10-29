@@ -9,22 +9,22 @@ export default {
   name: "App",
   provide() {
     return {
-      reload: this.reload
+      reload: this.reload,
     };
   },
   data() {
     return {
-      isRouterAlive: true
+      isRouterAlive: true,
     };
   },
   methods: {
     reload() {
       this.isRouterAlive = false;
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.isRouterAlive = true;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -44,5 +44,24 @@ body {
   color: #2c3e50;
   widows: 100%;
   height: 100%;
+}
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: rgb(51, 65, 87);
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 2px rgb (51, 65, 87);
+  background-color: rgb (51, 65, 87);
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 0 2px rgb(51, 65, 87);
+  background-color: rgb(51, 65, 87);
 }
 </style>

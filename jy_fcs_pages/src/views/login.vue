@@ -177,15 +177,15 @@ export default {
         self.clearCookie();
       }
       this.$refs[formName].validate((valid) => {
-         if(this.ruleForm.name == ""){
-            this.$message.error("请输入用户名！");
-            return false;
-         }
-        if(this.ruleForm.password == ""){
+        if (this.ruleForm.name == "") {
+          this.$message.error("请输入用户名！");
+          return false;
+        }
+        if (this.ruleForm.password == "") {
           this.$message.error("请输入密码！");
           return false;
         }
-        if(this.ruleForm.code == ""){
+        if (this.ruleForm.code == "") {
           this.$message.error("请输入验证码！");
           return false;
         }
@@ -205,10 +205,10 @@ export default {
                 let c = this.ruleForm.code.toLowerCase(); //小写转换
                 let cc = this.checkCode.toLowerCase(); //小写转换
                 let loginForm = {
-                  loginName:this.ruleForm.name,
-                  accountId:res.accountId,
-                  roleId:res.roleId
-                }
+                  loginName: this.ruleForm.name,
+                  accountId: res.accountId,
+                  roleId: res.roleId,
+                };
                 if (c == cc) {
                   this.$message.success(res.message);
                   // 测试通道，不为空直接登录
@@ -217,8 +217,8 @@ export default {
                     this.$router.push({ path: "/charts/statistics" });
                   }, 1000);
                 } else {
-                   this.ruleForm.code="";
-                   this.$message.error("验证码输入错误请重新输入！");
+                  this.ruleForm.code = "";
+                  this.$message.error("验证码输入错误请重新输入！");
                 }
               } else {
                 this.$message.error(res.message);
@@ -361,6 +361,7 @@ export default {
   max-width: 22rem;
   max-height: 20rem;
   background-color: #fff;
+  z-index: 999;
 }
 .f {
   font-size: 14px;
@@ -394,6 +395,7 @@ export default {
   left: 21%;
   width: 900px;
   margin-left: 1%;
+  z-index: 1;
 }
 .rights {
   margin-left: 20%;

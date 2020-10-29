@@ -6,11 +6,20 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
+    //Todo
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'http://192.168.1.106:8080/jy_fcs/', //目标接口域名
+        changeOrigin: true, //是否跨域
+        pathRewrite: {
+          '^/api': '/' //重写接口 后台接口指向不统一  所以指向所有/
+        }
+      },
+      cssSourceMap: false
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -20,7 +29,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */

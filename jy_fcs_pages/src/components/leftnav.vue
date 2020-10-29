@@ -14,25 +14,34 @@
     active-text-color="#ffd04b"
   >
     <div class="logobox">
-      <img :class="logo" style="background-color:#f2f2f2;width:auto;border-radius: 8px;" :src="logoImg" alt />
+      <img
+        :class="logo"
+        style="background-color: #f2f2f2; width: auto; border-radius: 8px"
+        :src="logoImg"
+        alt
+      />
     </div>
     <div v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
-      <div v-if="menu.only=='Y'">
+      <div v-if="menu.only == 'Y'">
         <el-menu-item :index="menu.url">
           <i :class="menu.icon"></i>
-          <span slot="title">{{menu.menuname}}</span>
+          <span slot="title">{{ menu.menuname }}</span>
         </el-menu-item>
       </div>
       <div v-else>
-        <el-submenu :index="''+menu.menuid">
+        <el-submenu :index="'' + menu.menuid">
           <template slot="title">
             <i :class="menu.icon"></i>
-            <span>{{menu.menuname}}</span>
+            <span>{{ menu.menuname }}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item v-for="chmenu in menu.menus" :index="'/'+chmenu.url" :key="chmenu.menuid">
+            <el-menu-item
+              v-for="chmenu in menu.menus"
+              :index="'/' + chmenu.url"
+              :key="chmenu.menuid"
+            >
               <i :class="chmenu.icon"></i>
-              <span>{{chmenu.menuname}}</span>
+              <span>{{ chmenu.menuname }}</span>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -48,49 +57,53 @@ import api from "@/axios/api.js";
 export default {
   name: "leftnav",
   data() {
-
     return {
-      logo:"e-log",
+      logo: "e-log",
       collapsed: false,
       allmenu: [],
-      logoImg:"http://60.205.246.126/images/2020/09/28/1601263959763498.png"
+      logoImg: "http://60.205.246.126/images/2020/09/28/1601263959763498.png",
     };
   },
   // 创建完毕状态(里面是操作)
   created() {
-    this.search();
+    // this.search();
     //console.log(JSON.stringify({ menu }));
     // 获取图形验证码
-    let res = {
-      success: true,
-      data: [],
-      msg: "success",
-    };
-    this.allmenu = res.data;
+    // let res = {
+    //   success: true,
+    //   data: [],
+    //   msg: "success",
+    // };
+    // this.allmenu = res.data;
     // 监听
     this.$root.Bus.$on("toggle", (value) => {
       this.collapsed = !value;
-      if(value){
-         this.logoImg="http://60.205.246.126/images/2020/09/28/1601263959763498.png"
-      }else{
-        this.logoImg="http://60.205.246.126/images/2020/09/28/1601263888633033.png"
+      if (value) {
+        this.logoImg =
+          "http://60.205.246.126/images/2020/09/28/1601263959763498.png";
+      } else {
+        this.logoImg =
+          "http://60.205.246.126/images/2020/09/28/1601263888633033.png";
       }
-        
     });
   },
+  mounted() {
+    this.search();
+  },
   methods: {
-    search: function(parameter) {
-      let roleId = localStorage.getItem("roleId");
+    search() {
+      let self = this;
       let params = {
-        roleId:localStorage.getItem("roleId")
+        roleId: localStorage.getItem("roleId"),
       };
-      api.testAxiosGet(ApiPath.url.getNavMenuList, params).then(res => {
+      this.allmenu = JSON.parse(sessionStorage.getItem("menuDate")) || [];
+      api.testAxiosGet(ApiPath.url.getNavMenuList, params).then((res) => {
         let code = res.state;
-        //console.log(JSON.stringify(res.data));
-        this.allmenu=res.data;
+        this.allmenu = res.data;
+        sessionStorage.setItem("menuDate", JSON.stringify(res.data));
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
@@ -123,9 +136,8 @@ export default {
 /* .logoimg {
   height: 40px;
 } */
-.e-log{
+.e-log {
   margin-left: -9px;
   height: 41px;
 }
-
 </style>
