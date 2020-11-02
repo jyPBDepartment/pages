@@ -205,6 +205,7 @@ export default {
     },
     closeUpdatePictureInfoDialog() {
       this.search(this.formInline);
+      this.transPictureInfoId = "";
       this.updatePictureInfoFlag = false;
     },
     upPictureInfo() {

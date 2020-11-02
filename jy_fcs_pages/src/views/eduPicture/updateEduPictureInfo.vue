@@ -103,6 +103,9 @@ export default {
       this.localShow = val;
     },
     transPictureInfoId(val) {
+      if(val == ""){
+        return;
+      }
       let params = {
         id: val,
       };
