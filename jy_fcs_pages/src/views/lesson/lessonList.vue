@@ -55,12 +55,12 @@
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border style="width: 100%;" highlight-current-row size="mini">
-      <el-table-column type="index" label="序号" align="center" min-width="3%" ></el-table-column>
-      <el-table-column prop="vocation.name" label="职业类别" align="center" min-width="60px"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="title" label="名称" align="center" min-width="100px"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="stuLimit" label="人数限制" align="center" min-width="25px"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column sortable prop="lessonDate" label="课程时间" align="center" min-width="50px" ></el-table-column>
-      <el-table-column align="center" prop="status" label="课程状态" min-width="30px" max-width="80px">
+      <el-table-column type="index" label="序号" align="center" min-width="7%" ></el-table-column>
+      <el-table-column prop="vocation.name" label="职业类别" align="center" min-width="10%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="title" label="名称" align="center" min-width="20%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="stuLimit" label="人数限制" align="center" min-width="10%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column sortable prop="lessonDate" label="课程时间" align="center" min-width="15%" ></el-table-column>
+      <el-table-column align="center" prop="status" label="课程状态" min-width="15%" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -72,42 +72,31 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="enrollStatus" label="审核状态" min-width="40px"   >
+      <el-table-column align="center" prop="enrollStatus" label="审核状态" min-width="15%"   >
         <template slot-scope="scope">
           <span v-if="scope.row.enrollStatus==0">报名中</span>
           <span v-if="scope.row.enrollStatus==1">报名结束</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="createBy"
-        label="创建人"
-        align="center"
-        min-width="50px"
-       
-      ></el-table-column>
-
-      <el-table-column fixed="right" label="操作" align="center" min-width="120px">
+      <el-table-column prop="createBy" label="创建人" align="center" min-width="6%"></el-table-column>
+      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
+      <el-table-column fixed="right" label="操作" align="center" min-width="25%">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
             type="primary"
             size="small"
             icon="el-icon-edit"
-           
+            style="width:70px;"
           >编辑</el-button>
           <el-button
             @click="deleteCase(scope)"
             type="danger"
             size="small"
             icon="el-icon-delete"
-            
+            style="width:70px;"
           >删除</el-button>
-          <el-button
-            @click="caseContent(scope)"
-            type="success"
-            size="small"
-            icon="el-icon-view"
-          >查看</el-button>
+          <el-button @click="openDetails(scope)" type="primary" size="small" icon="el-icon-view" >报名情况</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -128,6 +117,13 @@
       @close="closeUpdateLessonDialog"
       @save="updateLesson"
     ></edit-lesson>
+
+    <view-lesson
+      :show="viewLessonFlag"
+      :viewTransLessonInfoId="viewTransLessonInfoId"
+      :title="viewLessonTitle"
+      @close="closeViewLessonInfoDialog"
+    ></view-lesson>
     <br />
     <br />
   </div>
@@ -140,9 +136,9 @@ import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import addLesson from "@/views/lesson/addLesson";
 import editLesson from "@/views/lesson/editLesson";
-import caseContent from "@/views/CaseInfo/caseContent";
+//import caseContent from "@/views/CaseInfo/caseContent";
 import Pagination from "../../components/Pagination";
-
+import viewLesson from "@/views/lesson/studentList";
 export default {
   inject: ["reload"],
   props: {
@@ -164,7 +160,10 @@ export default {
       addLessonFlag: false,
       updateLessonFlag: false,
       transLessonInfoId: "",
+      viewTransLessonInfoId:"",
+      viewLessonTitle:"",
       caseContentFlag: false,
+      viewLessonFlag:false,
       caseContentId: "",
       transTagCode: "",
       tagCode: "",
@@ -186,8 +185,8 @@ export default {
       },
       statusOptions: [
         { value: "", label: "全部" },
-        { value: "0", label: "禁用" },
-        { value: "1", label: "启用" },
+        { value: "0", label: "启用" },
+        { value: "1", label: "禁用" },
       ],
     };
   },
@@ -323,6 +322,16 @@ export default {
       this.transLessonInfoId = scope.row.id;
       this.updateLessonFlag = true;
     },
+    //显示详情页面
+    openDetails(scope){
+      this.viewTransLessonInfoId = scope.row.id;
+      this.viewLessonTitle = scope.row.title + '报名情况';
+      this.viewLessonFlag = true;
+    },
+    //关闭详情页面
+    closeViewLessonInfoDialog(){
+      this.viewLessonFlag = false;
+    },
     saveLesson() {
       this.addLessonFlag = false;
     },
@@ -339,12 +348,14 @@ export default {
     // 重置
     resetRuleTag(search) {
       this.name = "";
-      this.auditStatus = "";
+      this.createBy = "";
+      this.status = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
     closeUpdateLessonDialog: function () {
+      this.transLessonInfoId = "";
       this.updateLessonFlag = false;
       this.search(this.formInline);
     },
@@ -365,7 +376,7 @@ export default {
   components: {
     addLesson,
     editLesson,
-    caseContent,
+    viewLesson,
     Pagination,
   },
 };
