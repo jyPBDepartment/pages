@@ -6,16 +6,11 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-/* Router Modules */
-// import chartsRouter from './modules/charts'
-// import tableRouter from './modules/table'
 import systemRouter from './modules/system'
 
 
 /**
- * 公共路由
- * a base page that does not have permission requirements
- * all roles can be accessed
+ * 公共路由 不需要权限
  */
 export const constantRoutes = [{
     path: '/redirect',
@@ -53,9 +48,9 @@ export const constantRoutes = [{
     children: [{
       path: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      name: 'Dashboard',
+      name: '首页',
       meta: {
-        title: 'dashboard',
+        title: '首页',
         icon: 'dashboard',
         affix: true
       }
@@ -81,104 +76,11 @@ export const constantRoutes = [{
 ]
 
 /**
- * 动态添加路由
- * the routes that need to be dynamically loaded based on user roles
+ * 动态添加路由 通过权限过滤的路由
  */
 export const asyncRoutes = [
   systemRouter,
-
-  // {
-  //   path: '/icon',
-  //   component: Layout,
-  //   children: [{
-  //     path: 'index',
-  //     component: () => import('@/views/icons/index'),
-  //     name: 'Icons',
-  //     meta: {
-  //       title: 'icons',
-  //       icon: 'icon',
-  //       noCache: true
-  //     }
-  //   }]
-  // },
-
-  /** when your routing map is too long, you can split it into small modules **/
-  // chartsRouter,
-  // tableRouter,
-  // {
-  //   path: '/error',
-  //   component: Layout,
-  //   redirect: 'noRedirect',
-  //   name: '错误页面',
-  //   meta: {
-  //     title: 'errorPages',
-  //     icon: '404'
-  //   },
-  //   children: [{
-  //       path: '401',
-  //       component: () => import('@/views/error-page/401'),
-  //       name: 'Page401',
-  //       meta: {
-  //         title: 'page401',
-  //         noCache: true
-  //       }
-  //     },
-  //     {
-  //       path: '404',
-  //       component: () => import('@/views/error-page/404'),
-  //       name: 'Page404',
-  //       meta: {
-  //         title: 'page404',
-  //         noCache: true
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/excel',
-  //   component: Layout,
-  //   redirect: '/excel/export-excel',
-  //   name: '导出表格',
-  //   meta: {
-  //     title: 'excel',
-  //     icon: 'excel'
-  //   },
-  //   children: [{
-  //       path: 'export-excel',
-  //       component: () => import('@/views/excel/export-excel'),
-  //       name: 'ExportExcel',
-  //       meta: {
-  //         title: 'exportExcel'
-  //       }
-  //     },
-  //     {
-  //       path: 'export-selected-excel',
-  //       component: () => import('@/views/excel/select-excel'),
-  //       name: 'SelectExcel',
-  //       meta: {
-  //         title: 'selectExcel'
-  //       }
-  //     },
-  //     {
-  //       path: 'export-merge-header',
-  //       component: () => import('@/views/excel/merge-header'),
-  //       name: 'MergeHeader',
-  //       meta: {
-  //         title: 'mergeHeader'
-  //       }
-  //     },
-  //     {
-  //       path: 'upload-excel',
-  //       component: () => import('@/views/excel/upload-excel'),
-  //       name: 'UploadExcel',
-  //       meta: {
-  //         title: 'uploadExcel'
-  //       }
-  //     }
-  //   ]
-  // },
-
-  // 404 page must be placed at the end !!!
+  //404 页面一定要放到最后
   {
     path: '*',
     redirect: '/404',
