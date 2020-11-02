@@ -52,7 +52,7 @@
 				<!-- 按钮 -->
 				<view class="next">
 					<button v-if="jumpCount!=1" type="primary" @click="prefixQues(index1+1)" class="examBtn" style="background-color: #bbb;">上一题</button>
-					<button v-if="jumpCount!=item.examCount" type="primary" @click="nextQues(index+1,index1+1)" class="examBtn">下一题</button>
+					<button v-if="jumpCount!=item.examCount" type="primary" @click="nextQues(index1+1)" class="examBtn">下一题</button>
 					<button type="primary" v-if="jumpCount ==item.examCount" class="examBtn" @click="submit">交卷</button>
 				</view>
 			</view>
@@ -294,12 +294,22 @@
 				})
 			},
 			// 下一题
-			nextQues(examNum,quesNum) {
+			// nextQues(examNum,quesNum) {
+			// 	this.jumpCount = quesNum+1;
+			// 	if(this.current !== ""){
+			// 		this.examList[examNum-1].questionList[quesNum-1].isCheck="1";
+			// 	}else{
+			// 		this.examList[examNum-1].questionList[quesNum-1].isCheck="0";
+					
+			// 	}
+			// 	this.current = "";
+			// },
+			nextQues(quesNum) {
 				this.jumpCount = quesNum+1;
 				if(this.current !== ""){
-					this.examList[examNum-1].questionList[quesNum-1].isCheck="1";
+					this.examList[0].questionList[quesNum-1].isCheck="1";
 				}else{
-					this.examList[examNum-1].questionList[quesNum-1].isCheck="0";
+					this.examList[0].questionList[quesNum-1].isCheck="0";
 					
 				}
 				this.current = "";
@@ -310,7 +320,7 @@
 			},
 			// 提交试卷
 			submit(){
-				this.nextQues("1",this.examList[0].examCount);
+				this.nextQues(this.examList[0].examCount);
 				this.show = true;
 				let msg ="";
 				for(let i =0;i<this.examList[0].questionList.length;i++){
