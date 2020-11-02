@@ -222,7 +222,6 @@ export default {
     },
     closeUpdateQuestionInfoDialog() {
       this.search(this.formInline);
-      // this.transQuestionInfoId ="";
       this.updateQuestionInfoFlag = false;
     },
     closeDetailQuestionDialog(){

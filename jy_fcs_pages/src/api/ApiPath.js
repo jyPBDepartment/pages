@@ -334,7 +334,9 @@ const url = {
   findVocationId: EDUHost + '/vocationInfo/occupation',
   // 标签下拉列表
   findLabelId: EDUHost + '/manualLabel/label',
+
   //试题管理
+  
   // 分页查询
   questionInfoSearch: EDUHost + '/questionInfo/findByName',
   // 添加

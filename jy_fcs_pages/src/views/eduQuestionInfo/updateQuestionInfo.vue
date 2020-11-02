@@ -195,6 +195,7 @@ export default {
           }
         }).catch(function (error) {});
     },
+    
     //保存
     updateQuestionInfo(editData) {
       this.$refs[editData].validate((valid) => {

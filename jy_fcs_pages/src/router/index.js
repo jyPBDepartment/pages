@@ -343,8 +343,7 @@ export default new Router({
                 meta: {
                     requireAuth: true
                 }
-            }
-            , {
+            }, {
                 path: '/eduQuestionInfo/questionInfo',
                 name: '试题管理',
                 component: QuestionInfo,

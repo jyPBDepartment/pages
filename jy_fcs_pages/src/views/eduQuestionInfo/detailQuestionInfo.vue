@@ -125,7 +125,6 @@ export default {
     };
   },
   watch: {
-
     show(val) {
       this.localShow = val;
     },

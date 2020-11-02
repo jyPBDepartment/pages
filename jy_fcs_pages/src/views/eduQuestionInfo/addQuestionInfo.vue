@@ -93,6 +93,7 @@ export default {
             quContent:""
         },
         vocationIdOptions: [],
+        //分数
         scoreOptions:[
             {value: "2", label: "2"},
             {value: "5", label: "5"},
