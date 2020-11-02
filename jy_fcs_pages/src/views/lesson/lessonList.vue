@@ -347,7 +347,7 @@ export default {
     },
     // 重置
     resetRuleTag(search) {
-      this.name = "";
+      this.name = ""; 
       this.createBy = "";
       this.status = "";
       this.formInline.page = 1;
