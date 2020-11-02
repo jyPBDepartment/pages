@@ -5,10 +5,16 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 
 		{
-			"path": "pages/module/studyExamination/credentials" //页签
+			"path": "pages/module/studyExamination/examResult" //考试结果页面
 		},
 		{
-			"path": "pages/module/components/screen" //页签
+			"path": "pages/module/studyExamination/examPage" //考试试题页面
+		},
+		{
+			"path": "pages/module/studyExamination/judge" //答题描述页面
+		},
+		{
+			"path": "pages/module/studyExamination/credentials" //申请证书
 		},
 		{
 			"path": "pages/module/hotCourse/hotCourseList" //热门课程更多
@@ -32,21 +38,12 @@
 		{
 			"path": "pages/module/learningManual/supplyArticleContent" // 供应商文章内容详情
 		},
-
-		
-
 		{
 			"path": "pages/module/learningManual/agentArticleContent" // 经销商文章内容详情
 		},
-
-		
-
 		{
 			"path": "pages/module/learningManual/manArticleContent" // 经理人文章内容详情
 		},
-
-		
-
 		{
 			"path": "pages/module/learningManual/supplyArticle" // 供应商文章列表详情
 		},
