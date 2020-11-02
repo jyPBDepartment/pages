@@ -103,6 +103,8 @@ import ManualInfo from '@/views/eduManualInfo/manualInfo';
 import QuestionInfo from '@/views/eduQuestionInfo/questionInfo';
 //线下课程
 import EduLessonInfo from '@/views/lesson/lessonList'
+//报名列表
+import EduStudentInfo from '@/views/lesson/studentList'
 
 // 启用路由
 Vue.use(Router);
@@ -303,7 +305,14 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        }
+        },{
+            path: '/lesson/studentList',
+           name: '报名列表',
+            component: EduStudentInfo,
+           meta: {
+               requireAuth: true
+           }
+       }
             , {
                 path: '/eduVocation/vocationInfo',
                 name: '职业类别',

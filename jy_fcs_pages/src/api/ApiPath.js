@@ -269,7 +269,8 @@ const url = {
   updateLesson:EDUHost+'/lesson/update',
   //获取所有职业类别信息
   findVocationOptions:EDUHost+'/option/findVocation',
-
+  //根据课程id查询报名信息
+  findStuListByLesson:EDUHost+'/lesson/findStuListByLesson',
   //设置管理
   //职业类别分页查询
   vocationInfoSearch: EDUHost + '/vocationInfo/findByName',
