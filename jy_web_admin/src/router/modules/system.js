@@ -5,13 +5,20 @@ import Layout from '@/layout'
 const systemRouter = {
   path: '/system',
   component: Layout,
-  redirect: '/system/account',
+  redirect: '/system/dict',
   name: 'system',
   meta: {
     title: '系统管理',
-    icon: 'table'
+    icon: 'el-icon-user-solid'
   },
   children: [{
+      path: 'dict',
+      component: () => import('@/views/commpage/index'),
+      name: 'dict',
+      meta: {
+        title: '字典管理'
+      }
+    }, {
       path: 'account',
       component: () => import('@/views/system/account/index'),
       name: 'account',
@@ -27,22 +34,39 @@ const systemRouter = {
         title: '权限管理'
       }
     },
+
     {
-      path: 'dict',
-      component: () => import('@/views/system/dict/index'),
-      name: 'dict',
+      path: 'role',
+      component: () => import('@/views/commpage/index'),
+      name: 'role',
       meta: {
-        title: '字典管理'
+        title: '角色管理'
       }
     },
     {
-      path: 'user',
-      component: () => import('@/views/system/user/index'),
-      name: 'user',
+      path: 'menuList',
+      component: () => import('@/views/commpage/index'),
+      name: 'menuList',
       meta: {
-        title: '用户管理'
+        title: '菜单管理'
       }
-    }
+    },
+    {
+      path: 'classify',
+      component: () => import('@/views/commpage/index'),
+      name: 'classify',
+      meta: {
+        title: '分类管理'
+      }
+    },
+    {
+      path: 'logger',
+      component: () => import('@/views/commpage/index'),
+      name: 'logger',
+      meta: {
+        title: '日志管理'
+      }
+    },
 
   ]
 }

@@ -5,9 +5,19 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
+import grainPricesRouter from './modules/grainPrices';
 import systemRouter from './modules/system'
+import moduleInfoRouter from './modules/moduleInfo'
 
+import momentsRouter from "./modules/moments";
+import publishRouter from "./modules/publish";
+import contentRouter from "./modules/content";
+
+import settingRouter from "./modules/setting";
+
+import testPaperRouter from "./modules/testPaper";
+import lessonRouter from "./modules/lesson";
+import learningRouter from "./modules/learning";
 
 /**
  * 公共路由 不需要权限
@@ -79,7 +89,17 @@ export const constantRoutes = [{
  * 动态添加路由 通过权限过滤的路由
  */
 export const asyncRoutes = [
+  grainPricesRouter,
+  moduleInfoRouter,
+  publishRouter,
+  momentsRouter,
+  contentRouter,
   systemRouter,
+  settingRouter,
+  learningRouter,
+  testPaperRouter,
+  lessonRouter,
+
   //404 页面一定要放到最后
   {
     path: '*',
