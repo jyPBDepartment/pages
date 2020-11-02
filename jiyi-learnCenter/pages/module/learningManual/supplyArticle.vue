@@ -15,8 +15,10 @@
 			</view>
 		</view>
 		
-		<!-- 页签 -->
-		<Screen :listIndex="listIndex" @select="select" :condition="condition" ></Screen>	
+		<!-- 滑块 -->
+		<u-tabs :list="list" :current="current" @change="change" font-size="30" item-width ="150" :show-bar="false"  active-color="red"></u-tabs>
+		
+		<!-- 懒加载 -->	
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 		<!-- 列表详情 -->
 		<view class="list" v-for="(item, index) in bookList" :key="index" @click="supplyArticleJump('./supplyArticleContent')">
@@ -39,13 +41,11 @@
 </template>
 
 <script>
-	import Screen from '@/pages/module/components/screen';
+	
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	export default{
 		mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
-		components: {
-			Screen
-		},
+		
 		data(){
 			return{
 				mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
@@ -63,14 +63,28 @@
 						tip: '暂无相关数据'
 					}
 				},
-				condition: [
-					{code:"",name: '全部'},
-					{code:0,name: '农技'}, 
-					{code:1,name: '财经'},
-					{code:2,name: '管理'},
-					{code:3,name: '推广'}
-					],
-					listIndex:0,
+				list: [{
+					code: "",
+					name: '全部'
+				},
+				{
+					code: 0,
+					name: '农技'
+				},
+				{
+					code: 1,
+					name: '财经'
+				},
+				{
+					code: 2,
+					name: '管理'
+				},
+				{
+					code: 3,
+					name: '推广'
+				}
+				],
+				current: 0,
 				title:'',
 				bookList:[
 					{url:"http://60.205.246.126/images/2020/10/12/1602482268784681.jpg",word:"日光斜射过阳台落在脸上 仙人掌立在窗台",sum:"1314"},
@@ -101,6 +115,9 @@
 			}
 		},
 		methods:{
+			change(index) {
+							this.current = index;
+						},
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;

@@ -205,11 +205,13 @@ export default {
     },
     closeUpdatePictureInfoDialog() {
       this.search(this.formInline);
+      this.transPictureInfoId = "";
       this.updatePictureInfoFlag = false;
     },
     upPictureInfo() {
       this.updatePictureInfoFlag = false;
     },
+    
     //启用/禁用
     pictureInfoEnable: function (scope) {
       let params = {

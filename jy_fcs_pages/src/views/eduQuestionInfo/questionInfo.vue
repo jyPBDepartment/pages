@@ -1,0 +1,331 @@
+<template>
+  <div>
+    <!-- 搜索筛选 -->
+    <el-form :inline="true" class="user-search">
+      <el-form-item label="创建人">
+        <el-input size="small" v-model="createBy" placeholder="输入创建人" style="width: 150px"></el-input>
+      </el-form-item>
+      <el-form-item label="试题类型" prop="quType">
+       <el-select v-model="quType" style="width:50%;height:30px" size="small">
+          <el-option v-for="item in quTypeOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="状态" prop="status" style="margin-left:-100px">
+        <el-select v-model="status" style="width:45%;height:30px;" size="small">
+          <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
+        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
+      </el-form-item>
+      <el-row>
+        <el-button size="small" type="success" icon="el-icon-plus" @click="addQuestionInfos()" class="insert">添加</el-button>
+      </el-row>
+      <br/>
+    </el-form>
+    <!--列表-->
+    <el-table
+      size="mini"
+      :data="listData"
+      highlight-current-row
+      v-loading="loading"
+      border
+      element-loading-text="拼命加载中"
+      style="width: 100%"
+    >
+      <el-table-column type="index" label="序号" min-width="7%" align="center"></el-table-column>
+      <el-table-column prop="quContent" min-width="8%" label="问题描述" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="quType" min-width="7%" label="试题类型" align="center" :show-overflow-tooltip="true">
+        <template slot-scope="scope">
+          <span v-if="scope.row.quType == '0'">选择题</span>
+          <span v-if="scope.row.quType == '1'">判断题</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="answer" min-width="7%" label="试题答案" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="score" min-width="6%" label="分值" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="vocation.name" min-width="8%" label="职业类别" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="createBy" min-width="8%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
+      <el-table-column prop="updateBy" min-width="8%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
+      <el-table-column align="center" min-width="7%" label="状态" prop="status">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            :active-value="0"
+            :inactive-value="1"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="questionInfoEnable(scope)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作" min-width="10%">
+        <template slot-scope="scope">
+          <el-button
+            @click="openUpdateQuestionInfo(scope)"
+            type="primary"
+            size="small"
+            icon="el-icon-edit"
+            >编辑</el-button>
+          <el-button
+            @click="deleteQuestionInfo(scope)"
+            type="danger"
+            size="small"
+            icon="el-icon-delete"
+            style="margin-top:3px;margin-left:-2px"
+            >删除</el-button>
+            <el-button
+            @click="openDetailQuestion(scope)"
+            type="primary"
+            size="small"
+            style="margin-top:3px;margin-left:-2px;width:73px"
+            >详情</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 分页组件 -->
+    <Pagination
+      v-bind:child-msg="formInline"
+      @callFather="callFather"
+    ></Pagination>
+    <!-- 添加 -->
+    <add-questionInfo
+      :show="addQuestionInfo"
+      title="添加"
+      @close="closeQuestionInfoDialog"
+      @save="saveQuestionInfo"
+    ></add-questionInfo>
+    <!-- 修改 -->
+    <update-questionInfo
+      :show="updateQuestionInfoFlag"
+      :transQuestionInfoId="transQuestionInfoId"
+      title="修改"
+      @close="closeUpdateQuestionInfoDialog"
+      @save="upQuestionInfo"
+    ></update-questionInfo>
+    <!-- 详情 -->
+    <detail-question
+      :show="detailQuestionFlag"
+      :transDetailQuestionId="transDetailQuestionId"
+      title="详情"
+      @close="closeDetailQuestionDialog"
+    ></detail-question>
+  </div>
+</template>
+
+<script>
+import Pagination from "../../components/Pagination";
+import ApiPath from "@/api/ApiPath.js";
+import api from "@/axios/api.js";
+import AddQuestionInfo from "./addQuestionInfo";
+import UpdateQuestionInfo from "./updateQuestionInfo";
+import DetailQuestion from "./detailQuestionInfo";
+export default {
+  inject: ["reload"],
+  data() {
+    return {
+      createBy: "",
+      quType:"",
+      status:"",
+      updateUser: "",
+      loading: false, //是显示加载
+      dialogVisible: false,
+      addQuestionInfo: false,
+      updateQuestionInfoFlag: false,
+      detailQuestionFlag:false,
+      transQuestionInfoId: "",
+      transDetailQuestionId:"",
+      formInline: {
+        page: 1,
+        limit: 10,
+        varLable: "",
+        varName: "",
+        currentPage: 1,
+        pageSize: 10,
+        total: 10,
+        token: localStorage.getItem("logintoken"),
+      },
+      listData: [], //用户数据
+      statusOptions: [
+        { value: "", label: "全部" },
+        { value: "0", label: "启用" },
+        { value: "1", label: "禁用" },
+      ],
+      quTypeOptions:[
+        {value: "", label: "全部"},
+        {value: "0", label: "选择题"},
+        {value: "1", label: "判断题"}
+      ],
+    };
+  },
+  // 注册组件
+  components: {
+    AddQuestionInfo,
+    UpdateQuestionInfo,
+    DetailQuestion,
+    Pagination,
+  },
+  watch: {},
+  mounted() {},
+  created() {
+    this.search(this.formInline);
+  },
+  methods: {
+    // 分页插件事件
+    callFather(parm) {
+      this.formInline.page = parm.currentPage;
+      this.formInline.limit = parm.pageSize;
+      this.search(this.formInline);
+    },
+    // 获取角色列表
+    search: function (parameter) {
+      if (parameter == "manual") {
+        this.formInline.page = 1;
+        this.formInline.limit = 10;
+      }
+      let params = {
+        title: this.title,
+        createBy: this.createBy,
+        quType: this.quType,
+        status: this.status,
+        page: this.formInline.page,
+        size: this.formInline.limit,
+      };
+      api.testAxiosGet(ApiPath.url.questionInfoSearch, params).then((res) => {
+        let code = res.state;
+        if (code == "0") {
+          this.loading = false;
+          this.listData = res.data.content;
+          this.formInline.currentPage = res.data.number + 1;
+          this.formInline.pageSize = res.data.size;
+          this.formInline.total = res.data.totalElements;
+        }
+      });
+    },
+    beforeClose() {
+      this.close();
+    },
+    close() {
+      this.$emit("close");
+    },
+    saveQuestionInfo() {
+      this.addQuestionInfo = false;
+    },
+    closeQuestionInfoDialog() {
+      this.search(this.formInline);
+      this.addQuestionInfo = false;
+    },
+    addQuestionInfos() {
+      this.addQuestionInfo = true;
+    },
+    closeUpdateQuestionInfoDialog() {
+      this.search(this.formInline);
+      this.updateQuestionInfoFlag = false;
+    },
+    closeDetailQuestionDialog(){
+      this.search(this.formInline)
+      this.detailQuestionFlag = false;
+    },
+    upQuestionInfo() {
+      this.updateQuestionInfoFlag = false;
+    },
+    //启用/禁用
+    questionInfoEnable: function (scope) {
+      let params = {
+        id: scope.row.id,
+        status: scope.row.status,
+        updateUser: localStorage.getItem("userInfo"),
+      };
+      api.testAxiosGet(ApiPath.url.questionInfoEnable, params)
+        .then((res) => {
+          let code = res.state;
+          if (code == "0") {
+            this.$message.success(res.message);
+          }
+          if (code == "1") {
+            this.$message.success(res.message);
+          }
+          this.reload();
+        }).catch(function (error) {});
+    },
+    //显示编辑界面
+    openUpdateQuestionInfo(scope) {
+      this.transQuestionInfoId = scope.row.id;
+      this.updateQuestionInfoFlag = true;
+    },
+    //显示详情页面
+    openDetailQuestion(scope) {
+      this.transDetailQuestionId = scope.row.id;
+      this.detailQuestionFlag = true;
+    },
+    //重置
+    resetForm(search) {
+      this.createBy = "",
+      this.quType= "",
+      this.status= "",
+      this.formInline.page = 1;
+      this.formInline.limit = 10;
+      this.search(this.formInline);
+    },
+    // 删除
+    deleteQuestionInfo(scope) {
+      //状态为0不能被删除
+      if (scope.row.status == 0) {
+        this.$alert("数据状态生效不能被删除！", "提示", {
+          confirmButtonText: "确定",
+        });
+        return false;
+      }
+      this.$confirm("确定要删除吗?删除后将不可恢复！", "信息", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+          let params = {
+            id: scope.row.id,
+          };
+          api.testAxiosGet(ApiPath.url.deleteQuestionInfo, params).then((res) => {
+            let code = res.state;
+            if (code == "0") {
+              this.$message.success(res.message);
+              this.reload();
+            }
+          });
+        }).catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
+  },
+};
+</script>
+
+<style scoped>
+.userQuestionInfo {
+  width: 100%;
+}
+.height {
+  margin-top: 5px;
+  margin-left: -120px;
+}
+.dialog-footer{
+  margin-top: 20px;
+}
+</style>
+<style>
+.el-tooltip__popper {
+  max-width: 300px;
+  font-size: 14px;
+  background: #84c1ff !important;
+}
+.el-tooltip__popper[x-placement^="top"] .popper__arrow {
+  border-top-color: #84c1ff;
+}
+.el-tooltip__popper[x-placement^="top"] .popper__arrow:after {
+  border-top-color: pink;
+}
+</style>

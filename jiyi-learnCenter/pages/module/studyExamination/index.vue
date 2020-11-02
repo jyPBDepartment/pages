@@ -35,7 +35,7 @@
 						title: '初级经理人考试',
 						levelColor: 'background-color: #fcca00',
 						backgroundColor: 'background-color: #fee78c',
-						pass:'0'
+						pass:'1'
 					},
 					{
 						levelCode: '1',

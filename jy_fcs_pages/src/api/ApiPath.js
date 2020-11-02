@@ -331,9 +331,24 @@ const url = {
   // 修改状态
   manualInfoEnable: EDUHost + '/manualInfo/enable',
   //职业类别下拉列表
-  findVocationId: EDUHost + '/manualInfo/occupation',
+  findVocationId: EDUHost + '/vocationInfo/occupation',
   // 标签下拉列表
-  findLabelId: EDUHost + '/manualInfo/label',
+  findLabelId: EDUHost + '/manualLabel/label',
+
+  //试题管理
+  
+  // 分页查询
+  questionInfoSearch: EDUHost + '/questionInfo/findByName',
+  // 添加
+  addQuestionInfo: EDUHost + '/questionInfo/add',
+  //修改
+  updateQuestionInfo: EDUHost + '/questionInfo/update',
+  //删除
+  deleteQuestionInfo: EDUHost + '/questionInfo/delete',
+  //通过id查询
+  questionFindById: EDUHost + '/questionInfo/findById',
+  // 修改状态
+  questionInfoEnable: EDUHost + '/questionInfo/enable',
 }
 export default {
   url

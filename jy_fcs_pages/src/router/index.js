@@ -99,6 +99,8 @@ import EduPictureInfo from '@/views/eduPicture/eduPictureInfo';
 import EduManualLabel from '@/views/eduManualLabel/manualLabelInfo';
 //手册列表
 import ManualInfo from '@/views/eduManualInfo/manualInfo';
+//试题管理
+import QuestionInfo from '@/views/eduQuestionInfo/questionInfo';
 //线下课程
 import EduLessonInfo from '@/views/lesson/lessonList'
 //报名列表
@@ -338,6 +340,13 @@ export default new Router({
                  path: '/eduManualInfo/manualInfo',
                 name: '手册列表',
                  component: ManualInfo,
+                meta: {
+                    requireAuth: true
+                }
+            }, {
+                path: '/eduQuestionInfo/questionInfo',
+                name: '试题管理',
+                component: QuestionInfo,
                 meta: {
                     requireAuth: true
                 }

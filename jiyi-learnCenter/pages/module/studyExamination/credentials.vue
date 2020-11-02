@@ -7,59 +7,80 @@
 			</view>
 			<view class="title">申领职业证书</view>
 		</view>
-		
+
 		<!-- 前言 -->
 		<view class="read">
-			<textarea :value="value" class="readTextarea"/>
-		</view>
+			<textarea :value="value" class="readTextarea" />
+			</view>
 		<!-- 内容介绍 -->
 		<view class="introduce">
 			<text class="containTitle">
 				颁发证书考核内容介绍
 			</text>
 			<view class="subject">
-				<u-steps :list="numList" :current="0" direction="column"></u-steps>
+				<view class="left">
+					<u-steps :list="numList" :current="currentIndex" direction="column" mode="dot" active-color="#ffaa7f" class="steps">
+					</u-steps>
+				</view>
+				
 				<view class="right">
+					<!--认证名额  -->
 					<view class="one">
-						<text class="introduceTitle">认证名额申请成功</text><br>
-						<text class="introduceContain">你已成为组织中的一员，赶紧开始学习之旅吧！</text>
+						<view class="introduceTitle">
+							认证名额申请成功
+						</view>
+						<view  class="introduceContain">
+							你已成为组织中的一员，赶紧开始学习之旅吧！</view>	
 					</view>
-					<view class="two">
-						<text class="introduceTitle">能力测评</text>
-							<u-line class="underline"></u-line>
-						<view class="introduceContain">选择题（约10分钟，不限考次）</view>
-						<view class="titleName">
-							<view class="news">
-								1、新手上路
-							</view>
-							<view>
-								<button class="titleBtn">答题</button>
-							</view>
-							
+					
+					<!--  能力测评-->
+					<view class="one">
+						<view class="introduceTitle">
+							能力测评
 						</view>
-						<view class="titleName">
-							<view class="news">
-								1、新手上路
-							</view>
-							<view>
-								<button class="titleBtn">答题</button>
-							</view>
-							
+						<view class="line">
+							<u-line class="underline" ></u-line>
 						</view>
-						<view class="titleName">
-							<view class="news">
-								1、新手上路
-							</view>
-							<view>
-								<button class="titleBtn">答题</button>
-							</view>
 							
+							<view id="exam" v-for="(item,key) in examList" :key="key">
+						<view class="titleName" >
+							<view class="choose">
+								{{key+1}}、{{item.exName}}
+							</view>
+							<view class="choose">（约{{item.exTime}}分钟，不限考次）</view>
+							<view :id="key">
+								<button class="btn" @click="answer(key)">答题</button>
+							</view>
 						</view>
+						<view class="sum">
+							(共{{item.exCount}}题)
+						</view>
+						</view>
+						
 					</view>
+					<!-- 获得证书和头衔 -->
+					<view class="one">
+						<view class="introduceTitle">
+							获得证书和头衔
+						</view>
+						
+					</view>
+				
 				</view>
 			
 			</view>
 		</view>
+		<view class="geiCredentials">
+			<view class="identity">
+				<image src="http://60.205.246.126/images/2020/10/27/1603764803170943.png" class="identImg"></image>
+				<text class="identText">初级经理人</text>
+			</view>
+			<view class="identity" @click="mineCredential">
+				<image src="http://60.205.246.126/images/2020/10/27/1603764777256292.png"  class="identImg"></image>
+				<text class="identText">专业证书</text>
+			</view>
+		</view>
+		<u-modal v-model="show" @confirm="confirm"  :async-close="true" :content="grade=='0' ? '请先通过测评' :'恭喜你晋级成功，专业证书已经打印，请在我的证书中查看。'"></u-modal>
 	</view>
 </template>
 
@@ -73,6 +94,33 @@
 				{name:""},
 				{name:""},
 				],
+				pass:'0',
+				grade:'1',
+				show: false,
+				currentIndex:'1',
+				examList:[
+					{
+						exName:"新手上路"	,
+						exTime:"10",
+						exCount:"6"
+					},{
+						exName:"农技知识"	,
+						exTime:"15",
+						exCount:"8"
+					},
+					{
+						exName:"农技服务"	,
+						exTime:"20",
+						exCount:"6"
+					},{
+						exName:"团队协作"	,
+						exTime:"30",
+						exCount:"6"
+					}
+					
+				],
+				index:null
+				
 			}
 		},
 		methods:{
@@ -80,7 +128,45 @@
 				uni.navigateBack({
 			
 				})
-			}
+			},
+			answer(index){
+			// 	document.getElementById(index).innerHTML="<button id='dis"+index+"' style='font-size: 12px;margin-top: 8px;' disabled>已通过</button>";
+				
+			// 	let count=0;
+			// 	for(let i=0;i<this.examList.length;i++){
+			// 		if(document.getElementById("dis"+i)!=null){
+			// 			count=count+1;
+			// 		}
+			// 	}
+			// if(count==this.examList.length){
+			// 	this.currentIndex=2;
+			// }else{
+			// 	count=0;
+			// }
+				// .html("<button class='btnPass' disabled>已通过</button>");
+				uni.navigateTo({
+						url:"./judge"
+					})
+			},
+			mineCredential(){
+				if(this.grade == '0'){
+					this.show = true;
+				}else{
+					this.show = true;
+				}
+				
+			},
+			confirm() {
+						setTimeout(() => {
+							// 3秒后自动关闭
+							// this.show = false;
+							// 如果不想关闭，而单是清除loading状态，需要通过ref手动调用方法
+							// this.$refs.uModal.clearLoading();
+							uni.navigateTo({
+								url:"../mine/mineCredentials"
+							});
+						}, 1000)
+					}
 		}
 	}
 </script>
@@ -92,13 +178,10 @@
 		background-color: #F8F8F8;
 		.head {
 			display: flex;
-			margin-top: 15rpx;
-			margin-left: 20rpx;
-		
+			margin: 15rpx 0 0 20rpx;
 			.backArrow {
 				margin-top: 6rpx;
 			}
-		
 			.title {
 				margin-left: 250rpx;
 				font-size: 32rpx;
@@ -113,14 +196,13 @@
 				font-size: 20rpx;
 				color: #888888;
 				text-indent: 50rpx;
-			
+				padding:20rpx 0 0 2rpx ;				
 			}
 		}
 		.introduce{
 			display: flex;
 			flex-direction: column;
-			padding-top: 20rpx;
-			padding-left: 20rpx;
+			padding: 20rpx 0 0 20rpx;
 			background-color: #fff;
 			.containTitle{
 				font-size: 30rpx;
@@ -128,73 +210,85 @@
 			}
 			.subject{
 				display: flex;
-				.right{
-					display: flex;
-					flex-direction: column;
+				margin-bottom: -72rpx;
+				.left{
 					margin-top: 40rpx;
+				}
+				
+				.right{
+					margin: 40rpx 0rpx 0rpx -50rpx;
+					width: 666rpx;
 					.one{
-						background-color:#F2F2F7;
-						width: 666rpx;
-						height: 150rpx;
-						margin-left: -50rpx;
+						background-color: #F2F2F7;
+						border-radius: 20rpx;
+						padding: 20rpx 10rpx 20rpx 20rpx;
 						margin-bottom: 20rpx;
-						border-radius: 20rpx;
 						.introduceTitle{
 							font-size: 30rpx;
-							font-weight: bolder;
-							
-							margin-left: 20rpx;
+							font-weight: bold;
+							margin-bottom: 20rpx;
 						}
 						.introduceContain{
 							font-size: 24rpx;
-							margin-left: 20rpx;
 							font-weight: bold;
 						}
-					}
-					.two{
-						background-color:#F2F2F7;
-						width: 666rpx;
-						// height: 150rpx;
-						margin-left: -50rpx;
-						border-radius: 20rpx;
-						.introduceTitle{
-							font-size: 30rpx;
-							font-weight: bolder;
-							
-							margin-left: 20rpx;
+						.line{
+							margin-left: -20rpx;
+							.underline{
+								border: 2rpx solid #D1D1D3 !important;	
+							}
 						}
-						.underline{
-							border: 2rpx solid #858586;
-						}
-						.introduceContain{
+						.choose{
 							font-size: 24rpx;
-							margin-left: 20rpx;
 							font-weight: bold;
-							
+							margin-top: 20rpx;
 						}
 						.titleName{
 							display: flex;
-							margin-left: 20rpx;
-							margin-top: 10rpx;
-							.news{
-								font-size: 24rpx;
-								
-								font-weight: bold;
-								// line-height: 80rpx;
-							}
-							.titleBtn{
-								width: 100rpx;
-								height: 60rpx;
-								margin-left: 380rpx;
-								border-radius: 40%;
-								background-color: #fff;
-								border: 2rpx solid red;
-							}
+							justify-content: space-between;
+								.btn{
+									font-size: 20rpx;
+									background-color: #fff;
+									border-radius: 60rpx;
+									border:2rpx solid red;
+									width: 108rpx;
+									
+									margin-top: 14rpx;
+								}
+								.btnPass{
+									font-size: 20rpx;
+									margin-top: 14rpx;
+								}
 						}
-						
+						.sum{
+							font-size: 22rpx;
+							color: #b3b3b4;
+							margin: -10rpx 0 0 40rpx;
+						}
+					
 					}
+					
 				}
-				
+			}
+		}
+		.geiCredentials{
+			display: flex;
+			background-color: #fff;
+			padding: 0rpx 0 40rpx 80rpx;
+			.identity{
+				display: flex;
+				flex-direction: column;
+				min-width: 33%;
+				.identImg{
+					width: 80rpx;
+					height: 80rpx;
+					margin-bottom: 20rpx;
+					padding-left: 20rpx;
+				}
+				.identText{
+					font-size: 28rpx;
+					font-weight: bold;
+				}
 			}
 		}
 		
