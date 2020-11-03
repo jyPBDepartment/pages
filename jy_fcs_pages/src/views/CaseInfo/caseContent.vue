@@ -5,62 +5,53 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="1024.5px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
-    <!-- 插槽区 -->
-    <slot>
-           <table border="2"  :data="caseInfoForm" align="center" class="table">
-        <tbody>
-          <tr>
-            <td class="title">病虫害名称</td>
-            <td class="content">{{caseInfoForm.name}}</td>
-            <td class="title">病虫害状态</td>
-            <td class="content" style="width:340px;">
-              <span v-if="caseInfoForm.auditStatus=='1'">启用</span>
-              <span v-if="caseInfoForm.auditStatus=='0'">禁用</span>
-            </td>
-          </tr>
-         
-          <tr>
-            <td class="title">农作物种类</td>
-            <td class="content">{{caseInfoForm.cropsTypeCode}}</td>
-            <td class="title">病虫害种类</td>
-            <td class="content">{{caseInfoForm.dipTypeCode}}</td>
-          </tr>
-           <tr>
-            <td class="title">图片</td>
-            <td class="content">
-                <el-image class="image" :src="caseInfoForm.url"></el-image>
-            </td>
-            <td class="title">描述</td>
-            <td class="contentText" v-html="caseInfoForm.describetion">
-                {{caseInfoForm.describetion}}
-            </td>
-          </tr>
-          
-        </tbody>
-      </table>
-    </slot>
-    <!-- 按钮区 -->
+    <div slot="title" class="dialog-title">
+      {{ title }}
+    </div>
+
+    <ul>
+      <li>
+        <span class="title">病虫害名称：</span>
+        <span class="content">{{ caseInfoForm.name }}</span>
+      </li>
+      <li>
+        <span class="title">病虫害状态：</span>
+        <span class="content">{{
+          caseInfoForm.auditStatus == "1" ? "启用" : "禁用"
+        }}</span>
+      </li>
+      <li>
+        <span class="title">农作物种类：</span>
+        <span class="content">{{ caseInfoForm.cropsTypeCode }}</span>
+      </li>
+      <li>
+        <span class="title">病虫害种类：</span>
+        <span class="content">{{ caseInfoForm.dipTypeCode }}</span>
+      </li>
+      <li>
+        <span class="title">图片：</span>
+        <el-image class="image" :src="caseInfoForm.url"></el-image>
+      </li>
+      <li>
+        <span class="title">描述：</span>
+        <div class="contentText" v-html="caseInfoForm.describetion"></div>
+      </li>
+    </ul>
     <span slot="footer">
-      <el-button type="info" icon="el-icon-close" @click="close" size="medium">关闭</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close" size="small">
+        关闭
+      </el-button>
     </span>
   </el-dialog>
 </template>
 <script>
-import qs from "qs";
-import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
-import aes from "@/utils/aes.js";
-import { quillEditor } from "vue-quill-editor";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
+
 export default {
-  inject: ["reload"],
   props: {
     show: {
       type: Boolean,
@@ -77,17 +68,9 @@ export default {
   data() {
     return {
       localShow: this.show,
-      isShow: false,
-      limit: 1,
       imgUrl: "",
-      upload: ApiPath.url.uploadImg,
       fileList: [],
-      labelPosition: "right",
-      editFormVisible: false,
       caseInfoForm: {},
-      cropsOptions: [],
-      dipOptions: [],
-    
     };
   },
   watch: {
@@ -110,21 +93,7 @@ export default {
       });
     },
   },
-  mounted() {},
   methods: {
-    uploadExceed(files, fileList) {
-      this.$message.error("只能上传一个图片，如需修改请先删除图片！");
-      return;
-    },
-    uploadSuccess(response, file, fileList) {
-      this.imgUrl = response.url;
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
     close: function () {
       this.$emit("close");
     },
@@ -132,57 +101,63 @@ export default {
       this.close();
     },
   },
-  components: {
-    quillEditor,
-  },
 };
 </script>
 
 <style scoped>
-.el-form {
-  padding-left: 115px;
+ul {
+  margin: 0 20px;
+  padding: 0;
 }
-.bottom {
-  margin-bottom: 0px;
+li {
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 10px;
 }
-.select {
-  width: 30px;
-  height: 20px;
-  margin-left: 304px;
-  margin-bottom: -34px;
-  position: relative;
-  z-index: 100;
-}
-.table {
-  height: 400px;
-  width: 900px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2)
-}
-.title {
-  width: 100px;
-  text-align: center;
-}
-.content {
-  text-align: center;
-}
-.image{
- width: 200px; 
- height: 200px
-}
-.contentText{
-  text-align: center;
-}
-.contentText >>> img{
-  width:300px;
-  height: 300px;
-  margin: 0px 10px 10px 9px;
-}
-</style>
-<style>
-.el-input.is-disabled .el-input__inner {
-  color: black;
-  background-color: #fff;
-  scrollbar-arrow-color: #fff;
+li > span {
+  display: inline-block;
+  min-width: 120px;
 }
 
+li > span:last-child {
+  margin-left: 20px;
+}
+
+li > .image {
+  width: 200px;
+  height: 200px;
+  margin: 5px 0 5px 20px;
+}
+.dialog-title {
+  width: 100%;
+  line-height: 40px;
+  text-align: center;
+  color: #333;
+  font-weight: 600;
+  font-size: 18px;
+  border-bottom: 1px #eeeeee solid;
+}
+
+.title {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+.content {
+  color: #666;
+  font-weight: 500;
+  font-size: 14px;
+}
+.contentText {
+  text-align: center;
+  margin-left: 20px;
+}
+.contentText >>> img {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+}
 </style>

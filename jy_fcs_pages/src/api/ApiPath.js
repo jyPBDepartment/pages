@@ -349,6 +349,18 @@ const url = {
   questionFindById: EDUHost + '/questionInfo/findById',
   // 修改状态
   questionInfoEnable: EDUHost + '/questionInfo/enable',
+  // 获取证书列表
+  findCertificatePage: EDUHost + '/certificate/findPage',
+  //根据主键删除证书
+  deleteCertificateById: EDUHost + '/certificate/delete',
+  //新增证书
+  addCertificate: EDUHost + '/certificate/add',
+  //修改证书状态
+  changeCertificateStatus: EDUHost + '/certificate/enable',
+  //根据id获取证书信息
+  findCertificateById: EDUHost + '/certificate/findById',
+  //修改证书信息
+  updateCertificate: EDUHost + '/certificate/update',
 }
 export default {
   url

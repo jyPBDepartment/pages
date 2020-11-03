@@ -60,7 +60,7 @@
       <el-table-column prop="title" label="名称" align="center" min-width="20%"  :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="stuLimit" label="人数限制" align="center" min-width="10%"  :show-overflow-tooltip="true"></el-table-column>
       <el-table-column sortable prop="lessonDate" label="课程时间" align="center" min-width="15%" ></el-table-column>
-      <el-table-column align="center" prop="status" label="课程状态" min-width="15%" max-width="80px">
+      <el-table-column align="center" prop="status" label="报名状态" min-width="15%" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
