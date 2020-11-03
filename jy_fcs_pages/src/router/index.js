@@ -105,7 +105,14 @@ import QuestionInfo from '@/views/eduQuestionInfo/questionInfo';
 import EduLessonInfo from '@/views/lesson/lessonList'
 //报名列表
 import EduStudentInfo from '@/views/lesson/studentList'
-
+//证书列表
+import CertificateList from '@/views/certificate/certificateList'
+//证书模板
+import FormworkList from '@/views/certificate/formworkList'
+//证书颁发
+import CertificateIssue from '@/views/certificate/issue'
+//证书管理
+import CertificateMgt from '@/views/certificate/certificateMgt'
 // 启用路由
 Vue.use(Router);
 
@@ -347,6 +354,34 @@ export default new Router({
                 path: '/eduQuestionInfo/questionInfo',
                 name: '试题管理',
                 component: QuestionInfo,
+                meta: {
+                    requireAuth: true
+                }
+            }, {
+                path: '/certificate/certificateList',
+                name: '证书列表',
+                component: CertificateList,
+                meta: {
+                    requireAuth: true
+                }
+            }, {
+                path: '/certificate/formworkList',
+                name: '证书模板',
+                component: FormworkList,
+                meta: {
+                    requireAuth: true
+                }
+            }, {
+                path: '/certificate/issue',
+                name: '证书颁发',
+                component: CertificateIssue,
+                meta: {
+                    requireAuth: true
+                }
+            }, {
+                path: '/certificate/certificateMgt',
+                name: '证书颁发',
+                component: CertificateMgt,
                 meta: {
                     requireAuth: true
                 }
