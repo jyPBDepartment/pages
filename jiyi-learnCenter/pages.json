@@ -5,6 +5,27 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 
 		{
+			"path": "pages/module/mine/myCredentials" //我的证书页面
+		},
+		{
+			"path": "pages/module/mine/signUpCourses" //报名课程页面
+		},
+		{
+			"path": "pages/module/mine/examScore" //考试成绩页面
+		},
+		{
+			"path": "pages/module/mine/studyRecordContent" //学习记录详情页面
+		},
+		{
+			"path": "pages/module/mine/studyRecord" //学习记录列表页面
+		},
+		{
+			"path": "pages/module/mine/collectionContent" //我的收藏详情页面
+		},
+		{
+			"path": "pages/module/mine/myCollection" //我的收藏列表页面
+		},
+		{
 			"path": "pages/module/studyExamination/examResult" //考试结果页面
 		},
 		{

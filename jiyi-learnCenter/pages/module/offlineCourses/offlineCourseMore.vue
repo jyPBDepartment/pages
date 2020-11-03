@@ -8,7 +8,7 @@
 				<view class="title">热门课程</view>
 		</view>
 		<view class="offlineCourse animate__animated animate__lightSpeedInRight delay-5s 5s" v-for="(item, index) in offlineCourseList" :key="index"  @click="courseDetail">
-			<view class="background" :style="item.bgColor">				
+				<view class="background">		
 				<view class="logo">
 					<image class="courseImg" :src="item.url"></image>
 				</view>
@@ -34,11 +34,11 @@
 			return{
 				title:'',
 				offlineCourseList:[
-					{bgColor:'background-color:#91D5FF',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
-					{bgColor:'background-color:pink',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"农技知识",courseTime:"2020-12-12 09:00"},
-					{bgColor:'background-color:#ff73ab',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"经销商",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
-					{bgColor:'background-color:#75ffb6',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"供应商",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
-					{bgColor:'background-color:#ffaa7f',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"农技知识",courseTime:"2020-12-12 09:00"},
+					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
+					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"农技知识",courseTime:"2020-12-12 09:00"},
+					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"经销商",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
+					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"供应商",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
+					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"农技知识",courseTime:"2020-12-12 09:00"}
 				]
 			}
 		},
@@ -81,10 +81,12 @@
 			display: flex;
 			flex-direction: column;
 			background-color: #fff;
+			
 			.background{
 				margin-top: 20rpx;
 				font-weight: bold;
 				color: #fff;
+				
 				.logo{
 					.courseImg{
 						width: 140rpx;
@@ -110,6 +112,22 @@
 				}
 			}
 			
+			
+		}
+		.offlineCourse:nth-child(even){
+			background-color: #91D5FF;
+		}
+		.offlineCourse:nth-child(odd){
+			background-color: #ff73ab;
+		}
+		.offlineCourse:nth-child(3n+1){
+			background-color: pink;
+		}
+		.offlineCourse:nth-child(4n+1){
+			background-color: #ffaa7f;
+		}
+		.offlineCourse:nth-child(5n+1){
+			background-color: #75ffb6;
 		}
 	}
 	

@@ -38,12 +38,12 @@
 					<span style="color: #ff0000;">*</span>
 					手机号:
 				</u-col>
-				<u-col span="5">
+				<u-col span="8">
 					<u-input type="text" placeholder="输入手机号" :focus="true" maxlength="11" v-model="phone" border height="54" />
 				</u-col>
-				<u-col span="2">
+			<!-- 	<u-col span="2">
 					<u-button size="mini" >获取验证码</u-button>
-				</u-col>
+				</u-col> -->
 			</u-row>
 			
 			<u-row style="padding-top: 40rpx;">

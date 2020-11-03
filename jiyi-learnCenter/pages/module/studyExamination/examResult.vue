@@ -52,12 +52,7 @@
 						<u-td class="tdStyle">{{item.wrongNum}}</u-td>
 						<u-td class="tdStyle">{{item.getGrade}}</u-td>
 					</u-tr>
-					<!-- <u-tr v-for="(item,index) in examTableList" :key="index">
-						<u-td class="tdStyle">{{item.queType == '1' ? '单选题' : '判断题'}}</u-td>
-						<u-td class="tdStyle">{{count}}</u-td>
-						<u-td class="tdStyle">{{wrongCount}}</u-td>
-						<u-td class="tdStyle">{{item.queScore}}</u-td>
-					</u-tr> -->
+
 				</u-table>
 			</view>
 			<view class="questionAnswer">
@@ -86,7 +81,7 @@
 				</view>
 			</view>
 			<!-- 错题解析 -->
-			<view class="analysis animate__animated animate__slideInRight" v-for="(titleItem,titleIndex) in examTableList" :key="titleIndex" v-if="titleItem.queIsCorrect=='2'" v-show="jumpCount==titleIndex">
+			<view class="analysis animate__animated animate__slideInRight" v-for="(titleItem,titleIndex) in examTableList" :key="titleIndex" v-if="titleItem.queIsCorrect=='2'" :style="titleItem.queType == '1' ? 'margin-bottom: 770rpx;' : 'margin-bottom: 420rpx;'">
 				<view class="quetype">
 					<text>错题解析：{{titleItem.queType == '1' ? '单选题' : '判断题'}}</text>
 					<text>本题分值：{{titleItem.queScore}}分</text>
@@ -114,11 +109,7 @@
 						<text class="selectStylea" v-for="(item,index) in titleItem.queAnalysis" :key="index" v-if="item.isCorrect == '1'">{{item.queIndex}}</text>
 					</view>
 				</view>
-				<!-- 按钮 -->
-				<view class="next">
-					<button v-if="jumpCount!=1" type="primary" @click="prefixQues(titleIndex+1)" class="examBtn" style="background-color: #bbb;">上一题</button>
-					<button type="primary" @click="nextQues(titleIndex+1)" class="examBtn">下一题</button>
-				</view>
+			
 			</view>
 		</view>
 	</view>
@@ -131,7 +122,7 @@
 			return {
 				wrongCount: 0,
 				count: 0,
-				jumpCount: 1,
+				// jumpCount: 1,
 				examGrade: "60",
 				examTableInfo: [
 					{type:'0',queNum:'5',wrongNum:'3',getGrade:'30'},
@@ -192,7 +183,26 @@
 						queType: "2", //判断题
 						queNum: 4,
 						queIsCorrect: '1', //正确
-					}
+					},
+					{
+						queType: "2", //判断题
+						queNum: 5,
+						queIsCorrect: '2', //不正确
+						queScore: 5,
+						correctAnswers: "A",
+						queName: '从事农业产品回收储运、销售一级代理、信息传递服务等中介活动而获取到佣金或利润的人员是？',
+						queAnalysis: [{
+								queIndex: "A",
+								isCorrect: "0",
+								queSelectAnswer: "房产经理人"
+							}, {
+								queIndex: "B",
+								isCorrect: "1",
+								queSelectAnswer: "证券经纪人"
+							}
+					
+						]
+					},
 
 				],
 			}
@@ -203,14 +213,7 @@
 
 		},
 		methods: {
-			// 下一题
-			nextQues(val) {
-				this.jumpCount = val + 1;
-			},
-			// 上一题
-			prefixQues(val) {
-				this.jumpCount = val - 1;
-			},
+			
 			backTo() {
 				uni.navigateBack({
 
@@ -452,6 +455,7 @@
 
 			.analysis {
 				margin-top: 30rpx;
+				// margin-bottom: 760rpx;
 				height: 220rpx;
 				border: 2rpx solid #bbb;
 				border-radius: 20rpx;
@@ -493,10 +497,9 @@
 						}
 					}
 				}
-
 				.correctAnswer {
 					display: flex;
-					margin: 40rpx 10rpx 0rpx 10rpx;
+					margin: 40rpx 10rpx 100rpx 10rpx;
 					justify-content: space-around;
 
 					.selectStyle {
@@ -507,19 +510,6 @@
 					.selectStylea {
 						color: #E51C2E;
 						margin-left: 20rpx;
-					}
-				}
-
-				.next {
-					// display: flex;
-					margin: 60rpx -20rpx 0 -20rpx;
-					position: -webkit-sticky;
-					position: sticky;
-					bottom: 0rpx;
-					z-index: 999;
-
-					.examBtn {
-						width: 750rpx;
 					}
 				}
 

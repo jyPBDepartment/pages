@@ -61,7 +61,7 @@
 			</u-col>
 		</u-row>
 		<view class="offlineCourse animate__animated animate__fadeIn " v-for="(item, index) in offlineCourseList" :key="'list'+index"  @click="hyDetail">
-			<view class="background" :style="item.bgColor">				
+				<view class="background">		
 				<view class="logo">
 					<image class="courseImg" :src="item.url"></image>
 				</view>
@@ -100,15 +100,15 @@
 					{url:"http://60.205.246.126/images/2020/09/29/1601345997114502.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"300"}
 				],
 				offlineCourseList:[
-					{bgColor:'background-color:#91D5FF',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
-					{bgColor:'background-color:#9C9E0D',url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"农技知识",courseTime:"2020-12-12 09:00"},
+					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
+					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"农技知识",courseTime:"2020-12-12 09:00"}
 				]
 			}
 		},
 		methods: {
 			offlineCourses() {
 				uni.navigateTo({
-					url: "../../module/offlineCourses/index"
+					url: "../../module/offlineCourses/offlineCourseMore"
 				})
 			},
 			onlineTraining() {
@@ -228,15 +228,13 @@
 		}
 
 		.rm-row {
-			margin-left: 10rpx;
-			margin-right: 12rpx;
+			margin: 0 12rpx 0 10rpx;
 			background-color: #ffffff;
 			width: auto;
 			height: 180rpx;
 
 			.rm-image {
-				margin-top: 4rpx;
-				margin-buttom: 12rpx;
+				margin:4rpx 0 12rpx 0;
 			}
 
 			.rm-font {
@@ -253,9 +251,8 @@
 
 		.grid-text {
 			font-size: 24rpx;
-			margin-top: 10rpx;
+			margin:10rpx 0 -10rpx 0;
 			color: #333;
-			margin-bottom: -10rpx;
 		}
 
 		.u-row {
@@ -326,5 +323,12 @@
 			}
 			
 		}
+		.offlineCourse:nth-child(odd){
+			background-color: #91D5FF;
+		}
+		.offlineCourse:nth-child(even){
+			background-color: #ffaa7f;
+		}
+		
 	}
 </style>

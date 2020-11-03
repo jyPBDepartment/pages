@@ -51,8 +51,8 @@
 				</view>
 				<!-- 按钮 -->
 				<view class="next">
-					<button v-if="jumpCount!=1" type="primary" @click="prefixQues(index1+1)" class="examBtn" style="background-color: #bbb;">上一题</button>
-					<button v-if="jumpCount!=item.examCount" type="primary" @click="nextQues(index1+1)" class="examBtn">下一题</button>
+					<button v-if="jumpCount!=1" type="primary" @click="prefixQues(index1+1)" class="examBtn" >上一题</button>
+					<button v-if="jumpCount!=item.examCount" type="primary" @click="nextQues(index1+1)"  :style="jumpCount==1 ? 'width: 772rpx;' : 'width:386rpx'">下一题</button>
 					<button type="primary" v-if="jumpCount ==item.examCount" class="examBtn" @click="submit">交卷</button>
 				</view>
 			</view>
@@ -253,9 +253,6 @@
 		methods: {
 			// 取消按钮
 			cancel(){
-				// uni.navigateBack({
-				
-				// })
 				uni.navigateTo({
 					url: "./examPage"
 				})
@@ -409,8 +406,10 @@
 		.next {
 			display: flex;
 			margin: 128rpx -20rpx 0 -20rpx;
+			position: fixed;
+			top: 556px;
 			.examBtn{
-				width: 750rpx;
+				width: 386rpx;
 			}
 		}
 

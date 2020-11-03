@@ -63,21 +63,14 @@
 						<view class="introduceTitle">
 							获得证书和头衔
 						</view>
-						
+						<view class="identity" @click="mineCredential">
+							<image src="http://60.205.246.126/images/2020/10/27/1603764777256292.png"  class="identImg"></image>
+							<text class="identText">专业证书</text>
+						</view>
 					</view>
 				
 				</view>
 			
-			</view>
-		</view>
-		<view class="geiCredentials">
-			<view class="identity">
-				<image src="http://60.205.246.126/images/2020/10/27/1603764803170943.png" class="identImg"></image>
-				<text class="identText">初级经理人</text>
-			</view>
-			<view class="identity" @click="mineCredential">
-				<image src="http://60.205.246.126/images/2020/10/27/1603764777256292.png"  class="identImg"></image>
-				<text class="identText">专业证书</text>
 			</view>
 		</view>
 		<u-modal v-model="show" @confirm="confirm"  :async-close="true" :content="grade=='0' ? '请先通过测评' :'恭喜你晋级成功，专业证书已经打印，请在我的证书中查看。'"></u-modal>
@@ -95,7 +88,7 @@
 				{name:""},
 				],
 				pass:'0',
-				grade:'1',
+				grade:'0',
 				show: false,
 				currentIndex:'1',
 				examList:[
@@ -159,7 +152,7 @@
 			confirm() {
 						setTimeout(() => {
 							// 3秒后自动关闭
-							// this.show = false;
+							this.show = false;
 							// 如果不想关闭，而单是清除loading状态，需要通过ref手动调用方法
 							// this.$refs.uModal.clearLoading();
 							uni.navigateTo({
@@ -265,29 +258,24 @@
 							color: #b3b3b4;
 							margin: -10rpx 0 0 40rpx;
 						}
+						.identity{
+							display: flex;
+							flex-direction: column;
+							margin-left: 40rpx;
+							.identImg{
+								width: 80rpx;
+								height: 80rpx;
+								margin-bottom: 20rpx;
+								padding-left: 20rpx;
+							}
+							.identText{
+								font-size: 28rpx;
+								font-weight: bold;
+							}
+						}
 					
 					}
 					
-				}
-			}
-		}
-		.geiCredentials{
-			display: flex;
-			background-color: #fff;
-			padding: 0rpx 0 40rpx 80rpx;
-			.identity{
-				display: flex;
-				flex-direction: column;
-				min-width: 33%;
-				.identImg{
-					width: 80rpx;
-					height: 80rpx;
-					margin-bottom: 20rpx;
-					padding-left: 20rpx;
-				}
-				.identText{
-					font-size: 28rpx;
-					font-weight: bold;
 				}
 			}
 		}
