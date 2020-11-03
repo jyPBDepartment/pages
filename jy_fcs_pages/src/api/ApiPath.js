@@ -361,6 +361,18 @@ const url = {
   findCertificateById: EDUHost + '/certificate/findById',
   //修改证书信息
   updateCertificate: EDUHost + '/certificate/update',
+  //查询证书模板
+  findFormworkPage: EDUHost + '/formwork/findPage',
+  //根据主键删除模板
+  deleteFormworkById: EDUHost + '/formwork/delete',
+  //新增模板
+  addFormwork: EDUHost + '/formwork/add',
+  //修改模板状态
+  changeFormworkStatus: EDUHost + '/formwork/enable',
+  //根据id获取实体
+  findFormworkById: EDUHost + '/formwork/findById',
+  //修改模板信息
+  updateFormwork: EDUHost + '/formwork/update',
 }
 export default {
   url

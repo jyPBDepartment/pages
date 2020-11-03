@@ -114,7 +114,7 @@ export default {
     //新增保存
     saveModuleInfo(editData) {
       this.$refs[editData].validate((valid) => {
-          alert(this.editForm.createBy)
+          //alert(this.editForm.createBy)
         if (valid) {
             //this.editForm.url = this.imgUrl;
             let params = {
