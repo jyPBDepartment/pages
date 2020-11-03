@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const momentsRouter = {
   path: '/moments',
   component: Layout,
-  redirect: '/moments/postInfo',
+  redirect: 'noRedirect',
   name: 'system',
   meta: {
     title: '圈子管理',

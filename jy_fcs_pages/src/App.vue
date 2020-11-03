@@ -37,6 +37,9 @@ body {
   padding: 0px;
   margin: 0px;
 }
+ul li {
+  list-style: none;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

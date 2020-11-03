@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const publishRouter = {
   path: '/publish',
   component: Layout,
-  redirect: '/publish/agricultural',
+  redirect: 'noRedirect',
   name: 'publish',
   meta: {
     title: '发布管理',

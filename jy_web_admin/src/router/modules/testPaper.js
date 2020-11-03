@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const testPaperRouter = {
   path: '/testPaper',
   component: Layout,
-  redirect: '/testPaper/caseInfo',
+  redirect: 'noRedirect',
   name: 'testPaper',
   alwaysShow: true,
   meta: {

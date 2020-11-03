@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const systemRouter = {
   path: '/system',
   component: Layout,
-  redirect: '/system/dict',
+  redirect: 'noRedirect',
   name: 'system',
   meta: {
     title: '系统管理',

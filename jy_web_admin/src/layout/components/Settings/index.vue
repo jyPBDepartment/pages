@@ -5,10 +5,7 @@
 
       <div class="drawer-item">
         <span>{{ $t("settings.theme") }}</span>
-        <theme-picker
-          style="float: right; height: 26px; margin: -3px 8px 0 0"
-          @change="themeChange"
-        />
+        <theme-picker style="margin: 5px" @change="themeChange" />
       </div>
 
       <!-- <div class="drawer-item">
@@ -122,6 +119,9 @@ export default {
     color: rgba(0, 0, 0, 0.65);
     font-size: 14px;
     padding: 12px 0;
+  }
+  .theme-chose-item {
+    height: auto;
   }
 
   .drawer-switch {

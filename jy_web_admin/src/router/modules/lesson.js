@@ -6,7 +6,7 @@ import Layout from '@/layout'
 const lessonRouter = {
   path: '/lesson',
   component: Layout,
-  redirect: '/lesson/list',
+  redirect: 'noRedirect',
   name: 'lesson',
   alwaysShow: true,
   meta: {

@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const moduleInfoRouter = {
   path: '/moduleInfo',
   component: Layout,
-  redirect: '/moduleInfo/funmoduleInfo',
+  redirect: 'noRedirect',
   name: 'moduleInfo',
   meta: {
     title: '模块管理',

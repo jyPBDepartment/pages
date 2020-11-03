@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const contentRouter = {
   path: '/content',
   component: Layout,
-  redirect: '/content/caseInfo',
+  redirect: 'noRedirect',
   name: 'content',
   alwaysShow: true,
   meta: {

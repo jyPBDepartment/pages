@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const settingRouter = {
   path: '/setting',
   component: Layout,
-  redirect: '/setting/vocationInfo',
+  redirect: 'noRedirect',
   name: 'setting',
   meta: {
     title: '设置管理',

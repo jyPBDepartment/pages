@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const grainPricesRouter = {
   path: '/grainPrices',
   component: Layout,
-  redirect: '/grainPrices/grainPricesInfo',
+  redirect: 'noRedirect',
   name: 'grainPrices',
   meta: {
     title: '参数设置',

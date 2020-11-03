@@ -12,6 +12,10 @@
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
         <search id="header-search" class="right-menu-item" />
+        <div class="right-menu-item user-name">
+          <span v-text="name" class="name">XXX:</span>
+          <span>2020-11-03</span>
+        </div>
         <error-log class="errLog-container right-menu-item hover-effect" />
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
       </template>
@@ -31,7 +35,7 @@
             </el-dropdown-item>
           </router-link>
           <router-link to="/">
-            <el-dropdown-item>
+            <el-dropdown-item divided>
               {{ $t("navbar.dashboard") }}
             </el-dropdown-item>
           </router-link>
@@ -65,7 +69,7 @@ export default {
     Search,
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar", "device"]),
+    ...mapGetters(["sidebar", "avatar", "device", "name"]),
   },
   methods: {
     toggleSideBar() {
@@ -133,6 +137,17 @@ export default {
         &:hover {
           background: rgba(0, 0, 0, 0.025);
         }
+      }
+    }
+    .user-name {
+      user-select: none;
+      font-size: 14px;
+      > span {
+        color: #666;
+      }
+      .name {
+        color: #333;
+        margin-right: 10px;
       }
     }
 

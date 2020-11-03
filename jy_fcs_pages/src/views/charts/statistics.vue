@@ -27,7 +27,7 @@
         </div>
         <div class="right">
           <span type="text" class="up1">农活发布数量监测</span>
-          <span type="text" class="center1">{{argicultural}}</span>
+          <span type="text" class="center1">{{ argicultural }}</span>
           <div class="last">
             <img src="../../assets/img/箭头.png" class="iconFront" />
             <span type="text" class="down">同比昨天10%</span>
@@ -42,7 +42,7 @@
         </div>
         <div class="right">
           <span type="text" class="up">发帖数量监测</span>
-          <span type="text" class="center1">{{invationSum}}</span>
+          <span type="text" class="center1">{{ invationSum }}</span>
           <div class="last">
             <img src="../../assets/img/箭头(1).png" class="iconFront" />
             <span type="text" class="down">同比昨天32.32%</span>
@@ -57,7 +57,7 @@
         </div>
         <div class="right">
           <span type="text" class="up1">农活预约数量监测</span>
-          <span type="text" class="center">{{count}}</span>
+          <span type="text" class="center">{{ count }}</span>
           <div class="last">
             <img src="../../assets/img/箭头.png" class="iconFront" />
             <span type="text" class="down">同比昨天10%</span>
@@ -66,7 +66,7 @@
       </div>
     </el-col>
     <el-col :span="24">
-      <div style="height:450px;margin-top:20px;" ref="SCEchart"></div>
+      <div style="height: 450px; margin-top: 20px" ref="SCEchart"></div>
     </el-col>
   </el-row>
 </template>
@@ -88,8 +88,8 @@ export default {
           x: "45%",
           textStyle: {
             fontSize: 28,
-            color: "#1C8FE5"
-          }
+            color: "#1C8FE5",
+          },
         },
         tooltip: {},
         legend: {
@@ -100,15 +100,15 @@ export default {
           itemHeight: 20,
           textStyle: {
             fontSize: 16,
-            color: "#101010"
-          }
+            color: "#101010",
+          },
         },
         grid: {
           // left: 50,
           // right: 10,
           // top: 30,
           bottom: 100,
-          borderWidth: 1
+          borderWidth: 1,
         },
         xAxis: {
           type: "category",
@@ -116,8 +116,8 @@ export default {
           axisLine: {
             lineStyle: {
               color: "#BBBBBB",
-              width: 1
-            }
+              width: 1,
+            },
           },
           axisLabel: {
             margin: 14,
@@ -125,9 +125,9 @@ export default {
             interval: 0,
             textStyle: {
               fontSize: 16,
-              color: "#101010"
-            }
-          }
+              color: "#101010",
+            },
+          },
         },
         yAxis: [
           {
@@ -139,16 +139,16 @@ export default {
             axisLine: {
               lineStyle: {
                 color: "#BBBBBB",
-                width: 1
-              }
+                width: 1,
+              },
             },
             axisLabel: {
               margin: 14,
               textStyle: {
                 fontSize: 16,
-                color: "#101010"
-              }
-            }
+                color: "#101010",
+              },
+            },
           },
           {
             splitLine: { show: false },
@@ -159,18 +159,18 @@ export default {
             position: "right",
             axisLine: {
               lineStyle: {
-                color: "#BBBBBB"
-              }
+                color: "#BBBBBB",
+              },
             },
             axisLabel: {
               formatter: "{value}%",
               margin: 14,
               textStyle: {
                 fontSize: 16,
-                color: "#101010"
-              }
-            }
-          }
+                color: "#101010",
+              },
+            },
+          },
         ],
         series: [
           {
@@ -183,17 +183,17 @@ export default {
                 color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: "#FCCA00" },
                   { offset: 0.5, color: "#FCCA00" },
-                  { offset: 1, color: "#FCCA00" }
-                ])
+                  { offset: 1, color: "#FCCA00" },
+                ]),
               },
               emphasis: {
                 color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: "#FCCA00" },
                   { offset: 0.7, color: "#FCCA00" },
-                  { offset: 1, color: "#FCCA00" }
-                ])
-              }
-            }
+                  { offset: 1, color: "#FCCA00" },
+                ]),
+              },
+            },
           },
           {
             name: "今日",
@@ -205,20 +205,20 @@ export default {
                 color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: "#27B148" },
                   { offset: 0.5, color: "#27B148" },
-                  { offset: 1, color: "#27B148" }
-                ])
+                  { offset: 1, color: "#27B148" },
+                ]),
               },
               emphasis: {
                 color: new Chart.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: "#27B148" },
                   { offset: 0.7, color: "#27B148" },
-                  { offset: 1, color: "#27B148" }
-                ])
-              }
-            }
-          }
-        ]
-      }
+                  { offset: 1, color: "#27B148" },
+                ]),
+              },
+            },
+          },
+        ],
+      },
     };
   },
   // 导入组件
@@ -241,13 +241,13 @@ export default {
     transJurisdictionId(val) {
       console.log(111);
       let params = {};
-      api.testAxiosGet(ApiPath.url.initEchart, params).then(res => {
+      api.testAxiosGet(ApiPath.url.initEchart, params).then((res) => {
         let code = res.state;
         if (code == 0) {
           this.count = res.farmwork;
           this.invationSum = res.invation;
           this.argicultural = res.agricultural;
-         
+
           this.SCEoption.series[1].data.push(
             10,
             res.agricultural,
@@ -284,14 +284,16 @@ export default {
     getpayNum() {
       this.chart = Chart.init(this.$refs.payNumEchart);
       this.chart.setOption(this.payNumoption);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped >
 .first {
   border-width: 1px;
   border-style: solid;
+  padding: 10px;
+  box-sizing: border-box;
 }
 .left img {
   width: 60px;
@@ -299,7 +301,7 @@ export default {
 }
 
 .last img {
-  margin-top:4px;
+  margin-top: 4px;
   width: 60px;
   height: 30px;
 }
