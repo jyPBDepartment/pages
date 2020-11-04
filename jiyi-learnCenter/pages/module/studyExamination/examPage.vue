@@ -240,11 +240,8 @@
 																value: "02",
 																queSelectAnswer: "证券经纪人"
 															}
-															
 														]
-												
 													}
-
 					]
 
 				}],
@@ -284,30 +281,23 @@
 			radioGroupChange(e) {
 				// console.log(e);
 			},
-		
+			// 返回上一页
 			backTo() {
 				uni.navigateBack({
 
 				})
 			},
 			// 下一题
-			// nextQues(examNum,quesNum) {
-			// 	this.jumpCount = quesNum+1;
-			// 	if(this.current !== ""){
-			// 		this.examList[examNum-1].questionList[quesNum-1].isCheck="1";
-			// 	}else{
-			// 		this.examList[examNum-1].questionList[quesNum-1].isCheck="0";
-					
-			// 	}
-			// 	this.current = "";
-			// },
 			nextQues(quesNum) {
 				this.jumpCount = quesNum+1;
+				this.nextQuesJudge(quesNum);
+			},
+			// 判断选题
+			nextQuesJudge(judgeChoose) {
 				if(this.current !== ""){
-					this.examList[0].questionList[quesNum-1].isCheck="1";
+					this.examList[0].questionList[judgeChoose-1].isCheck="1";
 				}else{
-					this.examList[0].questionList[quesNum-1].isCheck="0";
-					
+					this.examList[0].questionList[judgeChoose-1].isCheck="0";
 				}
 				this.current = "";
 			},
@@ -317,23 +307,19 @@
 			},
 			// 提交试卷
 			submit(){
-				this.nextQues(this.examList[0].examCount);
+				this.nextQuesJudge(this.examList[0].examCount);
 				this.show = true;
-				let msg ="";
-				for(let i =0;i<this.examList[0].questionList.length;i++){
-					
+				let msg = "";
+				for(let i = 0;i<this.examList[0].questionList.length;i++){
 					if(this.examList[0].questionList[i].isCheck == "0"){
-						this.content="您有试题未答，是否提交试卷?";
-						msg = msg + (i+1)+","; 
-						
-					}else{
-						this.content="是否提前交卷？";
-						
+						msg += i;
 					}
-					
 				}
-				// alert(msg)
-				// alert("第"+msg.substring(0,msg.lastIndexOf(","))+"题为空");
+				if(msg == ""){
+						this.content="是否提前交卷？";
+				}else{
+					this.content="您有试题未答，是否提交试卷?";
+				}
 			}
 		}
 	}
