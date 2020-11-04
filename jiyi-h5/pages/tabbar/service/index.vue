@@ -4,7 +4,7 @@
 		<Screen @screened="screened" :screenList="screenList" @select="select" :condition="condition"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
-				<view class="app-modular g-flex" v-for="(item,index) in btnList" :key="index" @click="jumpInfo(item.id)">
+				<view class="app-modular comm-b-bottom g-flex" v-for="(item,index) in btnList" :key="index" @click="jumpInfo(item.id)">
 					<image class="app-img" :src="item.imageUrl"></image>
 
 					<view class="app-info g-f-1">
@@ -12,7 +12,6 @@
 						<view class="g-flex f-12 g-a-c" style="color: rgba(128, 128, 128, 1)">
 							<u-icon style="margin-right: 5rpx;" name="map-fill" color="#A6A6A6" size="36"></u-icon>
 							<p>{{item.address}}</p>
-
 						</view>
 						<view class="g-flex g-j-s-b f-12 tags">
 						</view>

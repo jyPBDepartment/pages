@@ -1,8 +1,8 @@
 <template>
-	<view class="qiun-columns">
+	<view class="qiun-columns comm-border">
 		<view class="t-c f-14" style="text-align: left;margin-left: 10px;">玉米价格行情(元/斤)</view>
-		<view class="f-1" style="">说明：该数据来源于大商所最近一个合约的前一日收盘价，仅供参考。</view>
-		<view style="text-align: center;">
+		<view class="tips">说明：该数据来源于大商所最近一个合约的前一日收盘价，仅供参考。</view>
+		<view style="text-align: center;margin: 10rpx 0;">
 			<u-row :gutter="6">
 				<u-col :span="2" style="text-align: center;">
 					<u-tag text="7日" shape="circle" :type="tagClick == '0'?'error':'info'" @click="getServerData('0')"></u-tag>
@@ -35,7 +35,7 @@
 		},
 		created() {
 			_self = this;
-			this.cWidth = uni.upx2px(750);
+			this.cWidth = uni.upx2px(660);
 			this.cHeight = uni.upx2px(500);
 			this.getServerData("0");
 		},
@@ -103,6 +103,8 @@
 				});
 			},
 			showLineA(canvasId, chartData) {
+				
+				let labelCount = this.tagClick === '0'? 8 : 9
 				canvaLineA = new uCharts({
 					$this: _self,
 					canvasId: canvasId,
@@ -126,7 +128,7 @@
 						boundaryGap: 'justify',
 						fontSize: 7,
 						gridEval: 1,
-						// disableGrid:true
+						labelCount:8,
 					},
 					yAxis: {
 						title: '元/斤',
@@ -169,28 +171,33 @@
 
 <style lang="scss">
 	.qiun-columns {
-		padding: 20rpx 0;
+		margin: 20rpx;
+		box-sizing: border-box;
+		background-color: #ffffff;
+		padding: 10rpx 20rpx;
 	}
 
 	/*样式的width和height一定要与定义的cWidth和cHeight相对应*/
 	.qiun-charts {
-		width: 750upx;
+		width: 660upx;
 		height: 500upx;
 		background-color: #FFFFFF;
 	}
 
 	.charts {
-		width: 750upx;
+		width: 660upx;
 		height: 500upx;
 		background-color: #FFFFFF;
 	}
 
-	.f-1 {
-		font-size: 10px;
+	.tips {
+		font-size: 20rpx;
 		background-color: #f2f2f2;
-		margin: 10px;
-		height: 14px;
+		margin: 20rpx 16rpx;
+		line-height: 50rpx;
 		text-align: center;
-		border-radius: 3px;
+		border-radius: 25rpx;
+		color:#e51c2e;
+		background: #f4f4f4;
 	}
 </style>

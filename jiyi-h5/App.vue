@@ -25,6 +25,7 @@
 <style lang="scss">
 	@import "uview-ui/index.scss";
 	/*每个页面公共css */
+	
 	.g-flex {
 		display: flex;
 	}
@@ -160,7 +161,7 @@
 	}
 
 	.b-t {
-		border-top: 1px solid rgba(229, 229, 229, 1)
+		border-top: 1px solid #f4f4f4;
 	}
 
 	.c-f {
@@ -170,9 +171,21 @@
 	.b-f {
 		background-color: #fff !important;
 	}
-
+	.comm-b-bottom{
+		border-bottom: 1px solid #f4f4f4;
+	}
 	.shadow {
-		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+		
+	}
+	.comm-container{
+		margin: 20rpx;
+		border-radius: 10rpx;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+	}
+	.comm-border{
+		border-radius: 10rpx;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 	}
 
 	.o-e {
@@ -192,14 +205,16 @@
 
 	.app-modular {
 		margin-top: 24rpx;
-
+		padding-bottom: 24rpx;
 		.app-img {
 			width: 258rpx;
 			height: 258rpx;
 			margin-right: 24rpx;
+			border-radius: 6rpx;
 		}
 
 		.app-info {
+			
 			.title {
 				line-height: 46rpx;
 				margin-bottom: 26rpx;
@@ -220,7 +235,7 @@
 
 			.app-number {
 				color: rgba(229, 28, 46, 1);
-				line-height: 60rpx;
+				height: 60rpx;
 			}
 
 			.immediately {
@@ -228,7 +243,17 @@
 				height: 60rpx;
 				background: rgba(229, 28, 46, 1);
 				border-radius: 10rpx;
+				
 			}
 		}
+	}
+	
+	
+	.footer-btn-box{
+	
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
 	}
 </style>

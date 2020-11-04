@@ -312,7 +312,7 @@
 		position: absolute;
 		right: 10rpx;
 		z-index: 9;
-		top: 14rpx;
+		top: 18rpx;
 	}
 
 	.title {
