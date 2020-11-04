@@ -5,12 +5,7 @@
       <el-form-item label="创建人">
         <el-input size="small" v-model="createBy" placeholder="输入创建人" style="width: 150px"></el-input>
       </el-form-item>
-      <el-form-item label="试题类型" prop="quType">
-       <el-select v-model="quType" style="width:50%;height:30px" size="small">
-          <el-option v-for="item in quTypeOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="状态" prop="status" style="margin-left:-100px">
+      <el-form-item label="状态" prop="status">
         <el-select v-model="status" style="width:45%;height:30px;" size="small">
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
         </el-select>
@@ -20,7 +15,7 @@
         <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
       </el-form-item>
       <el-row>
-        <el-button size="small" type="success" icon="el-icon-plus" @click="addQuestionInfos()" class="insert">添加</el-button>
+        <el-button size="small" type="success" icon="el-icon-plus" @click="addExamPaperInfos()" class="insert">添加</el-button>
       </el-row>
       <br/>
     </el-form>
@@ -35,21 +30,16 @@
       style="width: 100%"
     >
       <el-table-column type="index" label="序号" min-width="7%" align="center"></el-table-column>
-      <el-table-column prop="quContent" min-width="8%" label="问题名称" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="quType" min-width="7%" label="试题类型" align="center" :show-overflow-tooltip="true">
-        <template slot-scope="scope">
-          <span v-if="scope.row.quType == '0'">选择题</span>
-          <span v-if="scope.row.quType == '1'">判断题</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="answer" min-width="7%" label="试题答案" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="score" min-width="6%" label="分值" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="name" min-width="8%" label="试卷名称" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="vocation.name" min-width="8%" label="职业类别" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="answerTime" min-width="7%" label="答题时间" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="totalScore" min-width="7%" label="总分数" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="passScore" min-width="7%" label="及格分数" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="createBy" min-width="8%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
       <el-table-column prop="updateBy" min-width="8%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column align="center" min-width="7%" label="状态" prop="status">
+      <el-table-column align="center" min-width="6%" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -57,20 +47,20 @@
             :inactive-value="1"
             active-color="#13ce66"
             inactive-color="#ff4949"
-            @change="questionInfoEnable(scope)"
+            @change="examPaperInfoEnable(scope)"
           ></el-switch>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="10%">
         <template slot-scope="scope">
           <el-button
-            @click="openUpdateQuestionInfo(scope)"
+            @click="openUpdateExamPaperInfo(scope)"
             type="primary"
             size="small"
             icon="el-icon-edit"
             >编辑</el-button>
           <el-button
-            @click="deleteQuestionInfo(scope)"
+            @click="deleteExamPaperInfo(scope)"
             type="danger"
             size="small"
             icon="el-icon-delete"
@@ -91,27 +81,27 @@
       @callFather="callFather"
     ></Pagination>
     <!-- 添加 -->
-    <add-questionInfo
-      :show="addQuestionInfo"
+    <add-examPaperInfo
+      :show="addExamPaperInfo"
       title="添加"
-      @close="closeQuestionInfoDialog"
-      @save="saveQuestionInfo"
-    ></add-questionInfo>
+      @close="closeExamPaperInfoDialog"
+      @save="saveExamPaperInfo"
+    ></add-examPaperInfo>
     <!-- 修改 -->
-    <update-questionInfo
-      :show="updateQuestionInfoFlag"
-      :transQuestionInfoId="transQuestionInfoId"
+    <!-- <update-examPaperInfo
+      :show="updateExamPaperInfoFlag"
+      :transExamPaperInfoId="transExamPaperInfoId"
       title="修改"
-      @close="closeUpdateQuestionInfoDialog"
-      @save="upQuestionInfo"
-    ></update-questionInfo>
+      @close="closeUpdateExamPaperInfoDialog"
+      @save="upExamPaperInfo"
+    ></update-examPaperInfo> -->
     <!-- 详情 -->
-    <detail-question
+    <!-- <detail-examPaperInfo
       :show="detailQuestionFlag"
       :transDetailQuestionId="transDetailQuestionId"
       title="详情"
       @close="closeDetailQuestionDialog"
-    ></detail-question>
+    ></detail-examPaperInfo> -->
   </div>
 </template>
 
@@ -119,23 +109,22 @@
 import Pagination from "../../components/Pagination";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
-import AddQuestionInfo from "./addQuestionInfo";
-import UpdateQuestionInfo from "./updateQuestionInfo";
-import DetailQuestion from "./detailQuestionInfo";
+import AddExamPaperInfo from "./addExamPaperInfo";
+// import UpdateExamPaperInfo from "./updateExamPaperInfo";
+// import DetailQuestion from "./detailExamPaperInfo";
 export default {
   inject: ["reload"],
   data() {
     return {
       createBy: "",
-      quType:"",
       status:"",
       updateUser: "",
       loading: false, //是显示加载
       dialogVisible: false,
-      addQuestionInfo: false,
-      updateQuestionInfoFlag: false,
+      addExamPaperInfo: false,
+      updateExamPaperInfoFlag: false,
       detailQuestionFlag:false,
-      transQuestionInfoId: "",
+      transExamPaperInfoId: "",
       transDetailQuestionId:"",
       formInline: {
         page: 1,
@@ -153,18 +142,13 @@ export default {
         { value: "0", label: "启用" },
         { value: "1", label: "禁用" },
       ],
-      quTypeOptions:[
-        {value: "", label: "全部"},
-        {value: "0", label: "选择题"},
-        {value: "1", label: "判断题"}
-      ],
     };
   },
   // 注册组件
   components: {
-    AddQuestionInfo,
-    UpdateQuestionInfo,
-    DetailQuestion,
+    AddExamPaperInfo,
+    // UpdateExamPaperInfo,
+    // DetailQuestion,
     Pagination,
   },
   watch: {},
@@ -186,14 +170,12 @@ export default {
         this.formInline.limit = 10;
       }
       let params = {
-        title: this.title,
         createBy: this.createBy,
-        quType: this.quType,
         status: this.status,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
-      api.testAxiosGet(ApiPath.url.questionInfoSearch, params).then((res) => {
+      api.testAxiosGet(ApiPath.url.examPaperInfoSearch, params).then((res) => {
         let code = res.state;
         if (code == "0") {
           this.loading = false;
@@ -210,35 +192,35 @@ export default {
     close() {
       this.$emit("close");
     },
-    saveQuestionInfo() {
-      this.addQuestionInfo = false;
+    saveExamPaperInfo() {
+      this.addExamPaperInfo = false;
     },
-    closeQuestionInfoDialog() {
+    closeExamPaperInfoDialog() {
       this.search(this.formInline);
-      this.addQuestionInfo = false;
+      this.addExamPaperInfo = false;
     },
-    addQuestionInfos() {
-      this.addQuestionInfo = true;
+    addExamPaperInfos() {
+      this.addExamPaperInfo = true;
     },
-    closeUpdateQuestionInfoDialog() {
+    closeUpdateExamPaperInfoDialog() {
       this.search(this.formInline);
-      this.updateQuestionInfoFlag = false;
+      this.updateExamPaperInfoFlag = false;
     },
     closeDetailQuestionDialog(){
       this.search(this.formInline)
       this.detailQuestionFlag = false;
     },
-    upQuestionInfo() {
-      this.updateQuestionInfoFlag = false;
+    upExamPaperInfo() {
+      this.updateExamPaperInfoFlag = false;
     },
     //启用/禁用
-    questionInfoEnable: function (scope) {
+    examPaperInfoEnable: function (scope) {
       let params = {
         id: scope.row.id,
         status: scope.row.status,
         updateUser: localStorage.getItem("userInfo"),
       };
-      api.testAxiosGet(ApiPath.url.questionInfoEnable, params)
+      api.testAxiosGet(ApiPath.url.examPaperInfoEnable, params)
         .then((res) => {
           let code = res.state;
           if (code == "0") {
@@ -251,9 +233,9 @@ export default {
         }).catch(function (error) {});
     },
     //显示编辑界面
-    openUpdateQuestionInfo(scope) {
-      this.transQuestionInfoId = scope.row.id;
-      this.updateQuestionInfoFlag = true;
+    openUpdateExamPaperInfo(scope) {
+      this.transExamPaperInfoId = scope.row.id;
+      this.updateExamPaperInfoFlag = true;
     },
     //显示详情页面
     openDetailQuestion(scope) {
@@ -263,14 +245,13 @@ export default {
     //重置
     resetForm(search) {
       this.createBy = "",
-      this.quType= "",
       this.status= "",
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
     // 删除
-    deleteQuestionInfo(scope) {
+    deleteExamPaperInfo(scope) {
       //状态为0不能被删除
       if (scope.row.status == 0) {
         this.$alert("数据状态生效不能被删除！", "提示", {
@@ -286,7 +267,7 @@ export default {
           let params = {
             id: scope.row.id,
           };
-          api.testAxiosGet(ApiPath.url.deleteQuestionInfo, params).then((res) => {
+          api.testAxiosGet(ApiPath.url.deleteExamPaperInfo, params).then((res) => {
             let code = res.state;
             if (code == "0") {
               this.$message.success(res.message);
@@ -305,7 +286,7 @@ export default {
 </script>
 
 <style scoped>
-.userQuestionInfo {
+.userExamPaperInfo {
   width: 100%;
 }
 .height {

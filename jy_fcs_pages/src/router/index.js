@@ -101,6 +101,8 @@ import EduManualLabel from '@/views/eduManualLabel/manualLabelInfo';
 import ManualInfo from '@/views/eduManualInfo/manualInfo';
 //试题管理
 import QuestionInfo from '@/views/eduQuestionInfo/questionInfo';
+//试卷管理
+import ExamPaperInfo from '@/views/eduExamPaperInfo/examPaperInfo'
 //线下课程
 import EduLessonInfo from '@/views/lesson/lessonList'
 //报名列表
@@ -385,7 +387,15 @@ export default new Router({
                 meta: {
                     requireAuth: true
                 }
+            }, {
+                path: '/eduExamPaperInfo/examPaperInfo',
+                name: '试卷管理',
+                component: ExamPaperInfo,
+                meta: {
+                    requireAuth: true
+                }
             }
+
     ]
     }]
 })

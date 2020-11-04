@@ -56,7 +56,7 @@
       <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
       <el-table-column prop="updateBy" min-width="8%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column align="center" min-width="7%" label="状态" prop="status">
+      <el-table-column align="center" min-width="6%" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -68,7 +68,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="9%">
+      <el-table-column align="center" label="操作" min-width="10%">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateManualInfo(scope)"
@@ -278,6 +278,7 @@ export default {
     },
     closeUpdateManualInfoDialog() {
       this.search(this.formInline);
+      this.transManualInfoId = "";
       this.updateManualInfoFlag = false;
     },
     closeDetailManualDialog(){

@@ -63,16 +63,16 @@
             <div>
               <el-card style="height: 450px;width:560px;">
                 <!-- 富文本上传图片 -->
-                <el-upload
+                <!-- <el-upload
                   class="avatar-uploader quill-img"
                   :action="upload"
                   :show-file-list="false"
                   :on-success="quillUploadSuccess"
                   :beforeUpload="beforeAvatarUpload">
-                </el-upload>
-                <quill-editor v-model="editForm.content" ref="myQuillEditor" style="height: 345px;margin-top: -40px" :options="editorOption">
+                </el-upload> -->
+                <quill-editor v-model="editForm.content" ref="myQuillEditor" style="height: 345px;" :options="editorOption">
                   <!-- 自定义toolar -->
-                  <div id="toolbar" slot="toolbar">
+                  <!-- <div id="toolbar" slot="toolbar">
                     <button class="ql-bold" title="加粗">Bold</button>
                     <button class="ql-italic" title="斜体">Italic</button>
                     <button class="ql-underline" title="下划线">underline</button>
@@ -107,7 +107,7 @@
                     <button class="ql-clean" title="还原"></button>
                     <button class="ql-link" title="超链接"></button>
                     <button class="ql-image" title="照片"></button>
-                  </div>
+                  </div> -->
                 </quill-editor>
               </el-card>
             </div>
@@ -127,14 +127,14 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import {Quill,quillEditor} from 'vue-quill-editor'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+// import 'quill/dist/quill.core.css'
+// import 'quill/dist/quill.snow.css'
+// import 'quill/dist/quill.bubble.css'
 // 自定义字体大小
-let Size = Quill.import('attributors/style/size')
-Size.whitelist = ['14px', '16px', '18px', '20px','22px','24px','26px']
-import aes from "@/utils/aes.js";
-Quill.register(Size, true)
+// let Size = Quill.import('attributors/style/size')
+// Size.whitelist = ['14px', '16px', '18px', '20px','22px','24px','26px']
+// import aes from "@/utils/aes.js";
+// Quill.register(Size, true)
 export default {
   inject: ["reload"],
   props: {
@@ -180,18 +180,18 @@ export default {
         placeholder: "请输入...",
           theme: "snow", 
           modules: {
-            toolbar: {
-              container: '#toolbar',
-              handlers: {
-                'image': function (value) {
-                  if (value) {
-                      document.querySelector('.quill-img input').click()
-                  } else {
-                      this.quill.format('image', false);
-                  }
-                }
-              }
-            }
+            // toolbar: {
+            //   container: '#toolbar',
+            //   handlers: {
+            //     'image': function (value) {
+            //       if (value) {
+            //           document.querySelector('.quill-img input').click()
+            //       } else {
+            //           this.quill.format('image', false);
+            //       }
+            //     }
+            //   }
+            // }
          }
       }
     };
@@ -252,7 +252,7 @@ export default {
       this.close();
     },
     close() {
-      this.reload();
+      // this.reload();
       this.$emit("close");
     },
     // 职业类别下拉列表

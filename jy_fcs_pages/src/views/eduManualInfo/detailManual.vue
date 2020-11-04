@@ -58,11 +58,12 @@
         <el-row>
           <el-col :span="3">内容:</el-col>
           <el-col :span="18">
-            <el-card style="height: 450px;width:560px;">
+            <span v-html="editForm.content">{{editForm.content}}</span>
+            <!-- <el-card style="height: 450px;width:560px;">
               <quill-editor v-model="editForm.content" ref="myQuillEditor" style="height: 400px;" disabled :options="editorOption">
                 <div id="toolbar" slot="toolbar"></div>
               </quill-editor>
-            </el-card>
+            </el-card> -->
           </el-col>
         </el-row>
       </el-form>
@@ -122,9 +123,9 @@ export default {
         placeholder: "请输入...",
             theme: "snow", 
             modules: {
-                toolbar: {
-                    container: '#toolbar',
-                }
+                // toolbar: {
+                //     container: '#toolbar',
+                // }
             }
         }
     };
@@ -151,7 +152,7 @@ export default {
       this.close();
     },
     close() {
-      this.reload();
+      // this.reload();
       this.$emit("close");
     },
   },

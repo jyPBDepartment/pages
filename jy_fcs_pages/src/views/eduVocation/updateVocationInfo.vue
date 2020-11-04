@@ -114,7 +114,7 @@ export default {
     beforeClose() {
       this.close();
     },
-    close() {
+    close: function () {
       this.$emit("close");
     },
     //编辑保存

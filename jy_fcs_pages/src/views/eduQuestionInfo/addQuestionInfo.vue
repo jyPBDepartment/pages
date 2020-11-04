@@ -25,7 +25,7 @@
             </el-radio-group>
           </template>
         </el-form-item>
-        <el-form-item label="问题描述" prop="quContent">
+        <el-form-item label="问题名称" prop="quContent">
           <el-input type="textarea" v-model="editForm.quContent" rows="3" size="small" placeholder="请输入题目(限255个字)" style="width:80%;" maxlength="255"></el-input>
         </el-form-item>
         <el-form-item label="选项A" prop="optionA" v-if="aShow">
@@ -41,7 +41,7 @@
           <el-input type="text" v-model="option[3]" size="small" placeholder="请输入选项D(限255个字)" style="width:80%;" maxlength="255"></el-input>
         </el-form-item>
         <el-form-item label="正确答案" prop="answer">
-          <el-input type="text" v-model="editForm.answer" size="small" placeholder="正确答案" style="width:30%;" maxlength="5"></el-input>
+          <el-input type="text" v-model="editForm.answer" size="small" placeholder="请输入大写英文字母" change="answerBig" style="width:30%;" maxlength="5"></el-input>
         </el-form-item>
         <el-form-item label="分值" prop="score">
           <el-select v-model="editForm.score" style="width:30%;height:30px" size="small">
@@ -85,12 +85,13 @@ export default {
         option: [],
         optionName:[],
         editForm: {
-            vocationId: "",
-            answer: "",
-            id: "",
-            createBy: localStorage.getItem("userInfo"),
-            quType: 0,
-            quContent:""
+          vocationId: "",
+          answer: "",
+          id: "",
+          createBy: localStorage.getItem("userInfo"),
+          quType: 0,
+          quContent:"",
+          score:""
         },
         vocationIdOptions: [],
         //分数
@@ -201,11 +202,18 @@ export default {
               confirmButtonText: "确定",
             });
             return false;
-          }if (this.option[3] == "") {
+          }
+          if (this.option[3] == "") {
             this.$alert("选项D不能为空", "提示", {
               confirmButtonText: "确定",
             });
             return false;
+          }
+          if (!/^[A-D]$/.test(this.editForm.answer)) {
+            this.$alert("请输入正确答案！", "提示", {
+              confirmButtonText: "确定",
+            });
+            this.editForm.answer = "";
           }
         }
         if(this.editForm.quType == 1){
@@ -221,15 +229,15 @@ export default {
             });
             return false;
           }
-        }
-        if (this.editForm.answer == "") {
-          this.$alert("正确答案不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
+          if (!/^[A-B]$/.test(this.editForm.answer)) {
+            this.$alert("请输入正确答案(判断题只能输入A或B)！", "提示", {
+              confirmButtonText: "确定",
+            });
+            this.editForm.answer = "";
+          }
         }
         if (this.editForm.score == "") {
-          this.$alert("分数不能为空", "提示", {
+          this.$alert("分值不能为空", "提示", {
             confirmButtonText: "确定",
           });
           return false;

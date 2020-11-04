@@ -338,7 +338,6 @@ const url = {
   findLabelId: EDUHost + '/manualLabel/label',
 
   //试题管理
-  
   // 分页查询
   questionInfoSearch: EDUHost + '/questionInfo/findByName',
   // 添加
@@ -351,6 +350,14 @@ const url = {
   questionFindById: EDUHost + '/questionInfo/findById',
   // 修改状态
   questionInfoEnable: EDUHost + '/questionInfo/enable',
+  //试卷管理
+  //分页查询
+  examPaperInfoSearch: EDUHost + '/examPaperInfo/findByName',
+  //添加试题分页
+  showQuestion: EDUHost + '/questionInfo/findQuestion',
+  //添加
+  addExamPaperInfo: EDUHost + '/examPaperInfo/add',
+  
   // 获取证书列表
   findCertificatePage: EDUHost + '/certificate/findPage',
   //根据主键删除证书

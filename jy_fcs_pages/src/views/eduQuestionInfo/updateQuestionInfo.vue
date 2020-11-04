@@ -25,7 +25,7 @@
             </el-radio-group>
           </template>
         </el-form-item>
-        <el-form-item label="问题描述" prop="quContent">
+        <el-form-item label="问题名称" prop="quContent">
           <el-input type="textarea" v-model="editForm.quContent" rows="3" size="small" placeholder="请输入题目(限255个字)" style="width:80%;" maxlength="255"></el-input>
         </el-form-item>
         <el-form-item label="选项A" prop="optionA" v-if="aShow">
@@ -177,7 +177,7 @@ export default {
     beforeClose() {
       this.close();
     },
-    close() {
+    close: function () {
       this.$emit("close");
     },
     // 职业类别下拉列表
@@ -195,7 +195,7 @@ export default {
           }
         }).catch(function (error) {});
     },
-    
+
     //保存
     updateQuestionInfo(editData) {
       this.$refs[editData].validate((valid) => {
@@ -235,6 +235,12 @@ export default {
             });
             return false;
           }
+          if (!/^[A-D]$/.test(this.editForm.answer)) {
+            this.$alert("请输入正确答案！", "提示", {
+              confirmButtonText: "确定",
+            });
+            this.editForm.answer = "";
+          }
         }
         if(this.editForm.quType == 1){
           if (this.option[0] == "") {
@@ -249,12 +255,12 @@ export default {
             });
             return false;
           }
-        }
-        if (this.editForm.answer == "") {
-          this.$alert("正确答案不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
+          if (!/^[A-B]$/.test(this.editForm.answer)) {
+            this.$alert("请输入正确答案(判断题只能输入A或B)！", "提示", {
+              confirmButtonText: "确定",
+            });
+            this.editForm.answer = "";
+          }
         }
         if (this.editForm.score == "") {
           this.$alert("分数不能为空", "提示", {
@@ -262,8 +268,6 @@ export default {
           });
           return false;
         }
-        console.log(this.optionName[0]);
-        console.log(this.optionName[1]);
         if (valid) {
           let addOption = [];
           let add = [];

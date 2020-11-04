@@ -28,7 +28,7 @@
         </el-row>
         <el-divider></el-divider>
         <el-row>
-          <el-col :span="3">问题描述:</el-col>
+          <el-col :span="3">问题名称:</el-col>
           <el-col :span="18"><span>{{editForm.quContent}}</span></el-col>
         </el-row>
         <el-divider></el-divider>
