@@ -26,7 +26,7 @@
 					农机图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :file-list="fileList" max-count="5"></u-upload>
+					<u-upload :show-progress="false" :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">

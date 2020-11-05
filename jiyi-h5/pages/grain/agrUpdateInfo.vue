@@ -27,7 +27,7 @@
 					农服图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" list-type="picture" :on-exceed="uploadExceed" :lazy-load="true"
+					<u-upload :action="action" :show-progress="false" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" list-type="picture" :on-exceed="uploadExceed" :lazy-load="true"
  :before-remove="beforeRemove" :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5">
 					 <u-loading slot="loading">图片正在加载中。。。</u-loading>
 					 </u-upload>

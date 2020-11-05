@@ -5,11 +5,11 @@
 			 :class="(index0 == screenIndex || index0 == screened) && 'screen-select'" v-for="(item, index0) in condition" :key="index0">{{item.name}}</view>
 		</view>
 		<uni-drawer ref="drawer" mode="right" :visible="true" :width="300">
-			<view style="padding:46rpx ">
+			<view style="padding:40rpx ">
 				<view v-for="(item, index1) in screenList" :key="index1">
 					<view class="f-16" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item.title}}</view>
-					<view>
-						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
+					<view class="b-t">
+						<u-row class="categorys g-flex g-f-warp  st">
 							<u-col :span="2" v-for="(item, index) in item.category" :key="index" :class="(screenedIndex1 == index1 && screenedIndex == index) && ' screened'"
 							 @click="selected(index1,index)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f4f4f4;padding:5rpx;">
 								<view style="text-align: center;">
@@ -22,7 +22,7 @@
 
 				<view v-if="selectType=='1'" v-for="(item1, index2) in screenL" :key="index2+1" style="margin-top:20rpx;">
 					<view class="f-16" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item1.title}}</view>
-					<view>
+					<view class="b-t">
 						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
 							<u-col :span="3" v-for="(item2, index3) in item1.category" :key="index3" :class="(screenedIndex2 == index2 && screenedIndex3 == index3) && ' screened'"
 							 @click="selected1(index2,index3)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f4f4f4;padding:5rpx;">
@@ -183,5 +183,6 @@
 
 	.st {
 		justify-content: space-between !important
+		
 	}
 </style>

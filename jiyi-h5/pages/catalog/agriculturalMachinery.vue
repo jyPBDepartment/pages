@@ -5,11 +5,15 @@
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
 				<view @click="jump(item.id)" class="box box-border p-y-10 f-12 g-flex" v-for="(item, index) in list" :key="index">
-					<view class="image" :class="`${item.stateNum == 1 && 'green' } ${item.stateNum == 2 && ' red'}`">
+					<view class="image">
+						<!-- <view class="tag f-12 t-c" v-if="item.stutas === 0">{{ item.transactionTypeCode }}</view>
+						<view class="tag f-12 t-c">{{ item.transactionTypeCode }}</view>
+						<view class="tag f-12 t-c">{{ item.transactionTypeCode }}</view> -->
+						
 						<image class="app-img" :src="item.imageUrl" style="width: 200rpx;height: 200rpx;"></image>
 					</view>
-					<view class="info g-f-1"  >
-						<view class=" f-12  other g-a-c g-flex g-j-s-b">
+					<view class="info g-f-1">
+						<view class="name f-12  other g-a-c g-flex g-j-s-b">
 							<view class="o-e" >
 								{{item.name}}
 							</view>
@@ -209,6 +213,7 @@
 									curPageData[i].imageUrl = curPageData[i].url.split(",")[0];
 								}
 								this.list = this.list.concat(curPageData); //追加新数据
+								console.log(this.list)
 								this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
 							}
 							// 请求成功,隐藏加载状态
@@ -326,32 +331,51 @@
 		color: #808080;
 
 		.image {
+			position: relative;
 			width: 200rpx;
 			height: 200rpx;
 			margin-right: 20rpx;
 			color: #fff;
+			.tag {
+				position: absolute;
+				z-index: 9;
+				border-radius: 6rpx;
+				color: #fff;
+				top: 0;
+				left:0;
+				background: red;
+				width: 72rpx;
+				line-height: 40rpx;
+				font-size: 24rpx;
+				
+			}
+			.orange {
+			
+				background-color: #ff8d1a;
+			}
+			
+			.green {
+				background-color: #43cf7c;
+			}
+			
+			.red {
+			
+				background-color: #e51c2e;
+			}
+			
 		}
 
-		.orange {
-
-			background-color: #ff8d1a;
-		}
-
-		.green {
-
-			background-color: #43cf7c;
-		}
-
-		.red {
-
-			background-color: #e51c2e;
-		}
+		
 
 		.info {
+			.name{
+				height: 100rpx;
+				color: #333;
+				font-size: 36rpx;
+			}
 			.title {
 				height: 76rpx;
 				color: #333;
-
 				.price {
 					width: 210rpx;
 					text-align: right;

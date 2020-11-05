@@ -191,7 +191,7 @@
 	}
 
 	.tips {
-		font-size: 20rpx;
+		font-size: 18rpx;
 		background-color: #f2f2f2;
 		margin: 20rpx 16rpx;
 		line-height: 50rpx;

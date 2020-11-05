@@ -67,11 +67,11 @@
 					土地图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess"
+					<u-upload :action="action" :show-progress="false" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess"
 					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5"></u-upload>
 				</view>
 			</view>
-			<u-button @click="appointment" style="margin: 40rpx;" shape="circle" type="error">预约</u-button>
+			<u-button class="footer-btn-box" @click="appointment" style="margin: 24rpx 0;" shape="circle" type="error">预约</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
 		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change"

@@ -296,7 +296,7 @@
 	}
 
 	.content {
-		padding: 30rpx 30rpx 60rpx 30rpx;
+		padding: 30rpx;
 	}
 
 	.comments {

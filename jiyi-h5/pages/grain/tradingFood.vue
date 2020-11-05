@@ -23,7 +23,7 @@
 					土地图片
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload width="167" ref="uUpload" :action="action" :auto-upload="false"></u-upload>
+					<u-upload width="167" :show-progress="false" ref="uUpload" :action="action" :auto-upload="false"></u-upload>
 				</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">

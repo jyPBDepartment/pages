@@ -1,22 +1,12 @@
 <template>
 	<view>
 		<HeaderSearch @searchCallback="search" :title="title"></HeaderSearch>
-		
 		<view>
 			<image :src="url" style="width: 750rpx;height: 750rpx;"></image>
 		</view>
-		<view class="p-x-10" style="margin-top: 30rpx;">
+		<view class="p-10">
 			<view v-html="demoHtml"></view>
 		</view>
-		<!-- <view class="catalog t-c f-14 shadow" @click="isShow">目录</view>
-		<uni-drawer ref="drawer" mode="right" :visible="true">
-			<view class="title f-12" style="line-height: 36rpx;padding: 10rpx;">
-				目录
-			</view>
-			<view class="f-14" :class="index == selectIndex && 'select'" @click="select(index)" style="padding: 10rpx 20rpx;" v-for="(item, index) in 3" :key="index">
-				形态特征
-			</view>
-		</uni-drawer> -->
 	</view>
 </template>
 
@@ -81,15 +71,5 @@
 </script>
 
 <style lang="scss">
-	.catalog {
-		width: 72rpx;
-		line-height: 72rpx;
-		border-radius: 36rpx;
-		position: fixed;
-		right: 10rpx;
-		top: 700rpx;
-	}
-	.select{
-		background-color: #e5e5e5;
-	}
+
 </style>

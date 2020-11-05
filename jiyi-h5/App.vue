@@ -95,23 +95,23 @@
 	}
 
 	.p-x-10 {
-		padding: 0 20rpx;
+		padding: 0 24rpx;
 	}
 
 	.p-y-10 {
-		padding: 20rpx 0;
+		padding: 24rpx 0;
 	}
 
 	.p-10 {
-		padding: 20rpx;
+		padding: 24rpx;
 	}
 
 	.m-y-10 {
-		margin: 20rpx 0;
+		margin: 24rpx 0;
 	}
 
 	.m-x-10 {
-		margin: 0 20rpx;
+		margin: 0 24rpx;
 	}
 
 	.g-f-row {
@@ -139,7 +139,9 @@
 	.t-c {
 		text-align: center;
 	}
-
+	.f-10{
+		font-size: 20rpx;
+	}
 	.f-12 {
 		font-size: 24rpx;
 	}
@@ -255,5 +257,6 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
+		z-index: 999;
 	}
 </style>

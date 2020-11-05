@@ -26,7 +26,7 @@
 					设置封面
 				</view>
 				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :lazy-load="true" :before-remove="beforeRemove"
+					<u-upload :show-progress="false" :action="action" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :lazy-load="true" :before-remove="beforeRemove"
 					 :max-size="5 * 1024 * 1024" :file-list="fileList" max-count="5" list-type="picture" :on-exceed="uploadExceed"></u-upload>
 				</view>
 			</view>
