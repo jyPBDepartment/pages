@@ -47,10 +47,13 @@
         icon="el-icon-close"
       >重置</el-button>
       </el-form-item>
+      <el-row>
+        <el-button size="small" type="primary" icon="el-icon-download" @click="exportExcel()" >导出</el-button>
+      </el-row>
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;" highlight-current-row size="mini">
+    <el-table id="exportTab" :data="tableData" border style="width: 100%;" highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="7%" ></el-table-column>
       <el-table-column prop="certificate.name" label="证书名称" align="center" min-width="20%"  :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="certificate.vocation.name" min-width="10%" label="职业类别" align="center" :show-overflow-tooltip="true"></el-table-column>
@@ -78,6 +81,8 @@ import editLesson from "@/views/certificate/editCertificate";
 //import caseContent from "@/views/CaseInfo/caseContent";
 import Pagination from "../../components/Pagination";
 //import viewLesson from "@/views/lesson/studentList";
+import FileSaver from 'file-saver';
+ import XLSX from 'xlsx';
 export default {
   inject: ["reload"],
   props: {
@@ -141,6 +146,22 @@ export default {
     this.findContext();
   },
   methods: {
+        exportExcel () {
+      /* generate workbook object from table */
+      var xlsxParam = { raw: true } // 导出的内容只做解析，不进行格式转换
+      var wb = XLSX.utils.table_to_book(document.querySelector('#exportTab'), xlsxParam)
+
+      /* get binary string as output */
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+      try {
+        FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '审核情况表.xlsx')
+      } catch (e) {
+        if (typeof console !== 'undefined') {
+          console.log(e, wbout)
+        }
+      }
+      return wbout
+    },
     //分页赋值
     callFather(parm) {
       this.formInline.page = parm.currentPage;
