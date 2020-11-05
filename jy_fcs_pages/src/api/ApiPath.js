@@ -357,7 +357,14 @@ const url = {
   showQuestion: EDUHost + '/questionInfo/findQuestion',
   //添加
   addExamPaperInfo: EDUHost + '/examPaperInfo/add',
-  
+  //查询选项
+  findByQuestionId: EDUHost + '/optionInfo/findByQuestionId',
+  //修改状态
+  examPaperInfoEnable: EDUHost + '/examPaperInfo/enable',
+
+  //预览试卷
+  preview: EDUHost + '/examPaperInfo/preview',
+
   // 获取证书列表
   findCertificatePage: EDUHost + '/certificate/findPage',
   //根据主键删除证书

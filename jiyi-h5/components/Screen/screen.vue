@@ -4,14 +4,14 @@
 			<view class="sort g-f-1 g-flex g-a-c g-j-c" :style="item.name == '筛选' && 'border-left: 1rpx solid #e5e5e5;'" @click="selectLabel(item, index0)"
 			 :class="(index0 == screenIndex || index0 == screened) && 'screen-select'" v-for="(item, index0) in condition" :key="index0">{{item.name}}</view>
 		</view>
-		<uni-drawer ref="drawer" mode="right" :visible="true" :width="320">
-			<view style="padding:46rpx 20rpx">
+		<uni-drawer ref="drawer" mode="right" :visible="true" :width="300">
+			<view style="padding:46rpx ">
 				<view v-for="(item, index1) in screenList" :key="index1">
-					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item.title}}</view>
+					<view class="f-16" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item.title}}</view>
 					<view>
 						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
 							<u-col :span="2" v-for="(item, index) in item.category" :key="index" :class="(screenedIndex1 == index1 && screenedIndex == index) && ' screened'"
-							 @click="selected(index1,index)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f8fff3;opacity:0.9;">
+							 @click="selected(index1,index)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f4f4f4;padding:5rpx;">
 								<view style="text-align: center;">
 									{{item.name}}
 								</view>
@@ -21,11 +21,11 @@
 				</view>
 
 				<view v-if="selectType=='1'" v-for="(item1, index2) in screenL" :key="index2+1" style="margin-top:20rpx;">
-					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item1.title}}</view>
+					<view class="f-16" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item1.title}}</view>
 					<view>
 						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
 							<u-col :span="3" v-for="(item2, index3) in item1.category" :key="index3" :class="(screenedIndex2 == index2 && screenedIndex3 == index3) && ' screened'"
-							 @click="selected1(index2,index3)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f8fff3;opacity:0.9;">
+							 @click="selected1(index2,index3)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f4f4f4;padding:5rpx;">
 								<view style="text-align: center;">
 									{{item2.name}}
 								</view>
@@ -35,8 +35,8 @@
 				</view>
 			</view>
 			<view class="btns g-flex g-j-s-b">
-				<u-button class="btn" shape="circle" @click="recharge" plain>重置</u-button>
-				<u-button class="btn" shape="circle" @click="confirm(true)" type="error">确认</u-button>
+				<u-button class="btn" size="mini" shape="circle" @click="recharge" plain>重置</u-button>
+				<u-button class="btn" size="mini"  shape="circle" @click="confirm(true)" type="error">确认</u-button>
 			</view>
 		</uni-drawer>
 	</view>
@@ -143,7 +143,7 @@
 	.screen {
 		height: 84rpx;
 		color: #808080;
-		border-bottom: 1px solid #808080;
+		border-bottom: 1px solid #f4f4f4;
 
 		.sort {
 			height: 34rpx;
@@ -171,8 +171,10 @@
 
 	.btns {
 		position: absolute;
-		bottom: 60rpx;
+		bottom:20rpx;
 		width: 100%;
+		padding: 20rpx;
+		border-top: 1px solid #f4f4f4;
 
 		.btn {
 			width: 192rpx;
