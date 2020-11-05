@@ -46,8 +46,8 @@ import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
-import FileSaver from 'file-saver';
-import XLSX from 'xlsx';
+// import FileSaver from 'file-saver';
+// import XLSX from 'xlsx';
 export default {
   inject: ["reload"],
   props: {

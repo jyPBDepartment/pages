@@ -167,12 +167,10 @@ export default {
       this.voationId = val.vocationId;
       this.selectData = val.listData;
       this.search(this.formInline);
-      console.log(val.listData);
+      // console.log(val.listData);
     },
   },
-  mounted() {
-
-  },
+  mounted() {},
   created() {
     this.search(this.formInline);
   },
@@ -180,7 +178,7 @@ export default {
     //选中结果
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      console.log(this.multipleSelection);
+      // console.log(this.multipleSelection);
     },
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -189,6 +187,7 @@ export default {
     },
     // 获取角色列表
     search: function (parameter) {
+      this.listData = [];
       if (parameter == "manual") {
         this.formInline.page = 1;
         this.formInline.limit = 10;
@@ -202,24 +201,29 @@ export default {
       };
       api.testAxiosGet(ApiPath.url.showQuestion, params).then((res) => {
         let code = res.state;
+
         if (code == "0") {
+          console.log(this.selectData)
           this.loading = false;
+          let data = [];
+          if (this.selectData.length >= 1) {
+           let result =res.data.content
+            for (let j = 0; j < this.selectData.length; j++) {
+              for (let i = 0;i< result.length; i++) {
+                if (this.selectData[j].id == result[i].id) {
+                  console.log("循环单个结果："+result[i]);
 
-          if (this.selectData.length > 1) {
-            for (let i = 0; res.data.content.length; i++) {
-              for (let j = 0; j < this.selectData.length; j++) {
-
-console.log(this.selectData[j].id+"---"+res.data.content[i].id)
-                if (this.selectData[j].id != res.data.content[i].id) {
-                  res.data.content[i] = res.data.content[i];
+                  result.splice(i,1);
+                  break;
                 }
               }
             }
-            this.listData = res.data.content;
+           
+            this.listData = result;
             this.formInline.currentPage = res.data.number + 1;
             this.formInline.pageSize = res.data.size;
             this.formInline.total = res.data.totalElements;
-          }else{
+          } else {
             this.listData = res.data.content;
             this.formInline.currentPage = res.data.number + 1;
             this.formInline.pageSize = res.data.size;
@@ -242,10 +246,10 @@ console.log(this.selectData[j].id+"---"+res.data.content[i].id)
       this.$emit("close");
     },
     confirm() {
-      this.transShowQuestionId.vocationId="";
+      this.transShowQuestionId.vocationId = "";
       this.$emit("show", this.multipleSelection);
       // this.multipleSelection=[];
-      
+
       this.close();
     },
   },

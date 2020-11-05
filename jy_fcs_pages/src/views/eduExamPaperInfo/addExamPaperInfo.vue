@@ -195,7 +195,8 @@ export default {
       labelPosition: "right",
       showQuestionInfo: false,
       showExamPaperFlag: false,
-      transShowExamPaperId: "",
+      transShowExamPaperId: {},
+      showForm:{},
       transShowQuestion: {},
       listData: [],
       transForm:{},
@@ -207,6 +208,8 @@ export default {
         totalScore: "",
         passScore: "",
         answerTime: "",
+        vocation:"",
+        vocationName:"",
         createBy: localStorage.getItem("userInfo"),
       },
       vocationIdOptions: [],
@@ -263,7 +266,13 @@ export default {
 
     //获取选中试题
     getMultiple(data) {
-      this.listData = data;
+      if(this.listData.length>0){
+        for(let j=0;j<data.length;j++){
+          this.listData.push(data[j]);
+        }
+      }else{
+        this.listData = data;
+      }
       for (let i = 0; i < data.length; i++) {
         this.fraction = this.fraction + data[i].score;
       }
@@ -272,41 +281,25 @@ export default {
     deleteQuestion(scope) {
       console.log(this.listData.length);
         for(let i=0;i<this.listData.length;i++){
-            if(this.listData[i].id == scope.row.id){
-              this.fraction = this.fraction - this.listData[i].score;
-              delete this.listData[i];
-            }
+          if (scope.row.id == this.listData[i].id) {
+            this.fraction = this.fraction - this.listData[i].score;
+            this.listData.splice(i,1)
+          }
         }
-      // let list = [];
-      // list = this.listData;
-      // console.log(list.length);
-      // Array.prototype.indexOf = function (scope) {
-      //   for (let i = 0; i < this.length; i++) {
-      //     if (this[i] == scope) {
-      //       return i;
-      //     }
-      //     return -1;
-      //   }
-      // };
-      // Array.prototype.remove = function (scope) {
-      //   var index = this.indexOf(scope);
-      //   if (index > -1) {
-      //     this.splice(index, 1);
-      //   }
-      //   console.log(list.length);
-      // };
-
-      // for (let j = 0; j < this.listData.length; j++) {
-      //   if (scope.row.id == this.listData[j].id) {
-      //     this.listData.remove(this.listData[j]);
-      //   }
-      // }
-      console.log("2"+this.listData)
-      console.log("2" + this.listData.length);
     },
+    //预览
     showExamPaper(listData) {
-      this.transShowExamPaperId = listData;
+      this.showForm.name=this.editForm.name;
+      this.showForm.answerTime = this.editForm.answerTime;
+      this.showForm.vocationId = this.editForm.vocationId;
+      this.showForm.vocation = this.editForm.vocation;
+      this.showForm.listData = this.listData;
+      this.transShowExamPaperId = this.showForm;
       this.showExamPaperFlag = true;
+      // this.$refs.child.initHtml();
+      console.log("vocationName"+this.editForm.vocationName)
+      console.log(this.editForm.vocation.id)
+      console.log(this.editForm.vocationId)
     },
     closeShowExamPaperDialog() {
       this.showExamPaperFlag = false;
