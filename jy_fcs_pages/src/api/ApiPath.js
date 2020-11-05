@@ -382,6 +382,10 @@ const url = {
   findFormworkById: EDUHost + '/formwork/findById',
   //修改模板信息
   updateFormwork: EDUHost + '/formwork/update',
+  //获取证书颁发列表
+  findIssueList: EDUHost + '/issue/findPage',
+  //获得证书统计列表
+  findCertificateMgt: EDUHost + '/issue/findMgtPage',
 }
 export default {
   url
