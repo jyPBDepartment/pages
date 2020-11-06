@@ -11,7 +11,7 @@
 			</u-col>
 		</u-row>
 		<!--  背景图 -->
-		<u-image width="100%" height="190rpx" :src="src"></u-image>
+		<u-image width="100%" height="190rpx" v-for="(item,index) in banner" :key="index" :src="item.url"></u-image>
 		<!-- 学习手册 -->
 		<view class="rm-list">
 			<view class="rm-manager" v-for="(item,index) in optionList" :key="index" @click="juniorManager(item.id)" >
@@ -32,14 +32,15 @@
 	export default {
 		data() {
 			return {
-				src: 'http://60.205.246.126/images/2020/09/29/1601348332838540.png',
+				banner:[],
 				show: false,
 				optionList:[]
 			}
 		},
+		// 页面初始化加载
 		onLoad(e) {
-			// 初始化加载职业类别信息	
-			this.initModuleInfo();
+			this.initModuleInfo();// 初始化加载职业类别信息	
+			this.picture();//初始化加载banner图
 		},
 		methods: {
 			// 初始化加载职业类别信息
@@ -49,7 +50,7 @@
 					method: "GET",
 					data: {},
 					success: (res) => {
-					console.log(res)
+					
 						if (res.data.state == 0) {	
 							this.optionList = res.data.data
 						}else{
@@ -65,6 +66,31 @@
 					}
 				});
 			},
+			// 初始化加载banner图
+			picture(){
+					uni.request({
+						url: ApiPath.url.findBanner,
+						method: "GET",
+						data: {
+							picType:1
+						},
+						success: (res) => {
+							if (res.data.code == 200) {
+								this.banner = res.data.data
+							} else {
+								uni.showToast({
+									title: res.data.data
+								})
+							}
+						},
+						fail: (err) => {
+							uni.showToast({
+								title: "系统初始化失败，请联系管理员"
+							})
+						}
+					});
+				
+			},
 			// 返回上一页
 			backTo() {
 				uni.navigateBack({
@@ -76,6 +102,7 @@
 				uni.navigateTo({
 					url: './agentArticle?id='+getId,//跳转地址
 				});
+				
 			}
 			
 		}

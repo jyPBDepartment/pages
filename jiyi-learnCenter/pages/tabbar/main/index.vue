@@ -80,21 +80,13 @@
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js'
 	export default {
 		data() {
 			return {
 				border:false,
-				banner:[
-					{
-						url:'http://60.205.246.126/images/2020/09/29/1601345831839353.png'
-					},
-					{
-						url:'http://60.205.246.126/images/2020/09/29/1601345831839353.png'
-					},
-					{
-						url:'http://60.205.246.126/images/2020/09/29/1601345831839353.png'
-					}
-				],
+				picType:'',
+				banner:[],
 				hotCourseList:[
 					{url:"http://60.205.246.126/images/2020/09/29/1601345920052441.jpg",word:"通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)",sum:"200"},
 					{url:"http://60.205.246.126/images/2020/09/29/1601345997114502.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"300"}
@@ -105,17 +97,43 @@
 				]
 			}
 		},
+		// 页面初始化加载
+		onLoad(e) {
+			this.picture();//初始化加载banner图
+		},
 		methods: {
+			// 初始化加载banner图
+			picture(){
+					uni.request({
+						url: ApiPath.url.findBanner,
+						method: "GET",
+						data: {
+							picType:0
+						},
+						success: (res) => {
+							if (res.data.code == 200) {
+								this.banner = res.data.data
+							} else {
+								uni.showToast({
+									title: "服务器出错，请联系管理员"
+								})
+							}
+						},
+						fail: (err) => {
+							uni.showToast({
+								title: "系统初始化失败，请联系管理员"
+							})
+						}
+					});
+				
+			},
+			// 线下课程
 			offlineCourses() {
 				uni.navigateTo({
 					url: "../../module/offlineCourses/offlineCourseMore"
 				})
 			},
-			onlineTraining() {
-				uni.navigateTo({
-					url: "../../module/onlineTraining/index"
-				})
-			},
+			// 学习考试
 			studyExamination() {
 				uni.navigateTo({
 					url: "../../module/studyExamination/index"

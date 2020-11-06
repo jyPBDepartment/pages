@@ -29,9 +29,7 @@
 			<view class="img">
 				<image class="contentImg" :src="item.url"></image>
 			</view>
-			<view class="artContent">
-				{{item.articleContent}}
-			</view>
+			<u-parse :html="item.articleContent" :selectable="true" :show-with-animation="true" ></u-parse>
 		</view>
 		<u-toast ref="uToast" />
 	</view>

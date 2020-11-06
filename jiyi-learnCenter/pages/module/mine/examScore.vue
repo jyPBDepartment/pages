@@ -12,15 +12,15 @@
 			<view class="examGrade" v-for="(item,index) in examScoreList" :key="index">
 					<view class="examTime">
 						<view class="title">
-							{{item.title}}
+							{{item.examPaperName}}
 						</view>
 						<view class="time">
-							考试时间：{{item.examTime}}
+							考试时间：{{item.examDate}}
 						</view>
 					</view>
 					<view class="examTime">
 						<view class="title">
-							测评名称：{{item.examTitle}}
+							测评名称：{{item.vocationName}}
 						</view>
 						<view class="time">
 							通过分数：{{item.passScore}}
@@ -28,7 +28,7 @@
 					</view>
 					<view class="examTime">
 						<view class="title">
-							得分：{{item.getScore}}
+							得分：{{item.score}}
 						</view>
 						
 					</view>
@@ -38,17 +38,47 @@
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js'
 	export default{
 		data(){
 			return{
-				examScoreList:[
-					{title:'初级经理人考试',examTime:'2020/08/12 13:46',examTitle:'农机知识',passScore:'80',getScore:'56'},
-					{title:'中级经理人考试',examTime:'2020/11/03 13:46',examTitle:'农机服务',passScore:'80',getScore:'60'},
-					{title:'高级经理人考试',examTime:'2020/11/11 13:46',examTitle:'团队协作',passScore:'80',getScore:'79'}
-				]
+				// userId: localStorage.getItem("userId"),
+				userId: "asdsadsad",
+				examScoreList:[]
 			}
 		},
+		// 页面初始化加载
+		onLoad(e) {
+			this.examScore();//考试成绩初始化加载
+		},
 		methods:{
+			//考试成绩初始化加载
+			examScore(){
+						uni.request({
+							url: ApiPath.url.findExamScore,
+							method: "GET",
+							data: {
+								userId:this.userId
+							},
+							success: (res) => {
+								console.log(JSON.stringify(res.data.data))
+								if (res.data.code == 200) {
+									this.examScoreList = res.data.data
+								} else {
+									uni.showToast({
+										title: "服务器出错，请联系管理员"
+									})
+								}
+							},
+							fail: (err) => {
+								uni.showToast({
+									title: "系统初始化失败，请联系管理员"
+								})
+							}
+						});
+					
+			},
+			// 返回上一页
 			backTo() {
 				uni.navigateBack({
 			

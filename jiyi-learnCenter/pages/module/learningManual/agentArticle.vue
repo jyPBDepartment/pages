@@ -32,7 +32,7 @@
 					<view class="listText">{{item.title}}</view>
 				</view>
 				<view class="listSen">
-					<view class="bride">{{item.sum}}人已学</view>
+					<view class="bride">{{item.studyNum}}人已学</view>
 				</view>
 				<view>
 					<u-line class="underline"></u-line>
@@ -55,22 +55,6 @@
 						id: "",
 						name: '全部'
 					}
-					// {
-					// 	code: 0,
-					// 	name: '农技'
-					// },
-					// {
-					// 	code: 1,
-					// 	name: '财经'
-					// },
-					// {
-					// 	code: 2,
-					// 	name: '管理'
-					// },
-					// {
-					// 	code: 3,
-					// 	name: '推广'
-					// }
 				],
 				current: "",
 				learningId: "",
@@ -119,7 +103,6 @@
 			this.initLabel();
 		},
 		methods: {
-
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
@@ -144,8 +127,10 @@
 					},
 					url: ApiPath.url.findById, //请求接口路径
 					success: (res) => { //成功返回结果方法
+					
 						if (res.data.state == 0) {
 							this.agentList = res.data.data;
+							
 							//设置列表数据
 							if (page.num == 1) this.agentList = []; //如果是第一页需手动置空列表
 							this.agentList = this.agentList.concat(res.data.data.content); //追加新数据
@@ -219,15 +204,13 @@
 			},
 			// 返回上一页
 			backTo() {
-				uni.navigateBack({
-
-				})
+				uni.redirectTo({url: './index'})
 			},
 			// 经销商文章跳转详情页面
 			agentArticleJump(getId) {
-				uni.navigateTo({
-					url: './agentArticleContent?id=' + getId
-				})
+					uni.navigateTo({
+						url: './agentArticleContent?id=' + getId
+					})
 			},
 			//搜索功能
 			search() {
@@ -261,7 +244,7 @@
 		.u-sticky {
 			position: -webkit-sticky;
 			position: sticky;
-			top: 2rpx;
+			top: 0rpx;
 			z-index: 999;
 		}
 

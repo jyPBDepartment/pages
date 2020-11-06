@@ -1,14 +1,15 @@
 <template>
 	<view id="studyExamination">
-		<u-row style="background-color: #f2f2f2;height: 60rpx;">
-			<u-col span="1">
-				<view class="title" @click="backTo">
-					< </view> </u-col> <u-col span="11">
-						<view class="title">学习考试</view>
-			</u-col>
-		</u-row>
+		<!-- 头部 -->
+		<view class="head">
+			<view class="backArrow" @click="backTo">
+				<u-icon name="arrow-left" color="#333" size="32"></u-icon>
+			</view>
+			<view class="title">学习考试</view>
+		</view>
+		
 		<!--  背景图 -->
-		<u-image width="100%" height="190rpx" :src="src"></u-image>
+		<u-image width="100%" height="190rpx" v-for="(item,index) in banner" :key="index" :src="item.url"></u-image>
 		<!--  考试列表 -->
 		<u-row>
 			<u-col span="5" v-for="(item,key) in studyExaminationList" :key="key" class="se-col">
@@ -30,13 +31,14 @@
 	export default {
 		data() {
 			return {
-				src: 'http://60.205.246.126/images/2020/09/29/1601348332838540.png',
+				banner:[],
 				studyExaminationList: []
 			}
 		},
+		// 初始化加载页面
 		onLoad(e) {
-			// 初始化加载考试列表信息	
-			this.initExamInfo();
+			this.initExamInfo();// 初始化加载考试列表信息	
+			this.picture();//初始化加载banner图
 		},
 		methods: {
 			// 初始化加载考试列表信息
@@ -62,6 +64,31 @@
 					}
 				});
 			},
+			// 初始化加载banner图
+			picture(){
+					uni.request({
+						url: ApiPath.url.findBanner,
+						method: "GET",
+						data: {
+							picType:2
+						},
+						success: (res) => {
+							if (res.data.code == 200) {
+								this.banner = res.data.data
+							} else {
+								uni.showToast({
+									title: "服务器出错，请联系管理员"
+								})
+							}
+						},
+						fail: (err) => {
+							uni.showToast({
+								title: "系统初始化失败，请联系管理员"
+							})
+						}
+					});
+				
+			},
 			// linkTo(val,pass) {
 			// 	if(pass=='1'){
 			// 		uni.navigateTo({
@@ -82,11 +109,28 @@
 <style lang="scss" scoped>
 	#studyExamination {
 		background-color: #ffffff;
-
-		.title {
-			text-align: center;
+		
+		.head {
+			display: flex;
+			padding: 15rpx 0 0 20rpx;
+			background-color: #F8F8F8;
+			width: 750rpx;
+			height: 80rpx;
+			position: -webkit-sticky;
+			position: sticky;
+			top: 0rpx;
+			z-index: 999;
+		
+			.backArrow {
+				margin-top: 6rpx;
+			}
+		
+			.title {
+				margin-left: 250rpx;
+				font-size: 32rpx;
+			}
 		}
-
+	
 		.brage {
 			width: 100rpx;
 			height: 50rpx;
