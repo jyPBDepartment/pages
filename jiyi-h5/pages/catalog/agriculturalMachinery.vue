@@ -6,10 +6,6 @@
 			<view class="p-x-10">
 				<view @click="jump(item.id)" class="box box-border p-y-10 f-12 g-flex" v-for="(item, index) in list" :key="index">
 					<view class="image">
-						<!-- <view class="tag f-12 t-c" v-if="item.stutas === 0">{{ item.transactionTypeCode }}</view>
-						<view class="tag f-12 t-c">{{ item.transactionTypeCode }}</view>
-						<view class="tag f-12 t-c">{{ item.transactionTypeCode }}</view> -->
-						
 						<image class="app-img" :src="item.imageUrl" style="width: 200rpx;height: 200rpx;"></image>
 					</view>
 					<view class="info g-f-1">
@@ -369,7 +365,7 @@
 
 		.info {
 			.name{
-				height: 100rpx;
+				height: 80rpx;
 				color: #333;
 				font-size: 36rpx;
 			}

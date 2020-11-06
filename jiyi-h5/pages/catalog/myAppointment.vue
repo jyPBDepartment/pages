@@ -14,11 +14,11 @@
 							{{item.agriName}}
 						</view>
 						<view class="f-16 price" >
-							￥{{item.workPrice}}元/亩
+							￥ {{item.workPrice}}元/亩
 						</view>
 					</view>
 					<view class="other g-a-c g-flex g-j-s-b">
-						面积{{item.area}}亩
+						面积：{{item.area}}亩
 						<view class="g-j-e">
 							{{item.beginDate}}至{{item.endDate}}
 						</view>

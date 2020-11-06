@@ -22,7 +22,7 @@
 					<view class="name f-14">
 						{{item.commentUserName}}
 					</view>
-					<view class="f-12" style="height: 96rpx; color: #666666;">
+					<view class="comment-content">
 						{{item.commentContent}}
 					</view>
 					<view class="other g-flex f-12 g-a-c">
@@ -34,17 +34,17 @@
 						</view>
 					</view>
 
-					<view @click.stop v-for="(item1, index1) in item.getReplyList" :key="index1">
-						<view style="padding: 0 36rpx; border-left: 1rpx solid #e5e5e5;">
+					<view class="child-item" @click.stop v-for="(item1, index1) in item.getReplyList" :key="index1">
+						<view style="padding: 0 24rpx; border-left: 1rpx solid #e5e5e5;">
 							<view class="name f-14">
 								{{item1.replyUserName}}
 							</view>
-							<view class="f-12" style="height: 96rpx; color: #666666;">
+							<view class="comment-content f-12">
 								{{item1.replyContent}}
 							</view>
 						</view>
 
-						<view style="padding: 0 36rpx;" class="other g-flex f-12 g-a-c">
+						<view class="other g-flex f-12 g-a-c">
 							<view class="time">
 								{{formatDate(item.commentDate)}}
 							</view>
@@ -302,23 +302,32 @@
 	.comments {
 		padding: 0 30rpx;
 		height: 94rpx;
-		border-bottom: 1rpx solid #ddd;
+		border-bottom: 2rpx solid #ddd;
 		border-top: 1rpx solid #ddd;
 	}
 
 	.name {
-		line-height: 56rpx;
+		line-height: 60rpx;
 		margin: 24rpx 0 12rpx 0;
+	}
+	.comment-content{
+		font-size: 24rpx;
+		padding: 20rpx;
+		color: #666;
 	}
 
 	.other {
 		color: #808080;
-
+		border-bottom: 2rpx solid #f4f4f4;
+		padding: 16rpx 24rpx;
 		.number {
-			padding: 5rpx 20rpx;
 			background-color: #e5e5e5;
+			padding: 5rpx 20rpx;
 			margin-left: 20rpx;
 			border-radius: 20rpx;
 		}
+	}
+	.child-item{
+		margin-left: 20rpx;
 	}
 </style>

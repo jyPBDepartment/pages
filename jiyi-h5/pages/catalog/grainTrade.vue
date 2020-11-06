@@ -6,23 +6,46 @@
 		<view class="b-f">
 			<u-row>
 				<u-col>
-					<u-dropdown ref="uDropdown" @open="open" @close="close" >
+					<u-dropdown ref="uDropdown" @open="open" @close="close">
 						<u-dropdown-item title="区域">
 							<view class="slot-content" style="background-color: #FFFFFF;">
 								<scroll-view scroll-y="true" style="height: 900rpx;">
 									<u-row>
 										<u-col span="4">
-											<u-tag text="全区域" :type="allIndex == '1'?'error':'info'" @click="allProvince" style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;" />
-											<u-tag :text="item.label" :type="clickProvinceIndex == key?'error':'info'" v-for="(item,key) in provinceData"
-											 @click="getMap(item.label,'pro',key)" :key="key" style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;" />
+											<u-tag
+												text="全区域"
+												:type="allIndex == '1' ? 'error' : 'info'"
+												@click="allProvince"
+												style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;"
+											/>
+											<u-tag
+												:text="item.label"
+												:type="clickProvinceIndex == key ? 'error' : 'info'"
+												v-for="(item, key) in provinceData"
+												@click="getMap(item.label, 'pro', key)"
+												:key="key"
+												style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;"
+											/>
 										</u-col>
 										<u-col span="4">
-											<u-tag :text="item.label" :type="clickCityIndex == key?'error':'info'" v-for="(item,key) in cityData" @click="getMap(item.label,'city',key)"
-											 :key="key" style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;" />
+											<u-tag
+												:text="item.label"
+												:type="clickCityIndex == key ? 'error' : 'info'"
+												v-for="(item, key) in cityData"
+												@click="getMap(item.label, 'city', key)"
+												:key="key"
+												style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;"
+											/>
 										</u-col>
 										<u-col span="4">
-											<u-tag :text="item.label" :type="clickAreaIndex == key?'error':'info'" v-for="(item,key) in areaData" @click="getMap(item.label,'area',key)"
-											 :key="key" style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;" />
+											<u-tag
+												:text="item.label"
+												:type="clickAreaIndex == key ? 'error' : 'info'"
+												v-for="(item, key) in areaData"
+												@click="getMap(item.label, 'area', key)"
+												:key="key"
+												style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;"
+											/>
 										</u-col>
 									</u-row>
 								</scroll-view>
@@ -41,501 +64,499 @@
 				<view class="app-modular g-flex" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
 					<image class="app-img" :src="item.url" mode=""></image>
 					<view class="app-info g-flex g-f-1 g-f-column g-j-s-b">
-						<p class="title f-14">{{item.name}}</p>
+						<p class="title f-14">{{ item.name }}</p>
 						<view v-if="item.address" class="g-flex f-12 g-a-c" style="color: rgba(128, 128, 128, 1)">
 							<u-icon style="margin-right: 5rpx;" name="map-fill" color="#A6A6A6" size="36"></u-icon>
-							{{item.address}}
+							{{ item.address }}
 						</view>
 						<view class="g-flex g-j-s-b f-14 g-a-c">
 							<view class="g-flex g-a-c">
 								<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 40rpx;height:40rpx;margin-right: 20rpx;"></image>
-								<view class="word">
-									{{item.contactsUser}}
-								</view>
+								<view class="word">{{ item.contactsUser }}</view>
 							</view>
-							<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">
-								{{item.createDate}}
-							</view>
+							<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.createDate }}</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</mescroll-body>
-		<uni-drawer ref="drawer" mode="right" :visible="true" :width="320" @close="drawerClose" @change="drawerChange">
+		<uni-drawer ref="drawer" mode="right" :visible="true" :width="250" @close="drawerClose" @change="drawerChange">
 			<view style="padding:46rpx 20rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
-					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item.title}}</view>
-					<view>
+					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{ item.title }}</view>
+					<!-- 	<view>
 						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
-							<u-col :span="2" v-for="(item, index) in item.category" :key="index" :class="(screenedIndex == index) && ' screened'"
-							 @click="selected(index1,index)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f8fff3;opacity:0.9;">
-								<view style="text-align: center;">
-									{{item.name}}
-								</view>
+							<u-col
+								:span="2"
+								v-for="(item, index) in item.category"
+								:key="index"
+								:class="screenedIndex == index && ' screened'"
+								@click="selected(index1, index)"
+								style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f8fff3;opacity:0.9;"
+							>
+								<view style="text-align: center;">{{ item.name }}</view>
 							</u-col>
 						</u-row>
+					</view> -->
+					<view class="comm-drawer-categorys b-t">
+						<view v-for="(item, index) in item.category" :key="index" :class="screenedIndex == index && ' screened'" @click="selected(index1, index)" class="item">
+							{{ item.name }}
+						</view>
 					</view>
 				</view>
-
-				<!-- <view v-if="selectType=='1'" v-for="(item1, index2) in screenL" :key="index2+1" style="margin-top:20rpx;">
-					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{item1.title}}</view>
-					<view>
-						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
-							<u-col :span="3" v-for="(item2, index3) in item1.category" :key="index3" :class="(screenedIndex2 == index2 && screenedIndex3 == index3) && ' screened'"
-							 @click="selected1(index2,index3)" style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f8fff3;opacity:0.9;">
-								<view style="text-align: center;">
-									{{item2.name}}
-								</view>
-							</u-col>
-						</u-row>
-					</view>
-				</view> -->
 			</view>
-			<view class="btns g-flex g-j-s-b">
-				<u-button class="btn" shape="circle" @click="recharge" plain>重置</u-button>
-				<u-button class="btn" shape="circle" @click="confirm(true)" type="error">确认</u-button>
+			<view class="btns g-flex g-j-s-b b-t p-y-10">
+				<u-button class="btn" size="mini" shape="circle" @click="recharge" plain>重置</u-button>
+				<u-button class="btn" size="mini" shape="circle" @click="confirm(true)" type="error">确认</u-button>
 			</view>
 		</uni-drawer>
 	</view>
 </template>
 
 <script>
-	import Interface from '@/api/ApiPath.js'
-	import MescrollMixin from "@/mescroll-uni/mescroll-mixins.js";
-	import Screen from '@/components/Screen/screen.vue'
-	import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue'
-	// import provinceData from '@components/regionalComponents'
-	import provinceData from '../../components/regionalComponents/city-data/province.js';
+import Interface from '@/api/ApiPath.js';
+import MescrollMixin from '@/mescroll-uni/mescroll-mixins.js';
+import Screen from '@/components/Screen/screen.vue';
+import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
+// import provinceData from '@components/regionalComponents'
+import provinceData from '../../components/regionalComponents/city-data/province.js';
 
-	export default {
-		mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
-		components: {
-			Screen,
-			HeaderSearch,
-		},
-		data() {
-			return {
-				allIndex: '0',
-				clickAreaIndex: null,
-				clickCityIndex: null,
-				clickProvinceIndex: null,
-				provinceType: 'info',
-				sfValue: '',
-				sfOptions: [{
-						label: '全部',
-						value: '',
-					},
-					{
-						label: '农户',
-						value: 1,
-					}, {
-						label: '粮贩',
-						value: 2,
-					}, {
-						label: '粮库',
-						value: 3,
-					},
-				],
-				condition: [{
-					name: "全部",
+export default {
+	mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
+	components: {
+		Screen,
+		HeaderSearch
+	},
+	data() {
+		return {
+			allIndex: '0',
+			clickAreaIndex: null,
+			clickCityIndex: null,
+			clickProvinceIndex: null,
+			provinceType: 'info',
+			sfValue: '',
+			sfOptions: [
+				{
+					label: '全部',
+					value: ''
+				},
+				{
+					label: '农户',
+					value: 1
+				},
+				{
+					label: '粮贩',
+					value: 2
+				},
+				{
+					label: '粮库',
+					value: 3
+				}
+			],
+			condition: [
+				{
+					name: '全部',
 					code: null
-				}, {
-					name: "农户",
+				},
+				{
+					name: '农户',
 					code: 1
-				}, {
-					name: "粮贩",
+				},
+				{
+					name: '粮贩',
 					code: 2
-				}, {
-					name: "粮库",
+				},
+				{
+					name: '粮库',
 					code: 3
-				}, {
-					name: "筛选",
+				},
+				{
+					name: '筛选',
 					code: null
-				}],
-				screenList: [{
+				}
+			],
+			screenList: [
+				{
 					title: '农作物类别',
-					category: [{
-						code: 0,
-						name: "玉米"
-					}, {
-						code: 2,
-						name: "水稻"
-					}, {
-						code: 3,
-						name: "高粱"
-					}, {
-						code: 4,
-						name: "黄豆"
-					}]
-				}],
-				screenList1: [{
+					category: [
+						{
+							code: 0,
+							name: '玉米'
+						},
+						{
+							code: 2,
+							name: '水稻'
+						},
+						{
+							code: 3,
+							name: '高粱'
+						},
+						{
+							code: 4,
+							name: '黄豆'
+						}
+					]
+				}
+			],
+			screenList1: [
+				{
 					title: '省份',
-					category: [{
-						code: 0,
-						name: "吉林省"
-					}, {
-						code: 1,
-						name: "黑龙江省"
-					}, {
-						code: 2,
-						name: "辽宁省"
-					}, {
-						code: 3,
-						name: "内蒙古"
-					}]
-				}],
-				transactionTypeCode: null,
-				transactionCategoryCode: null,
-				identityCode: "",
-				mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
-				// 下拉刷新的配置(可选, 绝大部分情况无需配置)
-				downOption: {
-
-				},
-				// 上拉加载的配置(可选, 绝大部分情况无需配置)
-				upOption: {
-					page: {
-						size: 10 // 每页数据的数量,默认10
-					},
-					noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
-					empty: {
-						tip: '暂无相关数据'
-					}
-				},
-				// 列表数据
-				dataList: [],
-				type: "1",
-				address: "",
-				regionaStatus: true,
-				provinceData: '',
-				cityData: '',
-				areaData: '',
-				drop: '',
-				screenedIndex: null,
-				screened: ''
-
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-			drawerChange(e) {
-				if (!e) {
-					let params = "";
-					if (this.screenedIndex != null) {
-						for (let i = 0; i < this.screenList[0].category.length; i++) {
-							if (i == this.screenedIndex) {
-								params = this.screenList[0].category[i].code;
-							}
+					category: [
+						{
+							code: 0,
+							name: '吉林省'
+						},
+						{
+							code: 1,
+							name: '黑龙江省'
+						},
+						{
+							code: 2,
+							name: '辽宁省'
+						},
+						{
+							code: 3,
+							name: '内蒙古'
 						}
-						this.transactionCategoryCode = params;
-					} else {
-						this.screenedIndex = null;
-						this.screened = null;
-						this.transactionCategoryCode = params;
-
-					}
-					this.$refs.uDropdown.close()
-					this.$refs.uDropdown.highlight(2);
-					this.downCallback();
+					]
 				}
-
-			},
-			drawerClose() {
-
-
-			},
-			recharge() {
-				this.screenedIndex = null;
-				this.screened = null;
-				this.transactionCategoryCode="";
-				this.downCallback();
-				// this.$refs.drawer.close();
-			},
-			confirm(e) {
-				let params = "";
-				for (let i = 0; i < this.screenList[0].category.length; i++) {
-					if (i == this.screenedIndex) {
-						params = this.screenList[0].category[i].code;
-					}
+			],
+			transactionTypeCode: null,
+			transactionCategoryCode: null,
+			identityCode: '',
+			mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
+			// 下拉刷新的配置(可选, 绝大部分情况无需配置)
+			downOption: {},
+			// 上拉加载的配置(可选, 绝大部分情况无需配置)
+			upOption: {
+				page: {
+					size: 10 // 每页数据的数量,默认10
+				},
+				noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+				empty: {
+					tip: '暂无相关数据'
 				}
-
-				this.transactionCategoryCode = params;
-				this.$refs.drawer.close();
-				this.$refs.uDropdown.close()
+			},
+			// 列表数据
+			dataList: [],
+			type: '1',
+			address: '',
+			regionaStatus: true,
+			provinceData: '',
+			cityData: '',
+			areaData: '',
+			drop: '',
+			screenedIndex: null,
+			screened: ''
+		};
+	},
+	onLoad() {},
+	methods: {
+		drawerChange(e) {
+			if (!e) {
+				let params = '';
+				if (this.screenedIndex != null) {
+					for (let i = 0; i < this.screenList[0].category.length; i++) {
+						if (i == this.screenedIndex) {
+							params = this.screenList[0].category[i].code;
+						}
+					}
+					this.transactionCategoryCode = params;
+				} else {
+					this.screenedIndex = null;
+					this.screened = null;
+					this.transactionCategoryCode = params;
+				}
+				this.$refs.uDropdown.close();
 				this.$refs.uDropdown.highlight(2);
-			},
-			selected(index1, index) {
-				this.screenedIndex = index;
-			},
-			allProvince() {
-				this.address = "";
-				this.clickProvinceIndex = null;
-				this.clickCityIndex = null;
-				this.clickAreaIndex = null;
-				this.$refs.uDropdown.close();
-
-			},
-			change() {},
-			//高德获取地区信息
-			getMap(name, type, index) { //name选择名称 type类型
-				let that = this;
-				uni.request({
-					url: 'http://restapi.amap.com/v3/config/district', //仅为示例，并非真实接口地址。
-					data: {
-						key: 'ce6323f12466857e448d60dc495cd269',
-						keywords: name,
-						subdistrict: 1,
-					},
-					success: (res) => {
-						let arr = res.data.districts[0].districts;
-						let data = [];
-						arr.forEach(item => {
-							data.push({
-								label: item.name
-							})
-						});
-
-						if (type == 'pro') {
-							if (this.clickProvinceIndex != index) {
-								this.clickCityIndex = null;
-								this.clickAreaIndex = null;
-							}
-							this.clickProvinceIndex = index;
-
-
-							that.cityData = []; // 市的所有數據
-							that.cityData = data;
-						} else if (type == 'city') {
-							if (this.clickCityIndex != index) {
-								this.clickAreaIndex = null;
-							}
-							this.clickCityIndex = index;
-							that.areaData = []; // 区的所有数据
-							that.areaData = data;
-						} else if (type == 'area') {
-							this.clickAreaIndex = index;
-							// that.streetsData = []; // 街道的所有数据
-							// that.streetsData = data;
-
-							let province = '';
-							let city = '';
-							let area = '';
-							// 组合城市数据
-							for (let i = 0; i < this.provinceData.length; i++) {
-								if (i == this.clickProvinceIndex) {
-									province = this.provinceData[i].label;
-								}
-							}
-
-							for (let i = 0; i < this.cityData.length; i++) {
-								if (i == this.clickCityIndex) {
-									city = this.cityData[i].label;
-								}
-							}
-
-							for (let i = 0; i < this.areaData.length; i++) {
-								if (i == this.clickAreaIndex) {
-									area = this.areaData[i].label;
-								}
-							}
-
-							this.address = province + "/" + city + "/" + area;
-							this.$refs.uDropdown.close();
-						}
-					}
-				});
-			},
-			open(index) {
-				// 点击筛选时
-				if (index == 2) {
-					this.$refs.drawer.open();
-				}
-				this.$refs.uDropdown.highlight();
-				let result = [];
-				for (let i = 0; i < provinceData.length; i++) {
-					if (provinceData[i].label == '内蒙古自治区' ||
-						provinceData[i].label == '辽宁省' ||
-						provinceData[i].label == '吉林省' ||
-						provinceData[i].label == '黑龙江省') {
-
-						result.push(provinceData[i]);
-					}
-				}
-				this.provinceData = result;
-			},
-			close(index) {
-				this.$refs.uDropdown.highlight(index);
-				this.identityCode = this.sfValue;
-
 				this.downCallback();
-			},
-			closeDropdown() {
-				this.$refs.uDropdown.close();
-			},
-			removeSpaces(string) {
-				return string.replace(/\s*/g, '')
-			},
-			// 跳转详情页面
-			jump(val) {
-				uni.navigateTo({
-					url: '../grain/space?id=' + val + "&isShow=0"
-				})
-			},
-			search(e) {
-				this.searchName = this.removeSpaces(e)
-				this.downCallback()
-			},
-			select(code) {
-				this.identityCode = code;
-				this.downCallback()
-			},
-			// screened(e) {
-			// 	this.address = "";
-			// 	this.transactionCategoryCode = "";
-			// 	if (e !== null) {
-			// 		if (e.indexOf(",") > -1) { //如果包含，,说明是选择多组条件
-			// 			let val = e.split(",");
-			// 			this.transactionCategoryCode = val[0];
-			// 			this.address = val[1];
-			// 		} else {
-			// 			this.transactionCategoryCode = e;
-			// 		}
-			// 	}
-			// 	this.downCallback()
-			// },
-			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
-			mescrollInit(mescroll) {
-				this.mescroll = mescroll;
-			},
-			/*下拉刷新的回调, 有三种处理方式:*/
-			downCallback() {
-				this.mescroll.resetUpScroll();
-			},
-			/*上拉加载的回调*/
-			upCallback(page) {
-				let url
-				if (this.searchName == '') url = Interface.url.findAgriType
-				if (this.searchName != '') url = Interface.url.findAgriInfo
-				this.request(page, url)
-			},
-			request(page, url) {
-				let pageNum = page.num; // 页码, 默认从1开始
-				let pageSize = page.size; // 页长, 默认每页10条
-
-				// 第1种: 请求具体接口
-				uni.request({
-					url: url,
-					method: "GET",
-					data: {
-						type: 1,
-						name: this.searchName,
-						page: pageNum,
-						size: pageSize,
-						transactionTypeCode: this.transactionTypeCode,
-						transactionCategoryCode: this.transactionCategoryCode,
-						identityCode: this.identityCode,
-						address: this.address
-					},
-					success: (res) => {
-						if (res.data.state == 0) {
-							let curPageData = res.data.data.content.map(item => {
-								if (item.url != '') {
-									item.url = item.url.split(',')[0]
-								}
-								return item
-							})
-							let curPageLen = curPageData.length;
-							//设置列表数据
-							if (page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
-							this.dataList = this.dataList.concat(curPageData); //追加新数据
-							this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
-						}
-						// 请求成功,隐藏加载状态
-						this.mescroll.endSuccess()
-					},
-					fail: (err) => {
-						// 请求失败,隐藏加载状态
-						uni.showToast({
-							title: '请求失败',
-							duration: 2000
-						});
-						this.mescroll.endErr()
-					}
-				});
+			}
+		},
+		drawerClose() {},
+		recharge() {
+			this.screenedIndex = null;
+			this.screened = null;
+			this.transactionCategoryCode = '';
+			this.downCallback();
+			// this.$refs.drawer.close();
+		},
+		confirm(e) {
+			let params = '';
+			for (let i = 0; i < this.screenList[0].category.length; i++) {
+				if (i == this.screenedIndex) {
+					params = this.screenList[0].category[i].code;
+				}
 			}
 
+			this.transactionCategoryCode = params;
+			this.$refs.drawer.close();
+			this.$refs.uDropdown.close();
+			this.$refs.uDropdown.highlight(2);
+		},
+		selected(index1, index) {
+			this.screenedIndex = index;
+		},
+		allProvince() {
+			this.address = '';
+			this.clickProvinceIndex = null;
+			this.clickCityIndex = null;
+			this.clickAreaIndex = null;
+			this.$refs.uDropdown.close();
+		},
+		change() {},
+		//高德获取地区信息
+		getMap(name, type, index) {
+			//name选择名称 type类型
+			let that = this;
+			uni.request({
+				url: 'http://restapi.amap.com/v3/config/district', //仅为示例，并非真实接口地址。
+				data: {
+					key: 'ce6323f12466857e448d60dc495cd269',
+					keywords: name,
+					subdistrict: 1
+				},
+				success: res => {
+					let arr = res.data.districts[0].districts;
+					let data = [];
+					arr.forEach(item => {
+						data.push({
+							label: item.name
+						});
+					});
+
+					if (type == 'pro') {
+						if (this.clickProvinceIndex != index) {
+							this.clickCityIndex = null;
+							this.clickAreaIndex = null;
+						}
+						this.clickProvinceIndex = index;
+
+						that.cityData = []; // 市的所有數據
+						that.cityData = data;
+					} else if (type == 'city') {
+						if (this.clickCityIndex != index) {
+							this.clickAreaIndex = null;
+						}
+						this.clickCityIndex = index;
+						that.areaData = []; // 区的所有数据
+						that.areaData = data;
+					} else if (type == 'area') {
+						this.clickAreaIndex = index;
+						// that.streetsData = []; // 街道的所有数据
+						// that.streetsData = data;
+
+						let province = '';
+						let city = '';
+						let area = '';
+						// 组合城市数据
+						for (let i = 0; i < this.provinceData.length; i++) {
+							if (i == this.clickProvinceIndex) {
+								province = this.provinceData[i].label;
+							}
+						}
+
+						for (let i = 0; i < this.cityData.length; i++) {
+							if (i == this.clickCityIndex) {
+								city = this.cityData[i].label;
+							}
+						}
+
+						for (let i = 0; i < this.areaData.length; i++) {
+							if (i == this.clickAreaIndex) {
+								area = this.areaData[i].label;
+							}
+						}
+
+						this.address = province + '/' + city + '/' + area;
+						this.$refs.uDropdown.close();
+					}
+				}
+			});
+		},
+		open(index) {
+			// 点击筛选时
+			if (index == 2) {
+				this.$refs.drawer.open();
+			}
+			this.$refs.uDropdown.highlight();
+			let result = [];
+			for (let i = 0; i < provinceData.length; i++) {
+				if (provinceData[i].label == '内蒙古自治区' || provinceData[i].label == '辽宁省' || provinceData[i].label == '吉林省' || provinceData[i].label == '黑龙江省') {
+					result.push(provinceData[i]);
+				}
+			}
+			this.provinceData = result;
+		},
+		close(index) {
+			this.$refs.uDropdown.highlight(index);
+			this.identityCode = this.sfValue;
+
+			this.downCallback();
+		},
+		closeDropdown() {
+			this.$refs.uDropdown.close();
+		},
+		removeSpaces(string) {
+			return string.replace(/\s*/g, '');
+		},
+		// 跳转详情页面
+		jump(val) {
+			uni.navigateTo({
+				url: '../grain/space?id=' + val + '&isShow=0'
+			});
+		},
+		search(e) {
+			this.searchName = this.removeSpaces(e);
+			this.downCallback();
+		},
+		select(code) {
+			this.identityCode = code;
+			this.downCallback();
+		},
+		// screened(e) {
+		// 	this.address = "";
+		// 	this.transactionCategoryCode = "";
+		// 	if (e !== null) {
+		// 		if (e.indexOf(",") > -1) { //如果包含，,说明是选择多组条件
+		// 			let val = e.split(",");
+		// 			this.transactionCategoryCode = val[0];
+		// 			this.address = val[1];
+		// 		} else {
+		// 			this.transactionCategoryCode = e;
+		// 		}
+		// 	}
+		// 	this.downCallback()
+		// },
+		/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
+		mescrollInit(mescroll) {
+			this.mescroll = mescroll;
+		},
+		/*下拉刷新的回调, 有三种处理方式:*/
+		downCallback() {
+			this.mescroll.resetUpScroll();
+		},
+		/*上拉加载的回调*/
+		upCallback(page) {
+			let url;
+			if (this.searchName == '') url = Interface.url.findAgriType;
+			if (this.searchName != '') url = Interface.url.findAgriInfo;
+			this.request(page, url);
+		},
+		request(page, url) {
+			let pageNum = page.num; // 页码, 默认从1开始
+			let pageSize = page.size; // 页长, 默认每页10条
+
+			// 第1种: 请求具体接口
+			uni.request({
+				url: url,
+				method: 'GET',
+				data: {
+					type: 1,
+					name: this.searchName,
+					page: pageNum,
+					size: pageSize,
+					transactionTypeCode: this.transactionTypeCode,
+					transactionCategoryCode: this.transactionCategoryCode,
+					identityCode: this.identityCode,
+					address: this.address
+				},
+				success: res => {
+					if (res.data.state == 0) {
+						let curPageData = res.data.data.content.map(item => {
+							if (item.url != '') {
+								item.url = item.url.split(',')[0];
+							}
+							return item;
+						});
+						let curPageLen = curPageData.length;
+						//设置列表数据
+						if (page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
+						this.dataList = this.dataList.concat(curPageData); //追加新数据
+						this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
+					}
+					// 请求成功,隐藏加载状态
+					this.mescroll.endSuccess();
+				},
+				fail: err => {
+					// 请求失败,隐藏加载状态
+					uni.showToast({
+						title: '请求失败',
+						duration: 2000
+					});
+					this.mescroll.endErr();
+				}
+			});
 		}
 	}
+};
 </script>
 
 <style lang="scss">
-	.app-modular {
-		padding-bottom: 20rpx;
-		border-bottom: 1px solid rgba(229, 229, 229, 1);
+.app-modular {
+	padding-bottom: 20rpx;
+	border-bottom: 1px solid rgba(229, 229, 229, 1);
+}
+
+.tagGrain {
+	width: 140rpx;
+	line-height: 40rpx;
+	border-radius: 13rpx;
+	border: 1px solid rgba(255, 87, 51, 1);
+	color: rgba(255, 87, 51, 1);
+	font-weight: bold;
+	text-align: center;
+}
+
+.app-number-grain {
+	color: #333;
+	line-height: 60rpx;
+}
+
+.word {
+	font-size: 13rpx;
+	font-weight: bold;
+}
+
+.screen {
+	height: 84rpx;
+	color: #808080;
+	border-bottom: 1px solid #808080;
+
+	.sort {
+		height: 34rpx;
 	}
+}
 
-	.tagGrain {
-		width: 140rpx;
-		line-height: 40rpx;
-		border-radius: 13rpx;
-		border: 1px solid rgba(255, 87, 51, 1);
-		color: rgba(255, 87, 51, 1);
-		font-weight: bold;
-		text-align: center;
+.screened {
+	// width: 30rpx;
+	background-color: #e51c2e !important;
+	color: #fff !important;
+}
+
+.screen-select {
+	color: #e51c2e;
+	font-weight: bold;
+}
+
+.category {
+	width: 128rpx;
+	line-height: 64rpx;
+	background-color: #e5e5e5;
+	color: #505050;
+	margin-bottom: 20rpx;
+}
+
+.btns {
+	position: absolute;
+	bottom: 60rpx;
+	width: 100%;
+
+	.btn {
+		width: 192rpx;
 	}
+}
 
-	.app-number-grain {
-		color: #333;
-		line-height: 60rpx;
-	}
-
-	.word {
-		font-size: 13rpx;
-		font-weight: bold;
-	}
-
-	.screen {
-		height: 84rpx;
-		color: #808080;
-		border-bottom: 1px solid #808080;
-
-		.sort {
-			height: 34rpx;
-		}
-	}
-
-	.screened {
-		width: 30rpx;
-		background-color: #e51c2e !important;
-		color: #fff !important;
-	}
-
-	.screen-select {
-		color: #e51c2e;
-		font-weight: bold;
-	}
-
-	.category {
-		width: 128rpx;
-		line-height: 64rpx;
-		background-color: #e5e5e5;
-		color: #505050;
-		margin-bottom: 20rpx;
-	}
-
-	.btns {
-		position: absolute;
-		bottom: 60rpx;
-		width: 100%;
-
-		.btn {
-			width: 192rpx;
-		}
-	}
-
-	.st {
-		justify-content: space-between !important
-	}
+.st {
+	justify-content: space-between !important;
+}
 </style>

@@ -15,7 +15,7 @@
 				<text :class="showIndex == 3 ? 'select' : ''" @click="anewSelect(3)">{{ street }}</text>
 			</view>
 			<view class="main-box">
-				<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scroll="scroll">
+				<scroll-view :scroll-top="0" scroll-y="true" class="scroll-Y" @scroll="scroll">
 					<view v-if="showIndex == 0" class="list-box" @click="selectPro(index, item.label)" v-for="(item, index) in provinceData" :key="index">
 						<text>{{ item.label }}</text>
 					</view>
@@ -225,7 +225,7 @@ export default {
 		color: #343434;
 		font-size: 28upx;
 		padding: 10rpx 10rpx 0 10rpx;
-		height: 60upx;
+		height: 80upx;
 		background-color: #ffffff;
 		border-bottom: 2upx solid #f2f2f2;
 		box-sizing: border-box;

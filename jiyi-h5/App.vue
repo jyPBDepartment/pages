@@ -259,4 +259,88 @@
 		right: 0;
 		z-index: 999;
 	}
+	
+	
+	
+	
+	.comm-form-container {
+		padding: 24rpx;
+		.item {
+			display: flex;
+			align-items: center;
+			padding: 10rpx 0;
+			font-size: 32rpx;
+			line-height: 60rpx;
+			align-items: center;
+			border-bottom: solid 2rpx $u-border-color;
+			.title {
+				width: 150rpx;
+				font-size: 28rpx;
+				color: #333;
+				line-height: 1;
+			}
+			> text {
+				color: #fa3534;
+				font-weight: bold;
+				padding-right: 10rpx;
+			}
+			.info {
+				position: relative;
+				line-height: 1.5;
+				flex: 1;
+				display: flex;
+				> text {
+					color: #a6a6a6;
+					font-size: 28rpx;
+				}
+				.value {
+					width: 90%;
+				}
+				.input-icon {
+					position: absolute;
+					right: 0rpx;
+					top: 16rpx;
+					color: #999;
+				}
+				textarea {
+					background-color: #f7f7f7;
+					line-height: 60rpx;
+					padding: 0 20rpx;
+					border-radius: 10rpx;
+				}
+				.is-face{
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					height: 50rpx;
+					padding: 5rpx;
+					text{
+						font-size: 28rpx;
+						color: #999;
+						margin-left: 10rpx;
+					}
+				}
+			}
+		}
+	}
+	
+	
+	.comm-drawer-categorys {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-items: center;
+		
+		.item {
+			width: 80rpx;
+			margin-right: 20rpx;
+			text-align: center;
+			line-height: 40rpx;
+			margin-top:20rpx;
+			cursor:pointer;
+			border-radius:5px;
+			background-color:#f4f4f4;
+			opacity:0.9;
+		}
+	}
 </style>

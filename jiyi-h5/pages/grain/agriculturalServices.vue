@@ -1,113 +1,89 @@
 <template>
 	<view>
 		<HeaderSearch title="农服" @searchCallback="search"></HeaderSearch>
-		<view class="p-x-10">
-			<view class="g-flex p-y-10 g-a-c" style="border-bottom: 1rpx solid #999;">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14">标题</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="输入内容(最多输入10字)" :clearable="false" v-model="name" maxlength="10" height="64" />
-				</view>
+		<view class="comm-form-container">
+			<view class="item">
+				<view class="title">标题</view>
+				<view class="info"><u-input placeholder="输入内容(最多输入10字)" :clearable="false" v-model="name" maxlength="10" /></view>
 			</view>
-			<view class="g-flex p-y-10" style="border-bottom: 1rpx solid #999;">
-				<span style="color: #fff;">*</span>
-				<view class="title f-14" style="padding: 10rpx 0;">描述</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" maxlength="500" :clearable="false" v-model="descrip" height="200" />
-				</view>
+			<view class="item">
+				<view class="title">描述</view>
+				<view class="info"><u-input type="textarea" placeholder="请输入描述正文(最多输入500字)" maxlength="500" :clearable="false" v-model="descrip" height="200" /></view>
 			</view>
-			<view class="g-flex p-y-10">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style="width: 140rpx;">农服图片</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-upload :action="action" :show-progress="false" @on-choose-complete="onChoose" @on-remove="remove" @on-success="uploadSuccess" :file-list="fileList" max-count="5"></u-upload>
-				</view>
-			</view>
-
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style="width: 140rpx;">干活时间</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-icon name="calendar" class="input-icon"></u-icon>
-					<u-input @click="dateShow = true" disabled placeholder="请选择时间" :clearable="false" :focus="true" v-model="value" border height="64" />
+			<view class="item">
+				<view class="title">农服图片</view>
+				<view class="info">
+					<u-upload
+						:action="action"
+						:show-progress="false"
+						@on-choose-complete="onChoose"
+						@on-remove="remove"
+						@on-success="uploadSuccess"
+						:file-list="fileList"
+						max-count="5"
+					></u-upload>
 				</view>
 			</view>
 
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style="width: 140rpx;">劳务类型</view>
-				<view class=" info g-f-1" style="position: relative;">
-					<view class=" info g-f-1" style="position: relative;">
-						<u-input placeholder="请选择" v-model="transactionTypeName" type="select" border @click="sexShow1 = true" />
-						<u-action-sheet :list="agriCategory" v-model="sexShow1" @click="actionSheetCallback1"></u-action-sheet>
+			<view class="item">
+				<view class="title">干活时间</view>
+				<view class="info">
+					<u-input class="value" disabled placeholder="请选择时间" :clearable="false" v-model="value" />
+					<u-icon name="calendar" class="input-icon" @click="dateShow = true"></u-icon>
+				</view>
+			</view>
+
+			<view class="item">
+				<view class="title">劳务类型</view>
+				<view class="info">
+					<u-input class="value" placeholder="请选择" v-model="transactionTypeName" type="select" @click="sexShow1 = true" />
+					<u-action-sheet :list="agriCategory" v-model="sexShow1" @click="actionSheetCallback1"></u-action-sheet>
+				</view>
+			</view>
+			<view class="item">
+				<view class="title">作物类型</view>
+				<view class="info">
+					<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" @click="sexShow = true" />
+					<u-action-sheet :list="agriType" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
+				</view>
+			</view>
+
+			<view class="item">
+				<view class="title">农机台数</view>
+				<view class="info"><u-input placeholder="请输入农机台数" :clearable="false" v-model="machineNum" maxlength="10" /></view>
+			</view>
+			<view class="item">
+				<view class="title">价格</view>
+				<view class="info">
+					<u-radio-group v-model="isFace" :size="30" @change="radioGroupChange1">
+						<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">{{ item.name }}</u-radio>
+					</u-radio-group>
+					<view class="is-face" v-if="isFace == '定价'">
+						<u-input style="width: 180rpx;" placeholder="输入价格" height="60" border :clearable="false" v-model="price" />
+						<text>元/天</text>
 					</view>
 				</view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style="width: 140rpx;">作物类型</view>
-				<view class=" info g-f-1" style="position: relative;">
-					<view class=" info g-f-1" style="position: relative;">
-						<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" border @click="sexShow = true" />
-						<u-action-sheet :list="agriType" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
-					</view>
-				</view>
-			</view>
 
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style=" width: 140rpx;">农机台数</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入农机台数" :clearable="false" :focus="true" v-model="machineNum" border height="64" maxlength="10" />
-				</view>
-			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #ff0000;">*</span>
-				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">价格</view>
-				<u-row :gutter="6">
-					<u-col>
-						<view class="info g-f-1" style="position: relative;margin-bottom: 10rpx;">
-							<u-radio-group v-model="isFace" @change="radioGroupChange1">
-								<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">{{ item.name }}</u-radio>
-							</u-radio-group>
-						</view>
-					</u-col>
-					<u-col>
-						<view v-if="isFace == '定价'">
-							<u-input style="width: 220rpx;" placeholder="输入价格" border="" v-model="price" height="64" />
-							<view style="font-size:13px;margin-top: -52rpx;margin-left: 150rpx;color: #cdc4d7;">元/天</view>
-						</view>
-					</u-col>
-				</u-row>
-			</view>
-
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style="line-height: 62rpx; width: 140rpx;">农活方式</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-radio-group v-model="farmingMode" @change="radioGroupChange">
+			<view class="item">
+				<view class="title">农活方式</view>
+				<view class="info">
+					<u-radio-group v-model="farmingMode" :size="30" @change="radioGroupChange">
 						<u-radio @change="radioChange(index)" v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">{{ item.name }}</u-radio>
 					</u-radio-group>
 				</view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style=" width: 140rpx;">联系人</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-input placeholder="请输入联系人" :clearable="false" :focus="true" v-model="contactsUser" border height="64" />
-				</view>
+			<view class="item">
+				<view class="title">联系人</view>
+				<view class="info"><u-input placeholder="请输入联系人" :clearable="false" v-model="contactsUser" /></view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style=" width: 140rpx;">联系电话</view>
-				<view class="info g-f-1" style="position: relative;">
-					<u-input type="number" maxlength="11" placeholder="请输入联系电话,仅限数字" :clearable="false" :focus="true" v-model="contactsPhone" border height="64" />
-				</view>
+			<view class="item">
+				<view class="title">联系电话</view>
+				<view class="info"><u-input type="number" maxlength="11" placeholder="请输入联系电话,仅限数字" :clearable="false" v-model="contactsPhone" /></view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
-				<span style="color: #FA3534;">*</span>
-				<view class="title f-14" style=" width: 140rpx;">区域</view>
-				<view class=" info g-f-1" style="position: relative;"><u-input placeholder="请选择" v-model="address" type="select" border @click="regionaStatus = true" /></view>
+			<view class="item">
+				<view class="title">区域</view>
+				<view class="info"><u-input placeholder="请选择" v-model="address" type="select" @click="regionaStatus = true" /></view>
 			</view>
 			<u-button style="margin:20rpx 0rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>

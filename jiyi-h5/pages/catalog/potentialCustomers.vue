@@ -278,7 +278,7 @@
 		.info {
 			.title {
 				color: #333;
-
+				height: 72rpx;
 				.price {
 					width: 180rpx;
 					text-align: right;

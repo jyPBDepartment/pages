@@ -8,43 +8,43 @@
 				</swiper-item>
 			</block>
 		</swiper>
-		<view class="p-x-10">
-			<view class="g-flex p-y-10 g-a-c" >
+		<view class="p-x-10 b-t">
+			<view class="item-g g-flex p-y-10 g-a-c" >
 				<view class="title f-14"  style="width: 140rpx;">
 					干活时间
 				</view>
-				<view class="info g-f-1 f-14" style="position: relative;">
+				<view class="info g-f-1 f-12" style="position: relative;">
 					
 					{{farmwork.beginDate}}至{{farmwork.beginDate}}
 				</view>
 			</view>
 			
-			<view class="g-flex p-y-10 g-a-c">
+			<view class=" item-g g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					面积
 				</view>
-				<view class="info g-f-1 f-14" style="position: relative;">
+				<view class="info g-f-1 f-12" style="position: relative;">
 					{{farmwork.area}}亩
 				</view>
 			</view>
 
-			<view class="g-flex p-y-10 g-a-c">
+			<view class="item-g g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					干活地点
 				</view>
-				<view class=" info g-f-1 f-14" style="position: relative;">
+				<view class=" info g-f-1 f-12" style="position: relative;">
 					{{farmwork.workArea}}
 				</view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
+			<view class="item-g g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					农活价格
 				</view>
-				<view class="info g-f-1 f-14" style="position: relative;">
+				<view class="info g-f-1 f-12" style="position: relative;">
 					{{farmwork.workPrice}}元
 				</view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
+			<view class="item-g g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					联系人
 				</view>
@@ -52,11 +52,11 @@
 					{{farmwork.contactUser}}
 				</view>
 			</view>
-			<view class="g-flex p-y-10 g-a-c">
+			<view class="item-g g-flex p-y-10 g-a-c">
 				<view class="title f-14" style=" width: 140rpx;">
 					联系电话
 				</view>
-				<view class="info g-f-1 f-14" style="position: relative;">
+				<view class="info g-f-1 f-12" style="position: relative;">
 					{{farmwork.contactPhone}}
 				</view>
 			</view>
@@ -154,6 +154,9 @@
 </script>
 
 <style lang="scss">
+	.item-g{
+		border-bottom: 2upx solid #f4f4f4;
+	}
 	.circul {
 		width: 750rpx;
 		height: 750rpx;

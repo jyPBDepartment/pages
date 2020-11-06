@@ -12,11 +12,11 @@
 			<view class="content">
 				<view class="title">请选择身份</view>
 				<view class="confrim-btn">
-					<u-button style="width: 200rpx;" type="success" @click="link('1')">农户</u-button>
+					<u-button style="width: 300rpx;" type="success" @click="link('1')">农户</u-button>
 					<br/>
-					<u-button style="width: 200rpx;" type="warning" @click="link('2')">粮贩</u-button>
+					<u-button style="width: 300rpx;" type="warning" @click="link('2')">粮贩</u-button>
 					<br/>
-					<u-button style="width: 200rpx;" type="primary" @click="link('3')">粮库</u-button>
+					<u-button style="width: 300rpx;" type="primary" @click="link('3')">粮库</u-button>
 				</view>
 			</view>
 		</u-popup>

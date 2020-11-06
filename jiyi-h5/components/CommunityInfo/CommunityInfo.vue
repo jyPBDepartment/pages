@@ -45,13 +45,16 @@
 			margin: 12rpx 0;
 			font-size: 32rpx;
 			
+			
 		}
 
 		.simple {
-			height: 124rpx;
+			height: 128rpx;
 			line-height: 40rpx;
 			margin: 12rpx 0;
-			text-indent: 48rpx;
+			background-color: #f4f4f4;
+			padding: 10rpx;
+			border-radius: 8rpx;
 			
 		}
 		.article-info{
