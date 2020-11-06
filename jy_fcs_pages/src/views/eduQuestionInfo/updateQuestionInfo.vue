@@ -300,8 +300,8 @@ export default {
                 this.fullscreenLoading = true;
                 setTimeout(() => {
                     this.fullscreenLoading = false;
-                }, 500);
-         
+                }, 500);this.editForm.updateBy = localStorage.getItem("userInfo");
+         this.editForm.updateBy = localStorage.getItem("userInfo");
         } else {
           return false;
         }

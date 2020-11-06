@@ -14,12 +14,7 @@
       <el-form :model="editForm" ref="editForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
         <el-row>
           <el-col :span="3">类型:</el-col>
-          <el-col :span="3">文章</el-col>
-          <el-col :span="3">状态:</el-col>
-          <el-col :span="3">
-            <span v-if="editForm.status == '0'">启用</span>
-            <span v-if="editForm.status == '1'">禁用</span>
-          </el-col>
+          <el-col :span="9">文章</el-col>
           <el-col :span="3">标题:</el-col>
           <el-col :span="6"><span>{{editForm.title}}</span></el-col>
         </el-row>
@@ -52,18 +47,15 @@
         <el-divider></el-divider>
         <el-row>
           <el-col :span="3">导读:</el-col>
-          <el-col :span="18"><span>{{editForm.guide}}</span></el-col>
+          <el-col :span="18">
+            <el-input type="textarea" v-model="editForm.guide" size="small" rows="5" readonly></el-input>
+          </el-col>
         </el-row>
         <el-divider></el-divider>
         <el-row>
           <el-col :span="3">内容:</el-col>
           <el-col :span="18">
             <span v-html="editForm.content">{{editForm.content}}</span>
-            <!-- <el-card style="height: 450px;width:560px;">
-              <quill-editor v-model="editForm.content" ref="myQuillEditor" style="height: 400px;" disabled :options="editorOption">
-                <div id="toolbar" slot="toolbar"></div>
-              </quill-editor>
-            </el-card> -->
           </el-col>
         </el-row>
       </el-form>
@@ -122,11 +114,7 @@ export default {
       editorOption: { // 富文本框配置
         placeholder: "请输入...",
             theme: "snow", 
-            modules: {
-                // toolbar: {
-                //     container: '#toolbar',
-                // }
-            }
+            modules: {}
         }
     };
   },
@@ -152,7 +140,6 @@ export default {
       this.close();
     },
     close() {
-      // this.reload();
       this.$emit("close");
     },
   },

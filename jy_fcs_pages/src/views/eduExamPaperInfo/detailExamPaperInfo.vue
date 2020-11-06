@@ -22,6 +22,22 @@
         <el-row style="margin-top:10px;text-align:right">
           <el-col>所属职业类别：{{editForm.vocationName}}</el-col>
         </el-row>
+        <el-row>
+            <el-col :span="2">答题时间：</el-col>
+            <el-col :span="2">{{}}</el-col>
+            <el-col :span="2">试卷总分数：</el-col>
+            <el-col :span="2">{{}}</el-col>
+            <el-col :span="2">及格分数：</el-col>
+            <el-col :span="2">{{}}</el-col>
+            <el-col :span="2">创建人：</el-col>
+            <el-col :span="2">{{editForm.createBy}}</el-col>
+            <el-col :span="2">创建时间：</el-col>
+            <el-col :span="2">{{editForm.createDate}}</el-col>
+            <el-col :span="2">修改人：</el-col>
+            <el-col :span="2">{{editForm.updateBy}}</el-col>
+            <el-col :span="2">修改时间</el-col>
+            <el-col :span="2">{{editForm.updateDate}}</el-col>
+        </el-row>
         <div style="margin-top:20px">
           <el-row v-for="(item, index) in List" :key="index" style="margin-top:40px">
             <el-col :span="1">{{index + 1}}、</el-col>
@@ -57,8 +73,8 @@ export default {
       type: String,
       default: "对话框",
     },
-    transShowExamPaperId: {
-      type: Object,
+    transDetailExamPaperId: {
+      type: String,
     },
   },
   data() {
@@ -68,9 +84,16 @@ export default {
       editForm: {
         name: "",
         answerTime: "",
-        vocation: [],
-        vocationId: "",
+        // answerTime
+totalScore: "",
+passScore: "",
+        // vocation: [],
+        // vocationId: "",
         vocationName: "",
+        createBy:"",
+        createDate:"",
+        updateBy:"",
+        updateDate:"",
         number:0
       },
       List: [],
@@ -82,32 +105,34 @@ export default {
     show(val) {
       this.localShow = val;
     },
-    transShowExamPaperId(val) {
-      if(JSON.stringify(val) == '{}'){
-        return;
-      }
-      this.List = val.listData;
-      this.editForm.name = val.name;
-      //获取职业类别
-      this.editForm.vocationId = val.vocationId;
-      this.editForm.vocationName = val.vocation;
-      this.editForm.answerTime = val.answerTime;
-      this.editForm.number = this.List.length;
-      let question = [];
-      let ids = "";
-      for (let i = 0; i < this.List.length; i++) {
-        if (i == this.List.length - 1) {
-          ids = ids + this.List[i].id;
-        } else {
-          ids = ids + this.List[i].id + ",";
-        }
-      }
+    transDetailExamPaperId(val) {
+    //   if(JSON.stringify(val) == '{}'){
+    //     return;
+    //   }
+    //   this.List = val.listData;
+    //   this.editForm.name = val.name;
+    //   //获取职业类别
+    //   this.editForm.vocationId = val.vocationId;
+    //   this.editForm.vocationName = val.vocation;
+    //   this.editForm.answerTime = val.answerTime;
+    //   this.editForm.number = this.List.length;
+    //   let question = [];
+    //   let ids = "";
+    //   for (let i = 0; i < this.List.length; i++) {
+    //     if (i == this.List.length - 1) {
+    //       ids = ids + this.List[i].id;
+    //     } else {
+    //       ids = ids + this.List[i].id + ",";
+    //     }
+    //   }
       let params = {
-        idArray: ids,
+        id: val,
       };
-      api.testAxiosGet(ApiPath.url.preview, params).then((res) => {
+      api.testAxiosGet(ApiPath.url.findByExamId, params).then((res) => {
         if (res.state == 0) {
-          this.List = res.data;
+          this.editForm = res.data;
+          this.editForm.vocationName = res.data.vocation.name
+          console.log(res.data.vocation)
         }
       });
     },

@@ -62,52 +62,7 @@
           <el-form-item style="margin-left:-65px;">
             <div>
               <el-card style="height: 450px;width:560px;">
-                <!-- 富文本上传图片 -->
-                <!-- <el-upload
-                  class="avatar-uploader quill-img"
-                  :action="upload"
-                  :show-file-list="false"
-                  :on-success="quillUploadSuccess"
-                  :beforeUpload="beforeAvatarUpload">
-                </el-upload> -->
                 <quill-editor v-model="editForm.content" ref="myQuillEditor" style="height: 345px;" :options="editorOption">
-                  <!-- 自定义toolar -->
-                  <!-- <div id="toolbar" slot="toolbar">
-                    <button class="ql-bold" title="加粗">Bold</button>
-                    <button class="ql-italic" title="斜体">Italic</button>
-                    <button class="ql-underline" title="下划线">underline</button>
-                    <button class="ql-strike" title="删除线">strike</button>
-                    <button class="ql-blockquote" title="引用"></button>
-                    <button class="ql-code-block" title="代码"></button>
-                    <button class="ql-header" value="1" title="标题1"></button>
-                    <button class="ql-header" value="2" title="标题2"></button>
-                    <button class="ql-list" value="ordered" title="有序列表"></button>
-                    <button class="ql-list" value="bullet" title="无序列表"></button>
-                    <select class="ql-header" title="段落格式">
-                      <option selected>段落</option>
-                      <option value="1">标题1</option>
-                      <option value="2">标题2</option>
-                      <option value="3">标题3</option>
-                      <option value="4">标题4</option>
-                      <option value="5">标题5</option>
-                      <option value="6">标题6</option>
-                    </select>
-                    <select class="ql-size" title="字体大小">
-                      <option value="14px">14px</option>
-                      <option value="16px">16px</option>
-                      <option value="18px">18px</option>
-                      <option value="20px">20px</option>
-                      <option value="22px">22px</option>
-                      <option value="24px">24px</option>
-                      <option value="26px">26px</option>
-                    </select>
-                    <select class="ql-color" value="color" title="字体颜色"></select>
-                    <select class="ql-background" value="background" title="背景颜色"></select>
-                    <select class="ql-align" value="align" title="对齐"></select>
-                    <button class="ql-clean" title="还原"></button>
-                    <button class="ql-link" title="超链接"></button>
-                    <button class="ql-image" title="照片"></button>
-                  </div> -->
                 </quill-editor>
               </el-card>
             </div>
@@ -127,14 +82,6 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import {Quill,quillEditor} from 'vue-quill-editor'
-// import 'quill/dist/quill.core.css'
-// import 'quill/dist/quill.snow.css'
-// import 'quill/dist/quill.bubble.css'
-// 自定义字体大小
-// let Size = Quill.import('attributors/style/size')
-// Size.whitelist = ['14px', '16px', '18px', '20px','22px','24px','26px']
-// import aes from "@/utils/aes.js";
-// Quill.register(Size, true)
 export default {
   inject: ["reload"],
   props: {
@@ -180,18 +127,6 @@ export default {
         placeholder: "请输入...",
           theme: "snow", 
           modules: {
-            // toolbar: {
-            //   container: '#toolbar',
-            //   handlers: {
-            //     'image': function (value) {
-            //       if (value) {
-            //           document.querySelector('.quill-img input').click()
-            //       } else {
-            //           this.quill.format('image', false);
-            //       }
-            //     }
-            //   }
-            // }
          }
       }
     };
@@ -236,11 +171,6 @@ export default {
     uploadSuccess(response, file, fileList) {
       this.imgUrl = response.url;
     },
-    quillUploadSuccess(res){
-        let quill = this.$refs.myQuillEditor.quill
-        quill.focus();
-        quill.insertEmbed(quill.getSelection().index, 'image', res.url);
-    },
     handleRemove(file, fileList) {
       this.imgUrl="",
       console.log(file, fileList);
@@ -252,7 +182,6 @@ export default {
       this.close();
     },
     close() {
-      // this.reload();
       this.$emit("close");
     },
     // 职业类别下拉列表

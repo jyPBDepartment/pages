@@ -13,91 +13,33 @@
     <slot>
       <el-form :inline="true" class="user-search">
         <el-form-item label="试题类型" prop="quType">
-          <el-select
-            v-model="quType"
-            style="width: 50%; height: 30px"
-            size="small"
-          >
-            <el-option
-              v-for="item in quTypeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              size="small"
-            ></el-option>
+          <el-select v-model="quType" style="width: 50%; height: 30px" size="small">
+            <el-option v-for="item in quTypeOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button
-            size="small"
-            type="warning"
-            icon="el-icon-search"
-            @click="search('manual')"
-            >查询</el-button
-          >
-          <el-button
-            size="small"
-            type="info"
-            icon="el-icon-close"
-            @click="resetForm('search')"
-            >重置</el-button
-          >
+          <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
+          <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
         </el-form-item>
         <br />
       </el-form>
-      <el-table
-        size="mini"
-        :data="listData"
-        highlight-current-row
-        v-loading="loading"
-        border
-        element-loading-text="拼命加载中"
-        style="width: 100%"
-        @selection-change="handleSelectionChange"
-      >
+      <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" min-width="10%"></el-table-column>
-        <el-table-column
-          type="index"
-          label="序号"
-          min-width="10%"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="quContent"
-          min-width="30%"
-          label="问题名称"
-          align="center"
-          :show-overflow-tooltip="true"
-        ></el-table-column>
-        <el-table-column
-          prop="quType"
-          min-width="25%"
-          label="试题类型"
-          align="center"
-          :show-overflow-tooltip="true"
-        >
+        <el-table-column type="index" label="序号" min-width="10%" align="center"></el-table-column>
+        <el-table-column prop="quContent" min-width="30%" label="问题名称" align="center" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="quType" min-width="25%" label="试题类型" align="center" :show-overflow-tooltip="true">
           <template slot-scope="scope">
             <span v-if="scope.row.quType == '0'">选择题</span>
             <span v-if="scope.row.quType == '1'">判断题</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="score"
-          min-width="25%"
-          label="分值"
-          align="center"
-          :show-overflow-tooltip="true"
-        ></el-table-column>
+        <el-table-column prop="score" min-width="25%" label="分值" align="center" :show-overflow-tooltip="true"></el-table-column>
       </el-table>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" icon="el-icon-check" @click="confirm()"
-        >确认</el-button
-      >
-      <el-button type="info" icon="el-icon-close" @click="close()"
-        >关闭</el-button
-      >
+      <el-button type="primary" icon="el-icon-check" @click="confirm()">确认</el-button>
+      <el-button type="info" icon="el-icon-close" @click="close()">关闭</el-button>
     </span>
     <!-- 分页组件 -->
     <Pagination
@@ -167,7 +109,6 @@ export default {
       this.voationId = val.vocationId;
       this.selectData = val.listData;
       this.search(this.formInline);
-      // console.log(val.listData);
     },
   },
   mounted() {},
@@ -178,7 +119,6 @@ export default {
     //选中结果
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      // console.log(this.multipleSelection);
     },
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -195,15 +135,12 @@ export default {
       let params = {
         quType: this.quType,
         voationId: this.voationId,
-
         page: this.formInline.page,
         size: this.formInline.limit,
       };
       api.testAxiosGet(ApiPath.url.showQuestion, params).then((res) => {
         let code = res.state;
-
         if (code == "0") {
-          console.log(this.selectData)
           this.loading = false;
           let data = [];
           if (this.selectData.length >= 1) {
@@ -211,8 +148,6 @@ export default {
             for (let j = 0; j < this.selectData.length; j++) {
               for (let i = 0;i< result.length; i++) {
                 if (this.selectData[j].id == result[i].id) {
-                  console.log("循环单个结果："+result[i]);
-
                   result.splice(i,1);
                   break;
                 }
@@ -242,14 +177,11 @@ export default {
       this.close();
     },
     close() {
-      // this.multipleSelection = [];
       this.$emit("close");
     },
     confirm() {
       this.transShowQuestionId.vocationId = "";
       this.$emit("show", this.multipleSelection);
-      // this.multipleSelection=[];
-
       this.close();
     },
   },

@@ -11,14 +11,7 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form
-        :model="editForm"
-        :rules="rules"
-        ref="editForm"
-        :label-position="labelPosition"
-        label-width="100px"
-        style="border: groove; margin-top: -30px"
-      >
+      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" style="border: groove; margin-top: -30px">
         <el-form-item label="职业类别" prop="vocationId">
           <el-select v-model="editForm.vocationId" style="width: 35%" size="small" @change="currStationChange">
             <el-option v-for="item in vocationIdOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
@@ -103,6 +96,9 @@ export default {
       type: String,
       default: "对话框",
     },
+    transExamPaperInfoId: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -115,15 +111,14 @@ export default {
       transShowQuestion: {},
       listData: [],
       transForm:{},
-      oldVocation:"",
       fraction: 0,
       editForm: {
         id: "",
         name: "",
         totalScore: "",
-        vocationId:"",
         passScore: "",
         answerTime: "",
+        vocationId: "",
         vocationName:"",
         createBy: localStorage.getItem("userInfo"),
       },
@@ -140,7 +135,7 @@ export default {
         answerTime: [
           { required: true, message: "请输入答题时间", trigger: "bulr" },
         ],
-      },
+      }
     };
   },
   // 注册组件
@@ -151,13 +146,31 @@ export default {
   watch: {
     show(val) {
       this.localShow = val;
+    },
+    transExamPaperInfoId(val){
+        if(val == ""){
+        return;
+      }
+      let params = {
+        id: val,
+      };
+      //根据Id查询用户信息
+      api.testAxiosGet(ApiPath.url.ExamPaperFindById, params).then((res) => {
+        this.editForm = res.data;
+        this.editForm.vocationId = res.data.vocation.id
+        this.editForm.vocationName = res.data.vocation.name
+        this.listData = res.questData;
+        for(let i=0;i<this.listData.length;i++){
+            this.fraction = this.fraction+this.listData[i].score;
+        }
+      });
     }
   },
   mounted() {
     this.findVocationId();
   },
   methods: {
-    //判断职业类别是否改变
+     //判断职业类别是否改变
     currStationChange(val){
       this.$confirm("确认更换职业类别吗？更换后已选题目将清空！", "信息", {
         confirmButtonText: "确定",
@@ -177,6 +190,7 @@ export default {
           });
         });
     },
+    
     //试题添加
     showQuestion(vocationId) {
       if (this.editForm.vocationId == "") {
@@ -206,12 +220,12 @@ export default {
     },
     //试题删除
     deleteQuestion(scope) {
-      for(let i=0;i<this.listData.length;i++){
-        if (scope.row.id == this.listData[i].id) {
-          this.fraction = this.fraction - this.listData[i].score;
-          this.listData.splice(i,1)
+        for(let i=0;i<this.listData.length;i++){
+          if (scope.row.id == this.listData[i].id) {
+            this.fraction = this.fraction - this.listData[i].score;
+            this.listData.splice(i,1)
+          }
         }
-      }
     },
     //预览
     showExamPaper(listData) {
@@ -223,23 +237,23 @@ export default {
       this.transShowExamPaperId = this.showForm;
       this.showExamPaperFlag = true;
     },
-     closeShowExamPaperDialog() {
+    closeShowExamPaperDialog() {
       this.transShowExamPaperId = {};
       this.showExamPaperFlag = false;
     },
     closeShowQuestionDialog() {
       this.showQuestionInfo = false;
       this.transShowQuestion={};
-      
     },
     saveShowQuestion() {
       this.showQuestionInfo = false;
     },
-    beforeClose() {
-      this.close();
-    },
-    close() {
+   close: function () {
+      this.fraction =0;
       this.$emit("close");
+    },
+    beforeClose: function () {
+      this.close();
     },
     // 职业类别下拉列表
     findVocationId: function () {
@@ -255,13 +269,11 @@ export default {
               });
               if(i == 0){
                 this.oldVocation = res.data[i]["id"];
-                this.editForm.vocationId = res.data[i]["id"];
                 this.editForm.vocationName = res.data[i]["name"];
               }
             }
           }
-        })
-        .catch(function (error) {});
+        }).catch(function (error) {});
     },
     //新增保存
     saveExamPaperInfo(editData) {
@@ -309,7 +321,7 @@ export default {
           return false;
         }
         if (valid) {
-          let questionId = "";
+          let questionId = [];
           let question = [];
           for (let i = 0; i < this.listData.length; i++) {
             question.push(this.listData[i].id);
@@ -320,7 +332,7 @@ export default {
             questionId: questionId,
           };
           api
-            .testAxiosGet(ApiPath.url.addExamPaperInfo, params)
+            .testAxiosGet(ApiPath.url.updateExamPaperInfo, params)
             .then((res) => {
               let code = res.state;
               if (code == "0") {
@@ -334,13 +346,8 @@ export default {
           this.fullscreenLoading = true;
           setTimeout(() => {
             this.fullscreenLoading = false;
-            this.editForm.vocationId = "";
-            this.editForm.name = "";
-            this.editForm.totalScore = "";
-            this.editForm.passScore = "";
-            this.editForm.answerTime = "";
-            this.listData = [];
           }, 500);
+          this.editForm.updateBy = localStorage.getItem("userInfo");
         } else {
           return false;
         }

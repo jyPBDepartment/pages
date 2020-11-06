@@ -20,15 +20,7 @@
       <br/>
     </el-form>
     <!--列表-->
-    <el-table
-      size="mini"
-      :data="listData"
-      highlight-current-row
-      v-loading="loading"
-      border
-      element-loading-text="拼命加载中"
-      style="width: 100%"
-    >
+    <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%">
       <el-table-column type="index" label="序号" min-width="7%" align="center"></el-table-column>
       <el-table-column prop="name" min-width="8%" label="试卷名称" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="vocation.name" min-width="8%" label="职业类别" align="center" :show-overflow-tooltip="true"></el-table-column>
@@ -67,7 +59,7 @@
             style="margin-top:3px;margin-left:-2px"
             >删除</el-button>
             <el-button
-            @click="openDetailQuestion(scope)"
+            @click="openDetailExamPaper(scope)"
             type="primary"
             size="small"
             style="margin-top:3px;margin-left:-2px;width:73px"
@@ -88,20 +80,20 @@
       @save="saveExamPaperInfo"
     ></add-examPaperInfo>
     <!-- 修改 -->
-    <!-- <update-examPaperInfo
+    <update-examPaperInfo
       :show="updateExamPaperInfoFlag"
       :transExamPaperInfoId="transExamPaperInfoId"
       title="修改"
       @close="closeUpdateExamPaperInfoDialog"
       @save="upExamPaperInfo"
-    ></update-examPaperInfo> -->
+    ></update-examPaperInfo>
     <!-- 详情 -->
-    <!-- <detail-examPaperInfo
-      :show="detailQuestionFlag"
-      :transDetailQuestionId="transDetailQuestionId"
+    <detail-examPaperInfo
+      :show="detailExamPaperFlag"
+      :transDetailExamPaperId="transDetailExamPaperId"
       title="详情"
-      @close="closeDetailQuestionDialog"
-    ></detail-examPaperInfo> -->
+      @close="closeDetailExamPaperDialog"
+    ></detail-examPaperInfo>
   </div>
 </template>
 
@@ -110,8 +102,8 @@ import Pagination from "../../components/Pagination";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import AddExamPaperInfo from "./addExamPaperInfo";
-// import UpdateExamPaperInfo from "./updateExamPaperInfo";
-// import DetailQuestion from "./detailExamPaperInfo";
+import UpdateExamPaperInfo from "./updateExamPaperInfo";
+import DetailExamPaperInfo from "./detailExamPaperInfo";
 export default {
   inject: ["reload"],
   data() {
@@ -120,12 +112,11 @@ export default {
       status:"",
       updateUser: "",
       loading: false, //是显示加载
-      dialogVisible: false,
       addExamPaperInfo: false,
       updateExamPaperInfoFlag: false,
-      detailQuestionFlag:false,
+      detailExamPaperFlag:false,
       transExamPaperInfoId: "",
-      transDetailQuestionId:"",
+      transDetailExamPaperId:"",
       formInline: {
         page: 1,
         limit: 10,
@@ -147,8 +138,8 @@ export default {
   // 注册组件
   components: {
     AddExamPaperInfo,
-    // UpdateExamPaperInfo,
-    // DetailQuestion,
+    UpdateExamPaperInfo,
+    DetailExamPaperInfo,
     Pagination,
   },
   watch: {},
@@ -204,11 +195,12 @@ export default {
     },
     closeUpdateExamPaperInfoDialog() {
       this.search(this.formInline);
+      this.transExamPaperInfoId = "";
       this.updateExamPaperInfoFlag = false;
     },
-    closeDetailQuestionDialog(){
+    closeDetailExamPaperDialog(){
       this.search(this.formInline)
-      this.detailQuestionFlag = false;
+      this.detailExamPaperFlag = false;
     },
     upExamPaperInfo() {
       this.updateExamPaperInfoFlag = false;
@@ -238,9 +230,9 @@ export default {
       this.updateExamPaperInfoFlag = true;
     },
     //显示详情页面
-    openDetailQuestion(scope) {
-      this.transDetailQuestionId = scope.row.id;
-      this.detailQuestionFlag = true;
+    openDetailExamPaper(scope) {
+      this.transDetailExamPaperId = scope.row.id;
+      this.detailExamPaperFlag = true;
     },
     //重置
     resetForm(search) {
