@@ -55,7 +55,6 @@
 					},
 					url: ApiPath.url.findCollection, //请求接口路径
 					success: (res) => { //成功返回结果方法
-					console.log(JSON.stringify(res.data.data))
 						if (res.data.code == 200) {
 							this.collectionList = res.data.data;
 						} else {

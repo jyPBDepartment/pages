@@ -61,7 +61,7 @@
 								userId:this.userId
 							},
 							success: (res) => {
-								console.log(JSON.stringify(res.data.data))
+							
 								if (res.data.code == 200) {
 									this.examScoreList = res.data.data
 								} else {
