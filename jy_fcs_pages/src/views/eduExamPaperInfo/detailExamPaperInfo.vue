@@ -19,24 +19,22 @@
           <el-col :span="8"><b>{{editForm.answerTime}}分钟</b></el-col>
           <el-col :span="4"><b>共{{editForm.number}}题</b></el-col>
         </el-row>
-        <el-row style="margin-top:10px;text-align:right">
-          <el-col>所属职业类别：{{editForm.vocationName}}</el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="2">答题时间：</el-col>
-            <el-col :span="2">{{}}</el-col>
-            <el-col :span="2">试卷总分数：</el-col>
-            <el-col :span="2">{{}}</el-col>
+        <el-row style="margin-top:15px;">
+            <el-col :span="3">试卷总分数：</el-col>
+            <el-col :span="7">{{editForm.totalScore}}</el-col>
             <el-col :span="2">及格分数：</el-col>
-            <el-col :span="2">{{}}</el-col>
+            <el-col :span="5">{{editForm.passScore}}</el-col>
+          <el-col :span="7">所属职业类别：{{editForm.vocationName}}</el-col>
+        </el-row>
+        <el-row style="margin-top:15px;">
             <el-col :span="2">创建人：</el-col>
             <el-col :span="2">{{editForm.createBy}}</el-col>
             <el-col :span="2">创建时间：</el-col>
-            <el-col :span="2">{{editForm.createDate}}</el-col>
+            <el-col :span="6">{{editForm.createDate}}</el-col>
             <el-col :span="2">修改人：</el-col>
             <el-col :span="2">{{editForm.updateBy}}</el-col>
             <el-col :span="2">修改时间</el-col>
-            <el-col :span="2">{{editForm.updateDate}}</el-col>
+            <el-col :span="5">{{editForm.updateDate}}</el-col>
         </el-row>
         <div style="margin-top:20px">
           <el-row v-for="(item, index) in List" :key="index" style="margin-top:40px">
@@ -84,11 +82,8 @@ export default {
       editForm: {
         name: "",
         answerTime: "",
-        // answerTime
-totalScore: "",
-passScore: "",
-        // vocation: [],
-        // vocationId: "",
+        totalScore: "",
+        passScore: "",
         vocationName: "",
         createBy:"",
         createDate:"",
@@ -106,33 +101,15 @@ passScore: "",
       this.localShow = val;
     },
     transDetailExamPaperId(val) {
-    //   if(JSON.stringify(val) == '{}'){
-    //     return;
-    //   }
-    //   this.List = val.listData;
-    //   this.editForm.name = val.name;
-    //   //获取职业类别
-    //   this.editForm.vocationId = val.vocationId;
-    //   this.editForm.vocationName = val.vocation;
-    //   this.editForm.answerTime = val.answerTime;
-    //   this.editForm.number = this.List.length;
-    //   let question = [];
-    //   let ids = "";
-    //   for (let i = 0; i < this.List.length; i++) {
-    //     if (i == this.List.length - 1) {
-    //       ids = ids + this.List[i].id;
-    //     } else {
-    //       ids = ids + this.List[i].id + ",";
-    //     }
-    //   }
       let params = {
         id: val,
       };
       api.testAxiosGet(ApiPath.url.findByExamId, params).then((res) => {
         if (res.state == 0) {
           this.editForm = res.data;
-          this.editForm.vocationName = res.data.vocation.name
-          console.log(res.data.vocation)
+          this.editForm.vocationName = res.data.vocation.name;
+          this.List = res.dataQuest;
+          this.editForm.number =this.List.length;
         }
       });
     },

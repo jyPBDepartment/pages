@@ -371,6 +371,7 @@ const url = {
   //修改
   updateExamPaperInfo: EDUHost + '/examPaperInfo/update',
   findByExamId: EDUHost + '/examPaperInfo/findByExamId',
+  
   // 获取证书列表
   findCertificatePage: EDUHost + '/certificate/findPage',
   //根据主键删除证书

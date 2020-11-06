@@ -18,7 +18,7 @@
 			</view>
 			<view class="smallTitle">
 				<view class="read">
-					阅读：{{read}}
+					阅读：{{studyNum}}
 				</view>
 				<view class="pulicTime">
 					发布时间：{{createDate}} 
@@ -30,9 +30,7 @@
 			<view class="img">
 				<image class="contentImg" :src="url"></image>
 			</view>
-			<view class="artContent">
-				{{content}}
-			</view>
+			<u-parse class="artContent" :html="content" :selectable="true" :show-with-animation="true" ></u-parse>
 		</view>
 		<u-toast ref="uToast" />
 	</view>
@@ -50,15 +48,20 @@
 				read:"",
 				createDate:"",
 				guide:"",
+				studyNum:"",
 				url:"",
 				content:"",
 				style:'color:#333333',
-				articleList:[]
+				articleList:[],
+				userId:"asdsadsad",
+				manualInfoId:"",
+				isCollection: 0
 			}
 		},
 		onLoad(e) {
 			// 文章内容初始化
 			this.learningArticle(e.id);
+			this.manualInfoId = e.id;
 		},
 		methods:{
 			// 文章内容详情显示
@@ -71,19 +74,23 @@
 					data: param, //请求数据
 					url: ApiPath.url.findArticleContent, //请求接口路径
 					success: (res) => { //成功返回结果方法
-					if (res.data.state == 0) {
+					if (res.data.code == 200) {
 						this.title = res.data.data.title
 						this.createDate = res.data.data.createDate
 						this.guide = res.data.data.guide
 						this.url = res.data.data.url
 						this.content = res.data.data.content
+						this.studyNum = res.data.data.studyNum
+						if(res.data.dataUserManual.isCollection == 1){
+							this.name = "heart-fill";
+							this.style="color:red";
+						}
 					}else{
 							uni.showToast({
 								title: "服务器出错，请联系管理员"
 							})
 						}
 					}
-				
 				})
 			},
 			backTo() {
@@ -93,21 +100,41 @@
 			},
 			// 收藏
 			collection(){
+				let isCancel = 0;
 				if(this.name=="heart"){
 					this.name = "heart-fill";
 					this.style="color:red";
-					this.$refs.uToast.show({
-						title: '收藏成功，请到我的收藏查看手册。',
-						type: 'success'
-					});
+					this.isCollection = 1;
 				}else{
+					isCancel = 1;
 					this.name = "heart";
 					this.style="color:#333";
-					this.$refs.uToast.show({
-						title: '已取消收藏',
-						type: 'info'
-					});
+					this.isCollection = 0;
 				}
+				let param = {
+					userId:this.userId,
+					manualInfoId:this.manualInfoId,
+					isCollection:this.isCollection,
+					isCancel:isCancel
+				}
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.saveUserManualInfo, //请求接口路径
+					success: (res) => { //成功返回结果方法
+					if (res.data.code == 200) {
+						this.$refs.uToast.show({
+							title: '收藏成功，请到我的收藏查看手册。',
+							type: 'success'
+						});
+					}else{
+						this.$refs.uToast.show({
+							title: '已取消收藏',
+							type: 'info'
+						});
+						}
+					}
+				})
 			}
 		}
 		}
