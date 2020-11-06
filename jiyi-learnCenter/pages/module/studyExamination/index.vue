@@ -208,17 +208,17 @@
 			border-radius: 9px;
 		}
 
-		.se-col:nth-child(3n):after {
+		.se-col:nth-child(odd):after {
 			
-			background-color: #f2c48b;
+			background-color:  #ffaa7f;
 		}
 		
-		.se-col:nth-child(3n+1):after {
+		.se-col:nth-child(even):after {
 			
 			background-color: #b4e4bf;
 		}
 		
-		.se-col:nth-child(4n+2):after {
+		.se-col:nth-child(3n+1):after {
 			
 			background-color: #fee78c;
 		}
