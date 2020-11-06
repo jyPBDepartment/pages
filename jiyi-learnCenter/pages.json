@@ -3,7 +3,9 @@
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-
+{
+			"path": "pages/module/learningManual/agentArticle" // 经销商文章列表详情
+		},
 		{
 			"path": "pages/module/mine/myCredentials" //我的证书页面
 		},
@@ -56,24 +58,11 @@
 		{
 			"path": "pages/module/hotCourse/index" // 热门课程内容详情
 		},
-		{
-			"path": "pages/module/learningManual/supplyArticleContent" // 供应商文章内容详情
-		},
+		
 		{
 			"path": "pages/module/learningManual/agentArticleContent" // 经销商文章内容详情
 		},
-		{
-			"path": "pages/module/learningManual/manArticleContent" // 经理人文章内容详情
-		},
-		{
-			"path": "pages/module/learningManual/supplyArticle" // 供应商文章列表详情
-		},
-		{
-			"path": "pages/module/learningManual/agentArticle" // 经销商文章列表详情
-		},
-		{
-			"path": "pages/module/learningManual/managerArticle" // 经理人文章列表详情
-		},
+		
 		{
 			"path": "pages/tabbar/main/index" // 首页列表
 		},

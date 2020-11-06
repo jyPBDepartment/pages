@@ -12,26 +12,26 @@
 		</view>
 		
 		<!-- 内容 -->
-		<view class="content" v-for="(item,index) in articleList" :key="index">
+		<view class="contents" >
 			<view class="title">
-				{{item.title}}
+				{{title}}
 			</view>
 			<view class="smallTitle">
 				<view class="read">
-					阅读：{{item.read}}
+					阅读：{{read}}
 				</view>
 				<view class="pulicTime">
-					发布时间：{{item.publicTime}} 
+					发布时间：{{createDate}} 
 				</view>
 			</view>
 			<view class="ReadGuide">
-				<b>[导读]</b>{{item.readGuide}}
+				<b>[导读]</b>{{guide}}		
 			</view>
 			<view class="img">
-				<image class="contentImg" :src="item.url"></image>
+				<image class="contentImg" :src="url"></image>
 			</view>
 			<view class="artContent">
-				{{item.articleContent}}
+				{{content}}
 			</view>
 		</view>
 		<u-toast ref="uToast" />
@@ -40,17 +40,52 @@
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js';
 	export default {
 		data() {
 			return {
 				name:'heart',
+				id:"",
+				title:"",
+				read:"",
+				createDate:"",
+				guide:"",
+				url:"",
+				content:"",
 				style:'color:#333333',
-				articleList:[
-					{title:"不要紧，山野都有雾灯.",read:"300",publicTime:"2020-02-19 12:23:46",readGuide:"少女的征途是星辰大海，而并非烟尘人间.经销商。",url:"http://60.205.246.126/images/2020/10/15/1602727948520251.jpg",articleContent:"故事的开始，总会有个人，故意选择隐匿他的过去，惟你，让我的回忆汹涌而平静。"}
-				]
+				articleList:[]
 			}
 		},
+		onLoad(e) {
+			// 文章内容初始化
+			this.learningArticle(e.id);
+		},
 		methods:{
+			// 文章内容详情显示
+			learningArticle(val){
+				let param = {
+					id:val
+				}
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.findArticleContent, //请求接口路径
+					success: (res) => { //成功返回结果方法
+					if (res.data.state == 0) {
+						this.title = res.data.data.title
+						this.createDate = res.data.data.createDate
+						this.guide = res.data.data.guide
+						this.url = res.data.data.url
+						this.content = res.data.data.content
+					}else{
+							uni.showToast({
+								title: "服务器出错，请联系管理员"
+							})
+						}
+					}
+				
+				})
+			},
 			backTo() {
 				uni.navigateBack({
 			
@@ -99,7 +134,7 @@
 				margin-top: 2rpx;
 			}
 		}
-		.content{
+		.contents{
 			display: flex;
 			flex-direction: column;
 			margin-top: 15rpx;
@@ -119,6 +154,9 @@
 			.ReadGuide{
 				margin:10rpx 15rpx 10rpx 30rpx;
 				font-weight: 400;
+				width: 710rpx;
+				word-break:break-all;
+				
 			}
 			.img{
 				margin:10rpx 0rpx;
@@ -129,6 +167,8 @@
 			}
 			.artContent{
 					margin:0rpx 10rpx;
+					width: 710rpx;
+					word-break:break-all;
 			}
 			
 		}

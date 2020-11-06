@@ -14,51 +14,12 @@
 		<u-image width="100%" height="190rpx" :src="src"></u-image>
 		<!-- 学习手册 -->
 		<view class="rm-list">
-			<!-- 初级经理人学习手册 -->
-			<view class="rm-manager" @click="juniorManager">
+			<view class="rm-manager" v-for="(item,index) in optionList" :key="index" @click="juniorManager(item.id)" >
 				<view class="rm-img">
 					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
 				</view>
 				<view class="rm-font">
-					初级经理人学习手册
-				</view>
-			</view>
-			<!-- 初级经理人学习手册 -->
-			<view class="rm-manager" @click="middleManager">
-				<view class="rm-img">
-					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
-				</view>
-				<view class="rm-font">
-					中级经理人学习手册
-				</view>
-			</view>
-			<!-- 初级经理人学习手册 -->
-			<view class="rm-manager" @click="seniorManager">
-				<view class="rm-img">
-					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
-				</view>
-				<view class="rm-font">
-					高级经理人学习手册
-				</view>
-			</view>
-			
-			<!-- 供应商学习手册 -->
-			<view class="rm-manager" @click="suuplyJump">
-				<view class="rm-img">
-					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
-				</view>
-				<view class="rm-font">
-					供应商学习手册
-				</view>
-			</view>
-			
-			<!-- 经销商学习手册 -->
-			<view class="rm-manager" @click="agentJump">
-				<view class="rm-img">
-					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
-				</view>
-				<view class="rm-font">
-					经销商学习手册
+					{{item.name}}学习手册
 				</view>
 			</view>
 			
@@ -67,14 +28,43 @@
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js'
 	export default {
 		data() {
 			return {
 				src: 'http://60.205.246.126/images/2020/09/29/1601348332838540.png',
-				show: false
+				show: false,
+				optionList:[]
 			}
 		},
+		onLoad(e) {
+			// 初始化加载职业类别信息	
+			this.initModuleInfo();
+		},
 		methods: {
+			// 初始化加载职业类别信息
+			initModuleInfo() {
+				uni.request({
+					url: ApiPath.url.findTypeOfBussiness,
+					method: "GET",
+					data: {},
+					success: (res) => {
+					console.log(res)
+						if (res.data.state == 0) {	
+							this.optionList = res.data.data
+						}else{
+							uni.showToast({
+								title: "服务器出错，请联系管理员"
+							})
+						}
+					},
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+					}
+				});
+			},
 			// 返回上一页
 			backTo() {
 				uni.navigateBack({
@@ -82,34 +72,10 @@
 				})
 			},
 			// 经理人跳转
-			juniorManager(){
+			juniorManager(getId){
 				uni.navigateTo({
-					url: "./managerArticle",//跳转地址
+					url: './agentArticle?id='+getId,//跳转地址
 				});
-				
-			},
-			middleManager(){
-				uni.navigateTo({
-					url: "./managerArticle",//跳转地址
-				});
-			},
-			seniorManager(){
-				uni.navigateTo({
-					url: "./managerArticle",//跳转地址
-				});
-				
-			},
-			// 供应商跳转
-			suuplyJump(){
-				uni.navigateTo({
-					url:"./supplyArticle"
-				})
-			},
-			// 经销商跳转
-			agentJump(){
-				uni.navigateTo({
-					url:"./agentArticle"
-				})
 			}
 			
 		}
