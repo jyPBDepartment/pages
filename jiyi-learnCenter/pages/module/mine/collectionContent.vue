@@ -45,12 +45,14 @@
 				createDate:"",
 				guide:"",
 				url:"",
-				content:""
+				content:"",
+				id:''
 			}
 		},
 		onLoad(e) {
 			// 文章内容初始化
 			this.collectionArticle(e.id);
+			this.id = e.id;
 		},
 		methods:{
 			// 文章内容详情显示
@@ -67,14 +69,18 @@
 					}, //请求数据
 					url: ApiPath.url.findCollection, //请求接口路径
 					success: (res) => { //成功返回结果方法
-					// console.log(JSON.stringify(res.data.data[0].title))
 					if (res.data.code == 200) {
-						this.title = res.data.data[0].title
-						this.studyNum = res.data.data[0].studyNum
-						this.createDate =  res.data.data[0].createDate
-						this.guide =  res.data.data[0].guide
-						this.url =  res.data.data[0].url
-						this.content =  res.data.data[0].content
+						for(let i = 0;i<res.data.data.length;i++){
+							if(this.id == res.data.data[i].id){
+								this.title = res.data.data[i].title
+								this.studyNum = res.data.data[i].studyNum
+								this.createDate =  res.data.data[i].createDate
+								this.guide =  res.data.data[i].guide
+								this.url =  res.data.data[i].url
+								this.content =  res.data.data[i].content
+							}
+						}
+						
 					}else{
 							uni.showToast({
 								title: "服务器出错，请联系管理员"
@@ -86,9 +92,7 @@
 			},
 			// 返回上一页
 			backTo() {
-				uni.navigateBack({
-			
-				})
+				uni.redirectTo({url: './myCollection'})
 			}
 		}
 		}
@@ -131,6 +135,8 @@
 			.ReadGuide{
 				margin:10rpx 15rpx 10rpx 30rpx;
 				font-weight: 400;
+				width: 710rpx;
+				word-break:break-all;
 			}
 			.img{
 				margin:10rpx 0rpx;
@@ -140,7 +146,9 @@
 				}
 			}
 			.parse{
-					margin:0rpx 10rpx;
+					margin:0rpx 20rpx;
+					width: 710rpx;
+					word-break:break-all;
 			}
 			
 		}

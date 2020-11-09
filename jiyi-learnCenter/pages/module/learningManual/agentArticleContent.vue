@@ -94,9 +94,7 @@
 				})
 			},
 			backTo() {
-				uni.navigateBack({
-			
-				})
+				uni.redirectTo({url: './agentArticle'})
 			},
 			// 收藏
 			collection(){
@@ -193,7 +191,7 @@
 				}
 			}
 			.artContent{
-					margin:0rpx 10rpx;
+					margin:0rpx 20rpx;
 					width: 710rpx;
 					word-break:break-all;
 			}

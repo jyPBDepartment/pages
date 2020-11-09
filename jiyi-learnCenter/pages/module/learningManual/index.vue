@@ -93,9 +93,9 @@
 			},
 			// 返回上一页
 			backTo() {
-				uni.navigateBack({
-
-				})
+				uni.switchTab({
+				    url: '../../tabbar/main/index'
+				});
 			},
 			// 经理人跳转
 			juniorManager(getId){

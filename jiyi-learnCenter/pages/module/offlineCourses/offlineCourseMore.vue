@@ -5,7 +5,7 @@
 				<view class="backArrow" @click="backTo">
 					<u-icon name="arrow-left" color="#333" size="32"></u-icon>
 				</view> 
-				<view class="title">热门课程</view>
+				<view class="title">线下课程</view>
 		</view>
 		<view class="offlineCourse animate__animated animate__lightSpeedInRight delay-5s 5s" v-for="(item, index) in offlineCourseList" :key="index"  @click="courseDetail">
 				<view class="background">		

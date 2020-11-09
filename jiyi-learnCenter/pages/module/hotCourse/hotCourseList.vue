@@ -204,14 +204,15 @@
 			},
 			// 返回上一页
 			backTo() {
-				uni.navigateBack({
-					
-				})
+				uni.switchTab({
+				    url: '../../tabbar/main/index'
+				});
+				
 			},
-			// 经销商文章跳转详情页面
+			// 文章跳转详情页面
 			agentArticleJump(getId) {
 					uni.navigateTo({
-						url: '../../module/learningManual/agentArticleContent?id='+getId
+						url:'./hotCourseContent?id='+getId
 					})
 			},
 			//搜索功能
