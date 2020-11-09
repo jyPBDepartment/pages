@@ -37,9 +37,7 @@
 				<view class="space"></view>
 				<view class="info info-last">
 					<text class="item-info f-16">描述</text>
-					<view class="item-info desc f-12">
-						{{ descrip }}
-					</view>
+					<view class="item-info desc f-12">{{ descrip }}</view>
 				</view>
 				<view v-if="isDisplay !== 0" class="btn g-flex">
 					<view class="g-f-1"><u-button @click="cencal(true)" shape="circle">取消发布</u-button></view>
@@ -238,7 +236,7 @@ export default {
 				justify-content: space-between;
 				font-size: 28rpx;
 			}
-			.desc{
+			.desc {
 				color: #666;
 				font-size: 26rpx;
 				padding: 20rpx 50rpx;

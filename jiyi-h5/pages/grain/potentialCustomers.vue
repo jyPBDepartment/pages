@@ -9,7 +9,7 @@
 		<view class="p-x-10 b-t">
 			<view class="item-g g-flex p-y-10 g-a-c">
 				<view class="title f-14" style="width: 140rpx">干活时间</view>
-				<view class="info g-f-1 f-12" style="position: relative">{{ farmwork.beginDate }}至{{ farmwork.beginDate }}</view>
+				<view class="info g-f-1 f-12" style="position: relative">{{ farmwork.beginDate }}至{{ farmwork.endDate }}</view>
 			</view>
 
 			<view class="item-g g-flex p-y-10 g-a-c">

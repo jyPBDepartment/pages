@@ -3,7 +3,6 @@
 		<HeaderSearch @searchCallback="search" title="农服预约"></HeaderSearch>
 		<view class="form-container">
 			<view class="item">
-				
 				<view class="title">日期</view>
 				<view class="info" @tap.stop="showDatePicker">
 					<u-input class="value" disabled type="text" placeholder="请选择时间" :clearable="false" v-model="value" />
@@ -11,22 +10,17 @@
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">面积</view>
 				<view class="info">
 					<u-input class="value" type="number" placeholder="输入面积" :clearable="false" v-model="area" />
 					<text class="input-icon">亩</text>
 				</view>
 			</view>
-			<view class="item" >
-				
+			<view class="item">
 				<view class="title">干活地点</view>
-				<view class="info">
-					<u-input placeholder="请选择干活地点" v-model="workArea" type="select" @click="regionaStatus = true" />
-				</view>
+				<view class="info"><u-input placeholder="请选择干活地点" v-model="workArea" type="select" @click="regionaStatus = true" /></view>
 			</view>
 			<view class="item ">
-				
 				<view class="title">农活价格</view>
 				<view class="info">
 					<u-input class="value" type="number" placeholder="输入价格" :clearable="false" v-model="workPrice" />
@@ -34,17 +28,14 @@
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">联系人</view>
 				<view class="info"><u-input class="value" placeholder="输入联系人姓名" :clearable="false" v-model="contactUser" /></view>
 			</view>
 			<view class="item">
-				
 				<view class="title">联系电话</view>
 				<view class="info"><u-input class="value" type="number" maxlength="11" placeholder="输入联系电话" :clearable="false" v-model="contactPhone" /></view>
 			</view>
 			<view class="item">
-				
 				<view class="title">土地图片</view>
 				<view class="info">
 					<u-upload
@@ -340,5 +331,4 @@ export default {
 		}
 	}
 }
-
 </style>
