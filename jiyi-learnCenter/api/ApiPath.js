@@ -38,7 +38,9 @@ const url = {
 	// 我的考试成绩加载列表
 	findExamScore:URLHost + '/mine/getExamResultByUserId',
 	// 我的收藏加载列表
-	findCollection:URLHost + '/mine/getManualListByUserId'
+	findCollection:URLHost + '/mine/getManualListByUserId',
+	//线下课程报名
+	enrollLesson:URLHost + '/lesson/enrollLesson',
 
 }
 export default {

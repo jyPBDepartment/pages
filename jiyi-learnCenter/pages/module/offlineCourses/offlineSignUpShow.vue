@@ -57,7 +57,7 @@
 								<u-button type="primary" size="mini" @click="close(show = false)">关闭</u-button>
 							</view>
 						</u-popup>
-						<u-button type="primary" size="mini" @click="confirm(show = true)">确定报名</u-button>
+						<u-button type="primary" size="mini" @click="confirm()">确定报名</u-button>
 					</view>
 				</u-col>
 				<u-col span="1">
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js';
 	export default {
 		data() {
 			return {
@@ -80,6 +81,10 @@
 				idCard:'',
 				phone:'',
 				id:'',
+				lessonId:"402881eb7571f9fa0175721e9bc30000",
+				userId:"asdsadsad",
+				userName:"",
+				userTel:"",
 				className:'水稻是怎样的养成的',
 			}
 		},
@@ -94,7 +99,37 @@
 			},
 			
 			//确认报名
-			confirm(){},
+			confirm(){
+				let param = {
+					lessonId:this.lessonId,
+					userId:this.userId,
+					userName: this.name,
+					useTel:this.phone
+				};
+				
+				uni.request({
+				  method: "GET", //请求方式
+				  data: param, //请求数据
+				  url: ApiPath.url.enrollLesson, //请求接口路径
+				  success: (res) => {
+				    //成功返回结果方法
+				    if (res.data.code == 200) {
+						this.show = true
+				    }
+					else if(res.data.code == 6001) {
+						uni.showToast({
+						  title: "该课程报名人数已达上限",
+						});
+					}
+					 else {
+				      uni.showToast({
+				        title: "报名失败,联系管理员或重新报名",
+				      });
+				    }
+				  },
+				});
+				
+			},
 			
 			//重新编辑跳转
 			reEdit(){
@@ -106,7 +141,7 @@
 			//弹出层关闭跳转到课程列表页
 			close(){
 				uni.navigateTo({
-					url: '../offlineCourses/index'
+					url: '../offlineCourses/offlineCourseMore'
 				})
 			},
 			
