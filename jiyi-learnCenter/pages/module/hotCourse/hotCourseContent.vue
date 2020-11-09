@@ -6,11 +6,13 @@
 				 <u-icon name="arrow-left" color="#333" size="32"></u-icon> 
 				 </view> 
 				<view class="title">文章详情</view>
-				
+				<view class="star">
+					<u-icon :name="name" size="38" :style="style" @click="collection"></u-icon>
+				</view>
 		</view>
 		
 		<!-- 内容 -->
-		<view class="content" >
+		<view class="contents" >
 			<view class="title">
 				{{title}}
 			</view>
@@ -23,13 +25,14 @@
 				</view>
 			</view>
 			<view class="ReadGuide">
-				<b>[导读]</b>{{guide}}
+				<b>[导读]</b>{{guide}}		
 			</view>
 			<view class="img">
 				<image class="contentImg" :src="url"></image>
 			</view>
-			<u-parse :html="content" :selectable="true" :show-with-animation="true" class="parse" ></u-parse>
+			<u-parse class="artContent" :html="content" :selectable="true" :show-with-animation="true" ></u-parse>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 	
 </template>
@@ -39,60 +42,97 @@
 	export default {
 		data() {
 			return {
-				userId: "asdsadsad",
+				name:'heart',
+				id:"",
 				title:"",
-				studyNum:"",
+				read:"",
 				createDate:"",
 				guide:"",
+				studyNum:"",
 				url:"",
 				content:"",
-				id:''
+				style:'color:#333333',
+				articleList:[],
+				userId:"asdsadsad",
+				manualInfoId:"",
+				isCollection: 0
 			}
 		},
 		onLoad(e) {
 			// 文章内容初始化
-			this.collectionArticle(e.id);
-			this.id = e.id;
+			this.learningArticle(e.id);
+			this.manualInfoId = e.id;
 		},
 		methods:{
 			// 文章内容详情显示
-			collectionArticle(val){
+			learningArticle(val){
 				let param = {
 					id:val
 				}
 				uni.request({
 					method: 'GET', //请求方式
-					data: {
-						param,
-						userId:this.userId,
-						isCollection:1
-					}, //请求数据
-					url: ApiPath.url.findCollection, //请求接口路径
+					data: param, //请求数据
+					url: ApiPath.url.findArticleContent, //请求接口路径
 					success: (res) => { //成功返回结果方法
 					if (res.data.code == 200) {
-						for(let i = 0;i<res.data.data.length;i++){
-							if(this.id == res.data.data[i].id){
-								this.title = res.data.data[i].title
-								this.studyNum = res.data.data[i].studyNum
-								this.createDate =  res.data.data[i].createDate
-								this.guide =  res.data.data[i].guide
-								this.url =  res.data.data[i].url
-								this.content =  res.data.data[i].content
-							}
+						this.title = res.data.data.title
+						this.createDate = res.data.data.createDate
+						this.guide = res.data.data.guide
+						this.url = res.data.data.url
+						this.content = res.data.data.content
+						this.studyNum = res.data.data.studyNum
+						if(res.data.dataUserManual.isCollection == 1){
+							this.name = "heart-fill";
+							this.style="color:red";
 						}
-						
 					}else{
 							uni.showToast({
 								title: "服务器出错，请联系管理员"
 							})
 						}
 					}
-				
 				})
 			},
-			// 返回上一页
 			backTo() {
-				uni.redirectTo({url: './myCollection'})
+				uni.redirectTo({url: './hotCourseList'})
+			},
+			// 收藏
+			collection(){
+				let isCancel = 0;
+				if(this.name=="heart"){
+					this.name = "heart-fill";
+					this.style="color:red";
+					this.isCollection = 1;
+				}else{
+					isCancel = 1;
+					this.name = "heart";
+					this.style="color:#333";
+					this.isCollection = 0;
+				}
+				let param = {
+					userId:this.userId,
+					manualInfoId:this.manualInfoId,
+					isCollection:this.isCollection,
+					isCancel:isCancel
+				}
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.saveUserManualInfo, //请求接口路径
+					success: (res) => { //成功返回结果方法
+					if (res.data.code == 200) {
+						this.$refs.uToast.show({
+							title: '收藏成功，请到我的收藏查看手册。',
+							type: 'success'
+						});
+					}else{
+						this.$refs.uToast.show({
+							title: '已取消收藏',
+							type: 'info'
+						});
+						}
+					}
+				})
 			}
 		}
 		}
@@ -114,8 +154,12 @@
 				margin-left: 250rpx;
 				font-size: 35rpx;
 			}
+			.star{
+				margin-left: 250rpx;
+				margin-top: 2rpx;
+			}
 		}
-		.content{
+		.contents{
 			display: flex;
 			flex-direction: column;
 			margin-top: 15rpx;
@@ -137,6 +181,7 @@
 				font-weight: 400;
 				width: 710rpx;
 				word-break:break-all;
+				
 			}
 			.img{
 				margin:10rpx 0rpx;
@@ -145,7 +190,7 @@
 					height: 400rpx;
 				}
 			}
-			.parse{
+			.artContent{
 					margin:0rpx 20rpx;
 					width: 710rpx;
 					word-break:break-all;

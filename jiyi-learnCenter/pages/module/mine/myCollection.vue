@@ -72,8 +72,8 @@
 			},		
 			// 返回上一页
 			backTo() {
-				uni.navigateBack({
-			
+				uni.switchTab({
+					url:'../../tabbar/my/index'
 				})
 			},
 			// 我的收藏跳转详情页面

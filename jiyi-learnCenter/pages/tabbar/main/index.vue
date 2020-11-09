@@ -200,7 +200,7 @@
 			rmDetail(getId) {
 				
 				uni.navigateTo({
-					url: '../../module/learningManual/agentArticleContent?id='+getId
+					url:'../../module/hotCourse/hotCourseContent?id='+getId
 				})
 			},
 			// 线下课程详情
