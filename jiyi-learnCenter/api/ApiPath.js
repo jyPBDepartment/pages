@@ -26,7 +26,7 @@ const url = {
 	// 学习手册职业类别加载
 	findTypeOfBussiness: URLHost + '/vocationInfo/occupation',
 	// 学习手册查询列表
-	findById: URLHost + '/manualInfo/findByName',
+	findById: URLHost + '/manualInfo/findManualByName',
 	// 学习手册查看详情页面
 	findArticleContent: URLHost + '/manualInfo/findManualInfoId',
 	// 学习手册查询所有有效的标签
