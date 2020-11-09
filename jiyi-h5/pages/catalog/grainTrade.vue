@@ -4,60 +4,55 @@
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
 		<!-- 菜单展示栏 -->
 		<view class="b-f">
-			<u-row>
-				<u-col>
-					<u-dropdown ref="uDropdown" @open="open" @close="close">
-						<u-dropdown-item title="区域">
-							<view class="slot-content" style="background-color: #FFFFFF;">
-								<scroll-view scroll-y="true" style="height: 900rpx;">
-									<u-row>
-										<u-col span="4">
-											<u-tag
-												text="全区域"
-												:type="allIndex == '1' ? 'error' : 'info'"
-												@click="allProvince"
-												style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;"
-											/>
-											<u-tag
-												:text="item.label"
-												:type="clickProvinceIndex == key ? 'error' : 'info'"
-												v-for="(item, key) in provinceData"
-												@click="getMap(item.label, 'pro', key)"
-												:key="key"
-												style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;"
-											/>
-										</u-col>
-										<u-col span="4">
-											<u-tag
-												:text="item.label"
-												:type="clickCityIndex == key ? 'error' : 'info'"
-												v-for="(item, key) in cityData"
-												@click="getMap(item.label, 'city', key)"
-												:key="key"
-												style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;"
-											/>
-										</u-col>
-										<u-col span="4">
-											<u-tag
-												:text="item.label"
-												:type="clickAreaIndex == key ? 'error' : 'info'"
-												v-for="(item, key) in areaData"
-												@click="getMap(item.label, 'area', key)"
-												:key="key"
-												style="text-align: center;width:auto;margin-top:12px;margin-right:12px;position:relative;"
-											/>
-										</u-col>
-									</u-row>
+			<u-dropdown ref="uDropdown" @open="open" @close="close">
+				<u-dropdown-item title="区域">
+					<view class="slot-content">
+						<u-row align="top" class="b-t">
+							<u-col span="4" style="background-color: #FFFFFF;">
+								<scroll-view scroll-y="true" class="my-scroll-view">
+									<u-tag text="全区域" :type="allIndex == '1' ? 'error' : 'info'" @click="allProvince" class="my-tags" />
+									<u-tag
+										:text="item.label"
+										:type="clickProvinceIndex == key ? 'error' : 'info'"
+										v-for="(item, key) in provinceData"
+										@click="getMap(item.label, 'pro', key)"
+										:key="key"
+										class="my-tags"
+									/>
 								</scroll-view>
-							</view>
-						</u-dropdown-item>
-						<u-dropdown-item title="身份" v-model="sfValue" :options="sfOptions"></u-dropdown-item>
-						<u-dropdown-item title="筛选"></u-dropdown-item>
-					</u-dropdown>
-				</u-col>
-			</u-row>
+							</u-col>
+							<u-col span="4" style="border-left: 1px #f4f4f4 solid;background-color: #FFFFFF;" v-if="cityData.length">
+								<scroll-view scroll-y="true" class="my-scroll-view">
+									<u-tag
+										:text="item.label"
+										:type="clickCityIndex == key ? 'error' : 'info'"
+										v-for="(item, key) in cityData"
+										@click="getMap(item.label, 'city', key)"
+										:key="key"
+										class="my-tags"
+									/>
+								</scroll-view>
+							</u-col>
+							<u-col span="4" style="border-left: 1px #f4f4f4 solid;background-color: #FFFFFF;" v-if="areaData.length">
+								<scroll-view scroll-y="true" class="my-scroll-view">
+									<u-tag
+										:text="item.label"
+										:type="clickAreaIndex == key ? 'error' : 'info'"
+										v-for="(item, key) in areaData"
+										@click="getMap(item.label, 'area', key)"
+										:key="key"
+										class="my-tags"
+									/>
+								</scroll-view>
+							</u-col>
+						</u-row>
+					</view>
+				</u-dropdown-item>
+				<u-dropdown-item title="身份" v-model="sfValue" :options="sfOptions"></u-dropdown-item>
+				<u-dropdown-item title="筛选"></u-dropdown-item>
+			</u-dropdown>
 		</view>
-		<u-line color="black"></u-line>
+		<u-line color="#f4f4f4"></u-line>
 		<!-- 列表数据显示 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<view class="p-x-10">
@@ -83,21 +78,7 @@
 		<uni-drawer ref="drawer" mode="right" :visible="true" :width="250" @close="drawerClose" @change="drawerChange">
 			<view style="padding:46rpx 20rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
-					<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">{{ item.title }}</view>
-					<!-- 	<view>
-						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
-							<u-col
-								:span="2"
-								v-for="(item, index) in item.category"
-								:key="index"
-								:class="screenedIndex == index && ' screened'"
-								@click="selected(index1, index)"
-								style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f8fff3;opacity:0.9;"
-							>
-								<view style="text-align: center;">{{ item.name }}</view>
-							</u-col>
-						</u-row>
-					</view> -->
+					<view class="f-16" style="line-height: 52rpx;margin-bottom: 20rpx;">{{ item.title }}</view>
 					<view class="comm-drawer-categorys b-t">
 						<view v-for="(item, index) in item.category" :key="index" :class="screenedIndex == index && ' screened'" @click="selected(index1, index)" class="item">
 							{{ item.name }}
@@ -118,7 +99,6 @@ import Interface from '@/api/ApiPath.js';
 import MescrollMixin from '@/mescroll-uni/mescroll-mixins.js';
 import Screen from '@/components/Screen/screen.vue';
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
-// import provinceData from '@components/regionalComponents'
 import provinceData from '../../components/regionalComponents/city-data/province.js';
 
 export default {
@@ -129,7 +109,7 @@ export default {
 	},
 	data() {
 		return {
-			allIndex: '0',
+			allIndex: '1',
 			clickAreaIndex: null,
 			clickCityIndex: null,
 			clickProvinceIndex: null,
@@ -297,6 +277,7 @@ export default {
 			this.screenedIndex = index;
 		},
 		allProvince() {
+			this.allIndex = 1;
 			this.address = '';
 			this.clickProvinceIndex = null;
 			this.clickCityIndex = null;
@@ -323,14 +304,12 @@ export default {
 							label: item.name
 						});
 					});
-
 					if (type == 'pro') {
 						if (this.clickProvinceIndex != index) {
 							this.clickCityIndex = null;
 							this.clickAreaIndex = null;
 						}
 						this.clickProvinceIndex = index;
-
 						that.cityData = []; // 市的所有數據
 						that.cityData = data;
 					} else if (type == 'city') {
@@ -368,8 +347,11 @@ export default {
 						}
 
 						this.address = province + '/' + city + '/' + area;
+
 						this.$refs.uDropdown.close();
 					}
+
+					that.allIndex = '0';
 				}
 			});
 		},
@@ -491,7 +473,24 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.my-scroll-view {
+	height: 500rpx;
+	padding: 10rpx 20rpx 20rpx 20rpx;
+	.my-tags {
+		text-align: center;
+		width: auto;
+		margin-bottom: 20rpx;
+		margin-right: 20px;
+		position: relative;
+	}
+	.my-tags:first-child {
+		margin-top: 20rpx;
+	}
+}
+.service {
+	overflow: hidden;
+}
 .app-modular {
 	padding-bottom: 20rpx;
 	border-bottom: 1px solid rgba(229, 229, 229, 1);
@@ -513,7 +512,7 @@ export default {
 }
 
 .word {
-	font-size: 13rpx;
+	font-size: 22rpx;
 	font-weight: bold;
 }
 

@@ -10,13 +10,12 @@
 					action-text=""
 					placeholder="请输入搜索内容"
 					v-model="search"
-					:focus="!disabled"
 					height="50"
 					@focus="jumpSearch"
 				></u-search>
 			</view>
 		</view>
-		
+
 		<view v-else :class="bold && 'f-b'" :style="{ background: background, color: color }" class="HeaderSearch shadow g-flex g-a-c g-j-c p-x-10 f-16">
 			<u-icon v-if="title !== '圈子'" v-show="!hideBack" @tap="back" style="position: absolute;left: 20rpx;" class="f-20" name="arrow-left" :color="color"></u-icon>
 			{{ title }}
@@ -56,8 +55,7 @@ export default {
 			default: '#000'
 		}
 	},
-	mounted() {
-	},
+	mounted() {},
 	data() {
 		return {
 			search: '', //搜索输入得内容,

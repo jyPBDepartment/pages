@@ -9,12 +9,12 @@
 		</mescroll-body>
 
 		<uni-drawer ref="drawer" mode="right" :width="250" :visible="true">
-			<view style="padding:20rpx">
-				<view class="f-12" style="line-height: 52rpx;margin-bottom: 20rpx;">筛选类别</view>
-				<view class="categorys g-flex g-f-warp  p-y-10 g-j-s-a b-t">
+			<view style="padding: 20rpx">
+				<view class="f-16" style="line-height: 52rpx; margin-bottom: 20rpx">筛选类别</view>
+				<view class="comm-drawer-categorys">
 					<view
 						:class="index == selectCategoryIndex && tabIndex == 4 && 'screened'"
-						class="f-14 t-c category"
+						class="item category"
 						@click="selectCategory(item, index)"
 						v-for="(item, index) in categoryList"
 						:key="index"
@@ -206,18 +206,10 @@ export default {
 	color: #fff;
 }
 
-.article-info {
-	margin-top: 20rpx;
-}
-
 .category {
-	width: 160rpx;
+	min-width: 140rpx;
 	line-height: 54rpx;
-	background-color: #f4f4f4;
-	color: #505050;
-	margin-bottom: 20rpx;
-	padding: 0 20rpx;
-	border-radius: 6rpx;
+	padding: 0 8rpx;
 }
 
 .btns {

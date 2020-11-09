@@ -3,7 +3,7 @@
 		<HeaderSearch hideBack title="我的"></HeaderSearch>
 		<view class="content">
 			<view class="content-box">
-				<u-line color="#e5e5e5"></u-line>
+				<!-- <u-line color="#e5e5e5"></u-line> -->
 				<!-- 农机发布 -->
 				<view class="public" @click="jump('../../catalog/agriculturalMachinery?index=0')">
 					<u-icon size="58" name="http://60.205.246.126/images/2020/09/14/1600053715235457.png" class="item-icon"></u-icon>
@@ -25,12 +25,12 @@
 					<text class="title-name">农服发布</text>
 					<u-icon size="33" name="arrow-right" class="arrow-icon" @click=""></u-icon>
 				</view>
-				<u-line color="#e5e5e5"></u-line>
+				<!-- <u-line color="#e5e5e5"></u-line> -->
 			</view>
 
 			<!-- 我的预约 -->
 			<view class="content-box">
-				<u-line color="#e5e5e5"></u-line>
+				<!-- <u-line color="#e5e5e5"></u-line> -->
 				<!-- 我的预约 -->
 				<view class="public" @click="jump('../../catalog/myAppointment')">
 					<u-icon size="58" name="http://60.205.246.126/images/2020/09/14/1600053773729596.png" class="item-icon"></u-icon>
@@ -47,7 +47,7 @@
 					<u-icon size="33" name="arrow-right" class="arrow-icon" @click=""></u-icon>
 				</view>
 
-				<u-line color="#e5e5e5"></u-line>
+				<!-- <u-line color="#e5e5e5"></u-line> -->
 			</view>
 		</view>
 	</view>
@@ -78,7 +78,7 @@ export default {
 
 <style lang="scss">
 .my-container {
-	background: #f4f4f4;
+	background: $comm-border-color;
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -94,7 +94,7 @@ export default {
 			box-sizing: border-box;
 			margin-top: 24rpx;
 			background: #fff;
-			padding: 10rpx 24rpx;
+			padding: 20rpx 24rpx 30rpx 24rpx;
 			width: 100%;
 			box-sizing: border-box;
 			border-radius: 10rpx;

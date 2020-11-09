@@ -12,10 +12,10 @@
 				{{ item.name }}
 			</view>
 		</view>
-		<uni-drawer ref="drawer" mode="right" :visible="true" :width="270">
-			<view style="padding:40rpx">
+		<uni-drawer ref="drawer" mode="right" :visible="true" :width="250">
+			<view style="padding: 40rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
-					<view class="f-16" style="line-height: 52rpx;margin-bottom: 20rpx;">{{ item.title }}</view>
+					<view class="f-16" style="line-height: 52rpx; margin-bottom: 20rpx">{{ item.title }}</view>
 
 					<view class="comm-drawer-categorys b-t">
 						<view
@@ -24,15 +24,21 @@
 							:class="screenedIndex1 == index1 && screenedIndex == index && ' screened'"
 							@click="selected(index1, index)"
 							class="item"
-							style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f4f4f4;padding:5rpx;"
+							style="
+                margin-top: 20rpx;
+                cursor: pointer;
+                border-radius: 5px;
+                background-color: #f4f4f4;
+                padding: 5rpx;
+              "
 						>
 							{{ item.name }}
 						</view>
 					</view>
 				</view>
 
-				<view v-if="selectType == '1'" v-for="(item1, index2) in screenL" :key="index2 + 1" style="margin-top:20rpx;">
-					<view class="f-16" style="line-height: 52rpx;margin-bottom: 20rpx;">{{ item1.title }}</view>
+				<view v-if="selectType == '1'" v-for="(item1, index2) in screenL" :key="index2 + 1" style="margin-top: 20rpx">
+					<view class="f-16" style="line-height: 52rpx; margin-bottom: 20rpx">{{ item1.title }}</view>
 					<!-- 	<view class="b-t">
 						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
 							<u-col
@@ -56,7 +62,13 @@
 							:class="screenedIndex2 == index2 && screenedIndex3 == index3 && ' screened'"
 							@click="selected1(index2, index3)"
 							class="item"
-							style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f4f4f4;padding:5rpx;"
+							style="
+                margin-top: 20rpx;
+                cursor: pointer;
+                border-radius: 5px;
+                background-color: #f4f4f4;
+                padding: 5rpx;
+              "
 						>
 							{{ item.name }}
 						</view>
@@ -173,7 +185,7 @@ export default {
 .screen {
 	height: 84rpx;
 	color: #808080;
-	border-bottom: 1px solid #f4f4f4;
+	border-bottom: 1px solid $comm-border-color;
 
 	.sort {
 		height: 34rpx;
@@ -203,7 +215,7 @@ export default {
 	bottom: 20rpx;
 	width: 100%;
 	padding: 20rpx;
-	border-top: 1px solid #f4f4f4;
+	border-top: 1px solid $comm-border-color;
 
 	.btn {
 		width: 192rpx;
