@@ -55,9 +55,7 @@
 			"path": "pages/module/offlineCourses/offlineSignUpShow" //线下课程报名展示页
 		},
 
-		{
-			"path": "pages/module/hotCourse/index" // 热门课程内容详情
-		},
+	
 		
 		{
 			"path": "pages/module/learningManual/agentArticleContent" // 经销商文章内容详情

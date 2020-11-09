@@ -36,15 +36,15 @@
 				<view style="text-align: right;" @click="rmMore">更多>>></view>
 			</u-col>
 		</u-row>
-		<view class="list" v-for="(item, index) in hotCourseList" :key="index"  @click="rmDetail">
+		<view class="list" v-for="(item, index) in hotCourseList" :key="index"  @click="rmDetail(item.id)">
 			<view class="listOne">
 				<view class="img">
 					<image class="listImg" :src="item.url"></image>
 				</view>
-				<view class="listText">{{item.word}}</view>
+				<view class="listText">{{item.title}}</view>
 			</view>
 			<view class="listSen">
-				<view class="bride">{{item.sum}}人已学</view>
+				<view class="bride">{{item.readNum}}人已学</view>
 			</view>
 				<view>
 					<u-line class="underline"></u-line>
@@ -68,11 +68,8 @@
 				<view class="title1">
 					{{item.title}}
 				</view>
-				<view class="content">
-					{{item.content}}
-				</view>
 				<view class="courseTime">
-					开课时间：{{item.courseTime}}
+					开课时间：{{item.lessonTime}}
 				</view>
 			</view>
 		</view>
@@ -87,19 +84,15 @@
 				border:false,
 				picType:'',
 				banner:[],
-				hotCourseList:[
-					{url:"http://60.205.246.126/images/2020/09/29/1601345920052441.jpg",word:"通过row组件的justify来对分栏进行灵活的对齐， 可选值为start(或flex-start)、end(或flex-end)",sum:"200"},
-					{url:"http://60.205.246.126/images/2020/09/29/1601345997114502.jpg",word:"培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",sum:"300"}
-				],
-				offlineCourseList:[
-					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"职业生涯规划",courseTime:"2020-12-12 09:00"},
-					{url:"http://60.205.246.126/images/2020/10/22/1603331441054086.png",title:"现代职业农业经理人",content:"农技知识",courseTime:"2020-12-12 09:00"}
-				]
+				hotCourseList:[],
+				offlineCourseList:[]
 			}
 		},
 		// 页面初始化加载
 		onLoad(e) {
 			this.picture();//初始化加载banner图
+			this.hotCourse();//初始化加载热门课程
+			this.offLineCourse();//初始化加载线下课程
 		},
 		methods: {
 			// 初始化加载banner图
@@ -127,6 +120,52 @@
 					});
 				
 			},
+			// 初始化加载热门课程
+			hotCourse(){
+					uni.request({
+						url: ApiPath.url.findHotCourse,
+						method: "GET",
+						data: {},
+						success: (res) => {
+							if (res.data.code == 200) {
+								
+								this.hotCourseList = res.data.data
+							} else {
+								uni.showToast({
+									title: "服务器出错，请联系管理员"
+								})
+							}
+						},
+						fail: (err) => {
+							uni.showToast({
+								title: "系统初始化失败，请联系管理员"
+							})
+						}
+					});
+				
+			},
+			// 初始化加载线下课程
+			offLineCourse(){
+				uni.request({
+					url: ApiPath.url.findOffLineCourse,
+					method: "GET",
+					data: {},
+					success: (res) => {
+						if (res.data.code == 200) {
+							this.offlineCourseList = res.data.data
+						} else {
+							uni.showToast({
+								title: "服务器出错，请联系管理员"
+							})
+						}
+					},
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+					}
+				});
+			},
 			// 线下课程
 			offlineCourses() {
 				uni.navigateTo({
@@ -148,7 +187,7 @@
 			// 热门课程更多
 			rmMore() {
 				uni.navigateTo({
-					url: "../../module/hotCourse/hotCourseList"
+					url:"../../module/hotCourse/hotCourseList"
 				})
 			},
 			// 线下课程更多
@@ -158,10 +197,10 @@
 				})
 			},
 			// 热门课程详情
-			rmDetail() {
+			rmDetail(getId) {
 				
 				uni.navigateTo({
-					url: "../../module/hotCourse/index"
+					url: '../../module/learningManual/agentArticleContent?id='+getId
 				})
 			},
 			// 线下课程详情

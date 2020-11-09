@@ -1,6 +1,7 @@
 <template>
 	<view class="content">
 		<!-- 头部 -->
+
 		<view class="head">
 			<view class="backArrow" @click="backTo">
 				<u-icon name="arrow-left" color="#333" size="32"></u-icon>
@@ -12,61 +13,52 @@
 		<view class="select">
 			<view>
 				<u-search placeholder="搜索标题或标签" bg-color="#fff" :show-action="false" input-align="left" shape="square" margin="30rpx 0rpx 0rpx 20rpx"
-				 maxlength="16" class="input" v-model="searchTitle"></u-search>
+				 maxlength="16" class="input" v-model="title" @search="search"></u-search>
 			</view>
 		</view>
-				
-				<u-tabs :list="list" :current="current" @change="change" font-size="30" item-width ="150" active-color="red" ></u-tabs>
-		
+
+		<!-- 滑块 -->
+		<u-tabs :list="labelList" :current="current" @change="change" font-size="30" item-width="150" :show-bar="false"
+		 active-color="red" class="u-sticky"></u-tabs>
+
+		<!-- 懒加载 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-		<!-- 列表详情 -->
-			<view class="list" v-for="(item, index) in industryCaseList" :key="index"  @click="industryCaseJump('./index')">
-			<view class="listOne">
-				<view class="img">
-					<image class="listImg" :src="item.url"></image>
+			<!-- 列表详情 -->
+			<view class="list" v-for="(item, index) in agentList" :key="index" @click="agentArticleJump(item.id)">
+				<view class="listOne">
+					<view class="img">
+						<image class="listImg" :src="item.url"></image>
+					</view>
+					<view class="listText">{{item.title}}</view>
 				</view>
-				<view class="listText">{{item.word}}</view>
-			</view>
-			<view class="listSen">
-				<view class="bride">{{item.sum}}人已学</view>
-			</view>
+				<view class="listSen">
+					<view class="bride">{{item.studyNum}}人已学</view>
+				</view>
 				<view>
 					<u-line class="underline"></u-line>
 				</view>
-		</view>
+			</view>
 		</mescroll-body>
 	</view>
 
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js';
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	export default {
 		mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
-	
 		data() {
 			return {
-					list: [{
+				labelList: [{
 						code: "",
+						id: "",
 						name: '全部'
-					},
-					{
-						code: 0,
-						name: '农技'
-					},
-					{
-						code: 1,
-						name: '财经'
-					},
-					{
-						code: 2,
-						name: '管理'
-					},
-					{
-						code: 3,
-						name: '推广'
-					}],
-					current: 0,
+					}
+				],
+				current: "",
+				learningId: "",
+				labelId: "",
 				mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
 				// 下拉刷新的配置(可选, 绝大部分情况无需配置)
 				downOption: {
@@ -82,94 +74,8 @@
 						tip: '暂无相关数据'
 					}
 				},
-				listIndex: 0,
-				searchTitle: '',
-				industryCaseList: [{
-						type: "0",
-						url: "http://60.205.246.126/images/2020/10/12/1602481525521725.jpg",
-						word: "0人的欲望永无止尽 就像我一开始 只是想要知道你的名字",
-						sum: "1314"
-					},
-					{
-						type: "1",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "1培养农业职业经理人，是长春市今年农业战线重点改革之一，也是经济与生态体制......",
-						sum: "1314"
-					},
-					{
-						type: "0",
-						url: "http://60.205.246.126/images/2020/10/12/1602481543327363.jpg",
-						word: "0刮奖刮出一个谢字就足够了。",
-						sum: "1314"
-					},
-					{
-						type: "1",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "1你眼里有全宇宙 胜过我见过的所有山川河流",
-						sum: "1314"
-					},
-					{
-						type: "1",
-						url: "http://60.205.246.126/images/2020/10/12/1602481564370430.jpg",
-						word: "1孺子含辛，隐忍不嗔。",
-						sum: "1314"
-					},
-					{
-						type: "0",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "0加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					},
-					{
-						type: "2",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "2加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					},
-					{
-						type: "2",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "2加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					},
-					{
-						type: "2",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "2加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					},
-					{
-						type: "3",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "3加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					},
-					{
-						type: "3",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "3加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					},
-					{
-						type: "3",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "3加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					},
-					{
-						type: "3",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "3加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					},
-					{
-						type: "3",
-						url: "http://60.205.246.126/images/2020/10/12/1602481589403089.jpg",
-						word: "3加油呀,你是比自己想象的要好得多的人。",
-						sum: "1314"
-					}
-
-				],
+				title: '',
+				agentList: [],
 				formInline: {
 					page: 1,
 					limit: 10,
@@ -190,11 +96,13 @@
 				},
 			}
 		},
-
+		// 页面初始化
+		onLoad(e) {
+			this.learningId = e.id;
+			// 标签初始化
+			this.initLabel();
+		},
 		methods: {
-			change(index) {
-							this.current = index;
-						},
 			/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
@@ -207,20 +115,107 @@
 			upCallback(page) {
 				let pageNum = page.num; // 页码, 默认从1开始
 				let pageSize = page.size; // 页长, 默认每页10条
+				uni.request({
+					method: 'GET', //请求方式
+					data: {
+						title: this.title,
+						createBy: this.createBy,
+						vocationId: this.learningId,
+						labelId: this.labelId,
+						page: pageNum,
+						size: pageSize
+					},
+					url: ApiPath.url.findById, //请求接口路径
+					success: (res) => { //成功返回结果方法
+					
+						if (res.data.state == 0) {
+							this.agentList = res.data.data;
+							
+							//设置列表数据
+							if (page.num == 1) this.agentList = []; //如果是第一页需手动置空列表
+							this.agentList = this.agentList.concat(res.data.data.content); //追加新数据
+							this.mescroll.endByPage(res.data.data.content.length, res.data.data.totalPages);
+						} else {
+							uni.showToast({
+								title: "服务器出错，请联系管理员"
+							})
+						}
+						// 请求成功,隐藏加载状态
+						this.mescroll.endSuccess()
+					},
+					fail: (err) => {
+						// 请求失败,隐藏加载状态
+						this.mescroll.endErr()
+					}
+
+				})
 
 			},
-			backTo() {
-				uni.navigateBack({})
+			// 标签点击事件
+			change(index) {
+				// 循环遍历list,如果i与当前序号相等，res.labelId 赋值给list.id
+				for(let i=0;i<this.labelList.length;i++){
+					if(i==index){
+						this.labelId = this.labelList[i].id;
+					}
+				}
+				// 选中点击
+				this.current = index;
+				// 调用下拉刷新的方法
+				this.downCallback();
 			},
-			// 行业案例跳转详情页面
-			industryCaseJump(url) {
-				uni.navigateTo({
-					url: url
+			// 标签初始化
+			initLabel() {
+				uni.request({
+					method: 'GET', //请求方式
+					url: ApiPath.url.findLabel, //请求接口路径
+					success: (res) => { //成功返回结果方法
+						if (res.data.state == 0) {
+							for (let i = 0; i < res.data.data.length; i++) {
+								// 遍历循环，给标签list循环添加数据
+								this.labelList.push({
+									"id": res.data.data[i].id,
+									"code": i,
+									"name": res.data.data[i].name
+								})
+
+							}
+							// 页码，数量
+							let pages = {
+								num: 1,
+								size: 10
+							};
+							// 调用上拉加载方法
+							this.upCallback(pages);
+						} else {
+							uni.showToast({
+								title: "服务器出错，请联系管理员"
+							})
+						}
+						// 请求成功,隐藏加载状态
+						this.mescroll.endSuccess()
+					},
+					fail: (err) => {
+						// 请求失败,隐藏加载状态
+						this.mescroll.endErr()
+					}
+
 				})
 			},
-			//状态滑块筛选
-			select(code) {
-				this.status = code
+			// 返回上一页
+			backTo() {
+				uni.navigateBack({
+					
+				})
+			},
+			// 经销商文章跳转详情页面
+			agentArticleJump(getId) {
+					uni.navigateTo({
+						url: '../../module/learningManual/agentArticleContent?id='+getId
+					})
+			},
+			//搜索功能
+			search() {
 				this.downCallback()
 			}
 		}
@@ -236,8 +231,7 @@
 
 		.head {
 			display: flex;
-			margin-top: 15rpx;
-			margin-left: 20rpx;
+			margin: 15rpx 0rpx 0rpx 20rpx;
 
 			.backArrow {
 				margin-top: 6rpx;
@@ -245,10 +239,17 @@
 
 			.title {
 				margin-left: 250rpx;
-				font-size: 32rpx;
+				font-size: 35rpx;
 			}
 		}
-		
+
+		.u-sticky {
+			position: -webkit-sticky;
+			position: sticky;
+			top: 0rpx;
+			z-index: 999;
+		}
+
 		.select {
 			display: flex;
 			height: 120rpx;
@@ -257,7 +258,6 @@
 
 			.input {
 				width: 700rpx;
-
 			}
 
 			.uni-input-placeholder {
@@ -289,12 +289,10 @@
 			}
 
 			.listSen {
-
 				.bride {
 					font-size: 22rpx;
 					color: #BFBFBF;
-					margin-left: 600rpx;
-					margin-top: -50rpx;
+					margin: -50rpx 0rpx 0rpx 600rpx;
 				}
 			}
 

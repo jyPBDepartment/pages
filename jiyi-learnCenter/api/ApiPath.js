@@ -24,23 +24,27 @@ const extendUrl = {
 }
 const url = {
 	// 学习手册职业类别加载
-	findTypeOfBussiness:URLHost + '/vocationInfo/occupation',
+	findTypeOfBussiness: URLHost + '/vocationInfo/occupation',
 	// 学习手册查询列表
-	findById:URLHost + '/manualInfo/findByName',
+	findById: URLHost + '/manualInfo/findByName',
 	// 学习手册查看详情页面
-	findArticleContent:URLHost + '/manualInfo/findManualInfoId',
+	findArticleContent: URLHost + '/manualInfo/findManualInfoId',
 	// 学习手册查询所有有效的标签
-	findLabel:URLHost + '/manualLabel/label',
+	findLabel: URLHost + '/manualLabel/label',
 	//学习手册收藏
-	saveUserManualInfo:URLHost + '/manualInfo/saveUserManualInfo',
+	saveUserManualInfo: URLHost + '/manualInfo/saveUserManualInfo',
 	// 首页加载banner图
-	findBanner:URLHost + '/pictureInfo/getListByType',
+	findBanner: URLHost + '/pictureInfo/getListByType',
 	// 我的考试成绩加载列表
-	findExamScore:URLHost + '/mine/getExamResultByUserId',
+	findExamScore: URLHost + '/mine/getExamResultByUserId',
 	// 我的收藏加载列表
-	findCollection:URLHost + '/mine/getManualListByUserId',
+	findCollection: URLHost + '/mine/getManualListByUserId',
 	//线下课程报名
-	enrollLesson:URLHost + '/lesson/enrollLesson',
+	enrollLesson: URLHost + '/lesson/enrollLesson',
+	// 首页加载热门课程
+	findHotCourse: URLHost + '/manualInfo/getListByReading',
+	// 首页加载线下课程
+	findOffLineCourse: URLHost + '/lesson/getListByLessonDay'
 
 }
 export default {
