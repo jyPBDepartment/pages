@@ -128,7 +128,7 @@
 					url: ApiPath.url.findById, //请求接口路径
 					success: (res) => { //成功返回结果方法
 					
-						if (res.data.state == 0) {
+						if (res.data.code == 200) {
 							this.agentList = res.data.data;
 							
 							//设置列表数据
