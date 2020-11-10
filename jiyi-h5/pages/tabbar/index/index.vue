@@ -116,8 +116,8 @@ export default {
 			// alert("从app获取用户id=" + e.U + " sessionId=" + e.SI)
 			// Interface.common.userId = e.U; //缓存用户id
 			// Interface.common.sessionId = e.SI; //缓存sessionId
-			// localStorage.setItem('userId', e.U);
-			localStorage.setItem('userId', '20200909');
+			localStorage.setItem('userId', e.U);
+			// localStorage.setItem('userId', '20200909');
 			localStorage.setItem('sessionId', e.SI);
 			let us = localStorage.getItem('userId');
 			let ss = localStorage.getItem('sessionId');
