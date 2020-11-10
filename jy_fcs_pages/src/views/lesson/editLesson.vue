@@ -45,7 +45,7 @@
         <el-form-item label="课程名称" prop="title">
           <el-input type="text" v-model="lessonForm.title" size="small" placeholder="不超过32个字" style="width:92%" maxlength="32"></el-input>
         </el-form-item>
-        <el-form-item label="课程名称" prop="teacherName">
+        <el-form-item label="主讲人" prop="teacherName">
           <el-input type="text" v-model="lessonForm.teacherName" size="small" placeholder="不超过32个字" style="width:92%" maxlength="32"></el-input>
         </el-form-item>
         <el-form-item label="课程地点" prop="address">
