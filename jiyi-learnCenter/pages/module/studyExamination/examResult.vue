@@ -75,10 +75,9 @@
 				</view>
 			</view>
 			<!-- 错题解析 -->
-			<view class="analysis animate__animated animate__slideInRight" v-for="(titleItem,titleIndex) in examTableList" :key="titleIndex"
-			 v-if="titleItem.queIsCorrect=='2'" :style="titleItem.queType == '1' ? 'margin-bottom: 770rpx;' : 'margin-bottom: 420rpx;'">
+			<view class="analysis animate__animated animate__slideInRight" v-for="(titleItem,titleIndex) in examTableList" :key="titleIndex" v-if="titleItem.queIsCorrect=='2'" >
 				<view class="quetype">
-					<text>错题解析：{{titleItem.queType == '1' ? '单选题' : '判断题'}}</text>
+					<text>错题解析：{{titleItem.queType == '0' ? '单选题' : '判断题'}}</text>
 					<text>本题分值：{{titleItem.queScore}}分</text>
 				</view>
 				<view class="queName">
@@ -297,6 +296,7 @@
 			.questionAnswer {
 				display: flex;
 				flex-direction: column;
+				margin-bottom: 30rpx;
 
 				.answerCard {
 					margin-top: 30rpx;
@@ -365,68 +365,59 @@
 
 				}
 			}
-
 			.analysis {
-				margin-top: 30rpx;
-				// margin-bottom: 760rpx;
-				height: 220rpx;
+				margin: 0 0 50rpx 0;
 				border: 2rpx solid #bbb;
 				border-radius: 20rpx;
 				display: flex;
 				flex-direction: column;
-
+			
 				.quetype {
 					display: flex;
 					justify-content: space-between;
 					font-weight: bold;
-					margin: 30rpx 20rpx 20rpx 20rpx;
+					margin: 30rpx 20rpx 0rpx 20rpx;
 				}
-
+			
 				.queName {
-					margin: 50rpx 20rpx 40rpx 20rpx;
+					margin: 30rpx 20rpx 40rpx 20rpx;
 				}
-
+			
 				.queAnswer {
-					padding-bottom: 140rpx;
-					margin: 30rpx 10rpx 0rpx 10rpx;
-					border: 2rpx solid #bbb;
-					border-radius: 16rpx;
+					padding-bottom: 40rpx;
+					margin: 0rpx 10rpx;
 					display: flex;
 					flex-direction: column;
-
+			
 					.answerStyle {
 						display: flex;
-						margin-top: 40rpx;
-
 						.answerIcon {
 							width: 60rpx;
 							height: 60rpx;
 							margin-left: 30rpx;
 						}
-
 						.word {
-							margin-left: 20rpx;
-							margin-top: 10rpx;
+							margin:10rpx 0 0 20rpx ;
 						}
 					}
 				}
-
+			
 				.correctAnswer {
 					display: flex;
-					margin: 40rpx 10rpx 100rpx 10rpx;
+					margin: 10rpx 10rpx 20rpx 10rpx;
 					justify-content: space-around;
-
+			
 					.selectStyle {
 						color: #27B148;
 						margin-left: 20rpx;
 					}
-
+			
 					.selectStylea {
 						color: #E51C2E;
 						margin-left: 20rpx;
 					}
 				}
-
+			
 			}
 		}
 	}
