@@ -35,7 +35,7 @@
 		
 		data(){
 			return{
-				userId: "asdsadsad",
+				userId: localStorage.getItem("userId"),
 				collectionList:[]
 			}
 		},

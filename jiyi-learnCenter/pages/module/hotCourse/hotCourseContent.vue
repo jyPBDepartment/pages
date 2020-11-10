@@ -53,7 +53,7 @@
 				content:"",
 				style:'color:#333333',
 				articleList:[],
-				userId:"asdsadsad",
+				userId: localStorage.getItem("userId"),
 				manualInfoId:"",
 				isCollection: 0
 			}

@@ -42,8 +42,7 @@
 	export default{
 		data(){
 			return{
-				// userId: localStorage.getItem("userId"),
-				userId: "asdsadsad",
+				userId: localStorage.getItem("userId"),
 				examScoreList:[]
 			}
 		},
