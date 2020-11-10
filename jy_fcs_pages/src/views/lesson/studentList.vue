@@ -29,7 +29,7 @@
     <!--列表-->
     <el-table id="exportTab" size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column type="index" label="序号" min-width="7%" align="center"></el-table-column>
-      <el-table-column prop="userCode" min-width="9%" label="用户编号" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <!-- <el-table-column prop="userCode" min-width="9%" label="用户编号" align="center" :show-overflow-tooltip="true"></el-table-column> -->
       <el-table-column prop="userName" min-width="9%" label="用户姓名" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="userTel" min-width="9%" label="联系方式" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="createDate" min-width="12%" label="报名时间" align="center" sortable></el-table-column>
