@@ -46,7 +46,7 @@
 							<view class="choose">（约{{item.answerTime}}分钟，不限考次）</view>
 							<view >
 								<button v-if="item.isPass==0" class="btn" @click="answer(item)">答题</button>
-								<button v-if="item.isPass==1" class="btn" disabled="disabled">已通过</button>
+								<button v-if="item.isPass==1" class="btnPass" disabled="disabled">已通过</button>
 								<button v-if="item.isPass==2" class="btn" @click="answer(item)">重新答题</button>
 							</view>
 						</view>
@@ -239,10 +239,7 @@
 								.btn{
 									font-size: 12rpx;
 									background-color: #fff;
-									border-radius: 60rpx;
 									border:2rpx solid red;
-									width: 108rpx;
-									
 									margin-top: 14rpx;
 								}
 								.btnPass{
