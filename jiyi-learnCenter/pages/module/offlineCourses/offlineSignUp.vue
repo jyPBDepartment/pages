@@ -79,8 +79,9 @@
 				idCard:'',
 				phone:'',
 				code:'',
-				classId:'',
-				id:'tianjiaid121323',
+				id:'',
+				lessonId:'',
+				title:'',
 				width: 120,
 				height: 45
 			}
@@ -92,20 +93,24 @@
 			}, 1000)
 		},
 		onLoad(e) {
-			this.offlineSignUpId(e.id);
+			//index =1新增
+			if(e.index=='0'){
+				this.lessonId = e.id
+				this.title = e.title
+			}
 			//index=1编辑
 			if(e.index=='1'){
-				this.searchSignUpId()
 				this.name=e.name;
 				this.idCard=e.idCard;
 				this.phone=e.phone;
+				this.title = e.title
+				this.lessonId = e.lessonId
 			}
 		},
 		
 		methods: {
 			// 初始化验证码
 			init: function() {
-				// console.log('start');
 				var context = uni.createCanvasContext('imgcanvas', this),
 					w = this.width,
 					h = this.height;
@@ -141,7 +146,6 @@
 					context.fill();
 				}
 				context.draw();
-				// console.log('end');
 			},
 			rc: function(min, max) {
 				var r = this.rn(min, max);
@@ -156,10 +160,6 @@
 				this.init();
 			},
 			canvasIdErrorCallback: function(e) {
-				// console.error(e.detail.errMsg)
-			},
-			offlineSignUpId(val) {
-				this.classId = val
 			},
 			
 			//立即报名
@@ -217,12 +217,9 @@
 					return false;
 				}
 				uni.navigateTo({
-					url: '../offlineCourses/offlineSignUpShow?name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+''
+					url: '../offlineCourses/offlineSignUpShow?name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.title+''
 				})
 			},
-			
-			//重新编辑
-			searchSignUpId(){},
 			
 			//返回
 			backTo() {

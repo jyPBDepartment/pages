@@ -30,17 +30,19 @@
 					</view>
 				</view>
 
-				<view v-if="selectType == '1'" v-for="(item1, index2) in screenL" :key="index2 + 1" style="margin-top: 20rpx">
-					<view class="f-16" style="line-height: 52rpx; margin-bottom: 20rpx">{{ item1.title }}</view>
-					<view class="comm-drawer-categorys b-t">
-						<view
-							v-for="(item2, index3) in item1.category"
-							:key="index3"
-							:class="screenedIndex2 == index2 && screenedIndex3 == index3 && ' screened'"
-							@click="selected1(index2, index3)"
-							class="item"
-						>
-							{{ item.name }}
+				<view v-if="selectType == '1'">
+					<view v-for="(item1, index2) in screenL" :key="index2 + 1" style="margin-top: 20rpx">
+						<view class="f-16" style="line-height: 52rpx; margin-bottom: 20rpx">{{ item1.title }}</view>
+						<view class="comm-drawer-categorys b-t">
+							<view
+								v-for="(item2, index3) in item1.category"
+								:key="index3"
+								:class="screenedIndex2 == index2 && screenedIndex3 == index3 && ' screened'"
+								@click="selected1(index2, index3)"
+								class="item"
+							>
+								{{ item.name }}
+							</view>
 						</view>
 					</view>
 				</view>

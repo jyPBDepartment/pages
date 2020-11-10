@@ -81,28 +81,26 @@
 				idCard:'',
 				phone:'',
 				id:'',
-				lessonId:"402881eb7571f9fa0175721e9bc30000",
-				userId:"asdsadsad",
-				userName:"",
-				userTel:"",
-				className:'水稻是怎样的养成的',
+				lessonId:'',
+				userId:'',
+				userName:'',
+				userTel:'',
+				className:'',
 			}
 		},
 		onLoad(e) {
-			this.offlineSignUpId();
 			this.name=e.name;
 			this.idCard=e.idCard;
 			this.phone=e.phone;
+			this.className = e.title
+			this.lessonId = e.lessonId
 		},
 		methods: {
-			offlineSignUpId(val) {
-			},
-			
 			//确认报名
 			confirm(){
 				let param = {
 					lessonId:this.lessonId,
-					userId:this.userId,
+					userId:localStorage.getItem("userId"),
 					userName: this.name,
 					useTel:this.phone
 				};
@@ -134,7 +132,7 @@
 			//重新编辑跳转
 			reEdit(){
 				uni.navigateTo({
-					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+''
+					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.className+''
 				})
 			},
 			

@@ -51,7 +51,11 @@ const url = {
 	// 根据试卷Id加载试题列表信息
 	getQuestionListByExamId: URLHost + '/questionInfo/getQuestionListByExamId',
 	// 试卷提交
-	submitExam:URLHost+'/examPaperInfo/submitExam'
+	submitExam:URLHost+'/examPaperInfo/submitExam',
+	//线下课程列表
+	findLessonPage:URLHost+'/lesson/findLessonPage',
+	//线下课程详情
+	findById:URLHost+'/lesson/findById',
 }
 export default {
 	url,
