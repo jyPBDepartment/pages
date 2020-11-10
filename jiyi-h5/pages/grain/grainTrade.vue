@@ -3,16 +3,16 @@
 		<HeaderSearch :title="title" @searchCallback="search"></HeaderSearch>
 		<view class="comm-form-container">
 			<view class="item">
-				
 				<view class="title">标题</view>
 				<view class="info"><u-input placeholder="输入内容(最多输入10字)" maxlength="10" :clearable="false" v-model="name" /></view>
 			</view>
 			<view class="item">
 				<view class="title">描述</view>
-				<view class="info"><u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :maxlength="500" :clearable="false" v-model="descrip" height="200" /></view>
+				<view class="info">
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :maxlength="500" :clearable="false" v-model="descrip" height="200" />
+				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">设置封面</view>
 				<view class="info">
 					<u-upload
@@ -28,7 +28,6 @@
 				</view>
 			</view>
 			<view v-if="identityCode == '2'" class="item">
-				
 				<view class="title">类型</view>
 				<view class="info">
 					<u-radio-group :size="30" v-model="transactionTypeName" @change="radioGroupChange">
@@ -37,15 +36,13 @@
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">粮食种类</view>
-				<view class="info">
-					<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" @click="sexShow = true" />
+				<view class="info" @click="sexShow = true">
+					<u-input class="value" placeholder="请选择" v-model="transactionCategoryName" type="select" />
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">价格</view>
 				<view class="info">
 					<u-radio-group v-model="isFace" :size="30" @change="radioGroupChange1">
@@ -53,25 +50,22 @@
 					</u-radio-group>
 
 					<view class="is-face" v-if="isFace == '定价'">
-						<u-input style="width: 180rpx;" placeholder="输入价格" height="60"  border :clearable="false" v-model="price" />
+						<u-input style="width: 180rpx;" placeholder="输入价格" height="60" border :clearable="false" v-model="price" />
 						<text>元/天</text>
 					</view>
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">联系人</view>
 				<view class="info"><u-input placeholder="请输入联系人" :clearable="false" v-model="contactsUser" /></view>
 			</view>
 			<view class="item">
-				
 				<view class="title">联系电话</view>
 				<view class="info"><u-input :maxlength="11" placeholder="请输入联系电话" :clearable="false" v-model="contactsPhone" /></view>
 			</view>
 			<view class="item">
-				
 				<view class="title">区域</view>
-				<view class="info"><u-input placeholder="请选择" v-model="address" type="select" @click="regionaStatus = true" /></view>
+				<view class="info" @click="regionaStatus = true"><u-input class="value" placeholder="请选择" v-model="address" type="select" /></view>
 			</view>
 			<u-button style="margin:20rpx 0;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>

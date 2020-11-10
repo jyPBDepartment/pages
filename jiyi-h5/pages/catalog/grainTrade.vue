@@ -75,8 +75,8 @@
 				</view>
 			</view>
 		</mescroll-body>
-		<uni-drawer ref="drawer" mode="right" :visible="true" :width="250" @close="drawerClose" @change="drawerChange">
-			<view style="padding:46rpx 20rpx">
+		<uni-drawer ref="drawer" mode="right" :visible="true" :width="300" @close="drawerClose" @change="drawerChange">
+			<view style="padding:20rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
 					<view class="f-16" style="line-height: 52rpx;margin-bottom: 20rpx;">{{ item.title }}</view>
 					<view class="comm-drawer-categorys b-t">
@@ -86,9 +86,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="btns g-flex g-j-s-b b-t p-y-10">
-				<u-button class="btn" size="mini" shape="circle" @click="recharge" plain>重置</u-button>
-				<u-button class="btn" size="mini" shape="circle" @click="confirm(true)" type="error">确认</u-button>
+			<view class="drawer-bottom-btn">
+				<u-button class="btn" size="medium" shape="circle" @click="recharge" plain>重置</u-button>
+				<u-button class="btn" size="medium" shape="circle" @click="confirm(true)" type="error">确认</u-button>
 			</view>
 		</uni-drawer>
 	</view>
@@ -97,14 +97,12 @@
 <script>
 import Interface from '@/api/ApiPath.js';
 import MescrollMixin from '@/mescroll-uni/mescroll-mixins.js';
-import Screen from '@/components/Screen/screen.vue';
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
 import provinceData from '../../components/regionalComponents/city-data/province.js';
 
 export default {
 	mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 	components: {
-		Screen,
 		HeaderSearch
 	},
 	data() {
@@ -513,7 +511,7 @@ export default {
 
 .word {
 	font-size: 22rpx;
-	font-weight: bold;
+	font-weight: 500;
 }
 
 .screen {
@@ -535,24 +533,6 @@ export default {
 .screen-select {
 	color: #e51c2e;
 	font-weight: bold;
-}
-
-.category {
-	width: 128rpx;
-	line-height: 64rpx;
-	background-color: #e5e5e5;
-	color: #505050;
-	margin-bottom: 20rpx;
-}
-
-.btns {
-	position: absolute;
-	bottom: 60rpx;
-	width: 100%;
-
-	.btn {
-		width: 192rpx;
-	}
 }
 
 .st {

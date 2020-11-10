@@ -9,7 +9,7 @@
 			<view class="item">
 				<view class="title">描述</view>
 				<view class="info">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :maxlength="500" :clearable="false" v-model="machine.descrip" height="200" />
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :maxlength="500" :autoHeight="false" :clearable="false" v-model="machine.descrip" height="200" />
 				</view>
 			</view>
 			<view class="item">
@@ -31,8 +31,8 @@
 				</view>
 			</view>
 			<view class="item">
-				<view class="title f-14" >交易类型</view>
-				<view class="info g-f-1">
+				<view class="title">交易类型</view>
+				<view class="info">
 					<u-radio-group :size="30" v-model="machine.transactionTypeCode" @change="radioGroupChange">
 						<u-radio @change="radioChange" v-for="(item, index) in list" :key="index" :name="item.value" :disabled="item.disabled">{{ item.name }}</u-radio>
 					</u-radio-group>
@@ -40,25 +40,25 @@
 			</view>
 			<view class="item">
 				<view class="title">机器类型</view>
-				<view class="info">
-					<u-input placeholder="请选择" v-model="machineTypeName" type="select" @click="sexShow = true" />
+				<view class="info" @click="sexShow = true">
+					<u-input class="value" placeholder="请选择" v-model="machineTypeName" type="select" />
 					<u-action-sheet :list="machineTypeList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
 			<view class="item">
 				<view class="title">机器型号</view>
-				<view class="info"><u-input placeholder="请输入机器型号" :clearable="false" v-model="machine.model"  /></view>
+				<view class="info"><u-input placeholder="请输入机器型号" :clearable="false" v-model="machine.model" /></view>
 			</view>
 			<view class="item">
 				<view class="title">购买时间</view>
 				<view class="info" @click="dateShow = true">
+					<u-input class="value" disabled placeholder="请选择时间" :clearable="false" v-model="machine.purchaseDate" />
 					<u-icon name="calendar" class="input-icon"></u-icon>
-					<u-input  disabled placeholder="请选择时间" :clearable="false" v-model="machine.purchaseDate"  />
 				</view>
 			</view>
 
 			<view class="item">
-				<view class="title" >价格</view>
+				<view class="title">价格</view>
 
 				<view class="info">
 					<u-radio-group :size="30" v-model="machine.isFace" @change="radioGroupChange1">
@@ -67,7 +67,7 @@
 						</u-radio>
 					</u-radio-group>
 					<view class="is-face" v-if="machine.isFace == '定价'">
-						<u-input style="width: 180rpx;" placeholder="输入价格" height="60"  border :clearable="false" v-model="machine.price" />
+						<u-input style="width: 180rpx;" placeholder="输入价格" height="60" border :clearable="false" v-model="machine.price" />
 						<text>元/亩</text>
 					</view>
 				</view>
@@ -82,7 +82,7 @@
 			</view>
 			<view class="item">
 				<view class="title">区域</view>
-				<view class=" info"><u-input placeholder="请选择" v-model="machine.address" type="select" @click="regionaStatus = true" /></view>
+				<view class=" info" @click="regionaStatus = true"><u-input class="value" placeholder="请选择" v-model="machine.address" type="select" /></view>
 			</view>
 			<u-button style="margin: 20rpx 0;" shape="circle" type="error" @click="updateMachine">发布</u-button>
 		</view>

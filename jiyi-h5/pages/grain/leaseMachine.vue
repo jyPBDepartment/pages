@@ -3,17 +3,16 @@
 		<HeaderSearch title="农机" @searchCallback="search"></HeaderSearch>
 		<view class="comm-form-container">
 			<view class="item">
-				
 				<view class="title">标题</view>
 				<view class="info"><u-input placeholder="输入内容(必填,不能超过10个汉字)" maxlength="10" :clearable="false" v-model="name" height="64" /></view>
 			</view>
 			<view class="item">
-				
 				<view class="title">描述</view>
-				<view class="info"><u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :maxlength="500" :clearable="false" v-model="descrip" height="200" /></view>
+				<view class="info">
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :maxlength="500" :clearable="false" :autoHeight="false" v-model="descrip" height="200" />
+				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">农机图片</view>
 				<view class="info">
 					<u-upload
@@ -28,7 +27,6 @@
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">交易类型</view>
 				<view class="info">
 					<u-radio-group :size="30" v-model="transactionTypeCode" @change="radioGroupChange">
@@ -37,57 +35,47 @@
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">机器类型</view>
-				<view class=" info">
-					<u-input placeholder="请选择" v-model="machineTypeName" type="select" @click="sexShow = true" />
+				<view class=" info" @click="sexShow = true">
+					<u-input class="value" placeholder="请选择" v-model="machineTypeName" type="select" />
 					<u-action-sheet :list="machineTypeList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">机器型号</view>
-				<view class="info"><u-input placeholder="请输入机器型号" :clearable="false" v-model="model" height="64" /></view>
+				<view class="info"><u-input placeholder="请输入机器型号" :clearable="false" v-model="model" /></view>
 			</view>
 			<view class="item">
-				
 				<view class="title">购买时间</view>
-				<view class="info">
-					<u-icon name="calendar" class="input-icon" @click="dateShow = true"></u-icon>
-					<u-input  disabled placeholder="请选择时间" :clearable="false" v-model="purchaseDate" height="64" />
+				<view class="info" @click="dateShow = true">
+					<u-input class="value" disabled placeholder="请选择时间" :clearable="false" v-model="purchaseDate" />
+					<u-icon name="calendar" class="input-icon"></u-icon>
 				</view>
 			</view>
 
 			<view class="item">
-				
 				<view class="title">价格</view>
-
 				<view class="info">
 					<u-radio-group v-model="isFace" :size="30" @change="radioGroupChange1">
 						<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">{{ item.name }}</u-radio>
 					</u-radio-group>
 					<view class="is-face" v-if="isFace == '定价'">
-						<u-input style="width: 180rpx;" placeholder="输入价格" height="60"  border :clearable="false" v-model="price" />
+						<u-input style="width: 180rpx;" placeholder="输入价格" height="60" border :clearable="false" v-model="price" />
 						<text>元/天</text>
 					</view>
 				</view>
 			</view>
 			<view class="item">
-				
 				<view class="title">联系人</view>
 				<view class="info"><u-input placeholder="请输入联系人" :clearable="false" v-model="contactsUser" height="64" /></view>
 			</view>
 			<view class="item">
-				
 				<view class="title">联系电话</view>
-				<view class="info">
-					<u-input placeholder="请输入联系电话" type="number" maxlength="11" :clearable="false" v-model="contactsPhone" height="64" />
-				</view>
+				<view class="info"><u-input placeholder="请输入联系电话" type="number" maxlength="11" :clearable="false" v-model="contactsPhone" height="64" /></view>
 			</view>
 			<view class="item">
-				
 				<view class="title">区域</view>
-				<view class=" info"><u-input placeholder="请选择" v-model="address" type="select" @click="regionaStatus = true" /></view>
+				<view class=" info" @click="regionaStatus = true"><u-input class="value" placeholder="请选择" v-model="address" type="select" /></view>
 			</view>
 			<u-button style="margin: 20rpx 0;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>

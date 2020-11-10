@@ -171,7 +171,7 @@ export default {
 	margin: 20rpx;
 	box-sizing: border-box;
 	background-color: #ffffff;
-	padding: 10rpx 20rpx;
+	padding: 30rpx 20rpx 10rpx 20rpx;
 }
 
 /*样式的width和height一定要与定义的cWidth和cHeight相对应*/

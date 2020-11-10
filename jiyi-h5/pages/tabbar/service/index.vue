@@ -6,7 +6,6 @@
 			<view class="p-x-10">
 				<view class="app-modular comm-b-bottom g-flex" v-for="(item, index) in btnList" :key="index" @click="jumpInfo(item.id)">
 					<image class="app-img" :src="item.imageUrl"></image>
-
 					<view class="app-info g-f-1">
 						<p class="title f-14 o-e">{{ item.name }}</p>
 						<view class="g-flex f-12 g-a-c" style="color: rgba(128, 128, 128, 1)">
@@ -110,6 +109,10 @@ export default {
 						{
 							code: 4,
 							name: '黄豆'
+						},
+						{
+							code: 5,
+							name: '大豆'
 						}
 					]
 				}

@@ -9,11 +9,19 @@
 			<view class="item">
 				<view class="title">描述</view>
 				<view class="info">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :maxlength="500" :clearable="false" v-model="corn.descrip" height="200" />
+					<u-input
+						type="textarea"
+						placeholder="请输入描述正文（最多输入500字）"
+						:maxlength="500"
+						:autoHeight="false"
+						:clearable="false"
+						v-model="corn.descrip"
+						height="200"
+					/>
 				</view>
 			</view>
 			<view class="item">
-				<view class="title" style="width: 140rpx;">设置封面</view>
+				<view class="title">设置封面</view>
 				<view class="info">
 					<u-upload
 						:show-progress="false"
@@ -33,8 +41,8 @@
 			</view>
 			<view class="item">
 				<view class="title" style="width: 140rpx;">粮食种类</view>
-				<view class=" info">
-					<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" @click="sexShow = true" />
+				<view class="info" @click="sexShow = true">
+					<u-input class="value" placeholder="请选择" v-model="transactionCategoryName" type="select" />
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
@@ -47,7 +55,7 @@
 						<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">{{ item.name }}</u-radio>
 					</u-radio-group>
 					<view class="is-face" v-if="corn.isFace == '定价'">
-						<u-input style="width: 180rpx;" placeholder="输入价格" height="60"  border :clearable="false" v-model="corn.price" />
+						<u-input style="width: 180rpx;" placeholder="输入价格" height="60" border :clearable="false" v-model="corn.price" />
 						<text>元/斤</text>
 					</view>
 				</view>
@@ -62,7 +70,7 @@
 			</view>
 			<view class="item">
 				<view class="title">区域</view>
-				<view class=" info"><u-input placeholder="请选择" v-model="corn.address" type="select" @click="regionaStatus = true" /></view>
+				<view class="info" @click="regionaStatus = true"><u-input class="value" placeholder="请选择" v-model="corn.address" type="select" /></view>
 			</view>
 			<u-button style="margin:20rpx 0;" shape="circle" type="error" @click="updateMachine">发布</u-button>
 		</view>

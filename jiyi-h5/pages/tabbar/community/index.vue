@@ -8,13 +8,13 @@
 			<CommunityInfo @click="jump(item.id)" v-for="(item, index) in dataList" :key="index" :communityInfo="item" />
 		</mescroll-body>
 
-		<uni-drawer ref="drawer" mode="right" :width="250" :visible="true">
+		<uni-drawer ref="drawer" mode="right" :width="300" :visible="true">
 			<view style="padding: 20rpx">
 				<view class="f-16" style="line-height: 52rpx; margin-bottom: 20rpx">筛选类别</view>
-				<view class="comm-drawer-categorys">
+				<view class="comm-drawer-categorys b-t">
 					<view
 						:class="index == selectCategoryIndex && tabIndex == 4 && 'screened'"
-						class="item category"
+						class="item"
 						@click="selectCategory(item, index)"
 						v-for="(item, index) in categoryList"
 						:key="index"
@@ -23,9 +23,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="btns g-flex g-j-s-a b-t p-y-10">
-				<u-button class="btn" shape="circle" size="mini" @click="recharge" plain>重置</u-button>
-				<u-button class="btn" shape="circle" size="mini" @tap="searchData" type="error">确认</u-button>
+			<view class="drawer-bottom-btn">
+				<u-button class="btn" shape="circle" size="medium" @click="recharge" plain>重置</u-button>
+				<u-button class="btn" shape="circle" size="medium" @tap="searchData" type="error">确认</u-button>
 			</view>
 		</uni-drawer>
 		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
@@ -204,21 +204,6 @@ export default {
 
 .tab-hover {
 	color: #fff;
-}
-
-.category {
-	min-width: 140rpx;
-	line-height: 54rpx;
-	padding: 0 8rpx;
-}
-
-.btns {
-	position: absolute;
-	width: 100%;
-	bottom: 10rpx;
-	.btn {
-		width: 192rpx;
-	}
 }
 
 .screened {

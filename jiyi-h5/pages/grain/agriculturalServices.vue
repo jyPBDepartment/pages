@@ -8,7 +8,7 @@
 			</view>
 			<view class="item">
 				<view class="title">描述</view>
-				<view class="info"><u-input type="textarea" placeholder="请输入描述正文(最多输入500字)" maxlength="500" :clearable="false" v-model="descrip" height="200" /></view>
+				<view class="info"><u-input type="textarea" placeholder="请输入描述正文(最多输入500字)" maxlength="500" :autoHeight="false" :clearable="false" v-model="descrip" height="200" /></view>
 			</view>
 			<view class="item">
 				<view class="title">农服图片</view>
@@ -27,30 +27,30 @@
 
 			<view class="item">
 				<view class="title">干活时间</view>
-				<view class="info">
+				<view class="info" @click="dateShow = true">
 					<u-input class="value" disabled placeholder="请选择时间" :clearable="false" v-model="value" />
-					<u-icon name="calendar" class="input-icon" @click="dateShow = true"></u-icon>
+					<u-icon name="calendar" class="input-icon"></u-icon>
 				</view>
 			</view>
 
 			<view class="item">
 				<view class="title">劳务类型</view>
-				<view class="info">
-					<u-input class="value" placeholder="请选择" v-model="transactionTypeName" type="select" @click="sexShow1 = true" />
+				<view class="info" @click="sexShow1 = true">
+					<u-input class="value" placeholder="请选择" v-model="transactionTypeName" type="select" />
 					<u-action-sheet :list="agriCategory" v-model="sexShow1" @click="actionSheetCallback1"></u-action-sheet>
 				</view>
 			</view>
 			<view class="item">
 				<view class="title">作物类型</view>
-				<view class="info">
-					<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" @click="sexShow = true" />
+				<view class="info" @click="sexShow = true">
+					<u-input class="value" placeholder="请选择" v-model="transactionCategoryName" type="select" />
 					<u-action-sheet :list="agriType" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
 
 			<view class="item">
 				<view class="title">农机台数</view>
-				<view class="info"><u-input placeholder="请输入农机台数" :clearable="false" v-model="machineNum" maxlength="10" /></view>
+				<view class="info"><u-input type="number" placeholder="请输入农机台数" :clearable="false" v-model="machineNum" maxlength="10" /></view>
 			</view>
 			<view class="item">
 				<view class="title">价格</view>
@@ -83,7 +83,7 @@
 			</view>
 			<view class="item">
 				<view class="title">区域</view>
-				<view class="info"><u-input placeholder="请选择" v-model="address" type="select" @click="regionaStatus = true" /></view>
+				<view class="info" @click="regionaStatus = true"><u-input class="value" placeholder="请选择" v-model="address" type="select" /></view>
 			</view>
 			<u-button style="margin:20rpx 0rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>

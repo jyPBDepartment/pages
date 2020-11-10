@@ -9,7 +9,7 @@
 			<view class="item">
 				<view class="title">描述</view>
 				<view class="info">
-					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" maxlength="500" :clearable="false" v-model="agr.descrip" height="200" />
+					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" maxlength="500" :autoHeight="false" :clearable="false" v-model="agr.descrip" height="200" />
 				</view>
 			</view>
 			<view class="item">
@@ -37,27 +37,24 @@
 			<view class="item">
 				<view class="title">干活时间</view>
 				<view class="info" @click="dateShow = true">
+					<u-input class="value" disabled placeholder="请选择时间" :clearable="false" v-model="value" />
 					<u-icon name="calendar" class="input-icon"></u-icon>
-					<u-input disabled placeholder="请选择时间" :clearable="false" v-model="value" />
 				</view>
 			</view>
 
 			<view class="item">
 				<view class="title">劳务类型</view>
-				<view class=" info">
-					<view class=" info">
-						<u-input placeholder="请选择" v-model="transactionTypeName" type="select" @click="sexShow1 = true" />
-						<u-action-sheet :list="agriCategory" v-model="sexShow1" @click="actionSheetCallback1"></u-action-sheet>
-					</view>
+
+				<view class=" info" @click="sexShow1 = true">
+					<u-input class="value" placeholder="请选择" v-model="transactionTypeName" type="select" />
+					<u-action-sheet :list="agriCategory" v-model="sexShow1" @click="actionSheetCallback1"></u-action-sheet>
 				</view>
 			</view>
 			<view class="item">
 				<view class="title">作物类型</view>
-				<view class=" info">
-					<view class=" info">
-						<u-input placeholder="请选择" v-model="transactionCategoryName" type="select" @click="sexShow = true" />
-						<u-action-sheet :list="agriType" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
-					</view>
+				<view class="info" @click="sexShow = true">
+					<u-input class="value" placeholder="请选择" v-model="transactionCategoryName" type="select" />
+					<u-action-sheet :list="agriType" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
 
@@ -74,7 +71,7 @@
 								<u-radio @change="radioChange1" v-for="(item, index) in list1" :key="index" :name="item.name" :disabled="item.disabled">{{ item.name }}</u-radio>
 							</u-radio-group>
 							<view class="is-face" v-if="agr.isFace == '定价'">
-								<u-input style="width: 180rpx;" placeholder="输入价格" border height="60"  :clearable="false" v-model="agr.price" />
+								<u-input style="width: 180rpx;" placeholder="输入价格" border height="60" :clearable="false" v-model="agr.price" />
 								<text>元/天</text>
 							</view>
 						</view>

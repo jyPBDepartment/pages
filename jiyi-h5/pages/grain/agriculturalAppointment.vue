@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<HeaderSearch @searchCallback="search" title="农服预约"></HeaderSearch>
-		<view class="form-container">
+		<view class="comm-form-container">
 			<view class="item">
 				<view class="title">日期</view>
 				<view class="info" @tap.stop="showDatePicker">
@@ -12,28 +12,28 @@
 			<view class="item">
 				<view class="title">面积</view>
 				<view class="info">
-					<u-input class="value" type="number" placeholder="输入面积" :clearable="false" v-model="area" />
+					<u-input type="number" placeholder="输入面积" :clearable="false" v-model="area" />
 					<text class="input-icon">亩</text>
 				</view>
 			</view>
 			<view class="item">
 				<view class="title">干活地点</view>
-				<view class="info"><u-input placeholder="请选择干活地点" v-model="workArea" type="select" @click="regionaStatus = true" /></view>
+				<view class="info" @click="regionaStatus = true"><u-input class="value" placeholder="请选择干活地点" v-model="workArea" type="select" /></view>
 			</view>
 			<view class="item ">
 				<view class="title">农活价格</view>
 				<view class="info">
-					<u-input class="value" type="number" placeholder="输入价格" :clearable="false" v-model="workPrice" />
+					<u-input type="number" placeholder="输入价格" :clearable="false" v-model="workPrice" />
 					<text class="input-icon">元/天</text>
 				</view>
 			</view>
 			<view class="item">
 				<view class="title">联系人</view>
-				<view class="info"><u-input class="value" placeholder="输入联系人姓名" :clearable="false" v-model="contactUser" /></view>
+				<view class="info"><u-input placeholder="输入联系人姓名" :clearable="false" v-model="contactUser" /></view>
 			</view>
 			<view class="item">
 				<view class="title">联系电话</view>
-				<view class="info"><u-input class="value" type="number" maxlength="11" placeholder="输入联系电话" :clearable="false" v-model="contactPhone" /></view>
+				<view class="info"><u-input type="number" maxlength="11" placeholder="输入联系电话" :clearable="false" v-model="contactPhone" /></view>
 			</view>
 			<view class="item">
 				<view class="title">土地图片</view>
@@ -286,49 +286,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.form-container {
-	padding: 24rpx;
-	.item {
-		display: flex;
-		align-items: center;
-		padding: 10rpx 0;
-		font-size: 32rpx;
-		line-height: 60rpx;
-		align-items: center;
-		border-bottom: solid 2rpx $u-border-color;
-		.title {
-			width: 150rpx;
-			font-size: 28rpx;
-			color: #333;
-			line-height: 1;
-		}
-		> text {
-			color: #fa3534;
-			font-weight: bold;
-			padding-right: 10rpx;
-		}
-		.info {
-			position: relative;
-			z-index: 1;
-			line-height: 1.5;
-			flex: 1;
-			display: flex;
-			> text {
-				color: #a6a6a6;
-				font-size: 28rpx;
-			}
-			.value {
-				width: 90%;
-			}
-			.input-icon {
-				position: absolute;
-				right: 10rpx;
-				z-index: 9;
-				top: 16rpx;
-				color: #999;
-			}
-		}
-	}
-}
-</style>
+<style lang="scss" scoped></style>

@@ -225,6 +225,7 @@
 			.tags {
 				margin-top: 30rpx;
 				margin-bottom: 20rpx;
+				height: 40rpx;
 
 				.tag {
 					width: 120rpx;
@@ -295,6 +296,7 @@
 				}
 				.value {
 					width: 90%;
+					z-index: -1;
 				}
 				.input-icon {
 					position: absolute;
@@ -328,19 +330,33 @@
 	.comm-drawer-categorys {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: flex-start;
+		// justify-content: space-between;
 		align-items: center;
 		
 		.item {
-			width: 80rpx;
-			margin-right: 20rpx;
+			width: 30%;
+			margin-right: 3.3%;
 			text-align: center;
 			line-height: 40rpx;
 			margin-top:20rpx;
 			cursor:pointer;
 			border-radius:5px;
 			background-color:#f4f4f4;
-			opacity:0.9;
+			color: #333;
+			padding: 10rpx 0;
+		}
+	}
+	.drawer-bottom-btn{
+		position: absolute;
+		bottom: 0rpx;
+		left: 0;
+		right: 0;
+		padding: 20rpx;
+		border-top: 1px solid $comm-border-color;
+		display: flex;
+		justify-content: space-around;
+		.btn {
+			width: 192rpx;
 		}
 	}
 </style>

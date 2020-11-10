@@ -12,8 +12,8 @@
 				{{ item.name }}
 			</view>
 		</view>
-		<uni-drawer ref="drawer" mode="right" :visible="true" :width="250">
-			<view style="padding: 40rpx">
+		<uni-drawer ref="drawer" mode="right" :visible="true" :width="300">
+			<view style="padding: 20rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
 					<view class="f-16" style="line-height: 52rpx; margin-bottom: 20rpx">{{ item.title }}</view>
 
@@ -24,13 +24,6 @@
 							:class="screenedIndex1 == index1 && screenedIndex == index && ' screened'"
 							@click="selected(index1, index)"
 							class="item"
-							style="
-                margin-top: 20rpx;
-                cursor: pointer;
-                border-radius: 5px;
-                background-color: #f4f4f4;
-                padding: 5rpx;
-              "
 						>
 							{{ item.name }}
 						</view>
@@ -39,22 +32,6 @@
 
 				<view v-if="selectType == '1'" v-for="(item1, index2) in screenL" :key="index2 + 1" style="margin-top: 20rpx">
 					<view class="f-16" style="line-height: 52rpx; margin-bottom: 20rpx">{{ item1.title }}</view>
-					<!-- 	<view class="b-t">
-						<u-row class="categorys g-flex g-f-warp g-j-s-b st">
-							<u-col
-								:span="3"
-								:offset="1"
-								v-for="(item2, index3) in item1.category"
-								:key="index3"
-								:class="screenedIndex2 == index2 && screenedIndex3 == index3 && ' screened'"
-								@click="selected1(index2, index3)"
-								style="margin-top:20rpx;cursor:pointer;border-radius:5px;background-color:#f4f4f4;padding:5rpx;"
-							>
-								<view style="text-align: center;">{{ item2.name }}</view>
-							</u-col>
-						</u-row>
-					</view> -->
-
 					<view class="comm-drawer-categorys b-t">
 						<view
 							v-for="(item2, index3) in item1.category"
@@ -62,22 +39,15 @@
 							:class="screenedIndex2 == index2 && screenedIndex3 == index3 && ' screened'"
 							@click="selected1(index2, index3)"
 							class="item"
-							style="
-                margin-top: 20rpx;
-                cursor: pointer;
-                border-radius: 5px;
-                background-color: #f4f4f4;
-                padding: 5rpx;
-              "
 						>
 							{{ item.name }}
 						</view>
 					</view>
 				</view>
 			</view>
-			<view class="btns g-flex g-j-s-b">
-				<u-button class="btn" size="mini" shape="circle" @click="recharge" plain>重置</u-button>
-				<u-button class="btn" size="mini" shape="circle" @click="confirm(true)" type="error">确认</u-button>
+			<view class="drawer-bottom-btn">
+				<u-button class="btn" size="medium" shape="circle" @click="recharge" plain>重置</u-button>
+				<u-button class="btn" size="medium" shape="circle" @click="confirm(true)" type="error">确认</u-button>
 			</view>
 		</uni-drawer>
 	</view>
@@ -181,7 +151,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .screen {
 	height: 84rpx;
 	color: #808080;
@@ -200,26 +170,6 @@ export default {
 .screen-select {
 	color: #e51c2e;
 	font-weight: bold;
-}
-
-.category {
-	width: 128rpx;
-	line-height: 64rpx;
-	background-color: #e5e5e5;
-	color: #505050;
-	margin-bottom: 20rpx;
-}
-
-.btns {
-	position: absolute;
-	bottom: 20rpx;
-	width: 100%;
-	padding: 20rpx;
-	border-top: 1px solid $comm-border-color;
-
-	.btn {
-		width: 192rpx;
-	}
 }
 
 .st {
