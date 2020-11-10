@@ -7,7 +7,6 @@
 			</view>
 			<view class="title">申领职业证书</view>
 		</view>
-
 		<!-- 前言 -->
 		<view class="read">
 			<textarea :value="value" class="readTextarea" />
@@ -22,7 +21,6 @@
 					<u-steps :list="numList" :current="currentIndex" direction="column" mode="dot" active-color="#ffaa7f" class="steps">
 					</u-steps>
 				</view>
-				
 				<view class="right">
 					<!--认证名额  -->
 					<view class="one">
@@ -32,7 +30,6 @@
 						<view  class="introduceContain">
 							你已成为组织中的一员，赶紧开始学习之旅吧！</view>	
 					</view>
-					
 					<!--  能力测评-->
 					<view class="one">
 						<view class="introduceTitle">
@@ -41,22 +38,22 @@
 						<view class="line">
 							<u-line class="underline" ></u-line>
 						</view>
-							
 							<view id="exam" v-for="(item,key) in examList" :key="key">
 						<view class="titleName" >
 							<view class="choose">
 								{{key+1}}、{{item.name}}
 							</view>
 							<view class="choose">（约{{item.answerTime}}分钟，不限考次）</view>
-							<view :id="key">
-								<button class="btn" @click="answer(item)">答题</button>
+							<view >
+								<button v-if="item.isPass==0" class="btn" @click="answer(item)">答题</button>
+								<button v-if="item.isPass==1" class="btn" disabled="disabled">已通过</button>
+								<button v-if="item.isPass==2" class="btn" @click="answer(item)">重新答题</button>
 							</view>
 						</view>
 						<view class="sum">
 							(共{{item.questionNum}}题)
 						</view>
 						</view>
-						
 					</view>
 					<!-- 获得证书和头衔 -->
 					<view class="one">
@@ -68,9 +65,7 @@
 							<text class="identText">专业证书</text>
 						</view>
 					</view>
-				
 				</view>
-			
 			</view>
 		</view>
 		<u-modal v-model="show" @confirm="confirm"  :async-close="true" :content="grade=='0' ? '请先通过测评' :'恭喜你晋级成功，专业证书已经打印，请在我的证书中查看。'"></u-modal>
@@ -92,28 +87,8 @@
 				grade:'0',
 				show: false,
 				currentIndex:'1',
-				examList:[
-					// {
-					// 	exName:"新手上路"	,
-					// 	exTime:"10",
-					// 	exCount:"6"
-					// },{
-					// 	exName:"农技知识"	,
-					// 	exTime:"15",
-					// 	exCount:"8"
-					// },
-					// {
-					// 	exName:"农技服务"	,
-					// 	exTime:"20",
-					// 	exCount:"6"
-					// },{
-					// 	exName:"团队协作"	,
-					// 	exTime:"30",
-					// 	exCount:"6"
-					// }
-				],
+				examList:[],
 				index:null
-				
 			}
 		},
 		// 初始化加载页面
@@ -126,11 +101,21 @@
 					url: ApiPath.url.getExamListByVocationId,
 					method: "GET",
 					data: {
-						vocationId:val
+						vocationId:val,
+						userId: localStorage.getItem("userId")
 					},
 					success: (res) => {
 						if (res.data.code == 200) {
 							this.examList = res.data.data
+							let count = 0;
+							for(let i=0;i<this.examList.length;i++){
+								if(this.examList[i].isPass==1){
+									count = count+1;
+								}
+							}
+							if(count==this.examList.length){
+								this.currentIndex = 2;
+							}
 						} else {
 							uni.showToast({
 								title: "服务器出错，请联系管理员"
@@ -143,7 +128,6 @@
 						})
 					}
 				});
-				
 			},
 			backTo() {
 				uni.navigateBack({
@@ -151,20 +135,6 @@
 				})
 			},
 			answer(val){
-			// 	document.getElementById(index).innerHTML="<button id='dis"+index+"' style='font-size: 12px;margin-top: 8px;' disabled>已通过</button>";
-				
-			// 	let count=0;
-			// 	for(let i=0;i<this.examList.length;i++){
-			// 		if(document.getElementById("dis"+i)!=null){
-			// 			count=count+1;
-			// 		}
-			// 	}
-			// if(count==this.examList.length){
-			// 	this.currentIndex=2;
-			// }else{
-			// 	count=0;
-			// }
-				// .html("<button class='btnPass' disabled>已通过</button>");
 				uni.navigateTo({
 						url:"./judge?item="+JSON.stringify(val)
 					})
@@ -175,7 +145,6 @@
 				}else{
 					this.show = true;
 				}
-				
 			},
 			confirm() {
 				setTimeout(() => {
@@ -268,7 +237,7 @@
 							display: flex;
 							justify-content: space-between;
 								.btn{
-									font-size: 20rpx;
+									font-size: 12rpx;
 									background-color: #fff;
 									border-radius: 60rpx;
 									border:2rpx solid red;

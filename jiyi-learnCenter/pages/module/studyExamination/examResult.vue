@@ -24,7 +24,7 @@
 					</view>
 				</view>
 				<view class="tips">
-					{{examGrade>=80 ? '恭喜你通过考试！' : '不要紧，山野都有雾灯，再试一次吧(◕ᴗ◕✿)'}}
+					{{examGrade>=passScore ? '恭喜你通过考试！' : '不要紧，山野都有雾灯，再试一次吧(◕ᴗ◕✿)'}}
 				</view>
 			</view>
 			<!-- 下划线 -->
@@ -103,13 +103,16 @@
 					</view>
 				</view>
 			</view>
-			<view style="margin-top:12rpx;position: fixed;bottom:0">
+			<view style="margin-top:12rpx;">
 				<u-row>
 					<u-col :span="6" v-if="examGrade>=passScore">
 						<u-button type="primary" @click="continueExam()">继续考试</u-button>
 					</u-col>
 					<u-col :span="6" v-if="examGrade<passScore">
 						<u-button type="primary" @click="returnExam()">重新答题</u-button>
+					</u-col>
+					<u-col :span="6">
+						<u-button type="error" @click="exitExam()">退出考试</u-button>
 					</u-col>
 				</u-row>
 			</view>
@@ -130,18 +133,32 @@
 				examGrade: "",
 				passScore: "",
 				totalScore: "",
+				vocationId:"",
 				examTableInfo: [],
 				examTableList: [],
 			}
 		},
 		onLoad(e) {
 			let val = JSON.parse(e.param);
+			this.vocationId = val.studyExamationId;
 			this.passScore = val.passScore;
 			this.totalScore = val.totalScore;
 			// 从外部接口获取客户信息
 			this.initQueResultCard(val);
 		},
 		methods: {
+			// 继续考试
+			continueExam(){
+				uni.navigateTo({
+						url:"./credentials?id="+this.vocationId
+					})
+			},
+			// 退出考试
+			exitExam(){
+				uni.navigateTo({
+						url:"./index"
+					})
+			},
 			initQueResultCard(val) {
 				uni.request({
 					url: ApiPath.url.submitExam,
@@ -150,7 +167,6 @@
 						entity: val
 					},
 					success: (res) => {
-						console.log(JSON.stringify(res.data))
 						if (res.data.state == 0) {
 							//请求返回值
 							let result = res.data.data.examTableList;
