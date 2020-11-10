@@ -81,7 +81,11 @@
 						this.url = res.data.data.url
 						this.content = res.data.data.content
 						this.studyNum = res.data.data.studyNum
-						if(res.data.dataUserManual.isCollection == 1){
+						if(res.data.dataUserManual == null){
+							this.name = "heart";
+							this.style="color:#333";
+						}
+						else if(res.data.dataUserManual.isCollection == 1){
 							this.name = "heart-fill";
 							this.style="color:red";
 						}

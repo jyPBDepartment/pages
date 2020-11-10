@@ -17,7 +17,7 @@
           <el-col :span="8"><b>{{editForm.name}}</b></el-col>
           <el-col :span="2"><b>答题时间：</b></el-col>
           <el-col :span="8"><b>{{editForm.answerTime}}分钟</b></el-col>
-          <el-col :span="4"><b>共{{editForm.number}}题</b></el-col>
+          <el-col :span="4"><b>共{{editForm.questionNum}}题</b></el-col>
         </el-row>
         <el-row style="margin-top:15px;">
             <el-col :span="3">试卷总分数：</el-col>
@@ -89,7 +89,7 @@ export default {
         createDate:"",
         updateBy:"",
         updateDate:"",
-        number:0
+        questionNum:""
       },
       List: [],
       answerList: [],
@@ -109,7 +109,6 @@ export default {
           this.editForm = res.data;
           this.editForm.vocationName = res.data.vocation.name;
           this.List = res.dataQuest;
-          this.editForm.number =this.List.length;
         }
       });
     },
