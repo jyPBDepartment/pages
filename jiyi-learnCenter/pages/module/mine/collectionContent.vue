@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				userId: "asdsadsad",
+				userId: localStorage.getItem("userId"),
 				title:"",
 				studyNum:"",
 				createDate:"",
