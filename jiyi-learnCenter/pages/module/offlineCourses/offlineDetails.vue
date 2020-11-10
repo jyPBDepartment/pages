@@ -12,9 +12,11 @@
 			</u-col>
 		</u-row>
 		
-		<u-row style="padding-top: 5rpx;">
-			<u-image :src="image" mode="widthFix"></u-image>
-		</u-row>
+	
+		<view class="offImg">
+			<image :src="image" class="img"></image>
+		</view>
+
 		
 		<u-row class="row1">
 			<view style=" padding-left: 10rpx;">
@@ -39,7 +41,7 @@
 					主讲人：{{name}}
 				</u-row>
 				<u-row style="font-size: 14px; padding-top: 10rpx;">
-					课程介绍:(支持图文){{courseIntroduction}}
+					课程介绍:{{courseIntroduction}}
 				</u-row>
 			</view>
 		</u-row>
@@ -75,17 +77,18 @@
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js';
 	export default {
 		data() {
 			return {
 				cencalIsShow: false,
 				id:'',
-				title:'供应商入驻平台服务讲解',
-				beginDate:'2020-10-09 17:33:00',
-				name:'张三',
-				courseIntroduction:'这里是课程介绍',
-				courseGuide:'课程时间：2020-10-09 13:00 至 2020-10-09 16:00 显示主要课程公告与位置、报名须知等信息，后台自定义编辑。',
-				image:'../../../static/54.jpg'
+				title:'',
+				beginDate:'',
+				name:'',
+				courseIntroduction:'',
+				courseGuide:'',
+				image:''
 			}
 		},
 		
@@ -97,19 +100,24 @@
 		methods: {
 			//查看详情
 			offlineId(val) {
-			// 	let param = {
-			// 		id: val,
-			// 	};
-			// 	uni.request({
-			// 		method: 'GET', //请求方式
-			// 		data: param, //请求数据
-			// 		url: ApiPath.url., //请求接口路径
-			// 		success: (res) => { //成功返回结果方法
-			// 		if (res.data.state == 0) {
-			// 			
-			// 		}
-			// 		}
-			// 	})
+				let param = {
+					id: val,
+				};
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.findById, //请求接口路径
+					success: (res) => { //成功返回结果方法
+					if (res.data.state == 0) {
+						this.title = res.data.data.title
+						this.beginDate = res.data.data.lessonDate
+						this.name = res.data.data.teacherName
+						this.courseIntroduction = res.data.data.content
+						this.courseGuide = res.data.data.remark
+						this.image = res.data.data.url
+					}
+					}
+				})
 			},
 			
 			//返回
@@ -121,7 +129,7 @@
 			//立即报名跳转
 			signUp(val){
 				uni.navigateTo({
-					url: '../offlineCourses/offlineSignUp?index=0&id='+ val
+					url: '../offlineCourses/offlineSignUp?index=0&title='+this.title+'&id='+ val
 				})
 			}
 			
@@ -147,6 +155,12 @@
 			width: 723rpx;
 			min-height: 140rpx;
 			margin-left: 15rpx;
+		}
+		.offImg{
+			.img{
+				width: 750rpx;
+				height: 360rpx;				
+			}
 		}
 	}
 </style>
