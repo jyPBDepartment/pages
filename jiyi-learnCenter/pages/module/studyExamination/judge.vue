@@ -19,9 +19,9 @@
 					<view class="minute">
 						<view class="wave">
 							<view class="word">
-								10
+								{{answerTime}}
 							</view>
-						
+
 						</view>
 
 					</view>
@@ -40,22 +40,22 @@
 					<view class="minute1">
 						<view class="wave1">
 							<view class="word1">
-								80
+								{{passScore}}
 							</view>
 						</view>
-						
+
 					</view>
 					<view class="Company1">
-						满分100分
+						满分{{totalScore}}分
 					</view>
 				</view>
 			</view>
 
 			<view class="center">
-				本次选择题试卷通过分数为80分，请您仔细审题。
+				本次选择题试卷通过分数为{{passScore}}分，请您仔细审题。
 			</view>
 			<view class="bottom">
-				<button type="primary" style="font-size: 30rpx;" @click="examPage">开始考试</button>
+				<button type="primary" style="font-size: 30rpx;" @click="examPage()">开始考试</button>
 			</view>
 		</view>
 	</view>
@@ -65,18 +65,49 @@
 	export default {
 		data() {
 			return {
-
+				answerTime: 0,
+				passScore: 0,
+				totalScore: 0,
+				count:0,
+				name:"",
+				id:'',
+				_id:''
 			}
 		},
+		// 初始化加载页面
+		onLoad(e) {
+			this.initBaseInfo(e.item);
+		},
 		methods: {
+			initBaseInfo(val) {
+				let item = JSON.parse(val);
+				this.answerTime = item.answerTime;
+				this.passScore = item.passScore;
+				this.totalScore = item.totalScore;
+				this.count = item.questionNum;
+				this.id=item.id;
+				this.name = item.vocation.name;
+				this._id = item.vocation.id;
+			},
 			backTo() {
 				uni.navigateBack({
 
 				})
 			},
 			examPage() {
+				
+				let param = {
+					id:this.id,//试卷Id
+					time:this.answerTime,//答题时间
+					count:this.count,//总题数
+					name:this.name,//考试名称
+					_id:this._id,//职业类别Id(考试Id)
+					passScore:this.passScore,//通过分数
+					totalScore:this.totalScore//总分数
+				}
+				
 				uni.navigateTo({
-					url: "./examPage"
+					url: "./examPage?param="+JSON.stringify(param)
 				});
 			}
 		}
@@ -121,7 +152,7 @@
 
 				.left {
 					text-align: center;
-					
+
 					.time {
 						font-size: 30rpx;
 						font-weight: bold;
@@ -131,7 +162,7 @@
 
 					.minute {
 						margin-top: 80rpx;
-						
+
 						position: absolute;
 						width: 150rpx;
 						height: 150rpx;
@@ -147,7 +178,7 @@
 						box-shadow: 0 0 60rpx rgb(118, 218, 255);
 
 						.wave {
-						
+
 							position: relative;
 							width: 150rpx;
 							height: 150rpx;
@@ -155,13 +186,13 @@
 							border-radius: 50%;
 							top: -36rpx;
 							left: -48%;
-							
+
 							&::before,
 							&::after {
 								content: "";
 								position: absolute;
 								width: 150rpx;
-								height:150rpx;
+								height: 150rpx;
 								top: 20rpx;
 								left: 46%;
 								background-color: rgba(255, 255, 255, .3);
@@ -169,7 +200,7 @@
 								transform: translate(-50%, -70%) rotate(0);
 								animation: rotate 6s linear infinite;
 								z-index: 10;
-								
+
 							}
 
 							&::after {
@@ -178,7 +209,7 @@
 								transform: translate(-50%, -70%) rotate(0);
 								animation: rotate 5s linear -5s infinite;
 								z-index: 20;
-								
+
 							}
 
 							@keyframes rotate {
@@ -190,38 +221,39 @@
 									transform: translate(-50%, -70%) rotate(360deg);
 								}
 							}
-							.word{
+
+							.word {
 								font-size: 60rpx;
 								padding-top: 26rpx;
-								
+
 							}
 						}
 
 
 					}
-					
+
 
 					.Company {
 						font-size: 28rpx;
 						margin-top: 200rpx;
 					}
 
-					
+
 				}
-				
+
 				.right {
 					text-align: center;
-					
+
 					.time1 {
 						font-size: 30rpx;
 						font-weight: bold;
 						margin-bottom: 30rpx;
-				
+
 					}
-				
+
 					.minute1 {
 						margin-top: 80rpx;
-						
+
 						position: absolute;
 						width: 150rpx;
 						height: 150rpx;
@@ -235,9 +267,9 @@
 						-moz-box-shadow: 0 0 60px rgb(118, 218, 255);
 						-webkit-box-shadow: 0 0 60px rgb(118, 218, 255);
 						box-shadow: 0 0 60rpx rgb(118, 218, 255);
-				
+
 						.wave1 {
-							
+
 							position: relative;
 							width: 150rpx;
 							height: 150rpx;
@@ -245,13 +277,13 @@
 							border-radius: 50%;
 							top: -36rpx;
 							left: -48%;
-							
+
 							&::before,
 							&::after {
 								content: "";
 								position: absolute;
 								width: 150rpx;
-								height:150rpx;
+								height: 150rpx;
 								top: 20rpx;
 								left: 51%;
 								background-color: rgba(255, 255, 255, .3);
@@ -259,48 +291,50 @@
 								transform: translate(-50%, -70%) rotate(0);
 								animation: rotate 6s linear infinite;
 								z-index: 10;
-								
+
 							}
-				
+
 							&::after {
 								border-radius: 48%;
 								background-color: rgba(255, 255, 255, .8);
 								transform: translate(-50%, -70%) rotate(0);
 								animation: rotate 5s linear -5s infinite;
 								z-index: 20;
-								
+
 							}
-				
+
 							@keyframes rotate {
 								50% {
 									transform: translate(-60%, -80%) rotate(180deg);
 								}
-				
+
 								100% {
 									transform: translate(-50%, -70%) rotate(360deg);
 								}
 							}
-							.word1{
+
+							.word1 {
 								font-size: 60rpx;
 								padding-top: 26rpx;
-								
+
 							}
 						}
-				
-				
+
+
 					}
-					
-				
+
+
 					.Company1 {
 						font-size: 28rpx;
 						margin-top: 200rpx;
 					}
-				
-					
+
+
 				}
+
 				.underline {
 					border: 2rpx solid #333 !important;
-				
+
 				}
 			}
 

@@ -1,41 +1,36 @@
 <template>
 	<view class="content">
-
 		<!-- 头部 -->
 		<view class="head">
-			<view class="backArrow" @click="backTo">
+			<!-- <view class="backArrow" @click="backTo">
 				<u-icon name="arrow-left" color="#333" size="32"></u-icon>
-			</view>
+			</view> -->
 			<view class="title">考试结果</view>
 		</view>
-
-
 		<view class="contain">
 			<!-- 试题列表-->
 			<view class="examResult">
-				<view class="isPass" :style="examGrade>=80 ? 'background-color:#6ca984;' : 'background-color: #E51C2E;'">
-					<image :src="examGrade>=80 ? 'http://60.205.246.126/images/2020/10/29/1603956788960268.png' : 'http://60.205.246.126/images/2020/10/29/1603956449935082.png'"
+				<view class="isPass" :style="examGrade>=passScore ? 'background-color:#6ca984;' : 'background-color: #E51C2E;'">
+					<image :src="examGrade>=passScore ? 'http://60.205.246.126/images/2020/10/29/1603956788960268.png' : 'http://60.205.246.126/images/2020/10/29/1603956449935082.png'"
 					 class="examIcon"></image>
-					<text class="examWord">{{examGrade>=80 ? '通过' : '未通过'}}</text>
+					<text class="examWord">{{examGrade>=passScore ? '通过' : '未通过'}}</text>
 				</view>
 				<view class="currentGrade">
 					<view class="getScore">
 						<b>{{examGrade}}</b>分
 					</view>
 					<view class="full">
-						满分100分
+						满分{{totalScore}}分
 					</view>
 				</view>
 				<view class="tips">
 					{{examGrade>=80 ? '恭喜你通过考试！' : '不要紧，山野都有雾灯，再试一次吧(◕ᴗ◕✿)'}}
 				</view>
 			</view>
-
 			<!-- 下划线 -->
 			<view class="line">
 				<u-line class="underline"></u-line>
 			</view>
-
 			<!-- 表格 -->
 			<view class="examTable">
 				<u-table>
@@ -45,7 +40,6 @@
 						<u-th class="thStyle">错题数</u-th>
 						<u-th class="thStyle">得分</u-th>
 					</u-tr>
-					 
 					<u-tr v-for="(item,index) in examTableInfo" :key="index">
 						<u-td class="tdStyle">{{item.type == '1' ? '判断题' : '单选题'}}</u-td>
 						<u-td class="tdStyle">{{item.queNum}}</u-td>
@@ -81,7 +75,8 @@
 				</view>
 			</view>
 			<!-- 错题解析 -->
-			<view class="analysis animate__animated animate__slideInRight" v-for="(titleItem,titleIndex) in examTableList" :key="titleIndex" v-if="titleItem.queIsCorrect=='2'" :style="titleItem.queType == '1' ? 'margin-bottom: 770rpx;' : 'margin-bottom: 420rpx;'">
+			<view class="analysis animate__animated animate__slideInRight" v-for="(titleItem,titleIndex) in examTableList" :key="titleIndex"
+			 v-if="titleItem.queIsCorrect=='2'" :style="titleItem.queType == '1' ? 'margin-bottom: 770rpx;' : 'margin-bottom: 420rpx;'">
 				<view class="quetype">
 					<text>错题解析：{{titleItem.queType == '1' ? '单选题' : '判断题'}}</text>
 					<text>本题分值：{{titleItem.queScore}}分</text>
@@ -90,10 +85,9 @@
 					<text>{{titleItem.queNum}}、{{titleItem.queName}}</text>
 				</view>
 				<!-- 错题答案 -->
-
 				<view class="queAnswer" v-for="(item1,index1) in titleItem.queAnalysis" :key="index1">
-					<view class="answerStyle" >
-						<image :src="item1.isCorrect == '0' ? 'http://60.205.246.126/images/2020/10/30/1604029013343857.png' : 'http://60.205.246.126/images/2020/10/30/1604029038740080.png'"
+					<view class="answerStyle">
+						<image :src="item1.queIndex != titleItem.correctAnswers ? 'http://60.205.246.126/images/2020/10/30/1604029013343857.png' : 'http://60.205.246.126/images/2020/10/30/1604029038740080.png'"
 						 class="answerIcon"></image>
 						<text class="word">{{item1.queIndex}}、{{item1.queSelectAnswer}}</text>
 					</view>
@@ -106,184 +100,103 @@
 					</view>
 					<view class="userSelect">
 						<text>您的答案</text>
-						<text class="selectStylea" v-for="(item,index) in titleItem.queAnalysis" :key="index" v-if="item.isCorrect == '1'">{{item.queIndex}}</text>
+						<text class="selectStylea" >{{titleItem.queChoose}}</text>
 					</view>
 				</view>
-			
+			</view>
+			<view style="margin-top:12rpx;position: fixed;bottom:0">
+				<u-row>
+					<u-col :span="6" v-if="examGrade>=passScore">
+						<u-button type="primary" @click="continueExam()">继续考试</u-button>
+					</u-col>
+					<u-col :span="6" v-if="examGrade<passScore">
+						<u-button type="primary" @click="returnExam()">重新答题</u-button>
+					</u-col>
+				</u-row>
 			</view>
 		</view>
+		
 	</view>
+	
 	</view>
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js'
 	export default {
 		data() {
 			return {
 				wrongCount: 0,
 				count: 0,
-				// jumpCount: 1,
-				examGrade: "60",
-				examTableInfo: [
-					{type:'0',queNum:'5',wrongNum:'3',getGrade:'30'},
-					{type:'1',queNum:'5',wrongNum:'3',getGrade:'30'}
-				],
-				examTableList: [{
-						queType: "1", //选择题
-						queNum: 1,
-						queIsCorrect: '1', //正确
-					},
-					{
-						queType: "1", //选择题
-						queNum: 2,
-						queScore: 5,
-						queIsCorrect: '2', //不正确
-						correctAnswers: "B",
-						queName: '从事农业产品回收储运、销售一级代理、信息传递服务等中介活动而获取到佣金或利润的人员是？',
-						queAnalysis: [{
-								queIndex: "A",
-								isCorrect: "0",
-								queSelectAnswer: "房产经理人"
-							}, {
-								queIndex: "B",
-								isCorrect: "0",
-								queSelectAnswer: "证券经纪人"
-							}, {
-								queIndex: "C",
-								isCorrect: "1",
-								queSelectAnswer: "农产品经理人"
-							}, {
-								queIndex: "D",
-								isCorrect: "0",
-								queSelectAnswer: "金融经理人"
-							}
-
-						]
-					},
-					{
-						queType: "2", //判断题
-						queNum: 3,
-						queIsCorrect: '2', //不正确
-						queScore: 5,
-						correctAnswers: "A",
-						queName: '从事农业产品回收储运、销售一级代理、信息传递服务等中介活动而获取到佣金或利润的人员是？',
-						queAnalysis: [{
-								queIndex: "A",
-								isCorrect: "0",
-								queSelectAnswer: "房产经理人"
-							}, {
-								queIndex: "B",
-								isCorrect: "1",
-								queSelectAnswer: "证券经纪人"
-							}
-
-						]
-					},
-					{
-						queType: "2", //判断题
-						queNum: 4,
-						queIsCorrect: '1', //正确
-					},
-					{
-						queType: "2", //判断题
-						queNum: 5,
-						queIsCorrect: '2', //不正确
-						queScore: 5,
-						correctAnswers: "A",
-						queName: '从事农业产品回收储运、销售一级代理、信息传递服务等中介活动而获取到佣金或利润的人员是？',
-						queAnalysis: [{
-								queIndex: "A",
-								isCorrect: "0",
-								queSelectAnswer: "房产经理人"
-							}, {
-								queIndex: "B",
-								isCorrect: "1",
-								queSelectAnswer: "证券经纪人"
-							}
-					
-						]
-					},
-
-				],
+				examGrade: "",
+				passScore: "",
+				totalScore: "",
+				examTableInfo: [],
+				examTableList: [],
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			let val = JSON.parse(e.param);
+			this.passScore = val.passScore;
+			this.totalScore = val.totalScore;
 			// 从外部接口获取客户信息
-			this.initQueResultCard();
-
+			this.initQueResultCard(val);
 		},
 		methods: {
-			
-			backTo() {
-				uni.navigateBack({
-
-				})
-			},
-			initQueResultCard() {
-				// this.examTableList
-
-				//请求返回值
-				let result = this.examTableList;
-
-				//总题数设置
-				let count = result.length;
-				let radioCount = 0;
-				let radioWrongCount = 0;
-				let asertCount = 0;
-				let asertWrongCount = 0;
-				for (let i = 0; i < result.length; i++) {
-					if (result[i].queType == '1') { //选择题
-						radioCount = radioCount + 1;
-						if (result[i].queIsCorrect == "2") { //如果是错题
-							radioWrongCount = radioWrongCount + 1;
+			initQueResultCard(val) {
+				uni.request({
+					url: ApiPath.url.submitExam,
+					method: "GET",
+					data: {
+						entity: val
+					},
+					success: (res) => {
+						console.log(JSON.stringify(res.data))
+						if (res.data.state == 0) {
+							//请求返回值
+							let result = res.data.data.examTableList;
+							this.examTableList = res.data.data.examTableList;
+							this.examTableInfo = res.data.data.examTableInfo;
+							//总题数设置
+							let count = result.length;
+							let radioCount = 0;
+							let radioWrongCount = 0;
+							let asertCount = 0;
+							let asertWrongCount = 0;
+							let totalScore = 0;
+							for (let i = 0; i < result.length; i++) {
+								if (result[i].queType == '1') { //选择题
+									radioCount = radioCount + 1;
+									if (result[i].queIsCorrect == "2") { //如果是错题
+										radioWrongCount = radioWrongCount + 1;
+									}
+								} else {
+									asertCount = asertCount + 1;
+									if (result[i].queIsCorrect == "2") { //如果是错题
+										asertWrongCount = asertWrongCount + 1;
+									}
+								}
+							}
+							
+							for(let i = 0;i<this.examTableInfo.length;i++){
+								totalScore = totalScore + this.examTableInfo[i].getGrade;
+							}
+							this.examGrade = totalScore;
+							this.wrongCount = radioWrongCount + asertWrongCount;
+							this.count = radioCount + asertCount;
+						} else {
+							uni.showToast({
+								title: "服务器出错，请联系管理员"
+							})
 						}
-					} else {
-						asertCount = asertCount + 1;
-						if (result[i].queIsCorrect == "2") { //如果是错题
-							asertWrongCount = asertWrongCount + 1;
-						}
+					},
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
 					}
-				}
-				console.log("选择题总数：" + radioCount + "--错题数：" + radioWrongCount)
-				console.log("判断题总数：" + asertCount + "--错题数：" + asertWrongCount)
-				this.wrongCount = radioWrongCount + asertWrongCount;
-				this.count = radioCount + asertCount;
-				// for(let i=0;i<2;i++){
-				// 	this.examTableInfo.push({
-				// 		'name','选择题',
-				// 		'count':radioCount,
-				// 		'wrongCount':radioWrongCount
-				// 	})
-				// }
-
-				// {
-				// 	queType:"2",//判断题
-				// 	queNum:1,
-				// 	queIsCorrect:'2',//不正确
-				// 	queName:'从事农业产品回收储运、销售一级代理、信息传递服务等中介活动而获取到佣金或利润的人员是？',
-				// 	queAnalysis:[
-				// 		{
-				// 			queIndex: "A",
-				// 			isCorrect: "0",
-				// 			queSelectAnswer: "房产经理人"
-				// 		}, {
-				// 			queIndex: "B",
-				// 			isCorrect: "1",
-				// 			queSelectAnswer: "证券经纪人"
-				// 		}
-
-				// 	]
-				// },
-
-
-
-
-
-
-
-
+				});
 			}
-
 		}
 	}
 </script>
@@ -497,6 +410,7 @@
 						}
 					}
 				}
+
 				.correctAnswer {
 					display: flex;
 					margin: 40rpx 10rpx 100rpx 10rpx;

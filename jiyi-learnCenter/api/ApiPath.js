@@ -18,9 +18,10 @@ const md5 = {
 
 const extendUrl = {
 	// 测试环境
-	findCustmerInfo: 'http://112.126.103.106:16302/jyhn-frontend/webHttpServlet'
+	findCustmerInfo: 'http://112.126.103.106:16302/jyhn-frontend/webHttpServlet',
 	// 生产环境
 	// findCustmerInfo:'http://112.126.103.48:16302/jyhn-frontend/webHttpServlet'
+	getQuestionListByExamId:'http://192.168.1.108:8083/examPaperInfo/submitExam'
 }
 const url = {
 	// 学习手册职业类别加载
@@ -44,8 +45,13 @@ const url = {
 	// 首页加载热门课程
 	findHotCourse: URLHost + '/manualInfo/getListByReading',
 	// 首页加载线下课程
-	findOffLineCourse: URLHost + '/lesson/getListByLessonDay'
-
+	findOffLineCourse: URLHost + '/lesson/getListByLessonDay',
+	// 根据职业类型Id加载试卷列表信息
+	getExamListByVocationId: URLHost + '/examPaperInfo/getExamListByVocationId',
+	// 根据试卷Id加载试题列表信息
+	getQuestionListByExamId: URLHost + '/questionInfo/getQuestionListByExamId',
+	// 试卷提交
+	submitExam:URLHost+'/examPaperInfo/submitExam'
 }
 export default {
 	url,

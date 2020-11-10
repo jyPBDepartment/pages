@@ -45,15 +45,15 @@
 							<view id="exam" v-for="(item,key) in examList" :key="key">
 						<view class="titleName" >
 							<view class="choose">
-								{{key+1}}、{{item.exName}}
+								{{key+1}}、{{item.name}}
 							</view>
-							<view class="choose">（约{{item.exTime}}分钟，不限考次）</view>
+							<view class="choose">（约{{item.answerTime}}分钟，不限考次）</view>
 							<view :id="key">
-								<button class="btn" @click="answer(key)">答题</button>
+								<button class="btn" @click="answer(item)">答题</button>
 							</view>
 						</view>
 						<view class="sum">
-							(共{{item.exCount}}题)
+							(共{{item.questionNum}}题)
 						</view>
 						</view>
 						
@@ -78,6 +78,7 @@
 </template>
 
 <script>
+	import ApiPath from '@/api/ApiPath.js'
 	export default{
 		data(){
 			return{
@@ -92,37 +93,64 @@
 				show: false,
 				currentIndex:'1',
 				examList:[
-					{
-						exName:"新手上路"	,
-						exTime:"10",
-						exCount:"6"
-					},{
-						exName:"农技知识"	,
-						exTime:"15",
-						exCount:"8"
-					},
-					{
-						exName:"农技服务"	,
-						exTime:"20",
-						exCount:"6"
-					},{
-						exName:"团队协作"	,
-						exTime:"30",
-						exCount:"6"
-					}
-					
+					// {
+					// 	exName:"新手上路"	,
+					// 	exTime:"10",
+					// 	exCount:"6"
+					// },{
+					// 	exName:"农技知识"	,
+					// 	exTime:"15",
+					// 	exCount:"8"
+					// },
+					// {
+					// 	exName:"农技服务"	,
+					// 	exTime:"20",
+					// 	exCount:"6"
+					// },{
+					// 	exName:"团队协作"	,
+					// 	exTime:"30",
+					// 	exCount:"6"
+					// }
 				],
 				index:null
 				
 			}
 		},
+		// 初始化加载页面
+		onLoad(e) {
+			this.initExamPaperInfo(e.id);// 初始化加载试卷列表信息	
+		},
 		methods:{
+			initExamPaperInfo(val){
+				uni.request({
+					url: ApiPath.url.getExamListByVocationId,
+					method: "GET",
+					data: {
+						vocationId:val
+					},
+					success: (res) => {
+						if (res.data.code == 200) {
+							this.examList = res.data.data
+						} else {
+							uni.showToast({
+								title: "服务器出错，请联系管理员"
+							})
+						}
+					},
+					fail: (err) => {
+						uni.showToast({
+							title: "系统初始化失败，请联系管理员"
+						})
+					}
+				});
+				
+			},
 			backTo() {
 				uni.navigateBack({
 			
 				})
 			},
-			answer(index){
+			answer(val){
 			// 	document.getElementById(index).innerHTML="<button id='dis"+index+"' style='font-size: 12px;margin-top: 8px;' disabled>已通过</button>";
 				
 			// 	let count=0;
@@ -138,7 +166,7 @@
 			// }
 				// .html("<button class='btnPass' disabled>已通过</button>");
 				uni.navigateTo({
-						url:"./judge"
+						url:"./judge?item="+JSON.stringify(val)
 					})
 			},
 			mineCredential(){
@@ -150,16 +178,16 @@
 				
 			},
 			confirm() {
-						setTimeout(() => {
-							// 3秒后自动关闭
-							this.show = false;
-							// 如果不想关闭，而单是清除loading状态，需要通过ref手动调用方法
-							// this.$refs.uModal.clearLoading();
-							uni.navigateTo({
-								url:"../mine/mineCredentials"
-							});
-						}, 1000)
-					}
+				setTimeout(() => {
+					// 3秒后自动关闭
+					this.show = false;
+					// 如果不想关闭，而单是清除loading状态，需要通过ref手动调用方法
+					// this.$refs.uModal.clearLoading();
+					uni.navigateTo({
+						url:"../mine/mineCredentials"
+					});
+				}, 1000)
+			}
 		}
 	}
 </script>
