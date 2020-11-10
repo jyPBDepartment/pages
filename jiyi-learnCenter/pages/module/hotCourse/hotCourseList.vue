@@ -204,8 +204,8 @@
 			},
 			// 返回上一页
 			backTo() {
-				uni.switchTab({
-				    url: '../../tabbar/main/index'
+				uni.reLaunch({
+				    url: '../../tabbar/main/index',
 				});
 				
 			},
