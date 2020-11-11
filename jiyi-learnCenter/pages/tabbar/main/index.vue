@@ -61,7 +61,7 @@
 			</u-col>
 		</u-row>
 		<view class="offlineCourse animate__animated animate__fadeIn " v-for="(item, index) in offlineCourseList" :key="'list'+index"
-		 @click="hyDetail">
+		 @click="hyDetail(item.id)">
 			<view class="background">
 				<view class="logo">
 					<image class="courseImg" :src="item.url"></image>
@@ -216,7 +216,7 @@
 			hyDetail(val) {
 
 				uni.navigateTo({
-					url: "../../module/offlineCourses/offlineDetails"
+					url: "../../module/offlineCourses/offlineDetails?id="+val
 				})
 			},
 			initDate() {
