@@ -14,10 +14,10 @@
 		<u-row>
 			<u-col span="5" v-for="(item,key) in studyExaminationList" :key="key" class="se-col">
 				<!-- 角标 -->
-				<view @click="linkTo(item.id,1)">
-					<!-- <view class="brage">
+				<view @click="linkTo(item.id,item.isPass)">
+					<view class="brage" v-if="item.isPass == 1">
 						<text>已通过</text>
-					</view> -->
+					</view>
 					<view class="se-text"></view>
 					<view style="text-align: center;margin-top: -100rpx;margin-left: 58rpx;  font-size: 24rpx;font-weight: bold;position: absolute;z-index: 99;">{{item.name}}考试</view>
 				</view>
@@ -44,9 +44,11 @@
 			// 初始化加载考试列表信息
 			initExamInfo() {
 				uni.request({
-					url: ApiPath.url.occupation,
+					url: ApiPath.url.findStudyExamInfo,
 					method: "GET",
-					data: {},
+					data: {
+						userId:localStorage.getItem("userId")
+					},
 					success: (res) => {
 						if (res.data.state == 0) {
 							this.studyExaminationList = res.data.data
@@ -88,7 +90,7 @@
 				});
 			},
 			linkTo(val, pass) {
-				if (pass == '1') {
+				if (pass == '0') {
 					uni.navigateTo({
 						url: "./credentials?id=" + val
 					})

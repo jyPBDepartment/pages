@@ -56,6 +56,8 @@ const url = {
 	findLessonPage:URLHost+'/lesson/findLessonPage',
 	//线下课程详情
 	findById:URLHost+'/lesson/findById',
+	// 查询学习考试列表信息
+	findStudyExamInfo:URLHost+'/studyExam/findStudyExamInfo'
 }
 export default {
 	url,

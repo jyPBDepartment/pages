@@ -147,6 +147,11 @@
 			this.initQueResultCard(val);
 		},
 		methods: {
+			returnExam(){
+				uni.navigateTo({
+						url:"./index?id="+this.vocationId
+					})
+			},
 			// 继续考试
 			continueExam(){
 				uni.navigateTo({
