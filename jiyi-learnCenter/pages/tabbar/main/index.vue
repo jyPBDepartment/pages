@@ -56,7 +56,7 @@
 			</u-col>
 		</u-row> -->
 		<view class="split-space"></view>
-		<comm-title title="线下课程" moreText="更多>" @more="hyMore"></comm-title>
+		<comm-title title="线下课程" moreText="更多" @more="hyMore"></comm-title>
 
 		<view class="offlineCourse card-box animate__animated animate__fadeIn " v-for="(item, index) in offlineCourseList" :key="'list' + index" @click="hyDetail(item.id)">
 			<view class="background">
@@ -229,7 +229,7 @@ export default {
 	.circul {
 		width: 750rpx;
 		height: 320rpx;
-		margin-top: 88rpx;
+		padding-top: 88rpx;
 		.swiperItem {
 			width: 100%;
 			height: 100%;

@@ -1,6 +1,6 @@
 <template>
 	<view class="header">
-		<u-icon class="go-back" name="arrow-left" color="#333" size="48" @click="backTo"></u-icon>
+		<u-icon class="go-back" name="arrow-left" color="#333" size="44" @click="backTo"></u-icon>
 		<view class="title">{{ title }}</view>
 	</view>
 </template>

@@ -14,7 +14,7 @@ export default {
 		},
 		moreText: {
 			type: String,
-			default: '查看更多>'
+			default: '查看更多'
 		}
 	},
 	data() {
