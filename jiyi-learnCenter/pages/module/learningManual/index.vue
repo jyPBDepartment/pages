@@ -46,9 +46,9 @@
 			// 初始化加载职业类别信息
 			initModuleInfo() {
 				uni.request({
-					url: ApiPath.url.findTypeOfBussiness,
+					url: ApiPath.url.occupation,
 					method: "GET",
-					data: {},
+					
 					success: (res) => {
 					
 						if (res.data.state == 0) {	
@@ -69,7 +69,7 @@
 			// 初始化加载banner图
 			picture(){
 					uni.request({
-						url: ApiPath.url.findBanner,
+						url: ApiPath.url.getListByType,
 						method: "GET",
 						data: {
 							picType:1

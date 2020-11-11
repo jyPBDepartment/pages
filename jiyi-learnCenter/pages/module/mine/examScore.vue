@@ -54,7 +54,7 @@
 			//考试成绩初始化加载
 			examScore(){
 						uni.request({
-							url: ApiPath.url.findExamScore,
+							url: ApiPath.url.getExamResultByUserId,
 							method: "GET",
 							data: {
 								userId:this.userId

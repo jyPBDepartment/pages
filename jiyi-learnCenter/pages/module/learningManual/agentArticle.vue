@@ -13,7 +13,7 @@
 		<view class="select">
 			<view>
 				<u-search placeholder="搜索标题或标签" bg-color="#fff" :show-action="false" input-align="left" shape="square" margin="30rpx 0rpx 0rpx 20rpx"
-				 maxlength="16" class="input" v-model="title" @search="search"></u-search>
+				 maxlength="16" class="input" v-model="title" @input="blurSearch" ></u-search>
 			</view>
 		</view>
 
@@ -125,7 +125,7 @@
 						page: pageNum,
 						size: pageSize
 					},
-					url: ApiPath.url.findById, //请求接口路径
+					url: ApiPath.url.findManualByName, //请求接口路径
 					success: (res) => { //成功返回结果方法
 					
 						if (res.data.code == 200) {
@@ -168,7 +168,7 @@
 			initLabel() {
 				uni.request({
 					method: 'GET', //请求方式
-					url: ApiPath.url.findLabel, //请求接口路径
+					url: ApiPath.url.label, //请求接口路径
 					success: (res) => { //成功返回结果方法
 						if (res.data.state == 0) {
 							for (let i = 0; i < res.data.data.length; i++) {
@@ -213,7 +213,7 @@
 					})
 			},
 			//搜索功能
-			search() {
+			blurSearch() {
 				this.downCallback()
 			}
 		}

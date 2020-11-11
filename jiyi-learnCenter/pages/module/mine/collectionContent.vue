@@ -57,17 +57,14 @@
 		methods:{
 			// 文章内容详情显示
 			collectionArticle(val){
-				let param = {
-					id:val
-				}
 				uni.request({
 					method: 'GET', //请求方式
 					data: {
-						param,
+						id:val,
 						userId:this.userId,
 						isCollection:1
-					}, //请求数据
-					url: ApiPath.url.findCollection, //请求接口路径
+						}, //请求数据
+					url: ApiPath.url.getManualListByUserId, //请求接口路径
 					success: (res) => { //成功返回结果方法
 					if (res.data.code == 200) {
 						for(let i = 0;i<res.data.data.length;i++){

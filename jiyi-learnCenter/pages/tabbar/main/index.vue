@@ -36,7 +36,7 @@
 				<view style="text-align: right;" @click="rmMore">更多>>></view>
 			</u-col>
 		</u-row>
-		<view class="list" v-for="(item, index) in hotCourseList" :key="index" @click="rmDetail(item.id)">
+		<view class="list" v-for="(item, index) in hotCourseList" :key="index" @click="rmDetail(item.id,type)">
 			<view class="listOne">
 				<view class="img">
 					<image class="listImg" :src="item.url"></image>
@@ -86,7 +86,8 @@
 				picType: '',
 				banner: [],
 				hotCourseList: [],
-				offlineCourseList: []
+				offlineCourseList: [],
+				type:0
 			}
 		},
 		// 页面初始化加载
@@ -108,7 +109,7 @@
 			// 初始化加载banner图
 			picture() {
 				uni.request({
-					url: ApiPath.url.findBanner,
+					url: ApiPath.url.getListByType,
 					method: "GET",
 					data: {
 						picType: 0
@@ -133,9 +134,8 @@
 			// 初始化加载热门课程
 			hotCourse() {
 				uni.request({
-					url: ApiPath.url.findHotCourse,
+					url: ApiPath.url.getListByReading,
 					method: "GET",
-					data: {},
 					success: (res) => {
 						if (res.data.code == 200) {
 
@@ -157,9 +157,8 @@
 			// 初始化加载线下课程
 			offLineCourse() {
 				uni.request({
-					url: ApiPath.url.findOffLineCourse,
+					url: ApiPath.url.getListByLessonDay,
 					method: "GET",
-					data: {},
 					success: (res) => {
 						if (res.data.code == 200) {
 							this.offlineCourseList = res.data.data
@@ -207,10 +206,10 @@
 				})
 			},
 			// 热门课程详情
-			rmDetail(getId) {
+			rmDetail(getId,type) {
 
 				uni.navigateTo({
-					url: '../../module/hotCourse/hotCourseContent?id=' + getId
+					url: '../../module/hotCourse/hotCourseContent?id=' + getId + '&type='+type
 				})
 			},
 			// 线下课程详情

@@ -53,7 +53,7 @@
 						userId:this.userId,
 						isCollection:1
 					},
-					url: ApiPath.url.findCollection, //请求接口路径
+					url: ApiPath.url.getManualListByUserId, //请求接口路径
 					success: (res) => { //成功返回结果方法
 						if (res.data.code == 200) {
 							this.collectionList = res.data.data;

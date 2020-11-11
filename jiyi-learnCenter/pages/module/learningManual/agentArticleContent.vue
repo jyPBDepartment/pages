@@ -67,12 +67,13 @@
 			// 文章内容详情显示
 			learningArticle(val){
 				let param = {
-					id:val
+					id:val,
+					userId:this.userId
 				}
 				uni.request({
 					method: 'GET', //请求方式
 					data: param, //请求数据
-					url: ApiPath.url.findArticleContent, //请求接口路径
+					url: ApiPath.url.findManualInfoId, //请求接口路径
 					success: (res) => { //成功返回结果方法
 					if (res.data.code == 200) {
 						this.title = res.data.data.title

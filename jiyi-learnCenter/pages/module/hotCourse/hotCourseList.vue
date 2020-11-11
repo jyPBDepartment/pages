@@ -13,7 +13,7 @@
 		<view class="select">
 			<view>
 				<u-search placeholder="搜索标题或标签" bg-color="#fff" :show-action="false" input-align="left" shape="square" margin="30rpx 0rpx 0rpx 20rpx"
-				 maxlength="16" class="input" v-model="title" @search="search"></u-search>
+				 maxlength="16" class="input" v-model="title" @input="blurSearch"></u-search>
 			</view>
 		</view>
 
@@ -24,7 +24,7 @@
 		<!-- 懒加载 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 列表详情 -->
-			<view class="list" v-for="(item, index) in agentList" :key="index" @click="agentArticleJump(item.id)">
+			<view class="list" v-for="(item, index) in agentList" :key="index" @click="agentArticleJump(item.id,type)">
 				<view class="listOne">
 					<view class="img">
 						<image class="listImg" :src="item.url"></image>
@@ -59,6 +59,7 @@
 				current: "",
 				learningId: "",
 				labelId: "",
+				type:1,
 				mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
 				// 下拉刷新的配置(可选, 绝大部分情况无需配置)
 				downOption: {
@@ -125,7 +126,7 @@
 						page: pageNum,
 						size: pageSize
 					},
-					url: ApiPath.url.findById, //请求接口路径
+					url: ApiPath.url.findManualByName, //请求接口路径
 					success: (res) => { //成功返回结果方法
 					
 						if (res.data.code == 200) {
@@ -168,7 +169,7 @@
 			initLabel() {
 				uni.request({
 					method: 'GET', //请求方式
-					url: ApiPath.url.findLabel, //请求接口路径
+					url: ApiPath.url.label, //请求接口路径
 					success: (res) => { //成功返回结果方法
 						if (res.data.state == 0) {
 							for (let i = 0; i < res.data.data.length; i++) {
@@ -210,13 +211,13 @@
 				
 			},
 			// 文章跳转详情页面
-			agentArticleJump(getId) {
+			agentArticleJump(getId,type) {
 					uni.navigateTo({
-						url:'./hotCourseContent?id='+getId
+						url:'./hotCourseContent?id='+getId+'&type='+type
 					})
 			},
 			//搜索功能
-			search() {
+			blurSearch() {
 				this.downCallback()
 			}
 		}

@@ -44,7 +44,7 @@
 			// 初始化加载考试列表信息
 			initExamInfo() {
 				uni.request({
-					url: ApiPath.url.findTypeOfBussiness,
+					url: ApiPath.url.occupation,
 					method: "GET",
 					data: {},
 					success: (res) => {
@@ -66,7 +66,7 @@
 			// 初始化加载banner图
 			picture() {
 				uni.request({
-					url: ApiPath.url.findBanner,
+					url: ApiPath.url.getListByType,
 					method: "GET",
 					data: {
 						picType: 2
@@ -181,20 +181,6 @@
 				border-radius: 9px;
 				z-index: 99;
 			}
-
-			// .se-text:nth-child(2n+1):after {
-
-			// 	background-color: #e58b1c;
-			// }
-
-			// .se-text:nth-child(2n):after {
-
-			// 	background-color: #fcca00;
-			// }
-			// .se-text:nth-child(4n+2):after {
-
-			// 	background-color: #fee78c;
-			// }
 
 		}
 

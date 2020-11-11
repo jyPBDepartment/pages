@@ -62,17 +62,19 @@
 			// 文章内容初始化
 			this.learningArticle(e.id);
 			this.manualInfoId = e.id;
+			this.type = e.type;
 		},
 		methods:{
 			// 文章内容详情显示
 			learningArticle(val){
 				let param = {
-					id:val
+					id:val,
+					userId:this.userId
 				}
 				uni.request({
 					method: 'GET', //请求方式
 					data: param, //请求数据
-					url: ApiPath.url.findArticleContent, //请求接口路径
+					url: ApiPath.url.findManualInfoId, //请求接口路径
 					success: (res) => { //成功返回结果方法
 					if (res.data.code == 200) {
 						this.title = res.data.data.title
@@ -98,8 +100,16 @@
 					}
 				})
 			},
+			// 返回
 			backTo() {
-				uni.redirectTo({url: './hotCourseList'})
+				if(this.type == 0){//如果type==0，则返回首页；如果type==1，则返回列表页
+					uni.reLaunch({
+					    url: '../../tabbar/main/index',
+					});
+				}else{
+					uni.redirectTo({url: './hotCourseList'})
+				}
+				
 			},
 			// 收藏
 			collection(){

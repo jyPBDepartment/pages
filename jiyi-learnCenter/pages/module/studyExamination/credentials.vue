@@ -45,9 +45,9 @@
 							</view>
 							<view class="choose">（约{{item.answerTime}}分钟，不限考次）</view>
 							<view >
-								<button v-if="item.isPass==0" class="btn" @click="answer(item)">答题</button>
-								<button v-if="item.isPass==1" class="btnPass" disabled="disabled">已通过</button>
-								<button v-if="item.isPass==2" class="btn" @click="answer(item)">重新答题</button>
+								<button v-if="item.isPass==0" class="btn" @click="answer(item)" size="mini">答题</button>
+								<button v-if="item.isPass==1" class="btnPass" disabled="disabled" size="mini">已通过</button>
+								<button v-if="item.isPass==2" class="btn" @click="answer(item)" size="mini">重新答题</button>
 							</view>
 						</view>
 						<view class="sum">
@@ -55,10 +55,10 @@
 						</view>
 						</view>
 					</view>
-					<!-- 获得证书和头衔 -->
+					<!-- 获得证书 -->
 					<view class="one">
 						<view class="introduceTitle">
-							获得证书和头衔
+							获得证书
 						</view>
 						<view class="identity" @click="mineCredential">
 							<image src="http://60.205.246.126/images/2020/10/27/1603764777256292.png"  class="identImg"></image>
@@ -237,14 +237,16 @@
 							display: flex;
 							justify-content: space-between;
 								.btn{
-									font-size: 12rpx;
 									background-color: #fff;
-									border:2rpx solid red;
+									border:1rpx solid red;
 									margin-top: 14rpx;
+									padding: 0;
+									width: 134rpx;
 								}
 								.btnPass{
-									font-size: 20rpx;
 									margin-top: 14rpx;
+									padding: 0;
+									width: 138rpx;
 								}
 						}
 						.sum{
