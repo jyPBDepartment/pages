@@ -120,14 +120,14 @@
 			
 			},
 			backTo() {
-				uni.navigateBack({
-			
+				uni.switchTab({
+					url:'../../tabbar/main/index'
 				})
 			},
 			// 行业案例跳转详情页面
 			courseDetail(getId){
 				uni.navigateTo({
-					url:"./offlineDetails?id="+getId
+					url:"./offlineDetails?index=1&id="+getId
 				})
 			}
 		}

@@ -26,16 +26,6 @@
 			<u-row style="padding-top: 40rpx;">
 				<u-col span="3" style="text-align: right;">
 					<span style="color: #ff0000;">*</span>
-					身份证号:
-				</u-col>
-				<u-col span="8">
-					<u-input type="text" placeholder="输入身份证号" :focus="true" v-model="idCard" border height="54" maxlength="18" />
-				</u-col>
-			</u-row>
-			
-			<u-row style="padding-top: 40rpx;">
-				<u-col span="3" style="text-align: right;">
-					<span style="color: #ff0000;">*</span>
 					手机号:
 				</u-col>
 				<u-col span="8">
@@ -76,7 +66,6 @@
 			return {
 				cencalIsShow: false,
 				name:'',
-				idCard:'',
 				phone:'',
 				code:'',
 				id:'',
@@ -101,7 +90,6 @@
 			//index=1编辑
 			if(e.index=='1'){
 				this.name=e.name;
-				this.idCard=e.idCard;
 				this.phone=e.phone;
 				this.title = e.title
 				this.lessonId = e.lessonId
@@ -179,13 +167,6 @@
 					})
 					return false;
 				}
-				if (this.idCard == '' || !/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(this.idCard)) {
-					this.$refs.uToast.show({
-						title: "请输入正确的身份证号",
-						type: 'error',
-					})
-					return false;
-				}
 				
 				if (this.phone == '') {
 					this.$refs.uToast.show({
@@ -217,7 +198,7 @@
 					return false;
 				}
 				uni.navigateTo({
-					url: '../offlineCourses/offlineSignUpShow?name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.title+''
+					url: '../offlineCourses/offlineSignUpShow?name='+this.name+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.title+''
 				})
 			},
 			

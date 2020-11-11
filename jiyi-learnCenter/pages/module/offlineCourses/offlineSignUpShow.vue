@@ -23,7 +23,7 @@
 				</u-col>
 			</u-row>
 			
-			<u-row style="padding-top: 50rpx;">
+			<!-- <u-row style="padding-top: 50rpx;">
 				<u-col span="3" style="text-align: right;">
 					<span style="color: #ff0000;">*</span>
 					身份证号:
@@ -31,7 +31,7 @@
 				<u-col span="8">
 					<span>{{idCard}}</span>
 				</u-col>
-			</u-row>
+			</u-row> -->
 			
 			<u-row style="padding-top: 50rpx;">
 				<u-col span="3" style="text-align: right;">
@@ -78,7 +78,7 @@
 				show: false,
 				cencalIsShow: false,
 				name:'',
-				idCard:'',
+				// idCard:'',
 				phone:'',
 				id:'',
 				lessonId:'',
@@ -90,7 +90,7 @@
 		},
 		onLoad(e) {
 			this.name=e.name;
-			this.idCard=e.idCard;
+			// this.idCard=e.idCard;
 			this.phone=e.phone;
 			this.className = e.title
 			this.lessonId = e.lessonId
@@ -132,7 +132,7 @@
 			//重新编辑跳转
 			reEdit(){
 				uni.navigateTo({
-					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&idCard='+this.idCard+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.className+''
+					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.className+''
 				})
 			},
 			

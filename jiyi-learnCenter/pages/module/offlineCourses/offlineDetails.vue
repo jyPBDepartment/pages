@@ -102,13 +102,15 @@
 				userId: localStorage.getItem("userId"),
 				date: new Date().toISOString().slice(0, 10),
 				number: '',
-				closingDate: ''
+				closingDate: '',
+				index:''
 			}
 		},
 
 		onLoad(e) {
 			this.offlineId(e.id);
 			this.id = e.id;
+			this.index = e.index
 		},
 
 		methods: {
@@ -132,7 +134,7 @@
 							this.image = res.data.data.url
 							this.stuLimit = res.data.data.stuLimit
 							this.number = this.stuLimit - res.data.lesson.length
-							this.closingDate = this.$u.timeFormat(res.data.data.closingDate, 'yyyy-mm-dd');
+							this.closingDate = res.data.data.closingDate
 							//判断截止日期
 							const date = new Date();
 							let year = date.getFullYear();
@@ -143,6 +145,7 @@
 							this.closingDate.split("-")
 							dateTime = this.closingDate.split("-")
 							let returnAge = ""
+							if(res.data.data.enrollStatus == 0){
 							let ageDiff = dateTime[0] - year; //年之差
 							if (ageDiff >= 0) {
 								if (dateTime[1] == month) {
@@ -173,6 +176,12 @@
 							} else {
 								this.type = 2;
 							}
+						}
+						else if(res.data.data.enrollStatus == 1){
+							uni.showToast({
+								title: "此课程暂时不允许报名"
+							})
+						}
 						} else {
 							uni.showToast({
 								title: "服务器出错，请联系管理员"
@@ -211,7 +220,15 @@
 
 			//返回
 			backTo() {
-				uni.navigateBack({})
+				if(this.index == 0){
+					uni.switchTab({
+						url:'../../tabbar/main/index'
+					})
+				}else{
+					uni.navigateTo({
+						url: './offlineCourseMore',
+					})
+				}				
 			},
 
 			//立即报名跳转

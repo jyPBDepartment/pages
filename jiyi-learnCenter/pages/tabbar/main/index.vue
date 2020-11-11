@@ -216,7 +216,7 @@
 			hyDetail(val) {
 
 				uni.navigateTo({
-					url: "../../module/offlineCourses/offlineDetails?id="+val
+					url: "../../module/offlineCourses/offlineDetails?index=0&id="+val
 				})
 			},
 			initDate() {
