@@ -139,7 +139,7 @@
 			//弹出层关闭跳转到课程列表页
 			close(){
 				uni.navigateTo({
-					url: '../offlineCourses/offlineCourseMore'
+					url: '../offlineCourses/offlineDetails?id='+this.lessonId
 				})
 			},
 			

@@ -54,8 +54,7 @@ const url = {
 	submitExam:URLHost+'/examPaperInfo/submitExam',
 	//线下课程列表
 	findLessonPage:URLHost+'/lesson/findLessonPage',
-	//线下课程详情
-	findById:URLHost+'/lesson/findById',
+	//线下课程详情	findByLessonId:URLHost+'/lesson/findByLessonId',	//线下课程取消报名	cancellationRegistr:URLHost+'/lesson/cancellationRegistr',
 	// 查询学习考试列表信息
 	findStudyExamInfo:URLHost+'/studyExam/findStudyExamInfo'
 }
