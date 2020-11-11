@@ -1,6 +1,6 @@
 <template>
 	<view id="learningManual">
-		<u-row style="background-color: #ffffff;height: 60rpx;">
+		<!-- <u-row style="background-color: #ffffff;height: 60rpx;">
 			<u-col span="1">
 				<view class="backArrow" @click="backTo">
 					<u-icon name="arrow-left" color="#333" size="32"></u-icon>  
@@ -9,9 +9,10 @@
 			<u-col span="11">
 				<view class="title">学习手册</view>
 			</u-col>
-		</u-row>
+		</u-row> -->
+		<header-box title="学习手册"></header-box>
 		<!--  背景图 -->
-		<u-image width="100%" height="190rpx" v-for="(item,index) in banner" :key="index" :src="item.url"></u-image>
+		<u-image style="margin-top: 90rpx;" width="100%" height="190rpx" v-for="(item,index) in banner" :key="index" :src="item.url"></u-image>
 		<!-- 学习手册 -->
 		<view class="rm-list">
 			<view class="rm-manager" v-for="(item,index) in optionList" :key="index" @click="juniorManager(item.id)" >

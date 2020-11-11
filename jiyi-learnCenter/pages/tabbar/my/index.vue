@@ -1,9 +1,10 @@
 <template>
-	<view class="content">
+	<view class="content comm-container">
 		<!--头部 -->
-		<view>
+		<!-- <view>
 			<view class="title">我的</view>
-		</view>
+		</view> -->
+		<header-box title="我的"></header-box>
 		<!-- 各个功能页面 -->
 		<view class="function">
 			<view class="functions" @click="myCollection">
@@ -75,6 +76,7 @@
 		.function{
 			display: flex;
 			flex-direction: column;
+			margin-top: 90rpx;
 			.functions{
 				font-weight: bold;
 				margin:20rpx 0 10rpx 0;
