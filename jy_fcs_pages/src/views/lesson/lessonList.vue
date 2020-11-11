@@ -69,7 +69,7 @@
             :inactive-value="1"
             active-color="rgb(19, 206, 102)"
             inactive-color="rgb(255, 73, 73)"
-            @change="statusEnable(scope)"
+            @change="statusEnable(scope)" 
           ></el-switch>
            <!-- {{new Date(scope.row.closingDate).getTime()}} -->
         </template>
