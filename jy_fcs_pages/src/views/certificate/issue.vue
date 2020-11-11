@@ -53,9 +53,9 @@
     <el-table :data="tableData" border style="width: 100%;" highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="7%" ></el-table-column>
       <el-table-column prop="certificate.name" label="证书名称" align="center" min-width="20%"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="user.userName" label="申请人姓名" align="center" min-width="10%"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="user.userTel" min-width="10%" label="申请人电话" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="user.userCard" min-width="12%" label="身份证号" align="center" ></el-table-column>
+      <el-table-column prop="userName" label="申请人姓名" align="center" min-width="10%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="userTel" min-width="10%" label="申请人电话" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="userCard" min-width="12%" label="身份证号" align="center" ></el-table-column>
       <el-table-column  label="状态" align="center" min-width="8%">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.issueState == 0" type="warn">待处理</el-tag>

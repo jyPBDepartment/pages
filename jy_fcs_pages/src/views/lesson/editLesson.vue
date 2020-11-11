@@ -81,6 +81,13 @@
               }">
           </el-time-select>
         </el-form-item>
+        <el-form-item label="报名截止日期" prop="closingDate">
+          <el-date-picker
+            v-model="lessonForm.closingDate"
+            type="date" size="small" style="width:92%" 
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
         <el-form-item label="人数限制" prop="stuLimit">
           <el-input type="number" v-model="lessonForm.stuLimit" size="small" style="width:92%"></el-input>
         </el-form-item>
@@ -129,6 +136,7 @@ export default {
         vocationId:"",
         address:"",
         content:"",
+        closingDate:"",
         updateBy: localStorage.getItem("userInfo"),
         lessonDay:"",
         beginDate:"",

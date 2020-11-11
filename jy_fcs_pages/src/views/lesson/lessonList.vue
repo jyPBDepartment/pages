@@ -57,10 +57,10 @@
     <el-table :data="tableData" border style="width: 100%;" highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="7%" ></el-table-column>
       <el-table-column prop="vocation.name" label="职业类别" align="center" min-width="10%"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="title" label="名称" align="center" min-width="20%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="title" label="名称" align="center" min-width="15%"  :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="stuLimit" label="人数限制" align="center" min-width="10%"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column sortable prop="lessonDate" label="课程时间" align="center" min-width="15%" ></el-table-column>
-      <el-table-column align="center" prop="status" label="报名状态" min-width="15%" max-width="80px">
+      <el-table-column sortable prop="lessonDate" label="课程时间" align="center" min-width="20%" ></el-table-column>
+      <el-table-column align="center" prop="status" label="启用/禁用" min-width="10%" max-width="80px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -72,15 +72,22 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="enrollStatus" label="审核状态" min-width="15%"   >
+      <el-table-column align="center" prop="enrollStatus" label="报名状态" min-width="10%" max-width="80px">
         <template slot-scope="scope">
-          <span v-if="scope.row.enrollStatus==0">报名中</span>
-          <span v-if="scope.row.enrollStatus==1">报名结束</span>
+          <el-switch v-if="new Date().getTime()>new Date(scope.row.closingDate).getTime()"
+            v-model="scope.row.enrollStatus"
+            :active-value="0"
+            :inactive-value="1"
+            active-color="rgb(19, 206, 102)"
+            inactive-color="rgb(255, 73, 73)"
+            @change="enrollEnable(scope)"
+          ></el-switch>
+          <el-tag v-if="new Date().getTime()<new Date(scope.row.closingDate).getTime()" type="warn">报名已结束</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="createBy" label="创建人" align="center" min-width="6%"></el-table-column>
-      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
-      <el-table-column fixed="right" label="操作" align="center" min-width="25%">
+      <el-table-column prop="closingDate" min-width="12%" label="报名截止日期" align="center" sortable></el-table-column>
+      <el-table-column fixed="right" label="操作" align="center" min-width="30%">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
@@ -220,9 +227,14 @@ export default {
         .catch(function (error) {});
     },
     enrollEnable: function (scope) {
+      if(scope.row.status == 1){
+        this.$message.error("该课程已禁用");
+        scope.row.enrollStatus = 1;
+        return;
+      }
       let params = {
         id: scope.row.id,
-        enrollStatus: scope.row.enrollStatus,
+        status: scope.row.enrollStatus,
       };
       api
         .testAxiosGet(ApiPath.url.changeLessonEnroll, params)
