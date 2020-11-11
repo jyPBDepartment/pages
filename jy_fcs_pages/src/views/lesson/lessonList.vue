@@ -62,6 +62,7 @@
       <el-table-column sortable prop="lessonDate" label="课程时间" align="center" min-width="20%" ></el-table-column>
       <el-table-column align="center" prop="status" label="启用/禁用" min-width="10%" max-width="80px">
         <template slot-scope="scope">
+          <!-- {{new Date(scope.row.now).getTime()}} -->
           <el-switch
             v-model="scope.row.status"
             :active-value="0"
@@ -70,11 +71,13 @@
             inactive-color="rgb(255, 73, 73)"
             @change="statusEnable(scope)"
           ></el-switch>
+           <!-- {{new Date(scope.row.closingDate).getTime()}} -->
         </template>
       </el-table-column>
       <el-table-column align="center" prop="enrollStatus" label="报名状态" min-width="10%" max-width="80px">
         <template slot-scope="scope">
-          <el-switch v-if="new Date().getTime()>new Date(scope.row.closingDate).getTime()"
+          <!-- {{new Date(scope.row.now).getTime()-new Date(scope.row.closingDate).getTime()}} -->
+          <el-switch v-if="new Date(scope.row.now).getTime()<=new Date(scope.row.closingDate).getTime()"
             v-model="scope.row.enrollStatus"
             :active-value="0"
             :inactive-value="1"
@@ -82,7 +85,7 @@
             inactive-color="rgb(255, 73, 73)"
             @change="enrollEnable(scope)"
           ></el-switch>
-          <el-tag v-if="new Date().getTime()<new Date(scope.row.closingDate).getTime()" type="warn">报名已结束</el-tag>
+          <el-tag v-if="new Date(scope.row.now).getTime()>new Date(scope.row.closingDate).getTime()" type="warn">报名已结束</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="createBy" label="创建人" align="center" min-width="6%"></el-table-column>
