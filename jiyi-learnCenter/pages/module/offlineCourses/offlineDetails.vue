@@ -1,6 +1,6 @@
 <template>
-  <view id="offlineDetails">
-    <!-- 	<u-row style="background-color: #f2f2f2;height: 60rpx;">
+	<view id="offlineDetails">
+		<!-- 	<u-row style="background-color: #f2f2f2;height: 60rpx;">
 			<u-col span="1">
 				<view class="title" @click="backTo">
 					<u-icon name="arrow-left"></u-icon>
@@ -10,72 +10,50 @@
 				<view class="title">线下课程详情</view>
 			</u-col>
 		</u-row> -->
-    <header-box title="线下课程详情" @backTo="backTo"></header-box>
+		<header-box title="线下课程详情" @backTo="backTo"></header-box>
 
-    <view class="offImg"><image :src="image" class="img"></image></view>
+		<view class="offImg"><image :src="image" class="img"></image></view>
 
-    <u-row class="row1">
-      <view style="padding-left: 10rpx">
-        <view style="font-size: 16px; font-style: oblique">{{ title }}</view>
-        <view style="font-size: 14px; padding-top: 10rpx"
-          >开课时间：{{ beginDate }}</view
-        >
-      </view>
-    </u-row>
+		<u-row class="row1">
+			<view style="padding-left: 10rpx">
+				<view style="font-size: 16px; font-style: oblique">{{ title }}</view>
+				<view style="font-size: 14px; padding-top: 10rpx">开课时间：{{ beginDate }}</view>
+			</view>
+		</u-row>
 
-    <u-row
-      ><u-col style="text-align: center; padding-top: 15rpx; font-size: 15px"
-        >课程介绍</u-col
-      ></u-row
-    >
+		<u-row><u-col style="text-align: center; padding-top: 15rpx; font-size: 15px">课程介绍</u-col></u-row>
 
-    <u-row class="row2">
-      <view style="padding-left: 10rpx">
-        <u-row style="font-size: 16px">主讲人：{{ name }}</u-row>
-        <u-row style="font-size: 14px; padding-top: 10rpx"
-          >人数限制：{{ stuLimit }} 人</u-row
-        >
-        <u-row style="font-size: 14px; padding-top: 10rpx"
-          >课程介绍:{{ courseIntroduction }}</u-row
-        >
-      </view>
-    </u-row>
+		<u-row class="row2">
+			<view style="padding-left: 10rpx">
+				<u-row style="font-size: 16px">主讲人：{{ name }}</u-row>
+				<u-row style="font-size: 14px; padding-top: 10rpx">人数限制：{{ stuLimit }} 人</u-row>
+				<u-row style="font-size: 14px; padding-top: 10rpx">课程介绍:{{ courseIntroduction }}</u-row>
+			</view>
+		</u-row>
 
-    <u-row
-      ><u-col style="text-align: center; padding-top: 15rpx; font-size: 15px"
-        >参课指南</u-col
-      ></u-row
-    >
+		<u-row><u-col style="text-align: center; padding-top: 15rpx; font-size: 15px">参课指南</u-col></u-row>
 
-    <u-row style="padding-top: 15rpx">
-      <u-col>{{ courseGuide }}</u-col>
-    </u-row>
+		<u-row style="padding-top: 15rpx">
+			<u-col>{{ courseGuide }}</u-col>
+		</u-row>
 
-    <u-row style="padding-top: 230rpx">
-      <u-col style="text-align: center">
-        <footer class="foot-nav">
-          <span v-if="type == '0'">若每月超过三次未准时参加，本月报名失效</span>
-          <span v-if="type == '1'">该课程已经报名，剩余名额{{ number }}人</span>
-          <span v-if="type == '2'">该课程此次报名已结束</span>
-        </footer>
-      </u-col>
-    </u-row>
+		<u-row style="padding-top: 230rpx">
+			<u-col style="text-align: center">
+				<footer class="foot-nav">
+					<span v-if="type == '0'">若每月超过三次未准时参加，本月报名失效</span>
+					<span v-if="type == '1'">该课程已经报名，剩余名额{{ number }}人</span>
+					<span v-if="type == '2'">该课程此次报名已结束</span>
+				</footer>
+			</u-col>
+		</u-row>
 
-    <u-row>
-      <u-col>
-        <view style="text-align: center; margin-top: 20rpx" v-if="type == '0'"
-          ><u-button type="primary" size="mini" @click="signUp(id)"
-            >立即报名</u-button
-          ></view
-        >
-        <view style="text-align: center; margin-top: 20rpx" v-if="type == '1'"
-          ><u-button type="primary" size="mini" @click="cancel()"
-            >取消报名</u-button
-          ></view
-        >
-      </u-col>
-    </u-row>
-  </view>
+		<u-row>
+			<u-col>
+				<view style="text-align: center; margin-top: 20rpx" v-if="type == '0'"><u-button type="primary" size="mini" @click="signUp(id)">立即报名</u-button></view>
+				<view style="text-align: center; margin-top: 20rpx" v-if="type == '1'"><u-button type="primary" size="mini" @click="cancel()">取消报名</u-button></view>
+			</u-col>
+		</u-row>
+	</view>
 </template>
 
 <script>
@@ -184,35 +162,35 @@ export default {
 			});
 		},
 
-			//取消报名
-			cancel() {
-				let param = {
-					lessonId: this.id,
-					userId: this.userId
-				};
-				uni.request({
-					method: 'GET', //请求方式
-					data: param, //请求数据
-					url: ApiPath.url.cancellationRegistr, //请求接口路径
-					success: (res) => { //成功返回结果方法
-						if (res.data.code == 200) {
-							uni.showToast({
-								title: "取消报名成功"
-							})
-							setTimeout(() => {
-								// 3秒后自动关闭
-								uni.navigateTo({
-									url: './offlineCourseMore'
-								})
-							}, 3000)
-						} else {
-							uni.showToast({
-								title: "服务器出错，请联系管理员"
-							})
-						}
+		//取消报名
+		cancel() {
+			let param = {
+				lessonId: this.id,
+				userId: this.userId
+			};
+			uni.request({
+				method: 'GET', //请求方式
+				data: param, //请求数据
+				url: ApiPath.url.cancellationRegistr, //请求接口路径
+				success: res => {
+					//成功返回结果方法
+					if (res.data.code == 200) {
+						uni.showToast({
+							title: '取消报名成功'
+						});
+						setTimeout(() => {
+							// 3秒后自动关闭
+							uni.navigateTo({
+								url: './offlineCourseMore'
+							});
+						}, 3000);
+					} else {
+						uni.showToast({
+							title: '服务器出错，请联系管理员'
+						});
 					}
 				}
-			
+			});
 		},
 
 		//返回
@@ -240,32 +218,32 @@ export default {
 
 <style lang="scss" scoped>
 #offlineDetails {
-  .title {
-    text-align: center;
-  }
+	.title {
+		text-align: center;
+	}
 
-  .row1 {
-    margin-top: 15rpx;
-    border: groove;
-    width: 723rpx;
-    height: 150rpx;
-    margin-left: 15rpx;
-  }
+	.row1 {
+		margin-top: 15rpx;
+		border: groove;
+		width: 723rpx;
+		height: 150rpx;
+		margin-left: 15rpx;
+	}
 
-  .row2 {
-    margin-top: 15rpx;
-    border: groove;
-    width: 723rpx;
-    min-height: 140rpx;
-    margin-left: 15rpx;
-  }
+	.row2 {
+		margin-top: 15rpx;
+		border: groove;
+		width: 723rpx;
+		min-height: 140rpx;
+		margin-left: 15rpx;
+	}
 
-  .offImg {
-    margin-top: 80rpx;
-    .img {
-      width: 750rpx;
-      height: 360rpx;
-    }
-  }
+	.offImg {
+		margin-top: 80rpx;
+		.img {
+			width: 750rpx;
+			height: 360rpx;
+		}
+	}
 }
 </style>
