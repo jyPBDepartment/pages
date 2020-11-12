@@ -206,9 +206,12 @@
 							uni.showToast({
 								title: "取消报名成功"
 							})
-							uni.navigateTo({
-								url: './offlineCourseMore'
-							})
+							setTimeout(() => {
+								// 3秒后自动关闭
+								uni.navigateTo({
+									url: './offlineCourseMore'
+								})
+							}, 3000)
 						} else {
 							uni.showToast({
 								title: "服务器出错，请联系管理员"
