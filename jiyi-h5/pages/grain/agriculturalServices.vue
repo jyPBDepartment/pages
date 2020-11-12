@@ -313,9 +313,9 @@ export default {
 				return false;
 			}
 			if (this.isFace == '定价') {
-				if (!/^\d+(\.\d{1})?$/.test(this.price)) {
+				if (!/^\d+(\.\d{2})?$/.test(this.price)) {
 					this.$refs.uToast.show({
-						title: '价格只允许一位小数',
+						title: '价格只允许两位小数',
 						type: 'error'
 					});
 

@@ -285,9 +285,9 @@ export default {
 			}
 
 			if (this.isFace == '定价') {
-				if (!/^\d+(\.\d{1})?$/.test(this.price)) {
+				if (!/^\d+(\.\d{2})?$/.test(this.price)) {
 					this.$refs.uToast.show({
-						title: '价格小数点后保留一位小数',
+						title: '价格小数点后保留两位小数',
 						type: 'error'
 					});
 					return false;
