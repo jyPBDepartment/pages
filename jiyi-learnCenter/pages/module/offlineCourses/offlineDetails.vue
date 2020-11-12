@@ -27,6 +27,7 @@
       <span v-if="type == '0'">若每月超过三次未准时参加，本月报名失效</span>
       <span v-if="type == '1'">该课程已经报名，剩余名额{{ number }}人</span>
       <span v-if="type == '2'">该课程此次报名已结束</span>
+	  <span v-if="type == '3'">此次课程已结束或已开始</span>
     </view>
 
     <view style="text-align: center; margin: 40rpx">
