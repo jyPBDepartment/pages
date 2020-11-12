@@ -51,7 +51,7 @@
 
 					<view class="is-face" v-if="isFace == '定价'">
 						<u-input style="width: 180rpx;" placeholder="输入价格" height="60" border :clearable="false" v-model="price" />
-						<text>元/天</text>
+						<text>元/斤</text>
 					</view>
 				</view>
 			</view>
@@ -255,9 +255,9 @@ export default {
 			// }
 
 			if (this.isFace == '定价') {
-				if (!/^\d+(\.\d{1})?$/.test(this.price)) {
+				if (!/^\d+(\.\d{2})?$/.test(this.price)) {
 					this.$refs.uToast.show({
-						title: '价格小数点后保留一位小数',
+						title: '价格小数点后保留两位小数',
 						type: 'error'
 					});
 
