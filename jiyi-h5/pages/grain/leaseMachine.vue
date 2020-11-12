@@ -61,7 +61,7 @@
 					</u-radio-group>
 					<view class="is-face" v-if="isFace == '定价'">
 						<u-input style="width: 180rpx;" placeholder="输入价格" height="60" border :clearable="false" v-model="price" />
-						<text>元/天</text>
+						<text>元</text>
 					</view>
 				</view>
 			</view>
