@@ -2,12 +2,14 @@
 	<view class="content">
 		<view>
 			<!-- 头部 -->
-			<view class="head">
+			<!-- <view class="head">
 				<view class="backArrow" @click="backTo">
 					<u-icon name="arrow-left" color="#333" size="32"></u-icon>
 				</view>
 				<view class="title">{{examTypeName}}</view>
-			</view>
+			</view> -->
+			<header-box :title="examTypeName" @backTo="backTo"></header-box>
+			
 			<!-- 倒计时+题序 -->
 			<view class="second">
 				<view>
@@ -252,6 +254,7 @@
 			display: flex;
 			background-color: #007AFF;
 			height: 80rpx;
+			margin-top: 80rpx;
 
 			.paging {
 				font-size: 28rpx;

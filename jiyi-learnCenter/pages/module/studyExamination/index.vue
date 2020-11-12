@@ -1,15 +1,10 @@
 <template>
 	<view id="studyExamination">
 		<!-- 头部 -->
-		<view class="head">
-			<view class="backArrow" @click="backTo">
-				<u-icon name="arrow-left" color="#333" size="32"></u-icon>
-			</view>
-			<view class="title">学习考试</view>
-		</view>
+		<header-box title="学习考试" @backTo="backTo"></header-box>
 
 		<!--  背景图 -->
-		<u-image width="100%" height="190rpx" v-for="(item,index) in banner" :key="index" :src="item.url"></u-image>
+		<u-image class="bg-image" width="100%" height="190rpx" v-for="(item,index) in banner" :key="index" :src="item.url"></u-image>
 		<!--  考试列表 -->
 		<u-row>
 			<u-col span="5" v-for="(item,key) in studyExaminationList" :key="key" class="se-col">
@@ -110,25 +105,8 @@
 	#studyExamination {
 		background-color: #ffffff;
 
-		.head {
-			display: flex;
-			padding: 15rpx 0 0 20rpx;
-			background-color: #F8F8F8;
-			width: 750rpx;
-			height: 80rpx;
-			position: -webkit-sticky;
-			position: sticky;
-			top: 0rpx;
-			z-index: 999;
-
-			.backArrow {
-				margin-top: 6rpx;
-			}
-
-			.title {
-				margin-left: 250rpx;
-				font-size: 32rpx;
-			}
+		.bg-image {
+			margin-top: 80rpx;
 		}
 
 		.brage {
