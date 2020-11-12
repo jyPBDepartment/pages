@@ -6,7 +6,9 @@
 		<!-- 学习手册 -->
 		<view class="rm-list">
 			<view class="rm-manager card-box" v-for="(item, index) in optionList" :key="index" @click="juniorManager(item.id)">
-				<view class="rm-img"><image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image></view>
+				<view class="rm-img">
+					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
+				</view>
 				<view class="rm-font">{{ item.name }}学习手册</view>
 			</view>
 		</view>
@@ -14,108 +16,114 @@
 </template>
 
 <script>
-import ApiPath from '@/api/ApiPath.js';
-export default {
-	data() {
-		return {
-			banner: [],
-			show: false,
-			optionList: []
-		};
-	},
-	// 页面初始化加载
-	onLoad(e) {
-		this.initModuleInfo(); // 初始化加载职业类别信息
-		this.picture(); //初始化加载banner图
-	},
-	methods: {
-		// 初始化加载职业类别信息
-		initModuleInfo() {
-			uni.request({
-				url: ApiPath.url.occupation,
-				method: 'GET',
+	import ApiPath from '@/api/ApiPath.js';
+	export default {
+		data() {
+			return {
+				banner: [],
+				show: false,
+				optionList: []
+			};
+		},
+		// 页面初始化加载
+		onLoad(e) {
+			this.initModuleInfo(); // 初始化加载职业类别信息
+			this.picture(); //初始化加载banner图
+		},
+		methods: {
+			// 初始化加载职业类别信息
+			initModuleInfo() {
+				uni.request({
+					url: ApiPath.url.occupation,
+					method: 'GET',
 
-				success: res => {
-					if (res.data.state == 0) {
-						this.optionList = res.data.data;
-					} else {
+					success: res => {
+						if (res.data.state == 0) {
+							this.optionList = res.data.data;
+						} else {
+							uni.showToast({
+								title: '服务器出错，请联系管理员'
+							});
+						}
+					},
+					fail: err => {
 						uni.showToast({
-							title: '服务器出错，请联系管理员'
+							title: '系统初始化失败，请联系管理员'
 						});
 					}
-				},
-				fail: err => {
-					uni.showToast({
-						title: '系统初始化失败，请联系管理员'
-					});
-				}
-			});
-		},
-		// 初始化加载banner图
-		picture() {
-			uni.request({
-				url: ApiPath.url.getListByType,
-				method: 'GET',
-				data: {
-					picType: 1
-				},
-				success: res => {
-					if (res.data.code == 200) {
-						this.banner = res.data.data;
-					} else {
+				});
+			},
+			// 初始化加载banner图
+			picture() {
+				uni.request({
+					url: ApiPath.url.getListByType,
+					method: 'GET',
+					data: {
+						picType: 1
+					},
+					success: res => {
+						if (res.data.code == 200) {
+							this.banner = res.data.data;
+						} else {
+							uni.showToast({
+								title: res.data.data
+							});
+						}
+					},
+					fail: err => {
 						uni.showToast({
-							title: res.data.data
+							title: '系统初始化失败，请联系管理员'
 						});
 					}
-				},
-				fail: err => {
-					uni.showToast({
-						title: '系统初始化失败，请联系管理员'
-					});
-				}
-			});
-		},
-		// 返回上一页
-		backTo() {
-			uni.switchTab({
-				url: '../../tabbar/main/index'
-			});
-		},
-		// 经理人跳转
-		juniorManager(getId) {
-			uni.navigateTo({
-				url: './agentArticle?id=' + getId //跳转地址
-			});
+				});
+			},
+			// 返回上一页
+			backTo() {
+				uni.switchTab({
+					url: '../../tabbar/main/index'
+				});
+			},
+			// 经理人跳转
+			juniorManager(val) {
+				uni.navigateTo({
+					url: 'agentArticle?id=' + val //跳转地址
+				});
+
+			}
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss" scoped>
-.learning-manual-container {
-	background-color: #ffffff;
-	.bg-image {
-		margin-top: 80rpx;
-	}
+	.learning-manual-container {
+		background-color: #ffffff;
 
-	.rm-list {
-		display: flex;
-		flex-direction: column;
-		.rm-manager {
+		.bg-image {
+			margin-top: 80rpx;
+		}
+
+		.rm-list {
 			display: flex;
-			margin: 20rpx;
-			border-radius: 10rpx;
-			.rm-img {
+			flex-direction: column;
+
+			.rm-manager {
+				display: flex;
 				margin: 20rpx;
-				.rm-cover {
-					width: 240rpx;
-					height: 160rpx;
+				border-radius: 10rpx;
+
+				.rm-img {
+					margin: 20rpx;
+
+					.rm-cover {
+						width: 240rpx;
+						height: 160rpx;
+					}
 				}
-			}
-			.rm-font {
-				margin-top: 70rpx;
+
+				.rm-font {
+					margin-top: 70rpx;
+				}
 			}
 		}
 	}
-}
 </style>

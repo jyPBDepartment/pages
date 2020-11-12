@@ -42,7 +42,7 @@
 					url: ApiPath.url.findStudyExamInfo,
 					method: "GET",
 					data: {
-						userId:localStorage.getItem("userId")
+						userId: localStorage.getItem("userId")
 					},
 					success: (res) => {
 						if (res.data.state == 0) {
@@ -93,9 +93,9 @@
 
 			},
 			backTo() {
-				uni.navigateBack({
-
-				})
+				uni.switchTab({
+					url: '../../tabbar/main/index'
+				});
 			}
 		}
 	}

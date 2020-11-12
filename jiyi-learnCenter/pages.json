@@ -4,6 +4,9 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/tabbar/main/index" // 首页列表
+		},
+		{
 			"path": "pages/module/learningManual/agentArticle" // 经销商文章列表详情
 		},
 		{
@@ -63,9 +66,7 @@
 			"path": "pages/module/learningManual/agentArticleContent" // 经销商文章内容详情
 		},
 
-		{
-			"path": "pages/tabbar/main/index" // 首页列表
-		},
+		
 
 		{
 			"path": "pages/tabbar/my/index" // 我的页面

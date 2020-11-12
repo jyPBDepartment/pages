@@ -4,7 +4,9 @@
 		<view class="head">
 			<u-icon name="arrow-left" color="#333" size="44" @click="backTo"></u-icon>
 			<view class="title">文章详情</view>
-			<view class="star"><u-icon :name="name" size="38" :style="style" @click="collection"></u-icon></view>
+			<view class="star">
+				<u-icon :name="name" size="38" :style="style" @click="collection"></u-icon>
+			</view>
 		</view>
 
 		<!-- 内容 -->
@@ -18,7 +20,9 @@
 				<b>[导读]</b>
 				{{ guide }}
 			</view>
-			<view class="img"><image class="contentImg" :src="url"></image></view>
+			<view class="img">
+				<image class="contentImg" :src="url"></image>
+			</view>
 			<u-parse class="artContent" :html="content" :selectable="true" :show-with-animation="true"></u-parse>
 		</view>
 		<u-toast ref="uToast" />
@@ -26,168 +30,180 @@
 </template>
 
 <script>
-import ApiPath from '@/api/ApiPath.js';
-export default {
-	data() {
-		return {
-			name: 'heart',
-			id: '',
-			title: '',
-			read: '',
-			createDate: '',
-			guide: '',
-			studyNum: '',
-			url: '',
-			content: '',
-			style: 'color:#333333',
-			articleList: [],
-			userId: localStorage.getItem('userId'),
-			manualInfoId: '',
-			isCollection: 0
-		};
-	},
-	onLoad(e) {
-		// 文章内容初始化
-		this.learningArticle(e.id);
-		this.manualInfoId = e.id;
-	},
-	methods: {
-		// 文章内容详情显示
-		learningArticle(val) {
-			let param = {
-				id: val,
-				userId: this.userId
+	import ApiPath from '@/api/ApiPath.js';
+	export default {
+		data() {
+			return {
+				name: 'heart',
+				id: '',
+				title: '',
+				read: '',
+				createDate: '',
+				guide: '',
+				studyNum: '',
+				url: '',
+				content: '',
+				style: 'color:#333333',
+				articleList: [],
+				userId: localStorage.getItem('userId'),
+				manualInfoId: '',
+				isCollection: 0,
+				learningId: ''
 			};
-			uni.request({
-				method: 'GET', //请求方式
-				data: param, //请求数据
-				url: ApiPath.url.findManualInfoId, //请求接口路径
-				success: res => {
-					//成功返回结果方法
-					if (res.data.code == 200) {
-						this.title = res.data.data.title;
-						this.createDate = res.data.data.createDate;
-						this.guide = res.data.data.guide;
-						this.url = res.data.data.url;
-						this.content = res.data.data.content;
-						this.studyNum = res.data.data.studyNum;
-						if (res.data.dataUserManual == null) {
-							this.name = 'heart';
-							this.style = 'color:#333';
-						} else if (res.data.dataUserManual.isCollection == 1) {
-							this.name = 'heart-fill';
-							this.style = 'color:red';
+		},
+		onLoad(e) {
+			// 文章内容初始化
+			this.learningArticle(e.id);
+			this.manualInfoId = e.id;
+			this.learningId = e.learningId
+		},
+		methods: {
+			// 文章内容详情显示
+			learningArticle(val) {
+				let param = {
+					id: val,
+					userId: this.userId
+				};
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.findManualInfoId, //请求接口路径
+					success: res => {
+						//成功返回结果方法
+						if (res.data.code == 200) {
+							this.title = res.data.data.title;
+							this.createDate = res.data.data.createDate;
+							this.guide = res.data.data.guide;
+							this.url = res.data.data.url;
+							this.content = res.data.data.content;
+							this.studyNum = res.data.data.studyNum;
+							if (res.data.dataUserManual == null) {
+								this.name = 'heart';
+								this.style = 'color:#333';
+							} else if (res.data.dataUserManual.isCollection == 1) {
+								this.name = 'heart-fill';
+								this.style = 'color:red';
+							}
+						} else {
+							uni.showToast({
+								title: '服务器出错，请联系管理员'
+							});
 						}
-					} else {
-						uni.showToast({
-							title: '服务器出错，请联系管理员'
-						});
 					}
+				});
+			},
+			backTo() {
+				uni.redirectTo({
+					url: './agentArticle?id=' + this.learningId,
+				})
+			},
+			// 收藏
+			collection() {
+				let isCancel = 0;
+				if (this.name == 'heart') {
+					this.name = 'heart-fill';
+					this.style = 'color:red';
+					this.isCollection = 1;
+				} else {
+					isCancel = 1;
+					this.name = 'heart';
+					this.style = 'color:#333';
+					this.isCollection = 0;
 				}
-			});
-		},
-		backTo() {
-			uni.redirectTo({ url: './agentArticle' });
-		},
-		// 收藏
-		collection() {
-			let isCancel = 0;
-			if (this.name == 'heart') {
-				this.name = 'heart-fill';
-				this.style = 'color:red';
-				this.isCollection = 1;
-			} else {
-				isCancel = 1;
-				this.name = 'heart';
-				this.style = 'color:#333';
-				this.isCollection = 0;
+				let param = {
+					userId: this.userId,
+					manualInfoId: this.manualInfoId,
+					isCollection: this.isCollection,
+					isCancel: isCancel
+				};
+				uni.request({
+					method: 'GET', //请求方式
+					data: param, //请求数据
+					url: ApiPath.url.saveUserManualInfo, //请求接口路径
+					success: res => {
+						//成功返回结果方法
+						if (res.data.code == 200) {
+							this.$refs.uToast.show({
+								title: '收藏成功，请到我的收藏查看手册。',
+								type: 'success'
+							});
+						} else {
+							this.$refs.uToast.show({
+								title: '已取消收藏',
+								type: 'info'
+							});
+						}
+					}
+				});
 			}
-			let param = {
-				userId: this.userId,
-				manualInfoId: this.manualInfoId,
-				isCollection: this.isCollection,
-				isCancel: isCancel
-			};
-			uni.request({
-				method: 'GET', //请求方式
-				data: param, //请求数据
-				url: ApiPath.url.saveUserManualInfo, //请求接口路径
-				success: res => {
-					//成功返回结果方法
-					if (res.data.code == 200) {
-						this.$refs.uToast.show({
-							title: '收藏成功，请到我的收藏查看手册。',
-							type: 'success'
-						});
-					} else {
-						this.$refs.uToast.show({
-							title: '已取消收藏',
-							type: 'info'
-						});
-					}
-				}
-			});
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss" scoped>
-.container {
-	display: flex;
-	flex-direction: column;
-	background-color: #f8f8f8;
-	.head {
-		display: flex;
-		background-color: #ffffff;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 0 20rpx;
-		height: 80rpx;
-		.title {
-			font-size: 32rpx;
-		}
-	}
-	.contents {
+	.container {
 		display: flex;
 		flex-direction: column;
-		padding: 20rpx;
-		background-color: #fff;
-		box-sizing: border-box;
-		.title {
-			margin-top: 10rpx;
-			font-size: 30rpx;
-			font-weight: bolder;
-			line-height: 60rpx;
-		}
-		
-		.smallTitle {
-			margin-top: 10rpx;
+		background-color: #f8f8f8;
+
+		.head {
 			display: flex;
+			background-color: #ffffff;
+			display: flex;
+			align-items: center;
 			justify-content: space-between;
-			color: #bbb;
-			font-size: 22rpx;
-			line-height: 50rpx;
-		}
-		.ReadGuide {
-			margin-top: 10rpx;
-			font-weight: 400;
-			width: 710rpx;
-			word-break: break-all;
-		}
-		.img {
-			margin-top: 10rpx;
-			.contentImg {
-				width: 710rpx;
-				height: 400rpx;
+			padding: 0 20rpx;
+			height: 80rpx;
+
+			.title {
+				font-size: 32rpx;
 			}
 		}
-		.artContent {
-			margin: 10rpx;
-			width: 690rpx;
-			word-break: break-all;
+
+		.contents {
+			display: flex;
+			flex-direction: column;
+			padding: 20rpx;
+			background-color: #fff;
+			box-sizing: border-box;
+
+			.title {
+				margin-top: 10rpx;
+				font-size: 30rpx;
+				font-weight: bolder;
+				line-height: 60rpx;
+			}
+
+			.smallTitle {
+				margin-top: 10rpx;
+				display: flex;
+				justify-content: space-between;
+				color: #bbb;
+				font-size: 22rpx;
+				line-height: 50rpx;
+			}
+
+			.ReadGuide {
+				margin-top: 10rpx;
+				font-weight: 400;
+				width: 710rpx;
+				word-break: break-all;
+			}
+
+			.img {
+				margin-top: 10rpx;
+
+				.contentImg {
+					width: 710rpx;
+					height: 400rpx;
+				}
+			}
+
+			.artContent {
+				margin: 10rpx;
+				width: 690rpx;
+				word-break: break-all;
+			}
 		}
 	}
-}
 </style>
