@@ -23,7 +23,7 @@ export default {
 }
 .split-space {
 	width: 750px;
-	height: 20rpx;
+	height: 16rpx;
 	background: #f2f8ff;
 	opacity: 1;
 }

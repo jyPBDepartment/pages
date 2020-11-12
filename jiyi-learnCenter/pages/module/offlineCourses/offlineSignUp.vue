@@ -1,51 +1,37 @@
 <template>
 	<view id="offlineSignUp">
-		<!-- 	<u-row style="background-color: #f2f2f2;height: 60rpx;">
-			<u-col span="1">
-				<view class="title" @click="backTo">
-					<u-icon name="arrow-left"></u-icon>
-				</view>
-			</u-col>
-			<u-col span="11">
-				<view class="title">报名</view>
-			</u-col>
-		</u-row> -->
 		<header-box title="报名" @backTo="backTo"></header-box>
 
-		<view style="padding-top: 30rpx;margin-top: 80rpx;">
+		<view class="card-box" style="padding: 30rpx;margin: 110rpx 20rpx 20rpx 20rpx;">
 			<u-row>
-				<u-col span="3" style="text-align: right;">
+				<u-col span="3" style="text-align: left;">
 					<span style="color: #ff0000;">*</span>
 					姓名:
 				</u-col>
-				<u-col span="8"><u-input type="text" placeholder="输入姓名" :focus="true" v-model="name" border height="54" maxlength="10" /></u-col>
+				<u-col span="9"><u-input type="text" placeholder="输入姓名" :focus="true" v-model="name" height="64" maxlength="10" /></u-col>
 			</u-row>
-
-			<u-row style="padding-top: 40rpx;">
-				<u-col span="3" style="text-align: right;">
+			<u-line></u-line>
+			<u-row style="padding-top: 20rpx;">
+				<u-col span="3" style="text-align: left;">
 					<span style="color: #ff0000;">*</span>
 					手机号:
 				</u-col>
-				<u-col span="8"><u-input type="text" placeholder="输入手机号" :focus="true" maxlength="11" v-model="phone" border height="54" /></u-col>
+				<u-col span="9"><u-input type="text" placeholder="输入手机号" :focus="true" maxlength="11" v-model="phone" height="64" /></u-col>
 			</u-row>
-
-			<u-row style="padding-top: 40rpx;">
-				<u-col span="3" style="text-align: right;">
+			<u-line></u-line>
+			<u-row style="padding-top: 20rpx;">
+				<u-col span="3" style="text-align: left;">
 					<span style="color: #ff0000;">*</span>
 					验证码:
 				</u-col>
-				<u-col span="4"><u-input type="text" placeholder="输入验证码" :focus="true" v-model="code" border height="54" maxlength="4" /></u-col>
+				<u-col span="4"><u-input type="text" placeholder="输入验证码" :focus="true" v-model="code" height="64" maxlength="4" /></u-col>
 				<!-- 验证码 -->
 				<view class="canvas-img-code" @click="refresh()">
 					<canvas :style="{ width: width + 'px', height: height + 'px' }" canvas-id="imgcanvas" @error="canvasIdErrorCallback"></canvas>
 				</view>
 			</u-row>
-
-			<u-row style="padding-top: 80rpx;">
-				<u-col>
-					<view style="text-align: center;margin-top: 20rpx;"><u-button type="primary" size="mini" @click="signUp()">立即报名</u-button></view>
-				</u-col>
-			</u-row>
+			<u-line></u-line>
+			<view style="text-align: center;margin-top: 20rpx;padding-top: 80rpx;"><u-button type="primary" size="mini" @click="signUp()">立即报名</u-button></view>
 		</view>
 		<u-toast ref="uToast" />
 	</view>
@@ -64,7 +50,7 @@ export default {
 			lessonId: '',
 			title: '',
 			width: 120,
-			height: 45
+			height: 35
 		};
 	},
 	onShow() {
@@ -231,7 +217,7 @@ export default {
 
 		//返回
 		backTo() {
-			uni.navigateBack({});
+			uni.navigateBack(-1);
 		}
 	}
 };
@@ -243,5 +229,10 @@ export default {
 		text-align: center;
 		font-size: 16px;
 	}
+}
+
+.canvas-img-code {
+	border: 1rpx solid #f4f4f4;
+	margin-bottom: 20rpx;
 }
 </style>
