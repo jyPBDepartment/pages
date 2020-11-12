@@ -60,18 +60,12 @@
 		{
 			"path": "pages/module/hotCourse/hotCourseContent" //热门课程详情页
 		},
-
-
 		{
 			"path": "pages/module/learningManual/agentArticleContent" // 经销商文章内容详情
 		},
-
-
-
 		{
 			"path": "pages/tabbar/my/index" // 我的页面
 		},
-
 		{
 			"path": "pages/module/learningManual/index" // 学习手册列表
 		},
@@ -97,7 +91,8 @@
 		"backgroundColor": "#fffcf3",
 		"color": "#8F8F94",
 		"selectedColor": "#f33e54",
-		"list": [{
+		"list": [
+			{
 				"pagePath": "pages/tabbar/main/index",
 				"iconPath": "static/img/tabbar/首页.png",
 				"selectedIconPath": "static/img/tabbar/首页-s-r.png",
