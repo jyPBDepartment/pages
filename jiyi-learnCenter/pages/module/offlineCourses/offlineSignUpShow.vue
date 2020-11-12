@@ -86,6 +86,7 @@
 				userName:'',
 				userTel:'',
 				className:'',
+				status:''
 			}
 		},
 		onLoad(e) {
@@ -94,6 +95,7 @@
 			this.phone=e.phone;
 			this.className = e.title
 			this.lessonId = e.lessonId
+			this.status = e.status
 		},
 		methods: {
 			//确认报名
@@ -132,14 +134,14 @@
 			//重新编辑跳转
 			reEdit(){
 				uni.navigateTo({
-					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.className+''
+					url: '../offlineCourses/offlineSignUp?index=1&name='+this.name+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.className+'&status=' + this.status + ''
 				})
 			},
 			
 			//弹出层关闭跳转到课程列表页
 			close(){
 				uni.navigateTo({
-					url: '../offlineCourses/offlineDetails?id='+this.lessonId
+					url: '../offlineCourses/offlineDetails?status=' + this.status + '&id='+this.lessonId
 				})
 			},
 			

@@ -195,8 +195,8 @@ export default {
 		// 线下课程详情
 		hyDetail(val) {
 			uni.navigateTo({
-				url: '../../module/offlineCourses/offlineDetails?index=0&id=' + val
-			});
+				url: "../../module/offlineCourses/offlineDetails?status=0&id="+val
+			})
 		},
 		initDate() {
 			uni.request({

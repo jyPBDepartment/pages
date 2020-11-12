@@ -43,6 +43,7 @@
 					<span v-if="type == '0'">若每月超过三次未准时参加，本月报名失效</span>
 					<span v-if="type == '1'">该课程已经报名，剩余名额{{ number }}人</span>
 					<span v-if="type == '2'">该课程此次报名已结束</span>
+					<span v-if="type=='3'">此次课程已结束或已开始</span>
 				</footer>
 			</u-col>
 		</u-row>
@@ -74,15 +75,14 @@ export default {
 			userId: localStorage.getItem('userId'),
 			date: new Date().toISOString().slice(0, 10),
 			number: '',
-			closingDate: '',
-			index: ''
+			status:''
 		};
 	},
 
 	onLoad(e) {
 		this.offlineId(e.id);
 		this.id = e.id;
-		this.index = e.index;
+		this.status = e.status
 	},
 
 	methods: {
@@ -107,52 +107,29 @@ export default {
 						this.image = res.data.data.url;
 						this.stuLimit = res.data.data.stuLimit;
 						this.number = this.stuLimit - res.data.lesson.length;
-						this.closingDate = res.data.data.closingDate;
-						//判断截止日期
-						const date = new Date();
-						let year = date.getFullYear();
-						let month = date.getMonth() + 1;
-						let day = date.getDate();
-
-						let dateTime = [];
-						this.closingDate.split('-');
-						dateTime = this.closingDate.split('-');
-						let returnAge = '';
-						if (res.data.data.enrollStatus == 0) {
-							let ageDiff = dateTime[0] - year; //年之差
-							if (ageDiff >= 0) {
-								if (dateTime[1] == month) {
-									var dayDiff = dateTime[2] - day; //日之差
-									if (dayDiff < 0) {
-										returnAge = ageDiff - 1;
-									} else {
-										returnAge = dayDiff;
-									}
-								} else {
-									var monthDiff = dateTime[1] - month; //月之差
-									if (monthDiff < 0) {
-										returnAge = ageDiff - 1;
-									} else {
-										returnAge = ageDiff;
-									}
-								}
-							} else {
-								returnAge = -1;
-							}
-							if (returnAge >= 0) {
-								if (res.data.dataLesson == null) {
+						let nowDay = new Date(this.date).getTime();
+						let lessonDay = new Date(res.data.data.lessonDay).getTime();
+						let closingDate = new Date(res.data.data.closingDate).getTime();
+						if(nowDay>=lessonDay){
+							this.type=3;
+						}else{
+						if(nowDay<=closingDate){
+							if (res.data.dataLesson == null) {
+								if(res.data.data.enrollStatus == 0){
 									this.type = 0;
-								} else {
-									this.type = 1;
+								}else if(res.data.data.enrollStatus == 1){
+									uni.showToast({
+										title: "此课程暂时不允许报名"
+									})
 								}
+								
 							} else {
-								this.type = 2;
+								this.type = 1;
 							}
-						} else if (res.data.data.enrollStatus == 1) {
-							uni.showToast({
-								title: '此课程暂时不允许报名'
-							});
+						}else {
+							this.type = 2;
 						}
+					}
 					} else {
 						uni.showToast({
 							title: '服务器出错，请联系管理员'
@@ -179,11 +156,11 @@ export default {
 							title: '取消报名成功'
 						});
 						setTimeout(() => {
-							// 3秒后自动关闭
-							uni.navigateTo({
-								url: './offlineCourseMore'
-							});
-						}, 3000);
+							// 1秒后自动关闭
+							uni.reLaunch({
+								url: './offlineDetails?id='+this.id,
+							})
+						}, 1000)
 					} else {
 						uni.showToast({
 							title: '服务器出错，请联系管理员'
@@ -195,23 +172,24 @@ export default {
 
 		//返回
 		backTo() {
-			if (this.index == 0) {
-				uni.switchTab({
-					url: '../../tabbar/main/index'
-				});
-			} else {
+			if(this.status == 0){
+				uni.reLaunch({
+					url:'../../tabbar/main/index'
+				})
+			}else{
 				uni.navigateTo({
-					url: './offlineCourseMore'
-				});
+					url: './offlineCourseMore',
+				})
 			}
 		},
 
 		//立即报名跳转
 		signUp(val) {
 			uni.navigateTo({
-				url: '../offlineCourses/offlineSignUp?index=0&title=' + this.title + '&id=' + val
-			});
+				url: '../offlineCourses/offlineSignUp?index=0&title=' + this.title + '&status=' + this.status + '&id=' + val
+			})
 		}
+
 	}
 };
 </script>

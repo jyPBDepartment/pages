@@ -63,10 +63,12 @@ export default {
 			id: '',
 			lessonId: '',
 			title: '',
+			status:'',
 			width: 120,
 			height: 45
 		};
 	},
+	//验证码
 	onShow() {
 		_this = this;
 		setTimeout(function() {
@@ -78,6 +80,7 @@ export default {
 		if (e.index == '0') {
 			this.lessonId = e.id;
 			this.title = e.title;
+			this.status = e.status
 		}
 		//index=1编辑
 		if (e.index == '1') {
@@ -85,6 +88,7 @@ export default {
 			this.phone = e.phone;
 			this.title = e.title;
 			this.lessonId = e.lessonId;
+			this.status = e.status
 		}
 	},
 
@@ -187,13 +191,6 @@ export default {
 				});
 				return false;
 			}
-			if (this.idCard == '') {
-				this.$refs.uToast.show({
-					title: '请输入身份证号',
-					type: 'error'
-				});
-				return false;
-			}
 
 			if (this.phone == '') {
 				this.$refs.uToast.show({
@@ -225,8 +222,8 @@ export default {
 				return false;
 			}
 			uni.navigateTo({
-				url: '../offlineCourses/offlineSignUpShow?name=' + this.name + '&phone=' + this.phone + '&lessonId=' + this.lessonId + '&title=' + this.title + ''
-			});
+				url: '../offlineCourses/offlineSignUpShow?name='+this.name+'&phone='+this.phone+'&lessonId='+this.lessonId+'&title='+this.title+'&status=' + this.status + ''
+			})
 		},
 
 		//返回

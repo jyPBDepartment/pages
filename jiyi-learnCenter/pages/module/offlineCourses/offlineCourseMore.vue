@@ -120,11 +120,11 @@ export default {
 				url: '../../tabbar/main/index'
 			});
 		},
-		// 行业案例跳转详情页面
+		// 跳转详情页面
 		courseDetail(getId) {
 			uni.navigateTo({
-				url: './offlineDetails?index=1&id=' + getId
-			});
+				url:"./offlineDetails?status=1&id="+getId
+			})
 		}
 	}
 };
