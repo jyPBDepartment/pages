@@ -84,7 +84,9 @@ export default {
 			let pageSize = page.size; // 页长, 默认每页10条
 		},
 		backTo() {
-			uni.navigateBack(-1);
+			uni.switchTab({
+				url:'/pages/tabbar/my/index'
+			})
 		},
 		// 学习记录跳转详情页面
 		studyRecordContentJump() {

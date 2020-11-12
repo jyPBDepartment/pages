@@ -154,6 +154,7 @@ export default {
 		justify-content: space-between;
 		padding: 0 20rpx;
 		height: 80rpx;
+		border-bottom: 1rpx solid #f4f4f4;
 		.title {
 			font-size: 32rpx;
 		}

@@ -6,7 +6,7 @@
 		<view class="credential">
 			<view class="package card-box" v-for="(item, index) in creList" :key="index">
 				<image class="image" :src="item.url" mode="fill"></image>
-				<button size="mini" type="primary" @click="btnFunction">保存至相册</button>
+				<button size="mini" type="primary" @click="btnFunction(item.url)">保存至相册</button>
 			</view>
 		</view>
 	</view>
@@ -20,22 +20,31 @@ export default {
 		};
 	},
 	methods: {
-		btnFunction() {
-			uni.chooseImage({
-				count: 1,
-				sourceType: ['camera'],
-				success: function(res) {
-					uni.saveImageToPhotosAlbum({
-						filePath: res.tempFilePaths[0],
-						success: function() {
-							console.log('save success');
-						}
-					});
+		btnFunction(url) {
+		
+			uni.downloadFile({
+				url,
+				success: res => {
+					if (res.statusCode === 200) {
+						uni.saveImageToPhotosAlbum({
+							filePath: res.tempFilePath,
+							success: function() {
+								this.tools.toast('保存成功');
+							},
+							fail: function() {
+								this.tools.toast('保存失败，请稍后重试');
+							}
+						});
+					} else {
+						this.tools.toast('下载失败');
+					}
 				}
 			});
 		},
 		backTo() {
-			uni.navigateBack(-1);
+			uni.switchTab({
+				url:'/pages/tabbar/my/index'
+			})
 		}
 	}
 };

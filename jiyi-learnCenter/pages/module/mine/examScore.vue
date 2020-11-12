@@ -61,7 +61,9 @@ export default {
 		},
 		// 返回上一页
 		backTo() {
-			uni.navigateBack({});
+			uni.switchTab({
+				url:'/pages/tabbar/my/index'
+			})
 		}
 	}
 };
