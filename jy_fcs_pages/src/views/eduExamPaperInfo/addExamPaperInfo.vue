@@ -278,6 +278,12 @@ export default {
           });
           return false;
         }
+        if(this.editForm.passScore > this.editForm.totalScore){
+          this.$alert("及格分数不可大于总分数", "提示", {
+            confirmButtonText: "确定",
+          });
+          return false;
+        }
         if (this.editForm.totalScore == "") {
           this.$alert("总分数为空", "提示", {
             confirmButtonText: "确定",
