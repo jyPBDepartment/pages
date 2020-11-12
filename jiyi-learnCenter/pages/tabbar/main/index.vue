@@ -323,10 +323,12 @@ export default {
 	}
 	.offlineCourse:nth-child(odd) {
 		background-color: #91d5ff;
+		background-image: linear-gradient(to right, #22c1c3, #fdbb2d);
 	}
 
 	.offlineCourse:nth-child(even) {
 		background-color: #ffaa7f;
+		background-image: linear-gradient(to right, #4568DC, #B06AB3);
 	}
 }
 </style>

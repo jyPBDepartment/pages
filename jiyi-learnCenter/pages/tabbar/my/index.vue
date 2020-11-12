@@ -1,18 +1,40 @@
 <template>
 	<view class="content">
 		<!--头部 -->
-		<!-- <view>
-			<view class="title">我的</view>
-		</view> -->
 		<header-box title="我的" :showGoBack="false"></header-box>
-
 		<!-- 各个功能页面 -->
 		<view class="function">
-			<view class="functions" @click="myCollection">我的收藏</view>
-			<view class="functions" @click="studyRecord">学习记录</view>
-			<view class="functions" @click="examScore">考试成绩</view>
-			<view class="functions" @click="signUp">报名课程</view>
-			<view class="functions" @click="myCertificate">我的证书</view>
+			<view class="split-space"></view>
+			<view class="item" @click="myCollection">
+				<u-icon name="star" color="#2979ff" size="32"></u-icon>
+				<text>我的收藏</text>
+				<u-icon name="arrow-right" color="#666666" size="32"></u-icon>
+			</view>
+			<view class="split-space"></view>
+			<view class="item" @click="studyRecord">
+				<u-icon name="file-text" color="#2979ff" size="32"></u-icon>
+				<text>学习记录</text>
+				<u-icon name="arrow-right" color="#666666" size="32"></u-icon>
+			</view>
+			<view class="split-space"></view>
+			<view class="item" @click="examScore">
+				<u-icon name="order" color="#2979ff" size="32"></u-icon>
+				<text>考试成绩</text>
+				<u-icon name="arrow-right" color="#666666" size="32"></u-icon>
+			</view>
+			<view class="split-space"></view>
+			<view class="item" @click="signUp">
+				<u-icon name="list" color="#2979ff" size="32"></u-icon>
+				<text>报名课程</text>
+				<u-icon name="arrow-right" color="#666666" size="32"></u-icon>
+			</view>
+			<view class="split-space"></view>
+			<view class="item" @click="myCertificate">
+				<u-icon name="bookmark" color="#2979ff" size="36"></u-icon>
+				<text>我的证书</text>
+				<u-icon name="arrow-right" color="#666666" size="32"></u-icon>
+			</view>
+			<view class="split-space"></view>
 		</view>
 	</view>
 </template>
@@ -56,22 +78,23 @@ export default {
 .content {
 	display: flex;
 	flex-direction: column;
-	.title {
-		text-align: center;
-		padding: 20rpx 0;
-		background-color: #f2f2f2;
-		font-size: 34rpx;
-	}
+	background: #f4f4f4;
 	.function {
 		display: flex;
 		flex-direction: column;
 		margin-top: 80rpx;
-		.functions {
-			font-weight: bold;
-			margin: 20rpx 0 10rpx 0;
-			background-color: #f2f2f2;
-			height: 100rpx;
-			padding: 26rpx 0 0 20rpx;
+		background-color: #ffffff;
+		.item {
+			font-weight: 500;
+			height: 80rpx;
+			padding: 20rpx 40rpx;
+			display: flex;
+			align-items: center;
+			
+			> text {
+				margin-left: 30rpx;
+				flex: 1;
+			}
 		}
 	}
 }

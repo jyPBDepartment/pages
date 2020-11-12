@@ -6,7 +6,7 @@
 			<view class="title">文章详情</view>
 			<view class="star"><u-icon :name="name" size="38" :style="style" @click="collection"></u-icon></view>
 		</view>
-		<view class="split-space"></view>
+
 		<!-- 内容 -->
 		<view class="contents">
 			<view class="title">{{ title }}</view>
