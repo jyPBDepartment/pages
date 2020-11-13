@@ -76,21 +76,29 @@
 		"enable": false
 	},
 	"h5": {
+		"router": {
+			"base": "./",
+			"mode": "hash"
+		},
+		"title": "学习中心",
 		"devServer": {
-			"port": 8080,
-			"disableHostCheck": false,
-			"proxy": {
-				"/api": {
-					"target": "http://192.168.1.106:8080/jy_edu",
-					"changeOrigin": true,
-					"secure": false,
-					"pathRewrite": {
-						"^/api": ""
-					}
-				}
-			}
+			"port": 80
 		}
 	}
-
-
+	// "h5": {
+	// 	"devServer": {
+	// 		"port": 8080,
+	// 		"disableHostCheck": false,
+	// 		"proxy": {
+	// 			"/api": {
+	// 				"target": "http://192.168.1.106:8080/jy_edu",
+	// 				"changeOrigin": true,
+	// 				"secure": false,
+	// 				"pathRewrite": {
+	// 					"^/api": ""
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 }

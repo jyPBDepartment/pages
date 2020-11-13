@@ -1,8 +1,8 @@
 //配置后台接口
 //开发环境基础路径地址
 // const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-const URLHost = 'http://192.168.1.106:8080/jy_edu';
-// const URLHost = 'http://localhost:8083';
+// const URLHost = 'http://192.168.1.106:8080/jy_edu';
+const URLHost = 'http://localhost:8083';
 
 //生产环境基础路径地址
 // const URLHost = 'http://182.92.77.60/jy_fcs';
@@ -59,7 +59,9 @@ const url = {
 	// 查询学习考试列表信息
 	findStudyExamInfo:URLHost+'/studyExam/findStudyExamInfo',
 	// 我的报名课程加载
-	getLessonsByUserId:URLHost+'/lesson/getLessonsByUserId'
+	getLessonsByUserId:URLHost+'/lesson/getLessonsByUserId',
+	// 我的证书申请
+	applyCertificate:URLHost+'/issue/applyCertificate'
 }
 export default {
 	url,
