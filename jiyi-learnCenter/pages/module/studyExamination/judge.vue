@@ -90,40 +90,24 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-	.head {
-		display: flex;
-		padding-top: 15rpx;
-		padding-left: 20rpx;
-		background-color: #f8f8f8;
-		width: 750rpx;
-		height: 80rpx;
+	padding-top: 80rpx;
 
-		.backArrow {
-			margin-top: 6rpx;
-		}
-
-		.title {
-			margin-left: 250rpx;
-			font-size: 32rpx;
-		}
-	}
 
 	.contain {
 		display: flex;
 		flex-direction: column;
 		width: 600rpx;
-		height: 720rpx;
+		height: 600rpx;
 		border-radius: 10rpx;
 		-moz-box-shadow: 0 0 60px #c2c2c2;
 		-webkit-box-shadow: 0 0 60px #c2c2c2;
 		box-shadow: 0 0 60rpx #c2c2c2;
-		margin: 180rpx 0 0 75rpx;
+		margin: 80rpx 0 0 75rpx;
 
 		.top {
 			display: flex;
 			justify-content: space-evenly;
-			margin-top: 145rpx;
-
+			padding-top: 20rpx;
 			.left {
 				text-align: center;
 
@@ -139,7 +123,7 @@ export default {
 					height: 150rpx;
 					padding: 34rpx;
 					border: 6rpx solid rgb(118, 218, 255);
-					top: 300rpx;
+					top: 320rpx;
 					left: 30%;
 					transform: translate(-50%, -50%);
 					border-radius: 50%;
@@ -219,7 +203,7 @@ export default {
 					height: 150rpx;
 					padding: 35rpx;
 					border: 6rpx solid rgb(118, 218, 255);
-					top: 300rpx;
+					top: 320rpx;
 					left: 70%;
 					transform: translate(-50%, -50%);
 					border-radius: 50%;
