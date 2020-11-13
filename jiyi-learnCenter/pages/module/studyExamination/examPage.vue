@@ -132,7 +132,7 @@
 					totalScore:this.totalScore
 				}
 				// console.log(JSON.stringify(param))
-
+				this.examTime = null;
 				uni.navigateTo({
 					url: "./examResult?param=" + JSON.stringify(param)
 				})

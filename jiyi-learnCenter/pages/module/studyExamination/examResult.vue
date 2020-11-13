@@ -75,7 +75,8 @@
 				</view>
 			</view>
 			<!-- 错题解析 -->
-			<view class="analysis animate__animated animate__slideInRight" v-for="(titleItem,titleIndex) in examTableList" :key="titleIndex" v-if="titleItem.queIsCorrect=='2'" >
+			<view class="analysis animate__animated animate__slideInRight" v-for="(titleItem,titleIndex) in examTableList" :key="titleIndex"
+			 v-if="titleItem.queIsCorrect=='2'">
 				<view class="quetype">
 					<text>错题解析：{{titleItem.queType == '0' ? '单选题' : '判断题'}}</text>
 					<text>本题分值：{{titleItem.queScore}}分</text>
@@ -99,7 +100,7 @@
 					</view>
 					<view class="userSelect">
 						<text>您的答案</text>
-						<text class="selectStylea" >{{titleItem.queChoose}}</text>
+						<text class="selectStylea">{{titleItem.queChoose}}</text>
 					</view>
 				</view>
 			</view>
@@ -117,9 +118,9 @@
 				</u-row>
 			</view>
 		</view>
-		
+
 	</view>
-	
+
 	</view>
 </template>
 
@@ -133,7 +134,7 @@
 				examGrade: "",
 				passScore: "",
 				totalScore: "",
-				vocationId:"",
+				vocationId: "",
 				examTableInfo: [],
 				examTableList: [],
 			}
@@ -147,22 +148,57 @@
 			this.initQueResultCard(val);
 		},
 		methods: {
-			returnExam(){//重新考试
+			returnExam() { //重新答题
 				uni.navigateTo({
-						url:"./credentials?id="+this.vocationId,
-					})
+					url: "./credentials?id=" + this.vocationId,
+				})
 			},
 			// 继续考试
-			continueExam(){
+			continueExam() {
 				uni.navigateTo({
-						url:"./index?id="+this.vocationId
-					})
+					url: "./credentials?id=" + this.vocationId
+				})
 			},
 			// 退出考试
-			exitExam(){
+			exitExam() {
 				uni.navigateTo({
-						url:"./index"
-					})
+					url: "./index"
+				})
+			},
+			initExamPaperInfo(val) {
+				uni.request({
+					url: ApiPath.url.getExamListByVocationId,
+					method: 'GET',
+					data: {
+						vocationId: val,
+						userId: localStorage.getItem('userId')
+					},
+					success: res => {
+						if (res.data.code == 200) {
+							let examList = res.data.data;
+							let count = 0;
+							for (let i = 0; i < examList.length; i++) {
+								if (examList[i].isPass == 1) {
+									count = count + 1;
+								}
+							}
+							if (count == examList.length) {
+								uni.navigateTo({
+									url: './credentials?id=' + this.vocationId
+								})
+							}
+						} else {
+							uni.showToast({
+								title: '服务器出错，请联系管理员'
+							});
+						}
+					},
+					fail: err => {
+						uni.showToast({
+							title: '系统初始化失败，请联系管理员'
+						});
+					}
+				});
 			},
 			initQueResultCard(val) {
 				uni.request({
@@ -197,13 +233,15 @@
 									}
 								}
 							}
-							
-							for(let i = 0;i<this.examTableInfo.length;i++){
+
+							for (let i = 0; i < this.examTableInfo.length; i++) {
 								totalScore = totalScore + this.examTableInfo[i].getGrade;
 							}
 							this.examGrade = totalScore;
 							this.wrongCount = radioWrongCount + asertWrongCount;
 							this.count = radioCount + asertCount;
+							//如果开始全部通过
+							this.initExamPaperInfo(this.vocationId);
 						} else {
 							uni.showToast({
 								title: "服务器出错，请联系管理员"
@@ -386,59 +424,62 @@
 
 				}
 			}
+
 			.analysis {
 				margin: 0 0 50rpx 0;
 				border: 2rpx solid #bbb;
 				border-radius: 20rpx;
 				display: flex;
 				flex-direction: column;
-			
+
 				.quetype {
 					display: flex;
 					justify-content: space-between;
 					font-weight: bold;
 					margin: 30rpx 20rpx 0rpx 20rpx;
 				}
-			
+
 				.queName {
 					margin: 30rpx 20rpx 40rpx 20rpx;
 				}
-			
+
 				.queAnswer {
 					padding-bottom: 40rpx;
 					margin: 0rpx 10rpx;
 					display: flex;
 					flex-direction: column;
-			
+
 					.answerStyle {
 						display: flex;
+
 						.answerIcon {
 							width: 60rpx;
 							height: 60rpx;
 							margin-left: 30rpx;
 						}
+
 						.word {
-							margin:10rpx 0 0 20rpx ;
+							margin: 10rpx 0 0 20rpx;
 						}
 					}
 				}
-			
+
 				.correctAnswer {
 					display: flex;
 					margin: 10rpx 10rpx 20rpx 10rpx;
 					justify-content: space-around;
-			
+
 					.selectStyle {
 						color: #27B148;
 						margin-left: 20rpx;
 					}
-			
+
 					.selectStylea {
 						color: #E51C2E;
 						margin-left: 20rpx;
 					}
 				}
-			
+
 			}
 		}
 	}
