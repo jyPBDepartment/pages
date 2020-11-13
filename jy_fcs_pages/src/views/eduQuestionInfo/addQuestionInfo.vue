@@ -26,19 +26,19 @@
           </template>
         </el-form-item>
         <el-form-item label="问题名称" prop="quContent">
-          <el-input type="textarea" v-model="editForm.quContent" rows="3" size="small" placeholder="请输入题目(限255个字)" style="width:80%;" maxlength="255"></el-input>
+          <el-input type="textarea" v-model="editForm.quContent" rows="3" size="small" placeholder="请输入题目(限160个字)" style="width:80%;" maxlength="160"></el-input>
         </el-form-item>
         <el-form-item label="选项A" prop="optionA" v-if="aShow">
-          <el-input type="text" v-model="option[0]" size="small" placeholder="请输入选项A(限255个字)" style="width:80%;" maxlength="255"></el-input>
+          <el-input type="text" v-model="option[0]" size="small" placeholder="请输入选项A(限30个字)" style="width:80%;" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="选项B" prop="optionB" v-if="bShow">
-          <el-input type="text" v-model="option[1]" size="small" placeholder="请输入选项B(限255个字)" style="width:80%;" maxlength="255"></el-input>
+          <el-input type="text" v-model="option[1]" size="small" placeholder="请输入选项B(限30个字)" style="width:80%;" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="选项C" prop="optionC" v-if="cShow">
-          <el-input type="text" v-model="option[2]" size="small" placeholder="请输入选项C(限255个字)" style="width:80%;" maxlength="255"></el-input>
+          <el-input type="text" v-model="option[2]" size="small" placeholder="请输入选项C(限30个字)" style="width:80%;" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="选项D" prop="optionD" v-if="dShow">
-          <el-input type="text" v-model="option[3]" size="small" placeholder="请输入选项D(限255个字)" style="width:80%;" maxlength="255"></el-input>
+          <el-input type="text" v-model="option[3]" size="small" placeholder="请输入选项D(限30个字)" style="width:80%;" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="正确答案" prop="answer">
           <el-input type="text" v-model="editForm.answer" size="small" placeholder="请输入大写英文字母" change="answerBig" style="width:30%;" maxlength="5"></el-input>

@@ -151,9 +151,9 @@ export default {
             setTimeout(() => {
               // 1秒后自动关闭
               uni.reLaunch({
-                url: "./offlineDetails?id=" + this.id,
+                url: './offlineDetails?status=' + this.status + '&id=' + this.id,
               });
-            }, 1000);
+            }, 500);
           } else {
             uni.showToast({
               title: "服务器出错，请联系管理员",

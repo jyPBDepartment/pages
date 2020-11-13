@@ -130,7 +130,7 @@
 					totalScore:this.totalScore
 				}
 				// console.log(JSON.stringify(param))
-
+				this.examTime = null;
 				uni.navigateTo({
 					url: "./examResult?param=" + JSON.stringify(param)
 				})
@@ -143,7 +143,9 @@
 					userId: userId,
 					studyExamationId: this.vocationId,
 					examId: this.id,
-					answerList: this.resultList
+					answerList: this.resultList,
+					passScore:this.passScore,
+					totalScore:this.totalScore
 				}
 				uni.navigateTo({
 					url: "./examResult?param=" + JSON.stringify(param)

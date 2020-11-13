@@ -93,7 +93,7 @@
                   :action="upload"
                   :show-file-list="false"
                   :on-success="quillUploadSuccess"
-                  :beforeUpload="beforeAvatarUpload"
+                  :beforeUpload="beforeAvatarUploadGif"
                   >
               </el-upload>
       <quill-editor v-model="caseInfoForm.describetion" ref="myQuillEditor" style="height: 345px;margin-top: -40px" :options="editorOption">
@@ -275,6 +275,27 @@ export default {
     this.fandKeyWord();
   },
   methods: {
+    //富文本上传动图
+    beforeAvatarUploadGif(file) {
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension = testmsg === "jpg";
+      const extension2 = testmsg === "png";
+      const extension3 = testmsg === "gif";
+      const isLt2M = file.size / 1024 / 1024 < 1;
+      if (!extension && !extension2 &&!extension3) {
+        this.$message({
+          message: "上传文件只能是 jpg、png、gif格式!",
+          type: "warning",
+        });
+      }
+      if (!isLt2M) {
+        this.$message({
+          message: "上传文件大小不能超过 1M!",
+          type: "warning",
+        });
+      }
+      return (extension || extension2 || extension3) && isLt2M;
+    },
     beforeAvatarUpload(file) {
       var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
       const extension = testmsg === "jpg";

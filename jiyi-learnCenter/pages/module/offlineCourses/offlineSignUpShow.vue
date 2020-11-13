@@ -57,7 +57,7 @@
 								<u-button type="primary" size="mini" @click="close(show = false)">关闭</u-button>
 							</view>
 						</u-popup>
-						<u-button type="primary" size="mini" @click="confirm()">确定报名</u-button>
+						<u-button type="primary" size="mini" @click="confirm()" >确定报名</u-button>
 					</view>
 				</u-col>
 				<u-col span="1">
@@ -67,6 +67,7 @@
 				</u-col>
 			</u-row>
 		</view>
+		<u-mask :show="mask" @click="mask = false"></u-mask>
 	</view>
 </template>
 
@@ -76,6 +77,7 @@
 		data() {
 			return {
 				show: false,
+				mask: false,
 				cencalIsShow: false,
 				name:'',
 				// idCard:'',
@@ -115,6 +117,7 @@
 				    //成功返回结果方法
 				    if (res.data.code == 200) {
 						this.show = true
+						this.mask = true
 				    }
 					else if(res.data.code == 6001) {
 						uni.showToast({

@@ -13,13 +13,40 @@
 </template>
 
 <script>
+import ApiPath from '@/api/ApiPath.js';
 export default {
 	data() {
 		return {
-			creList: [{ url: 'http://60.205.246.126/images/2020/11/03/1604386819438592.jpg' }, { url: 'http://60.205.246.126/images/2020/11/03/1604386819438592.jpg' }]
+			userId: localStorage.getItem('userId'),
+			creList: []
 		};
 	},
+	// 页面初始化
+	onLoad(e) {
+		// 收藏列表初始化
+		this.initCredenList();
+	},
 	methods: {
+		initCredenList(){
+			uni.request({
+				method: 'GET', //请求方式
+				data: {
+					userId: this.userId,
+				},
+				url: ApiPath.url.getCertificateByUserId, //请求接口路径
+				success: res => {
+					//成功返回结果方法
+					if (res.data.code == 200) {
+						this.creList = res.data.data;
+					} else {
+						uni.showToast({
+							title: '服务器出错，请联系管理员'
+						});
+					}
+				},
+				fail: err => {}
+			});
+		},
 		btnFunction(url) {
 		
 			uni.downloadFile({
