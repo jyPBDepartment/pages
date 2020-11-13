@@ -61,7 +61,9 @@ const url = {
 	// 我的报名课程加载
 	getLessonsByUserId:URLHost+'/lesson/getLessonsByUserId',
 	// 我的证书申请
-	applyCertificate:URLHost+'/issue/applyCertificate'
+	applyCertificate:URLHost+'/issue/applyCertificate',
+	//获取我的证书列表
+	getCertificateByUserId:URLHost+'/mine/getCertificateByUserId'
 }
 export default {
 	url,
