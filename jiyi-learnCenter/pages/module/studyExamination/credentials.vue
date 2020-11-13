@@ -20,7 +20,7 @@
 		<view class="introduce">
 			<text class="containTitle">颁发证书考核内容介绍</text>
 			<view class="subject">
-				<view class="left"><u-steps :list="numList" :current="currentIndex" direction="column" mode="dot" active-color="#ffaa7f" class="steps"></u-steps></view>
+				<view class="left"><u-steps :list="numList" :current="currentIndex" direction="column" mode="dot" active-color="#1565C0" class="steps"></u-steps></view>
 				<view class="right">
 					<!--认证名额  -->
 					<view class="one">

@@ -251,7 +251,7 @@
 			display: flex;
 			flex-direction: column;
 			background-color: #fff;
-
+			padding: 0 20rpx;
 			.listOne {
 				display: flex;
 				margin-top: 10rpx;

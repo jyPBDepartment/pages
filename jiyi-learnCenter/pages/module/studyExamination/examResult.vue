@@ -1,12 +1,8 @@
 <template>
 	<view class="content">
 		<!-- 头部 -->
-		<view class="head">
-			<!-- <view class="backArrow" @click="backTo">
-				<u-icon name="arrow-left" color="#333" size="32"></u-icon>
-			</view> -->
-			<view class="title">考试结果</view>
-		</view>
+	
+		<header-box title="考试结果" :showGoBack="false"></header-box>
 		<view class="contain">
 			<!-- 试题列表-->
 			<view class="examResult">
@@ -223,7 +219,8 @@
 
 <style lang="scss" scoped>
 	.content {
-
+		position: relative;
+		padding-top: 80rpx;
 		.head {
 			display: flex;
 			padding: 15rpx 0 0 20rpx;
