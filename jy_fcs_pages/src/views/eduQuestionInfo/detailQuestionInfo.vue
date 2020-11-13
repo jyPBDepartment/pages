@@ -33,17 +33,17 @@
         </el-row>
         <el-divider></el-divider>
         <el-row v-if="aShow">
-          <el-col :span="3">选项A:</el-col>
+          <el-col :span="2">选项A:</el-col>
           <el-col :span="9"><span>{{option[0]}}</span></el-col>
-          <el-col :span="3">选项B:</el-col>
-          <el-col :span="6"><span>{{option[1]}}</span></el-col>
+          <el-col :span="2">选项B:</el-col>
+          <el-col :span="9"><span>{{option[1]}}</span></el-col>
         </el-row>
         <el-divider></el-divider>
          <el-row v-if="bShow">
-          <el-col :span="3">选项C:</el-col>
+          <el-col :span="2">选项C:</el-col>
           <el-col :span="9"><span>{{option[2]}}</span></el-col>
-          <el-col :span="3">选项D:</el-col>
-          <el-col :span="6"><span>{{option[3]}}</span></el-col>
+          <el-col :span="2">选项D:</el-col>
+          <el-col :span="9"><span>{{option[3]}}</span></el-col>
         </el-row>
         <el-divider v-if="bShow"></el-divider>
          <el-row>
