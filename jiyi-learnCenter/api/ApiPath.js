@@ -57,7 +57,9 @@ const url = {
 	findLessonPage:URLHost+'/lesson/findLessonPage',
 	//线下课程详情	findByLessonId:URLHost+'/lesson/findByLessonId',	//线下课程取消报名	cancellationRegistr:URLHost+'/lesson/cancellationRegistr',
 	// 查询学习考试列表信息
-	findStudyExamInfo:URLHost+'/studyExam/findStudyExamInfo'
+	findStudyExamInfo:URLHost+'/studyExam/findStudyExamInfo',
+	// 我的报名课程加载
+	getLessonsByUserId:URLHost+'/lesson/getLessonsByUserId'
 }
 export default {
 	url,

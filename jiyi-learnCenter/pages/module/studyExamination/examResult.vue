@@ -24,7 +24,7 @@
 					</view>
 				</view>
 				<view class="tips">
-					{{examGrade>=passScore ? '恭喜你通过考试！' : '不要紧，山野都有雾灯，再试一次吧(◕ᴗ◕✿)'}}
+					{{examGrade>=passScore ? '恭喜你通过考试！' : '不要紧，山野都有雾灯，再试一次吧！'}}
 				</view>
 			</view>
 			<!-- 下划线 -->
