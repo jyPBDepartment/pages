@@ -145,7 +145,9 @@
 					userId: userId,
 					studyExamationId: this.vocationId,
 					examId: this.id,
-					answerList: this.resultList
+					answerList: this.resultList,
+					passScore:this.passScore,
+					totalScore:this.totalScore
 				}
 				uni.navigateTo({
 					url: "./examResult?param=" + JSON.stringify(param)

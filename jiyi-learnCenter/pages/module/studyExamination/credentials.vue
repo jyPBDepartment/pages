@@ -220,7 +220,9 @@
 				});
 			},
 			backTo() {
-				uni.navigateBack({});
+				uni.navigateTo({
+					url:'./index'
+				})
 			},
 			answer(val) {
 				uni.navigateTo({

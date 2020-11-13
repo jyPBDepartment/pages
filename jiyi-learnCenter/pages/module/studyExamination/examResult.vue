@@ -147,15 +147,15 @@
 			this.initQueResultCard(val);
 		},
 		methods: {
-			returnExam(){
+			returnExam(){//重新考试
 				uni.navigateTo({
-						url:"./index?id="+this.vocationId
+						url:"./credentials?id="+this.vocationId,
 					})
 			},
 			// 继续考试
 			continueExam(){
 				uni.navigateTo({
-						url:"./credentials?id="+this.vocationId
+						url:"./index?id="+this.vocationId
 					})
 			},
 			// 退出考试
