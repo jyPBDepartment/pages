@@ -219,7 +219,7 @@ export default {
 						background-color: rgb(118, 218, 255);
 						border-radius: 50%;
 						top: -36rpx;
-						left: -48%;
+						left: -53%;
 
 						&::before,
 						&::after {

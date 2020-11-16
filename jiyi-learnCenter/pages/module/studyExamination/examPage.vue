@@ -54,6 +54,11 @@
 			</view>
 		</view>
 		<u-modal v-model="show" :content="content" :zoom="true" show-cancel-button async-close @confirm="confirm" @cancel="cancel"></u-modal>
+		
+		<!-- 返回按钮 确认弹窗提示 -->
+		<u-modal v-model="showconfirmGoBack" content="是否放弃考试返回上一页？" :title-style="{ color: 'red' }" show-cancel-button async-close @confirm="confirmGoBack" @cancel="cancel">
+			
+		</u-modal>
 	</view>
 </template>
 
@@ -63,11 +68,12 @@ export default {
 	data() {
 		return {
 			show: false,
+			showconfirmGoBack:false,
 			content: '',
 			jumpCount: 1,
 			examCount: '',
 			examTime: '',
-			examTypeName: '',
+			examTypeName: '考试',
 			current: null,
 			resultList: [],
 			examList: [],
@@ -89,6 +95,7 @@ export default {
 		this.initQuestionInfo(val.id); // 初始化加载试题列表信息
 	},
 	methods: {
+		
 		initQuestionInfo(val) {
 			uni.request({
 				url: ApiPath.url.getQuestionListByExamId,
@@ -115,6 +122,10 @@ export default {
 		// 取消按钮
 		cancel() {
 			this.show = false;
+			this.showconfirmGoBack = false
+		},
+		confirmGoBack(){
+			uni.navigateBack(-1);
 		},
 		// 正式提交试卷
 		confirm() {
@@ -172,7 +183,8 @@ export default {
 		radioGroupChange(e) {},
 		// 返回上一页
 		backTo() {
-			uni.navigateBack({});
+			this.showconfirmGoBack = true
+			//
 		},
 		// 下一题
 		nextQues(quesNum) {

@@ -5,8 +5,8 @@
 		<!-- 图片 -->
 		<view class="credential">
 			<view class="package card-box" v-for="(item, index) in creList" :key="index">
-				<image class="image" :src="item.url" mode="fill"></image>
-				<button size="mini" type="primary" @click="btnFunction(item.url)">保存至相册</button>
+				<image class="image" :src="item.url || defaultImage" mode="fill"></image>
+				<button size="mini" type="primary">长按图片保存至相册</button>
 			</view>
 		</view>
 	</view>
@@ -14,11 +14,13 @@
 
 <script>
 import ApiPath from '@/api/ApiPath.js';
+
 export default {
 	data() {
 		return {
 			userId: localStorage.getItem('userId'),
-			creList: []
+			creList: [],
+			defaultImage: 'http://60.205.246.126/images/2020/11/16/1605505637623190.jpg' //证书默认图片
 		};
 	},
 	// 页面初始化
@@ -27,11 +29,11 @@ export default {
 		this.initCredenList();
 	},
 	methods: {
-		initCredenList(){
+		initCredenList() {
 			uni.request({
 				method: 'GET', //请求方式
 				data: {
-					userId: this.userId,
+					userId: this.userId
 				},
 				url: ApiPath.url.getCertificateByUserId, //请求接口路径
 				success: res => {
@@ -47,31 +49,10 @@ export default {
 				fail: err => {}
 			});
 		},
-		btnFunction(url) {
-		
-			uni.downloadFile({
-				url,
-				success: res => {
-					if (res.statusCode === 200) {
-						uni.saveImageToPhotosAlbum({
-							filePath: res.tempFilePath,
-							success: function() {
-								this.tools.toast('保存成功');
-							},
-							fail: function() {
-								this.tools.toast('保存失败，请稍后重试');
-							}
-						});
-					} else {
-						this.tools.toast('下载失败');
-					}
-				}
-			});
-		},
 		backTo() {
 			uni.switchTab({
-				url:'/pages/tabbar/my/index'
-			})
+				url: '/pages/tabbar/my/index'
+			});
 		}
 	}
 };
