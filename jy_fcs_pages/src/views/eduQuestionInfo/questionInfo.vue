@@ -247,6 +247,9 @@ export default {
           if (code == "1") {
             this.$message.success(res.message);
           }
+          if(code == "2"){
+            this.$message.error(res.message);
+          }
           this.reload();
         }).catch(function (error) {});
     },
