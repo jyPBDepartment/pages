@@ -102,7 +102,6 @@
 							<u-col :span="6">
 								<u-button @click="cancelApply()">取消</u-button>
 							</u-col>
-							</u-col>
 						</u-row>
 					</view>
 				</view>

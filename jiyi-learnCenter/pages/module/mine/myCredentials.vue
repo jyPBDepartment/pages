@@ -79,11 +79,13 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-	padding: 20rpx;
+	padding-top: 20rpx;
 	.credential {
 		margin-top: 80rpx;
 		display: flex;
 		justify-content: space-between;
+		flex-wrap: wrap;
+		padding: 0 20rpx;
 		.package {
 			display: flex;
 			flex-direction: column;
@@ -91,6 +93,7 @@ export default {
 			align-items: center;
 			justify-content: flex-start;
 			padding: 20rpx;
+			margin-top: 20rpx;
 			.image {
 				width: 305rpx;
 				height: 446rpx;

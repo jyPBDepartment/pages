@@ -230,7 +230,7 @@ export default {
 		position: -webkit-sticky;
 		position: sticky;
 		top: 80rpx;
-		z-index: 999;
+		z-index: 555;
 	}
 	.screen-box {
 		border-bottom: 2rpx solid #f4f4f4;
@@ -243,10 +243,6 @@ export default {
 		padding: 0 30rpx;
 		justify-content: center;
 		align-items: center;
-
-		.uni-input-placeholder {
-			margin-left: 200rpx;
-		}
 	}
 
 	.list {

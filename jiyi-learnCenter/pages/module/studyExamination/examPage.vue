@@ -36,9 +36,9 @@
 						<view class="queAnswer" v-for="(item2, index2) in item1.optionList" :key="index2">
 							<view>
 								<radio-group id="ansGroup" @change="radioChange">
-									<label style="display: flex;align-items: center;">
+									<label style="display: flex;align-items: center;padding-right: 20rpx;">
 										<view><radio style="transform:scale(0.8)" :value="item2.id" :checked="index2 === current" /></view>
-										<view>{{ item2.title }}、{{ item2.content }}</view>
+										<view style="font-size: 24rpx;">{{ item2.title }}、{{ item2.content }}</view>
 									</label>
 								</radio-group>
 							</view>

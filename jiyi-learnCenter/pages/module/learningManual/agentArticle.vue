@@ -243,7 +243,7 @@
 				position: -webkit-sticky;
 				position: sticky;
 				top: 80rpx;
-				z-index: 999;
+				z-index: 555;
 			}
 		}
 

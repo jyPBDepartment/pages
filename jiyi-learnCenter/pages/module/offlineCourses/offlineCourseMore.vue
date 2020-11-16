@@ -10,7 +10,7 @@
 		<header-box title="线下课程" @backTo="backTo"></header-box>
 
 		<!-- 懒加载 -->
-		<mescroll-body style="margin-top: 80rpx;" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<!-- 列表详情 -->
 			<view
 				class="offlineCourse card-box animate__animated animate__lightSpeedInRight delay-5s 5s"
@@ -135,19 +135,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	background-color: #FFFFFF;
-	.head {
-		display: flex;
-		margin-top: 15rpx;
-		margin-left: 20rpx;
-		height: 60rpx;
-		.backArrow {
-			margin-top: 6rpx;
-		}
-		.title {
-			margin-left: 250rpx;
-			font-size: 32rpx;
-		}
-	}
+	padding-top: 80rpx;
 	.offlineCourse {
 		display: flex;
 		margin: 20rpx;
