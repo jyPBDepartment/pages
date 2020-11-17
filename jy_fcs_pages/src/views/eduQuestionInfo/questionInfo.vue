@@ -250,7 +250,7 @@ export default {
           if(code == "2"){
             this.$message.error(res.message);
           }
-          this.reload();
+          this.search(this.formInline);
         }).catch(function (error) {});
     },
     //显示编辑界面
@@ -293,7 +293,7 @@ export default {
             let code = res.state;
             if (code == "0") {
               this.$message.success(res.message);
-              this.reload();
+              this.search(this.formInline);
             }
           });
         }).catch(() => {

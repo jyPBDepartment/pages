@@ -279,6 +279,10 @@ export default {
                     this.editForm.quContent = "";
                     this.editForm.answer = "";
                     this.editForm.score = "";
+                    this.aShow = true;
+                    this.bShow = true;
+                    this.cShow = true;
+                    this.dShow = true;
                     this.option = [];
                 }, 500);
          

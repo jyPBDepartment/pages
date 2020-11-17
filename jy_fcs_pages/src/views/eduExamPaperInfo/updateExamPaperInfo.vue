@@ -320,6 +320,13 @@ export default {
           });
           return false;
         }
+        if(this.editForm.passScore > this.fraction){
+          this.$alert("及格分数不可大于总分数", "提示", {
+            confirmButtonText: "确定",
+          });
+          this.editForm.passScore = "";
+          return false;
+        }
         if (valid) {
           let questionId = [];
           let question = [];

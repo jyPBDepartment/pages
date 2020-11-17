@@ -25,10 +25,10 @@
         <div style="margin-top:20px">
           <el-row v-for="(item, index) in List" :key="index" style="margin-top:40px">
             <el-col :span="1">{{index + 1}}、</el-col>
-            <el-col :span="14">{{item.quContent}}</el-col>
+            <el-col :span="23">{{item.quContent}}</el-col>
             <br>
             <el-col :span="2" style="margin-top:25px"><span>答案：</span></el-col>
-              <el-col :span="5" style="margin-top:25px" v-for="(answerItem, index1) in item.optionList" :key="index1">
+              <el-col :span="10" style="margin-top:25px" v-for="(answerItem, index1) in item.optionList" :key="index1">
                 {{answerItem.title}}、 {{answerItem.content}}
               </el-col>
           </el-row>

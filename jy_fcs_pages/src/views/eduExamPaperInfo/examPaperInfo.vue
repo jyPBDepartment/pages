@@ -10,6 +10,11 @@
           <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="职业类别" prop="vocationId" style="margin-left:-115px">
+       <el-select v-model="vocationId" style="width:55%;height:30px;" size="small">
+          <el-option v-for="item in vocationIdOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
         <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
@@ -110,6 +115,7 @@ export default {
     return {
       createBy: "",
       status:"",
+      vocationId:"",
       updateUser: "",
       loading: false, //是显示加载
       addExamPaperInfo: false,
@@ -133,6 +139,7 @@ export default {
         { value: "0", label: "启用" },
         { value: "1", label: "禁用" },
       ],
+      vocationIdOptions:[],
     };
   },
   // 注册组件
@@ -143,7 +150,9 @@ export default {
     Pagination,
   },
   watch: {},
-  mounted() {},
+  mounted() {
+    this.findVocationId();
+  },
   created() {
     this.search(this.formInline);
   },
@@ -163,6 +172,7 @@ export default {
       let params = {
         createBy: this.createBy,
         status: this.status,
+        vocationId: this.vocationId,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
@@ -176,6 +186,22 @@ export default {
           this.formInline.total = res.data.totalElements;
         }
       });
+    },
+    // 职业类别下拉列表
+    findVocationId: function () {
+      let params = {};
+      api
+        .testAxiosGet(ApiPath.url.findVocationId, params)
+        .then((res) => {
+          if (res.state == "0") {
+            for (let i = 0; i < res.data.length; i++) {
+              this.vocationIdOptions.push({
+                value: res.data[i]["id"],
+                label: res.data[i]["name"],
+              });
+            }
+          }
+        }).catch(function (error) {});
     },
     beforeClose() {
       this.close();
@@ -221,7 +247,7 @@ export default {
           if (code == "1") {
             this.$message.success(res.message);
           }
-          this.reload();
+          this.search(this.formInline);
         }).catch(function (error) {});
     },
     //显示编辑界面
@@ -238,6 +264,7 @@ export default {
     resetForm(search) {
       this.createBy = "",
       this.status= "",
+      this.vocationId = "",
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
@@ -263,7 +290,7 @@ export default {
             let code = res.state;
             if (code == "0") {
               this.$message.success(res.message);
-              this.reload();
+              this.search(this.formInline);
             }
           });
         }).catch(() => {
@@ -283,7 +310,7 @@ export default {
 }
 .height {
   margin-top: 5px;
-  margin-left: -120px;
+  margin-left: -100px;
 }
 .dialog-footer{
   margin-top: 20px;
