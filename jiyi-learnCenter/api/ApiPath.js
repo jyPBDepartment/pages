@@ -1,8 +1,8 @@
 //配置后台接口
 //开发环境基础路径地址
 // const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-// const URLHost = 'http://192.168.1.106:8080/jy_edu';
-const URLHost = 'http://localhost:8083';
+const URLHost = 'http://192.168.1.106:8080/jy_edu';
+// const URLHost = 'http://localhost:8083';
 
 //生产环境基础路径地址
 // const URLHost = 'http://182.92.77.60/jy_fcs';
@@ -22,7 +22,7 @@ const extendUrl = {
 	findCustmerInfo: 'http://112.126.103.106:16302/jyhn-frontend/webHttpServlet',
 	// 生产环境
 	// findCustmerInfo:'http://112.126.103.48:16302/jyhn-frontend/webHttpServlet'
-	getQuestionListByExamId:'http://192.168.1.108:8083/examPaperInfo/submitExam'
+	getQuestionListByExamId: 'http://192.168.1.108:8083/examPaperInfo/submitExam'
 }
 const url = {
 	// 学习手册职业类别加载
@@ -52,18 +52,21 @@ const url = {
 	// 根据试卷Id加载试题列表信息
 	getQuestionListByExamId: URLHost + '/questionInfo/getQuestionListByExamId',
 	// 试卷提交
-	submitExam:URLHost+'/examPaperInfo/submitExam',
+	submitExam: URLHost + '/examPaperInfo/submitExam',
 	//线下课程列表
-	findLessonPage:URLHost+'/lesson/findLessonPage',
-	//线下课程详情	findByLessonId:URLHost+'/lesson/findByLessonId',	//线下课程取消报名	cancellationRegistr:URLHost+'/lesson/cancellationRegistr',
+	findLessonPage: URLHost + '/lesson/findLessonPage',
+	//线下课程详情
+	findByLessonId: URLHost + '/lesson/findByLessonId',
+	//线下课程取消报名
+	cancellationRegistr: URLHost + '/lesson/cancellationRegistr',
 	// 查询学习考试列表信息
-	findStudyExamInfo:URLHost+'/studyExam/findStudyExamInfo',
+	findStudyExamInfo: URLHost + '/studyExam/findStudyExamInfo',
 	// 我的报名课程加载
-	getLessonsByUserId:URLHost+'/lesson/getLessonsByUserId',
+	getLessonsByUserId: URLHost + '/lesson/getLessonsByUserId',
 	// 我的证书申请
-	applyCertificate:URLHost+'/issue/applyCertificate',
+	applyCertificate: URLHost + '/issue/applyCertificate',
 	//获取我的证书列表
-	getCertificateByUserId:URLHost+'/mine/getCertificateByUserId'
+	getCertificateByUserId: URLHost + '/mine/getCertificateByUserId'
 }
 export default {
 	url,

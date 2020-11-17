@@ -34,9 +34,12 @@
 								<view class="choose">{{ key + 1 }}、{{ item.name }}</view>
 								<view class="choose">（约{{ item.answerTime }}分钟，不限考次）</view>
 								<view>
-									<button v-if="item.isPass == 0" class="btn" @click="answer(item)" size="mini">答题</button>
+									<u-button type="primary" v-if="item.isPass == 0" class="btn" @click="answer(item)" size="mini">答题</u-button>
+									<u-button type="success" v-if="item.isPass == 1" class="btn" disabled="disabled" size="mini">已通过</u-button>
+									<u-button type="warning" v-if="item.isPass == 2" class="btn" @click="answer(item)" size="mini">重新答题</u-button>
+									<!-- 			<button v-if="item.isPass == 0" class="btn" @click="answer(item)" size="mini">答题</button>
 									<button v-if="item.isPass == 1" class="btnPass" disabled="disabled" size="mini">已通过</button>
-									<button v-if="item.isPass == 2" class="btn" @click="answer(item)" size="mini">重新答题</button>
+									<button v-if="item.isPass == 2" class="btnRep" @click="answer(item)" size="mini">重新答题</button> -->
 								</view>
 							</view>
 							<view class="sum">(共{{ item.questionNum }}题)</view>
@@ -239,7 +242,7 @@ export default {
 }
 .my-popup-content {
 	padding: 30rpx;
-	
+
 	.item {
 		display: flex;
 		justify-content: center;
@@ -249,7 +252,7 @@ export default {
 			width: 120rpx;
 			height: 60rpx;
 			text-align: justify;
-			color: #000000; 
+			color: #000000;
 			font-size: 28rpx;
 			font-weight: 500;
 		}
@@ -302,7 +305,7 @@ export default {
 
 		.subject {
 			display: flex;
-			margin-bottom: -72rpx;
+			margin-bottom: 20rpx;
 
 			.left {
 				margin-top: 40rpx;
@@ -347,20 +350,9 @@ export default {
 						justify-content: space-between;
 
 						.btn {
-							background-color: #007aff;
-							border: 1rpx solid #007aff;
 							margin-top: 14rpx;
 							padding: 0;
-							color: #ffffff;
-							width: 134rpx;
-						}
-
-						.btnPass {
-							margin-top: 14rpx;
-							padding: 0;
-							border: 1rpx solid red;
-							width: 138rpx;
-							color: #333333;
+							width: 135rpx;
 						}
 					}
 

@@ -6,20 +6,8 @@
 		<!--  背景图 -->
 		<u-image class="bg-image" width="100%" height="270rpx" v-for="(item, index) in banner" :key="index" :src="item.url"></u-image>
 		<!--  考试列表 -->
-		<!-- <u-row>
-			<u-col span="5" v-for="(item, key) in studyExaminationList" :key="key" class="se-col">
-				
-				<view @click="linkTo(item.id, item.isPass)">
-					<view class="brage" v-if="item.isPass == 1"><text>已通过</text></view>
-					<view class="se-text"></view>
-					<view style="text-align: center;margin-top: -100rpx;margin-left: 58rpx;  font-size: 24rpx;font-weight: bold;position: absolute;z-index: 99;">
-						{{ item.name }}考试
-					</view>
-				</view>
-			</u-col>
-		</u-row> -->
 		<view class="exam-list">
-			<view class="list-item card-box" v-for="(item, key) in studyExaminationList" :key="key" @click="linkTo(item.id, item.isPass)">
+			<view class="list-item card-box" :class="`list-item${key}`" v-for="(item, key) in studyExaminationList" :key="key" @click="linkTo(item.id, item.isPass)">
 				<view class="brage" v-if="item.isPass == 1"><text>已通过</text></view>
 				<view class="se-text"></view>
 				<view class="title">{{ item.name }}考试</view>
@@ -170,19 +158,34 @@ export default {
 			font-size: 14px;
 			border-radius: 12px;
 		}
+		
+		
+		// .list-item0{
+		// 	background-image: linear-gradient(to right, #CAC531, #F37335);
+		// }
+		// .list-item1{
+		// 	background-image: linear-gradient(to right, #f12711, #f5af19);
+		// }
+		// .list-item2{
+		// 	background-image: linear-gradient(to right, #134E5E, #71B280);
+		// }
+		// .list-item3{
+		// 	background-image: linear-gradient(to right, #8E2DE2, #4A00E0);
+		// }
+		// .list-item4{
+		// 	background-image: linear-gradient(to right, #ED213A, #93291E);
+		// }
+		
 		.list-item:nth-child(odd):after {
 			background-color: #f5af19;
-			// background-image: linear-gradient(to right, #fdfc47, #f5af19);
 		}
 
 		.list-item:nth-child(even):after {
 			background-color: #6dd5ed;
-			// background-image: linear-gradient(to right, #1d976c, #93f9b9);
 		}
 
 		.list-item:nth-child(3n + 1):after {
 			background-color: #1E9600;
-			// background-image: linear-gradient(to right, #11998e, #38ef7d);
 		}
 	}
 
