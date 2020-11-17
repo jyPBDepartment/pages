@@ -62,8 +62,8 @@ export default {
 		// 返回上一页
 		backTo() {
 			uni.switchTab({
-				url:'/pages/tabbar/my/index'
-			})
+				url: '/pages/tabbar/my/index'
+			});
 		}
 	}
 };
@@ -92,7 +92,7 @@ export default {
 		.examGrade {
 			display: flex;
 			flex-direction: column;
-			background-image: linear-gradient(to right, #00b09b, #96c93d);
+			background-image: linear-gradient(to right, #00b4db, #0083b0);
 			border-radius: 20rpx;
 			margin-bottom: 20rpx;
 			color: #ffffff;

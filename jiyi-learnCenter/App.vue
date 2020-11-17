@@ -20,6 +20,7 @@ export default {
 /*每个页面公共css */
 * {
 	font-family: PingFang SC;
+	overflow-x: hidden;
 }
 .split-space {
 	width: 750px;

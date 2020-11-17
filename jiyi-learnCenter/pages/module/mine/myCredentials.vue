@@ -5,8 +5,8 @@
 		<!-- 图片 -->
 		<view class="credential">
 			<view class="package card-box" v-for="(item, index) in creList" :key="index">
-				<image class="image" :src="item.url || defaultImage" mode="fill"></image>
-				<button size="mini" type="primary">长按图片保存至相册</button>
+				<image class="image" :lazy-load="true"	 :src="item.url || defaultImage" mode="fill"></image>
+				<button size="mini" type="primary">长按保存至相册</button>
 			</view>
 		</view>
 	</view>

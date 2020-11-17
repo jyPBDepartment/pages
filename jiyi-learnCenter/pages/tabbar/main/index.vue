@@ -6,7 +6,7 @@
 		<!--  轮播图 -->
 		<swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
 			<block v-for="(item, index) in banner" :key="index">
-				<swiper-item class="swiperItem"><image :src="item.url" mode="aspectFill" class="swiperImage"></image></swiper-item>
+				<swiper-item class="swiperItem"><image :lazy-load="true" :src="item.url" mode="aspectFill" class="swiperImage"></image></swiper-item>
 			</block>
 		</swiper>
 		<!--  模块 -->
