@@ -91,8 +91,9 @@ export default {
 <style lang="scss" scoped>
 .content {
 	padding-top: 80rpx;
-
-
+	padding-bottom: 80rpx;
+	position: relative;
+	
 	.contain {
 		display: flex;
 		flex-direction: column;
