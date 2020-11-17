@@ -11,11 +11,14 @@
 					<view class="type" v-if="item.status == '0'">未开始</view>
 					<view class="type" v-if="item.status == '1'">已开始</view>
 					<view class="type" v-if="item.status == '2'">已结束</view>
+					
+					
 				</view>
 				<view class="examTime">
 					<view class="time">
 						<b>课程时间：</b>
 						{{ item.lessonTime }}
+						
 					</view>
 				</view>
 				<view class="examTime">
@@ -36,6 +39,7 @@ export default {
 		return {
 			examScoreList: [],
 			userId: localStorage.getItem('userId')
+		
 		};
 	},
 	onLoad(e) {
@@ -53,7 +57,7 @@ export default {
 				success: res => {
 					if (res.data.code == 200) {
 						this.examScoreList = res.data.data;
-						// console.log(JSON.stringify(this.examScoreList))
+						
 					} else {
 						uni.showToast({
 							title: '服务器出错，请联系管理员'

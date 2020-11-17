@@ -285,7 +285,7 @@ export default {
 
 		.queName {
 			margin-top: 20rpx;
-
+			width: 710rpx;            word-break: break-all;
 			.line {
 				margin: 40rpx -20rpx;
 			}

@@ -62,7 +62,7 @@ const url = {
 	// 查询学习考试列表信息
 	findStudyExamInfo: URLHost + '/studyExam/findStudyExamInfo',
 	// 我的报名课程加载
-	getLessonsByUserId: URLHost + '/lesson/getLessonsByUserId',
+	getLessonsByUserId: URLHost + '/mine/getLessonsByUserId',
 	// 我的证书申请
 	applyCertificate: URLHost + '/issue/applyCertificate',
 	//获取我的证书列表

@@ -274,7 +274,7 @@
 				.bride {
 					font-size: 22rpx;
 					color: #bfbfbf;
-					margin: -50rpx 0rpx 0rpx 600rpx;
+					margin: -50rpx 0rpx 0rpx 590rpx;
 				}
 			}
 

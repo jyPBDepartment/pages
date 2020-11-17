@@ -44,7 +44,7 @@
 			</u-row>
 			
 			<u-row style="padding-top: 80rpx;">
-				<u-col span="7">
+				<u-col span="6">
 					<view style="text-align: center;margin-top: 20rpx;">
 						<!-- 确认报名弹出框 -->
 						<u-popup v-model="show" mode="center" border-radius="14" width="650rpx" height="330rpx" :mask-close-able="false" >
@@ -60,7 +60,7 @@
 						<u-button type="primary" size="mini" @click="confirm()" >确定报名</u-button>
 					</view>
 				</u-col>
-				<u-col span="1">
+				<u-col span="5">
 					<view style="text-align: center;margin-top: 20rpx;">
 						<u-button type="primary" size="mini" @click="reEdit()">重新编辑</u-button>
 					</view>
