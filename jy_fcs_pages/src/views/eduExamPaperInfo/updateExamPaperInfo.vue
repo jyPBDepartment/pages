@@ -18,7 +18,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="试卷名称" prop="name">
-          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入试卷名称(限255个字)" style="width: 35%" maxlength="255"></el-input>
+          <el-input type="text" v-model="editForm.name" size="small" placeholder="请输入试卷名称(限7个字)" style="width: 35%" maxlength="7"></el-input>
         </el-form-item>
         <el-form-item label="总分数" prop="totalScore">
           <el-input type="text" v-model="editForm.totalScore" size="small" placeholder="请输入总分数(限数字)" style="width: 25%" maxlength="10"></el-input>
