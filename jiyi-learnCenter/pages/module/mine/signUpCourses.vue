@@ -9,20 +9,17 @@
 				<view class="examTime">
 					<view class="title">{{ item.vocationName }}--{{ item.lessonName }}</view>
 					<view class="type" v-if="item.status == '0'">未开始</view>
-					<view class="type" v-if="item.status == '1'">已开始</view>
-					<view class="type" v-if="item.status == '2'">已结束</view>
-					
-					
+					<view class="type success" v-if="item.status == '1'">已开始</view>
+					<view class="type  end" v-if="item.status == '2'">已结束</view>
 				</view>
 				<view class="examTime">
 					<view class="time">
 						<b>课程时间：</b>
 						{{ item.lessonTime }}
-						
 					</view>
 				</view>
 				<view class="examTime">
-					<view class="title">
+					<view class="time">
 						<b>课程地点：</b>
 						{{ item.address }}
 					</view>
@@ -39,7 +36,6 @@ export default {
 		return {
 			examScoreList: [],
 			userId: localStorage.getItem('userId')
-		
 		};
 	},
 	onLoad(e) {
@@ -57,7 +53,6 @@ export default {
 				success: res => {
 					if (res.data.code == 200) {
 						this.examScoreList = res.data.data;
-						
 					} else {
 						uni.showToast({
 							title: '服务器出错，请联系管理员'
@@ -73,8 +68,8 @@ export default {
 		},
 		backTo() {
 			uni.switchTab({
-				url:"../../tabbar/my/index"
-			})
+				url: '../../tabbar/my/index'
+			});
 		}
 	}
 };
@@ -103,20 +98,40 @@ export default {
 		.examGrade {
 			display: flex;
 			flex-direction: column;
-			background-color: pink;
+			background-image: linear-gradient(to right, #f12711, #f5af19);
 			border-radius: 20rpx;
 			margin-bottom: 20rpx;
+			color: #ffffff;
 			.examTime {
 				display: flex;
 				justify-content: space-between;
-				margin-top: 10rpx;
-				padding: 0rpx 20rpx 4rpx 20rpx;
-				.type {
-					border: 2rpx solid #fff;
-					background-color: #fff;
-					font-size: 20rpx;
-					border-radius: 6rpx;
+				margin-top: 20rpx;
+				padding: 0 20rpx 10rpx 20rpx;
+
+				.time {
+					font-size: 28rpx;
+					font-weight: 500;
 				}
+				.title {
+					font-size: 32rpx;
+					font-weight: 500;
+				}
+			}
+			.type {
+				background-color: #2979ff;
+				line-height: 40rpx;
+				height: 40rpx;
+				font-size: 20rpx;
+				border-radius: 8rpx;
+				padding: 0 15rpx;
+				font-weight: 500;
+				font-size: 24rpx;
+			}
+			.success {
+				background-color: #19be6b;
+			}
+			.end {
+				background-color: #fa3534;
 			}
 		}
 	}
