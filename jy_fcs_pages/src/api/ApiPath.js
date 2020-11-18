@@ -400,6 +400,8 @@ const url = {
   findIssueList: EDUHost + '/issue/findPage',
   //获得证书统计列表
   findCertificateMgt: EDUHost + '/issue/findMgtPage',
+  //切换职业类别是否需要考试
+  vocationExamEnable: EDUHost + '/vocationInfo/examEnable',
 }
 export default {
   url

@@ -40,6 +40,18 @@
           ></el-switch>
         </template>
       </el-table-column>
+      <el-table-column align="center" min-width="7%" label="是否考试" prop="isExam">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isExam"
+            :active-value="1"
+            :inactive-value="0"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="examEnable(scope)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="操作" min-width="26%">
         <template slot-scope="scope">
            <el-button @click="openUpdateVocationInfo(scope)" type="primary" size="small" icon="el-icon-edit" style="width:73px;">编辑</el-button>
@@ -172,6 +184,23 @@ export default {
     },
     closedetailsVocationInfoDialog(){
         this.detailsVocationInfoFlag = false;
+    },
+    //切换是否需要考试
+    examEnable: function(scope) {
+      let params = {
+        id: scope.row.id,
+        isExam: scope.row.isExam,
+        updateUser:localStorage.getItem("userInfo")
+      };
+      api.testAxiosGet(ApiPath.url.vocationExamEnable, params).then(res => {
+        let code = res.state;
+        if (code == "0") {
+          this.$message.success(res.message);
+        } else {
+          this.$message.success(res.message);
+        }
+        this.reload();
+      }).catch(function(error) {});
     },
     //启用/禁用
     vocationInfoEnable: function(scope) {
