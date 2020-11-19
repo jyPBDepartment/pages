@@ -113,12 +113,13 @@ export default {
 	methods: {
 		// 从外部接口获取客户信息
 		initCustomerInfo(e) {
-			// alert("从app获取用户id=" + e.U + " sessionId=" + e.SI)
 			// Interface.common.userId = e.U; //缓存用户id
 			// Interface.common.sessionId = e.SI; //缓存sessionId
 			localStorage.setItem('userId', e.U);
-			// localStorage.setItem('userId', '20200909');
+			// localStorage.setItem('userId', 'F0001241');
 			localStorage.setItem('sessionId', e.SI);
+			// localStorage.setItem('sessionId', "8900212315182333952");
+			
 			let us = localStorage.getItem('userId');
 			let ss = localStorage.getItem('sessionId');
 			let s = us + '+' + ss + '+' + Interface.md5.key;
@@ -130,17 +131,16 @@ export default {
 				S: sign
 			};
 
-			console.log(JSON.stringify(param));
+			// console.log(JSON.stringify(param));
 			uni.request({
 				method: 'POST',
-				url: '/api/jyhn-frontend/webHttpServlet',
-				// url: Interface.ProxyHost,
+				url: Interface.extendUrl.findCustmerInfo,
 				data: param,
 				header: {
 					'Content-Security-Policy': 'upgrade-insecure-requests'
 				},
 				success: res => {
-					// alert(JSON.stringify(res))
+					console.log(JSON.stringify(res))
 					let code = res.data.RETURNRESULT.RESULT;
 					let message = res.data.RETURNRESULT.RETCODE;
 
@@ -365,7 +365,7 @@ export default {
 		// 粮食买卖详情跳转
 		detailsMm(val) {
 			uni.navigateTo({
-				url: '/pages/grain/space?id=' + val + '&isMain=0'
+				url: '/pages/grain/space?id=' + val + '&isMain=0'+'&type=0'
 			});
 		},
 		// 农机详情跳转
