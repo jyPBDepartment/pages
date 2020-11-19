@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderSearch title="粮食买卖详情"></HeaderSearch>
+		<HeaderSearch :title="title"></HeaderSearch>
 		<view class="init">
 			<view class="roll-out">
 				<swiper class="roll" :current="current" @change="getCurrent">
@@ -16,7 +16,10 @@
 
 				<view class="price f-16">
 					<text v-if="isFace == '0'">面议</text>
-					<text v-if="isFace == '1'">￥{{ price }}元/公斤</text>
+					<text v-if="isFace == '1'">
+						<span v-if="type==0">￥{{ price }}元/斤</span>
+						<span v-else>￥{{ price }}元/台</span>
+						</text>
 				</view>
 				<view class="info g-flex g-a-c g-j-s-b">
 					<text class="item-info" v-if="transactionTypeCode == '0'">类型：收购</text>
@@ -85,13 +88,19 @@ export default {
 			isMain: '1',
 			id: '',
 			status: '',
-			reason: ''
+			reason: '',
+			title:''
 		};
 	},
 	//页面初始化
 	onLoad(e) {
 		this.isMain = e.isMain;
-
+		this.type = e.type;
+		if(e.type==0){
+			this.title="粮食买卖详情"
+		}else{
+			this.title="农机详情"
+		}
 		this.findMineId(e.id);
 		this.id = e.id;
 	},

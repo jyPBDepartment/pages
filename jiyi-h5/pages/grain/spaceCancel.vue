@@ -26,7 +26,7 @@
 				</view>
 				<view class="price f-16">
 					<text v-if="isFace == '0'">面议</text>
-					<text v-if="isFace == '1'">￥{{ price }}/亩</text>
+					<text v-if="isFace == '1'">￥{{ price }}元/台</text>
 				</view>
 				<view class="info  g-flex ">
 					<view class="text g-f-1  g-a-c g-flex g-j-s-b f-12">

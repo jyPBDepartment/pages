@@ -382,7 +382,7 @@ export default {
 		// 跳转详情页面
 		jump(val) {
 			uni.navigateTo({
-				url: '../grain/space?id=' + val + '&isShow=0'
+				url: '../grain/space?id=' + val + '&isShow=0'+'&type=0'
 			});
 		},
 		search(e) {
