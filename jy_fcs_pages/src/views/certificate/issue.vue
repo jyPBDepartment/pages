@@ -52,7 +52,11 @@
     <!-- 展示的表单 -->
     <el-table :data="tableData" border style="width: 100%;" highlight-current-row size="mini">
       <el-table-column type="index" label="序号" align="center" min-width="7%" ></el-table-column>
-      <el-table-column prop="certificate.name" label="证书名称" align="center" min-width="20%"  :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column label="职业类别" align="center" min-width="20%"  :show-overflow-tooltip="true">
+        <template slot-scope="scope">
+                <cast-vocation :vocationId="scope.row.vocationId">  </cast-vocation>
+        </template>
+      </el-table-column>
       <el-table-column prop="userName" label="申请人姓名" align="center" min-width="10%"  :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="userTel" min-width="10%" label="申请人电话" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="userCard" min-width="12%" label="身份证号" align="center" ></el-table-column>
@@ -92,6 +96,7 @@ import addLesson from "@/views/certificate/addCertificate";
 import editLesson from "@/views/certificate/editCertificate";
 //import caseContent from "@/views/CaseInfo/caseContent";
 import Pagination from "../../components/Pagination";
+import castVocation from "../../components/castVocation";
 //import viewLesson from "@/views/lesson/studentList";
 export default {
   inject: ["reload"],
@@ -314,6 +319,7 @@ export default {
     addLesson,
     editLesson,
     Pagination,
+    castVocation
   },
 };
 </script>
