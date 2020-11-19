@@ -98,9 +98,10 @@ export default {
 		.examGrade {
 			display: flex;
 			flex-direction: column;
-			background-image: linear-gradient(to right, #f12711, #f5af19);
+			// background-image: linear-gradient(to right, #f12711, #f5af19);
 			border-radius: 20rpx;
 			margin-bottom: 20rpx;
+			padding: 20rpx 0;
 			color: #ffffff;
 			.examTime {
 				display: flex;
@@ -134,6 +135,18 @@ export default {
 				background-color: #fa3534;
 			}
 		}
+		
+		.examGrade:nth-child(odd) {
+			background-color: #27b148;
+			background-image: linear-gradient(to right, #27b148, #11998e);
+		}
+		
+		.examGrade:nth-child(even) {
+			background-color: #ff3328;
+			background-image: linear-gradient(to right, #ff3328, #ED213A);
+		}
+	
+	
 	}
 }
 </style>

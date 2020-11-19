@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<!-- 头部 -->
-		<header-box :title="title" @backTo="backTo"></header-box>
+		<header-box title="历史考试成绩" @backTo="backTo"></header-box>
 		<!-- 内容 -->
 		<view class="contain animate__animated animate__slideInRight">
 			<view class="examGrade card-box" v-for="(item, index) in examScoreList" :key="index">
@@ -95,9 +95,10 @@ export default {
 		.examGrade {
 			display: flex;
 			flex-direction: column;
-			background-image: linear-gradient(to right, #00b4db, #0083b0);
-			border-radius: 20rpx;
+			background-color: #27b148;
+			border-radius: 10rpx;
 			margin-bottom: 20rpx;
+			padding: 20rpx 0;
 			color: #ffffff;
 			.examTime {
 				display: flex;
@@ -105,6 +106,9 @@ export default {
 				margin-top: 20rpx;
 				padding: 0 20rpx 10rpx 20rpx;
 			}
+		}
+		.no-pass{
+			 background: #909399;
 		}
 	}
 }

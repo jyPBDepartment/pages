@@ -97,11 +97,7 @@
 <style lang="scss" scoped>
 	.learning-manual-container {
 		background-color: #ffffff;
-
-		.bg-image {
-			margin-top: 80rpx;
-		}
-
+		padding-top: 80rpx;
 		.rm-list {
 			display: flex;
 			flex-direction: column;

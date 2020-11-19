@@ -19,7 +19,7 @@
 			<!-- <view class="split-space"></view> -->
 			<view class="item" @click="examScore">
 				<u-icon name="order" color="#2979ff" size="32"></u-icon>
-				<text>考试成绩</text>
+				<text>我的考试</text>
 				<u-icon name="arrow-right" color="#666666" size="32"></u-icon>
 			</view>
 			<view class="split-space"></view>

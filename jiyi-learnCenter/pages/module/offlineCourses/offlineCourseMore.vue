@@ -174,20 +174,14 @@ export default {
 			flex: 1;
 		}
 	}
-	.offlineCourse:nth-child(even) {
-		background-color: #91d5ff;
-	}
 	.offlineCourse:nth-child(odd) {
-		background-color: #ff73ab;
+		background-color: #27b148;
+		// background-image: linear-gradient(to right, #22c1c3, #fdbb2d);
 	}
-	.offlineCourse:nth-child(3n + 1) {
-		background-color: pink;
-	}
-	.offlineCourse:nth-child(4n + 1) {
-		background-color: #ffaa7f;
-	}
-	.offlineCourse:nth-child(5n + 1) {
-		background-color: #75ffb6;
+	
+	.offlineCourse:nth-child(even) {
+		background-color: #ff3328;
+		// background-image: linear-gradient(to right, #4568DC, #B06AB3);
 	}
 }
 </style>

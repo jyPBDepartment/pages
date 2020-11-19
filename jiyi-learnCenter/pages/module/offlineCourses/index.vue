@@ -65,13 +65,13 @@ export default {
 
 <style lang="scss" scoped>
 #offlineCourses {
+	padding-top: 80rpx;
 	.title {
 		text-align: center;
 	}
 
 	.oc-row {
 		padding-bottom: 14rpx;
-		margin-top: 80rpx;
 	}
 
 	.oc-col {

@@ -7,7 +7,7 @@
 		<u-image class="bg-image" width="100%" height="270rpx" v-for="(item, index) in banner" :key="index" :src="item.url"></u-image>
 		<!--  考试列表 -->
 		<view class="exam-list">
-			<view class="list-item card-box" :class="`list-item${key}`" v-for="(item, key) in studyExaminationList" :key="key" @click="linkTo(item.id, item.isPass)">
+			<view class="list-item card-box" :class="getItemBg(key)" v-for="(item, key) in studyExaminationList" :key="key" @click="linkTo(item.id, item.isPass)">
 				<view class="brage" v-if="item.isPass == 1"><text>已通过</text></view>
 				<view class="se-text"></view>
 				<view class="title">{{ item.name }}考试</view>
@@ -81,15 +81,40 @@ export default {
 		},
 		linkTo(val, pass) {
 			if (pass == '0') {
-				uni.navigateTo({
-					url: './credentials?id=' + val
-				});
+				setTimeout(() => {
+					uni.navigateTo({
+						url: './credentials?id=' + val
+					});
+				}, 200);
+			} else {
+				// uni.showToast({
+				// 	title: '您已通过该考试无需重复考试'
+				// });
 			}
 		},
 		backTo() {
 			uni.switchTab({
 				url: '../../tabbar/main/index'
 			});
+		},
+		getItemBg(i) {
+			let classStr = 'item1';
+			if ((i + 1) % 5 == 1) {
+				classStr = 'item1';
+			}
+			if ((i + 1) % 5 == 2) {
+				classStr = 'item2';
+			}
+			if ((i + 1) % 5 == 3) {
+				classStr = 'item3';
+			}
+			if ((i + 1) % 5 == 4) {
+				classStr = 'item4';
+			}
+			if ((i + 1) % 5 == 0) {
+				classStr = 'item5';
+			}
+			return classStr;
 		}
 	}
 };
@@ -105,20 +130,20 @@ export default {
 		width: 100%;
 		padding-top: 80rpx;
 		display: flex;
-		justify-content: space-around;
+		justify-content: start;
 		flex-wrap: wrap;
 		padding: 20rpx;
 		.list-item {
 			margin: 20rpx;
 			width: 315rpx;
 			height: 310rpx;
-			background: #007aff;
 			border-radius: 10rpx;
 			position: relative;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			z-index: 999;
+			cursor: hand;
 			.brage {
 				width: 150rpx;
 				height: 60rpx;
@@ -132,11 +157,9 @@ export default {
 				right: 10rpx;
 				background-color: #ffffff;
 				font-size: 24rpx;
-				transform: rotate(-30deg);
-				-ms-transform: rotate(-30deg);
-				/* IE 9 */
-				-webkit-transform: rotate(-30deg);
-				/* Safari and Chrome */
+				transform: rotate(-35deg);
+				-ms-transform: rotate(-35deg);
+				-webkit-transform: rotate(-35deg);
 				z-index: 99;
 			}
 			.title {
@@ -158,35 +181,41 @@ export default {
 			font-size: 14px;
 			border-radius: 12px;
 		}
-		
-		
-		// .list-item0{
-		// 	background-image: linear-gradient(to right, #CAC531, #F37335);
+
+		// .list-item:active {
+		// 	background:#007AFF ;
 		// }
-		// .list-item1{
-		// 	background-image: linear-gradient(to right, #f12711, #f5af19);
-		// }
-		// .list-item2{
-		// 	background-image: linear-gradient(to right, #134E5E, #71B280);
-		// }
-		// .list-item3{
-		// 	background-image: linear-gradient(to right, #8E2DE2, #4A00E0);
-		// }
-		// .list-item4{
-		// 	background-image: linear-gradient(to right, #ED213A, #93291E);
-		// }
-		
-		.list-item:nth-child(odd):after {
-			background-color: #f5af19;
+
+		.item1 {
+			background-color: #fcca00;
+		}
+		.item2 {
+			background-color: #ff8d00;
 		}
 
-		.list-item:nth-child(even):after {
-			background-color: #6dd5ed;
+		.item3 {
+			background-color: #27b148;
 		}
 
-		.list-item:nth-child(3n + 1):after {
-			background-color: #1E9600;
+		.item4 {
+			background-color: #ff3328;
 		}
+
+		.item5 {
+			background-color: #1f9cf9;
+		}
+
+		// .list-item:nth-child(odd):after {
+		// 	background-color: #f5af19;
+		// }
+
+		// .list-item:nth-child(even):after {
+		// 	background-color: #6dd5ed;
+		// }
+
+		// .list-item:nth-child(3n + 1):after {
+		// 	background-color: #1E9600;
+		// }
 	}
 
 	.se-col {
