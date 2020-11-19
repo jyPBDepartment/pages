@@ -235,6 +235,7 @@
 					success: res => {
 						if (res.data.code == 200) {
 							this.examList = res.data.data;
+							// console.log(JSON.stringify(this.examList))
 							let count = 0;
 							for (let i = 0; i < this.examList.length; i++) {
 								if (this.examList[i].isPass == 1) {

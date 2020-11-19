@@ -16,7 +16,10 @@
 			"path": "pages/module/mine/signUpCourses" //报名课程页面
 		},
 		{
-			"path": "pages/module/mine/examScore" //考试成绩页面
+			"path": "pages/module/mine/examScoreIndex" //考试页面
+		},
+		{
+			"path": "pages/module/mine/examScore" //考试成绩列表页面
 		},
 		{
 			"path": "pages/module/mine/studyRecordContent" //学习记录详情页面

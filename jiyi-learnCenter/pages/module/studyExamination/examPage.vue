@@ -137,7 +137,8 @@ export default {
 				examId: this.id,
 				answerList: this.resultList,
 				passScore: this.passScore,
-				totalScore: this.totalScore
+				totalScore: this.totalScore,
+				vocationId:this.vocationId
 			};
 			// console.log(JSON.stringify(param))
 			this.examTime = null;
@@ -155,7 +156,8 @@ export default {
 				examId: this.id,
 				answerList: this.resultList,
 				passScore: this.passScore,
-				totalScore: this.totalScore
+				totalScore: this.totalScore,
+				vocationId : this.vocationId
 			};
 			uni.navigateTo({
 				url: './examResult?param=' + JSON.stringify(param)

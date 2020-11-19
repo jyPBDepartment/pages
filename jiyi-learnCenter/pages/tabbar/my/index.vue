@@ -11,12 +11,12 @@
 				<u-icon name="arrow-right" color="#666666" size="32"></u-icon>
 			</view>
 			<view class="split-space"></view>
-			<view class="item" @click="studyRecord">
+			<!-- <view class="item" @click="studyRecord">
 				<u-icon name="file-text" color="#2979ff" size="32"></u-icon>
 				<text>学习记录</text>
 				<u-icon name="arrow-right" color="#666666" size="32"></u-icon>
-			</view>
-			<view class="split-space"></view>
+			</view> -->
+			<!-- <view class="split-space"></view> -->
 			<view class="item" @click="examScore">
 				<u-icon name="order" color="#2979ff" size="32"></u-icon>
 				<text>考试成绩</text>
@@ -57,7 +57,7 @@ export default {
 		},
 		examScore() {
 			uni.navigateTo({
-				url: '../../module/mine/examScore'
+				url: '../../module/mine/examScoreIndex'
 			});
 		},
 		signUp() {
