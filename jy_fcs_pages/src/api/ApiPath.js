@@ -350,6 +350,10 @@ const url = {
   questionFindById: EDUHost + '/questionInfo/findById',
   // 修改状态
   questionInfoEnable: EDUHost + '/questionInfo/enable',
+  //获取有效并考试的职业类别
+  findVocationIsExam: EDUHost + '/vocationInfo/findVocationIsExam',
+  //获取职业类别关联试题
+  findQuestVocationId: EDUHost + '/questionInfo/findQuestVocationId',
   //试卷管理
   //分页查询
   examPaperInfoSearch: EDUHost + '/examPaperInfo/findByName',

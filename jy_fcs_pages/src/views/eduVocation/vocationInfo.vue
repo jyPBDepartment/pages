@@ -199,7 +199,7 @@ export default {
         } else {
           this.$message.success(res.message);
         }
-        this.reload();
+        this.search(this.formInline);
       }).catch(function(error) {});
     },
     //启用/禁用
@@ -216,7 +216,7 @@ export default {
         } else {
           this.$message.success(res.message);
         }
-        this.reload();
+        this.search(this.formInline);
       }).catch(function(error) {});
     },
     //显示编辑界面
@@ -258,11 +258,11 @@ export default {
           let code = res.state;
           if(code == "0") {
             this.$message.success(res.message);
-            this.reload();
-          }else{
-            this.$alert("删除失败，请先解除关联关系！", "提示", {
-                confirmButtonText: "确定",
-            });
+            this.search(this.formInline);
+          }
+          if(code == "1") {
+             this.$message.error(res.message);
+            this.search(this.formInline);
           }
         });
       }).catch(() => {

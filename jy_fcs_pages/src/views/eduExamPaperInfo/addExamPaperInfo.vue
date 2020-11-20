@@ -53,8 +53,7 @@
               size="small"
               icon="el-icon-delete"
               style="margin-top: 3px; margin-left: -2px"
-              >删除</el-button
-            >
+              >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -131,15 +130,9 @@ export default {
       localShow: this.show,
       rules: {
         name: [{ required: true, message: "请输入试题名称", trigger: "bulr" }],
-        totalScore: [
-          { required: true, message: "请输入总分数", trigger: "bulr" },
-        ],
-        passScore: [
-          { required: true, message: "请输入通过分数", trigger: "bulr" },
-        ],
-        answerTime: [
-          { required: true, message: "请输入答题时间", trigger: "bulr" },
-        ],
+        totalScore: [{ required: true, message: "请输入总分数", trigger: "bulr" }],
+        passScore: [{ required: true, message: "请输入通过分数", trigger: "bulr" }],
+        answerTime: [{ required: true, message: "请输入答题时间", trigger: "bulr" }],
       },
     };
   },
@@ -159,22 +152,42 @@ export default {
   methods: {
     //判断职业类别是否改变
     currStationChange(val){
-      this.$confirm("确认更换职业类别吗？更换后已选题目将清空！", "信息", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      }).then(() => {
-        this.listData = [];
-        this.fraction = 0;
-        this.oldVocation = val;
-        this.editForm.vocationName = this.vocationIdOptions.find(item => item.id === val).name ;
-        }).catch(() => {
-          this.editForm.vocationId=this.oldVocation;
-          return false;
-          this.$message({
-            type: "info",
-            message: "已取消操作",
-          });
+       let params = {
+            vocationId: this.editForm.vocationId,
+        };
+        api.testAxiosGet(ApiPath.url.findQuestVocationId, params).then((res) => {          
+          let code = res.state;
+          if (code == "0") {
+            if(res.data.length > 0){
+              if(this.listData.length>0){
+                this.$confirm("确认更换职业类别吗？更换后已选题目将清空！", "信息", {
+                  confirmButtonText: "确定",
+                  cancelButtonText: "取消",
+                  type: "warning",
+                }).then(() => {
+                  this.listData = [];
+                  this.fraction = 0;
+                  this.oldVocation = val;
+                  this.editForm.vocationName = this.vocationIdOptions.find(item => item.id === val).name ;
+                  }).catch(() => {
+                    this.editForm.vocationId=this.oldVocation;
+                    return false;
+                    this.$message({
+                      type: "info",
+                      message: "已取消操作",
+                    });
+                  });
+              }else{
+                this.oldVocation = val;
+              }
+            }else{
+              this.$alert("此职业类别下无试题信息，请先添加试题！", "提示", {
+                confirmButtonText: "确定",
+              });
+              this.editForm.vocationId=this.oldVocation;
+              return false;
+            }
+          }
         });
     },
     //试题添加
@@ -245,7 +258,7 @@ export default {
     findVocationId: function () {
       let params = {};
       api
-        .testAxiosGet(ApiPath.url.findVocationId, params)
+        .testAxiosGet(ApiPath.url.findVocationIsExam, params)
         .then((res) => {
           if (res.state == "0") {
             for (let i = 0; i < res.data.length; i++) {
@@ -253,11 +266,6 @@ export default {
                 value: res.data[i]["id"],
                 label: res.data[i]["name"],
               });
-              if(i == 0){
-                this.oldVocation = res.data[i]["id"];
-                this.editForm.vocationId = res.data[i]["id"];
-                this.editForm.vocationName = res.data[i]["name"];
-              }
             }
           }
         })
