@@ -2,51 +2,50 @@
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [
-		{
-			"path": "pages/tabbar/index/index"   //首页
+	"pages": [{
+			"path": "pages/tabbar/index/index" //首页
 		},
 		{
-			"path": "pages/catalog/potentialCustomers"  //意向客户详情
+			"path": "pages/catalog/potentialCustomers" //意向客户详情
 		},
 		{
-			"path": "pages/grain/potentialCustomers"  //意向客户详情
+			"path": "pages/grain/potentialCustomers" //意向客户详情
 		},
 		{
-			"path": "pages/grain/potentialCustomersCancel"  //意向客户详情-带取消按钮
+			"path": "pages/grain/potentialCustomersCancel" //意向客户详情-带取消按钮
 		},
 		{
-			"path": "pages/grain/potentialCustomersConfirm"  //意向客户详情-带取消确认
+			"path": "pages/grain/potentialCustomersConfirm" //意向客户详情-带取消确认
 		},
 		{
-			"path": "pages/catalog/myAppointment"  //我的预约列表
+			"path": "pages/catalog/myAppointment" //我的预约列表
 		},
 		{
-			"path": "pages/catalog/agriculturalMachinery"  //我的，三种发布
+			"path": "pages/catalog/agriculturalMachinery" //我的，三种发布
 		},
 		{
-			"path": "pages/response"  //预约成功还是失败页面
+			"path": "pages/response" //预约成功还是失败页面
 		},
 		{
-			"path": "pages/grain/agriculturalServices"  //农服发布详情
+			"path": "pages/grain/agriculturalServices" //农服发布详情
 		},
 		{
-			"path": "pages/grain/article"  //圈子
+			"path": "pages/grain/article" //圈子
 		},
 		{
-			"path": "pages/grain/paddy"  //农服详情
+			"path": "pages/grain/paddy" //农服详情
 		},
 		{
-			"path": "pages/grain/paddyAgain"  //农服详情-带重新预约
+			"path": "pages/grain/paddyAgain" //农服详情-带重新预约
 		},
 		{
-			"path": "pages/grain/paddyCancel"  //农服详情-带取消
+			"path": "pages/grain/paddyCancel" //农服详情-带取消
 		},
 		{
-			"path": "pages/grain/paddyContact"  //农服详情-带联系商家
+			"path": "pages/grain/paddyContact" //农服详情-带联系商家
 		},
 		{
-			"path": "pages/community/release"  //发帖子页面
+			"path": "pages/community/release" //发帖子页面
 		},
 		{
 			"path": "pages/grain/buyMachine" //发布购买农机
@@ -58,62 +57,63 @@
 			"path": "pages/grain/leaseMachine" //发布出租农机
 		},
 		{
-			"path": "pages/grain/grainTrade"  //好像没用
+			"path": "pages/grain/grainTrade" //好像没用
 		},
 		{
-			"path": "pages/catalog/grainTrade"  //粮食买卖列表页面
+			"path": "pages/catalog/grainTrade" //粮食买卖列表页面
 		},
 		{
-			"path": "pages/grain/agriculturalAppointment"  //发布农服预约
+			"path": "pages/grain/agriculturalAppointment" //发布农服预约
 		},
 		{
-			"path": "pages/search"  //搜索页面
+			"path": "pages/search" //搜索页面
 		},
 		{
-			"path": "pages/grain/richText"  //病虫害详情
+			"path": "pages/grain/richText" //病虫害详情
 		},
 		{
-			"path": "pages/grain/space"  //农机详情
+			"path": "pages/grain/space" //农机详情
 		},
 		{
-			"path": "pages/grain/spaceCancel"  //农机详情-带取消
+			"path": "pages/grain/spaceCancel" //农机详情-带取消
 		},
 		{
-			"path": "pages/grain/spaceModify"  //农机详情-带修改
+			"path": "pages/grain/spaceModify" //农机详情-带修改
 		},
 		{
-			"path": "pages/catalog/leaseAgriculturalMachinery"  //农机出租列表
+			"path": "pages/catalog/leaseAgriculturalMachinery" //农机出租列表
 		},
 		{
-			"path": "pages/catalog/sellAgriculturalMachinery"   //农机出售列表
+			"path": "pages/catalog/sellAgriculturalMachinery" //农机出售列表
 		},
 		{
-			"path": "pages/catalog/findDisease"  //病虫害列表
+			"path": "pages/catalog/findDisease" //病虫害列表
 		},
 
 		{
-			"path": "pages/tabbar/service/index"  //农服
+			"path": "pages/tabbar/service/index" //农服
 		},
 		{
-			"path": "pages/tabbar/release/index"  //发布
+			"path": "pages/tabbar/release/index" //发布
 		},
 		{
-			"path": "pages/tabbar/community/index"  //圈子
+			"path": "pages/tabbar/community/index" //圈子
 		},
 		{
-			"path": "pages/tabbar/use/index"  //我的页面
+			"path": "pages/tabbar/use/index" //我的页面
 		},
 		{
-			"path": "pages/grain/machineUpdateInfo"  //农机修改信息
+			"path": "pages/grain/machineUpdateInfo" //农机修改信息
 		},
 		{
-			"path": "pages/grain/agrUpdateInfo"  //农服修改信息
+			"path": "pages/grain/agrUpdateInfo" //农服修改信息
 		},
 		{
-			"path": "pages/grain/cornUpdateInfo"  //农服修改信息
+			"path": "pages/grain/cornUpdateInfo" //农服修改信息
+		}, 
+		{
+			"path": "pages/grain/quotation"
 		}
-		
-
 	],
 	"globalStyle": {
 		"navigationStyle": "custom"

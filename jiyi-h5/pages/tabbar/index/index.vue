@@ -2,7 +2,7 @@
 	<view style="background-color: #f4f4f4">
 		<!-- search 组件监听到得参数search方法获取 -->
 		<HeaderSearch :disabled="true" @searchCallback="search"></HeaderSearch>
-		<FoodstuffPrice></FoodstuffPrice>
+		<FoodstuffPrice class="comm-border"></FoodstuffPrice>
 		<view class="content">
 			<view class="btn comm-border">
 				<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">

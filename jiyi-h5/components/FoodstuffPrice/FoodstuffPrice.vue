@@ -1,7 +1,12 @@
 <template>
-	<view class="qiun-columns comm-border">
-		<view class="t-c f-14" style="text-align: left;margin-left: 10px;">玉米价格行情(元/斤)</view>
-		<view class="tips">说明：该数据来源于大商所最近一个合约的前一日收盘价，仅供参考。</view>
+	<view class="qiun-columns">
+		<view class="t-c f-14 header-title">
+			<view>吉林省玉米价格行情(元/斤)</view>
+
+			<view><u-icon v-if="typeFrom != 1" name="arrow-rightward" @tap="goQuotation" color="#000" size="40"></u-icon></view>
+		</view>
+		<!-- <view class="tips">说明：该数据来源于大商所最近一个合约的前一日收盘价，仅供参考。</view> -->
+		<view class="tips">说明：该数据来源为资源整合，本公司对于其准确性、真实性不负任何法律责任，仅供参考。（该价格玉米为14%水分）</view>
 		<view style="text-align: center;margin: 10rpx 0;">
 			<u-row :gutter="6">
 				<u-col :span="2" style="text-align: center;">
@@ -12,22 +17,34 @@
 				</u-col>
 			</u-row>
 		</view>
+		<!-- commCharts -->
 		<view class="qiun-charts"><canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas></view>
+
+		<!-- <comm-charts></comm-charts> -->
 	</view>
 </template>
 
 <script>
 import uCharts from '@/u-charts/u-charts.js';
 import ApiPath from '@/api/ApiPath.js';
+// import commCharts from '@/components/commCharts.vue';
 var _self;
 var canvaLineA = null;
 export default {
+	// components:{commCharts},
+	props: {
+		typeFrom: {
+			type: String,
+			default: ''
+		}
+	},
 	data() {
 		return {
 			cWidth: '',
 			cHeight: '',
 			pixelRatio: 1,
-			tagClick: 0
+			tagClick: 0,
+			type: ''
 		};
 	},
 	created() {
@@ -37,6 +54,12 @@ export default {
 		this.getServerData('0');
 	},
 	methods: {
+		goQuotation() {
+			console.log(1);
+			uni.navigateTo({
+				url: '/pages/grain/quotation?type=1'
+			});
+		},
 		getServerData(val) {
 			if (val == '0') {
 				this.tagClick = '0';
@@ -60,7 +83,17 @@ export default {
 						};
 						let categories = [];
 						let seriesData = [];
+						let seriesData1 = [];
 						let series = [
+							{
+								name: '',
+								legendShape: '',
+								pointShape: '',
+								show: '',
+								type: '',
+								color: '',
+								data: []
+							},
 							{
 								name: '',
 								legendShape: '',
@@ -75,15 +108,24 @@ export default {
 						for (let i = 0; i < result.length; i++) {
 							categories.push(result[i].priceDate.substring(5, 10));
 							seriesData.push(result[i].price);
+							seriesData1.push(parseFloat(result[i].price) + 0.4);
 						}
 
-						series[0].name = '玉米价格';
+						series[0].name = '最低价格';
 						series[0].legendShape = 'line';
 						series[0].pointShape = 'circle';
 						series[0].show = true;
 						series[0].type = 'line';
 						series[0].color = '#1890ff';
 						series[0].data = seriesData;
+						console.log(seriesData1);
+						series[1].name = '最高价格';
+						series[1].legendShape = 'line';
+						series[1].pointShape = 'circle';
+						series[1].show = true;
+						series[1].type = 'line';
+						series[1].color = '#ff3328';
+						series[1].data = seriesData1;
 						LineA.categories = categories;
 						LineA.series = series;
 						// console.log(LineA)
@@ -172,6 +214,14 @@ export default {
 	box-sizing: border-box;
 	background-color: #ffffff;
 	padding: 30rpx 20rpx 10rpx 20rpx;
+	.header-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: #333;
+		font-weight: 500;
+		font-size: 36rpx;
+	}
 }
 
 /*样式的width和height一定要与定义的cWidth和cHeight相对应*/
@@ -188,12 +238,13 @@ export default {
 }
 
 .tips {
-	font-size: 18rpx;
+	font-size: 20rpx;
 	background-color: #f2f2f2;
-	margin: 20rpx 16rpx;
-	line-height: 50rpx;
-	text-align: center;
-	border-radius: 25rpx;
+	margin: 20rpx;
+	line-height: 35rpx;
+	text-align: left;
+	padding: 5rpx 20rpx;
+	border-radius: 30rpx;
 	color: #e51c2e;
 	background: $comm-border-color;
 }

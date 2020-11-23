@@ -1,9 +1,9 @@
 // 本地环境地址
-const URLHost = 'http://localhost:8080';
-const EDUHost = 'http://localhost:8083';
+// const URLHost = 'http://localhost:8080';
+// const EDUHost = 'http://localhost:8083';
 // 开发环境基础路径地址
-// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-// const EDUHost = 'http://192.168.1.106:8080/jy_edu';
+const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+const EDUHost = 'http://192.168.1.106:8080/jy_edu';
 // 生产环境基础路径地址
 // const URLHost = 'http://182.92.77.60/jy_fcs';
 // const URLHost = 'http://182.92.77.60/jy_edu';
@@ -24,7 +24,7 @@ const url = {
   findAccountInfoId: URLHost + '/accountInfo/findById',
   updateAccountInfo: URLHost + '/accountInfo/update',
   //绑定角色
-  bindingRole:URLHost + '/accountInfo/bindingRole',
+  bindingRole: URLHost + '/accountInfo/bindingRole',
   //重置密码
   resetPass: URLHost + '/accountInfo/resetPass',
   //关联权限修改
@@ -246,33 +246,33 @@ const url = {
   //查询粮价信息列表
   findGrainPricesList: URLHost + '/grainPrices/findPageByParam',
   //保存粮价信息
-  saveGrainPrices:URLHost+ '/grainPrices/saveOrUpdate',
+  saveGrainPrices: URLHost + '/grainPrices/saveOrUpdate',
   //根据id查询粮价信息
-  findGrainPricesInfoById:URLHost+ '/grainPrices/findById',
+  findGrainPricesInfoById: URLHost + '/grainPrices/findById',
   //根据id删除粮价信息
-  deleteGrainPricesInfoById:URLHost+ '/grainPrices/delete',
+  deleteGrainPricesInfoById: URLHost + '/grainPrices/delete',
   //验证粮价日期是否重复
-  checkPriceDate:URLHost+ '/grainPrices/checkPriceDate',
+  checkPriceDate: URLHost + '/grainPrices/checkPriceDate',
   //查询粮价操作历史信息列表
   findGrainPricesHistoryList: URLHost + '/grainPricesHistory/findPageByParam',
   //查询课程信息分页列表
-  findLessonPage:EDUHost+'/lesson/findPage',
+  findLessonPage: EDUHost + '/lesson/findPage',
   //切换线下课程报名状态
-  changeLessonEnroll:EDUHost+'/lesson/enrollSwitch',
+  changeLessonEnroll: EDUHost + '/lesson/enrollSwitch',
   //切换线下课程生效状态
-  changeLessonStatus:EDUHost+'/lesson/enableSwitch',
+  changeLessonStatus: EDUHost + '/lesson/enableSwitch',
   //根据id获取线下课程信息
-  findLessonById:EDUHost+'/lesson/findById',
+  findLessonById: EDUHost + '/lesson/findById',
   //根据id删除线下课程信息
-  deleteLessonById:EDUHost+'/lesson/delete',
+  deleteLessonById: EDUHost + '/lesson/delete',
   //新增线下课程信息
-  addLesson:EDUHost+'/lesson/add',
+  addLesson: EDUHost + '/lesson/add',
   //保存线下课程信息
-  updateLesson:EDUHost+'/lesson/update',
+  updateLesson: EDUHost + '/lesson/update',
   //获取所有职业类别信息
-  findVocationOptions:EDUHost+'/option/findVocation',
+  findVocationOptions: EDUHost + '/option/findVocation',
   //根据课程id查询报名信息
-  findStuListByLesson:EDUHost+'/lesson/findStuListByLesson',
+  findStuListByLesson: EDUHost + '/lesson/findStuListByLesson',
   //设置管理
   //职业类别分页查询
   vocationInfoSearch: EDUHost + '/vocationInfo/findByName',
@@ -375,7 +375,7 @@ const url = {
   //修改
   updateExamPaperInfo: EDUHost + '/examPaperInfo/update',
   findByExamId: EDUHost + '/examPaperInfo/findByExamId',
-  
+
   // 获取证书列表
   findCertificatePage: EDUHost + '/certificate/findPage',
   //根据主键删除证书
