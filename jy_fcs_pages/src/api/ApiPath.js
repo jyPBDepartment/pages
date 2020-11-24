@@ -406,6 +406,21 @@ const url = {
   findCertificateMgt: EDUHost + '/issue/findMgtPage',
   //切换职业类别是否需要考试
   vocationExamEnable: EDUHost + '/vocationInfo/examEnable',
+  //板块管理
+  //分页查询
+  sectionSearch: URLHost + '/sectionManage/findByName',
+  //修改状态
+  sectionEnable: URLHost + '/sectionManage/enable',
+  //删除
+  deleteSection: URLHost + '/sectionManage/delete',
+  //新增
+  addSection: URLHost + '/sectionManage/add',
+  //板块名称下拉列表
+  findSection: URLHost + '/sectionManage/findListName',
+  //通过id查询
+  findSectionId: URLHost + '/sectionManage/findById',
+  //编辑保存
+  updateSectionManage: URLHost + '/sectionManage/update',
 }
 export default {
   url
