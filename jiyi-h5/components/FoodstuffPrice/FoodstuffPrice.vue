@@ -107,7 +107,7 @@ export default {
 							seriesData.push(result[i].price || 0);
 							seriesData1.push((parseFloat(result[i].price || 0) + 0.4).toFixed(2));
 						}
-
+							
 						series[0].name = '最低价格';
 						series[0].legendShape = 'line';
 						series[0].pointShape = 'circle';
@@ -197,11 +197,16 @@ export default {
 			});
 		},
 		touchLineA(e) {
+			
 			canvaLineA.showToolTip(e, {
 				format: function(item, category) {
+					console.log(item,category)
 					return category + '\n' + item.name + ':' + item.data;
 				}
 			});
+		},
+		getPrice(){
+			return [1.3,1.5]
 		}
 	}
 };

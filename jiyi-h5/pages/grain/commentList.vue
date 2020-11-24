@@ -1,9 +1,8 @@
 <template>
 	<view class="comment-list-container">
 		<HeaderSearch title="更多点评"></HeaderSearch>
-		<u-tabs :list="listTab" :is-scroll="false" :current="current" @change="change"></u-tabs>
-			<u-line color="#f4f4f4"></u-line>
-
+		<u-tabs :list="listTab" font-size="28" :current="current" @change="change"></u-tabs>
+		<u-line color="#f4f4f4"></u-line>
 		<view class="list" v-for="i in list" @tap="goDetails" :key="i">
 			<view class="left"><image src="../../static/img/tabbar/首页-s-r.png"></image></view>
 			<view class="right">
@@ -35,6 +34,34 @@ export default {
 				{
 					name: '深度分析'
 				},
+				{
+					name: '原创分析'
+				},
+
+				{
+					name: '原创分析'
+				},
+
+				{
+					name: '原创分析'
+				},
+
+				{
+					name: '原创分析'
+				},
+
+				{
+					name: '原创分析'
+				},
+
+				{
+					name: '原创分析'
+				},
+
+				{
+					name: '原创分析'
+				},
+
 				{
 					name: '原创分析'
 				}

@@ -18,7 +18,7 @@
 				<u-action-sheet :list="cityList" v-model="showArea" @click="selectedArea"></u-action-sheet>
 			</view>
 		</view>
-		<FoodstuffPrice typeFrom="1"></FoodstuffPrice>
+		<FoodstuffPrice typeFrom="1" ref="price"></FoodstuffPrice>
 		<u-line></u-line>
 		<view class=""></view>
 		<view class="price-calculation">
@@ -114,9 +114,12 @@ export default {
 			],
 			grainPrice: '0',
 			grainMoisture: '',
-			ratioValue: 1.1,
+			ratioValue: 1,
 			ratioShow: false,
 			ratio: [
+				{
+					text: ' 1'
+				},
 				{
 					text: ' 1.1'
 				},
@@ -130,21 +133,36 @@ export default {
 		};
 	},
 	methods: {
+		getPrice(){
+			return this.$refs.price.getPrice()
+		},
 		calculationPrice() {
-			let reg = /^\d\.([1-9]{1,2}|[0-9][1-9])$|^[1-9]\d{0,1}(\.\d{1,2}){0,1}$|^100(\.0{1,2}){0,1}$/;
+			let reg = /^[1-9]\d*$/;
 			if (!this.grainMoisture) {
 				uni.showToast({
-					title: '请输入水分值',
+					title: '请输入潮粮水分值',
 					icon: 'none'
 				});
 			} else {
 				if (!reg.test(this.grainMoisture)) {
 					uni.showToast({
-						title: '水分0-100最多保留两位小数',
+						title: '潮粮水分应为整数',
 						icon: 'none'
 					});
 				} else {
-					this.grainPrice = (parseFloat(this.ratioValue) * parseFloat(this.grainMoisture * 0.01) * 100).toFixed(2);
+					if (this.grainMoisture < 14 || this.grainMoisture > 30) {
+						uni.showToast({
+							title: '潮粮水分应为14-30',
+							icon: 'none'
+						});
+					} else {
+						let priceArr =  this.getPrice()
+						let max = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[1])).toFixed(2)
+						let min = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[0])).toFixed(2)
+						this.grainPrice = `${min}~${max}`;
+						
+						
+					}
 				}
 			}
 		},
