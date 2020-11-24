@@ -2,25 +2,20 @@
 	<view class="qiun-columns">
 		<view class="t-c f-14 header-title">
 			<view>吉林省玉米价格行情(元/斤)</view>
-
-			<view><u-icon v-if="typeFrom != 1" name="arrow-rightward" @tap="goQuotation" color="#000" size="40"></u-icon></view>
+			<view><u-icon v-if="typeFrom != 1" name="arrow-rightward" @tap="goQuotation" color="#666" size="36"></u-icon></view>
 		</view>
-		<!-- <view class="tips">说明：该数据来源于大商所最近一个合约的前一日收盘价，仅供参考。</view> -->
 		<view class="tips">说明：该数据来源为资源整合，本公司对于其准确性、真实性不负任何法律责任，仅供参考。（该价格玉米为14%水分）</view>
-		<view style="text-align: center;margin: 10rpx 0;">
-			<u-row :gutter="6">
-				<u-col :span="2" style="text-align: center;">
-					<u-tag text="7日" shape="circle" :type="tagClick == '0' ? 'error' : 'info'" @click="getServerData('0')"></u-tag>
-				</u-col>
-				<u-col :span="2" style="text-align: center;">
-					<u-tag text="30日" shape="circle" :type="tagClick == '1' ? 'error' : 'info'" @click="getServerData('1')"></u-tag>
-				</u-col>
-			</u-row>
+		<view class="qiun-charts">
+			<canvas v-if="chartData" canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
+			<view class="暂未查到数据" v-else>
+				
+			</view>
+			
+			</view>
+		<view style="text-align: center;margin: 10rpx auto;">
+			<u-tag text="7日"  style="width: 100rpx;"  mode="dark" shape="circle" :type="tagClick == '0' ? 'error' : 'info'" @click="getServerData('0')"></u-tag>
+			<u-tag text="30日" style="margin-left: 30rpx;width: 100rpx;"  mode="dark" shape="circle" :type="tagClick == '1' ? 'error' : 'info'" @click="getServerData('1')"></u-tag>
 		</view>
-		<!-- commCharts -->
-		<view class="qiun-charts"><canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas></view>
-
-		<!-- <comm-charts></comm-charts> -->
 	</view>
 </template>
 
@@ -44,7 +39,8 @@ export default {
 			cHeight: '',
 			pixelRatio: 1,
 			tagClick: 0,
-			type: ''
+			type: '',
+			chartData:false
 		};
 	},
 	created() {
@@ -61,6 +57,7 @@ export default {
 			});
 		},
 		getServerData(val) {
+			let self = this;
 			if (val == '0') {
 				this.tagClick = '0';
 			}
@@ -76,7 +73,8 @@ export default {
 				method: 'GET',
 				data: param,
 				success: res => {
-					if (res.data.state == 0) {
+					if (res.data.state == 0 && res.data.data.length) {
+						self.chartData = true
 						let LineA = {
 							categories: [],
 							series: []
@@ -107,8 +105,8 @@ export default {
 						let result = res.data.data;
 						for (let i = 0; i < result.length; i++) {
 							categories.push(result[i].priceDate.substring(5, 10));
-							seriesData.push(result[i].price);
-							seriesData1.push(parseFloat(result[i].price) + 0.4);
+							seriesData.push(result[i].price || 0);
+							seriesData1.push((parseFloat(result[i].price || 0) + 0.4).toFixed(2));
 						}
 
 						series[0].name = '最低价格';
@@ -118,7 +116,7 @@ export default {
 						series[0].type = 'line';
 						series[0].color = '#1890ff';
 						series[0].data = seriesData;
-						console.log(seriesData1);
+						// console.log(seriesData1);
 						series[1].name = '最高价格';
 						series[1].legendShape = 'line';
 						series[1].pointShape = 'circle';
@@ -128,11 +126,14 @@ export default {
 						series[1].data = seriesData1;
 						LineA.categories = categories;
 						LineA.series = series;
+						console.log(seriesData,seriesData1)
 						// console.log(LineA)
 						//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
 						// LineA.categories = ['09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28'];
 						// LineA.series = [{'name':'玉米价格','data':[1,1.2,1.3,0.9,1,1.2,1.3,0.9,1,1.2,1.3,0.9],'legendShape': "line",'pointShape': "circle",'show': true,'type': "line",'color': "#1890ff"}];
 						_self.showLineA('canvasLineA', LineA);
+					}else{
+						self.chartData = false
 					}
 				},
 				fail: err => {
@@ -240,11 +241,11 @@ export default {
 .tips {
 	font-size: 20rpx;
 	background-color: #f2f2f2;
-	margin: 20rpx;
+	margin: 20rpx 0rpx;
 	line-height: 35rpx;
 	text-align: left;
-	padding: 5rpx 20rpx;
-	border-radius: 30rpx;
+	padding: 10rpx;
+	border-radius: 10rpx;
 	color: #e51c2e;
 	background: $comm-border-color;
 }

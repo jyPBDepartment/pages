@@ -2,7 +2,8 @@
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [{
+	"pages": [
+		{
 			"path": "pages/tabbar/index/index" //首页
 		},
 		{
@@ -113,8 +114,14 @@
 		}, 
 		{
 			"path": "pages/grain/quotation"
-		}
-	],
+		},
+		{
+            "path" : "pages/grain/commentList"
+        },
+		{
+            "path" : "pages/grain/commentDetails"
+        }
+    ],
 	"globalStyle": {
 		"navigationStyle": "custom"
 	},

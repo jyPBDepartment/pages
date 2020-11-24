@@ -72,12 +72,14 @@
       <el-row>
         <el-upload
           :multiple="false"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          action="http://192.168.1.103:8080/grainPrices/import"
           :before-upload="beforeUpload"
           :on-success="UploadSuccess"
           :on-error="UploadError"
+          :data="uploadData"
         >
-          <el-button type="success" icon="el-icon-plus">导入</el-button>
+          <el-button type="primary" icon="el-icon-upload2">导入</el-button>
         </el-upload>
       </el-row>
       <br />
@@ -193,6 +195,10 @@ export default {
   inject: ["reload"],
   data() {
     return {
+      uploadData: {
+        createBy: "",
+        suffix: "",
+      },
       priceDefinedType: "",
       url: "",
       updateUser: "",
@@ -220,6 +226,7 @@ export default {
         { value: "0", label: "手动导入" },
         { value: "1", label: "自动生成" },
       ],
+      upLoading: null,
     };
   },
   // 注册组件
@@ -236,9 +243,12 @@ export default {
   methods: {
     UploadError() {
       this.$message.error("上传失败");
+      this.upLoading.close();
     },
     UploadSuccess() {
       this.$message.success("上传成功");
+      this.upLoading.close();
+      this.search("manual");
     },
     beforeUpload(file) {
       const extension = file.name.split(".")[1] === "xls";
@@ -247,6 +257,14 @@ export default {
         this.$message.error("上传模板只能是 xls、xlsx格式!");
         return;
       }
+      this.uploadData.createBy = localStorage.getItem("userInfo");
+      this.uploadData.suffix = file.name.split(".")[1];
+      this.upLoading = this.$loading({
+        lock: true,
+        text: "正在上传",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
       return extension || extension2; // 返回false不会自动上传
     },
     // 分页插件事件
