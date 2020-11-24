@@ -22,6 +22,8 @@ import SellAgriMachinery from '@/views/childrenMenu/sellAgriMachinery'
 //粮食买卖发布
 import CornBusiness from '@/views/childrenMenu/CornBusiness'
 
+//版块管理
+import SectionInfo from '@/views/section/sectionInfo';
 
 /**
  * 门户菜单
@@ -391,7 +393,15 @@ export default new Router({
         meta: {
           requireAuth: true
         }
-      }
+        },
+        {
+            path: '/section/sectionInfo',
+            name: '版块管理',
+            component: SectionInfo,
+            meta: {
+                requireAuth: true
+            }
+        },
 
     ]
   }]
