@@ -1,10 +1,13 @@
 <template>
 	<view class="comment-list-container">
 		<HeaderSearch title="更多点评"></HeaderSearch>
+		<u-tabs :list="listTab" :is-scroll="false" :current="current" @change="change"></u-tabs>
+			<u-line color="#f4f4f4"></u-line>
+
 		<view class="list" v-for="i in list" @tap="goDetails" :key="i">
 			<view class="left"><image src="../../static/img/tabbar/首页-s-r.png"></image></view>
 			<view class="right">
-				<view class="title">文章标题{{i}}</view>
+				<view class="title">文章标题{{ i }}</view>
 				<view class="date">2020-11-24</view>
 			</view>
 		</view>
@@ -23,8 +26,20 @@ export default {
 				loading: '努力加载中',
 				nomore: '实在没有了'
 			},
-			page:1,
-			list:10,
+			page: 1,
+			list: 10,
+			listTab: [
+				{
+					name: '短期分析'
+				},
+				{
+					name: '深度分析'
+				},
+				{
+					name: '原创分析'
+				}
+			],
+			current: 0
 		};
 	},
 	onReachBottom() {
@@ -39,6 +54,9 @@ export default {
 		}, 2000);
 	},
 	methods: {
+		change(index) {
+			this.current = index;
+		},
 		goDetails() {
 			uni.navigateTo({
 				url: '/pages/grain/commentDetails'
