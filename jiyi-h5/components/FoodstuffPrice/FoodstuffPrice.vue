@@ -51,7 +51,6 @@ export default {
 	},
 	methods: {
 		goQuotation() {
-			console.log(1);
 			uni.navigateTo({
 				url: '/pages/grain/quotation?type=1'
 			});
@@ -116,7 +115,7 @@ export default {
 						series[0].type = 'line';
 						series[0].color = '#1890ff';
 						series[0].data = seriesData;
-						// console.log(seriesData1);
+						
 						series[1].name = '最高价格';
 						series[1].legendShape = 'line';
 						series[1].pointShape = 'circle';
@@ -126,8 +125,7 @@ export default {
 						series[1].data = seriesData1;
 						LineA.categories = categories;
 						LineA.series = series;
-						console.log(seriesData,seriesData1)
-						// console.log(LineA)
+						
 						//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
 						// LineA.categories = ['09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28'];
 						// LineA.series = [{'name':'玉米价格','data':[1,1.2,1.3,0.9,1,1.2,1.3,0.9,1,1.2,1.3,0.9],'legendShape': "line",'pointShape': "circle",'show': true,'type': "line",'color': "#1890ff"}];

@@ -27,18 +27,25 @@
 				<view class="comm-form-container left">
 					<view class="item">
 						<view class="title">潮粮水分</view>
-						<view class="info"><u-input placeholder="输入数字最多两位小数" :clearable="false" v-model="grainMoisture" border /></view>
+						<view class="info">
+							<u-input placeholder="请输入0-100最多保留两位小数" placeholder-style="font-size:20rpx" :clearable="false" v-model="grainMoisture" border />
+							<view style="line-height: 70rpx;margin-left: 10rpx;">%</view>
+						</view>
 					</view>
 					<view class="item">
 						<view class="title">折扣比例</view>
 						<view class="info" @tap="showSelect(4)">
 							<u-input style="z-index: -1;" v-model="ratioValue" placeholder="请选择" type="select" border />
 							<u-action-sheet :list="ratio" v-model="ratioShow" @click="selectedRatio"></u-action-sheet>
+							<view style="line-height: 70rpx;margin-left: 10rpx; width: 30rpx;"></view>
 						</view>
 					</view>
 					<view class="item">
 						<view class="title">潮粮价格</view>
-						<view class="info"><u-input disabled :clearable="false" v-model="grainPrice" border /></view>
+						<view class="info">
+							<u-input disabled :clearable="false" v-model="grainPrice" border />
+							<view style="line-height: 70rpx;margin-left: 10rpx;">元</view>
+						</view>
 					</view>
 				</view>
 				<view class="right"><u-button class="btn" :ripple="true" ripple-bg-color="#f90" type="success" @click="calculationPrice">计算</u-button></view>
@@ -49,7 +56,7 @@
 				<view class="name">独家点评</view>
 				<view class="more" @tap="goMore">
 					更多
-					<u-icon name="arrow-right"  color="#999" size="30"></u-icon>
+					<u-icon name="arrow-right" color="#999" size="30"></u-icon>
 				</view>
 			</view>
 			<view class="content">
@@ -90,8 +97,7 @@ export default {
 					text: '内蒙古'
 				}
 			],
-			grainPrice: '0',
-			grainMoisture:'',
+
 			dataList: [
 				{
 					name: '短期分析',
@@ -106,24 +112,41 @@ export default {
 					title: '特大喜讯！基本确定！今年玉米价格为5年来最高。'
 				}
 			],
-			ratioValue:1.1,
-			ratioShow:false,
-			ratio:[
+			grainPrice: '0',
+			grainMoisture: '',
+			ratioValue: 1.1,
+			ratioShow: false,
+			ratio: [
 				{
-					text:" 1.1"
+					text: ' 1.1'
 				},
 				{
-					text: "1.2"
+					text: '1.2'
 				},
 				{
-					text: "1.3"
+					text: '1.3'
 				}
 			]
 		};
 	},
 	methods: {
-		calculationPrice(){
-			this.grainPrice = 112 
+		calculationPrice() {
+			let reg = /^\d\.([1-9]{1,2}|[0-9][1-9])$|^[1-9]\d{0,1}(\.\d{1,2}){0,1}$|^100(\.0{1,2}){0,1}$/;
+			if (!this.grainMoisture) {
+				uni.showToast({
+					title: '请输入水分值',
+					icon: 'none'
+				});
+			} else {
+				if (!reg.test(this.grainMoisture)) {
+					uni.showToast({
+						title: '水分0-100最多保留两位小数',
+						icon: 'none'
+					});
+				} else {
+					this.grainPrice = (parseFloat(this.ratioValue) * parseFloat(this.grainMoisture * 0.01) * 100).toFixed(2);
+				}
+			}
 		},
 		showSelect(val) {
 			if (val == 1) {
@@ -148,18 +171,18 @@ export default {
 		selectedArea(index) {
 			this.area = this.cityList[index].text;
 		},
-		selectedRatio(i){
-			this.ratioValue = this.ratio[i].text
+		selectedRatio(i) {
+			this.ratioValue = this.ratio[i].text;
 		},
 		goMore() {
 			uni.navigateTo({
-				url:'/pages/grain/commentList'
-			})
+				url: '/pages/grain/commentList'
+			});
 		},
 		goDetails() {
 			uni.navigateTo({
-				url:'/pages/grain/commentDetails'
-			})
+				url: '/pages/grain/commentDetails'
+			});
 		}
 	}
 };
@@ -192,10 +215,9 @@ export default {
 			padding: 0;
 			.left {
 				flex: 1;
-				.item{
+				.item {
 					border: none;
 				}
-				
 			}
 			.right {
 				display: flex;

@@ -101,12 +101,15 @@
         min-width="6"
         align="center"
       ></el-table-column>
-      <el-table-column
-        prop="price"
-        label="区域"
-        align="center"
-        min-width="8"
-      ></el-table-column>
+      <el-table-column prop="price" label="区域" align="center" min-width="8">
+        <template slot-scope="scope">
+          <!-- "province": "吉林省", "city": "吉林市", "district": "" -->
+          <div v-if="scope.row.district">{{ scope.row.district }}</div>
+          <div v-else-if="scope.row.city">{{ scope.row.city }}</div>
+          <div v-else-if="scope.row.province">{{ scope.row.province }}</div>
+          <div v-else>--</div>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="priceDate"
         label="导入时间"
@@ -132,13 +135,13 @@
         min-width="10"
       ></el-table-column>
       <el-table-column
-        prop="price"
+        prop="maxPrice"
         label="最高价格(元/斤)"
         align="center"
         min-width="8"
       ></el-table-column>
       <el-table-column
-        prop="price"
+        prop="minPrice"
         label="最低价格(元/斤)"
         align="center"
         min-width="8"
@@ -284,6 +287,9 @@ export default {
         status: this.status,
         page: this.formInline.page,
         size: this.formInline.limit,
+        province: "",
+        city: "",
+        district: "",
       };
       api.testAxiosGet(ApiPath.url.findGrainPricesList, params).then((res) => {
         let code = res.state;
