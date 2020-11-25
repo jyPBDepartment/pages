@@ -15,48 +15,13 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="省份">
-        <el-select
-          v-model="priceDefinedType"
-          placeholder="请选择"
-          style="width: 142px"
-        >
-          <el-option
-            v-for="item in statusOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
+      <el-form-item>
+        <city-select
+          ref="citySelect"
+          @changeSelect="changeSelect"
+        ></city-select>
       </el-form-item>
-      <el-form-item label="地级市">
-        <el-select
-          v-model="priceDefinedType"
-          placeholder="请选择"
-          style="width: 142px"
-        >
-          <el-option
-            v-for="item in statusOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="区县">
-        <el-select
-          v-model="priceDefinedType"
-          placeholder="请选择"
-          style="width: 142px"
-        >
-          <el-option
-            v-for="item in statusOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-form-item>
+
       <el-form-item>
         <el-button
           type="warning"
@@ -73,7 +38,7 @@
         <el-upload
           :multiple="false"
           :show-file-list="false"
-          action="http://192.168.1.103:8080/grainPrices/import"
+          :action="importUrl"
           :before-upload="beforeUpload"
           :on-success="UploadSuccess"
           :on-error="UploadError"
@@ -101,14 +66,13 @@
         min-width="6"
         align="center"
       ></el-table-column>
-      <el-table-column prop="price" label="区域" align="center" min-width="8">
-        <template slot-scope="scope">
-          <!-- "province": "吉林省", "city": "吉林市", "district": "" -->
+      <el-table-column prop="area" label="区域" align="center" min-width="8">
+        <!-- <template slot-scope="scope">
           <div v-if="scope.row.district">{{ scope.row.district }}</div>
           <div v-else-if="scope.row.city">{{ scope.row.city }}</div>
           <div v-else-if="scope.row.province">{{ scope.row.province }}</div>
           <div v-else>--</div>
-        </template>
+        </template> -->
       </el-table-column>
       <el-table-column
         prop="priceDate"
@@ -146,24 +110,6 @@
         align="center"
         min-width="8"
       ></el-table-column>
-      <!-- <el-table-column align="center" label="操作" min-width="14">
-        <template slot-scope="scope">
-          <el-button
-            @click="openUpdateModuleInfo(scope)"
-            type="primary"
-            size="small"
-            icon="el-icon-edit"
-            >编辑</el-button
-          >
-          <el-button
-            @click="deleteModuleInfo(scope)"
-            type="danger"
-            size="small"
-            icon="el-icon-delete"
-            >删除</el-button
-          >
-        </template>
-      </el-table-column> -->
     </el-table>
     <!-- 分页组件 -->
     <Pagination
@@ -194,10 +140,13 @@ import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 import AddGrainPrices from "./addGrainPrices";
 import UpdateGrainPrices from "./updateGrainPrices";
+import citySelect from "@/components/citySelect.vue";
+import CitySelect from "../../components/citySelect.vue";
 export default {
   inject: ["reload"],
   data() {
     return {
+      importUrl: ApiPath.url.grainPricesImport,
       uploadData: {
         createBy: "",
         suffix: "",
@@ -230,6 +179,11 @@ export default {
         { value: "1", label: "自动生成" },
       ],
       upLoading: null,
+      selectObj: {
+        province: "",
+        city: "",
+        district: "",
+      },
     };
   },
   // 注册组件
@@ -237,6 +191,7 @@ export default {
     AddGrainPrices,
     UpdateGrainPrices,
     Pagination,
+    CitySelect,
   },
   watch: {},
   mounted() {},
@@ -276,8 +231,11 @@ export default {
       this.formInline.limit = parm.pageSize;
       this.search(this.formInline);
     },
-    // 获取角色列表
-    search: function (parameter) {
+
+    changeSelect(obj) {
+      this.selectObj = obj;
+    },
+    search(parameter) {
       if (parameter == "manual") {
         this.formInline.page = 1;
         this.formInline.limit = 10;
@@ -287,9 +245,9 @@ export default {
         status: this.status,
         page: this.formInline.page,
         size: this.formInline.limit,
-        province: "",
-        city: "",
-        district: "",
+        province: this.selectObj.province,
+        city: this.selectObj.city,
+        district: this.selectObj.district,
       };
       api.testAxiosGet(ApiPath.url.findGrainPricesList, params).then((res) => {
         let code = res.state;
@@ -364,6 +322,10 @@ export default {
       this.priceDefinedType = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
+      this.$refs.citySelect.resetData();
+      this.selectObj.province = "";
+      this.selectObj.city = "";
+      this.selectObj.district = "";
       this.search(this.formInline);
     },
     // 删除

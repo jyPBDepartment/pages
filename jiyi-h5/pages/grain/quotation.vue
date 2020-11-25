@@ -2,39 +2,23 @@
 	<view class="quotation-container">
 		<!-- 粮价行情 -->
 		<HeaderSearch title="粮价行情"></HeaderSearch>
-		<view class="search-top">
-			<view class="item" @tap="showSelect(1)">
-				<u-input input-align="center" style="z-index: -1;" v-model="province" placeholder="请选择" type="select" />
-				<u-action-sheet :list="cityList" v-model="showProvince" @click="selectedProvince"></u-action-sheet>
-			</view>
-			<u-line length="50" color="#f2f2f2" direction="col"></u-line>
-			<view class="item" @tap="showSelect(2)">
-				<u-input style="z-index: -1;" input-align="center" v-model="city" placeholder="请选择" type="select" />
-				<u-action-sheet :list="cityList" v-model="showCity" @click="selectedCity"></u-action-sheet>
-			</view>
-			<u-line length="50" color="#f2f2f2" direction="col"></u-line>
-			<view class="item" @tap="showSelect(3)">
-				<u-input style="z-index: -1;" input-align="center" v-model="area" placeholder="请选择" type="select" />
-				<u-action-sheet :list="cityList" v-model="showArea" @click="selectedArea"></u-action-sheet>
-			</view>
-		</view>
-		<FoodstuffPrice typeFrom="1" ref="price"></FoodstuffPrice>
+		<FoodstuffPrice typeFrom="1" ref="price" @cityChang="cityChang"></FoodstuffPrice>
 		<u-line></u-line>
 		<view class=""></view>
 		<view class="price-calculation">
-			<view class="header">潮粮价格计算：</view>
+			<view class="header">{{ rangStr }}潮粮价格计算：</view>
 			<view class="content">
 				<view class="comm-form-container left">
 					<view class="item">
 						<view class="title">潮粮水分</view>
 						<view class="info">
-							<u-input placeholder="请输入0-100最多保留两位小数" placeholder-style="font-size:20rpx" :clearable="false" v-model="grainMoisture" border />
+							<u-input placeholder="请输入14-30之间的整数" placeholder-style="font-size:24rpx" :clearable="false" v-model="grainMoisture" border />
 							<view style="line-height: 70rpx;margin-left: 10rpx;">%</view>
 						</view>
 					</view>
 					<view class="item">
 						<view class="title">折扣比例</view>
-						<view class="info" @tap="showSelect(4)">
+						<view class="info" @click="showSelect(4)">
 							<u-input style="z-index: -1;" v-model="ratioValue" placeholder="请选择" type="select" border />
 							<u-action-sheet :list="ratio" v-model="ratioShow" @click="selectedRatio"></u-action-sheet>
 							<view style="line-height: 70rpx;margin-left: 10rpx; width: 30rpx;"></view>
@@ -54,14 +38,14 @@
 		<view class="only-comment">
 			<view class="header">
 				<view class="name">独家点评</view>
-				<view class="more" @tap="goMore">
+				<view class="more" @click="goMore">
 					更多
 					<u-icon name="arrow-right" color="#999" size="30"></u-icon>
 				</view>
 			</view>
 			<view class="content">
-				<view class="item" v-for="(item, i) in dataList" :key="i" @tap="goDetails">
-					<text class="name">{{ item.name }}</text>
+				<view class="item" v-for="(item, i) in dataList" :key="i" @click="goDetails">
+					<text class="name">{{ item.section.name }}</text>
 					<text class="title">{{ item.title }}</text>
 				</view>
 			</view>
@@ -72,32 +56,12 @@
 <script>
 import HeaderSearch from '../../components/HeaderSearch/HeaderSearch.vue';
 import FoodstuffPrice from '@/components/FoodstuffPrice/FoodstuffPrice.vue';
+import ApiPath from '@/api/ApiPath.js';
 
 export default {
 	components: { HeaderSearch, FoodstuffPrice },
 	data() {
 		return {
-			city: '',
-			province: '吉林省',
-			area: '',
-			showCity: false,
-			showProvince: false,
-			showArea: false,
-			cityList: [
-				{
-					text: '吉林省'
-				},
-				{
-					text: '辽宁省'
-				},
-				{
-					text: '黑龙江省'
-				},
-				{
-					text: '内蒙古'
-				}
-			],
-
 			dataList: [
 				{
 					name: '短期分析',
@@ -115,7 +79,9 @@ export default {
 			grainPrice: '0',
 			grainMoisture: '',
 			ratioValue: 1,
+			rangStr: '吉林省',
 			ratioShow: false,
+
 			ratio: [
 				{
 					text: ' 1'
@@ -132,9 +98,12 @@ export default {
 			]
 		};
 	},
+	onShow() {
+		this.getArticleList();
+	},
 	methods: {
-		getPrice(){
-			return this.$refs.price.getPrice()
+		getPrice() {
+			return this.$refs.price.getPrice();
 		},
 		calculationPrice() {
 			let reg = /^[1-9]\d*$/;
@@ -156,41 +125,41 @@ export default {
 							icon: 'none'
 						});
 					} else {
-						let priceArr =  this.getPrice()
-						let max = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[1])).toFixed(2)
-						let min = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[0])).toFixed(2)
+						let priceArr = this.getPrice();
+						let max = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[1])).toFixed(2);
+						let min = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[0])).toFixed(2);
 						this.grainPrice = `${min}~${max}`;
-						
-						
 					}
 				}
 			}
 		},
+		cityChang(str) {
+			this.rangStr = str;
+		},
 		showSelect(val) {
-			if (val == 1) {
-				this.showProvince = true;
-			}
-			if (val == 2) {
-				this.showCity = true;
-			}
-			if (val == 3) {
-				this.showArea = true;
-			}
 			if (val == 4) {
 				this.ratioShow = true;
 			}
 		},
-		selectedCity(index) {
-			this.city = this.cityList[index].text;
-		},
-		selectedProvince(index) {
-			this.province = this.cityList[index].text;
-		},
-		selectedArea(index) {
-			this.area = this.cityList[index].text;
-		},
 		selectedRatio(i) {
 			this.ratioValue = this.ratio[i].text;
+		},
+		getArticleList() {
+			let self = this;
+			uni.request({
+				method: 'GET', //请求方式
+				data: {}, //请求数据
+				url: ApiPath.url.findArticleInfo, //请求接口路径
+				success: res => {
+					
+					if(res.data.code == 200){
+						let arr = res.data.data;
+						self.dataList = arr
+					}
+					
+				},
+				fail: err => {}
+			});
 		},
 		goMore() {
 			uni.navigateTo({
@@ -225,8 +194,9 @@ export default {
 		.header {
 			padding: 20rpx;
 			height: 50rpx;
-			color: #666;
-			font-size: 32rpx;
+			color: #333;
+			font-weight: 500;
+			font-size: 30rpx;
 		}
 		.content {
 			display: flex;

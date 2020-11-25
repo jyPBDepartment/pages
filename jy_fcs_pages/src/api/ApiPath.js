@@ -245,6 +245,10 @@ const url = {
   deleteAgricultural: URLHost + '/agricultural/delete',
   //查询粮价信息列表
   findGrainPricesList: URLHost + '/grainPrices/findPageByParam',
+  //导入粮价
+  grainPricesImport: URLHost + '/grainPrices/import',
+  //获取地区数据
+  grainPricesGetArea: URLHost + '/grainPrices/getArea',
   //保存粮价信息
   saveGrainPrices: URLHost + '/grainPrices/saveOrUpdate',
   //根据id查询粮价信息

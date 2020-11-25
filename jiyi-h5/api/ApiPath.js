@@ -122,7 +122,17 @@ const url = {
 	//农机，农服，粮食买卖图片删除
 	deleteMachine: URLHost + '/agricultural/deletePic',
 	//根据筛选类型查询粮价信息
-	findGrainPricesByType:URLHost + '/grainPrices/findListByType'
+	findGrainPricesByType: URLHost + '/grainPrices/findListByType',
+	//获取地区数据
+	grainPricesGetArea: URLHost + '/grainPrices/getArea',
+	//获取有效的3条文章列表
+	findArticleInfo: URLHost + '/articleManage/findArticleInfo',
+	//文章点评列表
+	findArticleList: URLHost + '/articleManage/findListByChoose',
+	//板块列表
+	findSectionList: URLHost + '/sectionManage/findListSectionId',
+	//文章详情
+	// findSectionList: URLHost + '/sectionManage/findListSectionId',
 }
 export default {
 	url,
