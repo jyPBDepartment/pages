@@ -164,7 +164,7 @@ export default {
         });
         return false;
       }
-      this.$confirm("确定要删除吗?删除后将不可恢复！", "信息", {
+      this.$confirm("确定要删除吗?删除后关联的文章也将被删除！", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -212,6 +212,9 @@ export default {
           }
           if (code == "1") {
             this.$message.success(res.message);
+          }
+          if (code == "2") {
+            this.$message.error(res.message);
           }
           this.search(this.formInline);
         })
