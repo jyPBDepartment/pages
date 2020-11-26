@@ -61,7 +61,7 @@ export default {
 		};
 	},
 	onShow() {
-		// this.getSectionTab();
+		this.getSectionTab();
 		this.getCommentList(this.listTab[0].id);
 	},
 	onReachBottom() {
@@ -95,41 +95,32 @@ export default {
 				page: this.page,
 				size: 10
 			};
-			uni.request({
-				method: 'GET', //请求方式
-				data: params, //请求数据
-				url: ApiPath.url.findArticleList, //请求接口路径
-				success: res => {
-					console.log(res);
-					if (res.data.code == 200) {
-						if (res.data.data.content.length < 10) {
-							self.nomore = true;
-							self.status = 'nomore';
-							self.commentListData = self.commentListData.concat(res.data.data.content);
-						} else {
-							setTimeout(() => {
-								self.status = 'loadmore';
-								self.commentListData = self.commentListData.concat(res.data.data.content);
-							}, 2000);
-						}
+			this.$ajax(ApiPath.url.findArticleList,'GET',params).then((res)=>{
+				if (res.code == 200) {
+					if (res.data.content.length < 10) {
+						self.nomore = true;
+						self.status = 'nomore';
+						self.commentListData = self.commentListData.concat(res.data.content);
+					} else {
+						setTimeout(() => {
+							self.status = 'loadmore';
+							self.commentListData = self.commentListData.concat(res.data.content);
+						}, 2000);
 					}
-				},
-				fail: err => {}
-			});
+				}
+			}).catch((err)=>{
+				
+			})
 		},
 		getSectionTab() {
 			let self = this;
-			uni.request({
-				method: 'GET', //请求方式
-				data: {}, //请求数据
-				url: ApiPath.url.findSectionList, //请求接口路径
-				success: res => {
-					if (res.data.code == 200) {
-						console.log(res.data);
-					}
-				},
-				fail: err => {}
-			});
+			this.$ajax(ApiPath.url.findSectionList,'GET',{}).then((res)=>{
+				if (res.code == 200) {
+					console.log(res.data)
+				}
+			}).catch((err)=>{
+				
+			})
 		}
 	}
 };

@@ -135,18 +135,14 @@ export default {
 		},
 		getArticleList() {
 			let self = this;
-			uni.request({
-				method: 'GET', //请求方式
-				data: {}, //请求数据
-				url: ApiPath.url.findArticleInfo, //请求接口路径
-				success: res => {
-					if (res.data.code == 200) {
-						let arr = res.data.data;
+			this.$ajax(ApiPath.url.findArticleInfo, 'GET', {})
+				.then(res => {
+					if (res.code == 200) {
+						let arr = res.data;
 						self.dataList = arr;
 					}
-				},
-				fail: err => {}
-			});
+				})
+				.catch(err => {});
 		},
 		goMore() {
 			uni.navigateTo({
@@ -155,7 +151,7 @@ export default {
 		},
 		goDetails(id) {
 			uni.navigateTo({
-				url: '/pages/grain/commentDetails?commentId='+id
+				url: '/pages/grain/commentDetails?commentId=' + id
 			});
 		}
 	}

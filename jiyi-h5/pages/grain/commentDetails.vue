@@ -2,11 +2,9 @@
 	<view class="comment-details-container">
 		<HeaderSearch title="详情"></HeaderSearch>
 		<view class="comment-content">
-			<view class="title">{{commentData.title}}</view>
-			<view class="date">{{commentData.updateDate}}</view>
-			<view class="content">
-				<u-parse :html="commentData.content"></u-parse>
-			</view>
+			<view class="title">{{ commentData.title }}</view>
+			<view class="date">{{ commentData.updateDate }}</view>
+			<view class="content"><u-parse :html="commentData.content"></u-parse></view>
 		</view>
 	</view>
 </template>
@@ -35,21 +33,14 @@ export default {
 	methods: {
 		getCommentDetails() {
 			console.log(this.commentId);
-
 			let self = this;
-			uni.request({
-				method: 'GET', //请求方式
-				data: {
-					id: self.commentId
-				}, //请求数据
-				url: ApiPath.url.findArticleIdDetails, //请求接口路径
-				success: res => {
-					if (res.data.code == 200) {
+			this.$ajax(ApiPath.url.findArticleIdDetails, 'GET', { id: self.commentId })
+				.then(res => {
+					if (res.code == 200) {
 						console.log(res.data);
 					}
-				},
-				fail: err => {}
-			});
+				})
+				.catch(err => {});
 		}
 	}
 };
