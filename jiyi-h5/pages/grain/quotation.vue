@@ -44,7 +44,7 @@
 				</view>
 			</view>
 			<view class="content">
-				<view class="item" v-for="(item, i) in dataList" :key="i" @click="goDetails">
+				<view class="item" v-for="(item, i) in dataList" :key="i" @click="goDetails(item.id)">
 					<text class="name">{{ item.section.name || '' }}</text>
 					<text class="title">{{ item.title }}</text>
 				</view>
@@ -153,9 +153,9 @@ export default {
 				url: '/pages/grain/commentList'
 			});
 		},
-		goDetails() {
+		goDetails(id) {
 			uni.navigateTo({
-				url: '/pages/grain/commentDetails'
+				url: '/pages/grain/commentDetails?commentId='+id
 			});
 		}
 	}

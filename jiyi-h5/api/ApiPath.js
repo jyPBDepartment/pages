@@ -132,7 +132,7 @@ const url = {
 	//板块列表
 	findSectionList: URLHost + '/sectionManage/findListSectionId',
 	//文章详情
-	// findSectionList: URLHost + '/sectionManage/findListSectionId',
+	findArticleIdDetails: URLHost + '/articleManage/findArticleId',
 }
 export default {
 	url,

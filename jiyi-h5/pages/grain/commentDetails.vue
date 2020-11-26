@@ -2,44 +2,71 @@
 	<view class="comment-details-container">
 		<HeaderSearch title="详情"></HeaderSearch>
 		<view class="comment-content">
-			<view class="title">点评标题</view>
-			<view class="date">2020-11-24</view>
+			<view class="title">{{commentData.title}}</view>
+			<view class="date">{{commentData.updateDate}}</view>
 			<view class="content">
-				<text>
-					文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容
-					文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容
-					文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容
-				</text>
-			</view>
-			<view class="bottom">
-				<view class="download">下载APP</view>
-				<image class="image" src="../../static/img/tabbar/首页-s-r.png"></image>
+				<u-parse :html="commentData.content"></u-parse>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import ApiPath from '@/api/ApiPath.js';
+
 export default {
-	data() {
-		return {};
+	onLoad(datas) {
+		this.commentId = datas.commentId;
 	},
-	methods: {}
+	data() {
+		return {
+			commentId: '',
+			commentData: {
+				title: '文章标题1',
+				content:
+					'<p><img src="http://60.205.246.126/images/2020/11/25/1606288306423928.gif"><img src="http://60.205.246.126/images/2020/11/25/1606272943742215.gif"></p><p><br></p>',
+				updateDate: '2020-11-26 09:38:46'
+			}
+		};
+	},
+	onShow() {
+		this.getCommentDetails();
+	},
+	methods: {
+		getCommentDetails() {
+			console.log(this.commentId);
+
+			let self = this;
+			uni.request({
+				method: 'GET', //请求方式
+				data: {
+					id: self.commentId
+				}, //请求数据
+				url: ApiPath.url.findArticleIdDetails, //请求接口路径
+				success: res => {
+					if (res.data.code == 200) {
+						console.log(res.data);
+					}
+				},
+				fail: err => {}
+			});
+		}
+	}
 };
 </script>
 
 <style lang="scss" scoped>
 .comment-details-container {
-	.comment-content{
+	.comment-content {
 		padding: 20rpx;
-		
-		.title{
+
+		.title {
 			line-height: 80rpx;
 			font-size: 36rpx;
 			color: #333333;
 			font-weight: 600;
 		}
-		.date{
+		.date {
 			width: 100%;
 			line-height: 40rpx;
 			font-size: 28rpx;
@@ -47,25 +74,10 @@ export default {
 			font-weight: 500;
 			text-align: right;
 		}
-		.content{
-			padding: 20rpx 0;
+		.content {
+			padding: 20rpx;
 			color: #666;
 			font-size: 32rpx;
-			
-		}
-		.bottom{
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			.download{
-				text-align: center;
-			}
-			.image{
-				width: 500rpx;
-				height: 400rpx;
-			}
 		}
 	}
 }

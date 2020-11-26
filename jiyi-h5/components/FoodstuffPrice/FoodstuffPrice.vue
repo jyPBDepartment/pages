@@ -22,7 +22,10 @@
 				<view v-if="typeFrom != 1">吉林省玉米价格行情(元/斤)</view>
 				<view v-else class="title-tip">{{ RangStr }}玉米价格行情(元/斤)</view>
 
-				<view class="more" v-if="typeFrom != 1"><text>更多</text>	<u-icon name="arrow-right" @tap="goQuotation" color="#666" size="36"></u-icon></view>
+				<view class="more" v-if="typeFrom != 1">
+					<text>更多</text>
+					<u-icon name="arrow-right" @tap="goQuotation" color="#666" size="36"></u-icon>
+				</view>
 			</view>
 			<view class="tips">说明：该数据来源为资源整合，本公司对于其准确性、真实性不负任何法律责任，仅供参考。（该价格玉米为14%水分）</view>
 			<view class="qiun-charts">
@@ -366,7 +369,7 @@ export default {
 	margin: 20rpx;
 	box-sizing: border-box;
 	background-color: #ffffff;
-	padding: 30rpx 20rpx 10rpx 20rpx;
+	padding: 20rpx 0;
 
 	.header-title {
 		display: flex;
@@ -378,7 +381,7 @@ export default {
 		.title-tip {
 			font-size: 28rpx;
 		}
-		.more{
+		.more {
 			font-size: 28rpx;
 			color: #666;
 		}
