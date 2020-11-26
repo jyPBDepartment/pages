@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import ApiPath from '@/api/ApiPath.js';
+
 export default {
 	data() {
 		return {
@@ -69,6 +71,9 @@ export default {
 			current: 0
 		};
 	},
+	onShow() {
+		this.getSectionTab();
+	},
 	onReachBottom() {
 		console.log('loadmore');
 		if (this.page >= 3) return;
@@ -80,6 +85,7 @@ export default {
 			else this.status = 'loading';
 		}, 2000);
 	},
+
 	methods: {
 		change(index) {
 			this.current = index;
@@ -87,6 +93,20 @@ export default {
 		goDetails() {
 			uni.navigateTo({
 				url: '/pages/grain/commentDetails'
+			});
+		},
+		getSectionTab() {
+			let self = this;
+			uni.request({
+				method: 'GET', //请求方式
+				data: {}, //请求数据
+				url: ApiPath.url.findSectionList, //请求接口路径
+				success: res => {
+					if (res.data.code == 200) {
+						console.log(res.data);
+					}
+				},
+				fail: err => {}
 			});
 		}
 	}

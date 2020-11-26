@@ -2,7 +2,7 @@
 	<view style="background-color: #f4f4f4">
 		<!-- search 组件监听到得参数search方法获取 -->
 		<HeaderSearch :disabled="true" @searchCallback="search"></HeaderSearch>
-		<FoodstuffPrice class="comm-border"></FoodstuffPrice>
+		<FoodstuffPrice class="charts-box"></FoodstuffPrice>
 		<view class="content">
 			<view class="btn comm-border">
 				<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">
@@ -385,6 +385,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	.charts-box{
+		margin: 20rpx;
+		border-radius: 10rpx;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+		background: #FFFFFF;
+	}
 .content {
 	padding: 0 20rpx 20rpx 20rpx;
 }

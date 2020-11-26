@@ -2,18 +2,18 @@
 	<view>
 		<view class="search-top" v-if="typeFrom == 1">
 			<view class="item" @click="showSelect(1)">
-				<u-input input-align="center" style="z-index: -1;" v-model="province" placeholder="请选择" type="select" />
+				<u-input input-align="center" style="z-index: -1;" v-model="province" placeholder="省份" type="select" />
 
 				<u-picker mode="selector" v-model="showProvince" range-key="name" :default-selector="[0]" :range="provinceList" @confirm="selectedProvince"></u-picker>
 			</view>
 			<u-line length="50" color="#f2f2f2" direction="col"></u-line>
 			<view class="item" @click="showSelect(2)">
-				<u-input style="z-index: -1;" input-align="center" v-model="city" placeholder="请选择" type="select" />
+				<u-input style="z-index: -1;" input-align="center" v-model="city" placeholder="地级市" type="select" />
 				<u-picker mode="selector" @confirm="selectedCity" v-model="showCity" range-key="name" :default-selector="[0]" :range="cityList"></u-picker>
 			</view>
 			<u-line length="50" color="#f2f2f2" direction="col"></u-line>
 			<view class="item" @click="showSelect(3)">
-				<u-input style="z-index: -1;" input-align="center" range-key="name" v-model="district" placeholder="请选择" type="select" />
+				<u-input style="z-index: -1;" input-align="center" range-key="name" v-model="district" placeholder="区/县" type="select" />
 				<u-picker mode="selector" @confirm="selecteddistrict" v-model="showdistrict" range-key="name" :default-selector="[0]" :range="districtList"></u-picker>
 			</view>
 		</view>

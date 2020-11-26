@@ -45,7 +45,7 @@
 			</view>
 			<view class="content">
 				<view class="item" v-for="(item, i) in dataList" :key="i" @click="goDetails">
-					<text class="name">{{ item.section.name }}</text>
+					<text class="name">{{ item.section.name || '' }}</text>
 					<text class="title">{{ item.title }}</text>
 				</view>
 			</view>
@@ -62,20 +62,7 @@ export default {
 	components: { HeaderSearch, FoodstuffPrice },
 	data() {
 		return {
-			dataList: [
-				{
-					name: '短期分析',
-					title: '点击可查看文章详情'
-				},
-				{
-					name: '深度分析',
-					title: '7月大旱，8月大涝----东北玉米价格必涨。'
-				},
-				{
-					name: '原创分析',
-					title: '特大喜讯！基本确定！今年玉米价格为5年来最高。'
-				}
-			],
+			dataList: [],
 			grainPrice: '0',
 			grainMoisture: '',
 			ratioValue: 1,
@@ -84,10 +71,10 @@ export default {
 
 			ratio: [
 				{
-					text: ' 1'
+					text: '1'
 				},
 				{
-					text: ' 1.1'
+					text: '1.1'
 				},
 				{
 					text: '1.2'
@@ -99,7 +86,9 @@ export default {
 		};
 	},
 	onShow() {
-		this.getArticleList();
+		setTimeout(() => {
+			this.getArticleList();
+		});
 	},
 	methods: {
 		getPrice() {
@@ -151,12 +140,10 @@ export default {
 				data: {}, //请求数据
 				url: ApiPath.url.findArticleInfo, //请求接口路径
 				success: res => {
-					
-					if(res.data.code == 200){
+					if (res.data.code == 200) {
 						let arr = res.data.data;
-						self.dataList = arr
+						self.dataList = arr;
 					}
-					
 				},
 				fail: err => {}
 			});
