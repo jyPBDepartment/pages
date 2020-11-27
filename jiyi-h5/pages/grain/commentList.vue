@@ -15,7 +15,7 @@
 			</view>
 		</view>
 
-		<view class="no-data" v-if="commentListData.length <= 0">
+		<view class="no-data" v-if="noData">
 			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
 			<text>暂无数据</text>
 		</view>
@@ -43,7 +43,8 @@ export default {
 			current: 0,
 			selectTab: null,
 			commentListData: [],
-			nomore: false
+			nomore: false,
+			noData:false,
 		};
 	},
 	created() {
@@ -81,22 +82,33 @@ export default {
 			let params = {
 				sectionId: id,
 				page: self.page,
-				size: 3
+				size: 5
 			};
 			self.$ajax(ApiPath.url.findArticleList, 'GET', params)
 				.then(res => {
 					if (res.code == 200) {
-						if (res.data.content.length < 3) {
+						if (res.data.content.length < 5) {
 							self.nomore = true;
 							self.status = 'nomore';
 							self.commentListData = self.commentListData.concat(res.data.content);
+							if(self.commentListData.length == 0){
+								self.noData = true
+							}else{
+								self.noData = false
+							}
 						} else {
 							setTimeout(() => {
 								self.nomore = false;
 								self.status = 'loadmore';
 								self.commentListData = self.commentListData.concat(res.data.content);
+								if(self.commentListData.length == 0){
+									self.noData = true
+								}else{
+									self.noData = false
+								}
 							}, 200);
 						}
+						
 					}
 				})
 				.catch(err => {});
@@ -109,6 +121,7 @@ export default {
 						self.listTab = res.data;
 						self.commentListData = [];
 						self.getCommentList(self.listTab[0].id);
+						
 					}
 				})
 				.catch(err => {});
