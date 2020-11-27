@@ -42,10 +42,8 @@
              </el-row>
              <el-divider></el-divider>
              <el-row>
-                <el-col :span="3">内容:</el-col>
-                <el-col :span="18">
-                    <span v-html="editFrom.content">{{editFrom.content}}</span>
-                </el-col>
+                <span>描述：</span>
+                <div class="contentText" v-html="editFrom.content"></div>
              </el-row>
          </el-form>
      </slot>
@@ -61,7 +59,7 @@ import Vue from "vue";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
 export default {
-      props: {
+  props: {
     show: {
       type: Boolean,
       default: false,
@@ -117,5 +115,10 @@ export default {
 <style scoped>
 .el-form {
   padding-left: 100px;
+}
+.contentText >>> img {
+  width: 300px;
+  height: 200px;
+  margin: 10px;
 }
 </style>
