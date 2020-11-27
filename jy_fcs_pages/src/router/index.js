@@ -22,9 +22,6 @@ import SellAgriMachinery from '@/views/childrenMenu/sellAgriMachinery'
 //粮食买卖发布
 import CornBusiness from '@/views/childrenMenu/CornBusiness'
 
-//版块管理
-import SectionInfo from '@/views/section/sectionInfo';
-
 /**
  * 门户菜单
  */
@@ -118,6 +115,10 @@ import FormworkList from '@/views/certificate/formworkList'
 import CertificateIssue from '@/views/certificate/issue'
 //证书管理
 import CertificateMgt from '@/views/certificate/certificateMgt'
+//版块管理
+import SectionInfo from '@/views/section/sectionInfo';
+//文章管理
+import ArticleManage from '@/views/articleManage/articleManage';
 // 启用路由
 Vue.use(Router);
 
@@ -401,7 +402,14 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        },
+        }, {
+            path: '/articleManage/articleManage',
+            name: '文章管理',
+            component: ArticleManage,
+            meta: {
+                requireAuth: true
+            }
+        }
 
     ]
   }]

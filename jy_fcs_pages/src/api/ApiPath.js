@@ -425,6 +425,20 @@ const url = {
   findSectionId: URLHost + '/sectionManage/findById',
   //编辑保存
   updateSectionManage: URLHost + '/sectionManage/update',
+  //文章分页查询
+  articleSearch: URLHost + '/articleManage/findByName',
+  //查询有效版块
+  findListSectionId: URLHost + '/sectionManage/findListSectionId',
+  //新增
+  addArticle: URLHost + '/articleManage/add',
+  //删除
+  deleteArticle: URLHost + '/articleManage/delete',
+  //修改状态
+  articleEnable: URLHost + '/articleManage/enable',
+  //通过id查询
+  ArticleFindById: URLHost + '/articleManage/findById',
+  //编辑
+  updateArticle: URLHost + '/articleManage/update',
 }
 export default {
   url
