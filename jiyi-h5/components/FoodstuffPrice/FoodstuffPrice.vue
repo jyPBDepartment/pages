@@ -3,7 +3,6 @@
 		<view class="search-top" v-if="typeFrom == 1">
 			<view class="item" @click="showSelect(1)">
 				<u-input input-align="center" style="z-index: -1;" v-model="province" placeholder="省份" type="select" />
-
 				<u-picker mode="selector" v-model="showProvince" range-key="name" :default-selector="[0]" :range="provinceList" @confirm="selectedProvince"></u-picker>
 			</view>
 			<u-line length="50" color="#f2f2f2" direction="col"></u-line>
@@ -29,7 +28,10 @@
 			<view class="tips">说明：该数据来源为资源整合，本公司对于其准确性、真实性不负任何法律责任，仅供参考。（该价格玉米为14%水分）</view>
 			<view class="qiun-charts">
 				<canvas v-if="chartData" canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
-				<view class="暂未查到数据" v-else></view>
+				<view class="no-data" v-else>
+					<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
+					<text>暂未查到数据</text>
+				</view>
 			</view>
 			<view style="text-align: center;margin: 10rpx auto;">
 				<u-tag text="7日" style="width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '0' ? 'error' : 'info'" @click="getServerData('0')"></u-tag>
@@ -236,7 +238,6 @@ export default {
 					gridColor: '#CCCCCC',
 					dashLength: 4,
 					splitNumber: 4,
-					// disableGrid:true,
 					min: 0,
 					max: 1,
 					fontSize: 8,
@@ -260,7 +261,6 @@ export default {
 		touchLineA(e) {
 			canvaLineA.showToolTip(e, {
 				format: function(item, category) {
-					console.log(item, category);
 					return category + '\n' + item.name + ':' + item.data;
 				}
 			});
@@ -314,7 +314,6 @@ export default {
 		selectedCity(index) {
 			this.city = this.cityList[index[0]].name;
 			this.cityId = this.cityList[index[0]].id;
-
 			this.getCityList(this.cityList[index[0]].id, 'district');
 			this.district = '';
 			this.districtId = '';
@@ -352,7 +351,7 @@ export default {
 <style lang="scss">
 .search-top {
 	display: flex;
-	padding: 10rpx 20rpx;
+	padding: 10rpx 0;
 	border-bottom: 1rpx solid #f4f4f4;
 	margin-bottom: -20rpx;
 	align-items: center;

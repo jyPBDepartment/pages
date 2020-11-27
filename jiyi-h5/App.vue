@@ -1,4 +1,4 @@
-<script>
+no-data<script>
 	export default {
 		onLaunch: function() {
 			// console.log('App Launch');
@@ -357,6 +357,23 @@
 		justify-content: space-around;
 		.btn {
 			width: 192rpx;
+		}
+	}
+	.no-data{
+		width: 100%;
+		height: 300rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		margin-top: 160rpx;
+		> image {
+			width: 300rpx;
+			height: 300rpx;
+		}
+		text {
+			font-size: 28rpx;
+			color: #999;
 		}
 	}
 </style>

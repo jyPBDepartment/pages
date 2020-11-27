@@ -20,7 +20,7 @@
 			<text>暂无数据</text>
 		</view>
 
-		<u-loadmore v-if="commentListData.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" />
+		<u-loadmore v-if="commentListData.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
 	</view>
 </template>
 
@@ -59,6 +59,11 @@ export default {
 	},
 
 	methods: {
+		loadmore(){
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.getCommentList(this.listTab[this.current].id);
+		},
 		change(index) {
 			this.current = index;
 			this.selectTab = this.listTab[index];
@@ -76,12 +81,12 @@ export default {
 			let params = {
 				sectionId: id,
 				page: self.page,
-				size: 5
+				size: 3
 			};
 			self.$ajax(ApiPath.url.findArticleList, 'GET', params)
 				.then(res => {
 					if (res.code == 200) {
-						if (res.data.content.length < 5) {
+						if (res.data.content.length < 3) {
 							self.nomore = true;
 							self.status = 'nomore';
 							self.commentListData = self.commentListData.concat(res.data.content);
