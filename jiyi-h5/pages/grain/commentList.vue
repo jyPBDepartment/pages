@@ -82,12 +82,12 @@ export default {
 			let params = {
 				sectionId: id,
 				page: self.page,
-				size: 5
+				size: 10
 			};
 			self.$ajax(ApiPath.url.findArticleList, 'GET', params)
 				.then(res => {
 					if (res.code == 200) {
-						if (res.data.content.length < 5) {
+						if (res.data.content.length < 10) {
 							self.nomore = true;
 							self.status = 'nomore';
 							self.commentListData = self.commentListData.concat(res.data.content);
