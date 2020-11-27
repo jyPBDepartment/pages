@@ -32,7 +32,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="right"><u-button class="btn" :ripple="true" ripple-bg-color="#f90" type="success" @click="calculationPrice">计算</u-button></view>
+				<view class="right"><u-button class="btn" :ripple="true" type="success" @click="calculationPrice">计算</u-button></view>
 			</view>
 		</view>
 		<view class="only-comment">
@@ -68,7 +68,6 @@ export default {
 			ratioValue: 1,
 			rangStr: '吉林省',
 			ratioShow: false,
-
 			ratio: [
 				{
 					text: '1'

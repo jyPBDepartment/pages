@@ -4,7 +4,7 @@
 		<view class="comment-content">
 			<view class="title">{{ commentData.title }}</view>
 			<view class="date">{{ commentData.updateDate }}</view>
-			<view class="content"><u-parse :html="commentData.content"></u-parse></view>
+			<view class="content"><u-parse :html="commentData.content" :tag-style="style"></u-parse></view>
 		</view>
 	</view>
 </template>
@@ -20,10 +20,12 @@ export default {
 		return {
 			commentId: '',
 			commentData: {
-				title: '文章标题1',
-				content:
-					'<p><img src="http://60.205.246.126/images/2020/11/25/1606288306423928.gif"><img src="http://60.205.246.126/images/2020/11/25/1606272943742215.gif"></p><p><br></p>',
-				updateDate: '2020-11-26 09:38:46'
+				title: '',
+				content: '',
+				updateDate: ''
+			},
+			style: {
+				p: 'word-wrap: break-word;word-break: break-all;overflow: hidden;'
 			}
 		};
 	},
@@ -37,7 +39,8 @@ export default {
 			this.$ajax(ApiPath.url.findArticleIdDetails, 'GET', { id: self.commentId })
 				.then(res => {
 					if (res.code == 200) {
-						console.log(res.data);
+						// console.log(res.data);
+						self.commentData = res.data;
 					}
 				})
 				.catch(err => {});
@@ -69,6 +72,7 @@ export default {
 			padding: 20rpx;
 			color: #666;
 			font-size: 32rpx;
+			// width: 670rpx;
 		}
 	}
 }
