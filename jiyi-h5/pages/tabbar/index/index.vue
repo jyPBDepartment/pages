@@ -1,6 +1,5 @@
 <template>
 	<view style="background-color: #f4f4f4">
-		<!-- search 组件监听到得参数search方法获取 -->
 		<HeaderSearch :disabled="true" @searchCallback="search"></HeaderSearch>
 		<FoodstuffPrice class="charts-box"></FoodstuffPrice>
 		<view class="content">

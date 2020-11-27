@@ -62,9 +62,8 @@ export default {
 		change(index) {
 			this.current = index;
 			this.selectTab = this.listTab[index];
-			this.commentListData = [];
-			console.log(this.listTab[index].id);
 			this.page = 1;
+			this.commentListData = [];
 			this.getCommentList(this.listTab[index].id);
 		},
 		goDetails(id) {
@@ -83,7 +82,6 @@ export default {
 				.then(res => {
 					if (res.code == 200) {
 						if (res.data.content.length < 5) {
-							console.log('last-page');
 							self.nomore = true;
 							self.status = 'nomore';
 							self.commentListData = self.commentListData.concat(res.data.content);

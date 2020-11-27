@@ -67,12 +67,6 @@
         align="center"
       ></el-table-column>
       <el-table-column prop="area" label="区域" align="center" min-width="8">
-        <!-- <template slot-scope="scope">
-          <div v-if="scope.row.district">{{ scope.row.district }}</div>
-          <div v-else-if="scope.row.city">{{ scope.row.city }}</div>
-          <div v-else-if="scope.row.province">{{ scope.row.province }}</div>
-          <div v-else>--</div>
-        </template> -->
       </el-table-column>
       <el-table-column
         prop="priceDate"
@@ -116,19 +110,6 @@
       v-bind:child-msg="formInline"
       @callFather="callFather"
     ></Pagination>
-    <add-grain-prices
-      :show="addGrainPricesShow"
-      title="添加"
-      @close="closeGrainPricesDialog"
-      @save="saveGrainPricesInfo"
-    ></add-grain-prices>
-    <update-grain-prices
-      :show="updateGrainPricesShow"
-      :transModuleInfoId="transModuleInfoId"
-      title="修改"
-      @close="closeUpdateModuleInfoDialog"
-      @save="upModuleInfo"
-    ></update-grain-prices>
   </div>
 </template>
 
@@ -138,9 +119,6 @@ import Pagination from "../../components/Pagination";
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
-import AddGrainPrices from "./addGrainPrices";
-import UpdateGrainPrices from "./updateGrainPrices";
-import citySelect from "@/components/citySelect.vue";
 import CitySelect from "../../components/citySelect.vue";
 export default {
   inject: ["reload"],
@@ -188,8 +166,6 @@ export default {
   },
   // 注册组件
   components: {
-    AddGrainPrices,
-    UpdateGrainPrices,
     Pagination,
     CitySelect,
   },
@@ -268,9 +244,6 @@ export default {
       this.search(this.formInline);
       this.addGrainPricesShow = false;
     },
-    // addGrainPrices() {
-    //   this.addGrainPricesShow = true;
-    // },
     closeUpdateModuleInfoDialog() {
       this.search(this.formInline);
       this.updateGrainPricesShow = false;

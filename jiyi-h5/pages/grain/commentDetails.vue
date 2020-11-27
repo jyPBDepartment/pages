@@ -34,12 +34,10 @@ export default {
 	},
 	methods: {
 		getCommentDetails() {
-			console.log(this.commentId);
 			let self = this;
 			this.$ajax(ApiPath.url.findArticleIdDetails, 'GET', { id: self.commentId })
 				.then(res => {
 					if (res.code == 200) {
-						// console.log(res.data);
 						self.commentData = res.data;
 					}
 				})
@@ -70,9 +68,6 @@ export default {
 		}
 		.content {
 			padding: 20rpx;
-			color: #666;
-			font-size: 32rpx;
-			// width: 670rpx;
 		}
 	}
 }
