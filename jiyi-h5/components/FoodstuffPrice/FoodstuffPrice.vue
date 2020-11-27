@@ -23,7 +23,7 @@
 				<view v-else class="title-tip">{{ RangStr }}玉米价格行情(元/斤)</view>
 				<view class="more" v-if="typeFrom != 1" @tap="goQuotation" >
 					<text>更多</text>
-					<u-icon name="arrow-right" color="#666" size="36"></u-icon>
+					<u-icon name="arrow-right" color="#666" size="30"></u-icon>
 				</view>
 			</view>
 			<view class="tips">说明：该数据来源为资源整合，本公司对于其准确性、真实性不负任何法律责任，仅供参考。（该价格玉米为14%水分）</view>
