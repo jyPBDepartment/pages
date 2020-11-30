@@ -152,7 +152,7 @@ export default {
 		},
 		selectedRatio(i) {
 			this.ratioValue = this.ratio[i].text;
-			this.calculationPrice();
+			// this.calculationPrice();
 		},
 		getArticleList() {
 			let self = this;
