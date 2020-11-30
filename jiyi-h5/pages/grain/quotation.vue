@@ -10,24 +10,37 @@
 			<view class="content">
 				<view class="comm-form-container left">
 					<view class="item">
-						<view class="title">潮粮水分</view>
+						<view class="title">潮粮水分：</view>
 						<view class="info">
-							<u-input placeholder="请输入14-30之间的整数" placeholder-style="font-size:24rpx" :clearable="false" v-model="grainMoisture" border />
+							<u-input
+								placeholder="请输入14-30之间的整数"
+								:custom-style="{ 'padding-right': '10rpx' }"
+								input-align="right"
+								placeholder-style="font-size:24rpx"
+								:clearable="false"
+								v-model="grainMoisture"
+							/>
 							<view style="line-height: 70rpx;margin-left: 10rpx;">%</view>
 						</view>
 					</view>
 					<view class="item">
-						<view class="title">折扣比例</view>
+						<view class="title">折扣比例：</view>
 						<view class="info" @click="showSelect(4)">
-							<u-input style="z-index: -1;" v-model="ratioValue" placeholder="请选择" type="select" border />
+							<u-input
+								style="z-index: -1;"
+								:custom-style="{ 'padding-right': '10rpx' }"
+								v-model="ratioValue"
+								input-align="right"
+								placeholder="请选择折扣比例"
+								type="select"
+							/>
 							<u-action-sheet :list="ratio" v-model="ratioShow" @click="selectedRatio"></u-action-sheet>
-							<view style="line-height: 70rpx;margin-left: 10rpx; width: 30rpx;"></view>
 						</view>
 					</view>
 					<view class="item">
-						<view class="title">潮粮价格</view>
+						<view class="title">潮粮价格：</view>
 						<view class="info">
-							<u-input disabled :clearable="false" v-model="grainPrice" border />
+							<u-input :custom-style="{ color: '#FA3534', 'font-size': '32rpx' }" input-align="right" disabled :clearable="false" v-model="grainPrice" />
 							<view style="line-height: 70rpx;margin-left: 10rpx;">元</view>
 						</view>
 					</view>
@@ -65,7 +78,7 @@ export default {
 			dataList: [],
 			grainPrice: '0',
 			grainMoisture: '',
-			ratioValue: 1,
+			ratioValue: '',
 			rangStr: '吉林省',
 			ratioShow: false,
 			ratio: [
@@ -113,10 +126,18 @@ export default {
 							icon: 'none'
 						});
 					} else {
-						let priceArr = this.getPrice();
-						let max = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[1])).toFixed(2);
-						let min = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[0])).toFixed(2);
-						this.grainPrice = `${min}~${max}`;
+						if (!this.ratioValue) {
+							uni.showToast({
+								title: '请选择折扣比例',
+								icon: 'none'
+							});
+							this.ratioShow = true;
+						} else {
+							let priceArr = this.getPrice();
+							let max = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[1])).toFixed(2);
+							let min = (((100 - (parseInt(this.grainMoisture) - 14) * parseFloat(this.ratioValue)) / 100) * parseFloat(priceArr[0])).toFixed(2);
+							this.grainPrice = `${min}~${max}`;
+						}
 					}
 				}
 			}
@@ -131,6 +152,7 @@ export default {
 		},
 		selectedRatio(i) {
 			this.ratioValue = this.ratio[i].text;
+			this.calculationPrice();
 		},
 		getArticleList() {
 			let self = this;
@@ -186,7 +208,7 @@ export default {
 			.left {
 				flex: 1;
 				.item {
-					border: none;
+					// border: none;
 				}
 			}
 			.right {

@@ -14,12 +14,10 @@
 				</view>
 			</view>
 		</view>
-
 		<view class="no-data" v-if="noData">
 			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
 			<text>暂无数据</text>
 		</view>
-
 		<u-loadmore v-if="commentListData.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
 	</view>
 </template>
@@ -44,7 +42,7 @@ export default {
 			selectTab: null,
 			commentListData: [],
 			nomore: false,
-			noData:false,
+			noData: false
 		};
 	},
 	created() {
@@ -60,7 +58,7 @@ export default {
 	},
 
 	methods: {
-		loadmore(){
+		loadmore() {
 			this.status = 'loading';
 			this.page = ++this.page;
 			this.getCommentList(this.listTab[this.current].id);
@@ -91,24 +89,23 @@ export default {
 							self.nomore = true;
 							self.status = 'nomore';
 							self.commentListData = self.commentListData.concat(res.data.content);
-							if(self.commentListData.length == 0){
-								self.noData = true
-							}else{
-								self.noData = false
+							if (self.commentListData.length == 0) {
+								self.noData = true;
+							} else {
+								self.noData = false;
 							}
 						} else {
 							setTimeout(() => {
 								self.nomore = false;
 								self.status = 'loadmore';
 								self.commentListData = self.commentListData.concat(res.data.content);
-								if(self.commentListData.length == 0){
-									self.noData = true
-								}else{
-									self.noData = false
+								if (self.commentListData.length == 0) {
+									self.noData = true;
+								} else {
+									self.noData = false;
 								}
 							}, 200);
 						}
-						
 					}
 				})
 				.catch(err => {});
@@ -121,7 +118,6 @@ export default {
 						self.listTab = res.data;
 						self.commentListData = [];
 						self.getCommentList(self.listTab[0].id);
-						
 					}
 				})
 				.catch(err => {});

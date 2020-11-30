@@ -20,7 +20,7 @@
 			<view class="t-c f-14 header-title">
 				<view v-if="typeFrom != 1">吉林省玉米价格行情(元/斤)</view>
 				<view v-else class="title-tip">{{ RangStr }}玉米价格行情(元/斤)</view>
-				<view class="more" v-if="typeFrom != 1" @tap="goQuotation" >
+				<view class="more" v-if="typeFrom != 1" @tap="goQuotation">
 					<text>更多</text>
 					<u-icon name="arrow-right" color="#666" size="30"></u-icon>
 				</view>
@@ -34,15 +34,8 @@
 				</view>
 			</view>
 			<view style="text-align: center;margin: 10rpx auto;">
-				<u-tag text="7日" style="width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '0' ? 'error' : 'info'" @click="getServerData('0')"></u-tag>
-				<u-tag
-					text="30日"
-					style="margin-left: 30rpx;width: 100rpx;"
-					mode="dark"
-					shape="circle"
-					:type="tagClick == '1' ? 'error' : 'info'"
-					@click="getServerData('1')"
-				></u-tag>
+				<u-tag text="7日" style="width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '0' ? 'error' : 'info'" @click="tabSelect('0')"></u-tag>
+				<u-tag text="30日" style="margin-left: 30rpx;width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '1' ? 'error' : 'info'" @click="tabSelect('1')"></u-tag>
 			</view>
 		</view>
 	</view>
@@ -83,7 +76,8 @@ export default {
 			priceObj: {
 				max: '',
 				min: ''
-			}
+			},
+			tabValue: '1'
 		};
 	},
 	created() {
@@ -94,6 +88,16 @@ export default {
 		setTimeout(() => {
 			this.getServerData('0');
 		});
+	},
+	watch: {
+		tagClick: {
+			handler: function(vnew, old) {
+				if (vnew !== old) {
+					this.getServerData(vnew);
+				}
+			},
+			immediate: true
+		}
 	},
 	computed: {
 		RangStr: function() {
@@ -109,19 +113,39 @@ export default {
 		}
 	},
 	methods: {
-		goQuotation() {
-			uni.navigateTo({
-				url: '/pages/grain/quotation?type=1'
-			});
+		throttle(fn, delay = 1000) {
+			let timer = null;
+			let firstTime = true;
+			return function(...args) {
+				if (firstTime) {
+					fn.apply(this, args);
+					return (firstTime = false);
+				}
+				if (timer) {
+					return;
+				}
+				timer = setTimeout(() => {
+					clearTimeout(timer);
+					timer = null;
+					fn.apply(this, args);
+				}, delay);
+			};
 		},
-		getServerData(val) {
-			let self = this;
+		tabSelect(val) {
 			if (val == '0') {
 				this.tagClick = '0';
 			}
 			if (val == '1') {
 				this.tagClick = '1';
 			}
+		},
+		goQuotation() {
+			uni.navigateTo({
+				url: '/pages/grain/quotation'
+			});
+		},
+		getServerData(val) {
+			let self = this;
 			let param = {
 				type: val,
 				province: this.provinceId,
