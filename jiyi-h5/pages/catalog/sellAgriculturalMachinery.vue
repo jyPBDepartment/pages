@@ -3,7 +3,7 @@
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
 		<Screen @select="select" :condition="condition" :type="2"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption" style="background-color: #fff!important">
-			<view class="p-x-10 g-flex g-f-warp g-f-row g-j-s-b" style="margin:20rpx 0;">
+			<view class="g-flex g-f-warp g-f-row " style="margin:20rpx 0;">
 				<view @click="jump(item)" class="commodity comm-border b-f" v-for="(item, index) in dataList" :key="index">
 					<view class="label f-12">{{ item.labelCode }}</view>
 					<image style="width: 316rpx;height: 298rpx;" :src="item.url" mode=""></image>
@@ -154,6 +154,7 @@ page {
 	padding: 12rpx;
 	margin-bottom: 20rpx;
 	position: relative;
+	margin-left: 22rpx;
 }
 
 .label {

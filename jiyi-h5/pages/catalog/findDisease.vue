@@ -171,11 +171,12 @@ export default {
 	.find-disease-container{
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-around;
+		justify-content: flex-start;
 		margin-top: 30rpx;
 		.list-item-l {
 			width: 345rpx;
 			margin-bottom: 30rpx;
+			margin-left: 20rpx;
 			padding: 16rpx 0;
 			display: flex;
 			flex-direction: column;
