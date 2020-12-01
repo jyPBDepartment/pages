@@ -27,11 +27,7 @@
 			</view>
 			<view class="tips">说明：该数据来源为资源整合，本公司对于其准确性、真实性不负任何法律责任，仅供参考。（该价格玉米为14%水分）</view>
 			<view class="qiun-charts">
-				<canvas v-if="chartData" canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
-				<view class="no-data" v-else>
-					<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
-					<text>暂未查到数据</text>
-				</view>
+				<canvas  canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
 			</view>
 			<view style="text-align: center;margin: 10rpx auto;">
 				<u-tag text="7日" style="width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '0' ? 'error' : 'info'" @click="tabSelect('0')"></u-tag>
@@ -60,7 +56,6 @@ export default {
 			pixelRatio: 1,
 			tagClick: 0,
 			type: '',
-			chartData: false,
 			city: '',
 			province: '吉林省',
 			district: '',
@@ -84,15 +79,14 @@ export default {
 		_self = this;
 		this.cWidth = uni.upx2px(660);
 		this.cHeight = uni.upx2px(500);
+		canvaLineA = null
 		this.getCityList();
-		setTimeout(() => {
-			this.getServerData('0');
-		});
+		
 	},
 	watch: {
 		tagClick: {
 			handler: function(vnew, old) {
-				if (vnew !== old) {
+				if (vnew != old) {
 					this.getServerData(vnew);
 				}
 			},
@@ -113,23 +107,8 @@ export default {
 		}
 	},
 	methods: {
-		throttle(fn, delay = 1000) {
-			let timer = null;
-			let firstTime = true;
-			return function(...args) {
-				if (firstTime) {
-					fn.apply(this, args);
-					return (firstTime = false);
-				}
-				if (timer) {
-					return;
-				}
-				timer = setTimeout(() => {
-					clearTimeout(timer);
-					timer = null;
-					fn.apply(this, args);
-				}, delay);
-			};
+		updateData(){
+			this.getCityList();
 		},
 		tabSelect(val) {
 			if (val == '0') {
@@ -159,7 +138,6 @@ export default {
 				data: param,
 				success: res => {
 					if (res.data.state == 0 && res.data.data.length) {
-						self.chartData = true;
 						let LineA = {
 							categories: [],
 							series: []
@@ -217,9 +195,7 @@ export default {
 						// LineA.categories = ['09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28'];
 						// LineA.series = [{'name':'玉米价格','data':[1,1.2,1.3,0.9,1,1.2,1.3,0.9,1,1.2,1.3,0.9],'legendShape': "line",'pointShape': "circle",'show': true,'type': "line",'color': "#1890ff"}];
 						_self.showLineA('canvasLineA', LineA);
-					} else {
-						self.chartData = false;
-					}
+					} 
 				},
 				fail: err => {
 					uni.showToast({
@@ -230,6 +206,7 @@ export default {
 			});
 		},
 		showLineA(canvasId, chartData) {
+			
 			let labelCount = this.tagClick === '0' ? 8 : 9;
 			canvaLineA = new uCharts({
 				$this: _self,
@@ -327,8 +304,10 @@ export default {
 						arr.forEach(item => {
 							if (item.name == '吉林省') {
 								self.provinceId = item.id;
+								self.getServerData('0');
 							}
 						});
+						
 						self.getCityList(self.provinceId, 'city');
 					}
 				},

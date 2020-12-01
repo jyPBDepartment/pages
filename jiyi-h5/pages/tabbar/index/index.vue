@@ -1,7 +1,7 @@
 <template>
 	<view style="background-color: #f4f4f4">
 		<HeaderSearch :disabled="true" @searchCallback="search"></HeaderSearch>
-		<FoodstuffPrice class="charts-box"></FoodstuffPrice>
+		<FoodstuffPrice v-if="showCharts" class="charts-box"></FoodstuffPrice>
 		<view class="content">
 			<view class="btn comm-border">
 				<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">
@@ -92,7 +92,8 @@ export default {
 			NjList: [],
 			ChList: [],
 			show: true,
-			maskAble: false
+			maskAble: false,
+			showCharts: true
 		};
 	},
 	onLoad(e) {
@@ -109,6 +110,12 @@ export default {
 		// 初始化加载病虫害信息
 		this.initCaseInfo();
 	},
+	onShow: function() {
+		this.showCharts = false;
+		setTimeout(() => {
+			this.showCharts = true;
+		});
+	},
 	methods: {
 		// 从外部接口获取客户信息
 		initCustomerInfo(e) {
@@ -118,7 +125,7 @@ export default {
 			// localStorage.setItem('userId', 'F0001241');
 			localStorage.setItem('sessionId', e.SI);
 			// localStorage.setItem('sessionId', "8900212315182333952");
-			
+
 			let us = localStorage.getItem('userId');
 			let ss = localStorage.getItem('sessionId');
 			let s = us + '+' + ss + '+' + Interface.md5.key;
@@ -139,7 +146,7 @@ export default {
 					'Content-Security-Policy': 'upgrade-insecure-requests'
 				},
 				success: res => {
-					console.log(JSON.stringify(res))
+					console.log(JSON.stringify(res));
 					let code = res.data.RETURNRESULT.RESULT;
 					let message = res.data.RETURNRESULT.RETCODE;
 
@@ -364,7 +371,7 @@ export default {
 		// 粮食买卖详情跳转
 		detailsMm(val) {
 			uni.navigateTo({
-				url: '/pages/grain/space?id=' + val + '&isMain=0'+'&type=0'
+				url: '/pages/grain/space?id=' + val + '&isMain=0' + '&type=0'
 			});
 		},
 		// 农机详情跳转
@@ -384,12 +391,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.charts-box{
-		margin: 20rpx;
-		border-radius: 10rpx;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-		background: #FFFFFF;
-	}
+.charts-box {
+	margin: 20rpx;
+	border-radius: 10rpx;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+	background: #ffffff;
+}
 .content {
 	padding: 0 20rpx 20rpx 20rpx;
 }
