@@ -1,6 +1,7 @@
 <template>
 	<view style="background-color: #f4f4f4">
-		<HeaderSearch :disabled="true" @searchCallback="search"></HeaderSearch>
+		<!-- <view><u-button @click="sums">sum</u-button></view> -->
+		<HeaderSearch :disabled="true" @searchCallback="search" :showMsg="true"></HeaderSearch>
 		<FoodstuffPrice v-if="showCharts" class="charts-box"></FoodstuffPrice>
 		<view class="content">
 			<view class="btn comm-border">
@@ -79,7 +80,7 @@ import Interface from '@/api/ApiPath.js';
 import FoodstuffPrice from '@/components/FoodstuffPrice/FoodstuffPrice.vue';
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
 import MD5 from '../../../utils/md5.js';
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { initImSDK } from '../../../utils/initNIM.js';
 
 export default {
 	components: {
@@ -98,10 +99,6 @@ export default {
 			showCharts: true
 		};
 	},
-	computed: {
-		...mapGetters(['getMsgSum']),
-		...mapState(['msgSum'])
-	},
 	onLoad(e) {
 		// 从外部接口获取客户信息
 		this.initCustomerInfo(e);
@@ -115,17 +112,15 @@ export default {
 		this.initAgriMachineInfo();
 		// 初始化加载病虫害信息
 		this.initCaseInfo();
+		initImSDK('73jl000006', '73jl000006');
 	},
 	onShow: function() {
 		this.showCharts = false;
 		setTimeout(() => {
 			this.showCharts = true;
 		});
-
-		console.log(this.msgSum);
 	},
 	methods: {
-		...mapMutations(['setMsgSum']),
 		// 从外部接口获取客户信息
 		initCustomerInfo(e) {
 			// Interface.common.userId = e.U; //缓存用户id

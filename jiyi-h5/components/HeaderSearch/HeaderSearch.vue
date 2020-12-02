@@ -14,6 +14,10 @@
 					@focus="jumpSearch"
 				></u-search>
 			</view>
+			<view v-if="showMsg">
+				<u-icon name="chat" color="#fff" size="48" @tap="goToImPage"></u-icon>
+				<u-badge v-if="msgSum" class="badge" type="green" size="mini" :count="msgSum" :offset="badgeoffset"></u-badge>
+			</view>
 		</view>
 
 		<view v-else :class="bold && 'f-b'" :style="{ background: background, color: color }" class="HeaderSearch shadow g-flex g-a-c g-j-c p-x-10 f-16">
@@ -27,8 +31,24 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
 	name: 'HeaderSearch',
+	computed: {
+		...mapState(['msgSum']),
+		badgeoffset: function() {
+			let arr = [15, 15];
+			if (parseInt(this.msgSum) < 10) {
+				arr = [15, 15];
+			} else if (parseInt(this.msgSum) > 99) {
+				arr = [10, 0];
+			} else {
+				arr = [10, 10];
+			}
+			return arr;
+		}
+	},
 	props: {
 		title: {
 			type: String,
@@ -53,9 +73,12 @@ export default {
 		color: {
 			type: String,
 			default: '#000'
-		}
+		},
+		showMsg:{
+			type: Boolean,
+			default: false
+		},
 	},
-	mounted() {},
 	data() {
 		return {
 			search: '', //搜索输入得内容,
@@ -68,10 +91,6 @@ export default {
 			this.$emit('searchCallback', newValue);
 		}
 	},
-	created() {
-		if (this.focus) {
-		}
-	},
 	methods: {
 		jumpSearch() {
 			if (this.disabled) {
@@ -79,6 +98,9 @@ export default {
 					url: '/pages/search'
 				});
 			}
+		},
+		goToImPage() {
+			console.log(1231231231);
 		},
 		back() {
 			if (getCurrentPages().length > 1) {
@@ -95,6 +117,10 @@ export default {
 </script>
 
 <style lang="scss">
+.badge {
+	background: #e51c2e;
+	color: #fff;
+}
 .HeaderSearch {
 	// width: calc(100% - 40rpx);
 	width: 100%;
