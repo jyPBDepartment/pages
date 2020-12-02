@@ -1,7 +1,7 @@
 {
-  "name": "NIM_WEB_HTML5_DEMO",
+  "name": "jiyi-im-app",
   "version": "1.0.0",
-  "description": "Web SDK Html5 Demo",
+  "description": "jiyi-im-app",
   "main": "index.js",
   "scripts": {
     "start": "run-p -lns dev server",
@@ -29,7 +29,7 @@
     "postcss",
     "webpack"
   ],
-  "author": "netease",
+  "author": "xiaofu",
   "license": "ISC",
   "dependencies": {
     "ajv": "^4.11.5",

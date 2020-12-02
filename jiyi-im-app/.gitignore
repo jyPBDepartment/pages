@@ -4,7 +4,7 @@ node_modules
 *.log*
 *.lock
 .eslintrc.js
-package-lock.json
+# package-lock.json
 .history
 /dist
 /h5
