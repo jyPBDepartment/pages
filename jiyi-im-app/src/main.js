@@ -16,6 +16,17 @@ Vue.use(VueTouch)
 // 同步单页路由与数据中心
 import store from './store'
 import router from './router'
+import cookie from './utils/cookie'
+
+// 路由拦截器
+router.beforeEach((to, from, next) => {
+
+  console.log(to.query.uid)
+  next()
+  // 73jl000006
+  cookie.setCookie('uid', to.query.uid)
+  cookie.setCookie('sdktoken', to.query.token)
+})
 
 require('./utils/polyfill')
 

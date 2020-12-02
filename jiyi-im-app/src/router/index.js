@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/session',
     name: 'session',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/Session'], resolve)
     }
   },
@@ -24,7 +24,7 @@ const routes = [
   {
     path: '/sysmsgs',
     name: 'sysmsgs',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/SysMsgs'], resolve)
     }
   },
@@ -32,7 +32,7 @@ const routes = [
   {
     path: '/chat/:sessionId',
     name: 'chat',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/Chat'], resolve)
     }
   },
@@ -40,7 +40,7 @@ const routes = [
   {
     path: '/chathistory/:sessionId',
     name: 'chathistory',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/ChatHistory'], resolve)
     }
   },
@@ -48,7 +48,7 @@ const routes = [
   {
     path: '/room',
     name: 'room',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/Room'], resolve)
     }
   },
@@ -56,7 +56,7 @@ const routes = [
   {
     path: '/roomChat/:chatroomId',
     name: 'roomChat',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/RoomChat'], resolve)
     }
   },
@@ -64,7 +64,7 @@ const routes = [
   {
     path: '/contacts',
     name: 'contacts',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/Contacts'], resolve)
     }
   },
@@ -72,7 +72,7 @@ const routes = [
   {
     path: '/namecard/:userId',
     name: 'namecard',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/NameCard'], resolve)
     }
   },
@@ -80,7 +80,7 @@ const routes = [
   {
     path: '/namecardremark/:userId',
     name: 'namecardremark',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/NameCardRemark'], resolve)
     }
   },
@@ -88,7 +88,7 @@ const routes = [
   {
     path: '/searchuser/:searchType',
     name: 'searchuser',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/SearchUser'], resolve)
     }
   },
@@ -96,7 +96,7 @@ const routes = [
   {
     path: '/teaminvite/:teamId',
     name: 'teaminvite',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/TeamInvite'], resolve)
     }
   },
@@ -104,7 +104,7 @@ const routes = [
   {
     path: '/general',
     name: 'general',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/General'], resolve)
     }
   },
@@ -112,7 +112,7 @@ const routes = [
   {
     path: '/teamlist/:teamType',
     name: 'teamlist',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/TeamList'], resolve)
     }
   },
@@ -120,7 +120,7 @@ const routes = [
   {
     path: '/teamcard/:teamId',
     name: 'teamcard',
-    component (resolve) {
+    component(resolve) {
       require(['../pages/TeamCard'], resolve)
     }
   },
@@ -133,7 +133,7 @@ const routes = [
     }
   },
   // 群设置
-  { 
+  {
     path: '/teamsetting',
     name: 'teamsetting',
     component(resolve) {
@@ -178,5 +178,6 @@ let router = new VueRouter({
   history: true,
   routes
 })
+
 
 export default router
