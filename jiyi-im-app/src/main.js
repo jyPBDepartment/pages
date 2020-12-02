@@ -21,11 +21,13 @@ import cookie from './utils/cookie'
 // 路由拦截器
 router.beforeEach((to, from, next) => {
 
-  console.log(to.query.uid)
+  if (to && to.query && to.query.uid) {
+    cookie.setCookie('uid', to.query.uid)
+  }
+  if (to && to.query && to.query.token) {
+    cookie.setCookie('sdktoken', to.query.token)
+  }
   next()
-  // 73jl000006
-  cookie.setCookie('uid', to.query.uid)
-  cookie.setCookie('sdktoken', to.query.token)
 })
 
 require('./utils/polyfill')

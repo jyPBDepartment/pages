@@ -99,8 +99,8 @@ export default {
 				});
 			}
 		},
-		goToImPage() {
-			console.log(1231231231);
+		goToImPage() {			
+			window.location.href = "http://127.0.0.1:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
 		},
 		back() {
 			if (getCurrentPages().length > 1) {
