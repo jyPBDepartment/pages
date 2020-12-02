@@ -1,6 +1,6 @@
 <template>
 	<view style="background-color: #f4f4f4">
-		<HeaderSearch :disabled="true" @searchCallback="search" ></HeaderSearch>
+		<HeaderSearch :disabled="true" @searchCallback="search"></HeaderSearch>
 		<FoodstuffPrice v-if="showCharts" class="charts-box"></FoodstuffPrice>
 		<view class="content">
 			<view class="btn comm-border">
@@ -79,7 +79,7 @@ import Interface from '@/api/ApiPath.js';
 import FoodstuffPrice from '@/components/FoodstuffPrice/FoodstuffPrice.vue';
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
 import MD5 from '../../../utils/md5.js';
-import { mapState, mapGetters ,mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 
 export default {
 	components: {
@@ -125,6 +125,7 @@ export default {
 		console.log(this.msgSum);
 	},
 	methods: {
+		...mapMutations(['setMsgSum']),
 		// 从外部接口获取客户信息
 		initCustomerInfo(e) {
 			// Interface.common.userId = e.U; //缓存用户id
