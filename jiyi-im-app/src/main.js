@@ -20,12 +20,15 @@ import cookie from './utils/cookie'
 
 // 路由拦截器
 router.beforeEach((to, from, next) => {
+  console.log(from)
 
   if (to && to.query && to.query.uid) {
     cookie.setCookie('uid', to.query.uid)
+    localStorage.setItem('uid', to.query.uid)
   }
   if (to && to.query && to.query.token) {
     cookie.setCookie('sdktoken', to.query.token)
+    localStorage.setItem('sdktoken', to.query.token)
   }
   next()
 })
