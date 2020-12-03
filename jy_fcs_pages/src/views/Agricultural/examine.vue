@@ -12,7 +12,7 @@
     <!-- 插槽区 -->
     <slot>
       <el-form  ref="postInfoForm" :model="agrForm" :label-position="labelPosition" label-width="100px" style="margin-left:-135px">
-         <el-form-item label="审核原因" >
+         <el-form-item label="驳回理由" >
           <el-input type="textarea" :rows="3" v-model="agrForm.examineReason" size="small" style="width:95%"></el-input>
         </el-form-item>
       </el-form>
@@ -76,7 +76,7 @@ export default {
           this.agrForm.examineReason == "" ||
           this.agrForm.examineReason == null
         ) {
-          this.$alert("请填写拒绝理由！", "提示", {
+          this.$alert("请填写驳回理由！", "提示", {
             confirmButtonText: "确定",
           });
           return false;

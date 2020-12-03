@@ -4,121 +4,115 @@
     :title="title"
     append-to-body
     modal-append-to-body
-    width="1024.5px"
+    width="800px"
     :before-close="beforeClose"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <slot>
-      <table border="2" :data="agrForm" align="center" class="table">
-        <tbody>
-          <tr>
-            <td class="title">标题名称</td>
-            <td class="content" colspan="3">{{ agrForm.name }}</td>
-          </tr>
-          <tr>
-            <td class="title">图片</td>
-            <td align="left">
-              <span v-for="item in agrList" :key="item">
-                <el-image
-                  style="width: 90px;  height: 90px; margin: 5px"
-                  :src="item"
-                  readonly
-                ></el-image>
-              </span>
-            </td>
-            <td class="title">描述</td>
-            <td class="content" style="width: 340px">{{ agrForm.descrip }}</td>
-          </tr>
-          <tr>
-            <td class="title">开始时间</td>
-            <td class="content">{{ agrForm.beginDate }}</td>
-            <td class="title">结束时间</td>
-            <td class="content">{{ agrForm.endDate }}</td>
-          </tr>
-
-          <tr>
-            <td class="title">天数</td>
-            <td class="content">{{ agrForm.days }}天</td>
-            <td class="title">价格</td>
-            <td class="content">{{ agrForm.price }}元</td>
-          </tr>
-
-          <tr>
-            <td class="title">交易类型</td>
-            <td class="content">
-              <span v-if="agrForm.transactionTypeCode == '3'">播种</span>
-              <span v-if="agrForm.transactionTypeCode == '4'">植保</span>
-              <span v-if="agrForm.transactionTypeCode == '5'">收割</span>
-            </td>
-            <td class="title">交易类别</td>
-            <td class="content">
-              <span v-if="agrForm.transactionCategoryCode == '0'">玉米</span>
-              <span v-if="agrForm.transactionCategoryCode == '2'">水稻</span>
-              <span v-if="agrForm.transactionCategoryCode == '3'">高粱</span>
-              <span v-if="agrForm.transactionCategoryCode == '4'">黄豆</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="title">农机台数</td>
-            <td class="content">{{ agrForm.machineNum }}台</td>
-            <td class="title">干活地点</td>
-            <td class="content">{{ agrForm.address }}</td>
-          </tr>
-          <tr>
-            <td class="title">农活方式</td>
-            <td class="content">
-              <span v-if="agrForm.farmingMode == '0'">整活</span>
-              <span v-if="agrForm.farmingMode == '1'">零活</span>
-            </td>
-            <td class="title">是否面议</td>
-            <td class="content">
-              <span v-if="agrForm.isFace == '0'">是</span>
-              <span v-if="agrForm.isFace == '1'">否</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="title">联系人</td>
-            <td class="content">{{ agrForm.contactsUser }}</td>
-            <td class="title">联系方式</td>
-            <td class="content">{{ agrForm.contactsPhone }}</td>
-          </tr>
-          <tr>
-            <td class="title">发布时间</td>
-            <td class="content">{{ agrForm.createDate }}</td>
-            <td class="title">修改时间</td>
-            <td class="content">{{ agrForm.updateDate }}</td>
-          </tr>
-          <tr>
-            <td class="title">发布人</td>
-            <td class="content">{{ agrForm.createUser }}</td>
-            <td class="title">审核人</td>
-            <td class="content">{{ agrForm.updateUser }}</td>
-          </tr>
-          <tr>
-            <td class="title">审核理由</td>
-            <td colspan="3" class="content">
-              {{ agrForm.examineReason }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <el-form :model="agrForm" ref="agrForm" :label-position="labelPosition" label-width="100px" style="margin-left: -85px">
+        <el-row>
+          <el-col :span="3">标题名称：</el-col>
+          <el-col :span="8">{{ agrForm.name }}</el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">交易类型：</el-col>
+          <el-col :span="9">
+            <span v-if="agrForm.transactionTypeCode == '3'">播种</span>
+            <span v-if="agrForm.transactionTypeCode == '4'">植保</span>
+            <span v-if="agrForm.transactionTypeCode == '5'">收割</span>
+          </el-col>
+          <el-col :span="3">交易类别：</el-col>
+          <el-col :span="6">
+            <span v-if="agrForm.transactionCategoryCode == '0'">玉米</span>
+            <span v-if="agrForm.transactionCategoryCode == '2'">水稻</span>
+            <span v-if="agrForm.transactionCategoryCode == '3'">高粱</span>
+            <span v-if="agrForm.transactionCategoryCode == '4'">黄豆</span>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">图片：</el-col>
+          <el-col :span="18">
+            <span v-for="item in agrList" :key="item">
+              <el-image style="width: 90px;  height: 90px; margin: 5px" :src="item"></el-image>
+            </span>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">描述：</el-col>
+          <el-col :span="18">
+            <span>
+              <el-input type="textarea" v-model="agrForm.descrip" rows="3" readonly></el-input>
+            </span>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">开始时间：</el-col>
+          <el-col :span="9">{{ agrForm.beginDate }}</el-col>
+          <el-col :span="3">结束时间：</el-col>
+          <el-col :span="6">{{ agrForm.endDate }}</el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">天数：</el-col>
+          <el-col :span="9">{{ agrForm.days }}</el-col>
+          <el-col :span="3">农活方式：</el-col>
+          <el-col :span="6">
+            <span v-if="agrForm.farmingMode == '0'">整活</span>
+            <span v-if="agrForm.farmingMode == '1'">零活</span>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">干活地点：</el-col>
+          <el-col :span="18"><span>{{ agrForm.address }}</span></el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">是否面议：</el-col>
+          <el-col :span="9">
+            <span v-if="agrForm.isFace == '0'">是</span>
+            <span v-if="agrForm.isFace == '1'">否</span>
+          </el-col>
+          <span v-if="agrForm.isFace == '1'">
+            <el-col :span="3">价格：</el-col>
+            <el-col :span="6">{{ agrForm.price }} 元</el-col>
+          </span>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">联系人：</el-col>
+          <el-col :span="9">{{ agrForm.contactsUser }}</el-col>
+          <el-col :span="3">联系方式：</el-col>
+          <el-col :span="6">{{ agrForm.contactsPhone }}</el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="3">农机台数：</el-col>
+          <el-col :span="9">{{ agrForm.machineNum }}</el-col>
+          <el-col :span="3">发布时间：</el-col>
+          <el-col :span="6"><span>{{ agrForm.createDate }}</span></el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="12">审核人：<span style="margin-left:37px">{{agrForm.updateUser}}</span></el-col>
+          <el-col :span="10">审核时间：<span style="margin-left:22px">{{agrForm.updateDate}}</span></el-col>
+        </el-row>
+        <el-divider></el-divider>
+      </el-form>
     </slot>
-    <span slot="footer" >
+    <span slot="footer">
       <span v-if="agrForm.status == '0'">
-        <el-button type="success" icon="el-icon-check" @click="updateStatus()"
-          >审核通过</el-button
-        >
+        <el-button type="success" icon="el-icon-check" @click="updateStatus()">审核通过</el-button>
       </span>
-      <span v-if="agrForm.status == '0'" >
-        <el-button  type="danger" icon="el-icon-close" @click="examine(agrForm.id)"
-          >审核驳回</el-button
-        >
+      <span v-if="agrForm.status == '0'">
+        <el-button type="danger" icon="el-icon-close" @click="examine(agrForm.id)">审核驳回</el-button>
       </span>
-
-      <el-button type="info" icon="el-icon-close" @click="close"
-        >关闭</el-button
-      >
+      <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
     <examine
       :show="examineFlag"
@@ -159,6 +153,23 @@ export default {
       agrForm: {
         status: "",
         examineReason: "",
+        name: "",
+        transactionTypeCode: "",
+        transactionCategoryCode: "",
+        descrip: "",
+        beginDate: "",
+        endDate: "",
+        days: "",
+        farmingMode: "",
+        address: "",
+        isFace: "",
+        price: "",
+        contactsUser: "",
+        contactsPhone: "",
+        machineNum: "",
+        createDate: "",
+        updateUser: "",
+        updateDate: "",
       },
       agrList: [],
     };
@@ -169,6 +180,9 @@ export default {
     },
     //根据Id查询用户信息
     agrContentId(val) {
+      if (val == "") {
+        return;
+      }
       let params = {
         id: val,
       };
@@ -183,7 +197,7 @@ export default {
     },
   },
   components: {
-    examine
+    examine,
   },
   methods: {
     // 查看详情
@@ -201,15 +215,14 @@ export default {
         if (code == "0") {
           this.$message.success(res.message);
           this.close();
-          this.reload();
         }
       });
       this.agrForm.updateUser = localStorage.getItem("userInfo");
     },
-    
+
     close: function () {
-      this.reload();
       this.$emit("close");
+      this.agrList = [];
     },
     closeUpdateExamineDialog() {
       this.examineFlag = false;

@@ -119,6 +119,7 @@ export default {
 			isFaceCode: '',
 			createUser: '',
 			createUserId: localStorage.getItem('userId'),
+			accId: localStorage.getItem("accId"),
 			action: ApiPath.url.uploadImg,
 			fileList: [],
 			list: [
@@ -366,7 +367,8 @@ export default {
 				transactionCategoryCode: this.transactionCategoryCode,
 				createUser: this.createUser,
 				createUserId: this.createUserId,
-				addItem: addItem
+				addItem: addItem,
+				accId: this.accId
 			};
 			uni.request({
 				method: 'GET', //请求方式

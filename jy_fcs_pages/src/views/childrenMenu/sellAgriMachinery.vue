@@ -254,6 +254,8 @@ export default {
       this.machineContentId = scope.row.id;
     },
     closeUpdateMachineContentDialog(){
+      this.search(this.formInline);
+      this.machineContentId = "";
       this.machineContentFlag = false;
     },
     onSubmit: function () {
@@ -306,7 +308,6 @@ export default {
     },
   },
   components: {
-    
     Pagination,
     MachineContent
   },

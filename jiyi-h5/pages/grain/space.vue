@@ -30,7 +30,7 @@
 					<text class="item-info" v-if="transactionCategoryCode == '4'">类别：黄豆</text>
 				</view>
 				<view class="info g-flex g-a-c g-j-s-b">
-					<text class="item-info">联系人：{{ contactsUser }}</text>
+					<view class="item-user">联系人：{{ contactsUser }}<u-icon name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40"></u-icon></view>
 					<text class="item-info">联系电话：{{ contactsPhone }}</text>
 				</view>
 				<view class="info">
@@ -89,7 +89,8 @@ export default {
 			id: '',
 			status: '',
 			reason: '',
-			title:''
+			title:'',
+			accId: localStorage.getItem("accId")
 		};
 	},
 	//页面初始化
@@ -242,6 +243,10 @@ export default {
 			padding: 10rpx;
 			.item-info {
 				display: flex;
+				justify-content: space-between;
+				font-size: 28rpx;
+			}
+			.item-user {
 				justify-content: space-between;
 				font-size: 28rpx;
 			}

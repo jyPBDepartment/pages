@@ -9,131 +9,88 @@
     <!-- 查询条件 -->
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item label="标题">
-        <el-input
-          v-model="name"
-          type="text"
-          placeholder="请输入标题"
-          class="el-input el-input--small"
-          style="width:200px;"
-          clearable
-        ></el-input>
+        <el-input v-model="name" type="text" placeholder="请输入标题" class="el-input el-input--small" style="width: 200px" clearable></el-input>
       </el-form-item>
       <el-form-item label="审核状态">
-        <el-select v-model="status" style="width:48%;height:100px;" size="small" clearable>
-          <el-option
-            v-for="item in statusOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"           
-          ></el-option>
+        <el-select v-model="status" style="width: 48%; height: 100px" size="small" clearable>
+          <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-      <el-button
-        type="warning" 
-        @click="search('manual')"
-        size="small"
-        icon="el-icon-search"
-        class="height"
-      >查询</el-button>
-      <el-button
-        type="info"  
-        @click="resetRuleTag(search)"
-        size="small"
-        icon="el-icon-close"
-      >重置</el-button>
+        <el-button type="warning" @click="search('manual')" size="small" icon="el-icon-search" class="height">查询</el-button>
+        <el-button type="info" @click="resetRuleTag(search)" size="small" icon="el-icon-close">重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
-      <el-table-column type="index" label="序号" align="center"  min-width="4%" ></el-table-column>
-      <el-table-column prop="name" label="标题" align="center"  min-width="12%" 
-        :show-overflow-tooltip="true"></el-table-column>
-
-      <el-table-column
-        prop="transactionTypeCode"
-        label="交易类型"
-        align="center"
-       min-width="6%" 
-      >
+      <el-table-column type="index" label="序号" align="center" min-width="4%"></el-table-column>
+      <el-table-column prop="name" label="标题" align="center" min-width="12%" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="transactionTypeCode" label="交易类型" align="center" min-width="6%">
         <template slot-scope="scope">
-          <span v-if="scope.row.transactionTypeCode=='3'">播种</span>
-          <span v-if="scope.row.transactionTypeCode=='4'">植保</span>
-          <span v-if="scope.row.transactionTypeCode=='5'">收割</span>
+          <span v-if="scope.row.transactionTypeCode == '3'">播种</span>
+          <span v-if="scope.row.transactionTypeCode == '4'">植保</span>
+          <span v-if="scope.row.transactionTypeCode == '5'">收割</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="transactionCategoryCode"
-        label="交易类别"
-        align="center"
-         min-width="6%" 
-        
-      >
+      <el-table-column prop="transactionCategoryCode" label="交易类别" align="center" min-width="6%">
         <template slot-scope="scope">
-          <span v-if="scope.row.transactionCategoryCode=='0'">玉米</span>
-          <span v-if="scope.row.transactionCategoryCode=='2'">水稻</span>
-          <span v-if="scope.row.transactionCategoryCode=='3'">高粱</span>
-          <span v-if="scope.row.transactionCategoryCode=='4'">黄豆</span>
+          <span v-if="scope.row.transactionCategoryCode == '0'">玉米</span>
+          <span v-if="scope.row.transactionCategoryCode == '2'">水稻</span>
+          <span v-if="scope.row.transactionCategoryCode == '3'">高粱</span>
+          <span v-if="scope.row.transactionCategoryCode == '4'">黄豆</span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="address"
-        label="干活地点"
-        align="center"
-        min-width="20%" 
-        :show-overflow-tooltip="true"
-      ></el-table-column>
-      <el-table-column align="center" prop="status" label="审核状态" min-width="6%"   >
+      <el-table-column prop="address" label="干活地点" align="center" min-width="20%" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column align="center" prop="status" label="审核状态" min-width="6%">
         <template slot-scope="scope">
-          <span v-if="scope.row.status==0">待审核</span>
-          <span v-if="scope.row.status==1">审核通过</span>
-          <span v-if="scope.row.status==2">审核拒绝</span>
-          <span v-if="scope.row.status==3">已取消</span>
+          <span v-if="scope.row.status == 0">待审核</span>
+          <span v-if="scope.row.status == 1">审核通过</span>
+          <span v-if="scope.row.status == 2">审核拒绝</span>
+          <span v-if="scope.row.status == 3">已取消</span>
         </template>
       </el-table-column>
-
-      <el-table-column sortable prop="createDate" label="发布时间" align="center"  min-width="12%" ></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"  min-width="12%" ></el-table-column>
-
-      <el-table-column fixed="right" label="操作" align="center"  min-width="16%"  >
+      <el-table-column sortable prop="createDate" label="发布时间" align="center" min-width="12%"></el-table-column>
+      <el-table-column sortable prop="updateDate" label="修改时间" align="center" min-width="12%"></el-table-column>
+      <el-table-column fixed="right" label="操作" align="center" min-width="16%">
         <template slot-scope="scope">
-          <el-button @click="agrContent(scope)" type="primary"  size="small"
-            style="padding:9px 6px;margin-bottom:5px;"
-          >信息审核</el-button>
-            <el-button
+          <el-button
+            @click="agrContent(scope)"
+            type="primary"
+            size="small"
+            style="padding: 9px 6px; margin-bottom: 5px"
+            >信息审核</el-button>
+          <el-button
             @click="deleteCase(scope)"
             type="danger"
             size="small"
-            style="padding:9px 10px; margin-left:0px;"
+            style="padding: 9px 10px; margin-left: 0px"
             icon="el-icon-delete"
-          >删除</el-button>
+            >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
+    <Pagination
+      v-bind:child-msg="pageparm"
+      @callFather="callFather"
+    ></Pagination>
     <agrContent
       :show="agrContentFlag"
       :agrContentId="agrContentId"
       title="信息审核"
       @close="closeUpdateAgrContentDialog"
     ></agrContent>
-    
-    <br />
-    <br />
   </div>
 </template>
 
-<script  >
+<script>
 import qs from "qs";
 import Vue from "vue";
 import ApiPath from "@/api/ApiPath";
 import api from "@/axios/api";
 import agrContent from "./agrContent";
 import Pagination from "../../components/Pagination";
-
 
 export default {
   inject: ["reload"],
@@ -153,20 +110,10 @@ export default {
       status: "",
       type: 0,
       agrContentFlag: false,
-     
       agrContentId: "",
-      updateAgriculturalFlag: false,
-      transAgriculturalId: "",
-      checkContentFlag: false,
-      checkContentId: "",
-      updateCheckContentFlag: false,
-      transTagCode: "",
       tagCode: "",
       tagName: "",
       localShow: this.show,
-      addAgriculturalFlag: false,
-      updateRuleTag: false,
-      mainBodyCode: "",
       tableData: [],
       formInline: {
         page: 1,
@@ -231,7 +178,7 @@ export default {
         })
         .catch(function (error) {});
     },
-        // 删除
+    // 删除
     deleteCase: function (scope) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -242,20 +189,20 @@ export default {
           let params = {
             id: scope.row.id,
           };
-          api.testAxiosGet(ApiPath.url.deleteAgricultural, params).then((res) => {
-            let code = res.state;
-
-            if (code == "0") {
-              this.$message({
-                type: "success",
-                message: "删除成功!",
-              });
-             
-               this.tableData.splice(scope.$index, 1);
-            } else {
-              this.$message.success(res.message);
-            }
-          });
+          api
+            .testAxiosGet(ApiPath.url.deleteAgricultural, params)
+            .then((res) => {
+              let code = res.state;
+              if (code == "0") {
+                this.$message({
+                  type: "success",
+                  message: "删除成功!",
+                });
+                this.tableData.splice(scope.$index, 1);
+              } else {
+                this.$message.success(res.message);
+              }
+            });
         })
         .catch(() => {
           this.$message({
@@ -264,21 +211,10 @@ export default {
           });
         });
     },
-    closeUpdateAgriculturalDialog: function () {
-      this.updateAgriculturalFlag = false;
-    },
-    closeUpdateCheckContentDialog: function () {
-      this.updateCheckContentFlag = false;
-    },
-    updateAgricultural: function () {},
     // 查看详情
     agrContent(scope) {
       this.agrContentFlag = true;
       this.agrContentId = scope.row.id;
-    },
-    checkContent(scope) {
-      this.checkContentFlag = true;
-      this.checkContentId = scope.row.id;
     },
     onSubmit: function () {
       let params = {
@@ -286,20 +222,6 @@ export default {
         chName: this.tagName,
         generateType: "gz",
       };
-    },
-    openUpdateDialog(scope) {
-      this.transAgriculturalId = scope.row.id;
-      this.updateAgriculturalFlag = true;
-    },
-    saveRuleTag() {
-      this.addAgriculturalFlag = false;
-    },
-
-    modifyRuleTag() {
-      this.updateRuleTag = false;
-    },
-    openRuleTag() {
-      this.addAgriculturalFlag = true;
     },
     // 重置
     resetRuleTag(search) {
@@ -310,16 +232,9 @@ export default {
       this.search(this.formInline);
     },
     closeUpdateAgrContentDialog() {
-      this.agrContentFlag = false;
       this.search(this.formInline);
-    },
-   
-    closeUpdateCheckContentDialog() {
-      this.checkContentFlag = false;
-    },
-
-    closeModifyRuleTagDialog() {
-      this.updateRuleTag = false;
+      this.agrContentId = "";
+      this.agrContentFlag = false;
     },
     beforeClose() {
       this.close();
@@ -327,13 +242,9 @@ export default {
     close() {
       this.$emit("close");
     },
-    save() {
-      this.$emit("save", this.transData);
-    },
   },
   components: {
     agrContent,
-
     Pagination,
   },
 };
@@ -354,8 +265,8 @@ export default {
   margin-top: 5px;
   margin-left: -90px;
 }
-.option{
- text-align:center;
+.option {
+  text-align: center;
 }
 </style>
 
