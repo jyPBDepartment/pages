@@ -105,6 +105,7 @@ export default {
 			isFaceCode: '',
 			createUser: '',
 			createUserId: localStorage.getItem('userId'),
+			accId:localStorage.getItem('accId'),
 			transactionCategoryName: '',
 			identityCode: '', //身份编码
 			url: [],
@@ -343,7 +344,8 @@ export default {
 				createUser: this.createUser,
 				createUserId: this.createUserId,
 				addItem: addItem,
-				identityCode: this.identityCode
+				identityCode: this.identityCode,
+				accId:this.accId
 			};
 
 			uni.request({

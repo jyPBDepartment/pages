@@ -34,12 +34,12 @@
       ></el-table-column>
       <el-table-column
         prop="code"
-        label="内容"
+        label="帖子内容"
         align="center"
         :show-overflow-tooltip="true"
         min-width="8%"
       ></el-table-column>
-      <el-table-column prop="author" :show-overflow-tooltip="true" label="作者" align="center" min-width="8%"></el-table-column>
+      <el-table-column prop="author" :show-overflow-tooltip="true" label="发帖作者" align="center" min-width="8%"></el-table-column>
       <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="7%">
         <template slot-scope="scope">
           <span v-if="scope.row.auditStatus==0">未审核</span>
@@ -48,7 +48,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="12%"></el-table-column>
-      <el-table-column prop="updateDate" label="修改时间" align="center" sortable min-width="12%"></el-table-column>
+      <el-table-column prop="updateDate" label="审核时间" align="center" sortable min-width="12%"></el-table-column>
       <el-table-column prop="auditUser" label="审核人" align="center" min-width="8%"></el-table-column>
       <el-table-column align="center" label="状态" prop="status" min-width="7%">
         <template slot-scope="scope">
@@ -180,6 +180,8 @@ export default {
     },
     closeUpdatePostInfoDialog() {
       this.updatePostInfoFlag = false;
+      this.search(this.formInline);
+      this.transPostInfoId= "";
     },
     upPostInfo() {
       this.updatePostInfoFlag = false;

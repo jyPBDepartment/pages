@@ -22,7 +22,7 @@
 					<text class="f-14">干活地点:{{ address }}</text>
 				</view>
 				<view class="item-info">
-					<text class="f-14">联系人: {{ contactsUser }}</text>
+					<view class="f-14 contactUser">联系人: {{ contactsUser }}<u-icon name="chat" color="#2979ff" size="40" class="iconStyle" top="4rpx"></u-icon></view>
 					<text class="f-14">联系电话:{{ contactsPhone }}</text>
 				</view>
 			</view>
@@ -125,6 +125,13 @@ export default {
 			justify-content: space-between;
 			font-size: 28rpx;
 			margin-top: 24rpx;
+			.contactUser{
+				margin-top: -4rpx;
+				.iconStyle{
+					margin-left: 10rpx;
+				}
+			}
+			
 		}
 	}
 }

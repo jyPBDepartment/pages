@@ -136,6 +136,7 @@ export default {
 			value: '',
 			createUser: '',
 			createUserId: localStorage.getItem('userId'),
+			accId:localStorage.getItem('accId'),
 			list: [
 				{
 					value: '0',
@@ -398,7 +399,8 @@ export default {
 				endDate: this.endTime,
 				createUser: this.createUser,
 				createUserId: this.createUserId,
-				addItem: addItem
+				addItem: addItem,
+				accId:this.accId
 			};
 			uni.request({
 				method: 'GET', //请求方式

@@ -293,6 +293,8 @@ export default {
       this.search(this.formInline);
     },
     closeUpdateCornContentDialog() {
+      this.search(this.formInline);
+      this.cornContentId= "";
       this.cornContentFlag = false;
     },
     closeUpdateCheckContentDialog() {
