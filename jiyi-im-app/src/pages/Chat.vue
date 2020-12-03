@@ -8,7 +8,11 @@
       <h1 class="m-tab-top" @click="enterNameCard">{{ sessionName }}</h1>
       <a slot="left"></a>
       <div class="m-tab-right" slot="right">
-        <span class="icon-history" @click="onHistoryClick"></span>
+        <span
+          class="icon-history"
+          style="margin-top: -0.2rem"
+          @click="onHistoryClick"
+        ></span>
         <span
           v-if="scene === 'team'"
           class="icon-team"
@@ -197,20 +201,21 @@ export default {
       // location.href = '#/contacts'
       window.stopPlayAudio && window.stopPlayAudio();
       window.location.href = "http://192.168.1.108/#/";
-      // window.history.go(-1);
+      // uni.navigateBack(-1);
+      window.history.go(-1);
     },
     msgsLoaded() {
       pageUtil.scrollChatListDown();
     },
     enterNameCard() {
-      if (/^p2p-/.test(this.sessionId)) {
-        let account = this.sessionId.replace(/^p2p-/, "");
-        if (account === this.$store.state.userUID) {
-          location.href = `#/general`;
-          return;
-        }
-        location.href = `#/namecard/${account}`;
-      }
+      // if (/^p2p-/.test(this.sessionId)) {
+      //   let account = this.sessionId.replace(/^p2p-/, "");
+      //   if (account === this.$store.state.userUID) {
+      //     location.href = `#/general`;
+      //     return;
+      //   }
+      //   location.href = `#/namecard/${account}`;
+      // }
     },
     onTeamManageClick() {
       if (this.teamInfo && this.teamInfo.validToCurrentUser) {

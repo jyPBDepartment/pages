@@ -2,8 +2,7 @@
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/tabbar/index/index" //首页
 		},
 		{
@@ -111,17 +110,19 @@
 		},
 		{
 			"path": "pages/grain/cornUpdateInfo" //农服修改信息
-		}, 
+		},
 		{
 			"path": "pages/grain/quotation"
 		},
 		{
-            "path" : "pages/grain/commentList"
-        },
+			"path": "pages/grain/commentList"
+		},
 		{
-            "path" : "pages/grain/commentDetails"
-        }
-    ],
+			"path": "pages/grain/commentDetails"
+		}, {
+			"path": "pages/imPage/imPage"//IM webview
+		}
+	],
 	"globalStyle": {
 		"navigationStyle": "custom"
 	},
