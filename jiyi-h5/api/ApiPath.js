@@ -2,10 +2,14 @@
 //开发环境基础路径地址
 const URLHost = 'http://192.168.1.106:8080/jy_fcs';
 // const URLHost = 'http://192.168.1.110:8080';
-const imServerUrl = ''
 
 //生产环境基础路径地址
 // const URLHost = 'http://182.92.77.60/jy_fcs';
+
+// im 服务地址
+const imUrl = 'http://192.168.1.106:2001/webdemo/h5/index.html#/chat/'
+// const imUrl = 'http://182.92.77.60:2001/webdemo/h5/index.html#/chat/'
+
 
 let common = {
 	userId: '',
@@ -139,5 +143,6 @@ export default {
 	url,
 	common,
 	md5,
-	extendUrl
+	extendUrl,
+	imUrl
 }

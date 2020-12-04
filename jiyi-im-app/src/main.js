@@ -14,14 +14,12 @@ Vue.use(VueTouch)
 // Vue.use(VueRecyclerviewNew)
 
 // 同步单页路由与数据中心
-import store from './store'
 import router from './router'
+import store from './store'
 import cookie from './utils/cookie'
 
 // 路由拦截器
 router.beforeEach((to, from, next) => {
-  console.log(from)
-
   if (to && to.query && to.query.uid) {
     cookie.setCookie('uid', to.query.uid)
     localStorage.setItem('uid', to.query.uid)
