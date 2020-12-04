@@ -70,7 +70,14 @@
       </el-table-column>
       <el-table-column
         prop="priceDate"
-        label="导入时间"
+        label="日期"
+        align="center"
+        sortable
+        min-width="10"
+      ></el-table-column>
+      <el-table-column
+        prop="createDate"
+        label="生成时间"
         align="center"
         sortable
         min-width="10"
