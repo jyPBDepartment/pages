@@ -22,7 +22,7 @@
 					<text class="f-14">干活地点:{{ address }}</text>
 				</view>
 				<view class="item-info">
-					<view class="f-14 contactUser">联系人: {{ contactsUser }}<u-icon name="chat" color="#2979ff" size="40" class="iconStyle" top="4rpx"></u-icon></view>
+					<view class="f-14 contactUser">联系人: {{ contactsUser }}<u-icon name="chat" color="#2979ff" size="40" class="iconStyle" top="4rpx" @tap="goToImPage"></u-icon></view>
 					<text class="f-14">联系电话:{{ contactsPhone }}</text>
 				</view>
 			</view>
@@ -94,6 +94,15 @@ export default {
 					}
 				}
 			});
+		},
+		goToImPage() {
+		  // window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
+		  let token = localStorage.getItem("token") || "73jl000006";
+		  let uid = localStorage.getItem("uid") || "73jl000006";
+		  let sid = localStorage.getItem("sid") || "73jl000048";
+		  uni.navigateTo({
+		    url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`,
+		  });
 		},
 		preview(getId) {
 			uni.navigateTo({

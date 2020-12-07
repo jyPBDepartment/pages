@@ -30,7 +30,7 @@
 					<text class="item-info" v-if="transactionCategoryCode == '4'">类别：黄豆</text>
 				</view>
 				<view class="info g-flex g-a-c g-j-s-b">
-					<view class="item-user">联系人：{{ contactsUser }}<u-icon name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40"></u-icon></view>
+					<view class="item-user">联系人：{{ contactsUser }}<u-icon name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @tap="goToImPage"></u-icon></view>
 					<text class="item-info">联系电话：{{ contactsPhone }}</text>
 				</view>
 				<view class="info">
@@ -218,7 +218,16 @@ export default {
 				}
 			});
 			this.cencalIsShow = false;
-		}
+		},
+		goToImPage() {
+		  // window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
+		  let token = localStorage.getItem("token") || "73jl000006";
+		  let uid = localStorage.getItem("uid") || "73jl000006";
+		  let sid = localStorage.getItem("sid") || "73jl000048";
+		  uni.navigateTo({
+		    url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`,
+		  });
+		},
 	}
 };
 </script>
