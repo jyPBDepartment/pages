@@ -473,6 +473,13 @@ export default {
 				add.push(this.u[i]);
 			}
 			addItem = add.join(',');
+			//获取图片删除后剩余图片
+			let deleteSurplus = '';
+			let deleteFile =[];
+			for(let i=0;i<this.url.length;i++){
+				deleteFile.push(this.url[i]);
+			}
+			deleteSurplus = deleteFile.join(',');
 			// alert("农服>>发布人id"+ApiPath.common.userId)
 			this.show = true;
 			let param = {
@@ -496,7 +503,8 @@ export default {
 				id: this.id,
 				status: this.agr.status,
 				days: this.agr.days,
-				deleteItem: this.deleteItem
+				deleteItem: this.deleteItem,
+				deleteSurplus: deleteSurplus
 			};
 			uni.request({
 				method: 'GET', //请求方式

@@ -324,6 +324,7 @@ export default {
 					this.corn.isFace = this.list1[j].name;
 				}
 			}
+			
 
 			//传递多个图片
 			let addItem = '';
@@ -332,6 +333,14 @@ export default {
 				add.push(this.u[i]);
 			}
 			addItem = add.join(',');
+			
+			//获取图片删除后剩余图片
+			let deleteSurplus = '';
+			let deleteFile =[];
+			for(let i=0;i<this.url.length;i++){
+				deleteFile.push(this.url[i]);
+			}
+			deleteSurplus = deleteFile.join(',');
 			let param = {
 				id: this.id,
 				name: this.corn.name,
@@ -349,7 +358,8 @@ export default {
 				addItem: addItem,
 				identityCode: this.corn.identityCode,
 				status: this.corn.status,
-				deleteItem: this.deleteItem
+				deleteItem: this.deleteItem,
+				deleteSurplus: deleteSurplus
 			};
 			uni.request({
 				method: 'GET', //请求方式

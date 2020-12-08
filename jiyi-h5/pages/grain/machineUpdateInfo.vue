@@ -378,6 +378,13 @@ export default {
 				add.push(this.u[i]);
 			}
 			addItem = add.join(',');
+			//获取图片删除后剩余图片
+			let deleteSurplus = '';
+			let deleteFile =[];
+			for(let i=0;i<this.url.length;i++){
+				deleteFile.push(this.url[i]);
+			}
+			deleteSurplus = deleteFile.join(',');
 			// alert("农机>>发布人id"+ApiPath.common.userId)
 			let param = {
 				id: this.id,
@@ -398,7 +405,8 @@ export default {
 				createUserId: this.machine.createUserId,
 				addItem: addItem,
 				status: this.machine.status,
-				deleteItem: this.deleteItem
+				deleteItem: this.deleteItem,
+				deleteSurplus: deleteSurplus
 			};
 
 			uni.request({
