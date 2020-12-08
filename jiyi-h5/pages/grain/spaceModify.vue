@@ -18,7 +18,7 @@
 					<text v-if="isFace == '0'">面议</text>
 					<text v-if="isFace == '1'">￥{{ price }}元/天</text>
 				</view>
-				<view class="info  g-flex ">
+				<view class="info  g-flex g-j-s-b">
 					<text v-if="transactionTypeCode == '3'">类型：播种</text>
 					<text v-if="transactionTypeCode == '4'">类型：植保</text>
 					<text v-if="transactionTypeCode == '5'">类型：收割</text>

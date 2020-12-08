@@ -147,13 +147,13 @@ export default {
 		if (e.index == 0) {
 			this.index1 = 0;
 			this.title = '农机发布';
-			this.company = '元/亩';
+			this.company = '元/台';
 		}
 		//粮食买卖显示
 		if (e.index == 1) {
 			this.index1 = 1;
 			this.title = '粮食买卖';
-			this.company = '元/公斤';
+			this.company = '元/斤';
 		}
 		//农服发布显示
 		if (e.index == 2) {
@@ -292,7 +292,7 @@ export default {
 			//粮食买卖详情跳转
 			if (this.index1 == 1) {
 				uni.navigateTo({
-					url: '../grain/space?id=' + getId + '&isMain=1'
+					url: '../grain/space?id=' + getId + '&isMain=1'  + '&isMine=1'
 				});
 			}
 			//农服发布详情跳转
