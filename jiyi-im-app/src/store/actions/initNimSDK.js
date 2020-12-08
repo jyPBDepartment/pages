@@ -82,7 +82,6 @@ export function initNimSDK({
     },
     onerror: function onError(event) {
       alert('网络连接状态异常')
-      location.href = config.loginUrl
     },
     onwillreconnect: function onWillReconnect() {
       console.log(event)
@@ -91,20 +90,9 @@ export function initNimSDK({
       switch (error.code) {
         // 账号或者密码错误, 请跳转到登录页面并提示错误
         case 302:
-          // pageUtil.turnPage('帐号或密码错误', 'login')
           break
           // 被踢, 请提示错误后跳转到登录页面
         case 'kicked':
-          // let map = {
-          //   PC: '电脑版',
-          //   Web: '网页版',
-          //   Android: '手机版',
-          //   iOS: '手机版',
-          //   WindowsPhone: '手机版'
-          // }
-          // let str = error.from
-          // let errorMsg = `你的帐号于${util.formatDate(new Date())}被${(map[str] || '其他端')}踢出下线，请确定帐号信息安全!`
-          // pageUtil.turnPage(errorMsg, 'login')
           break
         default:
           break

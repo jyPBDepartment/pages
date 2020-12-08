@@ -18,8 +18,11 @@ import router from './router'
 import store from './store'
 import cookie from './utils/cookie'
 
+
+localStorage.clear()
 // 路由拦截器
 router.beforeEach((to, from, next) => {
+
   if (to && to.query && to.query.uid) {
     cookie.setCookie('uid', to.query.uid)
     localStorage.setItem('uid', to.query.uid)

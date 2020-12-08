@@ -198,10 +198,7 @@ export default {
   },
   methods: {
     onClickBack() {
-      // location.href = '#/contacts'
       window.stopPlayAudio && window.stopPlayAudio();
-      window.location.href = "http://192.168.1.108/#/";
-      // uni.navigateBack(-1);
       window.history.go(-1);
     },
     msgsLoaded() {
