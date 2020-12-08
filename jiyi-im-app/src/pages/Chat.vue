@@ -63,8 +63,13 @@ export default {
   // 进入该页面，文档被挂载
   mounted() {
     this.$store.dispatch("showLoading");
+    if (this.sessionId) {
+      this.$store.dispatch("setCurrSession", this.sessionId);
+    } else {
+      pageUtil.goBack("客服信息有误，请电话联系");
+    }
     // 此时设置当前会话
-    this.$store.dispatch("setCurrSession", this.sessionId);
+    // this.$store.dispatch("setCurrSession", this.sessionId);
     pageUtil.scrollChatListDown();
 
     setTimeout(() => {

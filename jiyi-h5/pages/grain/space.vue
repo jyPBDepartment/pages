@@ -17,9 +17,9 @@
 				<view class="price f-16">
 					<text v-if="isFace == '0'">面议</text>
 					<text v-if="isFace == '1'">
-						<span v-if="type==0">￥{{ price }}元/斤</span>
+						<span v-if="type == 0">￥{{ price }}元/斤</span>
 						<span v-else>￥{{ price }}元/台</span>
-						</text>
+					</text>
 				</view>
 				<view class="info g-flex g-a-c g-j-s-b">
 					<text class="item-info" v-if="transactionTypeCode == '0'">类型：收购</text>
@@ -30,7 +30,10 @@
 					<text class="item-info" v-if="transactionCategoryCode == '4'">类别：黄豆</text>
 				</view>
 				<view class="info g-flex g-a-c g-j-s-b">
-					<view class="item-user">联系人：{{ contactsUser }}<u-icon v-if="isMain == '0'"  name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @tap="goToImPage"></u-icon></view>
+					<view class="item-user">
+						联系人：{{ contactsUser }}
+						<u-icon v-if="isMain == '0'" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @tap="goToImPage"></u-icon>
+					</view>
 					<text class="item-info">联系电话：{{ contactsPhone }}</text>
 				</view>
 				<view class="info">
@@ -89,7 +92,7 @@ export default {
 			id: '',
 			status: '',
 			reason: '',
-			title:'',
+			title: '',
 			accId: ''
 		};
 	},
@@ -97,10 +100,10 @@ export default {
 	onLoad(e) {
 		this.isMain = e.isMain;
 		this.type = e.type;
-		if(e.type==0){
-			this.title="粮食买卖详情"
-		}else{
-			this.title="农机详情"
+		if (e.type == 0) {
+			this.title = '粮食买卖详情';
+		} else {
+			this.title = '农机详情';
 		}
 		this.findMineId(e.id);
 		this.id = e.id;
@@ -221,14 +224,40 @@ export default {
 			this.cencalIsShow = false;
 		},
 		goToImPage() {
-		  // window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
-		  let token = localStorage.getItem("accId");
-		  let uid = localStorage.getItem("accId");
-		  let sid = this.accId;
-		  uni.navigateTo({
-		    url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`,
-		  });
-		},
+			// window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
+			let token = localStorage.getItem('accId');
+			let uid = localStorage.getItem('accId');
+			let sid = this.accId;
+			// uni.navigateTo({
+			//   url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`,
+			// });
+			if (!localStorage.getItem('accId')) {
+				let U = localStorage.getItem('userId');
+				let SI = localStorage.getItem('sessionId');
+				uni.showToast({
+					title: '登录信息有误，请重新登录',
+					icon: 'none',
+					duration: 2000,
+					success: () => {
+						setTimeout(() => {
+							uni.reLaunch({
+								url: '/?U=' + U + '&SI=' + SI
+							});
+						}, 1000);
+					}
+				});
+			} else if (!this.accId) {
+				uni.showToast({
+					title: '客服信息有误，请电话联系',
+					icon: 'none',
+					duration: 2000
+				});
+			} else {
+				uni.navigateTo({
+					url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`
+				});
+			}
+		}
 	}
 };
 </script>

@@ -22,7 +22,10 @@
 					<text class="f-14">干活地点:{{ address }}</text>
 				</view>
 				<view class="item-info">
-					<view class="f-14 contactUser">联系人: {{ contactsUser }}<u-icon name="chat" color="#2979ff" size="40" class="iconStyle" top="4rpx" @tap="goToImPage"></u-icon></view>
+					<view class="f-14 contactUser">
+						联系人: {{ contactsUser }}
+						<u-icon name="chat" color="#2979ff" size="40" class="iconStyle" top="4rpx" @tap="goToImPage"></u-icon>
+					</view>
 					<text class="f-14">联系电话:{{ contactsPhone }}</text>
 				</view>
 			</view>
@@ -57,7 +60,7 @@ export default {
 			banner: [],
 			id: '',
 			isFace: '',
-			accId:''
+			accId: ''
 		};
 	},
 	onLoad(e) {
@@ -98,13 +101,37 @@ export default {
 			});
 		},
 		goToImPage() {
-		  // window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
-		  let token = localStorage.getItem("accId");
-		  let uid = localStorage.getItem("accId");
-		  let sid = this.accId;
-		  uni.navigateTo({
-		    url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`,
-		  });
+			// window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
+			let token = localStorage.getItem('accId');
+			let uid = localStorage.getItem('accId');
+			let sid = this.accId;
+			if (localStorage.getItem('accId')) {
+				let U = localStorage.getItem('userId');
+				let SI = localStorage.getItem('sessionId');
+				uni.showToast({
+					title: '登录信息有误，请重新登录',
+					icon: 'none',
+					duration: 2000,
+					success: () => {
+						setTimeout(() => {
+							uni.reLaunch({
+								url: '/?U=' + U + '&SI=' + SI
+							});
+						}, 1000);
+					}
+				});
+				
+			} else if (!this.accId) {
+				uni.showToast({
+					title: '客服信息有误，请电话联系',
+					icon: 'none',
+					duration: 2000
+				});
+			} else {
+				uni.navigateTo({
+					url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`
+				});
+			}
 		},
 		preview(getId) {
 			uni.navigateTo({
@@ -136,13 +163,12 @@ export default {
 			justify-content: space-between;
 			font-size: 28rpx;
 			margin-top: 24rpx;
-			.contactUser{
+			.contactUser {
 				margin-top: -4rpx;
-				.iconStyle{
+				.iconStyle {
 					margin-left: 10rpx;
 				}
 			}
-			
 		}
 	}
 }

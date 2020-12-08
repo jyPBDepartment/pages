@@ -63,6 +63,12 @@ var page = {
   getChatListScroll: () => {
     return document.getElementById('chat-list').scrollTop
   },
+  goBack: (msg) => {
+    if (msg) {
+      alert(msg)
+    }
+    window.history.go(-1);
+  },
 }
 
 export default page

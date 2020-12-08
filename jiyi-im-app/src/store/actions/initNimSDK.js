@@ -78,10 +78,13 @@ export function initNimSDK({
       if (loginInfo) {
         // 连接上以后更新uid
         commit('updateUserUID', loginInfo)
+
       }
     },
     onerror: function onError(event) {
       alert('网络连接状态异常')
+      pageUtil.goBack()
+
     },
     onwillreconnect: function onWillReconnect() {
       console.log(event)
@@ -90,6 +93,7 @@ export function initNimSDK({
       switch (error.code) {
         // 账号或者密码错误, 请跳转到登录页面并提示错误
         case 302:
+          pageUtil.goBack()
           break
           // 被踢, 请提示错误后跳转到登录页面
         case 'kicked':

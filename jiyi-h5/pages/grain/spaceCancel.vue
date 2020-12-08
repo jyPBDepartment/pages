@@ -39,7 +39,10 @@
 					</view>
 				</view>
 				<view class="info g-a-c g-flex g-j-s-b f-12">
-					<view>联系人：{{ contactsUser }}<u-icon v-if="isMain == '0'" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @click="goToImPage()"></u-icon></view>
+					<view>
+						联系人：{{ contactsUser }}
+						<u-icon v-if="isMain == '0'" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @click="goToImPage()"></u-icon>
+					</view>
 					<view>联系电话：{{ contactsPhone }}</view>
 				</view>
 				<view class="info f-12">
@@ -214,13 +217,36 @@ export default {
 			}
 		},
 		goToImPage() {
-		  // window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
-		  let token = localStorage.getItem("accId");
-		  let uid = localStorage.getItem("accId");
-		  let sid = this.accId;
-		  uni.navigateTo({
-		    url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`,
-		  });
+			// window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
+			let token = localStorage.getItem('accId');
+			let uid = localStorage.getItem('accId');
+			let sid = this.accId;
+			if (!localStorage.getItem('accId')) {
+				let U = localStorage.getItem('userId');
+				let SI = localStorage.getItem('sessionId');
+				uni.showToast({
+					title: '登录信息有误，请重新登录',
+					icon: 'none',
+					duration: 2000,
+					success: () => {
+						setTimeout(() => {
+							uni.reLaunch({
+								url: '/?U=' + U + '&SI=' + SI
+							});
+						}, 1000);
+					}
+				});
+			} else if (!this.accId) {
+				uni.showToast({
+					title: '客服信息有误，请电话联系',
+					icon: 'none',
+					duration: 2000
+				});
+			} else {
+				uni.navigateTo({
+					url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`
+				});
+			}
 		}
 	}
 };
