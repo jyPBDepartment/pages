@@ -39,7 +39,7 @@
 					</view>
 				</view>
 				<view class="info g-a-c g-flex g-j-s-b f-12">
-					<view>联系人：{{ contactsUser }}</view>
+					<view>联系人：{{ contactsUser }}<u-icon v-if="isMain == '0'" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40"></u-icon></view>
 					<view>联系电话：{{ contactsPhone }}</view>
 				</view>
 				<view class="info f-12">
@@ -94,7 +94,8 @@ export default {
 			id: '',
 			status: '',
 			isDisplay: 0, //默认不显示信息
-			isMain: '1'
+			isMain: '1',
+			accId: localStorage.getItem("accId")
 		};
 	},
 	//页面初始化

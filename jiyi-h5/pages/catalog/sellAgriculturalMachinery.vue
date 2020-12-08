@@ -76,7 +76,7 @@ export default {
 		},
 		jump(item) {
 			uni.navigateTo({
-				url: '../grain/space?id=' + item.id + '&isShow=0'
+				url: '../grain/space?id=' + item.id + '&isMain=0'
 			});
 		},
 		search(e) {

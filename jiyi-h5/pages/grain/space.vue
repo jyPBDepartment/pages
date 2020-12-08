@@ -30,7 +30,7 @@
 					<text class="item-info" v-if="transactionCategoryCode == '4'">类别：黄豆</text>
 				</view>
 				<view class="info g-flex g-a-c g-j-s-b">
-					<view class="item-user">联系人：{{ contactsUser }}<u-icon name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @tap="goToImPage"></u-icon></view>
+					<view class="item-user">联系人：{{ contactsUser }}<u-icon v-if="isMain == '0'"  name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @tap="goToImPage"></u-icon></view>
 					<text class="item-info">联系电话：{{ contactsPhone }}</text>
 				</view>
 				<view class="info">
