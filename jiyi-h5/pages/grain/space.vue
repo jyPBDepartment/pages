@@ -90,7 +90,7 @@ export default {
 			status: '',
 			reason: '',
 			title:'',
-			accId: localStorage.getItem("accId")
+			accId: ''
 		};
 	},
 	//页面初始化
@@ -126,6 +126,7 @@ export default {
 						this.address = res.data.data.address;
 						this.contactsUser = res.data.data.contactsUser;
 						this.contactsPhone = res.data.data.contactsPhone;
+						this.accId = res.data.data.accId;
 						if (res.data.data.descrip != '') {
 							this.descrip = res.data.data.descrip;
 						} else {
@@ -221,9 +222,9 @@ export default {
 		},
 		goToImPage() {
 		  // window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
-		  let token = localStorage.getItem("token") || "73jl000006";
-		  let uid = localStorage.getItem("uid") || "73jl000006";
-		  let sid = localStorage.getItem("sid") || "73jl000048";
+		  let token = localStorage.getItem("accId");
+		  let uid = localStorage.getItem("accId");
+		  let sid = this.accId;
 		  uni.navigateTo({
 		    url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`,
 		  });

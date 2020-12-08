@@ -1,7 +1,8 @@
 <template>
 	<view style="background-color: #f4f4f4">
 		<!-- <view><u-button @click="sums">sum</u-button></view> -->
-		<HeaderSearch :disabled="true" @searchCallback="search" :showMsg="true"></HeaderSearch>
+		<HeaderSearch :disabled="true" @searchCallback="search"></HeaderSearch>
+		<!-- <HeaderSearch :disabled="true" @searchCallback="search" :showMsg="true"></HeaderSearch> -->
 		<FoodstuffPrice v-if="showCharts" class="charts-box"></FoodstuffPrice>
 		<view class="content">
 			<view class="btn comm-border">
@@ -112,7 +113,7 @@ export default {
 		this.initAgriMachineInfo();
 		// 初始化加载病虫害信息
 		this.initCaseInfo();
-		initImSDK('73jl000006', '73jl000006');
+		
 	},
 	onShow: function() {
 		this.showCharts = false;
@@ -132,6 +133,11 @@ export default {
 
 			let us = localStorage.getItem('userId');
 			let ss = localStorage.getItem('sessionId');
+			
+			localStorage.setItem('accId','73jl000006');
+			initImSDK('73jl000006', '73jl000006');
+			
+			
 			let s = us + '+' + ss + '+' + Interface.md5.key;
 			let sign = MD5(s).toUpperCase();
 			let param = {
@@ -159,6 +165,8 @@ export default {
 						// 昵称
 						Interface.common.nc = res.data.RETURNRESULT.NN;
 						// alert("昵称："+Interface.common.nc)
+						
+						localStorage.setItem('accId',res.data.RETURNRESULT.NN);
 					}
 					if (code == '-1') {
 						// alert("失败")

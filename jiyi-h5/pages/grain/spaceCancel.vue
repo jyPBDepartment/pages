@@ -39,7 +39,7 @@
 					</view>
 				</view>
 				<view class="info g-a-c g-flex g-j-s-b f-12">
-					<view>联系人：{{ contactsUser }}<u-icon v-if="isMain == '0'" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40"></u-icon></view>
+					<view>联系人：{{ contactsUser }}<u-icon v-if="isMain == '0'" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @click="goToImPage()"></u-icon></view>
 					<view>联系电话：{{ contactsPhone }}</view>
 				</view>
 				<view class="info f-12">
@@ -95,7 +95,7 @@ export default {
 			status: '',
 			isDisplay: 0, //默认不显示信息
 			isMain: '1',
-			accId: localStorage.getItem("accId")
+			accId: ''
 		};
 	},
 	//页面初始化
@@ -128,6 +128,7 @@ export default {
 						this.price = res.data.data.price;
 						this.isFace = res.data.data.isFace;
 						this.name = res.data.data.name;
+						this.accId = res.data.data.accId;
 						if (this.isMain == '1') {
 							if (res.data.data.status != 0 && res.data.data.status != 3) {
 								this.isDisplay = 1;
@@ -211,6 +212,15 @@ export default {
 			} else {
 				this.current = this.current + 1;
 			}
+		},
+		goToImPage() {
+		  // window.location.href = "http://192.168.1.108:2001/webdemo/h5/index.html#/chat/p2p-73jl000048?uid=73jl000006&token=73jl000006";
+		  let token = localStorage.getItem("accId");
+		  let uid = localStorage.getItem("accId");
+		  let sid = this.accId;
+		  uni.navigateTo({
+		    url: `/pages/imPage/imPage?token=${token}&sid=${sid}&uid=${uid}`,
+		  });
 		}
 	}
 };
