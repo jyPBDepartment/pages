@@ -105,7 +105,7 @@ export default {
 			let token = localStorage.getItem('accId');
 			let uid = localStorage.getItem('accId');
 			let sid = this.accId;
-			if (localStorage.getItem('accId')) {
+			if (!localStorage.getItem('accId')) {
 				let U = localStorage.getItem('userId');
 				let SI = localStorage.getItem('sessionId');
 				uni.showToast({
