@@ -9,8 +9,8 @@
 					<image style="width: 316rpx;height: 298rpx;" :src="item.url" mode=""></image>
 					<p class="f-14 o-e">{{ item.name }}</p>
 					<view class="info g-flex g-a-c f-12" style="margin-top: 24rpx; margin-bottom: 15rpx;">
-						<view class="f-14 g-f-1" style="color: #1e1e1e;">￥{{ item.price }}</view>
-						<!-- <view style="color: #999999;">月销3笔</view> -->
+					<view class="f-14 g-f-1" style="color: #1e1e1e;" v-if="item.isFace== 1">￥{{ item.price }}</view>
+					<view class="f-14 g-f-1" style="color: #1e1e1e;" v-if="item.isFace== 0">面议</view>
 					</view>
 				</view>
 			</view>
