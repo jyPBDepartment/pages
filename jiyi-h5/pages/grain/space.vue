@@ -34,7 +34,7 @@
 				<view class="info g-flex g-a-c g-j-s-b">
 					<view class="item-user">
 						联系人：{{ contactsUser }}
-						<u-icon v-if="isMain == '0'" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @tap="goToImPage"></u-icon>
+						<u-icon v-if="isMain == '0' && createUserId!=accId" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @tap="goToImPage"></u-icon>
 					</view>
 					<text class="item-info">联系电话：{{ contactsPhone }}</text>
 				</view>
@@ -99,7 +99,8 @@
 				status: '',
 				reason: '',
 				title: '',
-				accId: ''
+				accId: '',
+				createUserId: localStorage.getItem('userId')
 			};
 		},
 		//页面初始化
@@ -144,6 +145,7 @@
 							this.contactsUser = res.data.data.contactsUser;
 							this.contactsPhone = res.data.data.contactsPhone;
 							this.accId = res.data.data.accId;
+							this.createUserId = res.data.data.createUserId;
 							if (res.data.data.descrip != '') {
 								this.descrip = res.data.data.descrip;
 							} else {

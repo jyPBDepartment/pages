@@ -24,7 +24,7 @@
 				<view class="item-info">
 					<view class="f-14 contactUser">
 						联系人: {{ contactsUser }}
-						<u-icon name="chat" color="#2979ff" size="40" class="iconStyle" top="4rpx" @tap="goToImPage"></u-icon>
+						<u-icon v-if="createUserId!=accId" name="chat" color="#2979ff" size="40" class="iconStyle" top="4rpx" @tap="goToImPage" ></u-icon>
 					</view>
 					<text class="f-14">联系电话:{{ contactsPhone }}</text>
 				</view>
@@ -60,7 +60,8 @@ export default {
 			banner: [],
 			id: '',
 			isFace: '',
-			accId: ''
+			accId: '',
+			createUserId: localStorage.getItem('userId'),
 		};
 	},
 	onLoad(e) {
@@ -89,6 +90,7 @@ export default {
 						this.id = res.data.data.id;
 						this.isFace = res.data.data.isFace;
 						this.accId = res.data.data.accId;
+						this.createUserId = res.data.data.createUserId;
 						(this.contactsPhone = res.data.data.contactsPhone), (this.date = this.beginDate + '至' + this.endDate);
 						//查找图片
 						for (var i = 0; i < res.data.dataPic.length; i++) {

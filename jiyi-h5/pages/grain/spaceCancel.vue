@@ -41,7 +41,7 @@
 				<view class="info g-a-c g-flex g-j-s-b f-12">
 					<view>
 						联系人：{{ contactsUser }}
-						<u-icon v-if="isMain == '0'" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @click="goToImPage()"></u-icon>
+						<u-icon v-if="isMain == '0' && createUserId!=accId" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @click="goToImPage()"></u-icon>
 					</view>
 					<view>联系电话：{{ contactsPhone }}</view>
 				</view>
@@ -98,7 +98,8 @@ export default {
 			status: '',
 			isDisplay: 0, //默认不显示信息
 			isMain: '1',
-			accId: ''
+			accId: '',
+			createUserId: localStorage.getItem('userId')
 		};
 	},
 	//页面初始化
@@ -132,6 +133,7 @@ export default {
 						this.isFace = res.data.data.isFace;
 						this.name = res.data.data.name;
 						this.accId = res.data.data.accId;
+						this.createUserId = res.data.data.createUserId;
 						if (this.isMain == '1') {
 							if (res.data.data.status != 0 && res.data.data.status != 3) {
 								this.isDisplay = 1;
