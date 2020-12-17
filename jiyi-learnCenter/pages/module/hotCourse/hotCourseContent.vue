@@ -4,6 +4,7 @@
 		<view class="head">
 			<u-icon name="arrow-left" color="#333" size="44" @click="backTo"></u-icon>
 			<view class="title">文章详情</view>
+			<!-- <view><u-button @click="share()">分享</u-button></view> -->
 			<view class="star"><u-icon :name="name" size="38" :style="style" @click="collection"></u-icon></view>
 		</view>
 
@@ -27,6 +28,7 @@
 
 <script>
 import ApiPath from '@/api/ApiPath.js';
+import wx from '@/utils/wechat.js';
 export default {
 	data() {
 		return {
@@ -43,16 +45,36 @@ export default {
 			articleList: [],
 			userId: localStorage.getItem('userId'),
 			manualInfoId: '',
-			isCollection: 0
+			isCollection: 0,
+			type:''
 		};
 	},
 	onLoad(e) {
+		this.id=e.id;
 		// 文章内容初始化
 		this.learningArticle(e.id);
 		this.manualInfoId = e.id;
 		this.type = e.type;
 	},
 	methods: {
+		share(){
+			//初始化微信配置（重要）
+			let callback = true;
+			// wx.initJssdkShare(callback,ApiPath.url.getWxConfig);
+			
+			var pages = getCurrentPages();
+			var page = pages[pages.length - 1];
+			var currentRoute = page.route;
+		
+			//整合分享数据
+			let url = '#/'+currentRoute+'?id='+this.id+'&type='+this.type;
+			let data = {
+				title:this.title,
+				desc:this.guide,
+				imgUrl:this.url
+			}
+			wx.share(data,ApiPath.url.getWxConfig)
+		},
 		// 文章内容详情显示
 		learningArticle(val) {
 			let param = {

@@ -1,11 +1,11 @@
 //配置后台接口
 //开发环境基础路径地址
-// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+const URLHost = 'http://192.168.1.106:8080/jy_fcs';
 const URLHost = 'http://192.168.1.106:8080/jy_edu';
 // const URLHost = 'http://localhost:8083';
 
 //生产环境基础路径地址
-// const URLHost = 'http://182.92.77.60/jy_fcs';
+// const URLHost = 'http://hnser.jiyinongye.com:8080/jy_edu';
 
 let common = {
 	userId: '',
@@ -69,6 +69,8 @@ const url = {
 	getCertificateByUserId: URLHost + '/mine/getCertificateByUserId',
 	//获取用户证书是否申请
 	getExamIsPassByUserId: URLHost + '/mine/getExamIsPassByUserId',
+	//获取微信初始化配置
+	getWxConfig: URLHost+'/weixin/getWxConfig'
 }
 export default {
 	url,
