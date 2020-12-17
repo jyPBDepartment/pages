@@ -34,16 +34,16 @@
         <el-divider></el-divider>
         <el-row v-if="aShow">
           <el-col :span="2">选项A:</el-col>
-          <el-col :span="9"><span>{{option[0]}}</span></el-col>
+          <el-col :span="10"><span>{{editForm.optionA}}</span></el-col>
           <el-col :span="2">选项B:</el-col>
-          <el-col :span="9"><span>{{option[1]}}</span></el-col>
+          <el-col :span="9"><span>{{editForm.optionB}}</span></el-col>
         </el-row>
         <el-divider></el-divider>
          <el-row v-if="bShow">
           <el-col :span="2">选项C:</el-col>
-          <el-col :span="9"><span>{{option[2]}}</span></el-col>
+          <el-col :span="10"><span>{{editForm.optionC}}</span></el-col>
           <el-col :span="2">选项D:</el-col>
-          <el-col :span="9"><span>{{option[3]}}</span></el-col>
+          <el-col :span="9"><span>{{editForm.optionD}}</span></el-col>
         </el-row>
         <el-divider v-if="bShow"></el-divider>
          <el-row>
@@ -61,10 +61,8 @@
         </el-row>
         <el-divider></el-divider>
         <el-row>
-          <el-col :span="3">修改人:</el-col>
-          <el-col :span="9"><span>{{editForm.updateBy}}</span></el-col>
-          <el-col :span="3">修改时间:</el-col>
-          <el-col :span="6"><span>{{editForm.updateDate}}</span></el-col>
+          <el-col :span="12">修改人:<span style="margin-left:35px">{{editForm.updateBy}}</span></el-col>
+          <el-col :span="9">修改时间:<span style="margin-left:25px">{{editForm.updateDate}}</span></el-col>
         </el-row>
         <el-divider></el-divider>
         
@@ -119,6 +117,10 @@ export default {
         updateDate:"",
         status:"",
         vocation:"",
+        optionA:"",
+        optionB:"",
+        optionC:"",
+        optionD:""
       },
       option:[],
       localShow: this.show,
@@ -129,41 +131,23 @@ export default {
       this.localShow = val;
     },
     transDetailQuestionId(val) {
+      if(val == ""){
+        return;
+      }
       let params = {
         id: val,
       };
        //根据Id查询用户信息
       api.testAxiosGet(ApiPath.url.questionFindById, params).then((res) => {
         this.editForm = res.data;
+        console.log(this.editForm.optionA)
          if(this.editForm.quType == '0'){
             this.aShow = true;
             this.bShow = true;
-            this.option[0] = "";
-            this.option[1] = "";
-            this.option[2] = "";
-            this.option[3] = "";
         }
         if(this.editForm.quType == '1'){
             this.aShow = true;
             this.bShow = false;
-            this.option[0] = "";
-            this.option[1] = "";
-            this.option[2] = "";
-            this.option[3] = "";
-        }
-        for(let i=0;i<res.dataOption.length;i++){
-            if(res.dataOption[i].title == "A"){
-                this.option[0] = res.dataOption[i].content;
-            }
-            if(res.dataOption[i].title == "B"){
-                this.option[1] = res.dataOption[i].content;
-            }
-            if(res.dataOption[i].title == "C"){
-                this.option[2] = res.dataOption[i].content;
-            }
-            if(res.dataOption[i].title == "D"){
-                this.option[3] = res.dataOption[i].content;
-            }
         }
       });
     },

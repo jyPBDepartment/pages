@@ -37,10 +37,10 @@
       element-loading-text="拼命加载中"
       style="width: 100%"
     >
-      <el-table-column type="index" label="序号" min-width="7%" align="center"
+      <el-table-column type="index" label="序号" min-width="8%" align="center"
       ></el-table-column>
       <el-table-column prop="title" min-width="8%" label="标题" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="5%">
+      <el-table-column prop="url" label="图片" align="center" min-width="7%">
         <template slot-scope="scope" style="height: 120px">
           <el-image
             :src="scope.row.url"
@@ -51,12 +51,11 @@
       </el-table-column>
       <el-table-column prop="vocation.name" min-width="8%" label="职业类别" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="label.name" min-width="8%" label="标签" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="guide" min-width="8%" label="导读" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="createBy" min-width="8%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
       <el-table-column prop="updateBy" min-width="8%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column align="center" min-width="6%" label="状态" prop="status">
+      <el-table-column align="center" min-width="7%" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -68,7 +67,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="10%">
+      <el-table-column align="center" label="操作" min-width="14%">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateManualInfo(scope)"
@@ -264,6 +263,7 @@ export default {
       this.close();
     },
     close() {
+      this.search(this.formInline);
       this.$emit("close");
     },
     saveManualInfo() {
@@ -304,7 +304,7 @@ export default {
           if (code == "1") {
             this.$message.success(res.message);
           }
-          this.reload();
+          this.search(this.formInline);
         }).catch(function (error) {});
     },
     //显示编辑界面
@@ -348,7 +348,7 @@ export default {
             let code = res.state;
             if (code == "0") {
               this.$message.success(res.message);
-              this.reload();
+              this.search(this.formInline);
             }
           });
         }).catch(() => {

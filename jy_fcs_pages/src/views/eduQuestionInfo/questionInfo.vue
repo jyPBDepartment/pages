@@ -35,7 +35,7 @@
       style="width: 100%"
     >
       <el-table-column type="index" label="序号" min-width="7%" align="center"></el-table-column>
-      <el-table-column prop="quContent" min-width="8%" label="问题名称" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="quContent" min-width="7%" label="问题名称" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="quType" min-width="7%" label="试题类型" align="center" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <span v-if="scope.row.quType == '0'">选择题</span>
@@ -45,11 +45,11 @@
       <el-table-column prop="answer" min-width="7%" label="试题答案" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="score" min-width="6%" label="分值" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="vocation.name" min-width="8%" label="职业类别" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="createBy" min-width="8%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="createBy" min-width="7%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
-      <el-table-column prop="updateBy" min-width="8%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="updateBy" min-width="7%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column align="center" min-width="7%" label="状态" prop="status">
+      <el-table-column align="center" min-width="6%" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -61,7 +61,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="10%">
+      <el-table-column align="center" label="操作" min-width="14%">
         <template slot-scope="scope">
           <el-button
             @click="openUpdateQuestionInfo(scope)"
@@ -223,10 +223,12 @@ export default {
     closeUpdateQuestionInfoDialog() {
       this.search(this.formInline);
       this.updateQuestionInfoFlag = false;
+      this.transQuestionInfoId = "";
     },
     closeDetailQuestionDialog(){
       this.search(this.formInline)
       this.detailQuestionFlag = false;
+      this.transDetailQuestionId = "";
     },
     upQuestionInfo() {
       this.updateQuestionInfoFlag = false;

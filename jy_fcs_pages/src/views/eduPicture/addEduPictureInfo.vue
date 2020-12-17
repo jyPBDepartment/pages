@@ -23,7 +23,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="图片类型" prop="picType">
-            <el-select v-model="editForm.picType" style="width:45%;height:30px" size="small">
+            <el-select v-model="editForm.picType" placeholder="请选择" style="width:45%;height:30px" size="small">
                 <el-option v-for="item in pictureOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
             </el-select>
         </el-form-item>
@@ -98,8 +98,8 @@ export default {
       upload: ApiPath.url.uploadImg,
       localShow: this.show,
       rules: {
-        name: [{required: true, message: "请输入图片名称", trigger: "bulr"}],
-        picType: [{ required: true, message: "请选择图片类型", trigger: "blur" }],
+        name: [{required: true, message: "请输入图片名称", trigger: "change"}],
+        picType: [{ required: true, message: "请选择图片类型", trigger: "change" }],
       },
     };
   },
@@ -153,18 +153,6 @@ export default {
     //新增保存
     savePictureInfo(editData) {
       this.$refs[editData].validate((valid) => {
-        if(this.editForm.name == ""){
-          this.$alert("图片名称不能为空", "提示",{
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.picType == "") {
-          this.$alert("图片类型不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;

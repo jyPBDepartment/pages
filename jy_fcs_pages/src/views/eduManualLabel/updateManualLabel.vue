@@ -60,7 +60,7 @@ export default {
       },
       localShow: this.show,
       rules: {
-        name: [{ required: true, message: "请输入标签名称", trigger: "blur" },],
+        name: [{ required: true, message: "请输入标签名称", trigger: "change" },],
       },
     };
   },
@@ -69,6 +69,9 @@ export default {
       this.localShow = val;
     },
     transManualLabelId(val) {
+      if (val == "") {
+        return;
+      }
       let params = {
         id: val,
       };
@@ -89,12 +92,6 @@ export default {
     //编辑保存
     updateManualLabel(editData) {
       this.$refs[editData].validate((valid) => {
-        if (this.editForm.name == "") {
-          this.$alert("标签名称不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
         if (valid) {
             let params = {
               eduManualLabelInfoEntity: this.editForm,

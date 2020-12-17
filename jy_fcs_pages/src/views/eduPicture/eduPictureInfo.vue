@@ -291,7 +291,7 @@ export default {
             let code = res.state;
             if (code == "0") {
               this.$message.success(res.message);
-              this.reload();
+              this.search(this.formInline);
             }
           });
         })
