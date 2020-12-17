@@ -112,9 +112,9 @@ export default {
                   if (res.data.data.enrollStatus == 0) {
                     this.type = 0;
                   } else if (res.data.data.enrollStatus == 1) {
-                    uni.showToast({
-                      title: "此课程暂时不允许报名",
-                    });
+                    // uni.showToast({
+                    //   title: "此课程暂时不允许报名",
+                    // });
                   }
                 } else {
                   this.type = 1;

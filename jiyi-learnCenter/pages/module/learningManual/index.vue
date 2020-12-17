@@ -6,9 +6,9 @@
 		<!-- 学习手册 -->
 		<view class="rm-list">
 			<view class="rm-manager card-box" v-for="(item, index) in optionList" :key="index" @click="juniorManager(item.id)">
-				<view class="rm-img">
+				<!-- <view class="rm-img">
 					<image class="rm-cover" src="http://60.205.246.126/images/2020/09/29/1601345831839353.png"></image>
-				</view>
+				</view> -->
 				<view class="rm-font">{{ item.name }}学习手册</view>
 			</view>
 		</view>
@@ -106,7 +106,7 @@
 				display: flex;
 				margin: 20rpx;
 				border-radius: 10rpx;
-
+				height: 120rpx;;
 				.rm-img {
 					margin: 20rpx;
 
@@ -117,7 +117,9 @@
 				}
 
 				.rm-font {
-					margin-top: 70rpx;
+					margin-top: 40rpx;
+					text-align: center;
+					margin-left: 130rpx;
 				}
 			}
 		}

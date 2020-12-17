@@ -1,7 +1,7 @@
 <template>
 	<view id="main" class="main-container">
 		<!--  标题 -->
-		<header-box title="学习中心" :showGoBack="false"></header-box>
+		<header-box title="学习中心"  :showGoBack="false"></header-box>
 
 		<!--  轮播图 -->
 		<swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
@@ -80,15 +80,27 @@ export default {
 		this.picture(); //初始化加载banner图
 		this.hotCourse(); //初始化加载热门课程
 		this.offLineCourse(); //初始化加载线下课程
+		
+		// this.checkWeixin();
 	},
 	methods: {
+		checkWeixin(){
+			uni.request({
+				method:'POST',
+				url:ApiPath.getWxConfig,
+				data:'',
+				success: (res) => {
+					console.log(JSON.stringify(res))
+				}
+			})
+		},
 		// 从外部接口获取客户信息
 		initCustomerInfo(e) {
 			// alert("从app获取用户id=" + e.U + " sessionId=" + e.SI)
 			// Interface.common.userId = e.U; //缓存用户id
 			// Interface.common.sessionId = e.SI; //缓存sessionId
-			// localStorage.setItem('userId', e.U);
-			localStorage.setItem('userId', '20200909');
+			localStorage.setItem('userId', e.U);
+			// localStorage.setItem('userId', '20200909');
 		},
 		// 初始化加载banner图
 		picture() {
