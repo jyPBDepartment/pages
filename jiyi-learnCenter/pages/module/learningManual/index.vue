@@ -2,7 +2,7 @@
 	<view class="learning-manual-container">
 		<header-box title="学习手册" @backTo="backTo"></header-box>
 		<!--  背景图 -->
-		<u-image class="bg-image" width="100%" height="270rpx" v-for="(item, index) in banner" :key="index" :src="item.url"></u-image>
+		<u-image class="bg-image" width="100%" height="270rpx" mode="scaleToFill" v-for="(item, index) in banner" :key="index" :src="item.url"></u-image>
 		<!-- 学习手册 -->
 		<view class="rm-list">
 			<view class="rm-manager card-box" v-for="(item, index) in optionList" :key="index" @click="juniorManager(item.id)">
@@ -71,6 +71,11 @@ export default {
 				success: res => {
 					if (res.data.code == 200) {
 						this.banner = res.data.data;
+						if(!this.banner.length){
+							this.banner.push({
+								url:'http://60.205.246.126/images/2020/12/17/1608192914066744.png'
+							})
+						}
 					} else {
 						uni.showToast({
 							title: res.data.data

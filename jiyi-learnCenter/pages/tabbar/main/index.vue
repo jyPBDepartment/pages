@@ -6,7 +6,7 @@
 		<!--  轮播图 -->
 		<swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
 			<block v-for="(item, index) in banner" :key="index">
-				<swiper-item class="swiperItem"><image :lazy-load="true" :src="item.url" mode="aspectFill" class="swiperImage"></image></swiper-item>
+				<swiper-item class="swiperItem"><image  :lazy-load="true" :src="item.url" mode="scaleToFill" class="swiperImage"></image></swiper-item>
 			</block>
 		</swiper>
 		<!--  模块 -->
@@ -121,7 +121,7 @@ export default {
 						this.banner = res.data.data;
 						if(!this.banner.length){
 							this.banner.push({
-								url:'http://60.205.246.126/images/2020/12/17/1608190895100322.png'
+								url:'http://60.205.246.126/images/2020/12/17/1608192914066744.png'
 							})
 						}
 					} else {
