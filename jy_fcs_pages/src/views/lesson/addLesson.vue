@@ -5,13 +5,20 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="30%"
+    width="670px"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form :model="editForm" :rules="rules" ref="editForm" :label-position="labelPosition" label-width="100px" style="margin-left:-85px">
+      <el-form 
+      :model="editForm" 
+      :rules="rules" 
+      ref="editForm" 
+      :label-position="labelPosition" 
+      label-width="110px" 
+      class="form" 
+      style="margin-left:-85px">
         <el-form-item label="主图图片" prop="url">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
@@ -31,34 +38,63 @@
             <div slot="tip">只能上传jpg/png文件，且不超过1M</div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="职业类别" prop="vocationId">
-          <el-select v-model="editForm.vocationId" placeholder="请选择" size="small" style="width:92%">
-            <el-option
-              v-for="item in vocationOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              class="option"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="课程名称" prop="title">
-          <el-input type="text" v-model="editForm.title" size="small" placeholder="不超过32个字" style="width:92%" maxlength="32"></el-input>
+          <el-input type="text" v-model="editForm.title" size="small" placeholder="不超过32个字" style="width:97%" maxlength="32"></el-input>
         </el-form-item>
-        <el-form-item label="主讲人" prop="teacherName">
-          <el-input type="text" v-model="editForm.teacherName" size="small" placeholder="不超过32个字" style="width:92%" maxlength="32"></el-input>
-        </el-form-item>
-        
-        <el-form-item label="课程地点" prop="address">
-          <el-input type="text" v-model="editForm.address" size="small" style="width:92%" ></el-input>
-        </el-form-item>
-        <el-form-item label="上课日期" prop="lessonDay">
-          <el-date-picker
-            v-model="editForm.lessonDay"
-            type="date" size="small" style="width:92%" 
-            placeholder="选择日期">
-          </el-date-picker>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="职业类别" prop="vocationId">
+              <el-select v-model="editForm.vocationId" placeholder="请选择" size="small" style="width:92%">
+                <el-option
+                  v-for="item in vocationOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  class="option"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="主讲人" prop="teacherName">
+              <el-input type="text" v-model="editForm.teacherName" size="small" placeholder="不超过32个字" style="width:92%" maxlength="32"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+          <el-form-item label="课程地点" prop="address">
+            <el-input type="text" v-model="editForm.address" size="small" style="width:92%" ></el-input>
+          </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="人数限制" prop="stuLimit">
+              <el-input type="number" v-model="editForm.stuLimit" size="small" style="width:92%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="上课日期" prop="lessonDay">
+              <el-date-picker
+                v-model="editForm.lessonDay"
+                type="date" size="small" style="width:92%" 
+                placeholder="选择日期">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="报名截止日期" prop="closingDate">
+              <el-date-picker
+                v-model="editForm.closingDate"
+                type="date" size="small" style="width:92%" 
+                placeholder="选择日期">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
         <el-form-item label="上课开始时间" prop="beginDate">
             <el-time-select
               placeholder="开始时间" style="width:92%"
@@ -70,33 +106,28 @@
               }">
             </el-time-select>
         </el-form-item>
-        <el-form-item label="上课结束时间" prop="endDate">
-          <el-time-select
-              placeholder="结束时间" style="width:92%"
-              v-model="editForm.endDate"
-              :picker-options="{
-                start: '08:30',
-                step: '00:15',
-                end: '18:30',
-                minTime: editForm.beginDate
-              }">
-          </el-time-select>
-        </el-form-item>
-        <el-form-item label="报名截止日期" prop="closingDate">
-          <el-date-picker
-            v-model="editForm.closingDate"
-            type="date" size="small" style="width:92%" 
-            placeholder="选择日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="人数限制" prop="stuLimit">
-          <el-input type="number" v-model="editForm.stuLimit" size="small" style="width:92%"></el-input>
-        </el-form-item>
+          </el-col>
+           <el-col :span="12">
+            <el-form-item label="上课结束时间" prop="endDate">
+              <el-time-select
+                  placeholder="结束时间" style="width:92%"
+                  v-model="editForm.endDate"
+                  :picker-options="{
+                    start: '08:30',
+                    step: '00:15',
+                    end: '18:30',
+                    minTime: editForm.beginDate
+                  }">
+              </el-time-select>
+            </el-form-item>
+           </el-col>
+        </el-row>
+        
         <el-form-item label="课程介绍" prop="content">
-          <el-input type="textarea" v-model="editForm.content" size="small" style="width:92%"></el-input>
+          <el-input type="textarea" :rows="5" v-model="editForm.content" size="small" style="width:97%"></el-input>
         </el-form-item>
         <el-form-item label="参加指南" prop="remark">
-          <el-input type="textarea" v-model="editForm.remark" size="small" style="width:92%"></el-input>
+          <el-input type="textarea" :rows="5" v-model="editForm.remark" size="small" style="width:97%"></el-input>
         </el-form-item>
         
       </el-form>
@@ -292,4 +323,5 @@ export default {
   color: red;
   margin-left: -79px;
 }
+
 </style>
