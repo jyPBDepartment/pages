@@ -4,11 +4,13 @@
 		<header-box title="学习中心"  :showGoBack="false"></header-box>
 
 		<!--  轮播图 -->
-		<swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
+		<!-- <swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
 			<block v-for="(item, index) in banner" :key="index">
 				<swiper-item class="swiperItem"><image  :lazy-load="true" :src="item.url" mode="scaleToFill" class="swiperImage"></image></swiper-item>
 			</block>
-		</swiper>
+		</swiper> -->
+		
+		<u-swiper class="circul" bg-color="#ffffff"	 mode="none" height="270"	 img-mode="scaleToFill" :list="banner" name="url" :effect3d="true"></u-swiper>
 		<!--  模块 -->
 		<u-grid class="grid" :col="3" :border="border">
 			<u-grid-item @click="learningManual">
@@ -240,7 +242,7 @@ export default {
 	.circul {
 		width: 750rpx;
 		height: 320rpx;
-		margin-top: 80rpx;
+		margin-top: 90rpx;
 		.swiperItem {
 			width: 100%;
 			height: 100%;
