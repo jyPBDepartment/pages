@@ -25,6 +25,24 @@ no-data<script>
 <style lang="scss">
 	@import "uview-ui/index.scss";
 	/*每个页面公共css */
+	.my-skeleton-class{
+	    /*这是一个默认的样式，js自动添加到有 skeleton="true"  属性的标签中 ，
+	      最好是放在全局，这样所有页面的组件就都能用到。*/
+	    background-image:unset;
+	    box-shadow: unset;
+	    border: #C0C0C0;
+	    border-radius: 0.25rem;
+	    animation: mybgcolor 1s linear 0s infinite normal;
+	}
+	@keyframes mybgcolor
+	{
+	    0%{background-image: linear-gradient(to right ,#C0C0C0, rgb(230,230,230), rgb(230,230,230) );}
+	    50%{background-image: linear-gradient(to right, rgb(230,230,230),#C0C0C0,  rgb(230,230,230));}
+	    100%{background-image: linear-gradient(to right,   rgb(230,230,230), rgb(230,230,230),#C0C0C0);}
+	}
+	.my-class{
+	    /*这里写你想添加上去的样式，没有限制 是直接setAttir上去的，嘻嘻*/
+	}
 	
 	.g-flex {
 		display: flex;
