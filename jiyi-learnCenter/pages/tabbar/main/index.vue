@@ -80,11 +80,14 @@ export default {
 	onLoad(e) {
 		// 从外部接口获取客户信息
 		this.initCustomerInfo(e);
+		
+		
+		// this.checkWeixin();
+	},
+	onShow() {
 		this.picture(); //初始化加载banner图
 		this.hotCourse(); //初始化加载热门课程
 		this.offLineCourse(); //初始化加载线下课程
-		
-		// this.checkWeixin();
 	},
 	methods: {
 		checkWeixin(){
