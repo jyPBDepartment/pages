@@ -25,6 +25,8 @@
 					</view>
 				</view>
 			</view>
+			<data-empty v-if="examScoreList.length == 0" :option="{tip:'暂无报名课程'}"></data-empty>
+			
 		</view>
 	</view>
 </template>

@@ -11,6 +11,7 @@
 					<u-button class="btn" type="primary" plain size="mini" v-if="item.isApply == 0" @tap="applyShow(item.vocationId, item.vocationName)">证书申请</u-button>
 				</view>
 			</view>
+			<data-empty v-if="examScoreList.length == 0" :option="{tip:'暂无数据'}"></data-empty>
 		</view>
 		<u-popup v-model="show" mode="center" width="620rpx" height="530rpx" border-radius="10" :mask-close-able="false">
 			<view class="my-popup-title">请完善信息获取{{ type }}证书！</view>

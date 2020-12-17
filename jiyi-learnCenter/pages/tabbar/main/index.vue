@@ -33,8 +33,10 @@
 				<view class="content">{{ item.readNum }}人已学</view>
 			</view>
 		</view>
+		<data-empty v-if="hotCourseList.length == 0" :option="{tip:'暂无数据'}"></data-empty>
+		
 		<view class="split-space"></view>
-		<comm-title title="线下课程" @more="hyMore"></comm-title>
+		<comm-title title="最新课程" @more="hyMore"></comm-title>
 		<view
 			class="list-box offlineCourse card-box animate__animated animate__fadeIn "
 			v-for="(item, index) in offlineCourseList"
@@ -52,6 +54,7 @@
 				<view class="courseTime">开课时间：{{ item.lessonTime }}</view>
 			</view> -->
 		</view>
+		<data-empty v-if="offlineCourseList.length == 0" :option="{tip:'暂无数据'}"></data-empty>
 	</view>
 </template>
 
@@ -113,6 +116,11 @@ export default {
 				success: res => {
 					if (res.data.code == 200) {
 						this.banner = res.data.data;
+						if(!this.banner.length){
+							this.banner.push({
+								url:'http://60.205.246.126/images/2020/12/17/1608190895100322.png'
+							})
+						}
 					} else {
 						uni.showToast({
 							title: '服务器出错，请联系管理员'

@@ -49,11 +49,7 @@
 		mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 		data() {
 			return {
-				labelList: [{
-					code: '',
-					id: '',
-					name: '全部'
-				}],
+				labelList: [],
 				current: '',
 				learningId: '',
 				labelId: '',
@@ -167,6 +163,7 @@
 					success: res => {
 						//成功返回结果方法
 						if (res.data.state == 0) {
+							
 							for (let i = 0; i < res.data.data.length; i++) {
 								// 遍历循环，给标签list循环添加数据
 								this.labelList.push({
@@ -174,6 +171,13 @@
 									code: i,
 									name: res.data.data[i].name
 								});
+							}
+							if(this.labelList.length){
+								this.labelList.unshift({
+									code: '',
+									id: '',
+									name: '全部'
+								})
 							}
 							// 页码，数量
 							let pages = {

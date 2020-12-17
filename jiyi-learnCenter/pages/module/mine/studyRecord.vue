@@ -13,6 +13,7 @@
 					<view class="bride">{{ item.sum }}人已学</view>
 				</view>
 			</view>
+			<data-empty v-if="studyRecordList.length == 0" :option="{tip:'暂无学习记录'}"></data-empty>
 		</mescroll-body>
 	</view>
 </template>

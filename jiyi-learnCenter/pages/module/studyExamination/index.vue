@@ -12,6 +12,8 @@
 				<view class="se-text"></view>
 				<view class="title">{{ item.name }}考试</view>
 			</view>
+			<data-empty v-if="studyExaminationList.length == 0" :option="{tip:'暂无考试'}"></data-empty>
+			
 		</view>
 	</view>
 </template>
