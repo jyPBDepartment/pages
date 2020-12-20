@@ -47,9 +47,9 @@
 				</view>
 				<!-- 按钮 -->
 				<view class="next">
-					<button v-if="jumpCount != 1" type="primary" @click="prefixQues(index1 + 1)" class="examBtn">上一题</button>
-					<button v-if="jumpCount != examCount" type="primary" @click="nextQues(index1 + 1)" :style="jumpCount == 1 ? 'width: 772rpx;' : 'width:386rpx'">下一题</button>
-					<button type="primary" v-if="jumpCount == examCount" class="examBtn" @click="submit">交卷</button>
+					<button v-if="jumpCount > 1" type="primary" @click="prefixQues(index1 + 1)" class="examBtn">上一题</button>
+					<button v-if="jumpCount != examCount" type="primary" @click="nextQues(index1 + 1)" :style="jumpCount == 1 ? 'width: 772rpx' : 'width:386rpx'">下一题</button>
+					<button type="primary" v-if=" jumpCount == examCount " class="examBtn" @click="submit" :style="{width: examCount == 1 ? '772rpx' : '386rpx'}">交卷</button>
 				</view>
 			</view>
 		</view>
@@ -71,7 +71,7 @@ export default {
 			showconfirmGoBack:false,
 			content: '',
 			jumpCount: 1,
-			examCount: '',
+			examCount: 1,
 			examTime: '',
 			examTypeName: '考试',
 			current: null,
@@ -93,6 +93,9 @@ export default {
 		this.passScore = val.passScore;
 		this.totalScore = val.totalScore;
 		this.initQuestionInfo(val.id); // 初始化加载试题列表信息
+	},
+	onShow() {
+		console.log(this.examCount,'------',this.jumpCount)
 	},
 	methods: {
 		

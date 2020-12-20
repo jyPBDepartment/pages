@@ -91,6 +91,7 @@ export default {
 			console.log(this.show )
 		},
 		applyCertificate() {
+			let self = this;
 			//不为空判断
 			if (this.name == '') {
 				this.$refs.uToast.show({
@@ -143,15 +144,12 @@ export default {
 				success: res => {
 					if (res.data.state == 0) {
 						this.$refs.uToast.show({
-							title: '申请已经申请，等待审核！',
+							title: '申请证书成功，请等待审核！',
 							type: 'success'
 						});
 
-						setTimeout(function() {
-							this.show = false;
-							// uni.navigateTo({
-							// 	url: './index'
-							// });
+						setTimeout(()=> {
+							self.show = false;
 						}, 1000);
 					} else {
 						uni.showToast({
