@@ -256,6 +256,8 @@ export default {
           this.formInline.currentPage = res.data.number + 1;
           this.formInline.pageSize = res.data.size;
           this.formInline.total = res.data.totalElements;
+        }else{
+          this.$message.error(res.message);
         }
       });
     },
@@ -349,6 +351,8 @@ export default {
             if (code == "0") {
               this.$message.success(res.message);
               this.search(this.formInline);
+            }else{
+              this.$message.error(res.message);
             }
           });
         }).catch(() => {

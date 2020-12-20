@@ -136,9 +136,9 @@ export default {
         vocationIdOptions: [],
         //分数
         scoreOptions:[
-            {value: "2", label: "2"},
-            {value: "5", label: "5"},
-            {value: "10", label: "10"}
+          {value: "2", label: "2"},
+          {value: "5", label: "5"},
+          {value: "10", label: "10"}
         ],
         answerOptions:[
           {value: "A", label: "A"},
@@ -274,7 +274,6 @@ export default {
               }).catch(function (err) {});
                 this.fullscreenLoading = true;
                 setTimeout(() => {
-                    this.fullscreenLoading = false;
                     this.editForm.vocationId=""
                     this.editForm.quType=0;
                     this.editForm.quContent = "";
@@ -284,7 +283,11 @@ export default {
                     this.bShow = true;
                     this.cShow = true;
                     this.dShow = true;
-                    this.option = [];
+                    this.editForm.optionA= "";
+                    this.editForm.optionB= "";
+                    this.editForm.optionC= "";
+                    this.editForm.optionD= "";
+                    this.fullscreenLoading = false;
                 }, 500);
          
         } else {

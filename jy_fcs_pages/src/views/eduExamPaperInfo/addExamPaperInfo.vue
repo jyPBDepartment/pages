@@ -233,15 +233,18 @@ export default {
     //预览
     showExamPaper(editData) {
       this.$refs[editData].validate((valid) => {
-        
+        if (this.listData == "") {
+          this.$message.error("试题不能为空，请添加试题")
+          return false;
+        }
         if (valid) {
           this.showForm.name=this.editForm.name;
-        this.showForm.answerTime = this.editForm.answerTime;
-        this.showForm.vocationId = this.editForm.vocationId;
-        this.showForm.vocation = this.editForm.vocationName;
-        this.showForm.listData = this.listData;
-        this.transShowExamPaperId = this.showForm;
-        this.showExamPaperFlag = true;
+          this.showForm.answerTime = this.editForm.answerTime;
+          this.showForm.vocationId = this.editForm.vocationId;
+          this.showForm.vocation = this.editForm.vocationName;
+          this.showForm.listData = this.listData;
+          this.transShowExamPaperId = this.showForm;
+          this.showExamPaperFlag = true;
         } else {
           return false;
         }
@@ -254,7 +257,6 @@ export default {
     closeShowQuestionDialog() {
       this.showQuestionInfo = false;
       this.transShowQuestion={};
-      
     },
     saveShowQuestion() {
       this.showQuestionInfo = false;

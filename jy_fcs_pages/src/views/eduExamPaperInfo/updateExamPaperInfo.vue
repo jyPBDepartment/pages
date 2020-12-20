@@ -404,7 +404,7 @@ export default {
         })
         .catch(function (error) {});
     },
-    //新增保存
+    //保存
     saveExamPaperInfo(editData) {
       this.$refs[editData].validate((valid) => {
         if (this.listData == "") {
