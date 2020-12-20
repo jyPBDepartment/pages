@@ -1,7 +1,7 @@
 <template>
 	<view id="offlineSignUpShow">
 		
-		<u-row style="background-color: #f2f2f2;height: 60rpx;">
+	<!-- 	<u-row style="background-color: #f2f2f2;height: 60rpx;">
 			<u-col span="1">
 				<view class="title" @click="backTo">
 					<u-icon name="arrow-left"></u-icon>
@@ -10,16 +10,16 @@
 			<u-col span="11">
 				<view class="title">报名</view>
 			</u-col>
-		</u-row>
-		
-		<view style="padding-top: 40rpx;">
+		</u-row> -->
+		<header-box title="报名" @backTo="backTo"></header-box>
+		<view style="padding-top: 100rpx;">
 			<u-row>
-				<u-col span="3" style="text-align: right;">
-					<span style="color: #ff0000;">*</span>
+				<u-col span="3" style="text-align: right;font-size: 28rpx;">
+					<text style="color: #ff0000;font-size: 28rpx;">*</text>
 					姓名:
 				</u-col>
-				<u-col span="8">
-					<span>{{name}}</span>
+				<u-col span="8" style="font-size: 28rpx;">
+					<text>{{name}}</text>
 				</u-col>
 			</u-row>
 			
@@ -33,36 +33,36 @@
 				</u-col>
 			</u-row> -->
 			
-			<u-row style="padding-top: 50rpx;">
-				<u-col span="3" style="text-align: right;">
-					<span style="color: #ff0000;">*</span>
+			<u-row style="padding-top: 50rpx;" >
+				<u-col span="3" style="text-align: right;font-size: 28rpx;">
+					<text style="color: #ff0000;">*</text>
 					手机号:
 				</u-col>
-				<u-col span="8">
-					<span>{{phone}}</span>
+				<u-col span="8"  style="font-size: 28rpx;">
+					<text>{{phone}}</text>
 				</u-col>
 			</u-row>
 			
-			<u-row style="padding-top: 80rpx;">
+			<u-row style="padding-top: 60rpx;">
 				<u-col span="6">
 					<view style="text-align: center;margin-top: 20rpx;">
 						<!-- 确认报名弹出框 -->
-						<u-popup v-model="show" mode="center" border-radius="14" width="650rpx" height="330rpx" :mask-close-able="false" >
-							<view style="text-align: center;padding-top: 10rpx; font-size: 14px;">温馨提示</view>
-							<u-line color="#515151" style="padding-top: 10rpx;width: 620rpx; margin-left: 15rpx;"></u-line>
+						<u-popup v-model="show" mode="center" border-radius="14" width="650rpx" :mask-close-able="false" >
+							<view style="text-align: center;padding: 20rpx; font-size: 36rpx; color:#ff0000 ;">温馨提示</view>
+							<u-line color="#f4f4f4" style="padding-top: 10rpx;width: 620rpx; margin-left: 15rpx;"></u-line>
 							<u-icon name="checkbox-mark" color="#00aa00" size="90"></u-icon>
 							<view style="padding-top: 10rpx;font-size: 16px;">《{{className}}》报名成功，请您准时参加!</view>
-							<u-line color="#515151" style="padding-top: 10rpx;width: 620rpx; margin-left: 15rpx;"></u-line>
-							<view style="padding-top: 20rpx;">
-								<u-button type="primary" size="mini" @click="close(show = false)">关闭</u-button>
+							<u-line color="#f4f4f4" style="padding-top: 10rpx;width: 620rpx; margin-left: 15rpx;"></u-line>
+							<view style="padding: 20rpx;">
+								<u-button type="error" size="medium" @click="close(show = false)">关闭</u-button>
 							</view>
 						</u-popup>
-						<u-button type="primary" size="mini" @click="confirm()" >确定报名</u-button>
+						<u-button type="success" size="medium" @click="confirm()" >确定报名</u-button>
 					</view>
 				</u-col>
 				<u-col span="5">
 					<view style="text-align: center;margin-top: 20rpx;">
-						<u-button type="primary" size="mini" @click="reEdit()">重新编辑</u-button>
+						<u-button type="primary" size="medium" @click="reEdit()">重新编辑</u-button>
 					</view>
 				</u-col>
 			</u-row>

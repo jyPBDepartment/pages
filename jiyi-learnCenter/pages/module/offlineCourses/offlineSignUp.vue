@@ -31,7 +31,7 @@
 				</view>
 			</u-row>
 			<u-line></u-line>
-			<view style="text-align: center;margin-top: 20rpx;padding-top: 80rpx;"><u-button type="primary" size="mini" @click="signUp()">立即报名</u-button></view>
+			<view style="text-align: center;margin-top: 20rpx;padding-top: 80rpx;"><u-button type="primary" size="medium" @click="signUp()">立即报名</u-button></view>
 		</view>
 		<u-toast ref="uToast" />
 	</view>
