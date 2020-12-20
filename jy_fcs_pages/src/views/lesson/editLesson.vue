@@ -54,19 +54,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        
-        <el-row>
-          <el-col :span="12">
-        <el-form-item label="课程地点" prop="address">
-          <el-input type="text" v-model="lessonForm.address" size="small" style="width:92%" ></el-input>
-        </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="人数限制" prop="stuLimit">
-              <el-input type="number" v-model="lessonForm.stuLimit" size="small" style="width:92%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
         <el-row>
           <el-col :span="12">
         <el-form-item label="上课日期" prop="lessonDay">
@@ -115,7 +102,17 @@
           </el-time-select>
         </el-form-item>
            </el-col>
-        </el-row>        
+        </el-row>     
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="人数限制"  prop="stuLimit">
+              <el-input type="number" placeholder="人数限制" v-model="lessonForm.stuLimit" size="small" style="width:92%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="课程地点" prop="address">
+            <el-input type="text" placeholder="课程地点" v-model="lessonForm.address" size="small" style="width:97%" ></el-input>
+        </el-form-item>   
         <el-form-item label="课程介绍" prop="content">
           <el-input type="textarea" v-model="lessonForm.content" :rows="5" size="small" style="width:97%"></el-input>
         </el-form-item>
@@ -207,7 +204,7 @@ export default {
         id: val,
       };
       //根据Id查询用户信息
-      api.testAxiosGet(ApiPath.url.findLessonById, params).then((res) => {
+      api.testAxiosPost(ApiPath.url.findLessonById, params).then((res) => {
         this.lessonForm = res.data;
         this.lessonForm.vocationId = res.data.vocation.id;
         let url = res.data.url;

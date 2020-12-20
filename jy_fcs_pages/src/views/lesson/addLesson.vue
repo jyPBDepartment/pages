@@ -61,18 +61,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">
-          <el-form-item label="课程地点" prop="address">
-            <el-input type="text" v-model="editForm.address" size="small" style="width:92%" ></el-input>
-          </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="人数限制"  prop="stuLimit">
-              <el-input type="number" v-model="editForm.stuLimit" size="small" style="width:92%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        
         <el-row>
           <el-col :span="12">
             <el-form-item label="上课日期" prop="lessonDay">
@@ -122,7 +111,16 @@
             </el-form-item>
            </el-col>
         </el-row>
-        
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="人数限制"  prop="stuLimit">
+              <el-input type="number" placeholder="人数限制" v-model="editForm.stuLimit" size="small" style="width:92%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="课程地点" prop="address">
+            <el-input type="text" placeholder="课程地点" v-model="editForm.address" size="small" style="width:97%" ></el-input>
+        </el-form-item>
         <el-form-item label="课程介绍" prop="content">
           <el-input type="textarea" :rows="5" v-model="editForm.content" size="small" style="width:97%"></el-input>
         </el-form-item>
@@ -211,7 +209,7 @@ export default {
     findContext: function () {
       let params = {};
       api
-        .testAxiosGet(ApiPath.url.findVocationOptions, params)
+        .testAxiosPost(ApiPath.url.findVocationOptions, params)
         .then((res) => {
           if (res.state == "0") {
             // this.powerOptions.push({ value: "", label: "请选择" });
