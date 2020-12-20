@@ -182,12 +182,13 @@ export default {
       rules: {
         title: [{ required: true, message: "请输入课程名称", trigger: "blur" }],
         vocationId: [{ required: true, message: "请选择职业类别", trigger: "blur" }],
-        address: [{ required: true, message: "请输入地址", trigger: "blur" }],
+        address: [{ required: true, message: "请输入课程地点", trigger: "blur" }],
         content: [{ required: true, message: "请输入课程介绍", trigger: "blur" }],
         lessonDay: [{ required: true, message: "请输入上课日期", trigger: "blur" }],
         beginDate: [{ required: true, message: "请输入课程开始时间", trigger: "blur" }],
         endDate: [{ required: true, message: "请输入课程结束时间", trigger: "blur" }],
         stuLimit: [{ required: true, message: "请输入最大上课人数", trigger: "blur" }],
+        closingDate:[{ required: true, message: "请输入报名截止日期", trigger: "blur" }],
         remark: [{ required: true, message: "请输入参加指南", trigger: "blur" }],
         teacherName:[{ required: true, message: "请输入主讲人", trigger: "blur" }]
       },
