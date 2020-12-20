@@ -93,7 +93,7 @@ export default {
       },
       //rules表单验证
       rules: {
-        name:[{required: true,message: "请输入图片名称", trigger: "blur"}],
+        name:[{required: true,message: "请输入图片名称", trigger: "change"}],
         picType: [{ required: true, message: "请选择图片类型", trigger: "blur" }],
       },
     };
@@ -158,18 +158,6 @@ export default {
     },
     updatePicture(editData) {
       this.$refs[editData].validate((valid) => {
-        if (this.editForm.name == ""){
-          this.$alert("图片名称不能为空","提示",{
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.picType == "Null") {
-          this.$alert("图片类型不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;

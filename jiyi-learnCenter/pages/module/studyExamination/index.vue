@@ -4,7 +4,7 @@
 		<header-box title="学习考试" @backTo="backTo"></header-box>
 
 		<!--  背景图 -->
-		<u-image class="bg-image" width="100%" height="270rpx" v-for="(item, index) in banner" :key="index" :src="item.url"></u-image>
+		<u-image class="bg-image" mode="scaleToFill" width="100%" height="270rpx" v-for="(item, index) in banner" :key="index" :src="item.url"></u-image>
 		<!--  考试列表 -->
 		<view class="exam-list">
 			<view class="list-item card-box" :class="getItemBg(key)" v-for="(item, key) in studyExaminationList" :key="key" @click="linkTo(item.id, item.isPass)">
@@ -12,6 +12,8 @@
 				<view class="se-text"></view>
 				<view class="title">{{ item.name }}考试</view>
 			</view>
+			<data-empty v-if="studyExaminationList.length == 0" :option="{tip:'暂无考试'}"></data-empty>
+			
 		</view>
 	</view>
 </template>
@@ -66,6 +68,11 @@ export default {
 				success: res => {
 					if (res.data.code == 200) {
 						this.banner = res.data.data;
+						if(!this.banner.length){
+							this.banner.push({
+								url:'http://60.205.246.126/images/2020/12/17/1608192914066744.png'
+							})
+						}
 					} else {
 						uni.showToast({
 							title: '服务器出错，请联系管理员'

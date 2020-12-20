@@ -5,10 +5,12 @@ import uView from "uview-ui";
 // 注册加载全局组件
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
+import DataEmpty from '@/components/no-data.vue';
 import HeaderBox from "@/components/commHeader.vue"
 Vue.component('mescroll-body', MescrollBody)
 Vue.component('mescroll-uni', MescrollUni)
 Vue.component("header-box",HeaderBox)
+Vue.component('data-empty',DataEmpty)
 
 Vue.use(uView);
 Vue.config.productionTip = false

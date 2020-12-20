@@ -1,13 +1,13 @@
 <template>
 	<view style="background-color: #f4f4f4">
 		<!-- <view><u-button @click="sums">sum</u-button></view> -->
-		<HeaderSearch :disabled="true" @searchCallback="search"></HeaderSearch>
+		<HeaderSearch :disabled="true" @searchCallback="search" :goBackHome="true"></HeaderSearch>
 		<!-- <HeaderSearch :disabled="true" @searchCallback="search" :showMsg="true"></HeaderSearch> -->
 		<FoodstuffPrice v-if="showCharts" class="charts-box"></FoodstuffPrice>
 		<view class="content">
 			<view class="btn comm-border">
 				<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">
-					<view class="modular" :style="{ 'background-color': item.backgroundColor }"><image :src="item.url" mode=""></image></view>
+					<view class="modular" :style="{ 'background-color': item.backgroundColor }"><image :lazy-load="true" :src="item.url" mode=""></image></view>
 					<p>{{ item.name }}</p>
 				</view>
 			</view>
@@ -20,7 +20,10 @@
 				<view class="preview">
 					<view v-if="!nfList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsNf(item.id)" v-for="(item, index) in nfList" :key="index">
-						<view class="img"><image class="preview-img" :src="item.url" mode=""></image></view>
+						<view class="img">
+							<!-- <image :lazy-load="true" class="preview-img" :src="item.url" mode=""></image> -->
+							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
+						</view>
 						<p class="text f-14">{{ item.name }}</p>
 						<p class="text f-12 address">{{ item.address }}</p>
 					</view>
@@ -35,7 +38,10 @@
 				<view class="preview">
 					<view v-if="!mmList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsMm(item.id)" v-for="(item, index) in mmList" :key="index">
-						<view class="img"><image class="preview-img" :src="item.url" mode=""></image></view>
+						<view class="img">
+							<!-- <image class="preview-img" :lazy-load="true" :src="item.url" mode=""></image> -->
+							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
+						</view>
 						<p class="text f-12 o-e" style="line-height: 32rpx; margin-top: 20rpx">{{ item.name }}</p>
 					</view>
 				</view>
@@ -51,7 +57,8 @@
 					<view class="buju" @click="detailsNj(item.id)" v-for="(item, index) in NjList" :key="index">
 						<view class="img">
 							<view class="tag f-12 t-c" :style="{ 'background-color': item.bgColorTag }">{{ item.transactionTypeCode }}</view>
-							<image class="preview-img" :src="item.url" mode=""></image>
+							<!-- <image class="preview-img" :lazy-load="true" :src="item.url" mode=""></image> -->
+							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
 						</view>
 						<p class="text f-12 o-e" style="line-height: 32rpx; margin-top: 20rpx">{{ item.name }}</p>
 					</view>
@@ -66,7 +73,10 @@
 				<view class="preview">
 					<view v-if="!ChList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsCh(item.id)" v-for="(item, index) in ChList" :key="index">
-						<view class="img"><image class="preview-img" :src="item.url" mode=""></image></view>
+						<view class="img">
+							<!-- <image class="preview-img" :lazy-load="true" :src="item.url" mode=""></image> -->
+							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
+						</view>
 						<p class="text f-14">{{ item.name }}</p>
 					</view>
 				</view>
@@ -82,11 +92,13 @@ import FoodstuffPrice from '@/components/FoodstuffPrice/FoodstuffPrice.vue';
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
 import MD5 from '../../../utils/md5.js';
 import { initImSDK } from '../../../utils/initNIM.js';
+import easyLoadimage from '@/components/easy-loadimage/easy-loadimage.vue';
 
 export default {
 	components: {
 		HeaderSearch,
-		FoodstuffPrice
+		FoodstuffPrice,
+		easyLoadimage
 	},
 	data() {
 		return {
@@ -97,12 +109,19 @@ export default {
 			ChList: [],
 			show: true,
 			maskAble: false,
-			showCharts: true
+			showCharts: true,
+			scrollTop: 0
 		};
+	},
+	onPageScroll({ scrollTop }) {
+		// 传入scrollTop值并触发所有easy-loadimage组件下的滚动监听事件
+		this.scrollTop = scrollTop;
 	},
 	onLoad(e) {
 		// 从外部接口获取客户信息
 		this.initCustomerInfo(e);
+	},
+	onShow: function() {
 		// 初始化加载模块信息
 		this.initModuleInfo();
 		// 初始化加载农服预约信息
@@ -113,9 +132,7 @@ export default {
 		this.initAgriMachineInfo();
 		// 初始化加载病虫害信息
 		this.initCaseInfo();
-		
-	},
-	onShow: function() {
+
 		this.showCharts = false;
 		setTimeout(() => {
 			this.showCharts = true;
@@ -133,11 +150,10 @@ export default {
 
 			let us = localStorage.getItem('userId');
 			let ss = localStorage.getItem('sessionId');
-			
-			localStorage.setItem('accId','73jl000006');
-			initImSDK('73jl000006', '73jl000006');
-			
-			
+
+			// localStorage.setItem('accId', '73jl000006');
+			// initImSDK('73jl000006', '73jl000006');
+
 			let s = us + '+' + ss + '+' + Interface.md5.key;
 			let sign = MD5(s).toUpperCase();
 			let param = {
@@ -165,8 +181,8 @@ export default {
 						// 昵称
 						Interface.common.nc = res.data.RETURNRESULT.NN;
 						// alert("昵称："+Interface.common.nc)
-						
-						localStorage.setItem('accId',res.data.RETURNRESULT.NN);
+						localStorage.setItem('accId', res.data.RETURNRESULT.NN);
+						initImSDK(res.data.RETURNRESULT.NN, res.data.RETURNRESULT.NN);
 					}
 					if (code == '-1') {
 						// alert("失败")

@@ -29,19 +29,26 @@
           <el-input type="textarea" v-model="editForm.quContent" rows="3" size="small" placeholder="请输入题目(限160个字)" style="width:80%;" maxlength="160"></el-input>
         </el-form-item>
         <el-form-item label="选项A" prop="optionA" v-if="aShow">
-          <el-input type="text" v-model="option[0]" size="small" placeholder="请输入选项A(限30个字)" style="width:80%;" maxlength="30"></el-input>
+          <el-input type="text" v-model="editForm.optionA" size="small" placeholder="请输入选项A(限30个字)" style="width:80%;" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="选项B" prop="optionB" v-if="bShow">
-          <el-input type="text" v-model="option[1]" size="small" placeholder="请输入选项B(限30个字)" style="width:80%;" maxlength="30"></el-input>
+          <el-input type="text" v-model="editForm.optionB"  size="small" placeholder="请输入选项B(限30个字)" style="width:80%;" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="选项C" prop="optionC" v-if="cShow">
-          <el-input type="text" v-model="option[2]" size="small" placeholder="请输入选项C(限30个字)" style="width:80%;" maxlength="30"></el-input>
+          <el-input type="text" v-model="editForm.optionC" size="small" placeholder="请输入选项C(限30个字)" style="width:80%;" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="选项D" prop="optionD" v-if="dShow">
-          <el-input type="text" v-model="option[3]" size="small" placeholder="请输入选项D(限30个字)" style="width:80%;" maxlength="30"></el-input>
+          <el-input type="text" v-model="editForm.optionD" size="small" placeholder="请输入选项D(限30个字)" style="width:80%;" maxlength="30"></el-input>
         </el-form-item>
-        <el-form-item label="正确答案" prop="answer">
-          <el-input type="text" v-model="editForm.answer" size="small" placeholder="正确答案" style="width:30%;" maxlength="5"></el-input>
+         <el-form-item label="正确答案" prop="answer" v-if="editForm.quType == '0'">
+          <el-select v-model="editForm.answer" style="width:30%;height:30px" size="small">
+            <el-option v-for="item in answerOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="正确答案" prop="answer" v-if="editForm.quType == '1'">
+          <el-select v-model="editForm.answer" style="width:30%;height:30px" size="small">
+            <el-option v-for="item in answerOption" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="分值" prop="score">
           <el-select v-model="editForm.score" style="width:30%;height:30px" size="small">
@@ -78,6 +85,34 @@ export default {
     },
   },
   data() {
+    let validateOptionA = (rule, value, callback) => {
+      if (value == this.editForm.optionB || value == this.editForm.optionC || value == this.editForm.optionD) {
+        callback(new Error("选项内容不能一样！"));
+      } else {
+        callback();
+      }
+    };
+    let validateOptionB = (rule, value, callback) => {
+      if (value == this.editForm.optionA || value == this.editForm.optionC || value == this.editForm.optionD) {
+        callback(new Error("选项内容不能一样！"));
+      } else {
+        callback();
+      }
+    };
+    let validateOptionC = (rule, value, callback) => {
+      if (value == this.editForm.optionA || value == this.editForm.optionB || value == this.editForm.optionD) {
+        callback(new Error("选项内容不能一样！"));
+      } else {
+        callback();
+      }
+    };
+    let validateOptionD = (rule, value, callback) => {
+      if (value == this.editForm.optionA || value == this.editForm.optionB || value == this.editForm.optionC) {
+        callback(new Error("选项内容不能一样！"));
+      } else {
+        callback();
+      }
+    };
     return {
         fullscreenLoading: false,
         labelPosition: "right",
@@ -94,7 +129,11 @@ export default {
             createBy: localStorage.getItem("userInfo"),
             quType:"",
             quContent:"",
-            vocation:""
+            vocation:"",
+            optionA:"",
+            optionB:"",
+            optionC:"",
+            optionD:""
         },
         vocationIdOptions: [],
         scoreOptions:[
@@ -102,13 +141,39 @@ export default {
             {value: "5", label: "5"},
             {value: "10", label: "10"}
         ],
+        answerOptions:[
+          {value: "A", label: "A"},
+          {value: "B", label: "B"},
+          {value: "C", label: "C"},
+          {value: "D", label: "D"}
+        ],
+        answerOption:[
+          {value: "A", label: "A"},
+          {value: "B", label: "B"},
+        ],
         localShow: this.show,
         rules: {
-            vocationId: [{required: true, message: "请选择职业类别", trigger: "bulr"}],
-            quType: [{required: true, message: "请选择试题类型", trigger: "bulr"}],
-            quContent: [{required: true, message: "请输入问题描述", trigger: "bulr"}],
-            answer: [{required: true, message: "请输入正确答案", trigger: "bulr"}],
-            score: [{required: true, message: "请选择分数", trigger: "bulr"}],
+            vocationId: [{required: true, message: "请选择职业类别", trigger: "change"}],
+            quType: [{required: true, message: "请选择试题类型", trigger: "change"}],
+            quContent: [{required: true, message: "请输入问题描述", trigger: "change"}],
+            answer: [{required: true, message: "请输入正确答案", trigger: "change"}],
+            score: [{required: true, message: "请选择分数", trigger: "change"}],
+            optionA: [
+              { required: true, message: "请输入选项A！", trigger: "change" },
+              { validator: validateOptionA, trigger: "change" },
+            ],
+            optionB: [
+              { required: true, message: "请输入选项B！", trigger: "change" },
+              { validator: validateOptionB, trigger: "change" },
+            ],
+            optionC: [
+              { required: true, message: "请输入选项C！", trigger: "change" },
+              { validator: validateOptionC, trigger: "change" },
+            ],
+            optionD: [
+              { required: true, message: "请输入选项D！", trigger: "change" },
+              { validator: validateOptionD, trigger: "change" },
+            ],
         },
     };
   },
@@ -117,6 +182,9 @@ export default {
       this.localShow = val;
     },
     transQuestionInfoId(val){
+      if(val == ""){
+        return;
+      }
         let params = {
         id: val,
       };
@@ -124,21 +192,7 @@ export default {
       api.testAxiosGet(ApiPath.url.questionFindById, params).then((res) => {
         this.editForm = res.data;
         this.editForm.vocationId = this.editForm.vocation.id;
-        this.selectQuType(res.data.quType);
-        for(let i=0;i<res.dataOption.length;i++){
-            if(res.dataOption[i].title == "A"){
-                this.option[0] = res.dataOption[i].content;
-            }
-            if(res.dataOption[i].title == "B"){
-                this.option[1] = res.dataOption[i].content;
-            }
-            if(res.dataOption[i].title == "C"){
-                this.option[2] = res.dataOption[i].content;
-            }
-            if(res.dataOption[i].title == "D"){
-                this.option[3] = res.dataOption[i].content;
-            }
-        }
+        this.initQuType(res.data.quType);
       });
     }
   },
@@ -146,16 +200,12 @@ export default {
     this.findVocationId();
   },
   methods: {
-    selectQuType(result){
+    initQuType(result){
         if(result == 0){
             this.aShow = true;
             this.bShow = true;
             this.cShow = true;
             this.dShow = true;
-            this.option[0] = "";
-            this.option[1] = "";
-            this.option[2] = "";
-            this.option[3] = "";
             this.optionName[0] = "A";
             this.optionName[1] = "B";
             this.optionName[2] = "C";
@@ -166,10 +216,34 @@ export default {
             this.bShow = true;
             this.cShow = false;
             this.dShow = false;
-            this.option[0] = "";
-            this.option[1] = "";
-            this.option[2] = "";
-            this.option[3] = "";
+            this.optionName[0] = "A";
+            this.optionName[1] = "B";
+        }
+    },
+    selectQuType(result){
+        if(result == 0){
+            this.aShow = true;
+            this.bShow = true;
+            this.cShow = true;
+            this.dShow = true;
+            this.editForm.optionA = "";
+            this.editForm.optionB = "";
+            this.editForm.optionC = "";
+            this.editForm.optionD = "";
+            this.optionName[0] = "A";
+            this.optionName[1] = "B";
+            this.optionName[2] = "C";
+            this.optionName[3] = "D";
+        }
+        if(result == 1){
+            this.aShow = true;
+            this.bShow = true;
+            this.cShow = false;
+            this.dShow = false;
+            this.editForm.optionA = "";
+            this.editForm.optionB = "";
+            this.editForm.optionC = "";
+            this.editForm.optionD = "";
             this.optionName[0] = "A";
             this.optionName[1] = "B";
         }
@@ -199,76 +273,12 @@ export default {
     //保存
     updateQuestionInfo(editData) {
       this.$refs[editData].validate((valid) => {
-        if (this.editForm.vocationId == "") {
-          this.$alert("职业类别不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.quContent == "") {
-          this.$alert("问题描述不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if(this.editForm.quType == 0){
-          if (this.option[0] == "") {
-            this.$alert("选项A不能为空", "提示", {
-              confirmButtonText: "确定",
-            });
-            return false;
-          }
-          if (this.option[1] == "") {
-            this.$alert("选项B不能为空", "提示", {
-              confirmButtonText: "确定",
-            });
-            return false;
-          }
-          if (this.option[2] == "") {
-            this.$alert("选项C不能为空", "提示", {
-              confirmButtonText: "确定",
-            });
-            return false;
-          }if (this.option[3] == "") {
-            this.$alert("选项D不能为空", "提示", {
-              confirmButtonText: "确定",
-            });
-            return false;
-          }
-          if (!/^[A-D]$/.test(this.editForm.answer)) {
-            this.$alert("请输入正确答案！", "提示", {
-              confirmButtonText: "确定",
-            });
-            this.editForm.answer = "";
-          }
-        }
-        if(this.editForm.quType == 1){
-          if (this.option[0] == "") {
-            this.$alert("选项A不能为空", "提示", {
-              confirmButtonText: "确定",
-            });
-            return false;
-          }
-          if (this.option[1] == "") {
-            this.$alert("选项B不能为空", "提示", {
-              confirmButtonText: "确定",
-            });
-            return false;
-          }
-          if (!/^[A-B]$/.test(this.editForm.answer)) {
-            this.$alert("请输入正确答案(判断题只能输入A或B)！", "提示", {
-              confirmButtonText: "确定",
-            });
-            this.editForm.answer = "";
-          }
-        }
-        if (this.editForm.score == "") {
-          this.$alert("分数不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
         if (valid) {
+          this.option[0] = this.editForm.optionA;
+          this.option[1] = this.editForm.optionB;
+          this.option[2] = this.editForm.optionC;
+          this.option[3] = this.editForm.optionD;
+          console.log(this.option)
           let addOption = [];
           let add = [];
           for(let i=0; i<this.option.length;i++){

@@ -4,11 +4,13 @@
 		<header-box title="学习中心"  :showGoBack="false"></header-box>
 
 		<!--  轮播图 -->
-		<swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
+		<!-- <swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
 			<block v-for="(item, index) in banner" :key="index">
-				<swiper-item class="swiperItem"><image :lazy-load="true" :src="item.url" mode="aspectFill" class="swiperImage"></image></swiper-item>
+				<swiper-item class="swiperItem"><image  :lazy-load="true" :src="item.url" mode="scaleToFill" class="swiperImage"></image></swiper-item>
 			</block>
-		</swiper>
+		</swiper> -->
+		
+		<u-swiper class="circul" bg-color="#ffffff"	 mode="none" height="270"	 img-mode="scaleToFill" :list="banner" name="url" :effect3d="true"></u-swiper>
 		<!--  模块 -->
 		<u-grid class="grid" :col="3" :border="border">
 			<u-grid-item @click="learningManual">
@@ -33,8 +35,10 @@
 				<view class="content">{{ item.readNum }}人已学</view>
 			</view>
 		</view>
+		<data-empty v-if="hotCourseList.length == 0" :option="{tip:'暂无数据'}"></data-empty>
+		
 		<view class="split-space"></view>
-		<comm-title title="线下课程" @more="hyMore"></comm-title>
+		<comm-title title="最新课程" @more="hyMore"></comm-title>
 		<view
 			class="list-box offlineCourse card-box animate__animated animate__fadeIn "
 			v-for="(item, index) in offlineCourseList"
@@ -52,6 +56,7 @@
 				<view class="courseTime">开课时间：{{ item.lessonTime }}</view>
 			</view> -->
 		</view>
+		<data-empty v-if="offlineCourseList.length == 0" :option="{tip:'暂无数据'}"></data-empty>
 	</view>
 </template>
 
@@ -77,11 +82,14 @@ export default {
 	onLoad(e) {
 		// 从外部接口获取客户信息
 		this.initCustomerInfo(e);
+		
+		
+		// this.checkWeixin();
+	},
+	onShow() {
 		this.picture(); //初始化加载banner图
 		this.hotCourse(); //初始化加载热门课程
 		this.offLineCourse(); //初始化加载线下课程
-		
-		// this.checkWeixin();
 	},
 	methods: {
 		checkWeixin(){
@@ -113,6 +121,11 @@ export default {
 				success: res => {
 					if (res.data.code == 200) {
 						this.banner = res.data.data;
+						if(!this.banner.length){
+							this.banner.push({
+								url:'http://60.205.246.126/images/2020/12/17/1608192914066744.png'
+							})
+						}
 					} else {
 						uni.showToast({
 							title: '服务器出错，请联系管理员'
@@ -229,7 +242,7 @@ export default {
 	.circul {
 		width: 750rpx;
 		height: 320rpx;
-		margin-top: 80rpx;
+		margin-top: 90rpx;
 		.swiperItem {
 			width: 100%;
 			height: 100%;

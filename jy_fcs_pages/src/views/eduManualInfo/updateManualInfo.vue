@@ -127,11 +127,11 @@ export default {
       upload: ApiPath.url.uploadImg,
       localShow: this.show,
       rules: {
-        title: [{required: true, message: "请输入标题", trigger: "bulr"}],
-        vocationId: [{required: true, message: "请选择职业类别", trigger: "bulr"}],
-        labelId: [{required: true, message: "请选择标签", trigger: "bulr"}],
-        guide: [{required: true, message: "请输入导读", trigger: "bulr"}],
-        content: [{required: true, message: "请输入内容", trigger: "bulr"}],
+        title: [{required: true, message: "请输入标题", trigger: "change"}],
+        vocationId: [{required: true, message: "请选择职业类别", trigger: "change"}],
+        labelId: [{required: true, message: "请选择标签", trigger: "change"}],
+        guide: [{required: true, message: "请输入导读", trigger: "change"}],
+        content: [{required: true, message: "请输入内容", trigger: "change"}],
       },
       editorOption: { // 富文本框配置
         placeholder: "请输入...",
@@ -247,36 +247,6 @@ export default {
     //保存
     updateManualInfo(editData) {
       this.$refs[editData].validate((valid) => {
-        if(this.editForm.title == ""){
-          this.$alert("标题不能为空", "提示",{
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.vocationId == "") {
-          this.$alert("职业类别不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.labelId == "") {
-          this.$alert("标签不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.guide == "") {
-          this.$alert("导读不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.content == "") {
-          this.$alert("内容不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
         if (valid) {
           if (this.imgUrl != "") {
             this.editForm.url = this.imgUrl;

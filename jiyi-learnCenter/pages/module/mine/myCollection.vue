@@ -10,6 +10,7 @@
 					<view class="bride">{{ item.studyNum }}人已学</view>
 				</view>
 			</view>
+			<data-empty v-if="collectionList.length == 0" :option="{tip:'暂无收藏'}"></data-empty>
 		</view>
 	</view>
 </template>

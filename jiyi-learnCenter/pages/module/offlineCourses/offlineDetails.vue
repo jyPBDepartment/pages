@@ -9,7 +9,7 @@
     </view>
     <view class="split-space"></view>
     <view class="split-title">课程介绍</view>
-    <view class="split-space"></view>
+    <!-- <view class="split-space"></view> -->
     <view class="course-title">
       <view class="name">主讲人：{{ name }}</view>
       <view class="time">人数限制：{{ stuLimit }} 人</view>
@@ -17,7 +17,7 @@
     </view>
     <view class="split-space"></view>
     <view class="split-title">参课指南</view>
-    <view class="split-space"></view>
+    <!-- <view class="split-space"></view> -->
     <view class="course-title">
       <view class="time">{{ courseGuide }}</view>
     </view>
@@ -210,7 +210,7 @@ export default {
   }
   .course-title {
     padding: 20rpx;
-    margin: 20rpx;
+    margin: 0 20rpx;
     .name {
       font-size: 32rpx;
       font-family: PingFang SC;

@@ -26,9 +26,7 @@
 				</view>
 			</view>
 			<view class="tips">说明：该数据来源为资源整合，本公司对于其准确性、真实性不负任何法律责任，仅供参考。（该价格玉米为14%水分）</view>
-			<view class="qiun-charts">
-				<canvas  canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas>
-			</view>
+			<view class="qiun-charts"><canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas></view>
 			<view style="text-align: center;margin: 10rpx auto;">
 				<u-tag text="7日" style="width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '0' ? 'error' : 'info'" @click="tabSelect('0')"></u-tag>
 				<u-tag text="30日" style="margin-left: 30rpx;width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '1' ? 'error' : 'info'" @click="tabSelect('1')"></u-tag>
@@ -79,9 +77,8 @@ export default {
 		_self = this;
 		this.cWidth = uni.upx2px(660);
 		this.cHeight = uni.upx2px(500);
-		canvaLineA = null
+		canvaLineA = null;
 		this.getCityList();
-		
 	},
 	watch: {
 		tagClick: {
@@ -107,7 +104,7 @@ export default {
 		}
 	},
 	methods: {
-		updateData(){
+		updateData() {
 			this.getCityList();
 		},
 		tabSelect(val) {
@@ -195,7 +192,7 @@ export default {
 						// LineA.categories = ['09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28','09-25','09-26','09-27','09-28'];
 						// LineA.series = [{'name':'玉米价格','data':[1,1.2,1.3,0.9,1,1.2,1.3,0.9,1,1.2,1.3,0.9],'legendShape': "line",'pointShape': "circle",'show': true,'type': "line",'color': "#1890ff"}];
 						_self.showLineA('canvasLineA', LineA);
-					} 
+					}
 				},
 				fail: err => {
 					uni.showToast({
@@ -206,7 +203,6 @@ export default {
 			});
 		},
 		showLineA(canvasId, chartData) {
-			
 			let labelCount = this.tagClick === '0' ? 8 : 9;
 			canvaLineA = new uCharts({
 				$this: _self,
@@ -301,13 +297,13 @@ export default {
 						self.districtList = arr;
 					} else {
 						self.provinceList = arr;
-						arr.forEach(item => {
-							if (item.name == '吉林省') {
-								self.provinceId = item.id;
+						for (let i = 0; i < arr.length; i++) {
+							if (arr[i].name == '吉林省') {
+								self.provinceId = arr[i].id;
 								self.getServerData('0');
+								break;
 							}
-						});
-						
+						}
 						self.getCityList(self.provinceId, 'city');
 					}
 				},

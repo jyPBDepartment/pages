@@ -8,6 +8,8 @@
 				<image class="image" :lazy-load="true"	 :src="item.url || defaultImage" mode="fill"></image>
 				<button size="mini" type="primary">长按保存至相册</button>
 			</view>
+			<data-empty v-if="creList.length == 0" :option="{tip:'暂无证书'}"></data-empty>
+			
 		</view>
 	</view>
 </template>

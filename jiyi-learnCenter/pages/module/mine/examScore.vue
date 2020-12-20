@@ -17,6 +17,7 @@
 					<view class="title">得分：{{ item.score }}</view>
 				</view>
 			</view>
+			<data-empty v-if="examScoreList.length == 0" :option="{tip:'暂无历史考试成绩'}"></data-empty>
 		</view>
 	</view>
 </template>

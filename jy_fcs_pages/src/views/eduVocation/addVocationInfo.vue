@@ -32,7 +32,7 @@
             maxlength="16"
           ></el-input>
         </el-form-item>
-        <el-form-item label="描述" prop="description">
+        <el-form-item label="描述">
           <el-input
             type="textarea"
             v-model="editForm.description"
@@ -80,9 +80,8 @@ export default {
       },
       localShow: this.show,
       rules: {
-        vocationCode:[{required: true, message: "请输入职业编码", trigger: "blur"},],
-        name: [{ required: true, message: "请输入职业类别名称", trigger: "blur" },],
-        description: [{ required: true, message: "请输入描述", trigger: "blur" },],
+        vocationCode:[{required: true, message: "请输入职业编码", trigger: "change"},],
+        name: [{ required: true, message: "请输入职业类别名称", trigger: "change" },],
       },
     };
   },
@@ -102,25 +101,6 @@ export default {
     //新增保存
     saveEduVocationInfo(editData) {
       this.$refs[editData].validate((valid) => {
-        if(this.editForm.vocationCode == ""){
-          this.$alert("职业编码不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.name == "") {
-          this.$alert("职业类别名称不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.description == "") {
-          this.$alert("描述不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        
         if (valid) {
             let params = {
               eduVocationInfoEntity: this.editForm,

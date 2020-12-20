@@ -34,10 +34,8 @@
         </el-row>
         <el-divider></el-divider>
         <el-row>
-          <el-col :span="3">修改人:</el-col>
-          <el-col :span="9"><span>{{editForm.updateBy}}</span></el-col>
-          <el-col :span="3">修改时间:</el-col>
-          <el-col :span="6"><span>{{editForm.updateDate}}</span></el-col>
+          <el-col :span="12">修改人:<span style="margin-left:35px">{{editForm.updateBy}}</span></el-col>
+          <el-col :span="9">修改时间:<span style="margin-left:20px">{{editForm.updateDate}}</span></el-col>
         </el-row>
         <el-divider></el-divider>
         <el-row>

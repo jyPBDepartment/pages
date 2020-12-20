@@ -17,7 +17,12 @@
             <el-option v-for="item in quTypeOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="分值" prop="score" style="margin-left:-90px">
+          <el-select v-model="score" style="width: 50%; height: 30px" size="small">
+            <el-option v-for="item in scoreOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item style="margin-left:-90px">
           <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')">查询</el-button>
           <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
         </el-form-item>
@@ -74,6 +79,7 @@ export default {
       loading: false, //是显示加载
       labelPosition: "right",
       quType: "",
+      score:"",
       voationId: "",
       formInline: {
         page: 1,
@@ -92,6 +98,12 @@ export default {
         { value: "0", label: "选择题" },
         { value: "1", label: "判断题" },
       ],
+      scoreOptions:[
+        { value: "", label: "全部" },
+        {value: "2.0", label: "2"},
+        {value: "5.0", label: "5"},
+        {value: "10.0", label: "10"}
+      ],
       multipleSelection: [],
       selectData: [],
     };
@@ -106,6 +118,7 @@ export default {
     },
     transShowQuestionId(val) {
       this.quType = "";
+      this.score = "";
       this.voationId = val.vocationId;
       this.selectData = val.listData;
       this.search(this.formInline);
@@ -134,6 +147,7 @@ export default {
       }
       let params = {
         quType: this.quType,
+        score: this.score,
         voationId: this.voationId,
         page: this.formInline.page,
         size: this.formInline.limit,
@@ -169,7 +183,9 @@ export default {
     },
     //重置
     resetForm(search) {
-      (this.quType = ""), (this.formInline.page = 1);
+      this.quType = "",
+      this.score = "",
+      this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
     },

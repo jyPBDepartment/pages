@@ -63,7 +63,7 @@
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="primary" @click="showExamPaper(listData)">预览</el-button>
+      <el-button type="primary" @click="showExamPaper('editForm')">预览</el-button>
       <el-button type="primary" icon="el-icon-check" @click="saveExamPaperInfo('editForm')" v-loading.fullscreen.lock="fullscreenLoading">保存</el-button>
       <el-button type="info" icon="el-icon-close" @click="close">关闭</el-button>
     </span>
@@ -129,10 +129,11 @@ export default {
       vocationIdOptions: [],
       localShow: this.show,
       rules: {
-        name: [{ required: true, message: "请输入试题名称", trigger: "bulr" }],
-        totalScore: [{ required: true, message: "请输入总分数", trigger: "bulr" }],
-        passScore: [{ required: true, message: "请输入通过分数", trigger: "bulr" }],
-        answerTime: [{ required: true, message: "请输入答题时间", trigger: "bulr" }],
+        vocationId: [{ required: true, message: "请选择职业类别", trigger: "change" }],
+        name: [{ required: true, message: "请输入试题名称", trigger: "change" }],
+        totalScore: [{ required: true, message: "请输入总分数", trigger: "change" }],
+        passScore: [{ required: true, message: "请输入通过分数", trigger: "change" }],
+        answerTime: [{ required: true, message: "请输入答题时间", trigger: "change" }],
       },
     };
   },
@@ -168,7 +169,7 @@ export default {
                   this.listData = [];
                   this.fraction = 0;
                   this.oldVocation = val;
-                  this.editForm.vocationName = this.vocationIdOptions.find(item => item.id === val).name ;
+                  this.editForm.vocationName = res.data[0].vocation.name
                   }).catch(() => {
                     this.editForm.vocationId=this.oldVocation;
                     return false;
@@ -179,14 +180,17 @@ export default {
                   });
               }else{
                 this.oldVocation = val;
+                this.editForm.vocationName = res.data[0].vocation.name
               }
             }else{
               this.$alert("此职业类别下无试题信息，请先添加试题！", "提示", {
                 confirmButtonText: "确定",
               });
               this.editForm.vocationId=this.oldVocation;
+              this.editForm.vocationName = res.data[0].vocation.name
               return false;
             }
+            
           }
         });
     },
@@ -227,14 +231,21 @@ export default {
       }
     },
     //预览
-    showExamPaper(listData) {
-      this.showForm.name=this.editForm.name;
-      this.showForm.answerTime = this.editForm.answerTime;
-      this.showForm.vocationId = this.editForm.vocationId;
-      this.showForm.vocation = this.editForm.vocationName;
-      this.showForm.listData = this.listData;
-      this.transShowExamPaperId = this.showForm;
-      this.showExamPaperFlag = true;
+    showExamPaper(editData) {
+      this.$refs[editData].validate((valid) => {
+        
+        if (valid) {
+          this.showForm.name=this.editForm.name;
+        this.showForm.answerTime = this.editForm.answerTime;
+        this.showForm.vocationId = this.editForm.vocationId;
+        this.showForm.vocation = this.editForm.vocationName;
+        this.showForm.listData = this.listData;
+        this.transShowExamPaperId = this.showForm;
+        this.showExamPaperFlag = true;
+        } else {
+          return false;
+        }
+      });
     },
      closeShowExamPaperDialog() {
       this.transShowExamPaperId = {};
@@ -274,36 +285,6 @@ export default {
     //新增保存
     saveExamPaperInfo(editData) {
       this.$refs[editData].validate((valid) => {
-        if (this.editForm.vocationId == "") {
-          this.$alert("职业类别不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.name == "") {
-          this.$alert("试卷名称不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.totalScore == "") {
-          this.$alert("总分数为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.passScore == "") {
-          this.$alert("通过分数不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        if (this.editForm.answerTime == "") {
-          this.$alert("答题时间不能为空", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
         if (this.listData == "") {
           this.$alert("试题不能为空", "提示", {
             confirmButtonText: "确定",

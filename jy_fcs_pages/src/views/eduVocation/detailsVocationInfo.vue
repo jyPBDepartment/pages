@@ -14,14 +14,9 @@
       <el-form :model="editForm" :label-position="labelPosition" label-width="100px" >
         <el-row>
           <el-col :span="4">职业类别名称:</el-col>
-          <el-col :span="4">{{editForm.name}}</el-col>
+          <el-col :span="9">{{editForm.name}}</el-col>
           <el-col :span="3">职业编码:</el-col>
-          <el-col :span="5">{{editForm.vocationCode}}</el-col>
-          <el-col :span="3">状态:</el-col>
-          <el-col :span="3">
-            <span v-if="editForm.status == '0'">启用</span>
-            <span v-if="editForm.status == '1'">禁用</span>
-          </el-col>
+          <el-col :span="6">{{editForm.vocationCode}}</el-col>
         </el-row>
         <el-divider></el-divider>
         <el-row>
@@ -32,10 +27,8 @@
         </el-row>
         <el-divider></el-divider>
         <el-row>
-          <el-col :span="4">修改人:</el-col>
-          <el-col :span="9">{{editForm.updateBy}}</el-col>
-          <el-col :span="3">修改时间:</el-col>
-          <el-col :span="6">{{editForm.updateDate}}</el-col>
+          <el-col :span="13">修改人：<span style="margin-left:50px">{{editForm.updateBy}}</span></el-col>
+          <el-col :span="9">修改时间：<span style="margin-left:15px">{{editForm.updateDate}}</span></el-col>
         </el-row>
         <el-divider></el-divider>
         <el-row>
@@ -93,6 +86,9 @@ export default {
       this.localShow = val;
     },
     detailsTransVocationInfoId(val) {
+      if (val == "") {
+        return;
+      }
       let params = {
         id: val,
       };

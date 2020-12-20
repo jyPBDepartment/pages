@@ -158,6 +158,7 @@ export default {
     closeUpdateManualLabelDialog() {
       this.search(this.formInline);
       this.updateManualLabelFlag = false;
+      this.transManualLabelId = "";
     },
     upManualLabel() {
       this.updateManualLabelFlag = false;
@@ -218,7 +219,7 @@ export default {
           let code = res.state;
           if(code == "0") {
             this.$message.success(res.message);
-            this.reload();
+            this.search(this.formInline);
           }else{
             this.$alert("删除失败，请先解除关联关系！", "提示", {
                 confirmButtonText: "确定",

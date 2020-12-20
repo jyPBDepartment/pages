@@ -28,7 +28,7 @@
 
 <script>
 import ApiPath from '@/api/ApiPath.js';
-import wx from '@/utils/wechat.js';
+// import wx from '@/utils/wechat.js';
 export default {
 	data() {
 		return {
@@ -73,7 +73,7 @@ export default {
 				desc:this.guide,
 				imgUrl:this.url
 			}
-			wx.share(data,ApiPath.url.getWxConfig)
+			// wx.share(data,ApiPath.url.getWxConfig)
 		},
 		// 文章内容详情显示
 		learningArticle(val) {

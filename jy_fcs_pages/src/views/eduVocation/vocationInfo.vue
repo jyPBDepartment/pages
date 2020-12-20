@@ -178,12 +178,14 @@ export default {
     closeUpdateVocationInfoDialog() {
       this.search(this.formInline);
       this.updateVocationInfoFlag = false;
+      this.transVocationInfoId = "";
     },
     upVocationInfo() {
       this.updateVocationInfoFlag = false;
     },
     closedetailsVocationInfoDialog(){
         this.detailsVocationInfoFlag = false;
+        this.detailsTransVocationInfoId = "";
     },
     //切换是否需要考试
     examEnable: function(scope) {
