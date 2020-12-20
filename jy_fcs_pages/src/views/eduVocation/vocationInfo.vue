@@ -163,6 +163,9 @@ export default {
           this.formInline.pageSize = res.data.size;
           this.formInline.total = res.data.totalElements;
         }
+        else{
+            this.$message.error(res.message);
+        }
       });
     },
     saveVocationInfo() {

@@ -171,12 +171,12 @@ export default {
               }).catch(function (err) {});
                 this.fullscreenLoading = true;
                 setTimeout(() => {
-                  this.fullscreenLoading = false;
                   this.editForm.name="",
                   this.editForm.picType="";
                   this.editForm.url="";
                   this.fileList=[];
                   this.imgUrl="";
+                  this.fullscreenLoading = false;
                 }, 500);
           } else {
             this.$message.error("请上传图片");
