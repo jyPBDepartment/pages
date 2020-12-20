@@ -12,7 +12,7 @@
     <!-- 插槽区 -->
     <slot>
       <el-form :model="lessonForm" :rules="rules" ref="lessonForm" :label-position="labelPosition" label-width="110px" style="margin-left:-85px">
-        <el-form-item label="主图图片" prop="url">
+        <el-form-item label="主图图片"  prop="url">
           <el-link type="danger" class="required" :underline="false">*</el-link>
           <el-upload
             style="width:92%;margin-top:-38px;"

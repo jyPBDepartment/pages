@@ -68,7 +68,7 @@
           </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="人数限制" prop="stuLimit">
+            <el-form-item label="人数限制"  prop="stuLimit">
               <el-input type="number" v-model="editForm.stuLimit" size="small" style="width:92%"></el-input>
             </el-form-item>
           </el-col>
