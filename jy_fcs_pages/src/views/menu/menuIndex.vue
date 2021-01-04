@@ -31,13 +31,13 @@
       row-key="id"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column  prop="name" label="菜单名称" align="center" min-width="90px" max-width="220px"></el-table-column>
-      <el-table-column  prop="icon" label="菜单图标" align="center" min-width="90px" max-width="220px">
+      <el-table-column  prop="name" label="菜单名称" align="center" min-width="9" ></el-table-column>
+      <el-table-column  prop="icon" label="菜单图标" align="center" min-width="5" >
         <template slot-scope="scope">
           <i :class="scope.row.icon"></i>
         </template>
       </el-table-column>
-      <el-table-column  label="类型" align="center" min-width="90px" max-width="220px">
+      <el-table-column  label="类型" align="center" min-width="8" >
         <template slot-scope="scope">
           <el-tag v-if="scope.row.menuType == 1 && scope.row.only == 'Y'">独立目录</el-tag>
           <el-tag v-if="scope.row.menuType == 1 && scope.row.only != 'Y'">目录</el-tag>
@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
       
-      <el-table-column  align="center" label="状态" prop="state" min-width="90px" max-width="220px">
+      <el-table-column  align="center" label="状态" prop="state" min-width="6" >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -58,31 +58,34 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column  align="center" label="排序" prop="sort" min-width="170px" max-width="220px">
+      <el-table-column  align="center" label="排序" prop="sort" min-width="15" >
         <template slot-scope="scope">
-          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" :step=5 step-strictly></el-input-number>
+          <el-input-number v-model="scope.row.sort" @change="sortChange(scope)" size="small" :step=5 step-strictly></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column  prop="url" label="菜单路由" :show-overflow-tooltip="true" align="center" min-width="90px" max-width="220px"></el-table-column>
-      <el-table-column  prop="perssions" label="权限标识" align="center" min-width="90px" max-width="220px"></el-table-column>
-      <el-table-column align="center" label="操作" min-width="190px" max-width="220px">
+      <el-table-column  prop="url" label="菜单路由" :show-overflow-tooltip="true" align="center" min-width="16" ></el-table-column>
+      <el-table-column  prop="perssions" label="权限标识" align="center" min-width="6" ></el-table-column>
+      <el-table-column align="center" label="操作" min-width="30" >
         <template slot-scope="scope">
            <el-button
            @click="openUpdateRole(scope)"
             type="primary"
             size="small"
-          
             icon="el-icon-edit"
-
-            
           >编辑</el-button>
            <el-button
            @click="deleteMenu(scope)"
             type="danger"
             size="small"
-           
             icon="el-icon-delete"
           >删除</el-button>
+          <el-button
+          v-show="scope.row.url != ''"
+           @click="deleteMenu(scope)"
+            type="warning"
+            size="small"
+            icon="el-icon-seting"
+          >操作设置</el-button>
         </template>
       </el-table-column>
     </el-table>

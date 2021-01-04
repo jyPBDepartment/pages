@@ -43,7 +43,6 @@ export default {
 			data: {},
 			success: res => {
 				this.list = res.data.data;
-				console.log(this.list);
 			},
 			fail: err => {}
 		});
@@ -71,7 +70,7 @@ export default {
 					code: this.code,
 					parentCode: this.list.find(item => {
 						return item.name == this.parent;
-					}).parentCode,
+					}).id,
 					createUserId: localStorage.getItem('userId'),
 					createUser: ''
 				},

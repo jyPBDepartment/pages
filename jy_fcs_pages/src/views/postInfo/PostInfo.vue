@@ -24,33 +24,33 @@
       element-loading-text="拼命加载中"
       style="width: 100%;"
     >
-      <el-table-column type="index" label="序号" min-width="8%" align="center"></el-table-column>
+      <el-table-column type="index" label="序号" min-width="6" align="center"></el-table-column>
       <el-table-column
         prop="name"
         label="标题名称"
         align="center"
         :show-overflow-tooltip="true"
-        min-width="12%"
+        min-width="10"
       ></el-table-column>
       <el-table-column
         prop="code"
         label="帖子内容"
         align="center"
         :show-overflow-tooltip="true"
-        min-width="8%"
+        min-width="16"
       ></el-table-column>
-      <el-table-column prop="author" :show-overflow-tooltip="true" label="发帖作者" align="center" min-width="8%"></el-table-column>
-      <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="7%">
+      <!-- <el-table-column prop="author" :show-overflow-tooltip="true" label="发帖作者" align="center" min-width="8%"></el-table-column> -->
+      <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="6">
         <template slot-scope="scope">
           <span v-if="scope.row.auditStatus==0">未审核</span>
           <span v-if="scope.row.auditStatus==1">审核通过</span>
-          <span v-if="scope.row.auditStatus==2">审核驳回</span>
+          <span v-if="scope.row.auditStatus==2">审核拒绝</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="12%"></el-table-column>
-      <el-table-column prop="updateDate" label="审核时间" align="center" sortable min-width="12%"></el-table-column>
-      <el-table-column prop="auditUser" label="审核人" align="center" min-width="8%"></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="7%">
+      <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="12"></el-table-column>
+      <el-table-column prop="auditUser" label="审核人" align="center" min-width="8"></el-table-column>
+      <el-table-column prop="updateDate" label="审核时间" align="center" sortable min-width="12"></el-table-column>
+      <el-table-column align="center" label="状态" prop="status" min-width="10">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -62,9 +62,9 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="18%">
+      <el-table-column align="center" label="操作" min-width="16">
         <template slot-scope="scope">
-          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small" style="width:75px"><span align="center">信息审核</span></el-button>
+          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small" >信息审核</el-button>
           <el-button @click="deletePost(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>

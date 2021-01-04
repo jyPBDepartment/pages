@@ -27,8 +27,8 @@
 
 			<view class="item">
 				<view class="title">干活时间</view>
-				<view class="info" @click="dateShow = true">
-					<u-input class="value" disabled placeholder="请选择时间" :clearable="false" v-model="value" />
+				<view class="info" @click="dateClick">
+					<u-input class="value" disabled placeholder="请选择时间区段" :clearable="false" v-model="value" />
 					<u-icon name="calendar" class="input-icon"></u-icon>
 				</view>
 			</view>
@@ -88,8 +88,8 @@
 			<u-button style="margin:20rpx 0rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change">
-			<view slot="tooltip"><view class=" t-c p-y-10" style="color: #2979FF">请选择时间</view></view>
+		<u-calendar :closeable="maskAble" :mask-close-able="maskAble" v-model="dateShow" active-bg-color='orange' :start-text="startText" :end-text='endText' mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change">
+			<view slot="tooltip"><view class=" t-c p-y-10" style="color: #2979FF">请选择时间区段</view></view>
 		</u-calendar>
 		<u-mask :show="show" :mask-click-able="maskAble" :zoom="true" :duration="500"></u-mask>
 		<u-toast ref="uToast" />
@@ -108,6 +108,8 @@ export default {
 	},
 	data() {
 		return {
+			startText:'开始日期',
+			endText:'结束日期',
 			show: false,
 			currentDate: '',
 			regionaStatus: false,
@@ -208,7 +210,23 @@ export default {
 		}, 1000);
 	},
 	onReady() {},
+	watch:{
+		dateShow:function(){
+			if(!this.dateShow){
+				if(this.beginDate==''&&this.endTime==''){
+					this.$refs.uToast.show({
+						title: '请选择时间区段',
+						type: 'error'
+					});
+					this.dateShow=true;
+				}
+			}
+		}
+	},
 	methods: {
+		dateClick(){
+			this.dateShow = true;
+		},
 		remove(index, lists) {
 			this.url.splice(index, 1);
 		},

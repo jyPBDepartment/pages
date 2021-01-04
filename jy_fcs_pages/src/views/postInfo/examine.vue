@@ -11,16 +11,37 @@
   >
     <!-- 插槽区 -->
     <slot>
-      <el-form  ref="postInfoForm" :model="postInfoForm" :label-position="labelPosition" label-width="100px" style="margin-left:-135px">
-         <el-form-item label="驳回理由" >
-          <el-input type="textarea" :rows="3" v-model="postInfoForm.reason" size="small" style="width:95%"></el-input>
+      <el-form
+        :rules="rules"
+        ref="postInfoForm"
+        :model="postInfoForm"
+        :label-position="labelPosition"
+        label-width="100px"
+        style="margin-left: -135px"
+      >
+        <el-form-item label="拒绝理由" prop="reason">
+          <el-input
+            type="textarea"
+            :rows="4"
+            v-model="postInfoForm.reason"
+            size="small"
+            style="width: 95%"
+          ></el-input>
         </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
     <span slot="footer">
-      <el-button type="danger" icon="el-icon-close" @click="refusePostInfo()" size="small">拒绝审核</el-button>
-      <el-button type="info" icon="el-icon-close" @click="close" size="small">关闭</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-check"
+        @click="refusePostInfo()"
+        size="small"
+        >确认</el-button
+      >
+      <el-button type="info" icon="el-icon-close" @click="close" size="small"
+        >关闭</el-button
+      >
     </span>
   </el-dialog>
 </template>
@@ -34,25 +55,30 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: "对话框"
+      default: "对话框",
     },
     refuseId: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
       labelPosition: "right",
       postInfoForm: {
-        status:"",
-        id:"",
-        reason:"",
+        status: "",
+        id: "",
+        reason: "",
       },
       localShow: this.show,
+      rules: {
+        reason: [
+          { required: true, message: "请输入拒绝理由", trigger: "blur" },
+        ],
+      },
     };
   },
   watch: {
@@ -61,47 +87,49 @@ export default {
     },
     refuseId(val) {
       let params = {
-        id: val
+        id: val,
       };
       //根据Id查询用户信息
-      api.testAxiosGet(ApiPath.url.findPostInfoId, params).then(res => {
+      api.testAxiosGet(ApiPath.url.findPostInfoId, params).then((res) => {
         this.postInfoForm = res.data;
       });
-    }
+    },
   },
-   mounted() {},
+  mounted() {},
   methods: {
     //审核拒绝
-    refusePostInfo: function(){
-      if (          
-          this.postInfoForm.reason == "" ||
-          this.postInfoForm.reason == null
-        ) {
-          this.$alert("请填写驳回理由！", "提示", {
-            confirmButtonText: "确定",
-          });
-          return false;
-        }
-        let params = {
-        postInfoEntity: this.postInfoForm
-      };
-        api.testAxiosGet(ApiPath.url.refusePostInfo, params).then(res => {
-            let code = res.state;
-            if(code == "0") {
+    refusePostInfo: function () {
+      this.$refs["postInfoForm"].validate((valid) => {
+        if (valid) {
+          let params = {
+            id: this.postInfoForm.id,
+            auditUser: localStorage.getItem("userInfo"),
+            reason: this.postInfoForm.reason,
+          };
+          api
+            .testAxiosGet(ApiPath.url.refusePostInfo, params)
+            .then((res) => {
+              let code = res.state;
+              if (code == "0") {
                 this.$message.success(res.message);
                 this.close();
                 this.reload();
-            }
-        }).catch(function(error) {});
-      this.postInfoForm.auditUser =localStorage.getItem("userInfo");
+              }
+            })
+            .catch(function (error) {});
+          this.postInfoForm.auditUser = localStorage.getItem("userInfo");
+        } else {
+          return false;
+        }
+      });
     },
-    close: function() {
+    close: function () {
       this.$emit("close");
     },
-    beforeClose: function() {
+    beforeClose: function () {
       this.close();
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

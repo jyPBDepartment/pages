@@ -1,12 +1,12 @@
 // 本地环境地址
-// const URLHost = 'http://localhost:8080';
-// const EDUHost = 'http://localhost:8083';
+const URLHost = 'http://localhost:8080';
+const EDUHost = 'http://localhost:8083';
 // 开发环境基础路径地址
-const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-const EDUHost = 'http://192.168.1.106:8080/jy_edu';
+// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+// const EDUHost = 'http://192.168.1.106:8080/jy_edu';
 // 生产环境基础路径地址
-// const URLHost = 'http://182.92.77.60/jy_fcs';
-// const URLHost = 'http://182.92.77.60/jy_edu';
+// const URLHost = 'http://hnser.jiyinongye.com:8080/jy_fcs';
+// const EDUHost = 'http://hnser.jiyinongye.com/jy_edu';
 
 const url = {
 
@@ -99,6 +99,9 @@ const url = {
   passPostInfo: URLHost + '/postInfo/passPostInfo',
   //圈子审核驳回
   refusePostInfo: URLHost + '/postInfo/refusePostInfo',
+  //查询圈子类型
+  getPostType: URLHost + '/postInfo/getPostType',
+  //根据用户Id查询信息
   findAccountId: URLHost + '/accountInfo/findAccountId',
   //圈子删除
   deletePostinfo: URLHost + '/postInfo/delete',
