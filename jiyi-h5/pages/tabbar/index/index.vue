@@ -11,7 +11,7 @@
 					<p>{{ item.name }}</p>
 				</view>
 			</view>
-			<view class="appointment comm-border">
+		<!-- 	<view class="appointment comm-border">
 				<view class="title">
 					<view class="name">农服预约</view>
 					<view class="more" @click="moreNf">更多</view>
@@ -21,16 +21,16 @@
 					<view v-if="!nfList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsNf(item.id)" v-for="(item, index) in nfList" :key="index">
 						<view class="img">
-							<!-- <image :lazy-load="true" class="preview-img" :src="item.url" mode=""></image> -->
 							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
 						</view>
 						<p class="text f-14">{{ item.name }}</p>
 						<p class="text f-12 address">{{ item.address }}</p>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="appointment comm-border">
 				<view class="title">
+					<u-icon size="32" name="http://60.205.246.126/images/2021/01/07/1610010262142198.png"></u-icon>
 					<view class="name">粮食买卖</view>
 					<view class="more" @click="moreMm">更多</view>
 					<u-icon class="more" @click="moreMm" name="arrow-right"></u-icon>
@@ -39,7 +39,6 @@
 					<view v-if="!mmList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsMm(item.id)" v-for="(item, index) in mmList" :key="index">
 						<view class="img">
-							<!-- <image class="preview-img" :lazy-load="true" :src="item.url" mode=""></image> -->
 							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
 						</view>
 						<p class="text f-12 o-e" style="line-height: 32rpx; margin-top: 20rpx">{{ item.name }}</p>
@@ -48,6 +47,7 @@
 			</view>
 			<view class="appointment comm-border">
 				<view class="title">
+					<u-icon size="32" name="http://60.205.246.126/images/2021/01/07/1610010402851693.png"></u-icon>
 					<view class="name">农机</view>
 					<view class="more" @click="moreNj">更多</view>
 					<u-icon class="more" @click="moreNj" name="arrow-right"></u-icon>
@@ -57,7 +57,6 @@
 					<view class="buju" @click="detailsNj(item.id)" v-for="(item, index) in NjList" :key="index">
 						<view class="img">
 							<view class="tag f-12 t-c" :style="{ 'background-color': item.bgColorTag }">{{ item.transactionTypeCode }}</view>
-							<!-- <image class="preview-img" :lazy-load="true" :src="item.url" mode=""></image> -->
 							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
 						</view>
 						<p class="text f-12 o-e" style="line-height: 32rpx; margin-top: 20rpx">{{ item.name }}</p>
@@ -66,6 +65,7 @@
 			</view>
 			<view class="appointment comm-border">
 				<view class="title">
+					<u-icon size="32" name="http://60.205.246.126/images/2021/01/07/1610010449566342.png"></u-icon>
 					<view class="name">病虫害</view>
 					<view class="more" @click="moreCh">更多</view>
 					<u-icon class="more" @click="moreCh" name="arrow-right"></u-icon>
@@ -74,7 +74,6 @@
 					<view v-if="!ChList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsCh(item.id)" v-for="(item, index) in ChList" :key="index">
 						<view class="img">
-							<!-- <image class="preview-img" :lazy-load="true" :src="item.url" mode=""></image> -->
 							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
 						</view>
 						<p class="text f-14">{{ item.name }}</p>
@@ -125,7 +124,7 @@ export default {
 		// 初始化加载模块信息
 		this.initModuleInfo();
 		// 初始化加载农服预约信息
-		this.initAgriInfo();
+		// this.initAgriInfo();
 		// 初始化加载粮食买卖信息
 		this.initGrainInfo();
 		// 初始化加载农机信息
@@ -479,11 +478,13 @@ export default {
 		border-bottom: 1px$comm-border-color solid;
 		.name {
 			flex: 1;
+			font-weight: 600;
+			margin-left: 10rpx;
 		}
 		.more {
 			font-size: 28rpx;
 			text-indent: 6px;
-			color: rgba(80, 80, 80, 1);
+			color: #5EB14E;
 		}
 	}
 }
@@ -504,6 +505,12 @@ export default {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			margin-top: 10rpx;
+			font-size: 24rpx;
+			font-weight: 600;
+			line-height: 15px;
+			color: #000000;
+			opacity: 1;
+
 		}
 
 		.text:hover {
@@ -517,11 +524,12 @@ export default {
 			position: relative;
 			overflow: hidden;
 			position: relative;
+			border-radius: 20rpx;
 
 			.tag {
 				position: absolute;
 				z-index: 9;
-				border-radius: 6rpx 10rpx 6rpx 10rpx;
+				border-radius: 20rpx;
 				color: #fff;
 				top: 0;
 				left: 0;
@@ -534,7 +542,7 @@ export default {
 			.preview-img {
 				width: 100%;
 				height: 100%;
-				border-radius: 6rpx;
+				border-radius: 20rpx;
 			}
 
 			.number {

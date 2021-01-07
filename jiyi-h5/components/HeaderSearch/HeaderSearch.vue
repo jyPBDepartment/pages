@@ -1,21 +1,21 @@
 <template>
 	<view>
 		<view class="HeaderSearch g-flex g-a-c p-x-10" v-if="!title">
-			<u-icon @tap="back" size="44" v-if="!hideBack" name="arrow-left" color="#fff"></u-icon>
-			<view class="search g-flex g-a-c g-j-c p-x-10 m-c">
+			<u-icon @tap="back" size="44" v-if="!hideBack" name="http://60.205.246.126/images/2021/01/07/1610009246604636.png" color="#000"></u-icon>
+			<view class="search g-flex g-a-c g-j-c p-x-10">
 				<u-search
 					input-align="left"
-					bg-color="#ffffff"
+					bg-color="#F2F2F2"
 					:clearabled="false"
-					action-text=""
+					:show-action="false"
 					placeholder="请输入搜索内容"
 					v-model="search"
-					height="50"
+					height="70"
 					@focus="jumpSearch"
 				></u-search>
 			</view>
 			<view v-if="showMsg">
-				<u-icon name="chat" color="#fff" size="48" @tap="goToImPage"></u-icon>
+				<u-icon name="http://60.205.246.126/images/2021/01/07/1610009181168971.png" color="#000" size="40" @tap="goToImPage"></u-icon>
 				<u-badge v-if="msgSum" class="badge" type="green" size="mini" :count="msgSum" :offset="badgeoffset"></u-badge>
 			</view>
 		</view>
@@ -133,7 +133,7 @@ export default {
 	// width: calc(100% - 40rpx);
 	width: 100%;
 	height: 88rpx;
-	background: $header-search-background;
+	background: #FFFFFF;
 	position: fixed;
 	z-index: 999;
 }

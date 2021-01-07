@@ -17,19 +17,23 @@
 			</view>
 		</view>
 		<view class="qiun-columns">
+			<view class="top">
+				<u-icon name="http://60.205.246.126/images/2021/01/07/1610010693496098.png" size="30"></u-icon>
+				<text>玉米</text>
+			</view>
 			<view class="t-c f-14 header-title">
 				<view v-if="typeFrom != 1">吉林省玉米价格行情(元/斤)</view>
 				<view v-else class="title-tip">{{ RangStr }}玉米价格行情(元/斤)</view>
 				<view class="more" v-if="typeFrom != 1" @tap="goQuotation">
 					<text>更多</text>
-					<u-icon name="arrow-right" color="#666" size="30"></u-icon>
+					<u-icon name="arrow-right" size="30"></u-icon>
 				</view>
 			</view>
 			<view class="tips">说明：该数据来源为资源整合，本公司对于其准确性、真实性不负任何法律责任，仅供参考。（该价格玉米为14%水分）</view>
 			<view class="qiun-charts"><canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" @touchstart="touchLineA"></canvas></view>
 			<view style="text-align: center;margin: 10rpx auto;">
-				<u-tag text="7日" style="width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '0' ? 'error' : 'info'" @click="tabSelect('0')"></u-tag>
-				<u-tag text="30日" style="margin-left: 30rpx;width: 100rpx;" mode="dark" shape="circle" :type="tagClick == '1' ? 'error' : 'info'" @click="tabSelect('1')"></u-tag>
+				<u-tag text="7日" style="width: 100rpx;" mode="dark" shape="circle" :bg-color="tagClick == '0' ? '#19BE6B' : '#C4C4C4'" @click="tabSelect('0')"></u-tag>
+				<u-tag text="30日" style="margin-left: 30rpx;width: 100rpx;" mode="dark" shape="circle" :bg-color="tagClick == '1' ? '#19BE6B' : '#C4C4C4'" @click="tabSelect('1')"></u-tag>
 			</view>
 		</view>
 	</view>
@@ -234,9 +238,7 @@ export default {
 					gridType: 'dash',
 					gridColor: '#CCCCCC',
 					dashLength: 4,
-					splitNumber: 4,
-					min: 0,
-					max: 1,
+					splitNumber: 2,
 					fontSize: 8,
 					format: val => {
 						if (val == 0) {
@@ -365,6 +367,13 @@ export default {
 	box-sizing: border-box;
 	background-color: #ffffff;
 	padding: 20rpx 0;
+	.top{
+		color: rgba($color: #000000, $alpha: 0.6);
+		line-height: 40rpx;
+		display: flex;
+		align-items: center;
+		
+	}
 
 	.header-title {
 		display: flex;
@@ -378,7 +387,7 @@ export default {
 		}
 		.more {
 			font-size: 28rpx;
-			color: #666;
+			color: #5EB14E;
 		}
 	}
 }
