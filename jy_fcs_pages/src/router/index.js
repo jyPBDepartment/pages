@@ -119,6 +119,15 @@ import CertificateMgt from '@/views/certificate/certificateMgt'
 import SectionInfo from '@/views/section/sectionInfo';
 //文章管理
 import ArticleManage from '@/views/articleManage/articleManage';
+
+//评论管理
+//粮食评论列表
+import GrainCommentIndex from '@/views/CommentsManage/grainCommentIndex';
+//独家点评评论列表
+import ExclusiveCommentsIndex from '@/views/CommentsManage/exclusiveCommentsIndex';
+//看图识病评论
+import CaseCommentIndex from '@/views/CommentsManage/caseCommentIndex';
+
 // 启用路由
 Vue.use(Router);
 
@@ -147,269 +156,290 @@ export default new Router({
     component: index,
     iconCls: 'el-icon-tickets',
     children: [{
-        path: '/gateway/Banner',
-        name: '商品管理',
-        component: Banner,
-        meta: {
-          requireAuth: true
-        }
-      },
-      {
-        path: '/powerInfo/powerInfo',
-        name: '权限管理',
-        component: PowerInfo,
-        meta: {
-          requireAuth: true
-        }
-      },
-      {
-        path: '/Classification/classification',
-        name: '分类信息',
-        component: Classification,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/Agricultural/agricultural',
-        name: '农服发布',
-        component: Agricultural,
-        meta: {
-          requireAuth: true
-        }
-      },
-
-
-      {
-        path: '/childrenMenu/sellAgriMachinery',
-        name: '农机发布',
-        component: SellAgriMachinery,
-        meta: {
-          requireAuth: true
-        }
-      },
-      {
-        path: '/childrenMenu/CornBusiness',
-        name: '粮食买卖',
-        component: CornBusiness,
-        meta: {
-          requireAuth: true
-        }
-      },
-      {
-        path: '/CaseInfo/caseInfo',
-        name: '看图识病',
-        component: CaseInfo,
-        meta: {
-          requireAuth: true
-        }
-      },
-
-      {
-        path: '/druid/login',
-        name: '监控查询',
-        component: druidLogin,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/charts/statistics',
-        name: '数据可视化',
-        component: statistics,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/accountIfo/AccountInfo',
-        name: '账户管理',
-        component: AccountInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/moduleInfo/ModuleInfo',
-        name: '模块管理',
-        component: ModuleInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/DepolyModule/DepolyModule',
-        name: '发布模块管理',
-        component: DepolyModule,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/keyWord/KeyWord',
-        name: '关键字管理',
-        component: KeyWord,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/comment/comment',
-        name: '评论管理',
-        component: Comment,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/reply/reply',
-        name: '回复管理',
-        component: Reply,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/postInfo/PostInfo',
-        name: '圈子管理',
-        component: PostInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/menu/menuIndex',
-        name: '菜单管理',
-        component: Menu,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/role/roleShow',
-        name: '角色管理',
-        component: Role,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/dbLog/logShow',
-        name: '日志管理',
-        component: dbLog,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/dict/dictList',
-        name: '日志管理',
-        component: dict,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/grainPrices/grainPricesInfo',
-        name: '粮价管理',
-        component: GrainPrices,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/grainPrices/grainPricesHistoryInfo',
-        name: '粮价历史',
-        component: GrainPricesHistory,
-        meta: {
-          requireAuth: true
-        }
-      },
-      {
-        path: '/lesson/lessonList',
-        name: '线下课程',
-        component: EduLessonInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/lesson/studentList',
-        name: '报名列表',
-        component: EduStudentInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/eduVocation/vocationInfo',
-        name: '职业类别',
-        component: VocationInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/eduPicture/eduPictureInfo',
-        name: '图片设置',
-        component: EduPictureInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/eduManualLabel/manualLabelInfo',
-        name: '标签管理',
-        component: EduManualLabel,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/eduManualInfo/manualInfo',
-        name: '手册列表',
-        component: ManualInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/eduQuestionInfo/questionInfo',
-        name: '试题管理',
-        component: QuestionInfo,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/certificate/certificateList',
-        name: '证书列表',
-        component: CertificateList,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/certificate/formworkList',
-        name: '证书模板',
-        component: FormworkList,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/certificate/issue',
-        name: '证书颁发',
-        component: CertificateIssue,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/certificate/certificateMgt',
-        name: '证书颁发',
-        component: CertificateMgt,
-        meta: {
-          requireAuth: true
-        }
-      }, {
-        path: '/eduExamPaperInfo/examPaperInfo',
-        name: '试卷管理',
-        component: ExamPaperInfo,
-        meta: {
-          requireAuth: true
-        }
-        },
-        {
-            path: '/section/sectionInfo',
-            name: '版块管理',
-            component: SectionInfo,
-            meta: {
-                requireAuth: true
-            }
-        }, {
-            path: '/articleManage/articleManage',
-            name: '文章管理',
-            component: ArticleManage,
-            meta: {
-                requireAuth: true
-            }
-        }
+      path: '/gateway/Banner',
+      name: '商品管理',
+      component: Banner,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/powerInfo/powerInfo',
+      name: '权限管理',
+      component: PowerInfo,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/Classification/classification',
+      name: '分类信息',
+      component: Classification,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/Agricultural/agricultural',
+      name: '农服发布',
+      component: Agricultural,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/childrenMenu/sellAgriMachinery',
+      name: '农机发布',
+      component: SellAgriMachinery,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/childrenMenu/CornBusiness',
+      name: '粮食买卖',
+      component: CornBusiness,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/CaseInfo/caseInfo',
+      name: '看图识病',
+      component: CaseInfo,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/druid/login',
+      name: '监控查询',
+      component: druidLogin,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/charts/statistics',
+      name: '数据可视化',
+      component: statistics,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/accountIfo/AccountInfo',
+      name: '账户管理',
+      component: AccountInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/moduleInfo/ModuleInfo',
+      name: '模块管理',
+      component: ModuleInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/DepolyModule/DepolyModule',
+      name: '发布模块管理',
+      component: DepolyModule,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/keyWord/KeyWord',
+      name: '关键字管理',
+      component: KeyWord,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/comment/comment',
+      name: '评论管理',
+      component: Comment,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/reply/reply',
+      name: '回复管理',
+      component: Reply,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/postInfo/PostInfo',
+      name: '圈子管理',
+      component: PostInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/CommentsManage/grainCommentIndex',
+      name: '粮食评论',
+      component: GrainCommentIndex,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/CommentsManage/exclusiveCommentsIndex',
+      name: '独家点评评论',
+      component: ExclusiveCommentsIndex,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/CommentsManage/caseCommentIndex',
+      name: '看图识病评论',
+      component: CaseCommentIndex,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/menu/menuIndex',
+      name: '菜单管理',
+      component: Menu,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/role/roleShow',
+      name: '角色管理',
+      component: Role,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/dbLog/logShow',
+      name: '日志管理',
+      component: dbLog,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/dict/dictList',
+      name: '日志管理',
+      component: dict,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/grainPrices/grainPricesInfo',
+      name: '粮价管理',
+      component: GrainPrices,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/grainPrices/grainPricesHistoryInfo',
+      name: '粮价历史',
+      component: GrainPricesHistory,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/lesson/lessonList',
+      name: '线下课程',
+      component: EduLessonInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/lesson/studentList',
+      name: '报名列表',
+      component: EduStudentInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/eduVocation/vocationInfo',
+      name: '职业类别',
+      component: VocationInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/eduPicture/eduPictureInfo',
+      name: '图片设置',
+      component: EduPictureInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/eduManualLabel/manualLabelInfo',
+      name: '标签管理',
+      component: EduManualLabel,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/eduManualInfo/manualInfo',
+      name: '手册列表',
+      component: ManualInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/eduQuestionInfo/questionInfo',
+      name: '试题管理',
+      component: QuestionInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/certificate/certificateList',
+      name: '证书列表',
+      component: CertificateList,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/certificate/formworkList',
+      name: '证书模板',
+      component: FormworkList,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/certificate/issue',
+      name: '证书颁发',
+      component: CertificateIssue,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/certificate/certificateMgt',
+      name: '证书颁发',
+      component: CertificateMgt,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/eduExamPaperInfo/examPaperInfo',
+      name: '试卷管理',
+      component: ExamPaperInfo,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/section/sectionInfo',
+      name: '版块管理',
+      component: SectionInfo,
+      meta: {
+        requireAuth: true
+      }
+    }, {
+      path: '/articleManage/articleManage',
+      name: '文章管理',
+      component: ArticleManage,
+      meta: {
+        requireAuth: true
+      }
+    }
 
     ]
   }]

@@ -50,7 +50,7 @@
       <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="12"></el-table-column>
       <el-table-column prop="auditUser" label="审核人" align="center" min-width="8"></el-table-column>
       <el-table-column prop="updateDate" label="审核时间" align="center" sortable min-width="12"></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="10">
+      <el-table-column align="center" label="状态" prop="status" min-width="5">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -62,10 +62,12 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="16">
+      <el-table-column align="center" label="操作" min-width="20">
         <template slot-scope="scope">
-          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="small" >信息审核</el-button>
-          <el-button @click="deletePost(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
+          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="mini" >信息审核</el-button>
+          <el-button @click="deletePost(scope)" type="danger" size="mini">删除</el-button>
+          <el-button v-if="scope.row.isSelected == '0'" @click="setSelected(scope)" type="warning" size="mini">设为精选</el-button>
+          <el-button v-else @click="cancelSelected(scope)" type="info" size="mini">取消精选</el-button>
         </template>
       </el-table-column>
     </el-table>

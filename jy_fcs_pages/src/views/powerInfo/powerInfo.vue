@@ -15,7 +15,7 @@
           :maxlength="10"
           placeholder="请输入权限名称"
           class="el-input el-input--small"
-          style="width:200px;"
+          style="width: 200px"
           clearable
         ></el-input>
       </el-form-item>
@@ -26,7 +26,7 @@
           :maxlength="10"
           placeholder="请输入权限编码"
           class="el-input el-input--small"
-           style="width:200px;"
+          style="width: 200px"
           clearable
         ></el-input>
       </el-form-item>
@@ -36,16 +36,23 @@
         @click="search('manual')"
         icon="el-icon-search"
         class="height"
-      >查询</el-button>
+        >查询</el-button
+      >
       <el-button
         type="info"
         size="small"
         @click="resetRuleTag(search)"
-       
         icon="el-icon-close"
-      >重置</el-button>
+        >重置</el-button
+      >
       <el-row>
-        <el-button type="success" size="small" @click="openRuleTag" icon="el-icon-plus">添加</el-button>
+        <el-button
+          type="success"
+          size="small"
+          @click="openRuleTag"
+          icon="el-icon-plus"
+          >添加</el-button
+        >
       </el-row>
     </el-form>
 
@@ -53,7 +60,7 @@
     <el-table
       :data="tableData"
       border
-      style="width: 100%;"
+      style="width: 100%"
       highlight-current-row
       row-key="id"
       default-expand-all
@@ -64,17 +71,20 @@
         label="权限编码"
         align="center"
         min-width="10%"
-       
       ></el-table-column>
       <el-table-column
         prop="jurName"
         label="权限名称"
         align="center"
         min-width="10%"
-       
       ></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center" prop="auditStatus" label="状态" min-width="6%">
+      <el-table-column
+        align="center"
+        prop="auditStatus"
+        label="状态"
+        min-width="6%"
+      >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -86,44 +96,75 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" min-width="12%" ></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" min-width="12%" ></el-table-column>
+      <el-table-column
+        sortable
+        prop="createDate"
+        label="创建时间"
+        align="center"
+        min-width="12%"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        prop="updateDate"
+        label="修改时间"
+        align="center"
+        min-width="12%"
+      ></el-table-column>
       <el-table-column
         prop="createUser"
         label="创建人"
         align="center"
         min-width="8%"
-        
       ></el-table-column>
       <el-table-column
         prop="updateUser"
         label="修改人"
         align="center"
         min-width="8%"
-        
       ></el-table-column>
-      <el-table-column fixed="right" label="操作" min-width="30%"  align="center">
+      <el-table-column
+        fixed="right"
+        label="操作"
+        min-width="30%"
+        align="center"
+      >
         <template slot-scope="scope">
           <el-button
             @click="openUpdateDialog(scope)"
-           
             type="primary"
             size="small"
             icon="el-icon-edit"
-          >编辑</el-button>
+            >编辑</el-button
+          >
           <el-button
             @click="deletePowerInfo(scope)"
-            
             type="danger"
             size="small"
             icon="el-icon-delete"
-          >删除</el-button>
-          <el-button type="success" size="small" @click="table = true,check(scope)"  icon="el-icon-view" style="width:71px; padding-left:7px;">子菜单</el-button>
+            >删除</el-button
+          >
+          <el-button
+            type="success"
+            size="small"
+            @click="(table = true), check(scope)"
+            icon="el-icon-view"
+            >子菜单</el-button
+          >
+          <el-button
+            type="warning"
+            size="small"
+            @click="(table = true), check(scope)"
+            icon="el-icon-view"
+            >权限设置</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
+    <Pagination
+      v-bind:child-msg="pageparm"
+      @callFather="callFather"
+    ></Pagination>
     <br />
     <br />
     <add-power-info
@@ -140,8 +181,13 @@
       @close="closeUpdatePowerInfoDialog"
       @save="updatePowerInfo"
     ></update-power-info>
-
-    <el-drawer title="查看子菜单" :visible.sync="table" direction="rtl" size="69%" >
+    <set-rights></set-rights>
+    <el-drawer
+      title="查看子菜单"
+      :visible.sync="table"
+      direction="rtl"
+      size="69%"
+    >
       <el-table
         :data="gridData"
         border
@@ -149,28 +195,26 @@
         row-key="id"
         default-expand-all
         size="mini"
-        style="height:100%;"
+        style="height: 100%"
       >
         <el-table-column
           prop="jurCode"
           label="权限编码"
           align="center"
           min-width="6%"
-        
         ></el-table-column>
         <el-table-column
           prop="jurName"
           label="权限名称"
           align="center"
           min-width="6%"
-          
         ></el-table-column>
         <!--switch开关（表单）-->
         <el-table-column
           align="center"
           prop="auditStatus"
           label="状态"
-         min-width="5%" 
+          min-width="5%"
         >
           <template slot-scope="scope">
             <el-switch
@@ -183,23 +227,38 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column sortable prop="createDate" label="创建时间" align="center"  min-width="10%" ></el-table-column>
-        <el-table-column sortable prop="updateDate" label="修改时间" align="center"  min-width="10%"></el-table-column>
+        <el-table-column
+          sortable
+          prop="createDate"
+          label="创建时间"
+          align="center"
+          min-width="10%"
+        ></el-table-column>
+        <el-table-column
+          sortable
+          prop="updateDate"
+          label="修改时间"
+          align="center"
+          min-width="10%"
+        ></el-table-column>
         <el-table-column
           prop="createUser"
           label="创建人"
           align="center"
           min-width="6%"
-         
         ></el-table-column>
         <el-table-column
           prop="updateUser"
           label="修改人"
           align="center"
           min-width="6%"
-          
         ></el-table-column>
-        <el-table-column fixed="right" label="操作"  min-width="18%"  align="center">
+        <el-table-column
+          fixed="right"
+          label="操作"
+          min-width="18%"
+          align="center"
+        >
           <template slot-scope="scope">
             <el-button
               @click="openUpdateDialog(scope)"
@@ -207,14 +266,16 @@
               type="primary"
               size="small"
               icon="el-icon-edit"
-            >编辑</el-button>
+              >编辑</el-button
+            >
             <el-button
               @click="deletePowerInfo(scope)"
               class="del"
               type="danger"
               size="small"
               icon="el-icon-delete"
-            >删除</el-button>
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -249,7 +310,7 @@ export default {
       table: false,
       jurName: "",
       jurCode: "",
-      subJurCode:"",
+      subJurCode: "",
       updatePowerInfoFlag: false,
       transPowerInfoId: "",
       transTagCode: "",
@@ -313,7 +374,7 @@ export default {
     //子菜单查询方法
     check: function (scope) {
       let params = {
-        id:scope.row.id
+        id: scope.row.id,
       };
       api
         .testAxiosGet(ApiPath.url.menuPowerInfo, params)
@@ -347,7 +408,6 @@ export default {
             this.pageparm.currentPage = res.data.number + 1;
             this.pageparm.pageSize = res.data.size;
             this.pageparm.total = res.data.totalElements;
-            
           } else {
           }
         })
@@ -417,7 +477,7 @@ export default {
     },
     closeRuleTagDialog() {
       this.addPowerInfoFlag = false;
-       this.search(this.formInline);
+      this.search(this.formInline);
     },
 
     closeModifyRuleTagDialog() {

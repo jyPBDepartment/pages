@@ -15,60 +15,102 @@
           :maxlength="10"
           placeholder="请输入名称"
           class="el-input el-input--small"
-          style="width:200px;"
+          style="width: 200px"
           clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="状态">
-        <el-select v-model="auditStatus" style="width:40%" size="small" clearable>
+        <el-select
+          v-model="auditStatus"
+          style="width: 40%"
+          size="small"
+          clearable
+        >
           <el-option
             v-for="item in statusOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
-             class="option"
+            class="option"
           ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-      <el-button type="warning" @click="search('manual')" size="small" icon="el-icon-search" class="height">查询</el-button>
-      <el-button
-        type="info"
-        @click="resetRuleTag(search)"
-        size="small"
-        icon="el-icon-close"
-      >重置</el-button>
+        <el-button
+          type="warning"
+          @click="search('manual')"
+          size="small"
+          icon="el-icon-search"
+          class="height"
+          >查询</el-button
+        >
+        <el-button
+          type="info"
+          @click="resetRuleTag(search)"
+          size="small"
+          icon="el-icon-close"
+          >重置</el-button
+        >
       </el-form-item>
       <el-row>
-        <el-button type="success" @click="openRuleTag" size="small" icon="el-icon-plus">添加</el-button>
+        <el-button
+          type="success"
+          @click="openRuleTag"
+          size="small"
+          icon="el-icon-plus"
+          >添加</el-button
+        >
       </el-row>
     </el-form>
 
     <!-- 展示的表单 -->
-    <el-table :data="tableData" border style="width: 100%;" highlight-current-row size="mini">
-      <el-table-column type="index" label="序号" align="center" min-width="3%" ></el-table-column>
-      <el-table-column prop="name" label="名称" align="center" min-width="7%"  :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="url" label="图片" align="center" min-width="7%" >
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      highlight-current-row
+      size="mini"
+    >
+      <el-table-column
+        type="index"
+        label="序号"
+        align="center"
+        min-width="3"
+      ></el-table-column>
+      <el-table-column
+        prop="name"
+        label="名称"
+        align="center"
+        min-width="7"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column prop="url" label="图片" align="center" min-width="7">
         <template slot-scope="scope">
-          <el-image :src="scope.row.url" style="width:60px;height:60px;"></el-image>
+          <el-image
+            :src="scope.row.url"
+            style="width: 60px; height: 60px"
+          ></el-image>
         </template>
       </el-table-column>
       <el-table-column
         prop="cropsTypeCode"
         label="农作物种类"
         align="center"
-        min-width="6%"
-       
+        min-width="6"
       ></el-table-column>
       <el-table-column
         prop="dipTypeCode"
         label="病虫害种类"
         align="center"
-        min-width="6%"
-       
+        min-width="6"
       ></el-table-column>
       <!--switch开关（表单）-->
-      <el-table-column align="center" prop="auditStatus" label="状态" min-width="5%" >
+      <el-table-column
+        align="center"
+        prop="auditStatus"
+        label="状态"
+        min-width="5"
+      >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.auditStatus"
@@ -80,44 +122,43 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="创建时间" align="center" min-width="10%" ></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center" min-width="10%" ></el-table-column>
+      <el-table-column
+        sortable
+        prop="createDate"
+        label="创建时间"
+        align="center"
+        min-width="10"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        prop="updateDate"
+        label="修改时间"
+        align="center"
+        min-width="10"
+      ></el-table-column>
       <el-table-column
         prop="createUser"
         label="创建人"
         align="center"
-        min-width="5%"
-       
+        min-width="5"
       ></el-table-column>
 
-      <el-table-column fixed="right" label="操作" align="center" min-width="20%">
+      <el-table-column label="操作" align="center" min-width="20">
         <template slot-scope="scope">
-          <el-button
-            @click="openUpdateDialog(scope)"
-            type="primary"
-            size="small"
-            icon="el-icon-edit"
-           
-          >编辑</el-button>
-          <el-button
-            @click="deleteCase(scope)"
-            type="danger"
-            size="small"
-            icon="el-icon-delete"
-            
-          >删除</el-button>
-          <el-button
-            @click="caseContent(scope)"
-            type="success"
-            size="small"
-            icon="el-icon-view"
-          >查看</el-button>
+          <el-button @click="openUpdateDialog(scope)" type="primary" size="mini">编辑</el-button>
+          <el-button @click="deleteCase(scope)" type="danger" size="mini">删除</el-button>
+          <el-button @click="caseContent(scope)" type="success" size="mini">查看</el-button>
+          <el-button v-if="scope.row.isSelected == '0'" @click="setSelected(scope)" type="warning" size="mini">设为精选</el-button>
+          <el-button v-else @click="cancelSelected(scope)" type="info" size="mini">取消精选</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
+    <Pagination
+      v-bind:child-msg="pageparm"
+      @callFather="callFather"
+    ></Pagination>
     <add-case-info
       :show="addCaseInfoFlag"
       title="添加看图识病信息"
@@ -210,6 +251,10 @@ export default {
     this.search(this.formInline);
   },
   methods: {
+    cancelSelected(scope){},
+    setSelected(scope){
+
+    },
     //switch开关
     caseInfoEnable: function (scope) {
       let params = {
@@ -280,8 +325,8 @@ export default {
                 type: "success",
                 message: "删除成功!",
               });
-             
-               this.tableData.splice(scope.$index, 1);
+
+              this.tableData.splice(scope.$index, 1);
             } else {
               this.$message.success(res.message);
             }
@@ -365,9 +410,9 @@ export default {
 .el-table {
   background-color: #fff;
 }
-.el-button{
+/* .el-button { */
   /* margin:2px 4px 2px 4px; */
-}
+/* } */
 .el-row {
   margin-top: 2px;
   margin-bottom: 15px;
@@ -379,10 +424,10 @@ export default {
   margin-top: 5px;
   margin-left: -120px;
 }
-.option{
- width:80px;
- text-align:center;
- height:30px;
+.option {
+  width: 80px;
+  text-align: center;
+  height: 30px;
 }
 </style>
 
