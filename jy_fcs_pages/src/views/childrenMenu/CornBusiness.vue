@@ -15,12 +15,17 @@
           :maxlength="10"
           placeholder="请输入标题"
           class="el-input el-input--small"
-          style="width:200px;"
+          style="width: 200px"
           clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="审核状态">
-        <el-select v-model="status" style="width:48%;height:100px;" size="small" clearable>
+        <el-select
+          v-model="status"
+          style="width: 48%; height: 100px"
+          size="small"
+          clearable
+        >
           <el-option
             v-for="item in statusOptions"
             :key="item.value"
@@ -30,85 +35,129 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-      <el-button type="warning" @click="search('manual')" size="small" icon="el-icon-search" class="height"
-      >查询</el-button>
-      <el-button
-        type="info" @click="resetRuleTag(search)" size="small" icon="el-icon-close"
-      >重置</el-button>
+        <el-button
+          type="warning"
+          @click="search('manual')"
+          size="small"
+          icon="el-icon-search"
+          class="height"
+          >查询</el-button
+        >
+        <el-button
+          type="info"
+          @click="resetRuleTag(search)"
+          size="small"
+          icon="el-icon-close"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
     <!-- 展示的表单 -->
     <el-table :data="tableData" border highlight-current-row size="mini">
-      <el-table-column type="index" label="序号" align="center" min-width="4%" ></el-table-column>
-      <el-table-column prop="name" label="标题" align="center" min-width="12%" 
-         :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column
+        type="index"
+        label="序号"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="name"
+        label="标题"
+        align="center"
+        min-width="18"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
       <el-table-column
         prop="transactionTypeCode"
         label="交易类型"
         align="center"
-        min-width="6%" 
-       
+        min-width="6"
       >
         <template slot-scope="scope">
-          <span v-if="scope.row.transactionTypeCode==0">收购</span>
-          <span v-if="scope.row.transactionTypeCode==1">出售</span>
+          <span v-if="scope.row.transactionTypeCode == 0">收购</span>
+          <span v-if="scope.row.transactionTypeCode == 1">出售</span>
         </template>
       </el-table-column>
-       <el-table-column
+      <el-table-column
         prop="transactionCategoryCode"
         label="交易类别"
         align="center"
-        min-width="6%" 
-       
+        min-width="6"
       >
         <template slot-scope="scope">
-          <span v-if="scope.row.transactionCategoryCode=='0'">玉米</span>
-          <span v-if="scope.row.transactionCategoryCode=='2'">水稻</span>
-          <span v-if="scope.row.transactionCategoryCode=='3'">高粱</span>
-          <span v-if="scope.row.transactionCategoryCode=='4'">黄豆</span>
+          <span v-if="scope.row.transactionCategoryCode == '0'">玉米</span>
+          <span v-if="scope.row.transactionCategoryCode == '2'">水稻</span>
+          <span v-if="scope.row.transactionCategoryCode == '3'">高粱</span>
+          <span v-if="scope.row.transactionCategoryCode == '4'">黄豆</span>
         </template>
       </el-table-column>
-       <el-table-column
+      <el-table-column
         prop="address"
         label="区域"
         align="center"
-        min-width="20%" 
-       
+        min-width="18"
         :show-overflow-tooltip="true"
       ></el-table-column>
-
-      <el-table-column align="center" prop="status" label="审核状态" min-width="6%" >
+      <el-table-column
+        align="center"
+        prop="status"
+        label="审核状态"
+        min-width="6"
+      >
         <template slot-scope="scope">
-          <span v-if="scope.row.status==0">待审核</span>
-          <span v-if="scope.row.status==1">审核通过</span>
-          <span v-if="scope.row.status==2">审核拒绝</span>
-          <span v-if="scope.row.status==3">已取消</span>
+          <span v-if="scope.row.status == 0">待审核</span>
+          <span v-if="scope.row.status == 1">审核通过</span>
+          <span v-if="scope.row.status == 2">审核拒绝</span>
+          <span v-if="scope.row.status == 3">已取消</span>
         </template>
       </el-table-column>
-      <el-table-column sortable prop="createDate" label="发布时间" align="center" min-width="12" ></el-table-column>
-      <el-table-column sortable prop="updateDate" label="修改时间" align="center"  min-width="12" ></el-table-column>
-       <el-table-column fixed="right" label="操作" align="center" min-width="16%">
+      <el-table-column
+        sortable
+        prop="createDate"
+        label="发布时间"
+        align="center"
+        min-width="12"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        prop="updateDate"
+        label="修改时间"
+        align="center"
+        min-width="12"
+      ></el-table-column>
+      <el-table-column  label="操作" align="center" min-width="24">
         <template slot-scope="scope">
-          <el-button @click="cornContent(scope)" type="primary"  size="small"
-            style="padding:9px 6px;margin-bottom:5px;"
-          >信息审核</el-button>
-            <el-button
+          <el-button @click="cornContent(scope)" type="primary" size="mini"
+            >信息审核</el-button
+          >
+          <el-button v-if="scope.row.isSelected =='0'" @click="setSelected(scope)" type="success" size="mini"
+            >设为精选</el-button
+          >
+          <el-button v-else @click="setSelected(scope)" type="info" size="mini"
+            >取消精选</el-button
+          >
+          <el-button
             @click="deleteCase(scope)"
             type="danger"
-            size="small"
-            style="padding:9px 10px; margin-left:0px;"
-            icon="el-icon-delete"
-          >删除</el-button>
+            size="mini"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
-      </el-table>
-
+    </el-table>
 
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
-     <cornContent :show="cornContentFlag" :cornContentId="cornContentId" title="信息审核"  @close="closeUpdateCornContentDialog"></cornContent>
-   
+    <Pagination
+      v-bind:child-msg="pageparm"
+      @callFather="callFather"
+    ></Pagination>
+    <cornContent
+      :show="cornContentFlag"
+      :cornContentId="cornContentId"
+      title="信息审核"
+      @close="closeUpdateCornContentDialog"
+    ></cornContent>
+
     <br />
     <br />
   </div>
@@ -138,7 +187,7 @@ export default {
     return {
       name: "",
       status: "",
-      type:1,
+      type: 1,
       cornContentFlag: false,
       cornContentId: "",
       updateAgriculturalFlag: false,
@@ -167,7 +216,7 @@ export default {
         { value: "0", label: "待审核" },
         { value: "1", label: "审核通过" },
         { value: "2", label: "审核拒绝" },
-        { value: "3", label: "已取消" }
+        { value: "3", label: "已取消" },
       ],
     };
   },
@@ -180,6 +229,7 @@ export default {
     this.search(this.formInline);
   },
   methods: {
+    setSelected(scope) {},
     //分页赋值
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -213,9 +263,9 @@ export default {
         })
         .catch(function (error) {});
     },
-        // 删除
+    // 删除
     deleteCase: function (scope) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+      this.$confirm("是否删除该条信息?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -224,26 +274,28 @@ export default {
           let params = {
             id: scope.row.id,
           };
-          api.testAxiosGet(ApiPath.url.deleteAgricultural, params).then((res) => {
-            let code = res.state;
+          api
+            .testAxiosGet(ApiPath.url.deleteAgricultural, params)
+            .then((res) => {
+              let code = res.state;
 
-            if (code == "0") {
-              this.$message({
-                type: "success",
-                message: "删除成功!",
-              });
-             
-               this.tableData.splice(scope.$index, 1);
-            } else {
-              this.$message.success(res.message);
-            }
-          });
+              if (code == "0") {
+                this.$message({
+                  type: "success",
+                  message: "删除成功!",
+                });
+
+                this.tableData.splice(scope.$index, 1);
+              } else {
+                this.$message.success(res.message);
+              }
+            });
         })
         .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
+          // this.$message({
+          //   type: "info",
+          //   message: "已取消删除",
+          // });
         });
     },
 
@@ -294,7 +346,7 @@ export default {
     },
     closeUpdateCornContentDialog() {
       this.search(this.formInline);
-      this.cornContentId= "";
+      this.cornContentId = "";
       this.cornContentFlag = false;
     },
     closeUpdateCheckContentDialog() {
@@ -316,7 +368,7 @@ export default {
   },
   components: {
     Pagination,
-    CornContent
+    CornContent,
   },
 };
 </script>

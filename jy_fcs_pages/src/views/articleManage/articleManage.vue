@@ -19,14 +19,14 @@
       <br />
     </el-form>
     <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%">
-      <el-table-column type="index" label="序号" min-width="8%" align="center"></el-table-column>
-      <el-table-column prop="title" label="标题" min-width="8%" align="center"></el-table-column>
-      <el-table-column prop="section.name" label="版块名称" min-width="8%" align="center"></el-table-column>
-      <el-table-column prop="createBy" min-width="10%" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="createDate" min-width="12%" label="创建时间" align="center" sortable></el-table-column>
-      <el-table-column prop="updateBy" min-width="10%" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="updateDate" min-width="12%" label="修改时间" align="center" sortable></el-table-column>
-      <el-table-column align="center" min-width="7%" label="状态" prop="status">
+      <el-table-column type="index" label="序号" min-width="8" align="center"></el-table-column>
+      <el-table-column prop="title" label="标题" min-width="8" align="center"></el-table-column>
+      <el-table-column prop="section.name" label="版块名称" min-width="8" align="center"></el-table-column>
+      <el-table-column prop="createBy" min-width="10" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="createDate" min-width="12" label="创建时间" align="center" sortable></el-table-column>
+      <el-table-column prop="updateBy" min-width="10" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="updateDate" min-width="12" label="修改时间" align="center" sortable></el-table-column>
+      <el-table-column align="center" min-width="7" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -38,11 +38,13 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="25%">
+      <el-table-column align="center" label="操作" min-width="25">
         <template slot-scope="scope">
-          <el-button @click="openDetailArticle(scope)" type="primary" size="small" style="width:73px">查看</el-button>
-          <el-button @click="openUpdateArticle(scope)" type="primary" size="small" icon="el-icon-edit">编辑</el-button>
-          <el-button @click="deleteArticle(scope)" type="danger" size="small" icon="el-icon-delete">删除</el-button>
+          <el-button @click="openDetailArticle(scope)" type="warning" size="mini">查看</el-button>
+          <el-button @click="openUpdateArticle(scope)" type="primary" size="mini">编辑</el-button>
+          <el-button @click="deleteArticle(scope)" type="danger" size="mini" >删除</el-button>
+          <el-button v-if="scope.row.isSelected == '0'" @click="setSelected(scope)" type="warning" size="mini">设为精选</el-button>
+          <el-button v-else @click="cancelSelected(scope)" type="info" size="mini">取消精选</el-button>
         </template>
       </el-table-column>
     </el-table>
