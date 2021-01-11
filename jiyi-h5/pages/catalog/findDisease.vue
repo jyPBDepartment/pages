@@ -2,11 +2,43 @@
 	<view>
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
 		<Screen @screened="screened" @select="select" :screenList="screenList" :condition="condition"></Screen>
+		<FilterCom @selectTab="selectTab"></FilterCom>
+
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="find-disease-container">
-				<view class="comm-border list-item-l" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
-					<image :src="item.url" mode=""></image>
-					<p class="f-14 o-e">{{ item.name }}</p>
+			<view class="comm-list-item" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
+				<image class="item-img" :src="item.url" mode=""></image>
+				<view class="item-info">
+					<p class="title">{{ item.name }}</p>
+					<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate }}</view>
+					<view class="fun-btn">
+						<view class="item">
+							<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
+							<text>123</text>
+						</view>
+						<view class="item" @tap.stop="clickIcon(2)">
+							<u-icon
+								v-if="collection"
+								style="margin-right: 5rpx;"
+								name="http://60.205.246.126/images/2021/01/11/1610334200305905.png"
+								color="#9FA3A8"
+								size="24"
+							></u-icon>
+							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
+							<text>111</text>
+						</view>
+						<view class="item" @tap.stop="clickIcon(1)">
+							<u-icon
+								v-if="thumbs"
+								style="margin-right: 5rpx;"
+								name="http://60.205.246.126/images/2021/01/11/1610333920310281.png"
+								color="#9FA3A8"
+								size="24"
+							></u-icon>
+							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
+
+							<text>21</text>
+						</view>
+					</view>
 				</view>
 			</view>
 		</mescroll-body>
@@ -168,34 +200,33 @@ export default {
 </script>
 
 <style lang="scss">
-	.find-disease-container{
+.find-disease-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	margin-top: 30rpx;
+	.list-item-l {
+		width: 345rpx;
+		margin-bottom: 30rpx;
+		margin-left: 20rpx;
+		padding: 16rpx 0;
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-		margin-top: 30rpx;
-		.list-item-l {
-			width: 345rpx;
-			margin-bottom: 30rpx;
-			margin-left: 20rpx;
-			padding: 16rpx 0;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			> image {
-				width: 320rpx;
-				height: 320rpx;
-				border-radius: 8rpx;
-			}
-			p {
-				width: 100%;
-				height: 80rpx;
-				line-height: 40rpx;
-				text-align: left;
-				padding: 10rpx 16rpx;
-				box-sizing: border-box;
-			}
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		> image {
+			width: 320rpx;
+			height: 320rpx;
+			border-radius: 8rpx;
+		}
+		p {
+			width: 100%;
+			height: 80rpx;
+			line-height: 40rpx;
+			text-align: left;
+			padding: 10rpx 16rpx;
+			box-sizing: border-box;
 		}
 	}
-
+}
 </style>

@@ -7,13 +7,13 @@
 			</view>
 			<view v-if="modelCache.length">
 				<view class="title f-16 g-flex g-j-s-b g-a-c">
-					搜索历史
-					<u-icon @click="empty" size="44" name="trash"></u-icon>
+					<text class="name">最近搜索</text>
+					<text class="clear-all" @click="empty">清除所有</text>
 				</view>
 				<view class="history g-flex f-16" v-for="(item, index) in modelCache" :key="index">
-					<u-icon @click="search(item)" name="clock" style="margin-right: 20rpx;"></u-icon>
+					<!-- <u-icon @click="search(item)" name="clock" style="margin-right: 20rpx;"></u-icon> -->
 					<view @click="search(item)" class="g-f-1">{{ item }}</view>
-					<u-icon class="g-j-e" name="close" @click="current(index)"></u-icon>
+					<u-icon class="g-j-e" size="30" name="http://60.205.246.126/images/2021/01/11/1610327851825811.png" @click="current(index)"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -126,11 +126,26 @@ export default {
 .title {
 	margin: 40rpx 0 30rpx 0;
 	color: #333333;
+	text{
+		font-size: 32rpx;
+		font-weight: 600;
+		line-height: 84rpx;
+		color: #000000;
+		opacity: 1;
+	}
+	.clear-all{
+		color: #5EB14E;
+	}
 }
 
 .history {
 	border-bottom: 1px solid #d8d8d8;
 	color: #505050;
-	line-height: 80rpx;
+	line-height: 60rpx;
+	font-size: 28rpx;
+	font-weight: 400;
+	color: #000000;
+	opacity: 1;
+
 }
 </style>

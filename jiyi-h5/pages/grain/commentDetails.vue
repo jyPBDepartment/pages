@@ -25,7 +25,7 @@ export default {
 				updateDate: ''
 			},
 			style: {
-				p: 'word-wrap: break-word;word-break: break-all;overflow: hidden;'
+				p: 'word-wrap: break-word;word-break: break-all;overflow: hidden;color:#000000;font-size:28rpx;font-weight:blod;'
 			}
 		};
 	},

@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<view class="HeaderSearch g-flex g-a-c p-x-10" v-if="!title">
+		<view  class="HeaderSearch shadow g-flex g-a-c g-j-c p-x-10 f-16" v-if="!title">
 			<u-icon @tap="back" size="44" v-if="!hideBack" name="http://60.205.246.126/images/2021/01/07/1610009246604636.png" color="#000"></u-icon>
-			<view class="search g-flex g-a-c g-j-c p-x-10">
+			<view class="search g-flex g-a-c g-j-c p-x-10 g-f-1">
 				<u-search
 					input-align="left"
 					bg-color="#F2F2F2"
@@ -21,8 +21,8 @@
 		</view>
 
 		<view v-else :class="bold && 'f-b'" :style="{ background: background, color: color }" class="HeaderSearch shadow g-flex g-a-c g-j-c p-x-10 f-16">
-			<u-icon v-if="title !== '圈子'" v-show="!hideBack" @tap="back" style="position: absolute; left: 20rpx" class="f-20" name="arrow-left" :color="color"></u-icon>
-			{{ title }}
+			<u-icon v-if="title !== '圈子'" size="44" v-show="!hideBack" @tap="back" name="http://60.205.246.126/images/2021/01/07/1610009246604636.png" :color="color"></u-icon>
+			<text class="title-name g-f-1">{{ title }}</text>
 			<span style="position: absolute; right: 20rpx; color: #1890ff; z-index: 999" class="f-14" v-if="title == '圈子'" @tap="jump">发帖</span>
 		</view>
 		<view style="width: 100%; height: 88rpx"><!-- 占位 --></view>
@@ -136,6 +136,9 @@ export default {
 	background: #FFFFFF;
 	position: fixed;
 	z-index: 999;
+	.title-name{
+		padding-left: 40rpx;
+	}
 }
 
 .search {

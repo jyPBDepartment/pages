@@ -11,10 +11,12 @@ import {
 } from 'api/ajax.js'
 
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
+import FilterCom from '@/components/FilterCom/FilterCom.vue'
 
 Vue.component('mescroll-body', MescrollBody)
 Vue.component('mescroll-uni', MescrollUni)
 Vue.component('HeaderSearch', HeaderSearch)
+Vue.component('FilterCom',FilterCom)
 Vue.prototype.$ajax = ajax
 Vue.prototype.$store = store
 Vue.use(uView);

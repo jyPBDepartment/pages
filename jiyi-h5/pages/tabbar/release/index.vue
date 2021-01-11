@@ -1,21 +1,24 @@
 <template>
 	<view>
 		<HeaderSearch hideBack title="发布" @searchCallback="search"></HeaderSearch>
-		<view class="p-x-10  g-flex g-a-c " style="margin-top: 40rpx;">
-			<view class="btn f-12" v-for="(item, index) in btnList" @click="jump(item, index)" :key="index">
+		<view class="p-x-10  g-flex g-a-c g-f-column" style="margin-top: 40rpx;">
+			<!-- <view class="btn f-12" v-for="(item, index) in btnList" @click="jump(item, index)" :key="index">
 				<view class="img g-flex g-a-c g-j-c m-c"><image :src="item.src" mode=""></image></view>
 				<view class="name">{{ item.name }}</view>
-			</view>
+			</view> -->
+
+			<view class="btn-group-container" v-for="(item, index) in list" @click="jump(item, index)" :key="index"><image class="image" :src="item.imgUrl" mode=""></image></view>
 		</view>
+
 		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 		<u-popup mode="center" width="500" height="550" v-model="isShow" :closeable="isClose" @close="close" border-radius="10">
 			<view class="content">
 				<view class="title">请选择身份</view>
 				<view class="confrim-btn">
 					<u-button style="width: 300rpx;" type="success" @click="link('1')">农户</u-button>
-					<br/>
+					<br />
 					<u-button style="width: 300rpx;" type="warning" @click="link('2')">粮贩</u-button>
-					<br/>
+					<br />
 					<u-button style="width: 300rpx;" type="primary" @click="link('3')">粮库</u-button>
 				</view>
 			</view>
@@ -33,6 +36,23 @@ export default {
 	data() {
 		return {
 			btnList: [],
+			list: [
+				{
+					name: '农服',
+					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346336119875.png',
+					url: '../../grain/agriculturalServices'
+				},
+				{
+					name: '粮食买卖',
+					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346150825084.png',
+					url: '../../grain/grainTrade'
+				},
+				{
+					name: '农机',
+					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png',
+					url: '../../grain/leaseMachine'
+				}
+			],
 			show: true,
 			maskAble: false,
 			isCancel: true,
@@ -77,6 +97,7 @@ export default {
 								name: res.data.data[i].deployModuleName //发布模块名称
 							});
 						}
+						console.log(resp);
 						this.btnList = resp;
 					}
 					this.show = false;
@@ -110,7 +131,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	
+.btn-group-container {
+	.image {
+		width: 700rpx;
+		height: 222rpx;
+		margin-bottom: 20rpx;
+	}
+}
 
 .btn {
 	width: 120rpx;
@@ -141,11 +168,10 @@ export default {
 	padding: 24rpx;
 	text-align: center;
 	border-radius: 10rpx;
-	.title{
+	.title {
 		font-size: 36rpx;
 		padding: 20rpx;
 		font-weight: bold;
-		
 	}
 	.confrim-btn {
 		display: flex;

@@ -22,7 +22,7 @@
 				<text>玉米</text>
 			</view>
 			<view class="t-c f-14 header-title">
-				<view v-if="typeFrom != 1">吉林省玉米价格行情(元/斤)</view>
+				<view v-if="typeFrom != 1" class="title-tip">吉林省玉米价格行情(元/斤)</view>
 				<view v-else class="title-tip">{{ RangStr }}玉米价格行情(元/斤)</view>
 				<view class="more" v-if="typeFrom != 1" @tap="goQuotation">
 					<text>更多</text>
@@ -382,8 +382,13 @@ export default {
 		color: #333;
 		font-weight: 500;
 		font-size: 36rpx;
+		.name{
+			
+		}
 		.title-tip {
-			font-size: 28rpx;
+			font-size: 32rpx;
+			color: #000000;
+			font-weight: 600;
 		}
 		.more {
 			font-size: 28rpx;

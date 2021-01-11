@@ -1,53 +1,53 @@
 <template>
 	<view class="my-container">
-		<HeaderSearch hideBack title="我的"></HeaderSearch>
-		<view class="content">
-			<view class="content-box">
-				<!-- <u-line color="#e5e5e5"></u-line> -->
-				<!-- 农机发布 -->
-				<view class="public" @click="jump('../../catalog/agriculturalMachinery?index=0')">
-					<u-icon size="58" name="http://60.205.246.126/images/2020/09/14/1600053715235457.png" class="item-icon"></u-icon>
-					<text class="title-name f-14">农机发布</text>
-					<u-icon size="33" name="arrow-right" class="arrow-icon" @click=""></u-icon>
+		<!-- <HeaderSearch hideBack title="我的"></HeaderSearch> -->
+		<view class="header-info">
+			<image class="image" src="../../../static/logo.png" mode=""></image>
+			<text>XXXXX</text>
+		</view>
+		<view class="my-items">
+			<view class="item" @click="jump('../../catalog/agriculturalMachinery?index=0')">
+				<view class="image-box">
+					<u-icon name="http://60.205.246.126/images/2021/01/11/1610350638208923.png" style="margin-right: 10rpx;" color="#000000" size="44"></u-icon>
 				</view>
-				<u-line color="#e5e5e5"></u-line>
-				<!-- 粮食买卖 -->
-				<view class="public" @click="jump('../../catalog/agriculturalMachinery?index=1')">
-					<u-icon size="58" name="http://60.205.246.126/images/2020/09/14/1600053671176961.png" class="item-icon"></u-icon>
-					<text class="title-name f-14">粮食买卖</text>
-					<u-icon size="33" name="arrow-right" class="arrow-icon" @click=""></u-icon>
+				<text class="title-name">农机发布</text>
+				<u-icon size="33" name="arrow-right" class="arrow-icon"></u-icon>
+			</view>
+			<view class="item" @click="jump('../../catalog/agriculturalMachinery?index=1')">
+				<view class="image-box">
+					<u-icon name="http://60.205.246.126/images/2021/01/11/1610350691155054.png" style="margin-right: 10rpx;" color="#000000" size="44"></u-icon>
 				</view>
-				<u-line color="#e5e5e5"></u-line>
-
-				<!-- 农服发布 -->
-				<view class="public" @click="jump('../../catalog/agriculturalMachinery?index=2')">
-					<u-icon size="58" name="http://60.205.246.126/images/2020/09/14/1600053738955201.png" class="item-icon"></u-icon>
-					<text class="title-name">农服发布</text>
-					<u-icon size="33" name="arrow-right" class="arrow-icon" @click=""></u-icon>
-				</view>
-				<!-- <u-line color="#e5e5e5"></u-line> -->
+				<text class="title-name">粮食买卖</text>
+				<u-icon size="33" name="arrow-right" class="arrow-icon"></u-icon>
 			</view>
 
-			<!-- 我的预约 -->
-			<view class="content-box">
-				<!-- <u-line color="#e5e5e5"></u-line> -->
-				<!-- 我的预约 -->
-				<view class="public" @click="jump('../../catalog/myAppointment')">
-					<u-icon size="58" name="http://60.205.246.126/images/2020/09/14/1600053773729596.png" class="item-icon"></u-icon>
-					<text class="title-name">我的预约</text>
-					<u-icon size="33" name="arrow-right" class="arrow-icon" @click=""></u-icon>
+			<view class="item" @click="jump('../../catalog/agriculturalMachinery?index=2')">
+				<view class="image-box">
+					<u-icon name="http://60.205.246.126/images/2021/01/11/1610350739722880.png" style="margin-right: 10rpx;" color="#000000" size="44"></u-icon>
 				</view>
-
-				<u-line color="#e5e5e5"></u-line>
-
-				<!-- 意向用户 -->
-				<view class="public" @click="jump('../../catalog/potentialCustomers')">
-					<u-icon size="58" name="http://60.205.246.126/images/2020/09/14/1600053791065559.png" class="item-icon"></u-icon>
-					<text class="title-name">意向用户</text>
-					<u-icon size="33" name="arrow-right" class="arrow-icon" @click=""></u-icon>
+				<text class="title-name">农服发布</text>
+				<u-icon size="33" name="arrow-right" class="arrow-icon"></u-icon>
+			</view>
+			<view class="item">
+				<view class="image-box">
+					<u-icon name="http://60.205.246.126/images/2021/01/11/1610350759440345.png" style="margin-right: 10rpx;" color="#000000" size="44"></u-icon>
 				</view>
-
-				<!-- <u-line color="#e5e5e5"></u-line> -->
+				<text class="title-name">我的收藏</text>
+				<u-icon size="33" name="arrow-right" class="arrow-icon"></u-icon>
+			</view>
+			<view class="item" @click="jump('../../catalog/myAppointment')">
+				<view class="image-box">
+					<u-icon name="http://60.205.246.126/images/2021/01/11/1610350781201538.png" style="margin-right: 10rpx;" color="#000000" size="44"></u-icon>
+				</view>
+				<text class="title-name">我的预约</text>
+				<u-icon size="33" name="arrow-right" class="arrow-icon"></u-icon>
+			</view>
+			<view class="item" @click="jump('../../catalog/potentialCustomers')">
+				<view class="image-box">
+					<u-icon name="http://60.205.246.126/images/2021/01/11/1610350806505907.png" style="margin-right: 10rpx;" color="#000000" size="44"></u-icon>
+				</view>
+				<text class="title-name">意向用户</text>
+				<u-icon size="33" name="arrow-right" class="arrow-icon"></u-icon>
 			</view>
 		</view>
 	</view>
@@ -78,12 +78,75 @@ export default {
 
 <style lang="scss">
 .my-container {
-	background: $comm-border-color;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
+
+	.header-info {
+		height: 400rpx;
+		position: relative;
+		width: 100%;
+		z-index: -1;
+		background: url(../../../static/img/my-bg.jpg);
+		background-size: 100% 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		.image{
+			width: 174rpx;
+			height: 174rpx;
+			
+		}
+	}
+
+	.my-items {
+		position: absolute;
+		top: 350rpx;
+		left: 0;
+		right: 0;
+		background: #ffffff;
+		border-radius: 30rpx 30rpx 0 0;
+		z-index: 1;
+		padding: 48rpx 0 100rpx 0;
+		.item {
+			width: 686rpx;
+			height: 108rpx;
+			background: #ffffff;
+			border: 1rpx solid #dbdbdb;
+			opacity: 1;
+			border-radius: 24rpx;
+			display: flex;
+			align-items: center;
+			margin: 0 auto 30rpx auto;
+			padding: 0 20rpx;
+			.image-box {
+				width: 72rpx;
+				height: 72rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: #edf4fe;
+				border-radius: 24rpx;
+			}
+			.title-name {
+				flex: 1;
+				text-align: left;
+				padding-left: 24rpx;
+				font-size: 32rpx;
+				font-weight: 600;
+				color: #000000;
+				opacity: 1;
+			}
+			.arrow-icon {
+				color: #c2c4ca;
+				margin-top: 8rpx;
+			}
+		}
+	}
+
 	.content {
 		text-align: center;
 		padding: 0rpx 24rpx;

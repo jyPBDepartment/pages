@@ -21,7 +21,7 @@
 									/>
 								</scroll-view>
 							</u-col>
-							<u-col span="4" style="border-left: 1px #f4f4f4 solid;background-color: #FFFFFF;" v-if="cityData.length">
+							<u-col span="4" style="border-left: 1px #f4f4f4 solid;background-color: #FFFFFF;">
 								<scroll-view scroll-y="true" class="my-scroll-view">
 									<u-tag
 										:text="item.label"
@@ -33,7 +33,7 @@
 									/>
 								</scroll-view>
 							</u-col>
-							<u-col span="4" style="border-left: 1px #f4f4f4 solid;background-color: #FFFFFF;" v-if="areaData.length">
+							<u-col span="4" style="border-left: 1px #f4f4f4 solid;background-color: #FFFFFF;">
 								<scroll-view scroll-y="true" class="my-scroll-view">
 									<u-tag
 										:text="item.label"
@@ -46,6 +46,10 @@
 								</scroll-view>
 							</u-col>
 						</u-row>
+						<view class="area-select-bottom">
+							<u-button type="info" size="mini" @click="sureSelectArea(false)">取消</u-button>
+							<u-button type="success" size="mini" @click="sureSelectArea(true)">确认</u-button>
+						</view>
 					</view>
 				</u-dropdown-item>
 				<u-dropdown-item title="身份" v-model="sfValue" :options="sfOptions"></u-dropdown-item>
@@ -53,23 +57,39 @@
 			</u-dropdown>
 		</view>
 		<u-line color="#f4f4f4"></u-line>
+		<FilterCom @selectTab="selectTab"></FilterCom>
 		<!-- 列表数据显示 -->
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="p-x-10">
-				<view class="app-modular g-flex" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
-					<image class="app-img" :src="item.url" mode=""></image>
-					<view class="app-info g-flex g-f-1 g-f-column g-j-s-b">
-						<p class="title f-14">{{ item.name }}</p>
-						<view v-if="item.address" class="g-flex f-12 g-a-c" style="color: rgba(128, 128, 128, 1)">
-							<u-icon style="margin-right: 5rpx;" name="map-fill" color="#A6A6A6" size="36"></u-icon>
-							{{ item.address }}
+			<view class="comm-list-item" @tap.stop="jump(item.id)" v-for="(item, index) in dataList" :key="index">
+				<image class="item-img" :src="item.url" mode=""></image>
+				<view class="item-info">
+					<p class="title">{{ item.name }}</p>
+					<view v-if="item.address" class="address g-flex g-a-c" style="color: rgba(128, 128, 128, 1)">
+						<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334898551200.png" color="#9FA3A8" size="24"></u-icon>
+						{{ item.address }}
+					</view>
+					<view class="contactsUser">
+						<view class="g-flex g-a-c">
+							<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
+							<view class="word">{{ item.contactsUser }}</view>
 						</view>
-						<view class="g-flex g-j-s-b f-14 g-a-c">
-							<view class="g-flex g-a-c">
-								<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 40rpx;height:40rpx;margin-right: 20rpx;"></image>
-								<view class="word">{{ item.contactsUser }}</view>
-							</view>
-							<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.createDate }}</view>
+						<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.createDate }}</view>
+					</view>
+					<view class="fun-btn">
+						<view class="item">
+							<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
+							<text>123</text>
+						</view>
+						<view class="item" @tap.stop="clickIcon(2)">
+							<u-icon v-if="collection" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" color="#9FA3A8" size="24"></u-icon>
+							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
+							<text>111</text>
+						</view>
+						<view class="item" @tap.stop="clickIcon(1)">
+							<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" color="#9FA3A8" size="24"></u-icon>
+							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
+							
+							<text>21</text>
 						</view>
 					</view>
 				</view>
@@ -225,11 +245,25 @@ export default {
 			areaData: '',
 			drop: '',
 			screenedIndex: null,
-			screened: ''
+			screened: '',
+			collection:false,
+			thumbs:false,
 		};
 	},
 	onLoad() {},
 	methods: {
+		clickIcon(val) {
+			if(val==1){
+				this.thumbs = !this.thumbs
+			}
+			if(val == 2){
+				this.collection = !this.collection
+			}
+			
+		},
+		selectTab(val) {
+			console.log(val);
+		},
 		drawerChange(e) {
 			if (!e) {
 				let params = '';
@@ -302,6 +336,10 @@ export default {
 							label: item.name
 						});
 					});
+					let province = '';
+					let city = '';
+					let area = '';
+
 					if (type == 'pro') {
 						if (this.clickProvinceIndex != index) {
 							this.clickCityIndex = null;
@@ -310,6 +348,15 @@ export default {
 						this.clickProvinceIndex = index;
 						that.cityData = []; // 市的所有數據
 						that.cityData = data;
+
+						// 组合城市数据
+						for (let i = 0; i < this.provinceData.length; i++) {
+							if (i == this.clickProvinceIndex) {
+								province = this.provinceData[i].label;
+							}
+						}
+
+						this.address = province;
 					} else if (type == 'city') {
 						if (this.clickCityIndex != index) {
 							this.clickAreaIndex = null;
@@ -317,14 +364,22 @@ export default {
 						this.clickCityIndex = index;
 						that.areaData = []; // 区的所有数据
 						that.areaData = data;
+
+						// 组合城市数据
+						for (let i = 0; i < this.provinceData.length; i++) {
+							if (i == this.clickProvinceIndex) {
+								province = this.provinceData[i].label;
+							}
+						}
+
+						for (let i = 0; i < this.cityData.length; i++) {
+							if (i == this.clickCityIndex) {
+								city = this.cityData[i].label;
+							}
+						}
+						this.address = province + '/' + city;
 					} else if (type == 'area') {
 						this.clickAreaIndex = index;
-						// that.streetsData = []; // 街道的所有数据
-						// that.streetsData = data;
-
-						let province = '';
-						let city = '';
-						let area = '';
 						// 组合城市数据
 						for (let i = 0; i < this.provinceData.length; i++) {
 							if (i == this.clickProvinceIndex) {
@@ -345,13 +400,25 @@ export default {
 						}
 
 						this.address = province + '/' + city + '/' + area;
-
-						this.$refs.uDropdown.close();
 					}
 
 					that.allIndex = '0';
 				}
 			});
+		},
+		sureSelectArea(flag) {
+			if (flag) {
+				this.$refs.uDropdown.close();
+			} else {
+				this.address = '';
+				this.clickAreaIndex = null;
+				this.clickCityIndex = null;
+				this.clickProvinceIndex = null;
+				this.allIndex = 1;
+				this.cityData = [];
+				this.areaData = [];
+				this.$refs.uDropdown.close();
+			}
 		},
 		open(index) {
 			// 点击筛选时
@@ -370,7 +437,6 @@ export default {
 		close(index) {
 			this.$refs.uDropdown.highlight(index);
 			this.identityCode = this.sfValue;
-
 			this.downCallback();
 		},
 		closeDropdown() {
@@ -382,7 +448,7 @@ export default {
 		// 跳转详情页面
 		jump(val) {
 			uni.navigateTo({
-				url: '../grain/space?id=' + val + '&isMain=0'+'&type=0'
+				url: '../grain/space?id=' + val + '&isMain=0' + '&type=0'
 			});
 		},
 		search(e) {
@@ -472,6 +538,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slot-content {
+	background-color: #ffffff;
+}
 .my-scroll-view {
 	height: 500rpx;
 	padding: 10rpx 20rpx 20rpx 20rpx;
@@ -491,6 +560,7 @@ export default {
 }
 .app-modular {
 	padding-bottom: 20rpx;
+
 	border-bottom: 1px solid rgba(229, 229, 229, 1);
 }
 
@@ -537,5 +607,13 @@ export default {
 
 .st {
 	justify-content: space-between !important;
+}
+
+.area-select-bottom {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 30rpx;
+	border-top: 1rpx solid #f4f4f4;
 }
 </style>

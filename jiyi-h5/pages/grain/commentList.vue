@@ -1,16 +1,40 @@
 <template>
 	<view class="comment-list-container">
 		<HeaderSearch title="更多点评"></HeaderSearch>
-		<view class="tab-container">
+		<view class="tab-container" >
 			<u-tabs :list="listTab" font-size="28" :current="current" @change="change"></u-tabs>
 			<u-line color="#f4f4f4"></u-line>
 		</view>
-		<view style="padding-top: 88rpx;">
-			<view class="list" v-for="(item, i) in commentListData" @tap="goDetails(item.id)" :key="i">
-				<view class="left"><image :src="item.url || `../../static/img/tabbar/首页-s-r.png`"></image></view>
-				<view class="right">
+		<FilterCom style="padding-top: 88rpx;" @selectTab="selectTab"></FilterCom>
+		<view >
+			<view class="comm-list-item" v-for="(item, i) in commentListData" @tap="goDetails(item.id)" :key="i">
+				<image class="item-img" :src="item.url || `../../static/img/tabbar/首页-s-r.png`"></image>
+				<view class="item-info">
 					<view class="title">{{ item.title }}</view>
-					<view class="date">{{ item.updateDate }}</view>
+					<view class="contactsUser">
+						<view class="g-flex g-a-c">
+							<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
+							<view class="word">zhou</view>
+						</view>
+						<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.updateDate }}</view>
+					</view>
+					<view class="fun-btn">
+						<view class="item">
+							<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
+							<text>123</text>
+						</view>
+						<view class="item" @tap.stop="clickIcon(2)">
+							<u-icon v-if="collection" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" color="#9FA3A8" size="24"></u-icon>
+							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
+							<text>111</text>
+						</view>
+						<view class="item" @tap.stop="clickIcon(1)">
+							<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" color="#9FA3A8" size="24"></u-icon>
+							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
+							
+							<text>21</text>
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>

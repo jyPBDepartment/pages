@@ -460,6 +460,8 @@ export default {
 			text-align: center;
 			line-height: 40rpx;
 			margin-top: 20rpx;
+			font-weight: 600;
+			color: #000000;
 		}
 	}
 }
