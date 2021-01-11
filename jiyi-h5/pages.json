@@ -119,10 +119,17 @@
 		},
 		{
 			"path": "pages/grain/commentDetails"
-		}, {
+		}, 
+		{
 			"path": "pages/imPage/imPage"//IM webview
 		}
-	],
+	    ,{
+            "path" : "pages/commentList/commentList"
+        },
+		{
+            "path" : "pages/commentList/reply"
+        }
+    ],
 	"globalStyle": {
 		"navigationStyle": "custom"
 	},

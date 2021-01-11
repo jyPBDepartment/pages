@@ -2,7 +2,7 @@
 	<view>
 		<view  class="HeaderSearch shadow g-flex g-a-c g-j-c p-x-10 f-16" v-if="!title">
 			<u-icon @tap="back" size="44" v-if="!hideBack" name="http://60.205.246.126/images/2021/01/07/1610009246604636.png" color="#000"></u-icon>
-			<view class="search g-flex g-a-c g-j-c p-x-10 g-f-1">
+			<view class="search g-flex g-a-c g-j-c g-f-1">
 				<u-search
 					input-align="left"
 					bg-color="#F2F2F2"
@@ -137,7 +137,7 @@ export default {
 	position: fixed;
 	z-index: 999;
 	.title-name{
-		padding-left: 40rpx;
+		padding-left: 10rpx;
 	}
 }
 
@@ -146,6 +146,7 @@ export default {
 	height: 58rpx;
 	border-radius: 35rpx;
 	background-color: $white;
+	padding-right: 10rpx;
 
 	.input {
 		width: 100%;

@@ -198,12 +198,12 @@ export default {
 .tabs {
 	width: 100%;
 	height: 88rpx;
-	background-color: #e51c2e;
-	color: rgba(255, 255, 255, 0.7);
+	// background-color: #e51c2e;
+	color: #000;
 }
 
 .tab-hover {
-	color: #fff;
+	color: #e51c2e;
 }
 
 .screened {

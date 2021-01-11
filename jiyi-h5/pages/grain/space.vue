@@ -42,10 +42,10 @@
 				</view>
 
 				<view class="info g-flex g-a-c g-j-s-b">
-					<text class="item-contacts g-flex g-a-c">
+					<view class="item-contacts g-flex g-a-c">
 						<u-icon name="http://60.205.246.126/images/2021/01/11/1610337099768047.png" style="margin-right: 10rpx;" color="#5EB14E" size="24"></u-icon>
 						<text>联系电话：{{ contactsPhone }}</text>
-					</text>
+					</view>
 					<text>2020-12-15 15：03</text>
 				</view>
 				<view class="fun-btn">
@@ -75,8 +75,7 @@
 				<view class="comment-box-c">
 					<view class="top-box-c">
 						<text>评论(25)</text>
-						<text v-if="false" class="right">去评论 ></text>
-						<text v-else class="right">全部评论 ></text>
+						<text class="right" @tap="goCommentList">全部评论/去评论 ></text>
 					</view>
 					<u-line v-if="false" color="rgba(0, 0, 0, 0.1)" />
 					<view v-if="false"  class="content">
@@ -171,6 +170,11 @@ export default {
 		}
 	},
 	methods: {
+		goCommentList(){
+			uni.navigateTo({
+				url:'/pages/commentList/commentList'
+			})
+		},
 		clickIcon(val) {
 			if (val == 1) {
 				this.thumbs = !this.thumbs;
@@ -438,6 +442,7 @@ export default {
 					.image {
 						width: 48rpx;
 						height: 48rpx;
+						border-radius: 24rpx;
 					}
 					.users {
 						flex: 1;
