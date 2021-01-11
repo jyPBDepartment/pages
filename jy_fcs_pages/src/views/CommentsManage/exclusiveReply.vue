@@ -69,27 +69,21 @@
             min-width="5"
           ></el-table-column>
           <el-table-column
-            prop="postInfoEntity.name"
-            label="贴子标题"
-            align="center"
-            min-width="15"
-          ></el-table-column>
-          <el-table-column
-            prop="commentUserName"
-            label="评论人"
-            align="center"
-            min-width="10"
-          ></el-table-column>
-          <el-table-column
             show-overflow-tooltip
-            prop="commentContent"
+            prop="reply_content"
             label="评论内容"
             align="center"
             min-width="15"
           ></el-table-column>
           <el-table-column
+            prop="reply_user_name"
+            label="评论人"
+            align="center"
+            min-width="10"
+          ></el-table-column>
+          <el-table-column
             sortable
-            prop="commentDate"
+            prop="reply_date"
             label="评论时间"
             width="200px"
             align="center"
@@ -159,6 +153,10 @@ export default {
       type: String,
       default: "对话框",
     },
+    transCommentId: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
@@ -178,6 +176,7 @@ export default {
       },
       userparm: [], //搜索权限
       listData: [], //用户数据
+      commentId: "",
     };
   },
   components: {
@@ -187,16 +186,18 @@ export default {
     show(val) {
       this.localShow = val;
     },
+    transCommentId(val) {
+      this.commentId = val;
+      this.search(this.formInline);
+    },
   },
-  mounted() {
-    this.search(this.formInline);
-  },
+  mounted() {},
   methods: {
     close() {
-        this.$emit("close");
+      this.$emit("close");
     },
     beforeClose() {
-        this.close();
+      this.close();
     },
     // 分页插件事件
     callFather(parm) {
@@ -213,16 +214,17 @@ export default {
       }
       //alert(JSON.stringify(parameter));
       let params = {
+        commentId: this.commentId,
         content: this.content,
-        user: this.user,
+        name: this.user,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
+
       api
-        .testAxiosGet(ApiPath.url.commentSearch, params)
+        .testAxiosGet(ApiPath.url.exclusiveFindReplyPageByParam, params)
         .then((res) => {
-          let code = res.state;
-          if (code == "0") {
+          if (res.code == "200") {
             this.loading = false;
             this.listData = res.data.content;
             this.formInline.currentPage = res.data.number + 1;
@@ -240,10 +242,11 @@ export default {
         status: scope.row.status,
       };
       api
-        .testAxiosGet(ApiPath.url.commentEnable, params)
+        .testAxiosGet(ApiPath.url.exclusiveEnableReply, params)
         .then((res) => {
-          let code = res.state;
-          this.$message.success(res.message);
+          if ((res.code = "200")) {
+            this.$message.success(res.message);
+          }
         })
         .catch(function (error) {});
     },

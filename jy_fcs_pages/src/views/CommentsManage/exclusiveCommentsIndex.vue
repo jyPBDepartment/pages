@@ -6,17 +6,24 @@
     <!-- 面包屑导航 -->
     <!-- 搜索筛选 -->
     <el-form :inline="true" ref="searchForm" class="user-search">
-      <el-form-item prop="type" label="评论内容">
+      <el-form-item prop="title" label="标题">
+        <el-input
+          size="small"
+          v-model="title"
+          placeholder="输入标题"
+        ></el-input>
+      </el-form-item>
+      <el-form-item prop="content" label="评论内容">
         <el-input
           size="small"
           v-model="content"
           placeholder="输入评论内容"
         ></el-input>
       </el-form-item>
-      <el-form-item prop="type" label="评论人">
+      <el-form-item prop="name" label="评论人">
         <el-input
           size="small"
-          v-model="user"
+          v-model="name"
           placeholder="输入评论人"
         ></el-input>
       </el-form-item>
@@ -60,27 +67,27 @@
         min-width="5"
       ></el-table-column>
       <el-table-column
-        prop="postInfoEntity.name"
-        label="贴子标题"
+        prop="title"
+        label="点评标题"
         align="center"
         min-width="15"
       ></el-table-column>
       <el-table-column
-        prop="commentUserName"
-        label="评论人"
-        align="center"
-        min-width="10"
-      ></el-table-column>
-      <el-table-column
         show-overflow-tooltip
-        prop="commentContent"
+        prop="content"
         label="评论内容"
         align="center"
         min-width="15"
       ></el-table-column>
       <el-table-column
+        prop="user"
+        label="评论人"
+        align="center"
+        min-width="10"
+      ></el-table-column>
+      <el-table-column
         sortable
-        prop="commentDate"
+        prop="date"
         label="评论时间"
         width="200px"
         align="center"
@@ -128,7 +135,8 @@
     <!-- 独家点评回复列表-->
     <exclusive-reply
       :show="exclusiveReplyFlag"
-      title="回复列表"
+      :transCommentId="transCommentId"
+      :title="transTitle"
       @close="closeExclusiveReplyDialog"
     ></exclusive-reply>
   </div>
@@ -149,7 +157,8 @@ export default {
   data() {
     return {
       content: "",
-      user: "",
+      name: "",
+      title: "",
       loading: true, //是显示加载
       formInline: {
         page: 1,
@@ -164,6 +173,8 @@ export default {
       userparm: [], //搜索权限
       listData: [], //用户数据
       exclusiveReplyFlag: false,
+      transCommentId:'',
+      transTitle:''
     };
   },
   // 注册组件
@@ -180,10 +191,13 @@ export default {
   },
 
   methods: {
-    closeExclusiveReplyDialog(){
-      this.exclusiveReplyFlag=false;
+    closeExclusiveReplyDialog() {
+      this.exclusiveReplyFlag = false;
     },
     openReply(scope) {
+      // this.transTitle = scope.row.title+"回复列表";
+      this.transTitle = "回复列表";
+      this.transCommentId = scope.row.id;
       this.exclusiveReplyFlag = true;
     },
     // 分页插件事件
@@ -201,16 +215,16 @@ export default {
       }
       //alert(JSON.stringify(parameter));
       let params = {
+        title: this.title,
         content: this.content,
-        user: this.user,
+        name: this.user,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
       api
-        .testAxiosGet(ApiPath.url.commentSearch, params)
+        .testAxiosGet(ApiPath.url.exclusiveFindCommentPageByParam, params)
         .then((res) => {
-          let code = res.state;
-          if (code == "0") {
+          if (res.code == "200") {
             this.loading = false;
             this.listData = res.data.content;
             this.formInline.currentPage = res.data.number + 1;
@@ -238,6 +252,7 @@ export default {
     //重置
     resetForm(search) {
       //this.$refs['searchForm'].resetFields()
+      this.title = "";
       this.content = "";
       this.user = "";
       this.formInline.page = 1;
@@ -253,11 +268,10 @@ export default {
         type: "warning",
       }).then(() => {
         let params = {
-          id: scope.row.id,
+          commentId: scope.row.id,
         };
-        api.testAxiosGet(ApiPath.url.commentDelete, params).then((res) => {
-          let code = res.status;
-          if (code == "0") {
+        api.testAxiosGet(ApiPath.url.exclusiveDelCommentPC, params).then((res) => {
+          if (res.code == "200") {
             this.$message.success(res.message);
             //this.reload();
             this.listData.splice(scope.$index, 1);

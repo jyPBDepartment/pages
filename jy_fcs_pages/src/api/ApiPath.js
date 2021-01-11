@@ -262,6 +262,30 @@ const url = {
   checkPriceDate: URLHost + '/grainPrices/checkPriceDate',
   //查询粮价操作历史信息列表
   findGrainPricesHistoryList: URLHost + '/grainPricesHistory/findPageByParam',
+
+  // 文章点评设置精选
+  articleManageSetSelected: URLHost + '/articleManage/setSelected',
+
+  //分页查询粮食买卖评论列表
+  findCommentPageByParam: URLHost + '/grainTrading/findCommentPageByParam',
+  // 粮食买卖评论生效
+  grainTradingEnableComment: URLHost + '/grainTrading/enableComment',
+  // 删除粮食买卖评论信息
+  grainTradingDelCommentPC: URLHost + '/grainTrading/delCommentPC',
+
+  //分页查询文章点评评论列表
+  exclusiveFindCommentPageByParam: URLHost + '/exclusive/findCommentPageByParam',
+  // 文章点评评论生效
+  exclusiveEnableComment: URLHost + '/exclusive/enableComment',
+  // 文章点评回复生效
+  exclusiveEnableReply: URLHost + '/exclusive/enableReply',
+  
+  // 删除文章点评评论信息
+  exclusiveDelCommentPC: URLHost + '/exclusive/delCommentPC',
+  // 根据文章点评评论Id查询回复信息列表
+  exclusiveFindReplyPageByParam:URLHost + '/exclusive/findReplyPageByParam',
+
+
   //查询课程信息分页列表
   findLessonPage: EDUHost + '/lesson/findPage',
   //切换线下课程报名状态
