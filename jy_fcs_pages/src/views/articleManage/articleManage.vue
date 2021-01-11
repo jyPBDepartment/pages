@@ -2,30 +2,112 @@
   <div>
     <el-form :inline="true">
       <el-form-item label="标题" prop="title">
-        <el-input size="small" v-model="title" placeholder="输入标题" style="width: 150px"></el-input>
+        <el-input
+          size="small"
+          v-model="title"
+          placeholder="输入标题"
+          style="width: 150px"
+        ></el-input>
       </el-form-item>
       <el-form-item label="版块名称" prop="sectionId">
-        <el-select v-model="sectionId" placeholder="全部" style="width: 60%; height: 30px" size="small">
-          <el-option v-for="item in sectionOptions" :key="item.value" :label="item.label" :value="item.value" size="small"></el-option>
+        <el-select
+          v-model="sectionId"
+          placeholder="全部"
+          style="width: 60%; height: 30px"
+          size="small"
+        >
+          <el-option
+            v-for="item in sectionOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            size="small"
+          ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
-        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
+        <el-button
+          size="small"
+          type="warning"
+          icon="el-icon-search"
+          @click="search('manual')"
+          class="height"
+          >查询</el-button
+        >
+        <el-button
+          size="small"
+          type="info"
+          icon="el-icon-close"
+          @click="resetForm('search')"
+          >重置</el-button
+        >
       </el-form-item>
       <el-row>
-        <el-button size="small" type="success" icon="el-icon-plus" @click="addArticleInfo()">添加</el-button>
+        <el-button
+          size="small"
+          type="success"
+          icon="el-icon-plus"
+          @click="addArticleInfo()"
+          >添加</el-button
+        >
       </el-row>
       <br />
     </el-form>
-    <el-table size="mini" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%">
-      <el-table-column type="index" label="序号" min-width="8" align="center"></el-table-column>
-      <el-table-column prop="title" label="标题" min-width="8" align="center"></el-table-column>
-      <el-table-column prop="section.name" label="版块名称" min-width="8" align="center"></el-table-column>
-      <el-table-column prop="createBy" min-width="10" label="创建人" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="createDate" min-width="12" label="创建时间" align="center" sortable></el-table-column>
-      <el-table-column prop="updateBy" min-width="10" label="修改人" align="center" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="updateDate" min-width="12" label="修改时间" align="center" sortable></el-table-column>
+    <el-table
+      size="mini"
+      :data="listData"
+      highlight-current-row
+      v-loading="loading"
+      border
+      element-loading-text="拼命加载中"
+      style="width: 100%"
+    >
+      <el-table-column
+        type="index"
+        label="序号"
+        min-width="8"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="title"
+        label="标题"
+        min-width="8"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="section.name"
+        label="版块名称"
+        min-width="8"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="createBy"
+        min-width="10"
+        label="创建人"
+        align="center"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column
+        prop="createDate"
+        min-width="12"
+        label="创建时间"
+        align="center"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        prop="updateBy"
+        min-width="10"
+        label="修改人"
+        align="center"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column
+        prop="updateDate"
+        min-width="12"
+        label="修改时间"
+        align="center"
+        sortable
+      ></el-table-column>
       <el-table-column align="center" min-width="7" label="状态" prop="status">
         <template slot-scope="scope">
           <el-switch
@@ -40,11 +122,31 @@
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="25">
         <template slot-scope="scope">
-          <el-button @click="openDetailArticle(scope)" type="warning" size="mini">查看</el-button>
-          <el-button @click="openUpdateArticle(scope)" type="primary" size="mini">编辑</el-button>
-          <el-button @click="deleteArticle(scope)" type="danger" size="mini" >删除</el-button>
-          <el-button v-if="scope.row.isSelected == '0'" @click="setSelected(scope)" type="warning" size="mini">设为精选</el-button>
-          <el-button v-else @click="cancelSelected(scope)" type="info" size="mini">取消精选</el-button>
+          <el-button
+            @click="openDetailArticle(scope)"
+            type="warning"
+            size="mini"
+            >查看</el-button
+          >
+          <el-button
+            @click="openUpdateArticle(scope)"
+            type="primary"
+            size="mini"
+            >编辑</el-button
+          >
+          <el-button @click="deleteArticle(scope)" type="danger" size="mini"
+            >删除</el-button
+          >
+          <el-button
+            v-if="scope.row.isSelected == '0'"
+            @click="setSelected(scope)"
+            type="success"
+            size="mini"
+            >设为精选</el-button
+          >
+          <el-button v-else @click="setSelected(scope)" type="info" size="mini"
+            >取消精选</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -53,7 +155,7 @@
       v-bind:child-msg="formInline"
       @callFather="callFather"
     ></Pagination>
-     <!-- 添加 -->
+    <!-- 添加 -->
     <add-article
       :show="addArticle"
       title="添加"
@@ -81,21 +183,21 @@
 import Pagination from "../../components/Pagination";
 import ApiPath from "@/api/ApiPath.js";
 import api from "@/axios/api.js";
-import AddArticle from './addArticle';
-import UpdateArticle from './updataArticle';
-import DetailsArticle from './detailsArticle';
+import AddArticle from "./addArticle";
+import UpdateArticle from "./updataArticle";
+import DetailsArticle from "./detailsArticle";
 export default {
   data() {
     return {
       loading: false,
-      addArticle:false,
-      updateArticleFlag:false,
-      transArticleId:"",
+      addArticle: false,
+      updateArticleFlag: false,
+      transArticleId: "",
       detailsArticleFlag: false,
-      transDetailsArticleId:"",
-      title:"",
-      sectionId:"",
-      sectionOptions:[],
+      transDetailsArticleId: "",
+      title: "",
+      sectionId: "",
+      sectionOptions: [],
       formInline: {
         page: 1,
         limit: 10,
@@ -114,7 +216,7 @@ export default {
     Pagination,
     AddArticle,
     UpdateArticle,
-    DetailsArticle
+    DetailsArticle,
   },
   mounted() {
     this.findSectionName();
@@ -123,6 +225,32 @@ export default {
     this.search(this.formInline);
   },
   methods: {
+    setSelected(scope) {
+      let isSelected = "";
+      if (scope.row.isSelected == "0") {
+        isSelected = "1";
+      } else {
+        isSelected = "0";
+      }
+
+      let params = {
+        'id': scope.row.id,
+        'isSelected' : isSelected
+      };
+
+      api
+        .testAxiosGet(ApiPath.url.articleManageSetSelected, params)
+        .then((res) => {
+          if (res.code == "200") {
+            this.$message({
+              type: "success",
+              message: res.message,
+            });
+
+            this.search(this.formInline);
+          }
+        });
+    },
     // 分页插件事件
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -157,7 +285,7 @@ export default {
       this.title = "";
       this.sectionId = "";
       this.formInline.page = 1;
-      this.formInline.limit = 10; 
+      this.formInline.limit = 10;
       this.search(this.formInline);
     },
     // 版块名称下拉列表
@@ -174,7 +302,8 @@ export default {
               });
             }
           }
-        }).catch(function (error) {});
+        })
+        .catch(function (error) {});
     },
     //删除
     deleteArticle: function (scope) {
@@ -261,13 +390,13 @@ export default {
       this.updateArticleFlag = false;
     },
     //详情
-    openDetailArticle(scope){
+    openDetailArticle(scope) {
       this.transDetailsArticleId = scope.row.id;
       this.detailsArticleFlag = true;
     },
-    closedetailsArticleDialog(){
+    closedetailsArticleDialog() {
       this.detailsArticleFlag = false;
-    }
+    },
   },
 };
 </script>

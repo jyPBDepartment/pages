@@ -159,6 +159,10 @@ export default {
       type: String,
       default: "对话框",
     },
+    transCommentId:{
+      type: String,
+      default: "",
+    }
   },
   data() {
     return {
@@ -188,9 +192,14 @@ export default {
     show(val) {
       this.localShow = val;
     },
+    transCommentId(val){
+      console.log(val)
+      this.search(this.formInline);
+
+    }
   },
   mounted() {
-    this.search(this.formInline);
+    
   },
   methods: {
     close() {
