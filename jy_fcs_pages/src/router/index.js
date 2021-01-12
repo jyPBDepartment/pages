@@ -125,8 +125,10 @@ import ArticleManage from '@/views/articleManage/articleManage';
 import GrainCommentIndex from '@/views/CommentsManage/grainCommentIndex';
 //独家点评评论列表
 import ExclusiveCommentsIndex from '@/views/CommentsManage/exclusiveCommentsIndex';
-//看图识病评论
+//看图识病评论列表
 import CaseCommentIndex from '@/views/CommentsManage/caseCommentIndex';
+// 帖子评论列表
+import PostCommentIndex from '@/views/CommentsManage/postCommentIndex';
 
 // 启用路由
 Vue.use(Router);
@@ -293,6 +295,14 @@ export default new Router({
       path: '/CommentsManage/caseCommentIndex',
       name: '看图识病评论',
       component: CaseCommentIndex,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/CommentsManage/postCommentIndex',
+      name: '帖子评论',
+      component: PostCommentIndex,
       meta: {
         requireAuth: true
       }

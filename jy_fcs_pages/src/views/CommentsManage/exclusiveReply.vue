@@ -15,18 +15,18 @@
         <!-- 面包屑导航 -->
         <!-- 搜索筛选 -->
         <el-form :inline="true" ref="searchForm" class="user-search">
-          <el-form-item prop="type" label="评论内容">
+          <el-form-item prop="type" label="回复内容">
             <el-input
               size="small"
               v-model="content"
-              placeholder="输入评论内容"
+              placeholder="输入回复内容"
             ></el-input>
           </el-form-item>
-          <el-form-item prop="type" label="评论人">
+          <el-form-item prop="type" label="回复人">
             <el-input
               size="small"
               v-model="user"
-              placeholder="输入评论人"
+              placeholder="输入回复人"
             ></el-input>
           </el-form-item>
           <el-form-item>
@@ -89,7 +89,7 @@
             align="center"
             min-width="10"
           ></el-table-column>
-          <el-table-column
+          <!-- <el-table-column
             align="center"
             label="状态"
             prop="status"
@@ -105,7 +105,7 @@
                 @change="commentEnable(scope)"
               ></el-switch>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column align="center" label="操作" min-width="15">
             <template slot-scope="scope">
               <el-button

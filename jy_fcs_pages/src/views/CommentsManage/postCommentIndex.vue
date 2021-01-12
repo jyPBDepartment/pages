@@ -1,24 +1,19 @@
-<!--评论管理  粮食评论 -->
+/**
+ * 圈子管理  评论管理
+ */
 <template>
   <div>
     <!-- 面包屑导航 -->
     <!-- 搜索筛选 -->
     <el-form :inline="true" ref="searchForm" class="user-search">
-      <el-form-item prop="title" label="标题">
-        <el-input
-          size="small"
-          v-model="title"
-          placeholder="输入标题"
-        ></el-input>
-      </el-form-item>
-      <el-form-item prop="content" label="评论内容">
+      <el-form-item prop="type" label="评论内容">
         <el-input
           size="small"
           v-model="content"
           placeholder="输入评论内容"
         ></el-input>
       </el-form-item>
-      <el-form-item prop="user" label="评论人">
+      <el-form-item prop="type" label="评论人">
         <el-input
           size="small"
           v-model="user"
@@ -34,6 +29,7 @@
           class="find"
           >查询</el-button
         >
+
         <el-button
           size="small"
           type="info"
@@ -64,20 +60,20 @@
         min-width="5"
       ></el-table-column>
       <el-table-column
-        prop="title"
+        prop="name"
         label="标题"
         align="center"
         min-width="15"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="content"
+        prop="commentContent"
         label="评论内容"
         align="center"
         min-width="15"
       ></el-table-column>
       <el-table-column
-        prop="user"
+        prop="commentUserName"
         label="评论人"
         align="center"
         min-width="10"
@@ -130,12 +126,12 @@
       @callFather="callFather"
     ></Pagination>
     <!-- 粮食回复列表-->
-    <grain-reply
-      :show="grainReplyFlag"
+    <post-reply
+      :show="caseReplyFlag"
       :transCommentId="transCommentId"
       title="回复列表"
-      @close="closeGrainReplyDialog"
-    ></grain-reply>
+      @close="closeReplyDialog"
+    ></post-reply>
   </div>
 </template>
 
@@ -145,17 +141,16 @@ import Pagination from "../../components/Pagination";
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
-import GrainReply from "./grainReply";
 //import AddArticle from "./addArticle";
 //import UpdateArticle from "./updateArticle";
 //import ContentShow from "./content"
+import PostReply from "./postReply";
 export default {
   inject: ["reload"],
   data() {
     return {
       content: "",
       user: "",
-      title: "",
       loading: true, //是显示加载
       formInline: {
         page: 1,
@@ -169,7 +164,7 @@ export default {
       },
       userparm: [], //搜索权限
       listData: [], //用户数据
-      grainReplyFlag: false,
+      caseReplyFlag: false,
       transCommentId: "",
     };
   },
@@ -177,7 +172,7 @@ export default {
   components: {
     // AddArticle,
     // UpdateArticle,
-    GrainReply,
+    PostReply,
     Pagination,
   },
 
@@ -187,12 +182,12 @@ export default {
   },
 
   methods: {
-    closeGrainReplyDialog() {
-      this.grainReplyFlag = false;
+    closeReplyDialog() {
+      this.caseReplyFlag = false;
     },
     openReply(scope) {
       this.transCommentId = scope.row.id;
-      this.grainReplyFlag = true;
+      this.caseReplyFlag = true;
     },
     // 分页插件事件
     callFather(parm) {
@@ -209,16 +204,15 @@ export default {
       }
       //alert(JSON.stringify(parameter));
       let params = {
-        title: this.title,
-        name: this.user,
         content: this.content,
+        user: this.user,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
       api
-        .testAxiosGet(ApiPath.url.findCommentPageByParam, params)
+        .testAxiosGet(ApiPath.url.commentSearch, params)
         .then((res) => {
-          if (res.code == "200") {
+          if (res.state == "0") {
             this.loading = false;
             this.listData = res.data.content;
             this.formInline.currentPage = res.data.number + 1;
@@ -236,18 +230,16 @@ export default {
         status: scope.row.status,
       };
       api
-        .testAxiosGet(ApiPath.url.grainTradingEnableComment, params)
+        .testAxiosGet(ApiPath.url.commentEnable, params)
         .then((res) => {
-          if (res.code == "200") {
-            this.$message.success(res.message);
-          }
+          let code = res.state;
+          this.$message.success(res.message);
         })
         .catch(function (error) {});
     },
     //重置
     resetForm(search) {
       //this.$refs['searchForm'].resetFields()
-      this.title = "";
       this.content = "";
       this.user = "";
       this.formInline.page = 1;
@@ -259,16 +251,16 @@ export default {
     deleteUser(scope) {
       // 查询是否存在回复信息
       let params = {
-        cid: scope.row.id,
+        commentId: scope.row.id,
         content: "",
-        name: "",
+        user: "",
         page: this.formInline.page,
         size: this.formInline.limit,
       };
       api
-        .testAxiosGet(ApiPath.url.grainTradingFindReplyPageByParam, params)
+        .testAxiosGet(ApiPath.url.replySearch, params)
         .then((res) => {
-          if (res.code == "200") {
+          if (res.state == "0") {
             if (res.data.content.length > 0) {
               this.$confirm(
                 "该评论存在回复信息，删除后无法还原，是否确认删除?",

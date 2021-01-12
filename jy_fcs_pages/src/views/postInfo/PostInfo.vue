@@ -4,14 +4,39 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="user-search">
       <el-form-item label="名称">
-        <el-input type="text" size="small" v-model="name" placeholder="输入名称" style="width:150px"></el-input>
+        <el-input
+          type="text"
+          size="small"
+          v-model="name"
+          placeholder="输入名称"
+          style="width: 150px"
+        ></el-input>
       </el-form-item>
       <el-form-item label="发布人">
-        <el-input type="text" size="small" v-model="createUser" placeholder="输入发布人" style="width:150px"></el-input>
+        <el-input
+          type="text"
+          size="small"
+          v-model="createUser"
+          placeholder="输入发布人"
+          style="width: 150px"
+        ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="warning" icon="el-icon-search" @click="search('manual')" class="height">查询</el-button>
-        <el-button size="small" type="info" icon="el-icon-close" @click="resetForm('search')">重置</el-button>
+        <el-button
+          size="small"
+          type="warning"
+          icon="el-icon-search"
+          @click="search('manual')"
+          class="height"
+          >查询</el-button
+        >
+        <el-button
+          size="small"
+          type="info"
+          icon="el-icon-close"
+          @click="resetForm('search')"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
     <!--列表-->
@@ -22,9 +47,14 @@
       v-loading="loading"
       border
       element-loading-text="拼命加载中"
-      style="width: 100%;"
+      style="width: 100%"
     >
-      <el-table-column type="index" label="序号" min-width="6" align="center"></el-table-column>
+      <el-table-column
+        type="index"
+        label="序号"
+        min-width="6"
+        align="center"
+      ></el-table-column>
       <el-table-column
         prop="name"
         label="标题名称"
@@ -40,16 +70,38 @@
         min-width="16"
       ></el-table-column>
       <!-- <el-table-column prop="author" :show-overflow-tooltip="true" label="发帖作者" align="center" min-width="8%"></el-table-column> -->
-      <el-table-column prop="auditStatus" label="审核状态" align="center" min-width="6">
+      <el-table-column
+        prop="auditStatus"
+        label="审核状态"
+        align="center"
+        min-width="6"
+      >
         <template slot-scope="scope">
-          <span v-if="scope.row.auditStatus==0">未审核</span>
-          <span v-if="scope.row.auditStatus==1">审核通过</span>
-          <span v-if="scope.row.auditStatus==2">审核拒绝</span>
+          <span v-if="scope.row.auditStatus == 0">未审核</span>
+          <span v-if="scope.row.auditStatus == 1">审核通过</span>
+          <span v-if="scope.row.auditStatus == 2">审核拒绝</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" label="发布时间" align="center" sortable min-width="12"></el-table-column>
-      <el-table-column prop="auditUser" label="审核人" align="center" min-width="8"></el-table-column>
-      <el-table-column prop="updateDate" label="审核时间" align="center" sortable min-width="12"></el-table-column>
+      <el-table-column
+        prop="createDate"
+        label="发布时间"
+        align="center"
+        sortable
+        min-width="12"
+      ></el-table-column>
+      <el-table-column
+        prop="auditUser"
+        label="审核人"
+        align="center"
+        min-width="8"
+      ></el-table-column>
+      <el-table-column
+        prop="updateDate"
+        label="审核时间"
+        align="center"
+        sortable
+        min-width="12"
+      ></el-table-column>
       <el-table-column align="center" label="状态" prop="status" min-width="5">
         <template slot-scope="scope">
           <el-switch
@@ -64,15 +116,33 @@
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="20">
         <template slot-scope="scope">
-          <el-button @click="openUpdatePostInfo(scope)" type="primary" size="mini" >信息审核</el-button>
-          <el-button @click="deletePost(scope)" type="danger" size="mini">删除</el-button>
-          <el-button v-if="scope.row.isSelected == '0'" @click="setSelected(scope)" type="warning" size="mini">设为精选</el-button>
-          <el-button v-else @click="cancelSelected(scope)" type="info" size="mini">取消精选</el-button>
+          <el-button
+            @click="openUpdatePostInfo(scope)"
+            type="primary"
+            size="mini"
+            >信息审核</el-button
+          >
+          <el-button @click="deletePost(scope)" type="danger" size="mini"
+            >删除</el-button
+          >
+          <el-button
+            v-if="scope.row.isSelected == '0'"
+            @click="setSelected(scope)"
+            type="success"
+            size="mini"
+            >设为精选</el-button
+          >
+          <el-button v-else @click="setSelected(scope)" type="info" size="mini"
+            >取消精选</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <Pagination v-bind:child-msg="formInline" @callFather="callFather"></Pagination>
+    <Pagination
+      v-bind:child-msg="formInline"
+      @callFather="callFather"
+    ></Pagination>
     <update-postInfo
       :show="updatePostInfoFlag"
       :transPostInfoId="transPostInfoId"
@@ -142,6 +212,30 @@ export default {
   },
 
   methods: {
+    setSelected(scope) {
+      let isSelected = "";
+      if (scope.row.isSelected == "0") {
+        isSelected = "1";
+      } else {
+        isSelected = "0";
+      }
+
+      let params = {
+        id: scope.row.id,
+        isSelected: isSelected,
+      };
+
+      api.testAxiosGet(ApiPath.url.postSetSelected, params).then((res) => {
+        // if (res.status == "0") {
+          this.$message({
+            type: "success",
+            message: res.message,
+          });
+
+          this.search(this.formInline);
+        // }
+      });
+    },
     // 分页插件事件
     callFather(parm) {
       this.formInline.page = parm.currentPage;
@@ -183,7 +277,7 @@ export default {
     closeUpdatePostInfoDialog() {
       this.updatePostInfoFlag = false;
       this.search(this.formInline);
-      this.transPostInfoId= "";
+      this.transPostInfoId = "";
     },
     upPostInfo() {
       this.updatePostInfoFlag = false;
@@ -194,18 +288,16 @@ export default {
         id: scope.row.id,
         status: scope.row.status,
       };
-      api
-        .testAxiosGet(ApiPath.url.postInfoEnable, params)
-        .then((res) => {
-          let code = res.status;
-          if (code == "0") {
-            this.$message.success(res.message);
-          } else {
-            this.$message.success(res.message);
-          }
-          this.reload();
-        });
-        // .catch(function (error) {});
+      api.testAxiosGet(ApiPath.url.postInfoEnable, params).then((res) => {
+        let code = res.status;
+        if (code == "0") {
+          this.$message.success(res.message);
+        } else {
+          this.$message.success(res.message);
+        }
+        this.reload();
+      });
+      // .catch(function (error) {});
     },
     //显示编辑界面
     openUpdatePostInfo(scope) {
@@ -220,8 +312,8 @@ export default {
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
-    deletePost(scope){
-       this.$confirm("确定要删除吗?", "信息", {
+    deletePost(scope) {
+      this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -244,7 +336,7 @@ export default {
             message: "已取消删除",
           });
         });
-    }
+    },
   },
 };
 </script>

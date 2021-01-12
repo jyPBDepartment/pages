@@ -105,6 +105,8 @@ const url = {
   findAccountId: URLHost + '/accountInfo/findAccountId',
   //圈子删除
   deletePostinfo: URLHost + '/postInfo/delete',
+  // 帖子设置精选
+  postSetSelected: URLHost + '/postInfo/Boutique',
 
   //图片上传地址
   uploadImg: URLHost + '/upload/uploadImg',
@@ -168,6 +170,8 @@ const url = {
   updateCaseInfo: URLHost + '/caseInfo/update',
   //看图识病查看详情
   caseFindById: URLHost + '/caseInfo/findById',
+  // 看图识病设置精选
+  caseSetSelected: URLHost + '/caseInfo/setSelect',
   //菜单管理
   findMenuByName: URLHost + '/menu/findByName',
   //角色管理
@@ -272,6 +276,13 @@ const url = {
   grainTradingEnableComment: URLHost + '/grainTrading/enableComment',
   // 删除粮食买卖评论信息
   grainTradingDelCommentPC: URLHost + '/grainTrading/delCommentPC',
+  // 粮食买卖设置精选
+  grainTradingSetSelected: URLHost + '/grainTrading/setSelected',
+
+  // 根据粮食买卖评论Id查询回复信息列表
+  grainTradingFindReplyPageByParam: URLHost + '/grainTrading/findReplyPageByParam',
+  // 删除粮食买卖回复信息
+  grainTradingDelReplyPC: URLHost + '/grainTrading/delReplyPC',
 
   //分页查询文章点评评论列表
   exclusiveFindCommentPageByParam: URLHost + '/exclusive/findCommentPageByParam',
@@ -279,12 +290,19 @@ const url = {
   exclusiveEnableComment: URLHost + '/exclusive/enableComment',
   // 文章点评回复生效
   exclusiveEnableReply: URLHost + '/exclusive/enableReply',
-  
+
   // 删除文章点评评论信息
   exclusiveDelCommentPC: URLHost + '/exclusive/delCommentPC',
   // 根据文章点评评论Id查询回复信息列表
-  exclusiveFindReplyPageByParam:URLHost + '/exclusive/findReplyPageByParam',
-
+  exclusiveFindReplyPageByParam: URLHost + '/exclusive/findReplyPageByParam',
+  // 分页查询看图识病评论列表
+  caseInfoCommentFindCaseList: URLHost + '/caseInfoComment/findCaseList',
+  // 删除看图识病评论信息
+  caseInfoCommentDelete: URLHost + '/caseInfoComment/delete',
+  // 查询看图识病回复信息
+  caseInfoReplyFindReplyList: URLHost + '/caseInfoReply/findReplyList',
+  // 删除看图识病回复信息
+  caseInfoReplyDelete: URLHost + '/caseInfoReply/delete',
 
   //查询课程信息分页列表
   findLessonPage: EDUHost + '/lesson/findPage',

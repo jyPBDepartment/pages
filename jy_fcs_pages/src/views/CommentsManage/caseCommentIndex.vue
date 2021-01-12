@@ -60,8 +60,15 @@
         min-width="5"
       ></el-table-column>
       <el-table-column
-        prop="postInfoEntity.name"
-        label="贴子标题"
+        prop="title"
+        label="标题"
+        align="center"
+        min-width="15"
+      ></el-table-column>
+      <el-table-column
+        show-overflow-tooltip
+        prop="commentContent"
+        label="评论内容"
         align="center"
         min-width="15"
       ></el-table-column>
@@ -72,21 +79,14 @@
         min-width="10"
       ></el-table-column>
       <el-table-column
-        show-overflow-tooltip
-        prop="commentContent"
-        label="评论内容"
-        align="center"
-        min-width="15"
-      ></el-table-column>
-      <el-table-column
         sortable
-        prop="commentDate"
+        prop="date"
         label="评论时间"
         width="200px"
         align="center"
         min-width="10"
       ></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="5">
+      <!-- <el-table-column align="center" label="状态" prop="status" min-width="5">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -97,24 +97,24 @@
             @change="commentEnable(scope)"
           ></el-switch>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column align="center" label="操作" min-width="15">
         <template slot-scope="scope">
           <el-button
-            size="small"
-            type="danger"
-            @click="deleteUser(scope)"
-            align="left"
-            icon="el-icon-delete"
-            >删除</el-button
-          >
-          <el-button
-            size="small"
+            size="mini"
             type="primary"
             @click="openReply(scope)"
             align="left"
             icon="el-icon-circle-plus-outline"
             >查看回复</el-button
+          >
+          <el-button
+            size="mini"
+            type="danger"
+            @click="deleteUser(scope)"
+            align="left"
+            icon="el-icon-delete"
+            >删除</el-button
           >
         </template>
       </el-table-column>
@@ -128,6 +128,7 @@
     <!-- 粮食回复列表-->
     <case-reply
       :show="caseReplyFlag"
+      :transCommentId="transCommentId"
       title="回复列表"
       @close="closeReplyDialog"
     ></case-reply>
@@ -164,6 +165,7 @@ export default {
       userparm: [], //搜索权限
       listData: [], //用户数据
       caseReplyFlag: false,
+      transCommentId:''
     };
   },
   // 注册组件
@@ -181,9 +183,10 @@ export default {
 
   methods: {
     closeReplyDialog() {
-        this.caseReplyFlag=false;
+      this.caseReplyFlag = false;
     },
     openReply(scope) {
+      this.transCommentId = scope.row.id;
       this.caseReplyFlag = true;
     },
     // 分页插件事件
@@ -207,10 +210,9 @@ export default {
         size: this.formInline.limit,
       };
       api
-        .testAxiosGet(ApiPath.url.commentSearch, params)
+        .testAxiosGet(ApiPath.url.caseInfoCommentFindCaseList, params)
         .then((res) => {
-          let code = res.state;
-          if (code == "0") {
+          if (res.code == "200") {
             this.loading = false;
             this.listData = res.data.content;
             this.formInline.currentPage = res.data.number + 1;
@@ -255,9 +257,8 @@ export default {
         let params = {
           id: scope.row.id,
         };
-        api.testAxiosGet(ApiPath.url.commentDelete, params).then((res) => {
-          let code = res.status;
-          if (code == "0") {
+        api.testAxiosGet(ApiPath.url.caseInfoCommentDelete, params).then((res) => {
+          if (res.code == "200") {
             this.$message.success(res.message);
             //this.reload();
             this.listData.splice(scope.$index, 1);

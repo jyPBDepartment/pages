@@ -229,7 +229,30 @@ export default {
     this.search(this.formInline);
   },
   methods: {
-    setSelected(scope) {},
+    setSelected(scope) {
+      let isSelected = "";
+      if (scope.row.isSelected == "0") {
+        isSelected = "1";
+      } else {
+        isSelected = "0";
+      }
+
+      let params = {
+        id: scope.row.id,
+        isSelected: isSelected,
+      };
+
+      api.testAxiosGet(ApiPath.url.grainTradingSetSelected, params).then((res) => {
+        if (res.code == "200") {
+          this.$message({
+            type: "success",
+            message: res.message,
+          });
+
+          this.search(this.formInline);
+        }
+      });
+    },
     //分页赋值
     callFather(parm) {
       this.formInline.page = parm.currentPage;
