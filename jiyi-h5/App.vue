@@ -304,6 +304,12 @@ export default {
 			font-weight: bold;
 			padding-right: 10rpx;
 		}
+		.required{
+			color: #fa3534;
+			font-weight: bold;
+			padding-right: 10rpx;
+			width: 20rpx;
+		}
 		.info {
 			position: relative;
 			line-height: 1.5;

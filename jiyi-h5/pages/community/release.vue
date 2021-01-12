@@ -3,12 +3,12 @@
 		<HeaderSearch title="发帖" @searchCallback="search"></HeaderSearch>
 		<view class="comm-form-container">
 			<view class="item">
-				<text>*</text>	
+				<view class="required">*</view>	
 				<view class="title title-s">标题</view>
 				<view class="info"><u-input placeholder="输入标题" :clearable="false" v-model="name" height="64" /></view>
 			</view>
 			<view class="item">
-				<text>*</text>	
+				<view class="required">*</view>	
 				<view class="title title-s">类别</view>
 				<view class="info">
 					<u-radio-group v-model="parent" :size="30" active-color="#5EB14E"	>
@@ -17,7 +17,7 @@
 				</view>
 			</view>
 			<view class="item">
-				<text>{{`  `}}</text>
+				<view class="required"></view>
 				<view class="title title-s">图片</view>
 				<view class="info">
 					<u-upload
@@ -35,7 +35,7 @@
 				</view>
 			</view>
 			<view class="item">
-				<text>*</text>	
+				<view class="required">*</view>	
 				<view class="title title-s" style="padding: 10rpx 0;">内容</view>
 				<view class="info" style="position: relative;">
 					<u-input type="textarea" placeholder="请输入内容正文（最多输入500字）" :maxlength="500" :auto-height="false" :clearable="false" v-model="code" height="600" />

@@ -3,19 +3,24 @@
 		<HeaderSearch title="农机" @searchCallback="search"></HeaderSearch>
 		<view class="comm-form-container">
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">标题</view>
 				<view class="info"><u-input placeholder="输入内容(必填,不能超过10个汉字)" maxlength="10" :clearable="false" v-model="name" height="64" /></view>
 			</view>
 			<view class="item">
+				<view class="required"></view>
 				<view class="title">描述</view>
 				<view class="info">
 					<u-input type="textarea" placeholder="请输入描述正文（最多输入500字）" :maxlength="500" :clearable="false" :autoHeight="false" v-model="descrip" height="200" />
 				</view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">农机图片</view>
 				<view class="info">
 					<u-upload
+						width="168"
+						height="168"
 						:show-progress="false"
 						:action="action"
 						@on-choose-complete="onChoose"
@@ -27,6 +32,7 @@
 				</view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">交易类型</view>
 				<view class="info">
 					<u-radio-group :size="30" v-model="transactionTypeCode" @change="radioGroupChange">
@@ -35,6 +41,7 @@
 				</view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">机器类型</view>
 				<view class=" info" @click="sexShow = true">
 					<u-input class="value" placeholder="请选择" v-model="machineTypeName" type="select" />
@@ -42,10 +49,12 @@
 				</view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">机器型号</view>
 				<view class="info"><u-input placeholder="请输入机器型号" :clearable="false" v-model="model" /></view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">购买时间</view>
 				<view class="info" @click="dateShow = true">
 					<u-input class="value" disabled placeholder="请选择时间" :clearable="false" v-model="purchaseDate" />
@@ -54,6 +63,7 @@
 			</view>
 
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">价格</view>
 				<view class="info">
 					<u-radio-group v-model="isFace" :size="30" @change="radioGroupChange1">
@@ -66,14 +76,17 @@
 				</view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">联系人</view>
 				<view class="info"><u-input placeholder="请输入联系人" :clearable="false" v-model="contactsUser" height="64" /></view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">联系电话</view>
 				<view class="info"><u-input placeholder="请输入联系电话" type="number" maxlength="11" :clearable="false" v-model="contactsPhone" height="64" /></view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">区域</view>
 				<view class=" info" @click="regionaStatus = true"><u-input class="value" placeholder="请选择" v-model="address" type="select" /></view>
 			</view>
@@ -119,7 +132,7 @@ export default {
 			isFaceCode: '',
 			createUser: '',
 			createUserId: localStorage.getItem('userId'),
-			accId: localStorage.getItem("accId"),
+			accId: localStorage.getItem('accId'),
 			action: ApiPath.url.uploadImg,
 			fileList: [],
 			list: [

@@ -3,17 +3,24 @@
 		<HeaderSearch title="农服" @searchCallback="search"></HeaderSearch>
 		<view class="comm-form-container">
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">标题</view>
 				<view class="info"><u-input placeholder="输入内容(最多输入10字)" :clearable="false" v-model="name" maxlength="10" /></view>
 			</view>
 			<view class="item">
+				<view class="required"></view>
 				<view class="title">描述</view>
-				<view class="info"><u-input type="textarea" placeholder="请输入描述正文(最多输入500字)" maxlength="500" :autoHeight="false" :clearable="false" v-model="descrip" height="200" /></view>
+				<view class="info">
+					<u-input type="textarea" placeholder="请输入描述正文(最多输入500字)" maxlength="500" :autoHeight="false" :clearable="false" v-model="descrip" height="200" />
+				</view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">农服图片</view>
 				<view class="info">
 					<u-upload
+						width="168"
+						height="168"
 						:action="action"
 						:show-progress="false"
 						@on-choose-complete="onChoose"
@@ -26,6 +33,7 @@
 			</view>
 
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">干活时间</view>
 				<view class="info" @click="dateClick">
 					<u-input class="value" disabled placeholder="请选择时间区段" :clearable="false" v-model="value" />
@@ -34,6 +42,7 @@
 			</view>
 
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">劳务类型</view>
 				<view class="info" @click="sexShow1 = true">
 					<u-input class="value" placeholder="请选择" v-model="transactionTypeName" type="select" />
@@ -41,6 +50,7 @@
 				</view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">作物类型</view>
 				<view class="info" @click="sexShow = true">
 					<u-input class="value" placeholder="请选择" v-model="transactionCategoryName" type="select" />
@@ -49,10 +59,12 @@
 			</view>
 
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">农机台数</view>
 				<view class="info"><u-input type="number" placeholder="请输入农机台数" :clearable="false" v-model="machineNum" maxlength="10" /></view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">价格</view>
 				<view class="info">
 					<u-radio-group v-model="isFace" :size="30" @change="radioGroupChange1">
@@ -66,6 +78,7 @@
 			</view>
 
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">农活方式</view>
 				<view class="info">
 					<u-radio-group v-model="farmingMode" :size="30" @change="radioGroupChange">
@@ -74,21 +87,35 @@
 				</view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">联系人</view>
 				<view class="info"><u-input placeholder="请输入联系人" :clearable="false" v-model="contactsUser" /></view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">联系电话</view>
 				<view class="info"><u-input type="number" maxlength="11" placeholder="请输入联系电话,仅限数字" :clearable="false" v-model="contactsPhone" /></view>
 			</view>
 			<view class="item">
+				<view class="required">*</view>
 				<view class="title">区域</view>
 				<view class="info" @click="regionaStatus = true"><u-input class="value" placeholder="请选择" v-model="address" type="select" /></view>
 			</view>
 			<u-button style="margin:20rpx 0rpx;" shape="circle" type="error" @click="deploy">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
-		<u-calendar :closeable="maskAble" :mask-close-able="maskAble" v-model="dateShow" active-bg-color='orange' :start-text="startText" :end-text='endText' mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change">
+		<u-calendar
+			:closeable="maskAble"
+			:mask-close-able="maskAble"
+			v-model="dateShow"
+			active-bg-color="orange"
+			:start-text="startText"
+			:end-text="endText"
+			mode="range"
+			:min-date="currentDate"
+			max-date="2050-01-01"
+			@change="change"
+		>
 			<view slot="tooltip"><view class=" t-c p-y-10" style="color: #2979FF">请选择时间区段</view></view>
 		</u-calendar>
 		<u-mask :show="show" :mask-click-able="maskAble" :zoom="true" :duration="500"></u-mask>
@@ -108,8 +135,8 @@ export default {
 	},
 	data() {
 		return {
-			startText:'开始日期',
-			endText:'结束日期',
+			startText: '开始日期',
+			endText: '结束日期',
 			show: false,
 			currentDate: '',
 			regionaStatus: false,
@@ -138,7 +165,7 @@ export default {
 			value: '',
 			createUser: '',
 			createUserId: localStorage.getItem('userId'),
-			accId:localStorage.getItem('accId'),
+			accId: localStorage.getItem('accId'),
 			list: [
 				{
 					value: '0',
@@ -210,21 +237,21 @@ export default {
 		}, 1000);
 	},
 	onReady() {},
-	watch:{
-		dateShow:function(){
-			if(!this.dateShow){
-				if(this.beginDate==''&&this.endTime==''){
+	watch: {
+		dateShow: function() {
+			if (!this.dateShow) {
+				if (this.beginDate == '' && this.endTime == '') {
 					this.$refs.uToast.show({
 						title: '请选择时间区段',
 						type: 'error'
 					});
-					this.dateShow=true;
+					this.dateShow = true;
 				}
 			}
 		}
 	},
 	methods: {
-		dateClick(){
+		dateClick() {
 			this.dateShow = true;
 		},
 		remove(index, lists) {
@@ -418,7 +445,7 @@ export default {
 				createUser: this.createUser,
 				createUserId: this.createUserId,
 				addItem: addItem,
-				accId:this.accId
+				accId: this.accId
 			};
 			uni.request({
 				method: 'GET', //请求方式
