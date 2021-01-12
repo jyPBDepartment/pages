@@ -28,7 +28,7 @@
 				<text class="title-name">农服发布</text>
 				<u-icon size="33" name="arrow-right" class="arrow-icon"></u-icon>
 			</view>
-			<view class="item">
+			<view class="item" @click="jump('../../myCollection/myCollection')">
 				<view class="image-box">
 					<u-icon name="http://60.205.246.126/images/2021/01/11/1610350759440345.png" style="margin-right: 10rpx;" color="#000000" size="44"></u-icon>
 				</view>

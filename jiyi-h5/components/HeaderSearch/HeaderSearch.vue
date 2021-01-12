@@ -23,7 +23,7 @@
 		<view v-else :class="bold && 'f-b'" :style="{ background: background, color: color }" class="HeaderSearch shadow g-flex g-a-c g-j-c p-x-10 f-16">
 			<u-icon v-if="title !== '圈子'" size="44" v-show="!hideBack" @tap="back" name="http://60.205.246.126/images/2021/01/07/1610009246604636.png" :color="color"></u-icon>
 			<text class="title-name g-f-1">{{ title }}</text>
-			<span style="position: absolute; right: 20rpx; color: #1890ff; z-index: 999" class="f-14" v-if="title == '圈子'" @tap="jump">发帖</span>
+			<text style="position: absolute; right: 20rpx; color: #5EB14E; z-index: 999" class="f-14" v-if="title == '圈子'" @tap="jump">发帖</text>
 		</view>
 		<view style="width: 100%; height: 88rpx"><!-- 占位 --></view>
 		<view class="search-content"></view>

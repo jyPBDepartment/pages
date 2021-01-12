@@ -119,17 +119,20 @@
 		},
 		{
 			"path": "pages/grain/commentDetails"
-		}, 
+		},
 		{
-			"path": "pages/imPage/imPage"//IM webview
+			"path": "pages/imPage/imPage" //IM webview
+		}, {
+			"path": "pages/commentList/commentList"
+		},
+		{
+			"path": "pages/commentList/reply"
+		}, {
+			"path": "pages/myCollection/myCollection"
+		}, {
+			"path": "pages/community/communityDetails"
 		}
-	    ,{
-            "path" : "pages/commentList/commentList"
-        },
-		{
-            "path" : "pages/commentList/reply"
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationStyle": "custom"
 	},

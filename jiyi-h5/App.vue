@@ -121,6 +121,7 @@ export default {
 	padding: 0 24rpx;
 }
 
+
 .p-y-10 {
 	padding: 24rpx 0;
 }
@@ -295,6 +296,9 @@ export default {
 			color: #333;
 			line-height: 1;
 		}
+		.title-s{
+			width: 100rpx;
+		}
 		> text {
 			color: #fa3534;
 			font-weight: bold;
@@ -421,7 +425,8 @@ export default {
 			font-weight: 600;
 			line-height: 36rpx;
 			color: #000000;
-			opacity: 1;
+			display: flex;
+			justify-content: space-between;
 		}
 		.address {
 			font-size: 24rpx;
@@ -447,7 +452,7 @@ export default {
 			opacity: 1;
 			display: flex;
 			justify-content: space-between;
-			.item{
+			.item {
 				display: flex;
 				align-items: center;
 				height: 30rpx;
@@ -455,4 +460,25 @@ export default {
 		}
 	}
 }
+
+.dividing-line {
+	width: 100%;
+	height: 20rpx;
+	background-color: rgba(229, 229, 229, 1);
+}
+
+.fun-btn {
+			font-size: 24rpx;
+			font-weight: 400;
+			line-height: 30rpx;
+			color: #9fa3a8;
+			opacity: 1;
+			display: flex;
+			justify-content: space-between;
+			.item {
+				display: flex;
+				align-items: center;
+				height: 30rpx;
+			}
+		}
 </style>
