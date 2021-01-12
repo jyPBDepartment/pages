@@ -9,7 +9,7 @@
 					<view class="item-info">
 						<p class="title">{{ item.name }}</p>
 						<view class="address g-flex f-12 g-a-c" style="color: rgba(128, 128, 128, 1)">
-							<u-icon style="margin-right: 5rpx;" name="map-fill" color="#A6A6A6" size="36"></u-icon>
+							<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334898551200.png" color="#A6A6A6" size="24"></u-icon>
 							<p>{{ item.address }}</p>
 						</view>
 						<view class="btn-group">
