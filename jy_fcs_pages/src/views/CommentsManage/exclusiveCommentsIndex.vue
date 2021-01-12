@@ -93,7 +93,7 @@
         align="center"
         min-width="10"
       ></el-table-column>
-      <el-table-column align="center" label="状态" prop="status" min-width="5">
+      <!-- <el-table-column align="center" label="状态" prop="status" min-width="5">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -104,24 +104,24 @@
             @change="commentEnable(scope)"
           ></el-switch>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column align="center" label="操作" min-width="15">
         <template slot-scope="scope">
           <el-button
-            size="small"
-            type="danger"
-            @click="deleteUser(scope)"
-            align="left"
-            icon="el-icon-delete"
-            >删除</el-button
-          >
-          <el-button
-            size="small"
+            size="mini"
             type="primary"
             @click="openReply(scope)"
             align="left"
             icon="el-icon-circle-plus-outline"
             >查看回复</el-button
+          >
+          <el-button
+            size="mini"
+            type="danger"
+            @click="deleteUser(scope)"
+            align="left"
+            icon="el-icon-delete"
+            >删除</el-button
           >
         </template>
       </el-table-column>
@@ -173,8 +173,8 @@ export default {
       userparm: [], //搜索权限
       listData: [], //用户数据
       exclusiveReplyFlag: false,
-      transCommentId:'',
-      transTitle:''
+      transCommentId: "",
+      transTitle: "",
     };
   },
   // 注册组件
@@ -262,24 +262,67 @@ export default {
 
     // 删除评论
     deleteUser(scope) {
-      this.$confirm("确定要删除吗?", "信息", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      }).then(() => {
-        let params = {
-          commentId: scope.row.id,
-        };
-        api.testAxiosGet(ApiPath.url.exclusiveDelCommentPC, params).then((res) => {
+      // 查询是否存在回复信息
+      let params = {
+        commentId: scope.row.id,
+        content: '',
+        name: '',
+        page: this.formInline.page,
+        size: this.formInline.limit,
+      };
+      api
+        .testAxiosGet(ApiPath.url.exclusiveFindReplyPageByParam, params)
+        .then((res) => {
           if (res.code == "200") {
-            this.$message.success(res.message);
-            //this.reload();
-            this.listData.splice(scope.$index, 1);
-          } else {
-            this.$message.console.error();
+            if (res.data.content.length > 0) {
+              this.$confirm(
+                "该评论存在回复信息，删除后无法还原，是否确认删除?",
+                "信息",
+                {
+                  confirmButtonText: "确定",
+                  cancelButtonText: "取消",
+                  type: "warning",
+                }
+              ).then(() => {
+                let params = {
+                  commentId: scope.row.id,
+                };
+                api
+                  .testAxiosGet(ApiPath.url.grainTradingDelCommentPC, params)
+                  .then((res) => {
+                    if (res.code == "200") {
+                      this.$message.success(res.message);
+                      //this.reload();
+                      this.listData.splice(scope.$index, 1);
+                    } else {
+                      this.$message.console.error();
+                    }
+                  });
+              });
+            } else {
+              this.$confirm("确定要删除吗?", "信息", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+              }).then(() => {
+                let params = {
+                  commentId: scope.row.id,
+                };
+                api
+                  .testAxiosGet(ApiPath.url.grainTradingDelCommentPC, params)
+                  .then((res) => {
+                    if (res.code == "200") {
+                      this.$message.success(res.message);
+                      //this.reload();
+                      this.listData.splice(scope.$index, 1);
+                    } else {
+                      this.$message.console.error();
+                    }
+                  });
+              });
+            }
           }
         });
-      });
     },
   },
 };

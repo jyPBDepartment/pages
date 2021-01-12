@@ -15,18 +15,18 @@
         <!-- 面包屑导航 -->
         <!-- 搜索筛选 -->
         <el-form :inline="true" ref="searchForm" class="user-search">
-          <el-form-item prop="type" label="评论内容">
+          <el-form-item prop="type" label="回复内容">
             <el-input
               size="small"
-              v-model="content"
-              placeholder="输入评论内容"
+              v-model="replyContent"
+              placeholder="输入回复内容"
             ></el-input>
           </el-form-item>
-          <el-form-item prop="type" label="评论人">
+          <el-form-item prop="type" label="回复人">
             <el-input
               size="small"
-              v-model="user"
-              placeholder="输入评论人"
+              v-model="replyUserName"
+              placeholder="输入回复人"
             ></el-input>
           </el-form-item>
           <el-form-item>
@@ -38,7 +38,6 @@
               class="find"
               >查询</el-button
             >
-
             <el-button
               size="small"
               type="info"
@@ -49,7 +48,6 @@
             >
           </el-form-item>
           <br />
-
           <br />
         </el-form>
         <!--列表-->
@@ -69,33 +67,27 @@
             min-width="5"
           ></el-table-column>
           <el-table-column
-            prop="postInfoEntity.name"
-            label="贴子标题"
-            align="center"
-            min-width="15"
-          ></el-table-column>
-          <el-table-column
-            prop="commentUserName"
-            label="评论人"
-            align="center"
-            min-width="10"
-          ></el-table-column>
-          <el-table-column
             show-overflow-tooltip
-            prop="commentContent"
+            prop="replyContent"
             label="评论内容"
             align="center"
             min-width="15"
           ></el-table-column>
           <el-table-column
+            prop="replyUserName"
+            label="评论人"
+            align="center"
+            min-width="10"
+          ></el-table-column>
+          <el-table-column
             sortable
-            prop="commentDate"
+            prop="date"
             label="评论时间"
             width="200px"
             align="center"
             min-width="10"
           ></el-table-column>
-          <el-table-column
+          <!-- <el-table-column
             align="center"
             label="状态"
             prop="status"
@@ -111,7 +103,7 @@
                 @change="commentEnable(scope)"
               ></el-switch>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column align="center" label="操作" min-width="15">
             <template slot-scope="scope">
               <el-button
@@ -159,12 +151,16 @@ export default {
       type: String,
       default: "对话框",
     },
+    transCommentId: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
       localShow: this.show,
-      content: "",
-      user: "",
+      replyContent: "",
+      replyUserName: "",
       loading: true, //是显示加载
       formInline: {
         page: 1,
@@ -178,6 +174,7 @@ export default {
       },
       userparm: [], //搜索权限
       listData: [], //用户数据
+      commentId: "",
     };
   },
   components: {
@@ -187,16 +184,18 @@ export default {
     show(val) {
       this.localShow = val;
     },
+    transCommentId(val) {
+      this.commentId = val;
+      this.search(this.formInline);
+    },
   },
-  mounted() {
-    this.search(this.formInline);
-  },
+  mounted() {},
   methods: {
     close() {
-        this.$emit("close");
+      this.$emit("close");
     },
     beforeClose() {
-        this.close();
+      this.close();
     },
     // 分页插件事件
     callFather(parm) {
@@ -213,16 +212,17 @@ export default {
       }
       //alert(JSON.stringify(parameter));
       let params = {
-        content: this.content,
-        user: this.user,
+        commentId:this.commentId,
+        name:'',
+        replyContent: this.replyContent,
+        replyUserName: this.replyUserName,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
       api
-        .testAxiosGet(ApiPath.url.commentSearch, params)
+        .testAxiosGet(ApiPath.url.caseInfoReplyFindReplyList, params)
         .then((res) => {
-          let code = res.state;
-          if (code == "0") {
+          if (res.code == "200") {
             this.loading = false;
             this.listData = res.data.content;
             this.formInline.currentPage = res.data.number + 1;
@@ -250,8 +250,8 @@ export default {
     //重置
     resetForm(search) {
       //this.$refs['searchForm'].resetFields()
-      this.content = "";
-      this.user = "";
+      this.replyContent = "";
+      this.replyUserName = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
@@ -267,9 +267,8 @@ export default {
         let params = {
           id: scope.row.id,
         };
-        api.testAxiosGet(ApiPath.url.commentDelete, params).then((res) => {
-          let code = res.status;
-          if (code == "0") {
+        api.testAxiosGet(ApiPath.url.caseInfoReplyDelete, params).then((res) => {
+          if (res.code == "200") {
             this.$message.success(res.message);
             //this.reload();
             this.listData.splice(scope.$index, 1);

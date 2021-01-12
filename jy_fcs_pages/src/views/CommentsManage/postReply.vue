@@ -18,14 +18,14 @@
           <el-form-item prop="type" label="回复内容">
             <el-input
               size="small"
-              v-model="content"
+              v-model="replyContent"
               placeholder="输入回复内容"
             ></el-input>
           </el-form-item>
           <el-form-item prop="type" label="回复人">
             <el-input
               size="small"
-              v-model="name"
+              v-model="replyUserName"
               placeholder="输入回复人"
             ></el-input>
           </el-form-item>
@@ -38,7 +38,6 @@
               class="find"
               >查询</el-button
             >
-
             <el-button
               size="small"
               type="info"
@@ -49,7 +48,6 @@
             >
           </el-form-item>
           <br />
-
           <br />
         </el-form>
         <!--列表-->
@@ -77,14 +75,14 @@
           ></el-table-column>
           <el-table-column
             prop="replyUserName"
-            label="评论人"
+            label="回复人"
             align="center"
             min-width="10"
           ></el-table-column>
           <el-table-column
             sortable
-            prop="date"
-            label="评论时间"
+            prop="replyDate"
+            label="回复时间"
             width="200px"
             align="center"
             min-width="10"
@@ -153,16 +151,16 @@ export default {
       type: String,
       default: "对话框",
     },
-    transCommentId:{
+    transCommentId: {
       type: String,
       default: "",
-    }
+    },
   },
   data() {
     return {
       localShow: this.show,
-      content: "",
-      name: "",
+      replyContent: "",
+      replyUserName: "",
       loading: true, //是显示加载
       formInline: {
         page: 1,
@@ -176,7 +174,6 @@ export default {
       },
       userparm: [], //搜索权限
       listData: [], //用户数据
-      caseReplyFlag: false,
       commentId: "",
     };
   },
@@ -187,21 +184,18 @@ export default {
     show(val) {
       this.localShow = val;
     },
-    transCommentId(val){
+    transCommentId(val) {
       this.commentId = val;
       this.search(this.formInline);
-
-    }
+    },
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     close() {
-        this.$emit("close");
+      this.$emit("close");
     },
     beforeClose() {
-        this.close();
+      this.close();
     },
     // 分页插件事件
     callFather(parm) {
@@ -218,16 +212,16 @@ export default {
       }
       //alert(JSON.stringify(parameter));
       let params = {
-        content: this.content,
-        cid:this.commentId,
-        name: this.name,
+        commentId:this.commentId,
+        content: this.replyContent,
+        user: this.replyUserName,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
       api
-        .testAxiosGet(ApiPath.url.grainTradingFindReplyPageByParam, params)
+        .testAxiosGet(ApiPath.url.replySearch, params)
         .then((res) => {
-          if (res.code == "200") {
+          if (res.state == "0") {
             this.loading = false;
             this.listData = res.data.content;
             this.formInline.currentPage = res.data.number + 1;
@@ -255,14 +249,14 @@ export default {
     //重置
     resetForm(search) {
       //this.$refs['searchForm'].resetFields()
-      this.content = "";
-      this.name = "";
+      this.replyContent = "";
+      this.replyUserName = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
     },
 
-    // 删除评论
+    // 删除回复
     deleteUser(scope) {
       this.$confirm("确定要删除吗?", "信息", {
         confirmButtonText: "确定",
@@ -270,10 +264,10 @@ export default {
         type: "warning",
       }).then(() => {
         let params = {
-          replyId: scope.row.id,
+          id: scope.row.id,
         };
-        api.testAxiosGet(ApiPath.url.grainTradingDelReplyPC, params).then((res) => {
-          if (res.code == "200") {
+        api.testAxiosGet(ApiPath.url.replyDelete, params).then((res) => {
+          if (res.status == "0") {
             this.$message.success(res.message);
             //this.reload();
             this.listData.splice(scope.$index, 1);

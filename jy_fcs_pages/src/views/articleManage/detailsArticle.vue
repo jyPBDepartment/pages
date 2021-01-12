@@ -42,8 +42,23 @@
              </el-row>
              <el-divider></el-divider>
              <el-row>
-                <span>描述：</span>
+                <span>概述：</span>
                 <div class="contentText" v-html="editFrom.content"></div>
+             </el-row>
+             <el-divider></el-divider>
+             <el-row>
+                <span>危害：</span>
+                <div class="contentText" v-html="editFrom.contentA"></div>
+             </el-row>
+             <el-divider></el-divider>
+             <el-row>
+                <span>传播途径/发病条件：</span>
+                <div class="contentText" v-html="editFrom.contentB"></div>
+             </el-row>
+             <el-divider></el-divider>
+             <el-row>
+                <span>防治技术：</span>
+                <div class="contentText" v-html="editFrom.contentC"></div>
              </el-row>
          </el-form>
      </slot>

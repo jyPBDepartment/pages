@@ -149,7 +149,7 @@
           <el-button @click="deleteCase(scope)" type="danger" size="mini">删除</el-button>
           <el-button @click="caseContent(scope)" type="success" size="mini">查看</el-button>
           <el-button v-if="scope.row.isSelected == '0'" @click="setSelected(scope)" type="warning" size="mini">设为精选</el-button>
-          <el-button v-else @click="cancelSelected(scope)" type="info" size="mini">取消精选</el-button>
+          <el-button v-else @click="setSelected(scope)" type="info" size="mini">取消精选</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -251,9 +251,29 @@ export default {
     this.search(this.formInline);
   },
   methods: {
-    cancelSelected(scope){},
-    setSelected(scope){
+    setSelected(scope) {
+      let isSelected = "";
+      if (scope.row.isSelected == "0") {
+        isSelected = "1";
+      } else {
+        isSelected = "0";
+      }
 
+      let params = {
+        id: scope.row.id,
+        isSelected: isSelected,
+      };
+
+      api.testAxiosGet(ApiPath.url.caseSetSelected, params).then((res) => {
+        // if (res.status == "0") {
+          this.$message({
+            type: "success",
+            message: res.message,
+          });
+
+          this.search(this.formInline);
+        // }
+      });
     },
     //switch开关
     caseInfoEnable: function (scope) {
