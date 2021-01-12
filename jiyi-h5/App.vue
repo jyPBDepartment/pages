@@ -427,7 +427,7 @@ export default {
 		flex-direction: column;
 		justify-content: space-between;
 		.title {
-			font-size: 26rpx;
+			font-size: 28rpx;
 			font-weight: 600;
 			line-height: 36rpx;
 			color: #000000;
@@ -449,6 +449,18 @@ export default {
 			opacity: 1;
 			display: flex;
 			justify-content: space-between;
+		}
+		.btn-group{
+			
+			text-align: right;
+		}
+		.info-price{
+			font-size: 30rpx;
+			font-weight: 500;
+			line-height: 30rpx;
+			.price{
+				color: #5eb14e;
+			}
 		}
 		.fun-btn {
 			font-size: 24rpx;

@@ -2,24 +2,22 @@
 	<view class="service">
 		<HeaderSearch hideBack @searchCallback="search"></HeaderSearch>
 		<Screen @screened="screened" :screenList="screenList" @select="select" :condition="condition"></Screen>
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="p-x-10">
-				<view class="app-modular comm-b-bottom g-flex" v-for="(item, index) in btnList" :key="index" @click="jumpInfo(item.id)">
-					<image class="app-img" :src="item.imageUrl"></image>
-					<view class="app-info g-f-1">
-						<p class="title f-14 o-e">{{ item.name }}</p>
-						<view class="g-flex f-12 g-a-c" style="color: rgba(128, 128, 128, 1)">
+		<mescroll-body style="margin-top: 20rpx;" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			
+				<view class="comm-list-item" v-for="(item, index) in btnList" :key="index" @click="jumpInfo(item.id)">
+					<image class="item-img" :src="item.imageUrl"></image>
+					<view class="item-info">
+						<p class="title">{{ item.name }}</p>
+						<view class="address g-flex f-12 g-a-c" style="color: rgba(128, 128, 128, 1)">
 							<u-icon style="margin-right: 5rpx;" name="map-fill" color="#A6A6A6" size="36"></u-icon>
 							<p>{{ item.address }}</p>
 						</view>
-						<view class="g-flex g-j-s-b f-12 tags"></view>
-						<view class="g-flex g-j-s-b f-14">
-							<view class="app-number"></view>
-							<view @click.stop @click="jump(item.id)" class="immediately g-flex g-a-c g-j-c c-f">立即预约</view>
+						<view class="btn-group">
+							<u-button size="mini" type="error" @click.stop="jump(item.id)">立即预约</u-button>
 						</view>
 					</view>
 				</view>
-			</view>
+			
 		</mescroll-body>
 		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
 	</view>

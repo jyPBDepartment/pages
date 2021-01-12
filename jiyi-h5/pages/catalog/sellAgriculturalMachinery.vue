@@ -4,13 +4,16 @@
 		<Screen @select="select" :condition="condition" :type="2"></Screen>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption" style="background-color: #fff!important">
 			<view class="g-flex g-f-warp g-f-row " style="margin:20rpx 0;">
-				<view @click="jump(item)" class="commodity comm-border b-f" v-for="(item, index) in dataList" :key="index">
-					<view class="label f-12">{{ item.labelCode }}</view>
-					<image style="width: 316rpx;height: 298rpx;" :src="item.url" mode=""></image>
-					<p class="f-14 o-e">{{ item.name }}</p>
-					<view class="info g-flex g-a-c f-12" style="margin-top: 24rpx; margin-bottom: 15rpx;">
-					<view class="f-14 g-f-1" style="color: #1e1e1e;" v-if="item.isFace== 1">￥{{ item.price }}</view>
-					<view class="f-14 g-f-1" style="color: #1e1e1e;" v-if="item.isFace== 0">面议</view>
+				<view @click="jump(item)" class="comm-list-item" v-for="(item, index) in dataList" :key="index">
+					<!-- <view class="label f-12">{{ item.labelCode }}</view> -->
+					<image class="item-img" :src="item.url" mode=""></image>
+					<view class="item-info">
+						<p class="title">{{ item.name }}</p>
+						<view class="info-price g-flex g-a-c f-12" style="margin-top: 24rpx; margin-bottom: 15rpx;">
+							<text>价格：</text>
+							<view class="price" v-if="item.isFace == 1">￥{{ item.price }}</view>
+							<view class="price" v-if="item.isFace == 0">面议</view>
+						</view>
 					</view>
 				</view>
 			</view>

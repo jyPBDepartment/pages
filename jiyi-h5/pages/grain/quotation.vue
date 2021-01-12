@@ -53,7 +53,7 @@
 				<view class="name">独家点评</view>
 				<view class="more" @click="goMore">
 					更多
-					<u-icon name="arrow-right" color="#999" size="30"></u-icon>
+					<u-icon name="arrow-right" color="#5EB14E" size="30"></u-icon>
 				</view>
 			</view>
 			<view class="content">
@@ -198,8 +198,8 @@ export default {
 		.header {
 			padding: 20rpx;
 			height: 50rpx;
-			color: #333;
-			font-weight: 500;
+			color: #000;
+			font-weight: 600;
 			font-size: 30rpx;
 		}
 		.content {
@@ -240,12 +240,12 @@ export default {
 			padding: 20rpx;
 			.name {
 				font-size: 32rpx;
-				color: #333;
-				font-weight: 500;
+				font-weight: 600;
+				color: #000000;
 			}
 			.more {
 				font-size: 28rpx;
-				color: #999;
+				color: #5EB14E;
 				font-weight: 500;
 			}
 		}
@@ -261,7 +261,8 @@ export default {
 				.name {
 					margin-right: 10rpx;
 					font-size: 28rpx;
-					color: #333;
+					color: #000;
+					font-weight: 500;
 				}
 				.title {
 					font-size: 24rpx;
