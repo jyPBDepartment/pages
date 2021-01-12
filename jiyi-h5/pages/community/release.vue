@@ -30,6 +30,7 @@
 						@on-success="uploadSuccess"
 						:file-list="fileList"
 						max-count="9"
+						multiple
 					></u-upload>
 				</view>
 			</view>
@@ -39,6 +40,12 @@
 				<view class="info" style="position: relative;">
 					<u-input type="textarea" placeholder="请输入内容正文（最多输入500字）" :maxlength="500" :auto-height="false" :clearable="false" v-model="code" height="600" />
 				</view>
+			</view>
+			<!-- <CommReply></CommReply> -->
+			<view class="publish">
+				<u-checkbox-group>
+					<u-checkbox v-model="checked" active-color="#5EB14E"><text style="color:#9FA3A8">匿名发布</text></u-checkbox>
+				</u-checkbox-group>
 			</view>
 			<u-button class="btn" shape="circle" @click="release" type="error">发布帖子</u-button>
 		</view>
@@ -57,6 +64,7 @@ export default {
 			list: [],
 			action: Interface.url.uploadImg,
 			fileList: [],
+			checked:false
 		};
 	},
 	onLoad() {
@@ -155,10 +163,10 @@ export default {
 }
 
 .btn {
-	
-	width: calc(100% - 40rpx);
-	
 	background-color: #5EB14E;
 	margin: 20rpx auto 40rpx auto;
+}
+.publish{
+	line-height: 60rpx;
 }
 </style>

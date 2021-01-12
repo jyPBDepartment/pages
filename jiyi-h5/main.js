@@ -12,11 +12,13 @@ import {
 
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
 import FilterCom from '@/components/FilterCom/FilterCom.vue'
+import CommReply from '@/components/commReply/commReply.vue'
 
 Vue.component('mescroll-body', MescrollBody)
 Vue.component('mescroll-uni', MescrollUni)
 Vue.component('HeaderSearch', HeaderSearch)
 Vue.component('FilterCom',FilterCom)
+Vue.component('CommReply',CommReply)
 Vue.prototype.$ajax = ajax
 Vue.prototype.$store = store
 Vue.use(uView);
