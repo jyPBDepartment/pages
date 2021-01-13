@@ -19,19 +19,25 @@
 			</view>
 			<view class="fun-btn p-40">
 				<view class="item">
-					<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
+					<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
 					<text>123</text>
 				</view>
 				<view class="item" @tap.stop="clickIcon(2)">
-					<u-icon v-if="collection" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" color="#9FA3A8" size="24"></u-icon>
-					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
+					<u-icon v-if="collection" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" size="24"></u-icon>
+					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
 					<text>111</text>
 				</view>
 				<view class="item" @tap.stop="clickIcon(1)">
-					<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" color="#9FA3A8" size="24"></u-icon>
-					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
+					<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
 
 					<text>21</text>
+				</view>
+				<view class="item" @tap.stop="clickIcon(1)">
+					<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/13/1610507402974982.png" size="24"></u-icon>
+					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/13/1610507433084156.png" size="24"></u-icon>
+
+					<text>123</text>
 				</view>
 			</view>
 			<view class="dividing-line"></view>
@@ -68,7 +74,9 @@ export default {
 			selectIndex: 0,
 			title: '',
 			url: '',
-			tabIndex: 1
+			tabIndex: 1,
+			collection:false,
+			thumbs:false,
 		};
 	},
 	onLoad(e) {
@@ -78,6 +86,15 @@ export default {
 		// this.demoHtml = '这里是富文本解析得内容'
 	},
 	methods: {
+		clickIcon(val) {
+			if(val==1){
+				this.thumbs = !this.thumbs
+			}
+			if(val == 2){
+				this.collection = !this.collection
+			}
+			
+		},
 		clickTab(val) {
 			this.tabIndex = val;
 		},
@@ -108,6 +125,11 @@ export default {
 		},
 		select(index) {
 			this.selectIndex = index;
+		},
+		goCommentList(){
+			uni.navigateTo({
+				url:'/pages/commentList/commentList'
+			})
 		}
 	}
 };

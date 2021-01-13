@@ -10,7 +10,7 @@
 				<text class="times">2021-01-11</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more :ref="uReadMore" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+				<u-read-more ref="uReadMore" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 					<rich-text :nodes="content"></rich-text>
 				</u-read-more>
 			</view>
@@ -59,7 +59,7 @@
 				<text class="right">删除</text>
 			</view>
 		</view>
-	
+		<commReply @reply="commentPublish"></commReply>
 	</view>
 </template>
 
@@ -92,7 +92,9 @@ export default {
 				paddingTop: '0',
 				marginTop: '20rpx'
 			},
-			scrollTop: 0
+			scrollTop: 0,
+			collection:false,
+			thumbs:false,
 		};
 	},
 	methods: {
@@ -100,6 +102,24 @@ export default {
 			uni.navigateTo({
 				url:'/pages/commentList/reply'
 			})
+		},
+		clickIcon(val) {
+			if(val==1){
+				this.thumbs = !this.thumbs
+			}
+			if(val == 2){
+				this.collection = !this.collection
+			}
+			
+		},
+		commentPublish(val,isAnonymous){
+			if(val){
+				this.showReply = false
+			}else{
+				uni.showToast({
+					title:'请输入评论内容在评论'
+				})
+			}
 		}
 	}
 };
@@ -108,6 +128,7 @@ export default {
 <style lang="scss" scoped>
 .list-container-s {
 	background: #ffffff;
+	padding-bottom: 230rpx;
 	.title {
 		line-height: 80rpx;
 		font-size: 28rpx;

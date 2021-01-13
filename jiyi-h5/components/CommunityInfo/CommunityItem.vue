@@ -8,7 +8,7 @@
 				<text class="times">2021-01-11</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more :ref="uReadMore" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+				<u-read-more ref="uReadMore" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 					<rich-text :nodes="content"></rich-text>
 				</u-read-more>
 			</view>
@@ -65,7 +65,9 @@ export default {
 				paddingTop: '0',
 				marginTop: '20rpx'
 			},
-			scrollTop: 0
+			scrollTop: 0,
+			collection:false,
+			thumbs:false,
 		};
 	},
 	methods: {
@@ -76,7 +78,16 @@ export default {
 		},
 		jump(item) {
 			this.$emit('click', item);
-		}
+		},
+		clickIcon(val) {
+			if(val==1){
+				this.thumbs = !this.thumbs
+			}
+			if(val == 2){
+				this.collection = !this.collection
+			}
+			
+		},
 	},
 	props: {
 		communityInfo: {

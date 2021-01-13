@@ -131,6 +131,9 @@
 			"path": "pages/myCollection/myCollection"
 		}, {
 			"path": "pages/community/communityDetails"
+		},
+		{
+			"path": "pages/myCollection/deletedPage" //首页
 		}
 	],
 	"globalStyle": {

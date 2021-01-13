@@ -121,7 +121,6 @@ export default {
 	padding: 0 24rpx;
 }
 
-
 .p-y-10 {
 	padding: 24rpx 0;
 }
@@ -296,7 +295,7 @@ export default {
 			color: #333;
 			line-height: 1;
 		}
-		.title-s{
+		.title-s {
 			width: 100rpx;
 		}
 		> text {
@@ -304,7 +303,7 @@ export default {
 			font-weight: bold;
 			padding-right: 10rpx;
 		}
-		.required{
+		.required {
 			color: #fa3534;
 			font-weight: bold;
 			padding-right: 10rpx;
@@ -450,15 +449,14 @@ export default {
 			display: flex;
 			justify-content: space-between;
 		}
-		.btn-group{
-			
+		.btn-group {
 			text-align: right;
 		}
-		.info-price{
+		.info-price {
 			font-size: 30rpx;
 			font-weight: 500;
 			line-height: 30rpx;
-			.price{
+			.price {
 				color: #5eb14e;
 			}
 		}
@@ -486,17 +484,37 @@ export default {
 }
 
 .fun-btn {
-			font-size: 24rpx;
-			font-weight: 400;
-			line-height: 30rpx;
-			color: #9fa3a8;
-			opacity: 1;
-			display: flex;
-			justify-content: space-between;
-			.item {
-				display: flex;
-				align-items: center;
-				height: 30rpx;
-			}
-		}
+	font-size: 24rpx;
+	font-weight: 400;
+	line-height: 30rpx;
+	color: #9fa3a8;
+	opacity: 1;
+	display: flex;
+	justify-content: space-between;
+	.item {
+		display: flex;
+		align-items: center;
+		height: 30rpx;
+	}
+}
+
+.slot-content{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 40rpx;
+	>image{
+		width: 200rpx;
+		height: 200rpx;
+	}
+	>text{
+		font-size: 40rpx;
+		font-family: Proxima Nova;
+		font-weight: 600;
+		line-height: 48rpx;
+		color: #000000;
+		margin-top: 40rpx;
+	}
+}
 </style>

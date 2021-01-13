@@ -1,5 +1,5 @@
 <template>
-	<view class="comm-reply-container">
+	<view class="comm-reply-container" @click.stop>
 		<view class="publish">
 			<u-checkbox-group><u-checkbox v-model="checked" active-color="#5EB14E"><text style="color:#9FA3A8">匿名发布</text> </u-checkbox></u-checkbox-group>
 		</view>
@@ -17,7 +17,7 @@
 				:maxlength="500"
 				:auto-height="true"
 			/>
-			<u-icon class="btn-reply" @tap="reply" name="http://60.205.246.126/images/2021/01/12/1610432408185176.png" size="40"></u-icon>
+			<u-icon class="btn-reply" @click="reply" name="http://60.205.246.126/images/2021/01/12/1610432408185176.png" size="40"></u-icon>
 		</view>
 	</view>
 </template>
@@ -47,9 +47,13 @@ export default {
 			this.show = true;
 		},
 		reply() {
-			console.log(this.checked);
 			if (this.value) {
 				this.$emit('reply', this.value, this.checked);
+			}else{
+				uni.showToast({
+					title:'请输入内容在发布',
+					icon:'none'
+				})
 			}
 		}
 	}

@@ -1,14 +1,12 @@
 <template>
-	<view >
+	<view>
 		<HeaderSearch title="圈子" @searchCallback="search"></HeaderSearch>
 		<view class="tabs g-flex g-j-s-a g-a-c f-14">
 			<view @click="selectTab(item, index)" :class="index == tabIndex && 'tab-hover'" v-for="(item, index) in tabsList" :key="index">{{ item.name }}</view>
 		</view>
 		<FilterCom></FilterCom>
 		<mescroll-body style="background: #f4f4f4;" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-<!-- 			<CommunityInfo @click="jump(item.id)" v-for="(item, index) in dataList" :key="index" :communityInfo="item" />
- -->		<community-item @click="jump(item.id)" v-for="(item, index) in dataList" :key="index" :communityInfo="item"></community-item>
-		
+			<community-item @click="jump(item.id)" v-for="(item, index) in dataList" :key="index" :communityInfo="item"></community-item>
 		</mescroll-body>
 
 		<uni-drawer ref="drawer" mode="right" :width="300" :visible="true">
@@ -40,7 +38,7 @@ import Interface from '@/api/ApiPath.js';
 import MescrollMixin from '@/mescroll-uni/mescroll-mixins.js';
 import uniDrawer from '@/components/uni-drawer/uni-drawer.vue';
 import CommunityInfo from '../../../components/CommunityInfo/CommunityInfo.vue';
-import CommunityItem from '../../../components/CommunityInfo/CommunityItem.vue'
+import CommunityItem from '../../../components/CommunityInfo/CommunityItem.vue';
 export default {
 	mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 	components: {
@@ -138,7 +136,7 @@ export default {
 			this.mescroll.resetUpScroll();
 		},
 		jump(item) {
-			console.log(1111)
+			console.log(1111);
 			uni.navigateTo({
 				// url: `../../grain/article?params=${JSON.stringify(item)}`
 				url: `../../community/communityDetails?id=` + item
