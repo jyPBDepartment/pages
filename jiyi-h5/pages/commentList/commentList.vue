@@ -1,24 +1,24 @@
 <template>
 	<view class="list-container">
 		<HeaderSearch title="评论"></HeaderSearch>
-		<view class="title">全部评论(25)</view>
-		<view class="content" v-for="i in list" :key="i">
+		<view class="title">全部评论({{count}})</view>
+		<view class="content" v-for="(item, i) in commentList" :key="i">
 			<view class="header">
 				<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
-				<text class="users">zhoux</text>
-				<text class="times">2021-01-11</text>
+				<text class="users">{{item.comment_user_name}}</text>
+				<text class="times">{{item.date}}</text>
 			</view>
 			<view class="paragraph">
 				<u-read-more :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="content"></rich-text>
+					<rich-text :nodes="item.comment_content"></rich-text>
 				</u-read-more>
 			</view>
 			<view class="reply-b">
 				<view class="left">
 					<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610355717998322.png" color="#9FA3A8" size="24"></u-icon>
-					<text  @tap="goReplay">回复（22）</text>
+					<text  @tap="goReplay">回复（{{item.replyCount}}）</text>
 				</view>
-				<text class="right" @click="delItem">删除</text>
+				<text class="right" v-if="item.is_mine!=null" @click="delItem(item.id)">删除</text>
 			</view>
 		</view>
 		<view class="no-comment" v-if="list.length == 0">
@@ -42,9 +42,12 @@
 		</u-modal>
 	</view>
 </template>
-
 <script>
+import ApiPath from '@/api/ApiPath.js';
 export default {
+	onLoad(val) {
+		this.initComment(val);
+	},
 	data() {
 		return {
 			content: `1111111111`,
@@ -55,10 +58,25 @@ export default {
 			},
 			list: [1, 2, 3, 4, 5, 6],
 			tipModalShow:false,
-			delModalShow:false
+			delModalShow:false,
+			commentList:[],
+			count:'',
 		};
 	},
 	methods: {
+		initComment(val){
+			let params = {
+				userId: '22',
+				artId: val.id
+			};
+			this.$ajax(ApiPath.url.articleFindCommentByUserId, 'GET', params).then(res => {
+				if (res.code == "200") {
+					console.log(JSON.stringify(res.data))
+					this.count = res.data.length;
+					this.commentList = res.data;
+				}
+			})
+		},
 		goReplay() {
 			uni.navigateTo({
 				url: '/pages/commentList/reply'
@@ -77,11 +95,21 @@ export default {
 				});
 			}
 		},
-		delItem(){
+		delItem(val){
+			
+			
+			
+			
+			
+			
 			this.delModalShow = true
 			setTimeout(()=>{
 				this.delModalShow = false
 			},2000)
+			
+			
+			
+			
 		}
 		
 	}
