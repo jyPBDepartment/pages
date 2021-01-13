@@ -531,7 +531,7 @@ export default {
 			.tag {
 				position: absolute;
 				z-index: 9;
-				border-radius: 20rpx;
+				border-radius: 10rpx;
 				color: #fff;
 				top: 0;
 				left: 0;

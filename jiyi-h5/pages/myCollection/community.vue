@@ -14,7 +14,7 @@
 				<text class="times">2021-01-11</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more :ref="uReadMore" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+				<u-read-more ref="uReadMore" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 					<rich-text :nodes="content"></rich-text>
 				</u-read-more>
 			</view>
@@ -59,9 +59,7 @@ export default {
 	},
 	methods: {
 		jump(item) {
-			console.log(1111)
 			uni.navigateTo({
-				// url: `../../grain/article?params=${JSON.stringify(item)}`
 				url: `../community/communityDetails?id=` + item
 			});
 		},

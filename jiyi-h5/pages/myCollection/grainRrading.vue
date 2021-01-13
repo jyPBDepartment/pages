@@ -1,7 +1,7 @@
 <template>
 	<view class="service">
 		<!-- 列表数据显示 -->
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<!-- <mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> -->
 			<view class="comm-list-item" @tap.stop="jump(item.id)" v-for="(item, index) in dataList" :key="index">
 				<image class="item-img" :src="item.url" mode=""></image>
 				<view class="item-info">
@@ -25,39 +25,46 @@
 					<view class="fun-btn"></view>
 				</view>
 			</view>
-		</mescroll-body>
+		<!-- </mescroll-body> -->
+		
+		<view class="no-data" v-if="noData">
+			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
+			<text>暂无数据</text>
+		</view>
+		<u-loadmore v-if="dataList.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
 	</view>
 </template>
 
 <script>
 import Interface from '@/api/ApiPath.js';
-import MescrollMixin from '@/mescroll-uni/mescroll-mixins.js';
 
 export default {
-	mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 	data() {
 		return {
-			transactionTypeCode: null,
-			transactionCategoryCode: null,
-			identityCode: '',
-			mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
-			// 下拉刷新的配置(可选, 绝大部分情况无需配置)
-			downOption: {},
-			// 上拉加载的配置(可选, 绝大部分情况无需配置)
-			upOption: {
-				page: {
-					size: 10 // 每页数据的数量,默认10
-				},
-				noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
-				empty: {
-					tip: '暂无相关数据'
-				}
-			},
 			// 列表数据
 			dataList: [],
-			type: '1',
-			address: ''
+			status: 'loadmore',
+			iconType: 'flower',
+			loadText: {
+				loadmore: '点我加载更多',
+				loading: '客官别急马上就来~',
+				nomore: '我是有底线的~~~'
+			},
+			page: 1,
+			nomore: false,
+			noData: false
 		};
+	},
+	created() {
+		this.getGrainList(this.page)
+	},
+	onReachBottom() {
+		if (this.nomore) {
+			return false;
+		}
+		this.status = 'loading';
+		this.page = ++this.page;
+		this.getGrainList(this.page)
 	},
 	methods: {
 		// 跳转详情页面
@@ -66,71 +73,59 @@ export default {
 				url: '../grain/space?id=' + val + '&isMain=0' + '&type=0'
 			});
 		},
-		search(e) {
-			this.searchName = this.removeSpaces(e);
-			this.downCallback();
+		loadmore() {
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.getGrainList(this.page);
 		},
-		select(code) {
-			this.identityCode = code;
-			this.downCallback();
-		},
-		/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
-		mescrollInit(mescroll) {
-			this.mescroll = mescroll;
-		},
-		/*下拉刷新的回调, 有三种处理方式:*/
-		downCallback() {
-			this.mescroll.resetUpScroll();
-		},
-		/*上拉加载的回调*/
-		upCallback(page) {
-			let url;
-			if (this.searchName == '') url = Interface.url.findAgriType;
-			if (this.searchName != '') url = Interface.url.findAgriInfo;
-			this.request(page, url);
-		},
-		request(page, url) {
-			let pageNum = page.num; // 页码, 默认从1开始
-			let pageSize = page.size; // 页长, 默认每页10条
-
+		getGrainList(page) {
+			let self = this
+		
 			// 第1种: 请求具体接口
 			uni.request({
-				url: url,
+				url: Interface.url.findAgriInfo,
 				method: 'GET',
 				data: {
 					type: 1,
-					name: this.searchName,
-					page: pageNum,
-					size: pageSize,
-					transactionTypeCode: this.transactionTypeCode,
-					transactionCategoryCode: this.transactionCategoryCode,
-					identityCode: this.identityCode,
-					address: this.address
+					name: '',
+					page: page,
+					size: 10,
+					transactionTypeCode: '',
+					transactionCategoryCode: '',
+					identityCode: '',
+					address: ''
 				},
 				success: res => {
 					if (res.data.state == 0) {
-						let curPageData = res.data.data.content.map(item => {
-							if (item.url != '') {
-								item.url = item.url.split(',')[0];
+						if (res.data.data.content.length < 10) {
+							self.nomore = true;
+							self.status = 'nomore';
+							self.dataList = self.dataList.concat(res.data.data.content);
+							if (self.dataList.length == 0) {
+								self.noData = true;
+							} else {
+								self.noData = false;
 							}
-							return item;
-						});
-						let curPageLen = curPageData.length;
-						//设置列表数据
-						if (page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
-						this.dataList = this.dataList.concat(curPageData); //追加新数据
-						this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
+						} else {
+							setTimeout(() => {
+								self.nomore = false;
+								self.status = 'loadmore';
+								self.dataList = self.dataList.concat(res.data.data.content);
+								if (self.dataList.length == 0) {
+									self.noData = true;
+								} else {
+									self.noData = false;
+								}
+							}, 200);
+						}
+						
 					}
-					// 请求成功,隐藏加载状态
-					this.mescroll.endSuccess();
 				},
 				fail: err => {
-					// 请求失败,隐藏加载状态
 					uni.showToast({
 						title: '请求失败',
 						duration: 2000
 					});
-					this.mescroll.endErr();
 				}
 			});
 		}
