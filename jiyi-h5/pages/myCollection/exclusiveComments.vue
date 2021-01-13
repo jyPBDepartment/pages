@@ -84,7 +84,9 @@ export default {
 		getCommentList(id) {
 			let self = this;
 			let params = {
+				userId: '999',
 				sectionId: id,
+				orderType: this.tabIndex,
 				page: self.page,
 				size: 10
 			};

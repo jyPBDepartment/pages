@@ -1,7 +1,7 @@
 //配置后台接口
 //开发环境基础路径地址
-// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-const URLHost = 'http://localhost:8080';
+const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+// const URLHost = 'http://localhost:8080';
 
 //生产环境基础路径地址
 // const URLHost = 'http://182.92.77.60:8080/jy_fcs';
@@ -148,6 +148,37 @@ const url = {
 	articleAddPV: URLHost + '/exclusive/addPV',
 	// 文章点评根据用户id查询评论信息
 	articleFindCommentByUserId: URLHost + '/exclusive/findCommentByUserId',
+
+
+	/**
+	 * 慧农1.0 优化 接口新增
+	 */
+	// 设置粮食买卖信息收藏状态
+	grainTradingSetCollection: URLHost + '/grainTrading/setCollection',
+	// 增加粮食买卖信息阅读量
+	grainTradingAddPV: URLHost + '/grainTrading/addPV',
+	// 设置粮食买卖信息点赞 
+	grainTradingSetPraise: URLHost + '/grainTrading/setPraise',
+	// 增加粮食买卖信息评论
+	grainTradingAddComment: URLHost + '/grainTrading/addComment',
+	// 删除粮食买卖下的回复
+	grainTradingDeleteReply: URLHost + '/grainTrading/deleteReply',
+	// 删除粮食买卖下的评论
+	grainTradingDeleteComment: URLHost + '/grainTrading/deleteComment',
+	// 查询粮食买卖详情
+	grainTradingMobileView: URLHost + '/grainTrading/mobileView',
+	// 查询粮食买卖下所有评论
+	grainTradingFindCommentPage: URLHost + '/grainTrading/findCommentPage',
+	// 查询粮食买卖下所有回复
+	grainTradingFindReplyPage: URLHost + '/grainTrading/findReplyPage',
+	// 条件查询粮食买卖列表
+	agriculturalFindAgriInfo: URLHost + '/agricultural/findAgriInfo',
+	
+	
+	
+	
+	
+	
 
 }
 export default {

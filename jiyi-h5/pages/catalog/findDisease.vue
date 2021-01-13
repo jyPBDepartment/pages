@@ -86,7 +86,9 @@ export default {
 				}
 			},
 			// 列表数据
-			dataList: []
+			dataList: [],
+			collection: false,
+			thumbs: false
 		};
 	},
 	onLoad() {
@@ -124,6 +126,14 @@ export default {
 		});
 	},
 	methods: {
+		clickIcon(val) {
+			if (val == 1) {
+				this.thumbs = !this.thumbs;
+			}
+			if (val == 2) {
+				this.collection = !this.collection;
+			}
+		},
 		removeSpaces(string) {
 			return string.replace(/\s*/g, '');
 		},
