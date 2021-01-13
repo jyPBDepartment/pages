@@ -1,14 +1,16 @@
 //配置后台接口
 //开发环境基础路径地址
-const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-// const URLHost = 'http://192.168.1.110:8080';
+// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+const URLHost = 'http://localhost:8080';
 
 //生产环境基础路径地址
-// const URLHost = 'http://182.92.77.60/jy_fcs';
+// const URLHost = 'http://182.92.77.60:8080/jy_fcs';
 
 // im 服务地址
-const imUrl = 'http://192.168.1.106:2001/webdemo/h5/index.html#/chat/'
-// const imUrl = 'http://182.92.77.60:2001/webdemo/h5/index.html#/chat/'
+// 开发环境
+// const imUrl = 'http://192.168.1.106:2001/webdemo/h5/index.html#/chat/';
+// 生产环境
+const imUrl = 'http://182.92.77.60:2001/webdemo/h5/index.html#/chat/';
 
 
 let common = {
@@ -23,9 +25,9 @@ const md5 = {
 
 const extendUrl = {
 	// 测试环境
-	findCustmerInfo: 'http://112.126.103.106:16302/jyhn-frontend/webHttpServlet'
+	// findCustmerInfo: 'http://112.126.103.106:16302/jyhn-frontend/webHttpServlet'
 	// 生产环境
-	// findCustmerInfo:'http://112.126.103.48:16302/jyhn-frontend/webHttpServlet'
+	findCustmerInfo: 'http://hnser.jiyinongye.com/jw'
 }
 const url = {
 	// 首页
@@ -138,6 +140,15 @@ const url = {
 	findSectionList: URLHost + '/sectionManage/findListSectionId',
 	//文章详情
 	findArticleIdDetails: URLHost + '/articleManage/findArticleId',
+	// 文章点评收藏
+	articleCollection: URLHost + '/exclusive/setCollection',
+	// 文章点评点赞
+	articlePraise: URLHost + '/exclusive/setPraise',
+	// 文章点评浏览量
+	articleAddPV: URLHost + '/exclusive/addPV',
+	// 文章点评根据用户id查询评论信息
+	articleFindCommentByUserId: URLHost + '/exclusive/findCommentByUserId',
+
 }
 export default {
 	url,
