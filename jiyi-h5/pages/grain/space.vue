@@ -30,7 +30,7 @@
 				</view>
 				<view class="info g-flex g-a-c">
 					<view class="item-user g-flex g-a-c g-f-1">
-						<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
+						<!-- <image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image> -->
 						<text>{{ contactsUser }}</text>
 						<u-icon v-if="isMain == '0' && createUserId != accId" name="chat" style="margin-left: 10rpx;" color="#2979ff" size="40" @tap="goToImPage"></u-icon>
 					</view>

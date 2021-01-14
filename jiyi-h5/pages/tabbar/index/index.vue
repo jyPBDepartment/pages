@@ -180,8 +180,11 @@ export default {
 						// 昵称
 						Interface.common.nc = res.data.RETURNRESULT.NN;
 						// alert("昵称："+Interface.common.nc)
-						localStorage.setItem('accId', res.data.RETURNRESULT.NN);
-						initImSDK(res.data.RETURNRESULT.NN, res.data.RETURNRESULT.NN);
+						localStorage.setItem('nickName', res.data.RETURNRESULT.NN);
+						localStorage.setItem('pic', res.data.RETURNRESULT.UPU);
+						
+						localStorage.setItem('accId', res.data.RETURNRESULT.YXAID);
+						initImSDK(res.data.RETURNRESULT.YXAID, res.data.RETURNRESULT.YXTOK);
 					}
 					if (code == '-1') {
 						// alert("失败")

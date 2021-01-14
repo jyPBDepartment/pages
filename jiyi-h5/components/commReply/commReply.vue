@@ -71,7 +71,7 @@ export default {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: #ffffff;
+	border-top:1rpx solid #f2f2f2;
 	.publish {
 		line-height: 60rpx;
 		padding: 20rpx;

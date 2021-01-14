@@ -1,5 +1,5 @@
 <template>
-	<view class="list-container" @click.stop="clickBg">
+	<view class="list-container">
 		<HeaderSearch title="回复"></HeaderSearch>
 
 		<view class="content">
