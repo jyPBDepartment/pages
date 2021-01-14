@@ -50,41 +50,35 @@
 				</view>
 				<view class="fun-btn">
 					<view class="item">
-						<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
-						<text>123</text>
+						<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
+						<text>{{ viewNum }}</text>
 					</view>
-					<view class="item" @tap.stop="clickIcon(2)">
-						<u-icon
-							v-if="collection"
-							style="margin-right: 5rpx;"
-							name="http://60.205.246.126/images/2021/01/11/1610334200305905.png"
-							color="#9FA3A8"
-							size="24"
-						></u-icon>
-						<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
-						<text>111</text>
+					<view class="item" @tap.stop="clickIcon(curCollention, 1)">
+						<u-icon v-if="curCollention == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" size="24"></u-icon>
+						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
+						<text>{{ collectionNum }}</text>
 					</view>
-					<view class="item" @tap.stop="clickIcon(1)">
-						<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" color="#9FA3A8" size="24"></u-icon>
-						<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
-
-						<text>21</text>
+					<view class="item" @tap.stop="clickIcon(curPraise, 2)">
+						<u-icon v-if="curPraise == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
+						<text>{{ praiseNum }}</text>
 					</view>
 				</view>
 				<view class="space"></view>
 				<view class="comment-box-c">
 					<view class="top-box-c">
-						<text>评论(25)</text>
-						<text class="right" @tap="goCommentList">全部评论/去评论 ></text>
+						<text>评论({{ commentNum }})</text>
+						<text class="right" @tap="goCommentList">{{ commentNum ? '全部评论' : '去评论' }}</text>
 					</view>
-					<u-line v-if="false" color="rgba(0, 0, 0, 0.1)" />
-					<view v-if="false"  class="content">
+					<u-line v-if="commentNum" color="rgba(0, 0, 0, 0.1)" />
+					<view v-if="commentNum" class="content">
 						<view class="header">
-							<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
-							<text class="users">zhoux</text>
+							<!-- commentObj.commentPic || -->
+							<image class="image" :src="'../../static/img/tabbar/guanzhuactive.png'"></image>
+							<text class="users">{{ commentObj.isAnonymous ? '匿名' : commentObj.commentUserName }}</text>
 						</view>
 
-						<p class="words">{{ content }}</p>
+						<p class="words">{{ commentObj.commentContent }}</p>
 					</view>
 				</view>
 
@@ -145,9 +139,27 @@ export default {
 			reason: '',
 			title: '',
 			accId: '',
+			commentNum: 0,
+			praiseNum: 0,
+			collectionNum: 0,
+			viewNum: 0,
+
+			curCollention: 0,
+			curPraise: 0,
 			createUserId: localStorage.getItem('userId'),
 			collection: false,
-			thumbs: false
+			thumbs: false,
+			commentObj: {
+				id: '402881e976e0bdd20176e0be284d0001',
+				aid: '402881ec747b392e01747b4236320000',
+				commentContent: '娃哈哈有很多新产品',
+				commentUserName: '张三',
+				commentPic: '头像',
+				commentUserId: '张三的id',
+				isAnonymous: 0,
+				status: 1,
+				commentDate: '2021-01-08 14:45:27'
+			}
 		};
 	},
 	//页面初始化
@@ -161,7 +173,9 @@ export default {
 			this.title = '农机详情';
 			this.company = '台';
 		}
-		this.findMineId(e.id);
+
+		this.$u.debounce(this.findMineId(e.id), 1000);
+
 		this.id = e.id;
 		this.isMine = e.isMine;
 		if (e.isMine == 1) {
@@ -170,53 +184,132 @@ export default {
 		}
 	},
 	methods: {
-		goCommentList(){
-			uni.navigateTo({
-				url:'/pages/commentList/commentList'
-			})
+		addGrainTradingAddPV(id) {
+			let self = this;
+			self.$ajax(ApiPath.url.grainTradingAddPV, 'GET', { id: id }).then(res => {
+				if (res.code == 200) {
+					self.viewNum = res.data;
+				}
+			});
 		},
-		clickIcon(val) {
+		goCommentList() {
+			uni.navigateTo({
+				url: '/pages/commentList/commentList?id=' + this.id + '&type=1'
+			});
+		},
+		clickIcon(item, val) {
 			if (val == 1) {
-				this.thumbs = !this.thumbs;
+				//收藏点击
+				this.setCollection(item);
 			}
 			if (val == 2) {
-				this.collection = !this.collection;
+				// 点赞
+				this.setPraiseThumbs(item);
 			}
 		},
+		// 收藏
+		setCollection(item, i) {
+			let self = this;
+			let params = {
+				action: item ? 0 : 1,
+				agrId: this.id,
+				userId: '20200909'
+			};
+			this.$ajax(ApiPath.url.grainTradingSetCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (this.curCollention == 1) {
+							this.collectionNum = this.collectionNum - 1;
+							this.curCollention = 0;
+						} else {
+							this.collectionNum = this.collectionNum + 1;
+							this.curCollention = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							duration: 1000,
+							icon: 'loading'
+						});
+					}
+				})
+				.catch(err => {});
+		},
+		// 点赞
+		setPraiseThumbs(item, i) {
+			let self = this;
+			let params = {
+				action: item ? 0 : 1,
+				agrId: this.id,
+				userId: '20200909'
+			};
+			this.$ajax(ApiPath.url.grainTradingSetPraise, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (this.curPraise == 1) {
+							this.praiseNum = this.praiseNum - 1;
+							this.curPraise = 0;
+						} else {
+							this.praiseNum = this.praiseNum + 1;
+							this.curPraise = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							duration: 1000,
+							icon: 'loading'
+						});
+					}
+				})
+				.catch(err => {});
+		},
+
 		//查看详情
 		findMineId(val) {
 			let param = {
-				id: val
+				id: val,
+				userId: '20200909'
 			};
 			uni.request({
 				method: 'GET', //请求方式
 				data: param, //请求数据
-				url: ApiPath.url.findMineId, //请求接口路径
+				url: ApiPath.url.grainTradingMobileView, //请求接口路径
 				success: res => {
 					//成功返回结果方法
-					if (res.data.state == 0) {
-						this.transactionTypeCode = res.data.data.transactionTypeCode;
-						this.transactionCategoryCode = res.data.data.transactionCategoryCode;
-						this.labelCode = res.data.data.labelCode;
-						this.model = res.data.data.model;
-						this.articleNumber = res.data.data.articleNumber;
-						this.address = res.data.data.address;
-						this.contactsUser = res.data.data.contactsUser;
-						this.contactsPhone = res.data.data.contactsPhone;
-						this.accId = res.data.data.accId;
-						this.createUserId = res.data.data.createUserId;
-						if (res.data.data.descrip != '') {
-							this.descrip = res.data.data.descrip;
+					if (res.data.code == 200) {
+						this.$u.debounce(this.addGrainTradingAddPV(this.id), 2000);
+
+						this.transactionTypeCode = res.data.agr.transactionTypeCode;
+						this.transactionCategoryCode = res.data.agr.transactionCategoryCode;
+						this.labelCode = res.data.agr.labelCode;
+						this.model = res.data.agr.model;
+						this.articleNumber = res.data.agr.articleNumber;
+						this.address = res.data.agr.address;
+						this.contactsUser = res.data.agr.contactsUser;
+						this.contactsPhone = res.data.agr.contactsPhone;
+						this.accId = res.data.agr.accId;
+						this.createUserId = res.data.agr.createUserId;
+
+						this.commentNum = res.data.agr.commentNum;
+						this.praiseNum = res.data.agr.praiseNum;
+						this.collectionNum = res.data.agr.collectionNum;
+						this.viewNum = res.data.agr.viewNum;
+						this.commentObj = res.data.comment;
+
+						this.curCollention = res.data.curCollection;
+
+						this.curPraise = res.data.curPrise;
+
+						if (res.data.agr.descrip != '') {
+							this.descrip = res.data.agr.descrip;
 						} else {
 							this.descrip = '无';
 						}
 
-						this.price = res.data.data.price;
-						this.isFace = res.data.data.isFace;
+						this.price = res.data.agr.price;
+						this.isFace = res.data.agr.isFace;
 						// this.url = res.data.data.url
-						this.name = res.data.data.name;
+						this.name = res.data.agr.name;
 						if (this.isMain == '1') {
-							if (res.data.data.status != 0 && res.data.data.status != 3) {
+							if (res.data.agr.status != 0 && res.data.agr.status != 3) {
 								this.isDisplay = 1;
 							}
 						} else {
@@ -224,9 +317,9 @@ export default {
 						}
 
 						//查找图片
-						for (var i = 0; i < res.data.dataPic.length; i++) {
+						for (var i = 0; i < res.data.agrPic.length; i++) {
 							this.banner.push({
-								url: res.data.dataPic[i].picUrl
+								url: res.data.agrPic[i].picUrl
 							});
 						}
 					}

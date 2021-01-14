@@ -2,11 +2,11 @@
 	<view class="service">
 		<!-- 搜索栏 -->
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
-		<!-- 菜单展示栏 -->
+
 		<view class="b-f">
-			<u-dropdown ref="uDropdown" @open="open" @close="close">
+			<u-dropdown ref="uDropdown" @open="open" @close="uDropdownClose" :close-on-click-mask="false">
 				<u-dropdown-item title="区域">
-					<view class="slot-content">
+					<view class="slot-content-g">
 						<u-row align="top" class="b-t">
 							<u-col span="4" style="background-color: #FFFFFF;">
 								<scroll-view scroll-y="true" class="my-scroll-view">
@@ -47,8 +47,8 @@
 							</u-col>
 						</u-row>
 						<view class="area-select-bottom">
-							<u-button type="info" size="mini" @click="sureSelectArea(false)">取消</u-button>
-							<u-button type="success" size="mini" @click="sureSelectArea(true)">确认</u-button>
+							<u-button type="info" size="medium" style="margin-right: 80rpx;" @click="sureSelectArea(false)">取消</u-button>
+							<u-button type="success" size="medium" @click="sureSelectArea(true)">确认</u-button>
 						</view>
 					</view>
 				</u-dropdown-item>
@@ -58,43 +58,50 @@
 		</view>
 		<u-line color="#f4f4f4"></u-line>
 		<FilterCom @selectTab="selectTab"></FilterCom>
+
+		<!-- 菜单展示栏 -->
+
 		<!-- 列表数据显示 -->
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="comm-list-item" @tap.stop="jump(item.id)" v-for="(item, index) in dataList" :key="index">
-				<image class="item-img" :src="item.url" mode=""></image>
-				<view class="item-info">
-					<p class="title">{{ item.name }}</p>
-					<view v-if="item.address" class="address g-flex g-a-c" style="color: rgba(128, 128, 128, 1)">
-						<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334898551200.png" color="#9FA3A8" size="24"></u-icon>
-						{{ item.address }}
+		<view class="comm-list-item" @tap.stop="jump(item.id)" v-for="(item, index) in dataList" :key="index">
+			<image class="item-img" :src="item.url" mode=""></image>
+			<view class="item-info">
+				<p class="title">{{ item.name }}</p>
+				<view v-if="item.address" class="address g-flex g-a-c" style="color: rgba(128, 128, 128, 1)">
+					<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334898551200.png" size="24"></u-icon>
+					{{ item.address }}
+				</view>
+				<view class="contactsUser">
+					<view class="g-flex g-a-c">
+						<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
+						<view class="word">{{ item.contactsUser }}</view>
 					</view>
-					<view class="contactsUser">
-						<view class="g-flex g-a-c">
-							<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
-							<view class="word">{{ item.contactsUser }}</view>
-						</view>
-						<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.createDate }}</view>
+					<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</view>
+				</view>
+				<view class="fun-btn">
+					<view class="item">
+						<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
+						<text>{{ item.viewNum }}</text>
 					</view>
-					<view class="fun-btn">
-						<view class="item">
-							<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
-							<text>123</text>
-						</view>
-						<view class="item" @tap.stop="clickIcon(2)">
-							<u-icon v-if="collection" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" color="#9FA3A8" size="24"></u-icon>
-							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
-							<text>111</text>
-						</view>
-						<view class="item" @tap.stop="clickIcon(1)">
-							<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" color="#9FA3A8" size="24"></u-icon>
-							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
-							
-							<text>21</text>
-						</view>
+					<view class="item" @tap.stop="clickIcon(item, 1, index)">
+						<u-icon v-if="item.curCollention == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" size="24"></u-icon>
+						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
+						<text>{{ item.collectionNum }}</text>
+					</view>
+					<view class="item" @tap.stop="clickIcon(item, 2, index)">
+						<u-icon v-if="item.curPraise == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
+						<text>{{ item.praiseNum }}</text>
 					</view>
 				</view>
 			</view>
-		</mescroll-body>
+		</view>
+
+		<view class="no-data" v-if="noData">
+			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
+			<text>暂无数据</text>
+		</view>
+		<u-loadmore v-if="dataList.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
+
 		<uni-drawer ref="drawer" mode="right" :visible="true" :width="300" @close="drawerClose" @change="drawerChange">
 			<view style="padding:20rpx">
 				<view v-for="(item, index1) in screenList" :key="index1">
@@ -116,14 +123,23 @@
 
 <script>
 import Interface from '@/api/ApiPath.js';
-import MescrollMixin from '@/mescroll-uni/mescroll-mixins.js';
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
 import provinceData from '../../components/regionalComponents/city-data/province.js';
 
 export default {
-	mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 	components: {
 		HeaderSearch
+	},
+	onReachBottom() {
+		if (this.nomore) {
+			return false;
+		}
+		this.status = 'loading';
+		this.page = ++this.page;
+		this.request();
+	},
+	onShow() {
+		this.request(true);
 	},
 	data() {
 		return {
@@ -222,21 +238,18 @@ export default {
 			transactionTypeCode: null,
 			transactionCategoryCode: null,
 			identityCode: '',
-			mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
-			// 下拉刷新的配置(可选, 绝大部分情况无需配置)
-			downOption: {},
-			// 上拉加载的配置(可选, 绝大部分情况无需配置)
-			upOption: {
-				page: {
-					size: 10 // 每页数据的数量,默认10
-				},
-				noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
-				empty: {
-					tip: '暂无相关数据'
-				}
-			},
 			// 列表数据
 			dataList: [],
+			status: 'loadmore',
+			iconType: 'flower',
+			loadText: {
+				loadmore: '点我加载更多',
+				loading: '客官别急马上就来~',
+				nomore: '我是有底线的~~~'
+			},
+			page: 1,
+			nomore: false,
+			noData: false,
 			type: '1',
 			address: '',
 			regionaStatus: true,
@@ -246,23 +259,100 @@ export default {
 			drop: '',
 			screenedIndex: null,
 			screened: '',
-			collection:false,
-			thumbs:false,
+			collection: true,
+			thumbs: true,
+			sortIndex: 1 //1最火2最新3精品4热议5好评
 		};
 	},
 	onLoad() {},
 	methods: {
-		clickIcon(val) {
-			if(val==1){
-				this.thumbs = !this.thumbs
-			}
-			if(val == 2){
-				this.collection = !this.collection
-			}
-			
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
 		},
+		loadmore() {
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.request();
+		},
+		clickIcon(item, val, i) {
+			if (val == 1) {
+				//收藏点击
+				this.setCollection(item, i);
+			}
+			if (val == 2) {
+				// 点赞
+				this.setPraiseThumbs(item, i);
+			}
+		},
+		// 收藏
+		setCollection(item, i) {
+			let self = this;
+			let params = {
+				action: item.curCollention ? 0 : 1,
+				agrId: item.id,
+				userId: '20200909'
+			};
+			this.$ajax(Interface.url.grainTradingSetCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.curCollention == 1) {
+							this.dataList[i].collectionNum = parseInt(this.dataList[i].collectionNum) - 1;
+							this.dataList[i].curCollention = 0;
+						} else {
+							this.dataList[i].collectionNum = parseInt(this.dataList[i].collectionNum) + 1;
+							this.dataList[i].curCollention = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {});
+		},
+		// 点赞
+		setPraiseThumbs(item, i) {
+			let self = this;
+			let params = {
+				action: item.curPraise ? 0 : 1,
+				agrId: item.id,
+				userId: '20200909'
+			};
+			this.$ajax(Interface.url.grainTradingSetPraise, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.curPraise == 1) {
+							this.dataList[i].praiseNum = parseInt(this.dataList[i].praiseNum) - 1;
+							this.dataList[i].curPraise = 0;
+						} else {
+							this.dataList[i].praiseNum = parseInt(this.dataList[i].praiseNum) + 1;
+							this.dataList[i].curPraise = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {});
+		},
+
 		selectTab(val) {
 			console.log(val);
+			this.sortIndex = val;
+			this.downCallback();
 		},
 		drawerChange(e) {
 			if (!e) {
@@ -281,7 +371,7 @@ export default {
 				}
 				this.$refs.uDropdown.close();
 				this.$refs.uDropdown.highlight(2);
-				this.downCallback();
+				// this.downCallback();
 			}
 		},
 		drawerClose() {},
@@ -290,7 +380,6 @@ export default {
 			this.screened = null;
 			this.transactionCategoryCode = '';
 			this.downCallback();
-			// this.$refs.drawer.close();
 		},
 		confirm(e) {
 			let params = '';
@@ -299,11 +388,11 @@ export default {
 					params = this.screenList[0].category[i].code;
 				}
 			}
-
 			this.transactionCategoryCode = params;
 			this.$refs.drawer.close();
 			this.$refs.uDropdown.close();
 			this.$refs.uDropdown.highlight(2);
+			this.downCallback();
 		},
 		selected(index1, index) {
 			this.screenedIndex = index;
@@ -314,9 +403,8 @@ export default {
 			this.clickProvinceIndex = null;
 			this.clickCityIndex = null;
 			this.clickAreaIndex = null;
-			this.$refs.uDropdown.close();
+			// this.$refs.uDropdown.close();
 		},
-		change() {},
 		//高德获取地区信息
 		getMap(name, type, index) {
 			//name选择名称 type类型
@@ -419,6 +507,7 @@ export default {
 				this.areaData = [];
 				this.$refs.uDropdown.close();
 			}
+			this.downCallback();
 		},
 		open(index) {
 			// 点击筛选时
@@ -434,10 +523,12 @@ export default {
 			}
 			this.provinceData = result;
 		},
-		close(index) {
+		uDropdownClose(index) {
 			this.$refs.uDropdown.highlight(index);
 			this.identityCode = this.sfValue;
-			this.downCallback();
+			if (index == 1) {
+				this.downCallback();
+			}
 		},
 		closeDropdown() {
 			this.$refs.uDropdown.close();
@@ -459,69 +550,57 @@ export default {
 			this.identityCode = code;
 			this.downCallback();
 		},
-		// screened(e) {
-		// 	this.address = "";
-		// 	this.transactionCategoryCode = "";
-		// 	if (e !== null) {
-		// 		if (e.indexOf(",") > -1) { //如果包含，,说明是选择多组条件
-		// 			let val = e.split(",");
-		// 			this.transactionCategoryCode = val[0];
-		// 			this.address = val[1];
-		// 		} else {
-		// 			this.transactionCategoryCode = e;
-		// 		}
-		// 	}
-		// 	this.downCallback()
-		// },
-		/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
-		mescrollInit(mescroll) {
-			this.mescroll = mescroll;
-		},
 		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
-			this.mescroll.resetUpScroll();
+			this.page = 1;
+			this.request(true);
 		},
-		/*上拉加载的回调*/
-		upCallback(page) {
-			let url;
-			if (this.searchName == '') url = Interface.url.findAgriType;
-			if (this.searchName != '') url = Interface.url.findAgriInfo;
-			this.request(page, url);
-		},
-		request(page, url) {
-			let pageNum = page.num; // 页码, 默认从1开始
-			let pageSize = page.size; // 页长, 默认每页10条
 
+		request(action) {
+			let self = this;
+			if (action) {
+				this.dataList = [];
+			}
 			// 第1种: 请求具体接口
 			uni.request({
-				url: url,
+				url: Interface.url.agriculturalFindAgriInfo,
 				method: 'GET',
 				data: {
 					type: 1,
 					name: this.searchName,
-					page: pageNum,
-					size: pageSize,
+					page: this.page,
+					size: 10,
 					transactionTypeCode: this.transactionTypeCode,
 					transactionCategoryCode: this.transactionCategoryCode,
 					identityCode: this.identityCode,
-					address: this.address
+					address: this.address,
+					userId: '20200909',
+					sort: this.sortIndex
 				},
 				success: res => {
 					if (res.data.state == 0) {
-						let curPageData = res.data.data.content.map(item => {
-							if (item.url != '') {
-								item.url = item.url.split(',')[0];
+						if (res.data.data.content.length < 10) {
+							self.nomore = true;
+							self.status = 'nomore';
+							self.dataList = self.dataList.concat(res.data.data.content);
+							if (self.dataList.length == 0) {
+								self.noData = true;
+							} else {
+								self.noData = false;
 							}
-							return item;
-						});
-						let curPageLen = curPageData.length;
-						//设置列表数据
-						if (page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
-						this.dataList = this.dataList.concat(curPageData); //追加新数据
-						this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
+						} else {
+							setTimeout(() => {
+								self.nomore = false;
+								self.status = 'loadmore';
+								self.dataList = self.dataList.concat(res.data.data.content);
+								if (self.dataList.length == 0) {
+									self.noData = true;
+								} else {
+									self.noData = false;
+								}
+							}, 200);
+						}
 					}
-					// 请求成功,隐藏加载状态
-					this.mescroll.endSuccess();
 				},
 				fail: err => {
 					// 请求失败,隐藏加载状态
@@ -529,7 +608,6 @@ export default {
 						title: '请求失败',
 						duration: 2000
 					});
-					this.mescroll.endErr();
 				}
 			});
 		}
@@ -538,7 +616,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.slot-content {
+.slot-content-g {
 	background-color: #ffffff;
 }
 .my-scroll-view {
@@ -556,27 +634,12 @@ export default {
 	}
 }
 .service {
-	overflow: hidden;
-}
-.app-modular {
-	padding-bottom: 20rpx;
-
-	border-bottom: 1px solid rgba(229, 229, 229, 1);
-}
-
-.tagGrain {
-	width: 140rpx;
-	line-height: 40rpx;
-	border-radius: 13rpx;
-	border: 1px solid rgba(255, 87, 51, 1);
-	color: rgba(255, 87, 51, 1);
-	font-weight: bold;
-	text-align: center;
-}
-
-.app-number-grain {
-	color: #333;
-	line-height: 60rpx;
+	overflow: auto;
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .word {

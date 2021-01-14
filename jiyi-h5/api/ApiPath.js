@@ -161,6 +161,10 @@ const url = {
 	grainTradingSetPraise: URLHost + '/grainTrading/setPraise',
 	// 增加粮食买卖信息评论
 	grainTradingAddComment: URLHost + '/grainTrading/addComment',
+	// grainTrading/addReply
+	// 增加粮食买卖信息评论
+	grainTradingAddReply: URLHost + '/grainTrading/addReply',
+	
 	// 删除粮食买卖下的回复
 	grainTradingDeleteReply: URLHost + '/grainTrading/deleteReply',
 	// 删除粮食买卖下的评论

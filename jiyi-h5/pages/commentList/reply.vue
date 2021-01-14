@@ -5,49 +5,46 @@
 		<view class="content">
 			<view class="header">
 				<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
-				<text class="users">zhoux</text>
-				<text class="times">2021-01-11</text>
+				<text class="users">{{ commentData.isAnonymous ? '匿名' : commentData.nickName }}</text>
+				<text class="times">{{ commentData.date }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more ref="uReadMore" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="content"></rich-text>
+				<u-read-more text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+					<rich-text :nodes="commentData.content"></rich-text>
 				</u-read-more>
-			</view>
-			<view class="reply-b">
-				<view class="left" >
-					<u-icon @click="showReply = true" index='1' style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610355717998322.png" color="#9FA3A8" size="24"></u-icon>
-					<text @click.stop="showReply = true">回复（22）</text>
-				</view>
-				<text class="right" @click="delItem">删除</text>
 			</view>
 		</view>
 		<view class="space"></view>
-		
-		<view class="title">全部回复(25)</view>
-		
-		<view class="reply-content"  v-for="i in list" :key="i">
+
+		<view class="title">全部回复({{ totalElements }})</view>
+
+		<view class="reply-content" v-for="(item, i) in dataList" :key="i">
 			<view class="header">
 				<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
-				<text class="users">zhoux</text>
-				<text class="times">2021-01-11</text>
+				<text class="users">{{ item.isAnonymous ? '匿名' : item.replyUserName }}</text>
+				<text class="times">{{ item.replyDate }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="content"></rich-text>
+				<u-read-more text-indent="0" :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+					<view class="reply-content-c">
+						回复
+						<text class="nick-name">{{ commentData.nickName }}：</text>
+						<text>{{ item.replyContent }}</text>
+					</view>
 				</u-read-more>
 			</view>
-			<view class="reply-b">
-				<view class="left">
-					<!-- <u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610355717998322.png" color="#9FA3A8" size="24"></u-icon>
-					<text>回复（22）</text> -->
-				</view>
+			<view class="reply-b" v-if="item.isMyReply == 1">
+				<view class="left"></view>
 				<text class="right" @click="delItem">删除</text>
 			</view>
 		</view>
-		<view class="no-comment" v-if="list.length == 0">
+		<view class="no-comment" v-if="dataList.length == 0">
 			<image src="../../static/svg/no-comment.svg"></image>
 			<text>暂无回复</text>
 		</view>
+
+		<u-loadmore v-if="dataList.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
+
 		<u-modal v-model="tipModalShow" :show-title="false" :show-confirm-button="false">
 			<view class="slot-content">
 				<image src="../../static/svg/publish-success.svg"></image>
@@ -60,11 +57,12 @@
 				<text>删除成功</text>
 			</view>
 		</u-modal>
-		<commReply v-if="showReply" @reply="reply"></commReply>
+		<commReply @reply="replyPublish"></commReply>
 	</view>
 </template>
 
 <script>
+import ApiPath from '@/api/ApiPath.js';
 export default {
 	data() {
 		return {
@@ -74,31 +72,164 @@ export default {
 				paddingTop: '0',
 				marginTop: '20rpx'
 			},
-			list:[1,2,3,4,5],
-			showReply:false,
-			tipModalShow:false,
-			delModalShow:false
+			dataList: [],
+		
+			tipModalShow: false,
+			delModalShow: false,
+			commentID: '',
+			commentData: {},
+			page: 1,
+			status: 'loadmore',
+			iconType: 'flower',
+			loadText: {
+				loadmore: '点我加载更多',
+				loading: '客官别急马上就来~',
+				nomore: '我是有底线的~~~'
+			},
+			totalElements: 0
 		};
 	},
-	methods:{
-		reply(val){
-			if(val){
-				this.showReply = false
-				this.tipModalShow = true
-				setTimeout(()=>{
-					this.tipModalShow = false
-				},2000)
+	onLoad(data) {
+		this.commentID = data.id;
+		this.type = data.type;
+		this.commentData = JSON.parse(uni.getStorageSync('commentData'));
+		this.initPageList();
+	},
+	methods: {
+		// 加载下一页
+		loadmore() {
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.initPage();
+		},
+		initPageList(action) {
+			if (action) {
+				this.page = 1;
+				this.dataList = [];
 			}
-			
+			let url = ApiPath.url.articleFindCommentByUserId;
+			let params = {};
+			if (this.type == 1) {
+				// 粮食买卖
+				url = ApiPath.url.grainTradingFindReplyPage;
+				params = {
+					cid: this.commentID,
+					page: this.page,
+					size: 10,
+					userId: '20200909'
+				};
+			}
+			if (this.type == 2) {
+				// 文章点评
+				url = ApiPath.url.articleFindCommentByUserId;
+				params = {
+					userId: '22',
+					artId: this.commentID
+				};
+			}
+			if (this.type == 3) {
+				// 看图识病
+				url = ApiPath.url.articleFindCommentByUserId;
+			}
+			if (this.type == 4) {
+				// 圈子
+				url = ApiPath.url.articleFindCommentByUserId;
+			}
+			this.getReplyList(url, params);
 		},
-		clickBg(){
-			this.showReply = false
+		// 获取评论列表
+		getReplyList(url, params) {
+			let self = this;
+			this.$ajax(url, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (res.data.content.length < 10) {
+							self.nomore = true;
+							self.status = 'nomore';
+							self.dataList = self.dataList.concat(res.data.content);
+							if (self.dataList.length == 0) {
+								self.noData = true;
+							} else {
+								self.noData = false;
+							}
+						} else {
+							setTimeout(() => {
+								self.nomore = false;
+								self.status = 'loadmore';
+								self.dataList = self.dataList.concat(res.data.content);
+								if (self.dataList.length == 0) {
+									self.noData = true;
+								} else {
+									self.noData = false;
+								}
+							}, 200);
+						}
+
+						self.totalElements = res.data.totalElements;
+					}
+				})
+				.catch(err => {});
 		},
-		delItem(){
-			this.delModalShow = true
-			setTimeout(()=>{
-				this.delModalShow = false
-			},2000)
+		// 发布回复
+		replyPublish(val, isAnonymous) {
+			if (val) {
+				let url = '';
+				let params = {};
+				if (this.type == 1) {
+					// 粮食买卖
+					url = ApiPath.url.grainTradingAddReply;
+					params = {
+						commentId: this.commentID,
+						replyContent: val,
+						replyUserName: '小米',
+						replyPic: '22222',
+						replyUserId: '20200909',
+						isAnonymous: isAnonymous ? 1 : 0
+					};
+				}
+				if (this.type == 2) {
+					// 文章点评
+					// url = ApiPath.url.articleFindCommentByUserId;
+					// params = {
+					// 	userId: '22',
+					// 	artId: this.id
+					// };
+				}
+				if (this.type == 3) {
+					// 看图识病
+					url = ApiPath.url.caseInfoCommentSave;
+				}
+				if (this.type == 4) {
+					// 圈子
+					url = ApiPath.url.articleFindCommentByUserId;
+				}
+				this.saveReply(url, params);
+			} else {
+				uni.showToast({
+					title: '请输入评论内容在评论'
+				});
+			}
+		},
+		saveReply(url, params) {
+			let self = this;
+
+			this.$ajax(url, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						this.tipModalShow = true;
+						setTimeout(() => {
+							this.tipModalShow = false;
+						}, 1000);
+						self.initPageList(true);
+					}
+				})
+				.catch(err => {});
+		},
+		delItem() {
+			this.delModalShow = true;
+			setTimeout(() => {
+				this.delModalShow = false;
+			}, 2000);
 		}
 	}
 };
@@ -106,6 +237,7 @@ export default {
 
 <style lang="scss" scoped>
 .list-container {
+	padding-bottom: 250rpx;
 	.title {
 		line-height: 80rpx;
 		font-size: 24rpx;
@@ -119,7 +251,7 @@ export default {
 		height: 20rpx;
 		background-color: rgba(229, 229, 229, 1);
 	}
-	.reply-content{
+	.reply-content {
 		padding: 0;
 		.header {
 			display: flex;
@@ -176,7 +308,6 @@ export default {
 				color: #5eb14e;
 			}
 		}
-			
 	}
 	.content {
 		padding: 20rpx 0;
@@ -237,7 +368,6 @@ export default {
 				color: #5eb14e;
 			}
 		}
-	
 	}
 	.no-comment {
 		padding-top: 100rpx;
@@ -253,5 +383,12 @@ export default {
 			color: #000000;
 		}
 	}
+}
+
+.nick-name {
+	margin-left: 10rpx;
+	color: #5eb14e;
+}
+.reply-content-c {
 }
 </style>

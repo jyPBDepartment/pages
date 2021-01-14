@@ -6,6 +6,7 @@
 			<view :class="tabIndex == 3 && 'select-tab'" @tap="clickTab(3)">精品</view>
 			<view :class="tabIndex == 4 && 'select-tab'" @tap="clickTab(4)">热议</view>
 			<view :class="tabIndex == 5 && 'select-tab'" @tap="clickTab(5)">好评</view>
+			<!-- 1最火2最新3精品4热议5好评 -->
 		</view>
 	</view>
 </template>

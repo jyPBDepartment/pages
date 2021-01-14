@@ -1,7 +1,9 @@
 <template>
 	<view class="comm-reply-container" @click.stop>
 		<view class="publish">
-			<u-checkbox-group><u-checkbox v-model="checked" active-color="#5EB14E"><text style="color:#9FA3A8">匿名发布</text> </u-checkbox></u-checkbox-group>
+			<u-checkbox-group>
+				<u-checkbox v-model="checked" active-color="#5EB14E"><text style="color:#9FA3A8">匿名发布</text></u-checkbox>
+			</u-checkbox-group>
 		</view>
 		<view class="input-box">
 			<u-input
@@ -49,11 +51,13 @@ export default {
 		reply() {
 			if (this.value) {
 				this.$emit('reply', this.value, this.checked);
-			}else{
+				this.value = '';
+				this.checked = false;
+			} else {
 				uni.showToast({
-					title:'请输入内容在发布',
-					icon:'none'
-				})
+					title: '请输入内容在发布',
+					icon: 'none'
+				});
 			}
 		}
 	}

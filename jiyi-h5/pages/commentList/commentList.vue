@@ -1,30 +1,31 @@
 <template>
 	<view class="list-container">
 		<HeaderSearch title="评论"></HeaderSearch>
-		<view class="title">全部评论({{count}})</view>
-		<view class="content" v-for="(item, i) in commentList" :key="i">
+		<view class="title">全部评论({{ totalElements }})</view>
+		<view class="content" v-for="(item, i) in dataList" :key="i">
 			<view class="header">
 				<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
-				<text class="users">{{item.comment_user_name}}</text>
-				<text class="times">{{item.date}}</text>
+				<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName?item.nickName:'匿名' }}</text>
+				<text class="times">{{ item.date }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="item.comment_content"></rich-text>
+				<u-read-more :ref="`uReadMore${i}`" text-indent='0' :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+					<rich-text :nodes="item.content "></rich-text>
 				</u-read-more>
 			</view>
 			<view class="reply-b">
 				<view class="left">
 					<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610355717998322.png" color="#9FA3A8" size="24"></u-icon>
-					<text  @tap="goReplay">回复（{{item.replyCount}}）</text>
+					<text @tap="goReplay(item)">回复（{{ item.replyNum }}）</text>
 				</view>
-				<text class="right" v-if="item.is_mine!=null" @click="delItem(item.id)">删除</text>
+				<text class="right" v-if="item.isMyComment" @click="delItem(item.id)">删除</text>
 			</view>
 		</view>
-		<view class="no-comment" v-if="list.length == 0">
+		<view class="no-comment" v-if="dataList.length == 0">
 			<image src="../../static/svg/no-comment.svg"></image>
 			<text>暂无评论</text>
 		</view>
+		<u-loadmore v-if="dataList.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
 
 		<commReply @reply="commentPublish"></commReply>
 
@@ -45,9 +46,6 @@
 <script>
 import ApiPath from '@/api/ApiPath.js';
 export default {
-	onLoad(val) {
-		this.initComment(val);
-	},
 	data() {
 		return {
 			content: `1111111111`,
@@ -56,69 +54,191 @@ export default {
 				paddingTop: '0',
 				marginTop: '20rpx'
 			},
-			list: [1, 2, 3, 4, 5, 6],
-			tipModalShow:false,
-			delModalShow:false,
-			commentList:[],
-			count:'',
+			page: 1,
+			dataList: [],
+			tipModalShow: false,
+			delModalShow: false,
+			commentList: [],
+			count: '',
+			title: '评论',
+			type: 1, // 1 粮食 2 文章 3 看图识病 4 圈子
+			status: 'loadmore',
+			iconType: 'flower',
+			loadText: {
+				loadmore: '点我加载更多',
+				loading: '客官别急马上就来~',
+				nomore: '我是有底线的~~~'
+			},
+			totalElements:0
 		};
 	},
+	onReachBottom() {
+		if (this.nomore) {
+			return false;
+		}
+		this.status = 'loading';
+		this.page = ++this.page;
+		this.initPage();
+	},
+	onLoad(data) {
+		this.type = data.type;
+		this.id = data.id;
+		this.initPage();
+	},
 	methods: {
-		initComment(val){
-			let params = {
-				userId: '22',
-				artId: val.id
-			};
-			this.$ajax(ApiPath.url.articleFindCommentByUserId, 'GET', params).then(res => {
-				if (res.code == "200") {
-					console.log(JSON.stringify(res.data))
-					this.count = res.data.length;
-					this.commentList = res.data;
-				}
-			})
+		// 加载下一页
+		loadmore() {
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.initPage();
 		},
-		goReplay() {
+		// 根据type 查询接口配置
+		initPage(action) {
+			if(action){
+				this.page = 1
+				this.dataList = []
+			}
+			let url = ApiPath.url.articleFindCommentByUserId;
+			let params = {};
+			if (this.type == 1) {
+				// 粮食买卖
+				url = ApiPath.url.grainTradingFindCommentPage;
+				params = {
+					aid: this.id,
+					page: this.page,
+					size: 10,
+					userId:'20200909'
+				};
+			}
+			if (this.type == 2) {
+				// 文章点评
+				url = ApiPath.url.articleFindCommentByUserId;
+				params = {
+					userId: '22',
+					artId: this.id
+				};
+			}
+			if (this.type == 3) {
+				// 看图识病
+				url = ApiPath.url.articleFindCommentByUserId;
+			}
+			if (this.type == 4) {
+				// 圈子
+				url = ApiPath.url.articleFindCommentByUserId;
+			}
+			this.getCommentList(url, params);
+		},
+		// 获取评论列表
+		getCommentList(url, params) {
+			let self = this;
+			this.$ajax(url, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (res.data.content.length < 10) {
+							self.nomore = true;
+							self.status = 'nomore';
+							self.dataList = self.dataList.concat(res.data.content);
+							if (self.dataList.length == 0) {
+								self.noData = true;
+							} else {
+								self.noData = false;
+							}
+						} else {
+							setTimeout(() => {
+								self.nomore = false;
+								self.status = 'loadmore';
+								self.dataList = self.dataList.concat(res.data.content);
+								if (self.dataList.length == 0) {
+									self.noData = true;
+								} else {
+									self.noData = false;
+								}
+							}, 200);
+						}
+						
+						self.totalElements = res.data.totalElements
+					}
+				})
+				.catch(err => {});
+		},
+		
+		// 去评论页面
+		goReplay(item) {
+			console.log(item)
+			uni.setStorageSync('commentData',JSON.stringify(item))
 			uni.navigateTo({
-				url: '/pages/commentList/reply'
+				url: '/pages/commentList/reply?id=' + item.id + '&type=' + this.type
 			});
 		},
+		// 发布评论
 		commentPublish(val, isAnonymous) {
 			if (val) {
 				this.showReply = false;
-				this.tipModalShow = true
-				setTimeout(()=>{
-					this.tipModalShow = false
-				},2000)
+				let url = '';
+				let params = {};
+				if (this.type == 1) {
+					// 粮食买卖
+					url = ApiPath.url.grainTradingAddComment;
+					params = {
+						aid: this.id,
+						commentContent: val,
+						commentUserName: '小米',
+						commentPic: '22222',
+						commentUserId: '20200909',
+						isAnonymous: isAnonymous ? 1 : 0
+					};
+				}
+				if (this.type == 2) {
+					// 文章点评
+					// url = ApiPath.url.articleFindCommentByUserId;
+					// params = {
+					// 	userId: '22',
+					// 	artId: this.id
+					// };
+				}
+				if (this.type == 3) {
+					// 看图识病
+					url = ApiPath.url.caseInfoCommentSave;
+				}
+				if (this.type == 4) {
+					// 圈子
+					url = ApiPath.url.articleFindCommentByUserId;
+				}
+				this.saveComment(url, params);
 			} else {
 				uni.showToast({
 					title: '请输入评论内容在评论'
 				});
 			}
 		},
-		delItem(val){
-			
-			
-			
-			
-			
-			
-			this.delModalShow = true
-			setTimeout(()=>{
-				this.delModalShow = false
-			},2000)
-			
-			
-			
-			
-		}
+		saveComment(url, params) {
+			let self = this;
+			this.$ajax(url, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						this.tipModalShow = true;
+						setTimeout(() => {
+							this.tipModalShow = false;
+						}, 2000);
+						self.initPage(true);
+					}
+				})
+				.catch(err => {});
+		},
 		
+		delItem(val) {
+			this.delModalShow = true;
+			setTimeout(() => {
+				this.delModalShow = false;
+			}, 2000);
+		}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
 .list-container {
-	padding-bottom: 230rpx;
+	padding-bottom: 250rpx;
 	.title {
 		line-height: 80rpx;
 		font-size: 28rpx;
