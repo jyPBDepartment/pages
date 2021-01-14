@@ -151,7 +151,7 @@ const url = {
 
 
 	/**
-	 * 慧农1.0 优化 接口新增
+	 * 慧农V_1.0 优化 接口
 	 */
 	// 设置粮食买卖信息收藏状态
 	grainTradingSetCollection: URLHost + '/grainTrading/setCollection',
@@ -173,7 +173,62 @@ const url = {
 	grainTradingFindReplyPage: URLHost + '/grainTrading/findReplyPage',
 	// 条件查询粮食买卖列表
 	agriculturalFindAgriInfo: URLHost + '/agricultural/findAgriInfo',
+	// 根据用户id查询粮食买卖评论
+	grainTradingGetMyComment: URLHost + '/grainTrading/getMyComment',
+	// 根据用户id查询粮食买卖回复
+	grainTradingGetMyReply: URLHost + '/grainTrading/getMyReply',
+	// 设置帖子点赞功能
+	postInfoPostThumbs: URLHost + '/postInfo/postThumbs',
+	// 条件查询帖子列表
+	postInfoFindByFive: URLHost + '/postInfo/findByFive',
+	// 设置帖子收藏状态
+	postInfoPostCollection: URLHost + '/postInfo/postCollection',
+	// 我的收藏查询帖子列表
+	postInfoPostByUserId: URLHost + '/postInfo/postByUserId',
+	// 增加帖子浏览量
+	postInfoFindById: URLHost + '/postInfo/findById',
+	// 添加帖子发帖图片
+	postInfoAddPostInfo: URLHost + '/postInfo/addPostInfo',
+	// 根据帖子评论人ID查询评论
+	postCommentInfoFindByUserId: URLHost + '/postCommentInfo/findByUserId',
+	// 根据帖子回复人ID查询回复
+	commentInfoFindByUserReplyId: URLHost + '/commentInfo/findByUserReplyId',
+	// 根据帖子Id、用户id查询帖子列表详情
+	postInfoFindPostId: URLHost + '/postInfo/findPostId',
+	// 根据id查询评论列表信息
+	postCommentInfoFindCommentByUserId: URLHost + '/postCommentInfo/findCommentByUserId',
+	// 设置看图识病浏览量
+	caseInfoFindNumById: URLHost + '/caseInfo/findNumById',
+	// 新增看图识病评论
+	caseInfoCommentSave: URLHost + '/caseInfoComment/save',
+	// 设置看图识病点赞
+	caseInfoSaveCasePraise: URLHost + '/caseInfo/saveCasePraise',
+	// 新增看图识病回复
+	caseInfoReplySave: URLHost + '/caseInfoReply/save',
+	// 删除看图识病回复
+	caseInfoReplyDelete: URLHost + '/caseInfoReply/delete',
+	// 删除看图识病评论及评论下的回复
+	caseInfoCommentDelete: URLHost + '/caseInfoComment/delete',
+	// 设置看图识病与我无关
+	caseInfoIsIrrelevant: URLHost + '/caseInfo/isIrrelevant',
+	// 看图识病列表查询
+	caseInfoFindByNum: URLHost + '/caseInfo/findByNum',
+	// 设置看图识病收藏
+	caseInfoSaveCollection: URLHost + '/caseInfo/saveCollection',
+	// 我的看图识病收藏
+	caseInfoFindByMyCollection: URLHost + '/caseInfo/findByMyCollection',
+	// 根据评论人id查询评论
+	caseInfoCommentFindByUserId: URLHost + '/caseInfoComment/findByUserId',
+	// 根据回复人id查询回复
+	caseInfoReplyFindByUserId: URLHost + '/caseInfoReply/findByUserId',
+	// 看图士兵根据id userId查询
+	caseInfoFindUserCaseId: URLHost + '/caseInfo/findUserCaseId',
+	// 根据看图识病id、用户id查询评论信息
+	caseInfoCommentFindCommentByUserId: URLHost + '/caseInfoComment/findCommentByUserId',
 	
+	/**
+	 * 慧农V_1.0 优化 接口 end
+	 */
 	
 	
 	
