@@ -108,7 +108,7 @@ export default {
         this.$message.error("请选择角色");
         return;
       }
-        alert(this.roleId)
+        //alert(this.roleId)
       this.accountRoleInfoEntity.accountId = this.accountId;
       this.accountRoleInfoEntity.roleId = this.roleId;
       let params = this.accountRoleInfoEntity;
