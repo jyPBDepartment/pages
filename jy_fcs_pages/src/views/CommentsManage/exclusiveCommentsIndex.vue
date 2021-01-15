@@ -309,7 +309,7 @@ export default {
                   commentId: scope.row.id,
                 };
                 api
-                  .testAxiosGet(ApiPath.url.grainTradingDelCommentPC, params)
+                  .testAxiosGet(ApiPath.url.exclusiveDelCommentPC, params)
                   .then((res) => {
                     if (res.code == "200") {
                       this.$message.success(res.message);

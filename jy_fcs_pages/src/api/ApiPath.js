@@ -293,6 +293,8 @@ const url = {
 
   // 删除文章点评评论信息
   exclusiveDelCommentPC: URLHost + '/exclusive/delCommentPC',
+  // 删除文章点评回复信息
+  exclusiveDelReplyPC: URLHost + '/exclusive/delReplyPC',
   // 根据文章点评评论Id查询回复信息列表
   exclusiveFindReplyPageByParam: URLHost + '/exclusive/findReplyPageByParam',
   // 分页查询看图识病评论列表
