@@ -5,7 +5,7 @@
 			<u-tabs :list="listTab" font-size="28" :current="current" @change="change"></u-tabs>
 			<u-line color="#f4f4f4"></u-line>
 		</view>
-		<FilterCom style="padding-top: 88rpx" @selectTab="selectTab"></FilterCom>
+		<FilterCom style="padding-top: 88rpx" @selectTab="selectTabPage"></FilterCom>
 		<view>
 			<view class="comm-list-item" v-for="(item, i) in commentListData" @tap="goDetails(item.id)" :key="i">
 				<image class="item-img" :src="item.url || `../../static/img/tabbar/首页-s-r.png`"></image>
@@ -97,7 +97,7 @@ export default {
 			this.page = ++this.page;
 			this.getCommentList(this.listTab[this.current].id);
 		},
-		selectTab(val) {
+		selectTabPage(val) {
 			console.log(val);
 		},
 		clickIcon(m, n) {

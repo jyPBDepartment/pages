@@ -1,6 +1,11 @@
 no-data
 <script>
 export default {
+	globalData: {
+		userId: uni.getStorageSync('userId'),
+		nickName: uni.getStorageSync('nickName') || '匿名',
+		pic: uni.getStorageSync('pic') || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'
+	},
 	onLaunch: function() {
 		// console.log('App Launch');
 		// setTimeout(() => {
@@ -498,17 +503,17 @@ export default {
 	}
 }
 
-.slot-content{
+.slot-content {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding: 40rpx;
-	>image{
+	> image {
 		width: 200rpx;
 		height: 200rpx;
 	}
-	>text{
+	> text {
 		font-size: 40rpx;
 		font-family: Proxima Nova;
 		font-weight: 600;

@@ -2,8 +2,8 @@
 	<view class="my-container">
 		<!-- <HeaderSearch hideBack title="我的"></HeaderSearch> -->
 		<view class="header-info">
-			<image class="image" src="../../../static/logo.png" mode=""></image>
-			<text>XXXXX</text>
+			<image class="image" :src="pic" mode=""></image>
+			<text>{{ nickName }}</text>
 		</view>
 		<view class="my-items">
 			<view class="item" @click="jump('../../catalog/agriculturalMachinery?index=0')">
@@ -62,7 +62,9 @@ export default {
 	},
 	data() {
 		return {
-			nc: Interface.common.nc
+			nc: Interface.common.nc,
+			nickName: getApp().globalData.nickName,
+			pic: getApp().globalData.pic
 		};
 	},
 	onLoad() {},
@@ -95,10 +97,10 @@ export default {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		.image{
+		.image {
 			width: 174rpx;
 			height: 174rpx;
-			
+			margin-bottom: 20rpx;
 		}
 	}
 

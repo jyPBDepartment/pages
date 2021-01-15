@@ -216,7 +216,7 @@ const url = {
 	// 设置看图识病与我无关
 	caseInfoIsIrrelevant: URLHost + '/caseInfo/isIrrelevant',
 	// 看图识病列表查询
-	caseInfoFindByNum: URLHost + '/caseInfo/findByNum',
+	caseInfoFindCaseInfoList: URLHost + '/caseInfo/findCaseInfoList',
 	// 设置看图识病收藏
 	caseInfoSaveCollection: URLHost + '/caseInfo/saveCollection',
 	// 我的看图识病收藏
@@ -229,7 +229,14 @@ const url = {
 	caseInfoFindUserCaseId: URLHost + '/caseInfo/findUserCaseId',
 	// 根据看图识病id、用户id查询评论信息
 	caseInfoCommentFindCommentByUserId: URLHost + '/caseInfoComment/findCommentByUserId',
+	// 看图识病查看详情
+	caseInfoFindChannelId: URLHost + '/caseInfo/findChannelId',
 	
+	// 查询看图识病单条下所有评论
+	caseInfoFindCommentPage: URLHost + '/caseInfo/findCommentPage',
+	// 查询看图识病评论下全部回复
+	
+	caseInfoFindReplyPage: URLHost + '/caseInfo/findReplyPage',
 	/**
 	 * 慧农V_1.0 优化 接口 end
 	 */

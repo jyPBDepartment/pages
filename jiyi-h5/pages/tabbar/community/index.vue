@@ -5,9 +5,47 @@
 			<view @click="selectTab(item, index)" :class="index == tabIndex && 'tab-hover'" v-for="(item, index) in tabsList" :key="index">{{ item.name }}</view>
 		</view>
 		<FilterCom></FilterCom>
-		<mescroll-body style="background: #f4f4f4;" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+		<!-- 	<mescroll-body style="background: #f4f4f4;" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			<community-item @click="jump(item.id)" v-for="(item, index) in dataList" :key="index" :communityInfo="item"></community-item>
-		</mescroll-body>
+		</mescroll-body> -->
+
+		<view class="list-container-s" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
+			<view class="title">{{ item.name }}</view>
+			<view class="content">
+				<view class="header">
+					<image class="image" src="../../../static/img/tabbar/guanzhuactive.png"></image>
+					<text class="users">{{ item.author }}</text>
+					<text class="times">{{ item.createDate }}</text>
+				</view>
+				<view class="paragraph">
+					<p>{{item.code}}</p>
+				</view>
+				<view class="pictues-group">
+					<image v-for="(item, i) in url" class="preview-img"  :src="item.imgUrl" :key="i"></image>
+				</view>
+				<view class="fun-btn">
+					<view class="item">
+						<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
+						<text>{{ item.viewNum }}</text>
+					</view>
+					<view class="item" @tap.stop="clickIcon(item, 1, index)">
+						<u-icon v-if="item.curCollention == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" size="24"></u-icon>
+						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
+						<text>{{ item.collectionNum }}</text>
+					</view>
+					<view class="item" @tap.stop="clickIcon(item, 2, index)">
+						<u-icon v-if="item.curPraise == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
+						<text>{{ item.praiseNum }}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="no-data" v-if="noData">
+			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
+			<text>暂无数据</text>
+		</view>
+		<u-loadmore v-if="dataList.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
 
 		<uni-drawer ref="drawer" mode="right" :width="300" :visible="true">
 			<view style="padding: 20rpx">
@@ -46,30 +84,59 @@ export default {
 		CommunityInfo,
 		CommunityItem
 	},
+	onReachBottom() {
+		if (this.nomore) {
+			return false;
+		}
+		this.status = 'loading';
+		this.page = ++this.page;
+		this.request();
+	},
+	onShow() {
+		this.request(true);
+	},
 	data() {
 		return {
+			url: [
+				{
+					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346336119875.png'
+				},
+				{
+					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346150825084.png'
+				},
+				{
+					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png'
+				},
+				{
+					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png'
+				}
+			],
 			tabIndex: 0,
 			tabsList: [],
 			categoryList: [],
 			selectCategoryIndex: null,
 			postType: null,
-			mescroll: null, // mescroll实例对象 (此行可删,mixins已默认)
-			// 下拉刷新的配置(可选, 绝大部分情况无需配置)
-			downOption: {},
-			// 上拉加载的配置(可选, 绝大部分情况无需配置)
-			upOption: {
-				page: {
-					size: 10 // 每页数据的数量,默认10
-				},
-				noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
-				empty: {
-					tip: '暂无相关数据'
-				}
+			shadowStyle: {
+				backgroundImage: 'none',
+				paddingTop: '0',
+				marginTop: '20rpx'
 			},
+			scrollTop: 0,
 			// 列表数据
 			dataList: [],
 			show: true,
-			maskAble: false
+			maskAble: false,
+			
+			status: 'loadmore',
+			iconType: 'flower',
+			loadText: {
+				loadmore: '点我加载更多',
+				loading: '客官别急马上就来~',
+				nomore: '我是有底线的~~~'
+			},
+			page: 1,
+			nomore: false,
+			noData: false,
 		};
 	},
 	watch: {
@@ -127,18 +194,17 @@ export default {
 				console.log(item);
 				this.tabIndex = index;
 				this.postType = item.parentCode;
-				this.mescroll.resetUpScroll();
+				this.request(true)
 			}
 		},
 		selectCategory(item, index) {
+			console.log(item)
 			this.selectCategoryIndex = index;
 			this.postType = item.parentCode;
-			this.mescroll.resetUpScroll();
+			this.request(true)
 		},
 		jump(item) {
-			console.log(1111);
 			uni.navigateTo({
-				// url: `../../grain/article?params=${JSON.stringify(item)}`
 				url: `../../community/communityDetails?id=` + item
 			});
 		},
@@ -146,8 +212,8 @@ export default {
 			if (this.selectCategoryIndex != null) {
 				this.selectCategoryIndex = null;
 				this.$refs.drawer.close();
-				this.postType = null;
-				this.mescroll.resetUpScroll();
+				// this.postType = null;
+				this.request(true);
 			}
 		},
 		/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
@@ -160,37 +226,55 @@ export default {
 		},
 		/*上拉加载的回调*/
 		upCallback(page) {
-			this.request(page, Interface.url.findAllPostInfo);
+			this.request(page);
 		},
-		request(page, url) {
-			let pageNum = page.num; // 页码, 默认从1开始
-			let pageSize = page.size; // 页长, 默认每页10条
+		request(action) {
+			let self = this;
+			if(action){
+				this.page = 1
+				this.dataList = []
+			}
 			// 第1种: 请求具体接口
 			uni.request({
-				url: url,
+				url: Interface.url.findAllPostInfo,
 				method: 'GET',
 				data: {
-					page: pageNum,
-					size: pageSize,
+					page: this.page,
+					size: 10,
 					postType: this.postType
 				},
 				success: res => {
+					console.log(res.data.data)
 					if (res.data.state == 0) {
-						let curPageData = res.data.data.content;
-						let curPageLen = curPageData.length;
-						//设置列表数据
-						if (page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
-						this.dataList = this.dataList.concat(curPageData); //追加新数据
-						this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
+						if (res.data.data.content.length < 10) {
+							self.nomore = true;
+							self.status = 'nomore';
+							self.dataList = self.dataList.concat(res.data.data.content);
+							if (self.dataList.length == 0) {
+								self.noData = true;
+							} else {
+								self.noData = false;
+							}
+						} else {
+							setTimeout(() => {
+								self.nomore = false;
+								self.status = 'loadmore';
+								self.dataList = self.dataList.concat(res.data.data.content);
+								if (self.dataList.length == 0) {
+									self.noData = true;
+								} else {
+									self.noData = false;
+								}
+							}, 200);
+						}
 					}
 					this.show = false;
-					// 请求成功,隐藏加载状态
-					this.mescroll.endSuccess();
+				
 				},
 				fail: err => {
 					this.show = false;
 					// 请求失败,隐藏加载状态
-					this.mescroll.endErr();
+					
 				}
 			});
 		}
@@ -213,5 +297,86 @@ export default {
 .screened {
 	background-color: #e51c2e !important;
 	color: #fff !important;
+}
+
+.list-container-s {
+	background: #ffffff;
+	.title {
+		line-height: 80rpx;
+		font-size: 28rpx;
+		color: #000000;
+		padding: 0 40rpx;
+		font-weight: 600;
+	}
+	.content {
+		margin-bottom: 20rpx;
+		.header {
+			display: flex;
+			align-items: center;
+			font-size: 24rpx;
+			font-weight: 400;
+			color: #000000;
+			opacity: 1;
+			height: 60rpx;
+			line-height: 60rpx;
+			padding: 0 40rpx;
+			.image {
+				width: 48rpx;
+				height: 48rpx;
+				border-radius: 24rpx;
+			}
+			.users {
+				flex: 1;
+				padding-left: 20rpx;
+				font-size: 24rpx;
+				font-weight: 400;
+				line-height: 30rpx;
+				color: #9fa3a8;
+				opacity: 1;
+			}
+			.times {
+				font-size: 24rpx;
+				font-weight: 400;
+				line-height: 30rpx;
+				color: #9fa3a8;
+				opacity: 1;
+			}
+		}
+		.paragraph {
+			font-size: 24rpx;
+			font-weight: 400;
+			color: #000000;
+			opacity: 1;
+			padding: 0rpx 40rpx 20rpx 40rpx;
+		}
+		.pictues-group {
+			padding: 0 20rpx;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: start;
+			.preview-img {
+				height: 220rpx;
+				width: 220rpx;
+				margin: 0rpx 0 15rpx 15rpx;
+				border-radius: 10rpx;
+			}
+		}
+		.fun-btn {
+			font-size: 24rpx;
+			font-weight: 400;
+			line-height: 30rpx;
+			color: #9fa3a8;
+			opacity: 1;
+			display: flex;
+			justify-content: space-between;
+			padding: 20rpx 40rpx;
+			.item {
+				display: flex;
+				align-items: center;
+				height: 30rpx;
+			}
+		}
+	}
 }
 </style>

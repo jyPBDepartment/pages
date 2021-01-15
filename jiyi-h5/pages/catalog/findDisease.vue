@@ -4,44 +4,40 @@
 		<Screen @screened="screened" @select="select" :screenList="screenList" :condition="condition"></Screen>
 		<FilterCom @selectTab="selectTab"></FilterCom>
 
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<view class="comm-list-item" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
-				<image class="item-img" :src="item.url" mode=""></image>
-				<view class="item-info">
-					<p class="title">{{ item.name }}</p>
-					<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate }}</view>
-					<view class="fun-btn">
-						<view class="item">
-							<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
-							<text>123</text>
-						</view>
-						<view class="item" @tap.stop="clickIcon(2)">
-							<u-icon
-								v-if="collection"
-								style="margin-right: 5rpx;"
-								name="http://60.205.246.126/images/2021/01/11/1610334200305905.png"
-								color="#9FA3A8"
-								size="24"
-							></u-icon>
-							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
-							<text>111</text>
-						</view>
-						<view class="item" @tap.stop="clickIcon(1)">
-							<u-icon
-								v-if="thumbs"
-								style="margin-right: 5rpx;"
-								name="http://60.205.246.126/images/2021/01/11/1610333920310281.png"
-								color="#9FA3A8"
-								size="24"
-							></u-icon>
-							<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
-
-							<text>21</text>
-						</view>
+		<view class="comm-list-item" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
+			<image class="item-img" :src="item.url" mode=""></image>
+			<view class="item-info">
+				<p class="title">{{ item.name }}</p>
+				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate }}</view>
+				<view class="fun-btn">
+					<view class="item">
+						<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
+						<text>{{ item.browseNum }}</text>
+					</view>
+					<view class="item" @tap.stop="clickIcon(item, 1, index)">
+						<u-icon
+							v-if="item.isUserCollection == 0"
+							style="margin-right: 10rpx;"
+							name="http://60.205.246.126/images/2021/01/11/1610334200305905.png"
+							size="24"
+						></u-icon>
+						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
+						<text>{{ item.collectionNum }}</text>
+					</view>
+					<view class="item" @tap.stop="clickIcon(item, 2, index)">
+						<u-icon v-if="item.isUserPraise == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
+						<text>{{ item.praiseNum }}</text>
 					</view>
 				</view>
 			</view>
-		</mescroll-body>
+		</view>
+
+		<view class="no-data" v-if="noData">
+			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
+			<text>暂无数据</text>
+		</view>
+		<u-loadmore v-if="dataList.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
 	</view>
 </template>
 
@@ -87,8 +83,20 @@ export default {
 			},
 			// 列表数据
 			dataList: [],
+			status: 'loadmore',
+			iconType: 'flower',
+			loadText: {
+				loadmore: '点我加载更多',
+				loading: '客官别急马上就来~',
+				nomore: '我是有底线的~~~'
+			},
+			page: 1,
+			nomore: false,
+			noData: false,
+			sortIndex: 1,
 			collection: false,
-			thumbs: false
+			thumbs: false,
+			userId: localStorage.getItem('userId')
 		};
 	},
 	onLoad() {
@@ -125,15 +133,88 @@ export default {
 			}
 		});
 	},
+
+	onReachBottom() {
+		if (this.nomore) {
+			return false;
+		}
+		this.status = 'loading';
+		this.page = ++this.page;
+		this.request();
+	},
+	onShow() {
+		this.request(true);
+	},
 	methods: {
-		clickIcon(val) {
+		clickIcon(item, val, i) {
 			if (val == 1) {
-				this.thumbs = !this.thumbs;
+				//收藏点击
+				this.setCollection(item, i);
 			}
 			if (val == 2) {
-				this.collection = !this.collection;
+				// 点赞
+				this.setPraiseThumbs(item, i);
 			}
 		},
+		selectTab(val) {
+			this.sortIndex = val;
+			this.downCallback();
+		},
+		// 收藏
+		setCollection(item, i) {
+			let self = this;
+			let params = {
+				isCollection: item.isUserCollection ? 1 : 0,
+				caseId: item.id,
+				collectionUserId: this.userId
+			};
+			this.$ajax(Interface.url.caseInfoSaveCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.isUserCollection == 1) {
+							this.dataList[i].collectionNum = parseInt(this.dataList[i].collectionNum) - 1;
+							this.dataList[i].isUserCollection = 0;
+						} else {
+							this.dataList[i].collectionNum = parseInt(this.dataList[i].collectionNum) + 1;
+							this.dataList[i].isUserCollection = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {});
+		},
+		// 点赞
+		setPraiseThumbs(item, i) {
+			let self = this;
+			let params = {
+				isFabulous: item.isUserPraise ? 1 : 0,
+				caseId: item.id,
+				praiseUserId: this.userId
+			};
+			this.$ajax(Interface.url.caseInfoSaveCasePraise, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.isUserPraise == 1) {
+							this.dataList[i].praiseNum = parseInt(this.dataList[i].praiseNum) - 1;
+							this.dataList[i].isUserPraise = 0;
+						} else {
+							this.dataList[i].praiseNum = parseInt(this.dataList[i].praiseNum) + 1;
+							this.dataList[i].isUserPraise = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {});
+		},
+
 		removeSpaces(string) {
 			return string.replace(/\s*/g, '');
 		},
@@ -147,61 +228,66 @@ export default {
 			this.searchName = this.removeSpaces(e);
 			this.downCallback();
 		},
-		select(code) {
-			this.cropsTypeCode = code;
+		select(code, name) {
+			this.cropsTypeCode = name;
 			this.downCallback();
 		},
-		screened(code) {
-			this.dipTypeCode = code;
+		screened(code, name) {
+			this.dipTypeCode = name;
 			this.downCallback();
 		},
-		/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
-		mescrollInit(mescroll) {
-			this.mescroll = mescroll;
-		},
-		/*下拉刷新的回调, 有三种处理方式:*/
 		downCallback() {
-			this.mescroll.resetUpScroll();
+			this.request(true);
 		},
-		/*上拉加载的回调*/
-		upCallback(page) {
-			this.request(page, Interface.url.findCasePage);
-		},
-		request(page, url) {
-			let pageNum = page.num; // 页码, 默认从1开始
-			let pageSize = page.size; // 页长, 默认每页10条
+
+		request(action) {
+			let self = this;
+			if (action) {
+				this.page = 1;
+				this.dataList = [];
+			}
 			// 第1种: 请求具体接口
+			let userId = localStorage.getItem('userId');
 			uni.request({
-				url: url,
+				url: Interface.url.caseInfoFindCaseInfoList,
 				method: 'GET',
 				data: {
 					name: this.searchName,
-					page: pageNum,
-					size: pageSize,
+					page: this.page,
+					size: 10,
 					dipTypeCode: this.dipTypeCode,
-					cropsTypeCode: this.cropsTypeCode
+					cropsTypeCode: this.cropsTypeCode,
+					sort: this.sortIndex,
+					userId: userId
 				},
 				success: res => {
-					console.log(res.data);
-					if (res.data.state == 0) {
-						let curPageData = res.data.data.content.map(item => {
-							if (item.url != '') {
-								item.url = item.url.split(',')[0];
+					if (res.data.code == 200) {
+						if (res.data.data.content.length < 10) {
+							self.nomore = true;
+							self.status = 'nomore';
+							self.dataList = self.dataList.concat(res.data.data.content);
+							if (self.dataList.length == 0) {
+								self.noData = true;
+							} else {
+								self.noData = false;
 							}
-							return item;
-						});
-						let curPageLen = curPageData.length;
-						//设置列表数据
-						if (page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
-						this.dataList = this.dataList.concat(curPageData); //追加新数据
-						this.mescroll.endByPage(curPageLen, res.data.data.totalPages);
+						} else {
+							setTimeout(() => {
+								self.nomore = false;
+								self.status = 'loadmore';
+								self.dataList = self.dataList.concat(res.data.data.content);
+								if (self.dataList.length == 0) {
+									self.noData = true;
+								} else {
+									self.noData = false;
+								}
+							}, 200);
+						}
 					}
-					// 请求成功,隐藏加载状态
-					this.mescroll.endSuccess();
 				},
 				fail: err => {
 					// 请求失败,隐藏加载状态
-					this.mescroll.endErr();
+					// this.mescroll.endErr();
 				}
 			});
 		}

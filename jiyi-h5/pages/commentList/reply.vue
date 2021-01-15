@@ -4,7 +4,7 @@
 
 		<view class="content">
 			<view class="header">
-				<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
+				<image class="image" :src="commentData.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png' "></image>
 				<text class="users">{{ commentData.isAnonymous ? '匿名' : commentData.nickName }}</text>
 				<text class="times">{{ commentData.date }}</text>
 			</view>
@@ -20,7 +20,7 @@
 
 		<view class="reply-content" v-for="(item, i) in dataList" :key="i">
 			<view class="header">
-				<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
+				<image class="image" :src="item.replyPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png' "></image>
 				<text class="users">{{ item.isAnonymous ? '匿名' : item.replyUserName }}</text>
 				<text class="times">{{ item.replyDate }}</text>
 			</view>
@@ -35,7 +35,7 @@
 			</view>
 			<view class="reply-b" v-if="item.isMyReply == 1">
 				<view class="left"></view>
-				<text class="right" @click="delItem">删除</text>
+				<text class="right" @click="delItem(item)">删除</text>
 			</view>
 		</view>
 		<view class="no-comment" v-if="dataList.length == 0">
@@ -86,7 +86,9 @@ export default {
 				loading: '客官别急马上就来~',
 				nomore: '我是有底线的~~~'
 			},
-			totalElements: 0
+			totalElements: 0,
+			userId:localStorage.getItem('userId'),
+			
 		};
 	},
 	onLoad(data) {
@@ -116,7 +118,7 @@ export default {
 					cid: this.commentID,
 					page: this.page,
 					size: 10,
-					userId: '20200909'
+					userId: this.userId
 				};
 			}
 			if (this.type == 2) {
@@ -129,7 +131,13 @@ export default {
 			}
 			if (this.type == 3) {
 				// 看图识病
-				url = ApiPath.url.articleFindCommentByUserId;
+				url = ApiPath.url.caseInfoFindReplyPage;
+				params = {
+					commentId: this.commentID,
+					page: this.page,
+					size: 10,
+					userId: this.userId
+				};
 			}
 			if (this.type == 4) {
 				// 圈子
@@ -175,29 +183,40 @@ export default {
 			if (val) {
 				let url = '';
 				let params = {};
+				let nickName = getApp().globalData.nickName;
+				let pic = getApp().globalData.pic;
+				let userId = getApp().globalData.userId;
 				if (this.type == 1) {
 					// 粮食买卖
 					url = ApiPath.url.grainTradingAddReply;
 					params = {
 						commentId: this.commentID,
 						replyContent: val,
-						replyUserName: '小米',
-						replyPic: '22222',
-						replyUserId: '20200909',
+						replyUserName: nickName,
+						replyPic: pic,
+						replyUserId: this.userId,
 						isAnonymous: isAnonymous ? 1 : 0
 					};
 				}
 				if (this.type == 2) {
 					// 文章点评
-					// url = ApiPath.url.articleFindCommentByUserId;
-					// params = {
-					// 	userId: '22',
-					// 	artId: this.id
-					// };
+					url = ApiPath.url.articleFindCommentByUserId;
+					params = {
+						userId: '22',
+						artId: this.id
+					};
 				}
 				if (this.type == 3) {
 					// 看图识病
-					url = ApiPath.url.caseInfoCommentSave;
+					url = ApiPath.url.caseInfoReplySave;
+					params = {
+						commentId: this.commentID,
+						replyContent: val,
+						replyUserName: nickName,
+						replyPic: pic,
+						replyUserId: this.userId,
+						isAnonymous: isAnonymous ? 1 : 0
+					};
 				}
 				if (this.type == 4) {
 					// 圈子
@@ -210,6 +229,7 @@ export default {
 				});
 			}
 		},
+		// 发布回复
 		saveReply(url, params) {
 			let self = this;
 
@@ -225,11 +245,49 @@ export default {
 				})
 				.catch(err => {});
 		},
-		delItem() {
-			this.delModalShow = true;
-			setTimeout(() => {
-				this.delModalShow = false;
-			}, 2000);
+		delItem(item) {
+			let self = this;
+			let url = ''
+			let params = {}
+			if (this.type == 1) {
+				// 粮食买卖
+				url = ApiPath.url.grainTradingDeleteReply;
+				params = {
+					replyId: item.id
+				};
+			}
+			if (this.type == 2) {
+				// 文章点评
+				url = ApiPath.url.articleFindCommentByUserId;
+				params = {
+					id: item.id
+				};
+			}
+			if (this.type == 3) {
+				// 看图识病
+				url = ApiPath.url.caseInfoReplyDelete;
+				params = {
+					id: item.id
+				};
+			}
+			if (this.type == 4) {
+				// 圈子
+				url = ApiPath.url.articleFindCommentByUserId;
+				params = {
+					id: item.id
+				};
+			}
+			this.$ajax(url, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						this.delModalShow = true;
+						setTimeout(() => {
+							this.delModalShow = false;
+						}, 2000);
+						self.initPageList(true);
+					}
+				})
+				.catch(err => {});
 		}
 	}
 };

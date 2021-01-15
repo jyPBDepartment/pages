@@ -1,59 +1,64 @@
 <template>
 	<view class="rich-text-container">
-		<HeaderSearch :title="title"></HeaderSearch>
-
-		<!--  -->
+		<HeaderSearch title="详情"></HeaderSearch>
 		<view class="content">
-			<view class="image-t"><image :src="url"></image></view>
+			<view class="image-t"><image :src="detailsObj.url"></image></view>
 			<view class="details-box">
 				<view class="title">一、概述</view>
-				<view class="html-content"><u-parse :html="demoHtml"></u-parse></view>
+				<view class="html-content"><u-parse :html="detailsObj.describetion"></u-parse></view>
 				<view class="filter-container">
 					<view class="item" :class="tabIndex == 1 && 'select-tab'" @tap="clickTab(1)">危害</view>
 					<view class="item" :class="tabIndex == 2 && 'select-tab'" @tap="clickTab(2)">传播途径/发病条件</view>
 					<view class="item" :class="tabIndex == 3 && 'select-tab'" @tap="clickTab(3)">防治技术</view>
 				</view>
-				<view v-if="tabIndex == 1" class="html-content"><u-parse :html="demoHtml"></u-parse></view>
-				<view v-if="tabIndex == 2" class="html-content"><u-parse :html="demoHtml"></u-parse></view>
-				<view v-if="tabIndex == 3" class="html-content"><u-parse :html="demoHtml"></u-parse></view>
+				<view v-show="tabIndex == 1" class="html-content"><u-parse :html="detailsObj.harm"></u-parse></view>
+				<view v-show="tabIndex == 2" class="html-content"><u-parse :html="detailsObj.channel"></u-parse></view>
+				<view v-show="tabIndex == 3" class="html-content"><u-parse :html="detailsObj.controlTechnology"></u-parse></view>
 			</view>
 			<view class="fun-btn p-40">
 				<view class="item">
-					<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
-					<text>123</text>
+					<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
+					<text>{{ detailsObj.browse_num }}</text>
 				</view>
-				<view class="item" @tap.stop="clickIcon(2)">
-					<u-icon v-if="collection" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" size="24"></u-icon>
-					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
-					<text>111</text>
+				<view class="item" @tap.stop="clickIcon(detailsObj, 1)">
+					<u-icon
+						v-if="detailsObj.isUserCollection == 0"
+						style="margin-right: 10rpx;"
+						name="http://60.205.246.126/images/2021/01/11/1610334200305905.png"
+						size="24"
+					></u-icon>
+					<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
+					<text>{{ detailsObj.collection_num }}</text>
 				</view>
-				<view class="item" @tap.stop="clickIcon(1)">
-					<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
-					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
-
-					<text>21</text>
+				<view class="item" @tap.stop="clickIcon(detailsObj, 2)">
+					<u-icon v-if="detailsObj.isUserPraise == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+					<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
+					<text>{{ detailsObj.praise_num }}</text>
 				</view>
-				<view class="item" @tap.stop="clickIcon(1)">
-					<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/13/1610507402974982.png" size="24"></u-icon>
-					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/13/1610507433084156.png" size="24"></u-icon>
-
-					<text>123</text>
+				<view class="item" @tap.stop="clickIcon(detailsObj, 3)">
+					<u-icon
+						v-if="detailsObj.isUserIrrelevant == 0"
+						style="margin-right: 10rpx;"
+						name="http://60.205.246.126/images/2021/01/13/1610507402974982.png"
+						size="24"
+					></u-icon>
+					<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/13/1610507433084156.png" size="24"></u-icon>
+					<text>{{ detailsObj.irrelevant_num }}</text>
 				</view>
 			</view>
 			<view class="dividing-line"></view>
 			<view class="comment-box-c">
 				<view class="top-box-c">
-					<text>评论(25)</text>
-					<text class="right" @tap="goCommentList">全部评论/去评论 ></text>
+					<text>评论({{ detailsObj.comment_num }})</text>
+					<text class="right" @tap="goCommentList">{{ detailsObj.comment_num ? '全部评论' : '去评论' }} ></text>
 				</view>
-				<u-line v-if="false" color="rgba(0, 0, 0, 0.1)" />
-				<view class="content">
+				<u-line v-if="detailsObj.comment_num && dataComment" color="rgba(0, 0, 0, 0.1)" />
+				<view v-if="detailsObj.comment_num && dataComment" class="content">
 					<view class="header">
-						<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
-						<text class="users">zhoux</text>
+						<image class="image" :src=" dataComment.commentUserPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
+						<text class="users">{{ dataComment.commentUserName }}</text>
 					</view>
-
-					<p class="words">111111111111111111111</p>
+					<p class="words">{{ dataComment.commentContent }}</p>
 				</view>
 			</view>
 		</view>
@@ -64,54 +69,156 @@
 import HeaderSearch from '@/components/HeaderSearch/HeaderSearch.vue';
 //后台路径引用
 import ApiPath from '@/api/ApiPath.js';
+
 export default {
 	components: {
 		HeaderSearch
 	},
 	data() {
 		return {
-			demoHtml: '',
 			selectIndex: 0,
 			title: '',
 			url: '',
 			tabIndex: 1,
-			collection:false,
-			thumbs:false,
+			id: '',
+			detailsObj: {},
+			dataComment: {},
+			userId: localStorage.getItem('userId')
 		};
 	},
 	onLoad(e) {
-		// 根据id获取基础信息
-		this.getInfoById(e.id);
+		this.id = e.id;
 
-		// this.demoHtml = '这里是富文本解析得内容'
+		this.$u.debounce(this.getInfoById(e.id), 1000);
 	},
 	methods: {
-		clickIcon(val) {
-			if(val==1){
-				this.thumbs = !this.thumbs
-			}
-			if(val == 2){
-				this.collection = !this.collection
-			}
-			
+		addCaseInfoViewNum(id) {
+			let self = this;
+			self.$ajax(ApiPath.url.caseInfoFindNumById, 'GET', { id: id }).then(res => {
+				if (res.code == 200) {
+					self.detailsObj.browse_num = res.data.browseNum;
+				}
+			});
 		},
+		clickIcon(item, val) {
+			if (val == 1) {
+				//收藏点击
+				this.setCollection(item);
+			}
+			if (val == 2) {
+				// 点赞
+				this.setPraiseThumbs(item);
+			}
+			if (val == 3) {
+				// 点赞
+				this.setIrrelevant(item);
+			}
+		},
+		// 收藏
+		setCollection(item, i) {
+			let self = this;
+			let params = {
+				isCollection: item.isUserCollection ? 1 : 0,
+				caseId: item.id,
+				collectionUserId: this.userId
+			};
+			this.$ajax(ApiPath.url.caseInfoSaveCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.isUserCollection == 1) {
+							this.detailsObj.collection_num = parseInt(this.detailsObj.collection_num) - 1;
+							this.detailsObj.isUserCollection = 0;
+						} else {
+							this.detailsObj.collection_num = parseInt(this.detailsObj.collection_num) + 1;
+							this.detailsObj.isUserCollection = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {});
+		},
+		// 点赞
+		setPraiseThumbs(item, i) {
+			let self = this;
+			let params = {
+				isFabulous: item.isUserPraise ? 1 : 0,
+				caseId: item.id,
+				praiseUserId: this.userId
+			};
+			this.$ajax(ApiPath.url.caseInfoSaveCasePraise, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.isUserPraise == 1) {
+							this.detailsObj.praise_num = parseInt(this.detailsObj.praise_num) - 1;
+							this.detailsObj.isUserPraise = 0;
+						} else {
+							this.detailsObj.praise_num = parseInt(this.detailsObj.praise_num) + 1;
+							this.detailsObj.isUserPraise = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {
+					uni.showToast({
+						title: err.message,
+						icon: 'none'
+					});
+				});
+		},
+		// 点赞isIrrelevant
+		setIrrelevant(item, i) {
+			let self = this;
+			let params = {
+				isIrrelevant: item.isUserIrrelevant ? 1 : 0,
+				caseId: item.id,
+				irrelevantnUserId: this.userId
+			};
+			this.$ajax(ApiPath.url.caseInfoIsIrrelevant, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.isUserIrrelevant == 1) {
+							this.detailsObj.irrelevant_num = parseInt(this.detailsObj.irrelevant_num) - 1;
+							this.detailsObj.isUserIrrelevant = 0;
+						} else {
+							this.detailsObj.irrelevant_num = parseInt(this.detailsObj.irrelevant_num) + 1;
+							this.detailsObj.isUserIrrelevant = 1;
+						}
+						uni.showToast({
+							title: res.message,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {});
+		},
+
 		clickTab(val) {
 			this.tabIndex = val;
 		},
 		getInfoById(val) {
 			let param = {
-				id: val
+				id: val,
+				userId: this.userId
 			};
+			let self =  this;
 			uni.request({
 				method: 'GET',
-				url: ApiPath.url.findCaseInfoById,
+				url: ApiPath.url.caseInfoFindChannelId,
 				data: param,
 				success: res => {
-					console.log(res.data);
-					if (res.data.state == 0) {
-						this.demoHtml = res.data.data.describetion;
-						this.title = res.data.data.name;
-						this.url = res.data.data.url;
+					if (res.data.code == 200) {
+						self.detailsObj = res.data.data;
+						self.dataComment = res.data.dataComment;
+						self.$u.debounce(self.addCaseInfoViewNum(self.id), 2000);
 					}
 				},
 				fail: () => {}
@@ -126,10 +233,10 @@ export default {
 		select(index) {
 			this.selectIndex = index;
 		},
-		goCommentList(){
+		goCommentList() {
 			uni.navigateTo({
-				url:'/pages/commentList/commentList'
-			})
+				url: '/pages/commentList/commentList?id=' + this.id + '&type=3'
+			});
 		}
 	}
 };
@@ -157,6 +264,7 @@ export default {
 			}
 			.html-content {
 				padding: 20rpx 40rpx;
+				min-height: 100rpx;
 			}
 			.filter-container {
 				margin: 20rpx auto;

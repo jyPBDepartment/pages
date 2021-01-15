@@ -82,10 +82,10 @@
 		},
 		"optimization": {
 			"prefetch": {
-				"enable": true
+				"enable": false
 			},
 			"preload": {
-				"enable": true
+				"enable": false
 			},
 			"treeShaking": {
 				"enable": true

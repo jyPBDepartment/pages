@@ -110,7 +110,7 @@ export default {
 				return;
 			}
 			uni.request({
-				url: Interface.url.addPostInfo,
+				url: Interface.url.postInfoAddPostInfo,
 				method: 'GET',
 				data: {
 					name: this.name,

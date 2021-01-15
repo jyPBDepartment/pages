@@ -110,7 +110,7 @@ export default {
 				this.$refs.drawer.open();
 			} else {
 				this.screenIndex = index;
-				this.$emit('select', item.code);
+				this.$emit('select', item.code,item.name);
 			}
 		},
 		selected(index1, index) {
@@ -132,21 +132,27 @@ export default {
 		},
 		confirm(e) {
 			let params = '';
+			let name = ''
 			if (this.selectType == '1') {
+				
 				//存在2组选择框
 				if (this.screenedIndex !== null) {
 					params = this.screenList[this.screenedIndex1].category[this.screenedIndex].code + '';
+					console.log(params,1)
 				}
 				if (this.screenedIndex2 !== null) {
 					params = params + ',' + this.screenL[this.screenedIndex2].category[this.screenedIndex3].name;
+					console.log(params,2)
 				}
+				
 			} else {
 				if (this.screenedIndex !== null) {
 					params = this.screenList[this.screenedIndex1].category[this.screenedIndex].code + '';
+					name = this.screenList[this.screenedIndex1].category[this.screenedIndex].name + '';
 				}
 			}
-
-			this.$emit('screened', params);
+			
+			this.$emit('screened', params,name);
 			this.$refs.drawer.close();
 		}
 	}
