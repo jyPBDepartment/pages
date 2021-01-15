@@ -272,10 +272,10 @@ export default {
                 }
               ).then(() => {
                 let params = {
-                  commentId: scope.row.id,
+                  id: scope.row.id,
                 };
                 api
-                  .testAxiosGet(ApiPath.url.grainTradingDelCommentPC, params)
+                  .testAxiosGet(ApiPath.url.commentDelete, params)
                   .then((res) => {
                     if (res.code == "200") {
                       this.$message.success(res.message);
@@ -293,10 +293,10 @@ export default {
                 type: "warning",
               }).then(() => {
                 let params = {
-                  commentId: scope.row.id,
+                  id: scope.row.id,
                 };
                 api
-                  .testAxiosGet(ApiPath.url.grainTradingDelCommentPC, params)
+                  .testAxiosGet(ApiPath.url.commentDelete, params)
                   .then((res) => {
                     if (res.code == "200") {
                       this.$message.success(res.message);

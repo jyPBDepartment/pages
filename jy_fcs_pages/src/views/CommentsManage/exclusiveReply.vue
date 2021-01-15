@@ -268,11 +268,11 @@ export default {
         type: "warning",
       }).then(() => {
         let params = {
-          id: scope.row.id,
+          replyId: scope.row.id,
         };
-        api.testAxiosGet(ApiPath.url.commentDelete, params).then((res) => {
-          let code = res.status;
-          if (code == "0") {
+        api.testAxiosGet(ApiPath.url.exclusiveDelReplyPC, params).then((res) => {
+          let code = res.code;
+          if (code == "200") {
             this.$message.success(res.message);
             //this.reload();
             this.listData.splice(scope.$index, 1);
