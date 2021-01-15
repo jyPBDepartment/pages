@@ -141,7 +141,13 @@ export default {
 			}
 			if (this.type == 4) {
 				// 圈子
-				url = ApiPath.url.articleFindCommentByUserId;
+				url = ApiPath.url.postInfoFfindByReplyPage;
+				params = {
+					commentId: this.commentID,
+					page: this.page,
+					size: 10,
+					userId: this.userId
+				};
 			}
 			this.getReplyList(url, params);
 		},
@@ -220,7 +226,7 @@ export default {
 				}
 				if (this.type == 4) {
 					// 圈子
-					url = ApiPath.url.articleFindCommentByUserId;
+					url = ApiPath.url.postInfoFfindByReplyPage;
 				}
 				this.saveReply(url, params);
 			} else {

@@ -2,31 +2,31 @@
 	<view class="service">
 		<!-- 列表数据显示 -->
 		<!-- <mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> -->
-			<view class="comm-list-item" @tap.stop="jump(item.id)" v-for="(item, index) in dataList" :key="index">
-				<image class="item-img" :src="item.url" mode=""></image>
-				<view class="item-info">
-					<view class="title">
-						<text>{{ item.name }}</text>
-						<view @click.stop="">
-							<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
-						</view>
+		<view class="comm-list-item" @tap.stop="jump(item.id)" v-for="(item, index) in dataList" :key="index">
+			<image class="item-img" :src="item.url" mode=""></image>
+			<view class="item-info">
+				<view class="title">
+					<text>{{ item.name }}</text>
+					<view @click.stop="cancelCollection(item)">
+						<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
 					</view>
-					<view v-if="item.address" class="address g-flex g-a-c" style="color: rgba(128, 128, 128, 1)">
-						<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334898551200.png" color="#9FA3A8" size="24"></u-icon>
-						{{ item.address }}
-					</view>
-					<view class="contactsUser">
-						<view class="g-flex g-a-c">
-							<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
-							<view class="word">{{ item.contactsUser }}</view>
-						</view>
-						<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.createDate }}</view>
-					</view>
-					<view class="fun-btn"></view>
 				</view>
+				<view v-if="item.address" class="address g-flex g-a-c" style="color: rgba(128, 128, 128, 1)">
+					<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334898551200.png" color="#9FA3A8" size="24"></u-icon>
+					{{ item.address }}
+				</view>
+				<view class="contactsUser">
+					<view class="g-flex g-a-c">
+						<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
+						<view class="word">{{ item.contactsUser }}</view>
+					</view>
+					<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</view>
+				</view>
+				<view class="fun-btn"></view>
 			</view>
+		</view>
 		<!-- </mescroll-body> -->
-		
+
 		<view class="no-data" v-if="noData">
 			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
 			<text>暂无数据</text>
@@ -56,7 +56,7 @@ export default {
 		};
 	},
 	created() {
-		this.getGrainList(this.page)
+		this.getGrainList(this.page);
 	},
 	onReachBottom() {
 		if (this.nomore) {
@@ -64,9 +64,38 @@ export default {
 		}
 		this.status = 'loading';
 		this.page = ++this.page;
-		this.getGrainList(this.page)
+		this.getGrainList(this.page);
 	},
 	methods: {
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
+		},
+		cancelCollection(item) {
+			let self = this;
+			let params = {
+				action: 0,
+				agrId: item.id,
+				userId: getApp().globalData.userId
+			};
+			this.$ajax(Interface.url.grainTradingSetCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						self.dataList = [];
+						self.getGrainList(1);
+					}
+				})
+				.catch(err => {});
+		},
 		// 跳转详情页面
 		jump(val) {
 			uni.navigateTo({
@@ -79,21 +108,16 @@ export default {
 			this.getGrainList(this.page);
 		},
 		getGrainList(page) {
-			let self = this
-		
+			let self = this;
+
 			// 第1种: 请求具体接口
 			uni.request({
-				url: Interface.url.findAgriInfo,
+				url: Interface.url.grainTradingFindMyCollection,
 				method: 'GET',
 				data: {
-					type: 1,
-					name: '',
+					userId: getApp().globalData.userId,
 					page: page,
-					size: 10,
-					transactionTypeCode: '',
-					transactionCategoryCode: '',
-					identityCode: '',
-					address: ''
+					size: 10
 				},
 				success: res => {
 					if (res.data.state == 0) {
@@ -118,7 +142,6 @@ export default {
 								}
 							}, 200);
 						}
-						
 					}
 				},
 				fail: err => {

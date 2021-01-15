@@ -231,12 +231,22 @@ const url = {
 	caseInfoCommentFindCommentByUserId: URLHost + '/caseInfoComment/findCommentByUserId',
 	// 看图识病查看详情
 	caseInfoFindChannelId: URLHost + '/caseInfo/findChannelId',
-	
 	// 查询看图识病单条下所有评论
 	caseInfoFindCommentPage: URLHost + '/caseInfo/findCommentPage',
 	// 查询看图识病评论下全部回复
-	
 	caseInfoFindReplyPage: URLHost + '/caseInfo/findReplyPage',
+	
+	// 查询帖子列表
+	postInfoFindPostInfoList: URLHost + '/postInfo/findPostInfoList',
+	// 查询帖子单条下所有评论
+	postInfoFindByCommentPage: URLHost + '/postInfo/findByCommentPage',
+	// 查询帖子单条所有回复
+	postInfoFfindByReplyPage: URLHost + '/postInfo/findByReplyPagee',
+	
+	// 我的粮食买卖收藏
+	grainTradingFindMyCollection: URLHost + '/grainTrading/findMyCollection',
+	
+	
 	/**
 	 * 慧农V_1.0 优化 接口 end
 	 */

@@ -5,11 +5,11 @@
 			<view class="item-info">
 				<view class="title">
 					<text>{{ item.name }}</text>
-					<view @click.stop="">
+					<view @click.stop="cancelCollection(item)">
 						<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
 					</view>
 				</view>
-				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate }}</view>
+				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate?formatTime(item.createDate) : '' }}</view>
 				<view class="fun-btn"></view>
 			</view>
 		</view>
@@ -37,7 +37,8 @@ export default {
 			},
 			page: 1,
 			nomore: false,
-			noData: false
+			noData: false,
+			userId:getApp().globalData.userId
 		};
 	},
 	created() {
@@ -52,6 +53,35 @@ export default {
 		this.getPicList(this.page);
 	},
 	methods: {
+		cancelCollection(item){
+			let self = this;
+			let params = {
+				isCollection: 1,
+				caseId: item.id,
+				collectionUserId: this.userId
+			};
+			this.$ajax(Interface.url.caseInfoSaveCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						self.dataList = []
+						self.getPicList(1);
+					}
+				})
+				.catch(err => {});
+		},
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
+		},
 		jump(val) {
 			uni.navigateTo({
 				url: '../grain/richText?id=' + val
@@ -65,17 +95,16 @@ export default {
 		getPicList(page) {
 			let self = this;
 			uni.request({
-				url: Interface.url.findCasePage,
+				url: Interface.url.caseInfoFindByMyCollection,
 				method: 'GET',
 				data: {
-					name: '',
+					collectionUserId:this.userId,
 					page: page,
 					size: 10,
-					dipTypeCode: '',
-					cropsTypeCode: ''
 				},
 				success: res => {
-					if (res.data.state == 0) {
+					console.log(res.data)
+					if (res.data.code == 200) {
 						if (res.data.data.content.length < 10) {
 							self.nomore = true;
 							self.status = 'nomore';

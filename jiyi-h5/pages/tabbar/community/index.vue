@@ -5,36 +5,36 @@
 			<view @click="selectTab(item, index)" :class="index == tabIndex && 'tab-hover'" v-for="(item, index) in tabsList" :key="index">{{ item.name }}</view>
 		</view>
 		<FilterCom></FilterCom>
-		<!-- 	<mescroll-body style="background: #f4f4f4;" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
-			<community-item @click="jump(item.id)" v-for="(item, index) in dataList" :key="index" :communityInfo="item"></community-item>
-		</mescroll-body> -->
 
 		<view class="list-container-s" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
 			<view class="title">{{ item.name }}</view>
 			<view class="content">
 				<view class="header">
 					<image class="image" src="../../../static/img/tabbar/guanzhuactive.png"></image>
-					<text class="users">{{ item.author }}</text>
-					<text class="times">{{ item.createDate }}</text>
+					<text class="users">{{ item.nickName || '匿名' }}</text>
+					<text class="times">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</text>
 				</view>
 				<view class="paragraph">
-					<p>{{item.code}}</p>
+					<p>{{ item.code }}</p>
 				</view>
-				<view class="pictues-group">
-					<image v-for="(item, i) in url" class="preview-img"  :src="item.imgUrl" :key="i"></image>
-				</view>
+				<view class="pictues-group"><image v-for="(item, i) in url" class="preview-img" :src="item.imgUrl" :key="i"></image></view>
 				<view class="fun-btn">
 					<view class="item">
 						<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
-						<text>{{ item.viewNum }}</text>
+						<text>{{ item.pageview }}</text>
 					</view>
 					<view class="item" @tap.stop="clickIcon(item, 1, index)">
-						<u-icon v-if="item.curCollention == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" size="24"></u-icon>
+						<u-icon
+							v-if="item.isUserCollection == 0"
+							style="margin-right: 10rpx;"
+							name="http://60.205.246.126/images/2021/01/11/1610334200305905.png"
+							size="24"
+						></u-icon>
 						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
 						<text>{{ item.collectionNum }}</text>
 					</view>
 					<view class="item" @tap.stop="clickIcon(item, 2, index)">
-						<u-icon v-if="item.curPraise == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+						<u-icon v-if="item.isUserPraise == 0" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
 						<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
 						<text>{{ item.praiseNum }}</text>
 					</view>
@@ -126,7 +126,7 @@ export default {
 			dataList: [],
 			show: true,
 			maskAble: false,
-			
+
 			status: 'loadmore',
 			iconType: 'flower',
 			loadText: {
@@ -137,6 +137,7 @@ export default {
 			page: 1,
 			nomore: false,
 			noData: false,
+			sortIndex: 1
 		};
 	},
 	watch: {
@@ -153,6 +154,93 @@ export default {
 		this.initPostType();
 	},
 	methods: {
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
+		},
+		clickIcon(item, val, i) {
+			if (val == 1) {
+				//收藏点击
+				this.setCollection(item, i);
+			}
+			if (val == 2) {
+				// 点赞
+				this.setPraiseThumbs(item, i);
+			}
+		},
+		// 收藏
+		setCollection(item, i) {
+			let self = this;
+			let params = {
+				isCancelCollection: item.isUserCollection ? 1 : 0,
+				circleId: item.id,
+				userId: '20200909'
+			};
+			this.$ajax(Interface.url.postInfoPostCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.isUserCollection == 1) {
+							this.dataList[i].collectionNum = parseInt(this.dataList[i].collectionNum) - 1;
+							this.dataList[i].isUserCollection = 0;
+						} else {
+							this.dataList[i].collectionNum = parseInt(this.dataList[i].collectionNum) + 1;
+							this.dataList[i].isUserCollection = 1;
+						}
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {});
+		},
+		// 点赞
+		setPraiseThumbs(item, i) {
+			let self = this;
+			let params = {
+				isCancelThumbs: item.isUserPraise ? 1 : 0,
+				circleId: item.id,
+				thumbsUserId: '20200909'
+			};
+			this.$ajax(Interface.url.postInfoPostThumbs, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (item.isUserPraise == 1) {
+							this.dataList[i].praiseNum = parseInt(this.dataList[i].praiseNum) - 1;
+							this.dataList[i].isUserPraise = 0;
+						} else {
+							this.dataList[i].praiseNum = parseInt(this.dataList[i].praiseNum) + 1;
+							this.dataList[i].isUserPraise = 1;
+						}
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						});
+						this.dataList.splice(0, 0);
+					}
+				})
+				.catch(err => {});
+		},
+		selectTab(val) {
+			console.log(val);
+			this.sortIndex = val;
+			this.downCallback();
+		},
+		loadmore() {
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.request();
+		},
 		searchData() {
 			this.request({ num: 1, size: 10 }, Interface.url.findAllPostInfo);
 			this.$refs.drawer.close();
@@ -191,17 +279,16 @@ export default {
 			if (item.name == '筛选') {
 				this.$refs.drawer.open();
 			} else {
-				console.log(item);
 				this.tabIndex = index;
-				this.postType = item.parentCode;
-				this.request(true)
+				this.postType = item.code;
+				this.request(true);
 			}
 		},
 		selectCategory(item, index) {
-			console.log(item)
+			console.log(1111, item);
 			this.selectCategoryIndex = index;
-			this.postType = item.parentCode;
-			this.request(true)
+			this.postType = item.code;
+			this.request(true);
 		},
 		jump(item) {
 			uni.navigateTo({
@@ -216,36 +303,27 @@ export default {
 				this.request(true);
 			}
 		},
-		/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
-		mescrollInit(mescroll) {
-			this.mescroll = mescroll;
-		},
-		/*下拉刷新的回调, 有三种处理方式:*/
-		downCallback() {
-			this.mescroll.resetUpScroll();
-		},
-		/*上拉加载的回调*/
-		upCallback(page) {
-			this.request(page);
-		},
 		request(action) {
 			let self = this;
-			if(action){
-				this.page = 1
-				this.dataList = []
+			if (action) {
+				this.page = 1;
+				this.dataList = [];
 			}
 			// 第1种: 请求具体接口
 			uni.request({
-				url: Interface.url.findAllPostInfo,
+				url: Interface.url.postInfoFindPostInfoList,
 				method: 'GET',
 				data: {
 					page: this.page,
 					size: 10,
-					postType: this.postType
+					// postType: this.postType,
+					parentCode: this.postType,
+					sort: 1,
+					userId: getApp().globalData.userId
 				},
 				success: res => {
-					console.log(res.data.data)
-					if (res.data.state == 0) {
+					console.log(res.data.data);
+					if (res.data.code == 200) {
 						if (res.data.data.content.length < 10) {
 							self.nomore = true;
 							self.status = 'nomore';
@@ -269,12 +347,10 @@ export default {
 						}
 					}
 					this.show = false;
-				
 				},
 				fail: err => {
 					this.show = false;
 					// 请求失败,隐藏加载状态
-					
 				}
 			});
 		}

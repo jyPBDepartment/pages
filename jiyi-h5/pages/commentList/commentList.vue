@@ -130,7 +130,14 @@ export default {
 			}
 			if (this.type == 4) {
 				// 圈子
-				url = ApiPath.url.articleFindCommentByUserId;
+				url = ApiPath.url.postInfoFindByCommentPage;
+				params = {
+					userId: getApp().globalData.userId,
+					postId: this.id,
+					page: this.page,
+					size: 10
+				};
+				
 			}
 			this.getCommentList(url, params);
 		},
@@ -167,10 +174,8 @@ export default {
 				})
 				.catch(err => {});
 		},
-
 		// 去评论页面
 		goReplay(item) {
-			console.log(item);
 			uni.setStorageSync('commentData', JSON.stringify(item));
 			uni.navigateTo({
 				url: '/pages/commentList/reply?id=' + item.id + '&type=' + this.type

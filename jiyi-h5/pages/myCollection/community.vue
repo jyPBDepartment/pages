@@ -27,6 +27,7 @@
 
 <script>
 import easyLoadimage from '@/components/easy-loadimage/easy-loadimage.vue';
+import Interface from '@/api/ApiPath.js';
 
 export default {
 	components: {
@@ -63,6 +64,23 @@ export default {
 				url: `../community/communityDetails?id=` + item
 			});
 		},
+		// 收藏
+		setCollection(item, i) {
+			let self = this;
+			let params = {
+				isCancelCollection: item.isUserCollection ? 1 : 0,
+				circleId: item.id,
+				userId: '20200909'
+			};
+			this.$ajax(Interface.url.postInfoPostCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						
+					}
+				})
+				.catch(err => {});
+		},
+		
 	}
 	
 };
