@@ -80,21 +80,35 @@ export default {
 			// 返回
 			return result;
 		},
+		
 		cancelCollection(item) {
 			let self = this;
-			let params = {
-				action: 0,
-				agrId: item.id,
-				userId: getApp().globalData.userId
-			};
-			this.$ajax(Interface.url.grainTradingSetCollection, 'GET', params)
-				.then(res => {
-					if (res.code == 200) {
-						self.dataList = [];
-						self.getGrainList(1);
-					}
-				})
-				.catch(err => {});
+			
+			
+			uni.showModal({
+			    title: '提示',
+			    content: '是否取消收藏',
+				cancelText: '否',
+				confirmText:'是',
+			    success: function (res) {
+			        if (res.confirm) {
+			            let params = {
+			            	action: 0,
+			            	agrId: item.id,
+			            	userId: getApp().globalData.userId
+			            };
+			            self.$ajax(Interface.url.grainTradingSetCollection, 'GET', params)
+			            	.then(res => {
+			            		if (res.code == 200) {
+			            			self.dataList = [];
+			            			self.getGrainList(1);
+			            		}
+			            	})
+			            	.catch(err => {});
+			        } 
+			    }
+			});
+			
 		},
 		// 跳转详情页面
 		jump(val) {

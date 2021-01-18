@@ -77,18 +77,30 @@ export default {
 		},
 		cancelCollection(item) {
 			let self = this;
-			let params = {
-				action: 0,
-				agrId: item.id,
-				userId: getApp().globalData.userId
-			};
-			this.$ajax(ApiPath.url.articleCollection, 'GET', params)
-				.then(res => {
-					if (res.code == 200) {
-						this.getCommentList(true);
-					}
-				})
-				.catch(err => {});
+			
+			uni.showModal({
+			    title: '提示',
+			    content: '是否取消收藏',
+				cancelText: '否',
+				confirmText:'是',
+			    success: function (res) {
+			        if (res.confirm) {
+			          let params = {
+			          	action: 0,
+			          	agrId: item.id,
+			          	userId: getApp().globalData.userId
+			          };
+			          self.$ajax(ApiPath.url.articleCollection, 'GET', params)
+			          	.then(res => {
+			          		if (res.code == 200) {
+			          			self.getCommentList(true);
+			          		}
+			          	})
+			          	.catch(err => {});
+			        } 
+			    }
+			});
+			
 		},
 		// ()
 		getCommentList(action) {

@@ -55,19 +55,32 @@ export default {
 		},
 		cancelCollection(item){
 			let self = this;
-			let params = {
-				isCollection: 1,
-				caseId: item.id,
-				collectionUserId: this.userId
-			};
-			this.$ajax(Interface.url.caseInfoSaveCollection, 'GET', params)
-				.then(res => {
-					if (res.code == 200) {
-						self.dataList = []
-						self.getPicList(1);
-					}
-				})
-				.catch(err => {});
+			
+			
+			uni.showModal({
+			    title: '提示',
+			    content: '是否取消收藏',
+				cancelText: '否',
+				confirmText:'是',
+			    success: function (res) {
+			        if (res.confirm) {
+			          let params = {
+			          	isCollection: 1,
+			          	caseId: item.id,
+			          	collectionUserId: this.userId
+			          };
+			          self.$ajax(Interface.url.caseInfoSaveCollection, 'GET', params)
+			          	.then(res => {
+			          		if (res.code == 200) {
+			          			self.dataList = []
+			          			self.getPicList(1);
+			          		}
+			          	})
+			          	.catch(err => {});
+			        } 
+			    }
+			});
+			
 		},
 		formatTime(datetime) {
 			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000

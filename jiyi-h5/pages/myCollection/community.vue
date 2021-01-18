@@ -136,19 +136,30 @@ export default {
 		// 收藏
 		cancelCollection(item) {
 			let self = this;
-			let params = {
-				isCancelCollection: 1,
-				circleId: item.id,
-				userId: getApp().globalData.userId
-			};
-			this.$ajax(Interface.url.postInfoPostCollection, 'GET', params)
-				.then(res => {
-					if (res.code == 200) {
-						this.page = 1;
-						this.getCommunitList();
+
+			uni.showModal({
+				title: '提示',
+				content: '是否取消收藏',
+				cancelText: '否',
+				confirmText:'是',
+				success: function(res) {
+					if (res.confirm) {
+						let params = {
+							isCancelCollection: 1,
+							circleId: item.id,
+							userId: getApp().globalData.userId
+						};
+						self.$ajax(Interface.url.postInfoPostCollection, 'GET', params)
+							.then(res => {
+								if (res.code == 200) {
+									self.page = 1;
+									self.getCommunitList();
+								}
+							})
+							.catch(err => {});
 					}
-				})
-				.catch(err => {});
+				}
+			});
 		}
 	}
 };
