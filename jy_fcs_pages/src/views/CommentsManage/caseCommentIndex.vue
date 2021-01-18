@@ -204,8 +204,8 @@ export default {
       }
       //alert(JSON.stringify(parameter));
       let params = {
-        content: this.content,
-        user: this.user,
+        commentContent: this.content,
+        commentUserName: this.user,
         page: this.formInline.page,
         size: this.formInline.limit,
       };

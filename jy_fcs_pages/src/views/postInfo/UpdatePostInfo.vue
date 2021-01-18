@@ -185,11 +185,16 @@ export default {
           this.postInfoForm = res.data;
           api.testAxiosGet(ApiPath.url.getPostType, params).then((re) => {
             if (re.state == "0") {
+              var flag = false;
               for (let i = 0; i < re.data.length; i++) {
                 if (this.postInfoForm.parentCode == re.data[i].id) {
                   this.postInfoForm.parentCode = re.data[i].name;
+                  flag = true;
                   break
                 }
+              }
+              if(!flag){
+                this.postInfoForm.parentCode = "该分类已删除";
               }
             }
           });

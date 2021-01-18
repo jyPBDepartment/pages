@@ -94,7 +94,7 @@ const url = {
   //圈子状态 
   postInfoEnable: URLHost + '/postInfo/enable',
   //圈子查看详情
-  findPostInfoId: URLHost + '/postInfo/findById',
+  findPostInfoId: URLHost + '/postInfo/findByPcId',
   //圈子审核通过
   passPostInfo: URLHost + '/postInfo/passPostInfo',
   //圈子审核驳回
