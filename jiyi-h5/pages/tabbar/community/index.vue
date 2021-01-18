@@ -4,13 +4,13 @@
 		<view class="tabs g-flex g-j-s-a g-a-c f-14">
 			<view @click="selectTab(item, index)" :class="index == tabIndex && 'tab-hover'" v-for="(item, index) in tabsList" :key="index">{{ item.name }}</view>
 		</view>
-		<FilterCom></FilterCom>
+		<FilterCom @selectTab="selectTabCom"></FilterCom>
 
 		<view class="list-container-s" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
 			<view class="title">{{ item.name }}</view>
 			<view class="content">
 				<view class="header">
-					<image class="image" src="../../../static/img/tabbar/guanzhuactive.png"></image>
+					<image class="image" :src=" item.header || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 					<text class="users">{{ item.nickName || '匿名' }}</text>
 					<text class="times">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</text>
 				</view>
@@ -167,6 +167,10 @@ export default {
 			// 返回
 			return result;
 		},
+		selectTabCom(val){
+			this.sortIndex = val
+			this.downCallback();
+		},
 		clickIcon(item, val, i) {
 			if (val == 1) {
 				//收藏点击
@@ -290,9 +294,9 @@ export default {
 			this.postType = item.code;
 			this.request(true);
 		},
-		jump(item) {
+		jump(id) {
 			uni.navigateTo({
-				url: `../../community/communityDetails?id=` + item
+				url: `../../community/communityDetails?id=` + id
 			});
 		},
 		recharge() {

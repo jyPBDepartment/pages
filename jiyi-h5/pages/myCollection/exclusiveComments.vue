@@ -1,10 +1,11 @@
 <template>
 	<view class="comment-list-container">
+		<!-- 独家点评 -->
 		<view class="comm-list-item" v-for="(item, i) in commentListData" @tap="goDetails(item.id)" :key="i">
 			<image class="item-img" :src="item.url || `../../static/img/tabbar/首页-s-r.png`"></image>
 			<view class="item-info">
 				<view class="title">
-					<text>{{ item.title }}</text>
+					<text>{{ item.isAnonymous ? '匿名' : item.title ? item.title : '匿名' }}</text>
 					<view @click.stop="">
 						<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
 					</view>
@@ -64,6 +65,14 @@ export default {
 	},
 
 	methods: {
+		getMoreList(){
+			if (this.nomore) {
+				return false;
+			}
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.getCommentList(this.listTab[this.current].id);
+		},
 		loadmore() {
 			this.status = 'loading';
 			this.page = ++this.page;

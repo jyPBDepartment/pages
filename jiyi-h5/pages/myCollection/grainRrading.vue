@@ -58,15 +58,15 @@ export default {
 	created() {
 		this.getGrainList(this.page);
 	},
-	onReachBottom() {
-		if (this.nomore) {
-			return false;
-		}
-		this.status = 'loading';
-		this.page = ++this.page;
-		this.getGrainList(this.page);
-	},
 	methods: {
+		getMoreList(){
+			if (this.nomore) {
+				return false;
+			}
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.getGrainList();
+		},
 		formatTime(datetime) {
 			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
 			var year = date.getFullYear(),
@@ -107,7 +107,7 @@ export default {
 			this.page = ++this.page;
 			this.getGrainList(this.page);
 		},
-		getGrainList(page) {
+		getGrainList() {
 			let self = this;
 
 			// 第1种: 请求具体接口
@@ -116,7 +116,7 @@ export default {
 				method: 'GET',
 				data: {
 					userId: getApp().globalData.userId,
-					page: page,
+					page: this.page,
 					size: 10
 				},
 				success: res => {

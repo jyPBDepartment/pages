@@ -1,7 +1,7 @@
 <template>
 	<view class="list-container-s">
 		<HeaderSearch title="圈子详情"></HeaderSearch>
-		
+
 		<view class="title">标题1111</view>
 		<view class="content">
 			<view class="header">
@@ -14,30 +14,28 @@
 					<rich-text :nodes="content"></rich-text>
 				</u-read-more>
 			</view>
-			<view class="pictues-group">
-				<easy-loadimage v-for="(item, i) in url" class="preview-img" :scroll-top="scrollTop" :image-src="item.imgUrl" :key="i"></easy-loadimage>
-			</view>
+			<view class="pictues-group"><image v-for="(item, i) in url" class="preview-img" :src="item.imgUrl" :key="i"></image></view>
 			<view class="fun-btn">
 				<view class="item">
-					<u-icon style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
+					<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
 					<text>123</text>
 				</view>
 				<view class="item" @tap.stop="clickIcon(2)">
-					<u-icon v-if="collection" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" color="#9FA3A8" size="24"></u-icon>
-					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
+					<u-icon v-if="collection" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334200305905.png" size="24"></u-icon>
+					<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
 					<text>111</text>
 				</view>
 				<view class="item" @tap.stop="clickIcon(1)">
-					<u-icon v-if="thumbs" style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" color="#9FA3A8" size="24"></u-icon>
-					<u-icon v-else style="margin-right: 5rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
+					<u-icon v-if="thumbs" style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+					<u-icon v-else style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
 
 					<text>21</text>
 				</view>
 			</view>
 		</view>
-	
+
 		<view class="dividing-line"></view>
-		
+
 		<view class="title">全部评论(25)</view>
 		<view class="content" v-for="i in 5" :key="i">
 			<view class="header">
@@ -46,14 +44,13 @@
 				<text class="times">2021-01-11</text>
 			</view>
 			<view class="paragraph">
-				
 				<u-read-more :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-						<rich-text :nodes="content"></rich-text>
-					</u-read-more>
+					<rich-text :nodes="content"></rich-text>
+				</u-read-more>
 			</view>
 			<view class="reply-b">
 				<view class="left" @tap="goReplay">
-					<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610355717998322.png" color="#9FA3A8" size="24"></u-icon>
+					<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610355717998322.png" size="24"></u-icon>
 					<text>回复（22）</text>
 				</view>
 				<text class="right">删除</text>
@@ -64,11 +61,9 @@
 </template>
 
 <script>
-import easyLoadimage from '@/components/easy-loadimage/easy-loadimage.vue';
-
 export default {
-	components: {
-		easyLoadimage
+	onLoad(e) {
+		this.id = e.id;
 	},
 	data() {
 		return {
@@ -93,32 +88,33 @@ export default {
 				marginTop: '20rpx'
 			},
 			scrollTop: 0,
-			collection:false,
-			thumbs:false,
+			collection: false,
+			thumbs: false,
+			id: ''
 		};
 	},
 	methods: {
-		goReplay(){
+		goReplay() {
 			uni.navigateTo({
-				url:'/pages/commentList/reply'
-			})
+				url: '/pages/commentList/reply'
+			});
 		},
 		clickIcon(val) {
-			if(val==1){
-				this.thumbs = !this.thumbs
+			if (val == 1) {
+				this.thumbs = !this.thumbs;
 			}
-			if(val == 2){
-				this.collection = !this.collection
+			if (val == 2) {
+				this.collection = !this.collection;
 			}
-			
 		},
-		commentPublish(val,isAnonymous){
-			if(val){
-				this.showReply = false
-			}else{
+		getCommentList() {},
+		commentPublish(val, isAnonymous) {
+			if (val) {
+				this.showReply = false;
+			} else {
 				uni.showToast({
-					title:'请输入评论内容在评论'
-				})
+					title: '请输入评论内容在评论'
+				});
 			}
 		}
 	}
@@ -205,22 +201,22 @@ export default {
 				height: 30rpx;
 			}
 		}
-		.reply-b{
+		.reply-b {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			font-size: 20rpx;
 			font-weight: 400;
-			color: #9FA3A8;
+			color: #9fa3a8;
 			opacity: 1;
 			padding: 0 40rpx;
-			.left{
+			.left {
 				display: flex;
 				align-items: center;
 				flex: 1;
 			}
-			.right{
-				color: #5EB14E;
+			.right {
+				color: #5eb14e;
 			}
 		}
 	}

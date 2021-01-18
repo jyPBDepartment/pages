@@ -4,7 +4,7 @@
 			<image class="item-img" :src="item.url" mode=""></image>
 			<view class="item-info">
 				<view class="title">
-					<text>{{ item.name }}</text>
+					<text>{{  item.isAnonymous ? '匿名' : item.name ? item.name : '匿名' }}</text>
 					<view @click.stop="cancelCollection(item)">
 						<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
 					</view>
@@ -44,15 +44,15 @@ export default {
 	created() {
 		this.getPicList(this.page);
 	},
-	onReachBottom() {
-		if (this.nomore) {
-			return false;
-		}
-		this.status = 'loading';
-		this.page = ++this.page;
-		this.getPicList(this.page);
-	},
 	methods: {
+		getMoreList(){
+			if (this.nomore) {
+				return false;
+			}
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.getPicList();
+		},
 		cancelCollection(item){
 			let self = this;
 			let params = {
@@ -92,14 +92,14 @@ export default {
 			this.page = ++this.page;
 			this.getPicList(this.page);
 		},
-		getPicList(page) {
+		getPicList() {
 			let self = this;
 			uni.request({
 				url: Interface.url.caseInfoFindByMyCollection,
 				method: 'GET',
 				data: {
 					collectionUserId:this.userId,
-					page: page,
+					page: this.page,
 					size: 10,
 				},
 				success: res => {

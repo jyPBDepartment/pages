@@ -11,10 +11,10 @@
 		</view>
 
 		<view class="content">
-			<grain-rrading v-if="tabIndex == 1"></grain-rrading>
-			<pictures-diseases v-if="tabIndex == 2"></pictures-diseases>
-			<exclusive-comments v-if="tabIndex == 3"></exclusive-comments>
-			<vCommunity v-if="tabIndex == 4"></vCommunity>
+			<grain-rrading ref="contentList" v-if="tabIndex == 1"></grain-rrading>
+			<pictures-diseases ref="contentList"  v-if="tabIndex == 2"></pictures-diseases>
+			<exclusive-comments ref="contentList"  v-if="tabIndex == 3"></exclusive-comments>
+			<vCommunity ref="contentList"  v-if="tabIndex == 4"></vCommunity>
 		</view>
 	</view>
 </template>
@@ -31,15 +31,20 @@ export default {
 		exclusiveComments,
 		vCommunity
 	},
+	onReachBottom() {
+		this.getListData();
+	},
 	data() {
 		return {
 			tabIndex: 1
 		};
 	},
 	methods: {
+		getListData() {
+			this.$refs.contentList.getMoreList()
+		},
 		clickTab(val) {
 			this.tabIndex = val;
-			this.$emit('selectTab', val);
 		}
 	}
 };
@@ -52,7 +57,7 @@ export default {
 	left: 0;
 	right: 0;
 	z-index: 99;
-	background: #FFFFFF;
+	background: #ffffff;
 	.filter-container {
 		margin: 20rpx auto;
 		width: 686rpx;
@@ -71,7 +76,7 @@ export default {
 			color: #000000;
 			opacity: 1;
 		}
-	
+
 		.select-tab {
 			flex: 1;
 			height: 88rpx;
@@ -83,7 +88,6 @@ export default {
 		}
 	}
 }
-
 
 .content {
 	margin-top: 140rpx;

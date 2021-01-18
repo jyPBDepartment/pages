@@ -1,27 +1,29 @@
 <template>
-	<view class="list-container-s" @click.stop="jump">
-		<!-- <view class="title">标题1111</view> -->
-		<view class="title">
-			<text>标题1111</text>
-			<view @click.stop="">
-				<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
+	<view>
+		<view class="list-container-s" @click.stop="jump(item)" v-for="(item, index) in dataList" :key="index">
+			<!-- 圈子 -->
+			<view class="title">
+				<text>{{ item.name }}</text>
+				<view @click.stop="cancelCollection(item)">
+					<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
+				</view>
+			</view>
+			<view class="content">
+				<view class="header">
+					<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
+					<text class="users">{{ item.isAnonymous ? '匿名' : item.createUser ? item.createUser : '匿名' }}</text>
+					<text class="times">{{ item.createDate ? formatTime(item.createDate) : '' }}</text>
+				</view>
+				<view class="paragraph"><rich-text :nodes="item.code"></rich-text></view>
+				<view class="pictues-group"><image v-for="(items, i) in url" class="preview-img" :src="items.imgUrl" :key="i"></image></view>
 			</view>
 		</view>
-		<view class="content">
-			<view class="header">
-				<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
-				<text class="users">zhoux</text>
-				<text class="times">2021-01-11</text>
-			</view>
-			<view class="paragraph">
-				<u-read-more ref="uReadMore" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="content"></rich-text>
-				</u-read-more>
-			</view>
-			<view class="pictues-group">
-				<easy-loadimage v-for="(item, i) in url" class="preview-img" :scroll-top="scrollTop" :image-src="item.imgUrl" :key="i"></easy-loadimage>
-			</view>
+
+		<view class="no-data" v-if="noData">
+			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
+			<text>暂无数据</text>
 		</view>
+		<u-loadmore v-if="dataList.length > 0" :status="status" :icon-type="iconType" :load-text="loadText" @loadmore="loadmore" />
 	</view>
 </template>
 
@@ -55,34 +57,116 @@ export default {
 				paddingTop: '0',
 				marginTop: '20rpx'
 			},
-			scrollTop: 0
+			scrollTop: 0,
+			dataList: [],
+			status: 'loadmore',
+			iconType: 'flower',
+			loadText: {
+				loadmore: '点我加载更多',
+				loading: '客官别急马上就来~',
+				nomore: '我是有底线的~~~'
+			},
+			page: 1,
+			nomore: false,
+			noData: false
 		};
 	},
+	created() {
+		this.getCommunitList();
+	},
 	methods: {
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
+		},
+		getMoreList() {
+			if (this.nomore) {
+				return false;
+			}
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.getCommunitList();
+		},
 		jump(item) {
 			uni.navigateTo({
-				url: `../community/communityDetails?id=` + item
+				url: `../community/communityDetails?id=` + item.id
+			});
+		},
+		getCommunitList() {
+			let self = this;
+			if(this.page == 1){
+				this.dataList = []
+			}
+
+			// 第1种: 请求具体接口
+			uni.request({
+				url: Interface.url.postInfoPostByUserId,
+				method: 'GET',
+				data: {
+					userId: getApp().globalData.userId,
+					page: this.page,
+					size: 10
+				},
+				success: res => {
+					if (res.data.code == 200) {
+						if (res.data.data.content.length < 10) {
+							self.nomore = true;
+							self.status = 'nomore';
+							self.dataList = self.dataList.concat(res.data.data.content);
+							if (self.dataList.length == 0) {
+								self.noData = true;
+							} else {
+								self.noData = false;
+							}
+						} else {
+							setTimeout(() => {
+								self.nomore = false;
+								self.status = 'loadmore';
+								self.dataList = self.dataList.concat(res.data.data.content);
+								if (self.dataList.length == 0) {
+									self.noData = true;
+								} else {
+									self.noData = false;
+								}
+							}, 200);
+						}
+					}
+				},
+				fail: err => {
+					uni.showToast({
+						title: '请求失败',
+						duration: 2000
+					});
+				}
 			});
 		},
 		// 收藏
-		setCollection(item, i) {
+		cancelCollection(item) {
 			let self = this;
 			let params = {
-				isCancelCollection: item.isUserCollection ? 1 : 0,
+				isCancelCollection: 1,
 				circleId: item.id,
-				userId: '20200909'
+				userId: getApp().globalData.userId
 			};
 			this.$ajax(Interface.url.postInfoPostCollection, 'GET', params)
 				.then(res => {
 					if (res.code == 200) {
-						
+						this.page = 1;
+						this.getCommunitList();
 					}
 				})
 				.catch(err => {});
-		},
-		
+		}
 	}
-	
 };
 </script>
 
