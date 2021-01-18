@@ -3,16 +3,16 @@
 		<HeaderSearch title="发帖" @searchCallback="search"></HeaderSearch>
 		<view class="comm-form-container">
 			<view class="item">
-				<view class="required">*</view>	
+				<view class="required">*</view>
 				<view class="title title-s">标题</view>
 				<view class="info"><u-input placeholder="输入标题" :clearable="false" v-model="name" height="64" /></view>
 			</view>
 			<view class="item">
-				<view class="required">*</view>	
+				<view class="required">*</view>
 				<view class="title title-s">类别</view>
 				<view class="info">
-					<u-radio-group v-model="parent" :size="30" active-color="#5EB14E"	>
-						<u-radio v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">{{ item.name }}</u-radio>
+					<u-radio-group v-model="parent" :size="30" active-color="#5EB14E">
+						<u-radio v-for="(item, index) in list" :key="index" :name="item.id" :disabled="item.disabled">{{ item.name }}</u-radio>
 					</u-radio-group>
 				</view>
 			</view>
@@ -35,7 +35,7 @@
 				</view>
 			</view>
 			<view class="item">
-				<view class="required">*</view>	
+				<view class="required">*</view>
 				<view class="title title-s" style="padding: 10rpx 0;">内容</view>
 				<view class="info" style="position: relative;">
 					<u-input type="textarea" placeholder="请输入内容正文（最多输入500字）" :maxlength="500" :auto-height="false" :clearable="false" v-model="code" height="600" />
@@ -47,7 +47,7 @@
 					<u-checkbox v-model="checked" active-color="#5EB14E"><text style="color:#9FA3A8">匿名发布</text></u-checkbox>
 				</u-checkbox-group>
 			</view>
-			<u-button class="btn" shape="circle" @click="release" type="error">发布帖子</u-button>
+			<u-button class="btn" shape="circle" @click="addCommunity" type="error">发布帖子</u-button>
 		</view>
 	</view>
 </template>
@@ -59,12 +59,13 @@ export default {
 	data() {
 		return {
 			name: '',
-			parent: '无人机',
+			parent: '',
 			code: '',
 			list: [],
 			action: Interface.url.uploadImg,
 			fileList: [],
-			checked:false
+			checked: false,
+			url: []
 		};
 	},
 	onLoad() {
@@ -82,27 +83,85 @@ export default {
 		remove(index, lists) {
 			this.url.splice(index, 1);
 		},
-		
 		uploadSuccess(data, index, lists, name) {
-			this.$refs.uToast.show({
+			uni.showToast({
 				title: '上传成功',
-				type: 'success'
+				duration: 1000,
+				icon: 'success'
 			});
 			this.url.push(data.url);
-			this.show = false;
-			this.u = this.url;
 		},
 		onChoose(lists, name) {
-			this.show = true;
+			console.log(this.url);
 		},
-		release() {
+		addCommunity() {
 			if (this.name == '') {
 				uni.showToast({
 					title: '请输入标题'
 				});
 				return;
 			}
+			if (this.parent == '') {
+				uni.showToast({
+					title: '请输选择帖子类别'
+				});
+				return;
+			}
+			if (this.code == '') {
+				uni.showToast({
+					title: '请输入内容'
+				});
+				return;
+			}
+			let params = {
+				name: this.name,
+				code: this.code,
+				parentCode: this.parent,
+				is_anonymous: this.checked ? '1' : '0',
+				addItem: this.url,
+				header: getApp().globalData.pic,
+				createUser: getApp().globalData.nickName,
+				creatUserID: getApp().globalData.userId
+			};
+			this.$ajax(Interface.url.postInfoAddPostInfo, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						console.log(2122222);
+						uni.showToast({
+							title: '发布帖子成功，等待审核',
+							icon: 'none',
+							duration: 2000,
+							success: () => {
+								uni.reLaunch({
+									url: '/pages/tabbar/community/index'
+								});
+							}
+						});
+					} else {
+						uni.showToast({
+							title: '发布帖子失败，请联系管理员或重新发布',
+							icon: 'none',
+							duration: 2000
+						});
+					}
+				})
+				.catch(err => {
+					uni.showToast({
+						title: '系统错误，请联系管理员',
+						icon: 'none',
+						duration: 2000
+					});
+				});
+		},
 
+		release() {
+			console.log(this.parent);
+			if (this.name == '') {
+				uni.showToast({
+					title: '请输入标题'
+				});
+				return;
+			}
 			if (this.code == '') {
 				uni.showToast({
 					title: '请输入内容'
@@ -163,10 +222,10 @@ export default {
 }
 
 .btn {
-	background-color: #5EB14E;
+	background-color: #5eb14e;
 	margin: 20rpx auto 40rpx auto;
 }
-.publish{
+.publish {
 	line-height: 60rpx;
 }
 </style>

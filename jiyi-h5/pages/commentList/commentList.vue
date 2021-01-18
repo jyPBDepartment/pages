@@ -6,7 +6,7 @@
 			<view class="header">
 				<image class="image" :src="item.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png' "></image>
 				<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName ? item.nickName : '匿名' }}</text>
-				<text class="times">{{ item.date }}</text>
+				<text class="times">{{ item.commentTime }}</text>
 			</view>
 			<view class="paragraph">
 				<u-read-more text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
@@ -83,7 +83,10 @@ export default {
 	onLoad(data) {
 		this.type = data.type;
 		this.id = data.id;
-		this.initPage();
+		// this.initPage(true);
+	},
+	onShow() {
+		this.initPage(true);
 	},
 	methods: {
 		// 加载下一页
@@ -241,7 +244,7 @@ export default {
 						this.tipModalShow = true;
 						setTimeout(() => {
 							this.tipModalShow = false;
-						}, 2000);
+						}, 1000);
 						self.initPage(true);
 					}
 				})
@@ -286,7 +289,7 @@ export default {
 						this.delModalShow = true;
 						setTimeout(() => {
 							this.delModalShow = false;
-						}, 2000);
+						}, 1000);
 						self.initPage(true);
 					}
 				})

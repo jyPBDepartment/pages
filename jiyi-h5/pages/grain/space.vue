@@ -74,8 +74,8 @@
 					<view v-if="commentNum" class="content">
 						<view class="header">
 							<!-- commentObj.commentPic || -->
-							<image class="image" :src="commentObj.commentPic ||'../../static/img/tabbar/guanzhuactive.png'"></image>
-							<text class="users">{{ commentObj.isAnonymous ? '匿名' : commentObj.commentUserName?'commentObj.commentUserName':'匿名' }}</text>
+							<image class="image" :src="commentObj.commentPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
+							<text class="users">{{ commentObj.isAnonymous ? '匿名' : commentObj.commentUserName ? commentObj.commentUserName : '匿名' }}</text>
 						</view>
 
 						<p class="words">{{ commentObj.commentContent }}</p>
@@ -182,6 +182,9 @@ export default {
 			this.title = '粮食买卖详情';
 			this.company = '斤';
 		}
+	},
+	onShow() {
+		this.$u.debounce(this.findMineId(this.id), 1000);
 	},
 	methods: {
 		addGrainTradingAddPV(id) {

@@ -10,14 +10,14 @@
 			<view class="title">{{ item.name }}</view>
 			<view class="content">
 				<view class="header">
-					<image class="image" :src=" item.header || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
+					<image class="image" :src="item.header || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 					<text class="users">{{ item.nickName || '匿名' }}</text>
 					<text class="times">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</text>
 				</view>
 				<view class="paragraph">
 					<p>{{ item.code }}</p>
 				</view>
-				<view class="pictues-group"><image v-for="(item, i) in url" class="preview-img" :src="item.imgUrl" :key="i"></image></view>
+				<view v-if="item.picture"><communituPicList :picList="item.picture"></communituPicList></view>
 				<view class="fun-btn">
 					<view class="item">
 						<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
@@ -73,16 +73,12 @@
 
 <script>
 import Interface from '@/api/ApiPath.js';
-import MescrollMixin from '@/mescroll-uni/mescroll-mixins.js';
 import uniDrawer from '@/components/uni-drawer/uni-drawer.vue';
-import CommunityInfo from '../../../components/CommunityInfo/CommunityInfo.vue';
-import CommunityItem from '../../../components/CommunityInfo/CommunityItem.vue';
+import communituPicList from '../../community/communituPicList.vue';
 export default {
-	mixins: [MescrollMixin], // 使用mixin (在main.js注册全局组件)
 	components: {
 		uniDrawer,
-		CommunityInfo,
-		CommunityItem
+		communituPicList
 	},
 	onReachBottom() {
 		if (this.nomore) {
@@ -97,20 +93,6 @@ export default {
 	},
 	data() {
 		return {
-			url: [
-				{
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346336119875.png'
-				},
-				{
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346150825084.png'
-				},
-				{
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png'
-				},
-				{
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png'
-				}
-			],
 			tabIndex: 0,
 			tabsList: [],
 			categoryList: [],
@@ -167,8 +149,8 @@ export default {
 			// 返回
 			return result;
 		},
-		selectTabCom(val){
-			this.sortIndex = val
+		selectTabCom(val) {
+			this.sortIndex = val;
 			this.downCallback();
 		},
 		clickIcon(item, val, i) {
@@ -214,7 +196,7 @@ export default {
 			let params = {
 				isCancelThumbs: item.isUserPraise ? 1 : 0,
 				circleId: item.id,
-				thumbsUserId: '20200909'
+				thumbsUserId: getApp().globalData.userId
 			};
 			this.$ajax(Interface.url.postInfoPostThumbs, 'GET', params)
 				.then(res => {
@@ -235,10 +217,8 @@ export default {
 				})
 				.catch(err => {});
 		},
-		selectTab(val) {
-			console.log(val);
-			this.sortIndex = val;
-			this.downCallback();
+		downCallback() {
+			this.request(true);
 		},
 		loadmore() {
 			this.status = 'loading';
@@ -246,7 +226,7 @@ export default {
 			this.request();
 		},
 		searchData() {
-			this.request({ num: 1, size: 10 }, Interface.url.findAllPostInfo);
+			this.downCallback();
 			this.$refs.drawer.close();
 		},
 		initPostType() {
@@ -284,14 +264,13 @@ export default {
 				this.$refs.drawer.open();
 			} else {
 				this.tabIndex = index;
-				this.postType = item.code;
-				this.request(true);
+				this.postType = item.id;
+				this.downCallback();
 			}
 		},
 		selectCategory(item, index) {
-			console.log(1111, item);
 			this.selectCategoryIndex = index;
-			this.postType = item.code;
+			this.postType = item.id;
 			this.request(true);
 		},
 		jump(id) {
@@ -303,7 +282,7 @@ export default {
 			if (this.selectCategoryIndex != null) {
 				this.selectCategoryIndex = null;
 				this.$refs.drawer.close();
-				// this.postType = null;
+				this.postType = null;
 				this.request(true);
 			}
 		},
@@ -313,20 +292,18 @@ export default {
 				this.page = 1;
 				this.dataList = [];
 			}
-			// 第1种: 请求具体接口
 			uni.request({
 				url: Interface.url.postInfoFindPostInfoList,
 				method: 'GET',
 				data: {
 					page: this.page,
 					size: 10,
-					// postType: this.postType,
 					parentCode: this.postType,
-					sort: 1,
+					sort: this.sortIndex,
 					userId: getApp().globalData.userId
 				},
 				success: res => {
-					console.log(res.data.data);
+					// console.log(res.data.data);
 					if (res.data.code == 200) {
 						if (res.data.data.content.length < 10) {
 							self.nomore = true;

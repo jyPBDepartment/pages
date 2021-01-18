@@ -15,7 +15,7 @@
 					<text class="times">{{ item.createDate ? formatTime(item.createDate) : '' }}</text>
 				</view>
 				<view class="paragraph"><rich-text :nodes="item.code"></rich-text></view>
-				<view class="pictues-group"><image v-for="(items, i) in url" class="preview-img" :src="items.imgUrl" :key="i"></image></view>
+				<view v-if="item.picture"><communituPicList :picList="item.picture"></communituPicList></view>
 			</view>
 		</view>
 
@@ -28,36 +28,15 @@
 </template>
 
 <script>
-import easyLoadimage from '@/components/easy-loadimage/easy-loadimage.vue';
+import communituPicList from '../community/communituPicList.vue';
 import Interface from '@/api/ApiPath.js';
 
 export default {
 	components: {
-		easyLoadimage
+		communituPicList
 	},
 	data() {
 		return {
-			url: [
-				{
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346336119875.png'
-				},
-				{
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346150825084.png'
-				},
-				{
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png'
-				},
-				{
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png'
-				}
-			],
-			content: `1111111111`,
-			shadowStyle: {
-				backgroundImage: 'none',
-				paddingTop: '0',
-				marginTop: '20rpx'
-			},
-			scrollTop: 0,
 			dataList: [],
 			status: 'loadmore',
 			iconType: 'flower',
@@ -88,6 +67,11 @@ export default {
 			// 返回
 			return result;
 		},
+		loadmore() {
+			this.status = 'loading';
+			this.page = ++this.page;
+			this.getCommunitList();
+		},
 		getMoreList() {
 			if (this.nomore) {
 				return false;
@@ -103,8 +87,8 @@ export default {
 		},
 		getCommunitList() {
 			let self = this;
-			if(this.page == 1){
-				this.dataList = []
+			if (this.page == 1) {
+				this.dataList = [];
 			}
 
 			// 第1种: 请求具体接口

@@ -53,17 +53,8 @@ export default {
 		};
 	},
 	created() {
-		this.getSectionTab();
+		this.getCommentList();
 	},
-	onReachBottom() {
-		if (this.nomore) {
-			return false;
-		}
-		this.status = 'loading';
-		this.page = ++this.page;
-		this.getCommentList(this.listTab[this.current].id);
-	},
-
 	methods: {
 		getMoreList(){
 			if (this.nomore) {
@@ -71,19 +62,12 @@ export default {
 			}
 			this.status = 'loading';
 			this.page = ++this.page;
-			this.getCommentList(this.listTab[this.current].id);
+			this.getCommentList();
 		},
 		loadmore() {
 			this.status = 'loading';
 			this.page = ++this.page;
-			this.getCommentList(this.listTab[this.current].id);
-		},
-		change(index) {
-			this.current = index;
-			this.selectTab = this.listTab[index];
-			this.page = 1;
-			this.commentListData = [];
-			this.getCommentList(this.listTab[index].id);
+			this.getCommentList();
 		},
 		goDetails(id) {
 			uni.navigateTo({
@@ -94,14 +78,16 @@ export default {
 			let self = this;
 			let params = {
 				userId: '999',
-				sectionId: id,
+				sectionId: '',
 				orderType: this.tabIndex,
 				page: self.page,
 				size: 10
 			};
 			self.$ajax(ApiPath.url.findArticleList, 'GET', params)
 				.then(res => {
+					// 
 					if (res.code == 200) {
+						console.log(res.data.content)
 						if (res.data.content.length < 10) {
 							self.nomore = true;
 							self.status = 'nomore';
@@ -123,22 +109,12 @@ export default {
 								}
 							}, 200);
 						}
-					}
-				})
-				.catch(err => {});
-		},
-		getSectionTab() {
-			let self = this;
-			this.$ajax(ApiPath.url.findSectionList, 'GET', {})
-				.then(res => {
-					if (res.code == 200) {
-						self.listTab = res.data;
-						self.commentListData = [];
-						self.getCommentList(self.listTab[0].id);
+						console.log(self.commentListData,self.noData )
 					}
 				})
 				.catch(err => {});
 		}
+
 	}
 };
 </script>

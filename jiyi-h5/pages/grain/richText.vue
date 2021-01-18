@@ -55,7 +55,7 @@
 				<u-line v-if="detailsObj.comment_num && dataComment" color="rgba(0, 0, 0, 0.1)" />
 				<view v-if="detailsObj.comment_num && dataComment" class="content">
 					<view class="header">
-						<image class="image" :src=" dataComment.commentUserPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
+						<image class="image" :src="dataComment.commentUserPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
 						<text class="users">{{ dataComment.commentUserName }}</text>
 					</view>
 					<p class="words">{{ dataComment.commentContent }}</p>
@@ -88,8 +88,10 @@ export default {
 	},
 	onLoad(e) {
 		this.id = e.id;
-
 		this.$u.debounce(this.getInfoById(e.id), 1000);
+	},
+	onShow() {
+		this.$u.debounce(this.getInfoById(this.id), 1000);
 	},
 	methods: {
 		addCaseInfoViewNum(id) {
@@ -136,7 +138,6 @@ export default {
 							title: res.message,
 							icon: 'none'
 						});
-						this.dataList.splice(0, 0);
 					}
 				})
 				.catch(err => {});
@@ -163,7 +164,6 @@ export default {
 							title: res.message,
 							icon: 'none'
 						});
-						this.dataList.splice(0, 0);
 					}
 				})
 				.catch(err => {
@@ -195,7 +195,6 @@ export default {
 							title: res.message,
 							icon: 'none'
 						});
-						this.dataList.splice(0, 0);
 					}
 				})
 				.catch(err => {});
@@ -209,7 +208,7 @@ export default {
 				id: val,
 				userId: this.userId
 			};
-			let self =  this;
+			let self = this;
 			uni.request({
 				method: 'GET',
 				url: ApiPath.url.caseInfoFindChannelId,

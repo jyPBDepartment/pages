@@ -85,8 +85,7 @@ const url = {
 	//加载回复列表
 	findByCommentId: URLHost + '/replyInfo/findByCommentId',
 
-	//加载回复列表
-	addCommentInfo: URLHost + '/commentInfo/addCommentInfo',
+	
 
 	//加载回复列表
 	addReplyInfo: URLHost + '/replyInfo/addReplyInfo',
@@ -241,11 +240,19 @@ const url = {
 	// 查询帖子单条下所有评论
 	postInfoFindByCommentPage: URLHost + '/postInfo/findByCommentPage',
 	// 查询帖子单条所有回复
-	postInfoFfindByReplyPage: URLHost + '/postInfo/findByReplyPagee',
+	postInfoFfindByReplyPage: URLHost + '/postInfo/findByReplyPage',
 	
 	// 我的粮食买卖收藏
 	grainTradingFindMyCollection: URLHost + '/grainTrading/findMyCollection',
 	
+	// 帖子详情
+	postInfoFindByPostId: URLHost + '/postInfo/findByPostId',
+	// 删除圈子评论
+	commentInfoDelCommentInfo: URLHost + '/commentInfo/delCommentInfo',
+	// 添加圈子回复
+	replyInfoAddReplyInfo: URLHost + '/replyInfo/addReplyInfo',
+	// 新增圈子评论
+	addCommentInfo: URLHost + '/commentInfo/addCommentInfo',
 	
 	/**
 	 * 慧农V_1.0 优化 接口 end

@@ -6,7 +6,7 @@
 			<view class="header">
 				<image class="image" :src="commentData.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png' "></image>
 				<text class="users">{{ commentData.isAnonymous ? '匿名' : commentData.nickName }}</text>
-				<text class="times">{{ commentData.date }}</text>
+				<text class="times">{{ commentData.date || commentData.commentTime }}</text>
 			</view>
 			<view class="paragraph">
 				<u-read-more text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
@@ -186,6 +186,7 @@ export default {
 		},
 		// 发布回复
 		replyPublish(val, isAnonymous) {
+		
 			if (val) {
 				let url = '';
 				let params = {};
@@ -226,12 +227,20 @@ export default {
 				}
 				if (this.type == 4) {
 					// 圈子
-					url = ApiPath.url.postInfoFfindByReplyPage;
+					url = ApiPath.url.replyInfoAddReplyInfo;
+					params = {
+						commentId: this.commentID,
+						replyContent: val,
+						replyUserName: nickName,
+						replyPic: pic,
+						replyUserId: this.userId,
+						isAnonymous: isAnonymous ? 1 : 0,
+					};
 				}
 				this.saveReply(url, params);
 			} else {
 				uni.showToast({
-					title: '请输入评论内容在评论'
+					title: '请输入回复内容~'
 				});
 			}
 		},
@@ -241,16 +250,18 @@ export default {
 
 			this.$ajax(url, 'GET', params)
 				.then(res => {
-					if (res.code == 200) {
+					if (res.code == 200 || res.state == 0) {
 						this.tipModalShow = true;
 						setTimeout(() => {
 							this.tipModalShow = false;
 						}, 1000);
 						self.initPageList(true);
 					}
+					
 				})
 				.catch(err => {});
 		},
+		// 删除回复
 		delItem(item) {
 			let self = this;
 			let url = ''
@@ -289,7 +300,7 @@ export default {
 						this.delModalShow = true;
 						setTimeout(() => {
 							this.delModalShow = false;
-						}, 2000);
+						}, 1000);
 						self.initPageList(true);
 					}
 				})
