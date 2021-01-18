@@ -147,7 +147,8 @@ const url = {
 	articleAddPV: URLHost + '/exclusive/addPV',
 	// 文章点评根据用户id查询评论信息
 	articleFindCommentByUserId: URLHost + '/exclusive/findCommentByUserId',
-
+	// 文章点评我的收藏
+	articleFindMyCollection:URLHost+'/articleManage/findMyCollection',
 
 	/**
 	 * 慧农V_1.0 优化 接口
