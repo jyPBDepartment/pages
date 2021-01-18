@@ -88,7 +88,7 @@ export default {
 	},
 	onLoad(e) {
 		this.id = e.id;
-		this.$u.debounce(this.getInfoById(e.id), 1000);
+		// this.$u.debounce(this.getInfoById(e.id), 1000);
 	},
 	onShow() {
 		this.$u.debounce(this.getInfoById(this.id), 1000);

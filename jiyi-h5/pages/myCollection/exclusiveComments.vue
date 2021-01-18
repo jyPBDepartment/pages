@@ -5,17 +5,17 @@
 			<image class="item-img" :src="item.url || `../../static/img/tabbar/首页-s-r.png`"></image>
 			<view class="item-info">
 				<view class="title">
-					<text>{{ item.isAnonymous ? '匿名' : item.title ? item.title : '匿名' }}</text>
+					<text>{{ item.title }}</text>
 					<view @click.stop="cancelCollection(item)">
 						<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
 					</view>
 				</view>
 				<view class="contactsUser">
 					<view class="g-flex g-a-c">
-						<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
-						<view class="word">zhou</view>
+						<!-- <image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image> -->
+						<view class="word">{{ item.contactsUser }}</view>
 					</view>
-					<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.updateDate }}</view>
+					<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</view>
 				</view>
 				<view class="fun-btn"></view>
 			</view>
@@ -57,6 +57,19 @@ export default {
 		this.getCommentList();
 	},
 	methods: {
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
+		},
 		getMoreList() {
 			if (this.nomore) {
 				return false;
@@ -77,30 +90,29 @@ export default {
 		},
 		cancelCollection(item) {
 			let self = this;
-			
+
 			uni.showModal({
-			    title: '提示',
-			    content: '是否取消收藏',
+				title: '提示',
+				content: '是否取消收藏',
 				cancelText: '否',
-				confirmText:'是',
-			    success: function (res) {
-			        if (res.confirm) {
-			          let params = {
-			          	action: 0,
-			          	agrId: item.id,
-			          	userId: getApp().globalData.userId
-			          };
-			          self.$ajax(ApiPath.url.articleCollection, 'GET', params)
-			          	.then(res => {
-			          		if (res.code == 200) {
-			          			self.getCommentList(true);
-			          		}
-			          	})
-			          	.catch(err => {});
-			        } 
-			    }
+				confirmText: '是',
+				success: function(res) {
+					if (res.confirm) {
+						let params = {
+							action: 0,
+							agrId: item.id,
+							userId: getApp().globalData.userId
+						};
+						self.$ajax(ApiPath.url.articleCollection, 'GET', params)
+							.then(res => {
+								if (res.code == 200) {
+									self.getCommentList(true);
+								}
+							})
+							.catch(err => {});
+					}
+				}
 			});
-			
 		},
 		// ()
 		getCommentList(action) {

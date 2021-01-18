@@ -53,7 +53,7 @@
 				<text class="times">{{ item.commentTime }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+				<u-read-more text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 					<rich-text :nodes="item.content"></rich-text>
 				</u-read-more>
 			</view>
