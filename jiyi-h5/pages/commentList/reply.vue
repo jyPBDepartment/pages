@@ -123,10 +123,12 @@ export default {
 			}
 			if (this.type == 2) {
 				// 文章点评
-				url = ApiPath.url.articleFindCommentByUserId;
+				url = ApiPath.url.exclusiveFindReplyByUserId;
 				params = {
-					userId: '22',
-					artId: this.commentID
+					commentId: this.commentID,
+					page: this.page,
+					size: 10,
+					userId: this.userId
 				};
 			}
 			if (this.type == 3) {
@@ -207,10 +209,15 @@ export default {
 				}
 				if (this.type == 2) {
 					// 文章点评
-					url = ApiPath.url.articleFindCommentByUserId;
+					url = ApiPath.url.exclusiveAddReply;
 					params = {
-						userId: '22',
-						artId: this.id
+						commentId: this.commentID,
+						replyContent: val,
+						replyUserName: nickName,
+						replyPic: pic,
+						replyUserId: this.userId,
+						isAnonymous: isAnonymous ? 1 : 0,
+						status:0
 					};
 				}
 				if (this.type == 3) {

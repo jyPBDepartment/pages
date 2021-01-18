@@ -255,6 +255,14 @@ const url = {
 	// 新增圈子评论
 	addCommentInfo: URLHost + '/commentInfo/addCommentInfo',
 	
+	// 增加独家点评评论信息
+	exclusiveAddComment: URLHost + '/exclusive/addComment',
+	// 独家点评增加回复信息
+	exclusiveAddReply: URLHost + '/exclusive/addReply',
+	// 独家点评回复列表信息
+	exclusiveFindReplyByUserId: URLHost + '/exclusive/findReplyByUserId',
+	
+	
 	/**
 	 * 慧农V_1.0 优化 接口 end
 	 */

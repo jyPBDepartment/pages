@@ -79,7 +79,7 @@ export default {
 			noData: false
 		};
 	},
-	created() {
+	onShow() {
 		this.getSectionTab();
 	},
 	onReachBottom() {
@@ -90,7 +90,6 @@ export default {
 		this.page = ++this.page;
 		this.getCommentList(this.listTab[this.current].id);
 	},
-
 	methods: {
 		loadmore() {
 			this.status = 'loading';
@@ -110,7 +109,7 @@ export default {
 					action = 0;
 				}
 				let params = {
-					userId: '999',
+					userId: getApp().globalData.userId,
 					action: action,
 					agrId: n.id
 				};
@@ -132,7 +131,7 @@ export default {
 					action = 0;
 				}
 				let params = {
-					userId: '999',
+					userId: getApp().globalData.userId,
 					action: action,
 					agrId: n.id
 				};
@@ -159,23 +158,14 @@ export default {
 			this.getCommentList(this.listTab[index].id);
 		},
 		goDetails(id) {
-			//点击详情增加浏览量
-			let params = {
-				id: id
-			};
-			this.$ajax(ApiPath.url.articleAddPV, 'GET', params).then(res => {
-				if (res.code == '200') {
-					this.getCommentList(this.listTab[this.current].id);
-					uni.navigateTo({
-						url: '/pages/grain/commentDetails?commentId=' + id
-					});
-				}
+			uni.navigateTo({
+				url: '/pages/grain/commentDetails?commentId=' + id
 			});
 		},
 		getCommentList(id) {
 			let self = this;
 			let params = {
-				userId: '999',
+				userId: getApp().globalData.userId,
 				sectionId: id,
 				orderType: this.tabIndex,
 				page: self.page,

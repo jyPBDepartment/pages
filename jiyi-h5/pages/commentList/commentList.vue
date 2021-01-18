@@ -83,7 +83,6 @@ export default {
 	onLoad(data) {
 		this.type = data.type;
 		this.id = data.id;
-		// this.initPage(true);
 	},
 	onShow() {
 		this.initPage(true);
@@ -118,7 +117,9 @@ export default {
 				url = ApiPath.url.articleFindCommentByUserId;
 				params = {
 					userId: '22',
-					artId: this.id
+					artId: this.id,
+					page:this.page,
+					size:10
 				};
 			}
 			if (this.type == 3) {
@@ -207,11 +208,16 @@ export default {
 				}
 				if (this.type == 2) {
 					// 文章点评
-					// url = ApiPath.url.articleFindCommentByUserId;
-					// params = {
-					// 	userId: '22',
-					// 	artId: this.id
-					// };
+					url = ApiPath.url.exclusiveAddComment;
+					params = {
+						artId: this.id,
+						commentContent: val,
+						commentUserName: nickName,
+						commentPic: pic,
+						commentUserId: userId,
+						isAnonymous: isAnonymous ? 1 : 0,
+						status:0
+					};
 				}
 				if (this.type == 3) {
 					// 看图识病

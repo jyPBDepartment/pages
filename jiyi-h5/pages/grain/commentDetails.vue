@@ -37,17 +37,16 @@
 		<view class="dividing-line"></view>
 		<view class="comment-box-c">
 			<view class="top-box-c">
-				<text>评论({{ commentData.comment_num }})</text>
-				<text class="right" @tap="goCommentList(commentData.id)">全部评论/去评论 ></text>
+				<text>评论({{ totalElements }})</text>
+				<text class="right" @tap="goCommentList(commentData.id)">{{ totalElements ? '全部评论' : '去评论' }} ></text>
 			</view>
-			<u-line v-if="false" color="rgba(0, 0, 0, 0.1)" />
-			<view class="content">
+			<u-line v-if="totalElements" color="rgba(0, 0, 0, 0.1)" />
+			<view v-if="totalElements" class="content" v-for="(item, i) in commentList" :key="i">
 				<view class="header">
-					<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
-					<text class="users">zhoux</text>
+					<image class="image" :src="item.commentPic || ''"></image>
+					<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName ? item.nickName : '匿名' }}</text>
 				</view>
-
-				<p class="words">{{ content }}</p>
+				<p class="words">{{ item.content }}</p>
 			</view>
 		</view>
 	</view>
@@ -71,13 +70,48 @@ export default {
 			style: {
 				p: 'word-wrap: break-word;word-break: break-all;overflow: hidden;color:#000000;font-size:28rpx;font-weight:blod;'
 			},
-			content: 121212121
+			content: 121212121,
+			commentList: [],
+			totalElements: 0
 		};
 	},
 	onShow() {
 		this.getCommentDetails();
 	},
 	methods: {
+		addArticleAddPV() {
+			//点击详情增加浏览量
+			let params = {
+				id: this.commentId
+			};
+			this.$ajax(ApiPath.url.articleAddPV, 'GET', params).then(res => {
+				if (res.code == '200') {
+					this.commentData.view_num = res.data;
+				}
+			});
+		},
+		getOneCommentData(id) {
+			let self = this;
+			let url = ApiPath.url.articleFindCommentByUserId;
+			let params = {
+				userId: getApp().globalData.userId,
+				artId: id,
+				page: 1,
+				size: 10
+			};
+			this.$ajax(url, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						if (res.data.content && res.data.content.length) {
+							self.commentList.push(res.data.content[0]);
+						} else {
+							self.commentList = [];
+						}
+						self.totalElements = res.data.totalElements;
+					}
+				})
+				.catch(err => {});
+		},
 		goCommentList(val) {
 			uni.navigateTo({
 				url: '/pages/commentList/commentList?id=' + val + '&type=2'
@@ -93,7 +127,7 @@ export default {
 					action = 0;
 				}
 				let params = {
-					userId: '999',
+					userId: getApp().globalData.userId,
 					action: action,
 					agrId: n.id
 				};
@@ -117,7 +151,7 @@ export default {
 					action = 0;
 				}
 				let params = {
-					userId: '999',
+					userId: getApp().globalData.userId,
 					action: action,
 					agrId: n.id
 				};
@@ -135,12 +169,14 @@ export default {
 			let self = this;
 			let params = {
 				id: self.commentId,
-				userId: '999'
+				userId: getApp().globalData.userId
 			};
 			this.$ajax(ApiPath.url.findArticleIdDetails, 'GET', params)
 				.then(res => {
 					if (res.code == 200) {
 						self.commentData = res.data;
+						self.getOneCommentData(self.commentData.id);
+						self.addArticleAddPV();
 					}
 				})
 				.catch(err => {});

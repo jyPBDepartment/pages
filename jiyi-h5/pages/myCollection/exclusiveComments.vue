@@ -6,7 +6,7 @@
 			<view class="item-info">
 				<view class="title">
 					<text>{{ item.isAnonymous ? '匿名' : item.title ? item.title : '匿名' }}</text>
-					<view @click.stop="">
+					<view @click.stop="cancelCollection(item)">
 						<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
 					</view>
 				</view>
@@ -52,11 +52,12 @@ export default {
 			noData: false
 		};
 	},
-	created() {
+	created() {},
+	mounted() {
 		this.getCommentList();
 	},
 	methods: {
-		getMoreList(){
+		getMoreList() {
 			if (this.nomore) {
 				return false;
 			}
@@ -74,20 +75,38 @@ export default {
 				url: '/pages/grain/commentDetails?commentId=' + id
 			});
 		},
-		getCommentList(id) {
+		cancelCollection(item) {
 			let self = this;
 			let params = {
-				userId: '999',
-				sectionId: '',
-				orderType: this.tabIndex,
+				action: 0,
+				agrId: item.id,
+				userId: getApp().globalData.userId
+			};
+			this.$ajax(ApiPath.url.articleCollection, 'GET', params)
+				.then(res => {
+					if (res.code == 200) {
+						this.getCommentList(true);
+					}
+				})
+				.catch(err => {});
+		},
+		// ()
+		getCommentList(action) {
+			let self = this;
+			if (action) {
+				this.page = 1;
+				this.commentListData = [];
+			}
+			let params = {
+				userId: getApp().globalData.userId,
 				page: self.page,
 				size: 10
 			};
-			self.$ajax(ApiPath.url.findArticleList, 'GET', params)
+			self.$ajax(ApiPath.url.articleFindMyCollection, 'GET', params)
 				.then(res => {
-					// 
-					if (res.code == 200) {
-						console.log(res.data.content)
+					//
+					console.log(res);
+					if (res.status == 200) {
 						if (res.data.content.length < 10) {
 							self.nomore = true;
 							self.status = 'nomore';
@@ -109,12 +128,11 @@ export default {
 								}
 							}, 200);
 						}
-						console.log(self.commentListData,self.noData )
+						console.log(self.commentListData, self.noData);
 					}
 				})
 				.catch(err => {});
 		}
-
 	}
 };
 </script>
