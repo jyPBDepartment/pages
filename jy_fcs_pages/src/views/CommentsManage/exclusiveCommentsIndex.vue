@@ -217,7 +217,7 @@ export default {
       let params = {
         title: this.title,
         content: this.content,
-        name: this.user,
+        name: this.name,
         page: this.formInline.page,
         size: this.formInline.limit,
       };
@@ -254,7 +254,7 @@ export default {
       //this.$refs['searchForm'].resetFields()
       this.title = "";
       this.content = "";
-      this.user = "";
+      this.name = "";
       this.formInline.page = 1;
       this.formInline.limit = 10;
       this.search(this.formInline);
