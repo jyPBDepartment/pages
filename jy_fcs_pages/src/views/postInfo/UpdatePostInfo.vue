@@ -199,11 +199,11 @@ export default {
         if (res.status == "0") {
           this.postInfoForm = res.data;
 
-          console.log(res.data.picture)
+          // console.log(res.data.picture)
           if (res.data.picture.indexOf(",") > -1) {
             this.picList = res.data.picture.split(",");
           } else {
-            this.picList.push(res.data.picture);
+            this.picList.push(res.data.picture); 
           }
 
           api.testAxiosGet(ApiPath.url.getPostType, params).then((re) => {
