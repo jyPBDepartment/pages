@@ -69,7 +69,7 @@
           <el-table-column
             show-overflow-tooltip
             prop="replyContent"
-            label="评论内容"
+            label="回复内容"
             align="center"
             min-width="15"
           ></el-table-column>
@@ -267,7 +267,7 @@ export default {
           id: scope.row.id,
         };
         api.testAxiosGet(ApiPath.url.replyDelete, params).then((res) => {
-          if (res.status == "0") {
+          if (res.code == "200") {
             this.$message.success(res.message);
             //this.reload();
             this.listData.splice(scope.$index, 1);

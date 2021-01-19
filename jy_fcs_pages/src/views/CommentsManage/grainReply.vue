@@ -71,20 +71,20 @@
           <el-table-column
             show-overflow-tooltip
             prop="replyContent"
-            label="评论内容"
+            label="回复内容"
             align="center"
             min-width="15"
           ></el-table-column>
           <el-table-column
             prop="replyUserName"
-            label="评论人"
+            label="回复人"
             align="center"
             min-width="10"
           ></el-table-column>
           <el-table-column
             sortable
             prop="date"
-            label="评论时间"
+            label="回复时间"
             width="200px"
             align="center"
             min-width="10"
