@@ -27,7 +27,7 @@
 			<view class="paragraph">
 				<u-read-more text-indent="0" :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 					<view class="reply-content-c">
-						回复
+						<text>回复</text>
 						<text class="nick-name">{{ commentData.nickName }}：</text>
 						<text>{{ item.replyContent }}</text>
 					</view>
@@ -481,5 +481,6 @@ export default {
 	color: #5eb14e;
 }
 .reply-content-c {
+	font-size: 24rpx;
 }
 </style>

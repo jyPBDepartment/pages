@@ -16,7 +16,7 @@
 			<view class="reply-b">
 				<view class="left">
 					<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610355717998322.png" color="#9FA3A8" size="24"></u-icon>
-					<text @tap="goReplay(item)">回复（{{ item.replyNum }}）</text>
+					<text @tap="goReplay(item)">回复({{ item.replyNum }})</text>
 				</view>
 				<text class="right" v-if="item.isMyComment" @click="delItem(item)">删除</text>
 			</view>
