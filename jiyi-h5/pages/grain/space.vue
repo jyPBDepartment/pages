@@ -176,7 +176,7 @@ export default {
 			this.company = '台';
 		}
 
-		this.$u.debounce(this.findMineId(e.id), 1000);
+		// this.$u.debounce(this.findMineId(e.id), 1000);
 
 		this.id = e.id;
 		this.isMine = e.isMine;

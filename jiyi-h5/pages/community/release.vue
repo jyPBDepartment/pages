@@ -33,10 +33,9 @@
 						height="168"
 						:show-progress="false"
 						:action="action"
-						@on-choose-complete="onChoose"
 						@on-remove="remove"
 						@on-success="uploadSuccess"
-						:file-list="fileList"
+						
 						max-count="9"
 						multiple
 					></u-upload>
@@ -81,18 +80,21 @@ export default {
 		});
 	},
 	methods: {
+		// 移除一张图片
 		remove(index, lists) {
 			this.url.splice(index, 1);
 		},
+		//  上传图片成功返回图片url地址
 		uploadSuccess(data, index, lists, name) {
 			uni.showToast({
 				title: '上传成功',
-				duration: 1000,
-				icon: 'success'
+				duration: 500,
+				icon: 'none'
 			});
 			this.url.push(data.url);
 		},
 		onChoose(lists, name) {},
+		// 发布帖子
 		addCommunity() {
 			if (this.name == '') {
 				uni.showToast({
@@ -116,7 +118,7 @@ export default {
 				name: this.name,
 				code: this.code,
 				parentCode: this.parent,
-				is_anonymous: this.checked ? '1' : '0',
+				isAnonymous: this.checked ? '1' : '0',
 				addItem: this.url,
 				header: getApp().globalData.pic,
 				createUser: getApp().globalData.nickName,

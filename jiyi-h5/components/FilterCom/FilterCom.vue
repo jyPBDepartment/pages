@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view class="filter-container">
-			<view :class="tabIndex == 1 && 'select-tab'" @tap="clickTab(1)">最火</view>
 			<view :class="tabIndex == 2 && 'select-tab'" @tap="clickTab(2)">最新</view>
+			<view :class="tabIndex == 1 && 'select-tab'" @tap="clickTab(1)">最火</view>
 			<view :class="tabIndex == 3 && 'select-tab'" @tap="clickTab(3)">精品</view>
 			<view :class="tabIndex == 4 && 'select-tab'" @tap="clickTab(4)">热议</view>
 			<view :class="tabIndex == 5 && 'select-tab'" @tap="clickTab(5)">好评</view>
@@ -18,7 +18,7 @@ export default {
 	},
 	data() {
 		return {
-			tabIndex: 1
+			tabIndex: 2
 		};
 	},
 	methods: {

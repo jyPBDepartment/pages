@@ -116,7 +116,6 @@ export default {
 					size: 10,
 				},
 				success: res => {
-					console.log(res.data)
 					if (res.data.code == 200) {
 						if (res.data.data.content.length < 10) {
 							self.nomore = true;

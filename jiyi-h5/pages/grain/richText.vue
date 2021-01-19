@@ -271,7 +271,7 @@ export default {
 			.filter-container {
 				margin: 20rpx auto;
 				width: 708rpx;
-				height: 88rpx;
+				height: 78rpx;
 				background: #f4f4f4;
 				opacity: 1;
 				border-radius: 30rpx;
@@ -295,7 +295,7 @@ export default {
 
 				.select-tab {
 					flex: 1;
-					height: 88rpx;
+					height: 78rpx;
 					background: #5eb14e;
 					opacity: 1;
 					border-radius: 30rpx;

@@ -138,11 +138,9 @@ export default {
 				//存在2组选择框
 				if (this.screenedIndex !== null) {
 					params = this.screenList[this.screenedIndex1].category[this.screenedIndex].code + '';
-					console.log(params,1)
 				}
 				if (this.screenedIndex2 !== null) {
 					params = params + ',' + this.screenL[this.screenedIndex2].category[this.screenedIndex3].name;
-					console.log(params,2)
 				}
 				
 			} else {

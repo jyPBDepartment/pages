@@ -128,8 +128,6 @@ export default {
 			};
 			self.$ajax(ApiPath.url.articleFindMyCollection, 'GET', params)
 				.then(res => {
-					//
-					console.log(res);
 					if (res.status == 200) {
 						if (res.data.content.length < 10) {
 							self.nomore = true;
@@ -152,7 +150,6 @@ export default {
 								}
 							}, 200);
 						}
-						console.log(self.commentListData, self.noData);
 					}
 				})
 				.catch(err => {});

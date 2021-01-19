@@ -8,7 +8,7 @@
 			<image class="item-img" :src="item.url" mode=""></image>
 			<view class="item-info">
 				<p class="title">{{ item.name }}</p>
-				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate }}</view>
+				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</view>
 				<view class="fun-btn">
 					<view class="item">
 						<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
@@ -93,7 +93,7 @@ export default {
 			page: 1,
 			nomore: false,
 			noData: false,
-			sortIndex: 1,
+			sortIndex: 2,
 			collection: false,
 			thumbs: false,
 			userId: localStorage.getItem('userId')
@@ -146,6 +146,19 @@ export default {
 		this.request(true);
 	},
 	methods: {
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
+		},
 		clickIcon(item, val, i) {
 			if (val == 1) {
 				//收藏点击
@@ -256,7 +269,7 @@ export default {
 					page: this.page,
 					size: 10,
 					dipTypeCode: this.dipTypeCode,
-					cropsTypeCode: this.cropsTypeCode,
+					cropsTypeCode: this.cropsTypeCode == '全部' ? '' : this.cropsTypeCode,
 					sort: this.sortIndex,
 					userId: userId
 				},

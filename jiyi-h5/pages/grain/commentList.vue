@@ -77,10 +77,12 @@ export default {
 			commentListData: [],
 			nomore: false,
 			noData: false,
-			sortIndex:1
+			sortIndex: 2
 		};
 	},
 	onShow() {
+		console.log(this.current,this.sortIndex)
+		
 		this.getSectionTab();
 	},
 	onReachBottom() {
@@ -93,7 +95,7 @@ export default {
 	},
 	methods: {
 		selectTabPage(val) {
-			this.sortIndex = val
+			this.sortIndex = val;
 			this.getCommentList(this.listTab[this.current].id);
 		},
 		clickIcon(m, n) {
@@ -203,7 +205,7 @@ export default {
 					if (res.code == 200) {
 						self.listTab = res.data;
 						self.commentListData = [];
-						self.getCommentList(self.listTab[0].id);
+						self.getCommentList(self.listTab[self.current].id);
 					}
 				})
 				.catch(err => {});

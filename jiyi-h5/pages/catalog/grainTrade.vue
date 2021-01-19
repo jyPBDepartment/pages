@@ -261,7 +261,7 @@ export default {
 			screened: '',
 			collection: true,
 			thumbs: true,
-			sortIndex: 1 //1最火2最新3精品4热议5好评
+			sortIndex: 2 //1最火2最新3精品4热议5好评
 		};
 	},
 	onLoad() {},
