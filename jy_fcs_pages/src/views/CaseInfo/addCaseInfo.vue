@@ -789,7 +789,7 @@ export default {
           } else {
             this.editForm.isSelected = 0;
           }
-          alert(this.editForm.isSelected);
+          //alert(this.editForm.isSelected);
           let params = {
             caseInfoEntity: JSON.stringify(this.editForm),
           };
