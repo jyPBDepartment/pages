@@ -692,6 +692,7 @@ export default {
       quill.insertEmbed(quill.getSelection().index, "image", res.url);
     },
     handleRemove(file, fileList) {
+      this.imgUrl = '';
       console.log(file, fileList);
     },
     handlePreview(file) {
@@ -788,6 +789,7 @@ export default {
           } else {
             this.editForm.isSelected = 0;
           }
+          alert(this.editForm.isSelected);
           let params = {
             caseInfoEntity: JSON.stringify(this.editForm),
           };
