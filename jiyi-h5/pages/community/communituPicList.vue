@@ -1,5 +1,5 @@
 <template>
-	<view class="pictues-group"><image v-for="(item, i) in list" class="preview-img" :src="item" :key="i"></image></view>
+	<view class="pictues-group"><image :lazy-load="true" v-for="(item, i) in list" class="preview-img" :src="item" :key="i"></image></view>
 </template>
 
 <script>

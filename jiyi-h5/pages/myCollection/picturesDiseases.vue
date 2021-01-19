@@ -4,12 +4,12 @@
 			<image class="item-img" :src="item.url" mode=""></image>
 			<view class="item-info">
 				<view class="title">
-					<text>{{  item.isAnonymous ? '匿名' : item.name ? item.name : '匿名' }}</text>
+					<text>{{ item.isAnonymous ? '匿名' : item.name ? item.name : '匿名' }}</text>
 					<view @click.stop="cancelCollection(item)">
 						<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
 					</view>
 				</view>
-				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate?formatTime(item.createDate) : '' }}</view>
+				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate ? formatTime(item.createDate) : '' }}</view>
 				<view class="fun-btn"></view>
 			</view>
 		</view>
@@ -38,14 +38,14 @@ export default {
 			page: 1,
 			nomore: false,
 			noData: false,
-			userId:getApp().globalData.userId
+			userId: getApp().globalData.userId
 		};
 	},
 	created() {
 		this.getPicList(this.page);
 	},
 	methods: {
-		getMoreList(){
+		getMoreList() {
 			if (this.nomore) {
 				return false;
 			}
@@ -53,34 +53,32 @@ export default {
 			this.page = ++this.page;
 			this.getPicList();
 		},
-		cancelCollection(item){
+		cancelCollection(item) {
 			let self = this;
-			
-			
+
 			uni.showModal({
-			    title: '提示',
-			    content: '是否取消收藏',
+				title: '提示',
+				content: '是否取消收藏',
 				cancelText: '否',
-				confirmText:'是',
-			    success: function (res) {
-			        if (res.confirm) {
-			          let params = {
-			          	isCollection: 1,
-			          	caseId: item.id,
-			          	collectionUserId: this.userId
-			          };
-			          self.$ajax(Interface.url.caseInfoSaveCollection, 'GET', params)
-			          	.then(res => {
-			          		if (res.code == 200) {
-			          			self.dataList = []
-			          			self.getPicList(1);
-			          		}
-			          	})
-			          	.catch(err => {});
-			        } 
-			    }
+				confirmText: '是',
+				success: function(res) {
+					if (res.confirm) {
+						let params = {
+							isCollection: 1,
+							caseId: item.id,
+							collectionUserId: getApp().globalData.userId
+						};
+						self.$ajax(Interface.url.caseInfoSaveCollection, 'GET', params)
+							.then(res => {
+								if (res.code == 200) {
+									self.dataList = [];
+									self.getPicList(1);
+								}
+							})
+							.catch(err => {});
+					}
+				}
 			});
-			
 		},
 		formatTime(datetime) {
 			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -111,9 +109,9 @@ export default {
 				url: Interface.url.caseInfoFindByMyCollection,
 				method: 'GET',
 				data: {
-					collectionUserId:this.userId,
-					page: this.page,
-					size: 10,
+					collectionUserId: getApp().globalData.userId,
+					page: self.page,
+					size: 10
 				},
 				success: res => {
 					if (res.data.code == 200) {
@@ -139,7 +137,7 @@ export default {
 							}, 200);
 						}
 					}
-					
+
 					self.status = 'nomore';
 				},
 				fail: err => {
