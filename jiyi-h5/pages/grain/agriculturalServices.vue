@@ -232,11 +232,12 @@ export default {
 		// alert(localStorage.getItem("userId"))
 		// 设置干活时间选择日历的最小开始时间
 		this.currentDate = new Date().toISOString().slice(0, 10);
-		setTimeout(() => {
-			this.$refs.region.getScreen();
-		}, 1000);
 	},
-	onReady() {},
+	onReady() {
+		// setTimeout(() => {
+			this.$refs.region.getScreen();
+		// }, 1000);
+	},
 	watch: {
 		dateShow: function() {
 			if (!this.dateShow) {

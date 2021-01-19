@@ -97,7 +97,6 @@ export default {
 								name: res.data.data[i].deployModuleName //发布模块名称
 							});
 						}
-						console.log(resp);
 						this.btnList = resp;
 					}
 					this.show = false;

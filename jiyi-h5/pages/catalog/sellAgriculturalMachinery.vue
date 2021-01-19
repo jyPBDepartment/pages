@@ -120,7 +120,6 @@ export default {
 					transactionTypeCode: this.transactionTypeCode
 				},
 				success: res => {
-					console.log(res.data);
 					if (res.data.state == 0) {
 						let curPageData = res.data.data.content.map(item => {
 							if (item.url != '') {
