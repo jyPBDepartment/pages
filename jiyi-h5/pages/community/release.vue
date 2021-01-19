@@ -28,17 +28,7 @@
 				<view class="required"></view>
 				<view class="title title-s">图片</view>
 				<view class="info">
-					<u-upload
-						width="168"
-						height="168"
-						:show-progress="false"
-						:action="action"
-						@on-remove="remove"
-						@on-success="uploadSuccess"
-						
-						max-count="9"
-						multiple
-					></u-upload>
+					<u-upload width="168" height="168" :show-progress="false" :action="action" @on-remove="remove" @on-success="uploadSuccess" max-count="9" multiple></u-upload>
 				</view>
 			</view>
 			<!-- <CommReply></CommReply> -->
@@ -130,13 +120,13 @@ export default {
 						uni.showToast({
 							title: '发布帖子成功，等待审核',
 							icon: 'none',
-							duration: 2000,
-							success: () => {
-								uni.reLaunch({
-									url: '/pages/tabbar/community/index'
-								});
-							}
+							duration: 2000
 						});
+						setTimeout(() => {
+							uni.switchTab({
+								url: '/pages/tabbar/community/index'
+							});
+						}, 2000);
 					} else {
 						uni.showToast({
 							title: '发布帖子失败，请联系管理员或重新发布',
