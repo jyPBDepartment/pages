@@ -41,7 +41,7 @@
         <el-divider></el-divider>
         <el-row>
           <el-col :span="12">帖子分类：{{ postInfoForm.parentCode }}</el-col>
-          <el-col :span="12">发帖作者：{{ postInfoForm.author }}</el-col>
+          <el-col :span="12">发帖作者：{{ postInfoForm.nickName }}</el-col>
         </el-row>
         <el-divider></el-divider>
         <el-row>
@@ -53,6 +53,20 @@
               rows="5"
               readonly
             ></el-input>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+          <el-col :span="4">图片：</el-col>
+          <el-col :span="18">
+            <el-row>
+              <el-col :span="8" v-for="(item, i) in picList" :key="i">
+                <el-image
+                  :src="item"
+                  style="width: 130px; height: 130px; margin-left: 10px"
+                ></el-image>
+              </el-col>
+            </el-row>
           </el-col>
         </el-row>
         <el-divider></el-divider>
@@ -155,6 +169,7 @@ export default {
         id: "",
         reason: "",
       },
+      picList: [],
       localShow: this.show,
     };
   },
@@ -183,6 +198,14 @@ export default {
       api.testAxiosGet(ApiPath.url.findPostInfoId, params).then((res) => {
         if (res.status == "0") {
           this.postInfoForm = res.data;
+
+          console.log(res.data.picture)
+          if (res.data.picture.indexOf(",") > -1) {
+            this.picList = res.data.picture.split(",");
+          } else {
+            this.picList.push(res.data.picture);
+          }
+
           api.testAxiosGet(ApiPath.url.getPostType, params).then((re) => {
             if (re.state == "0") {
               var flag = false;
@@ -190,10 +213,10 @@ export default {
                 if (this.postInfoForm.parentCode == re.data[i].id) {
                   this.postInfoForm.parentCode = re.data[i].name;
                   flag = true;
-                  break
+                  break;
                 }
               }
-              if(!flag){
+              if (!flag) {
                 this.postInfoForm.parentCode = "该分类已删除";
               }
             }
