@@ -182,7 +182,7 @@ export default {
 			let params = {
 				isCancelCollection: item.isUserCollection ? 1 : 0,
 				circleId: item.id,
-				userId: '20200909'
+				userId: getApp().globalData.userId
 			};
 			this.$ajax(Interface.url.postInfoPostCollection, 'GET', params)
 				.then(res => {

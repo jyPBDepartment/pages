@@ -7,11 +7,12 @@
 		<FilterCom @selectTab="selectTabCom"></FilterCom>
 
 		<view class="list-container-s" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
+			<view class="dividing-line" v-if="index != 0"></view>
 			<view class="title">{{ item.name }}</view>
 			<view class="content">
 				<view class="header">
 					<image class="image" :src="item.header || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
-					<text class="users">{{ item.isAnonymous?'匿名': item.nickName?item.nickName:'匿名' }}</text>
+					<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName ? item.nickName : '匿名' }}</text>
 					<text class="times">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</text>
 				</view>
 				<view class="paragraph">
@@ -40,6 +41,7 @@
 					</view>
 				</view>
 			</view>
+			
 		</view>
 		<view class="no-data" v-if="noData">
 			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
@@ -169,7 +171,7 @@ export default {
 			let params = {
 				isCancelCollection: item.isUserCollection ? 1 : 0,
 				circleId: item.id,
-				userId: '20200909'
+				userId: getApp().globalData.userId
 			};
 			this.$ajax(Interface.url.postInfoPostCollection, 'GET', params)
 				.then(res => {

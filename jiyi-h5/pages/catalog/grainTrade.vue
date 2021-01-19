@@ -300,7 +300,7 @@ export default {
 			let params = {
 				action: item.curCollention ? 0 : 1,
 				agrId: item.id,
-				userId: '20200909'
+				userId: getApp().globalData.userId
 			};
 			this.$ajax(Interface.url.grainTradingSetCollection, 'GET', params)
 				.then(res => {
@@ -327,7 +327,7 @@ export default {
 			let params = {
 				action: item.curPraise ? 0 : 1,
 				agrId: item.id,
-				userId: '20200909'
+				userId: getApp().globalData.userId
 			};
 			this.$ajax(Interface.url.grainTradingSetPraise, 'GET', params)
 				.then(res => {
@@ -574,7 +574,7 @@ export default {
 					transactionCategoryCode: this.transactionCategoryCode,
 					identityCode: this.identityCode,
 					address: this.address,
-					userId: '20200909',
+					userId: getApp().globalData.userId,
 					sort: this.sortIndex
 				},
 				success: res => {

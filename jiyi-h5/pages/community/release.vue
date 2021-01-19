@@ -16,6 +16,14 @@
 					</u-radio-group>
 				</view>
 			</view>
+
+			<view class="item">
+				<view class="required">*</view>
+				<view class="title title-s" style="padding: 10rpx 0;">内容</view>
+				<view class="info" style="position: relative;">
+					<u-input type="textarea" placeholder="请输入内容正文（最多输入500字）" :maxlength="500" :auto-height="false" :clearable="false" v-model="code" height="600" />
+				</view>
+			</view>
 			<view class="item">
 				<view class="required"></view>
 				<view class="title title-s">图片</view>
@@ -32,13 +40,6 @@
 						max-count="9"
 						multiple
 					></u-upload>
-				</view>
-			</view>
-			<view class="item">
-				<view class="required">*</view>
-				<view class="title title-s" style="padding: 10rpx 0;">内容</view>
-				<view class="info" style="position: relative;">
-					<u-input type="textarea" placeholder="请输入内容正文（最多输入500字）" :maxlength="500" :auto-height="false" :clearable="false" v-model="code" height="600" />
 				</view>
 			</view>
 			<!-- <CommReply></CommReply> -->
@@ -91,9 +92,7 @@ export default {
 			});
 			this.url.push(data.url);
 		},
-		onChoose(lists, name) {
-			console.log(this.url);
-		},
+		onChoose(lists, name) {},
 		addCommunity() {
 			if (this.name == '') {
 				uni.showToast({
@@ -126,7 +125,6 @@ export default {
 			this.$ajax(Interface.url.postInfoAddPostInfo, 'GET', params)
 				.then(res => {
 					if (res.code == 200) {
-						console.log(2122222);
 						uni.showToast({
 							title: '发布帖子成功，等待审核',
 							icon: 'none',
@@ -152,60 +150,6 @@ export default {
 						duration: 2000
 					});
 				});
-		},
-
-		release() {
-			console.log(this.parent);
-			if (this.name == '') {
-				uni.showToast({
-					title: '请输入标题'
-				});
-				return;
-			}
-			if (this.code == '') {
-				uni.showToast({
-					title: '请输入内容'
-				});
-				return;
-			}
-			uni.request({
-				url: Interface.url.postInfoAddPostInfo,
-				method: 'GET',
-				data: {
-					name: this.name,
-					code: this.code,
-					parentCode: this.list.find(item => {
-						return item.name == this.parent;
-					}).id,
-					createUserId: localStorage.getItem('userId'),
-					createUser: ''
-				},
-				success: res => {
-					if (res.data.state == 0) {
-						uni.showToast({
-							title: '发布帖子成功，等待审核',
-							icon: 'success',
-							duration: 2000
-						});
-						setTimeout(() => {
-							uni.navigateBack();
-						}, 2000);
-					} else {
-						uni.showToast({
-							title: '发布帖子失败，请联系管理员或重新发布',
-							icon: 'success',
-							duration: 2000
-						});
-					}
-				},
-				fail: err => {
-					uni.showToast({
-						title: '系统崩溃，请联系管理员',
-						icon: 'success',
-						duration: 2000
-					});
-				}
-			});
 		}
 	}
 };

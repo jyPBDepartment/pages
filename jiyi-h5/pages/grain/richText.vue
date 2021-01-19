@@ -13,7 +13,7 @@
 				</view>
 				<view v-show="tabIndex == 1" class="html-content"><u-parse :html="detailsObj.harm"></u-parse></view>
 				<view v-show="tabIndex == 2" class="html-content"><u-parse :html="detailsObj.channel"></u-parse></view>
-				<view v-show="tabIndex == 3" class="html-content"><u-parse :html="detailsObj.controlTechnology"></u-parse></view>
+				<view v-show="tabIndex == 3" class="html-content"><u-parse :html="detailsObj.control_technology"></u-parse></view>
 			</view>
 			<view class="fun-btn p-40">
 				<view class="item">

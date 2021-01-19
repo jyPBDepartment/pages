@@ -218,7 +218,7 @@ export default {
 			let params = {
 				action: item ? 0 : 1,
 				agrId: this.id,
-				userId: '20200909'
+				userId: getApp().globalData.userId
 			};
 			this.$ajax(ApiPath.url.grainTradingSetCollection, 'GET', params)
 				.then(res => {
@@ -245,7 +245,7 @@ export default {
 			let params = {
 				action: item ? 0 : 1,
 				agrId: this.id,
-				userId: '20200909'
+				userId: getApp().globalData.userId
 			};
 			this.$ajax(ApiPath.url.grainTradingSetPraise, 'GET', params)
 				.then(res => {
@@ -271,7 +271,7 @@ export default {
 		findMineId(val) {
 			let param = {
 				id: val,
-				userId: '20200909'
+				userId: getApp().globalData.userId
 			};
 			uni.request({
 				method: 'GET', //请求方式

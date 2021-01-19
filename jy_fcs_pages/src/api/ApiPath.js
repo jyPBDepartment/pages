@@ -1,9 +1,9 @@
 // 本地环境地址
-const URLHost = 'http://localhost:8080';
-const EDUHost = 'http://localhost:8083';
+// const URLHost = 'http://localhost:8080';
+// const EDUHost = 'http://localhost:8083';
 // 开发环境基础路径地址
-// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-// const EDUHost = 'http://192.168.1.106:8080/jy_edu';
+const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+const EDUHost = 'http://192.168.1.106:8080/jy_edu';
 // 生产环境基础路径地址
 // const URLHost = 'http://hnser.jiyinongye.com:8080/jy_fcs';
 // const EDUHost = 'http://hnser.jiyinongye.com/jy_edu';
