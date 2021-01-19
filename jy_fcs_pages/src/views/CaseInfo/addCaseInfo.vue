@@ -5,7 +5,7 @@
     :before-close="beforeClose"
     append-to-body
     modal-append-to-body
-    width="670px"
+    width="65%"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
   >
@@ -15,9 +15,7 @@
         :rules="rules"
         ref="editForm"
         :model="editForm"
-        :label-position="labelPosition"
         label-width="100px"
-        class="form"
       >
         <el-form-item label="名称" prop="name">
           <el-input
@@ -26,21 +24,22 @@
             placeholder="请输入(限10字)"
             size="small"
             :maxlength="10"
+            style="width: 300px"
           ></el-input>
         </el-form-item>
-        <el-form-item label="关键词" prop="keyCodes" class="second">
+        <el-form-item label="关键词" prop="keyCodes">
           <el-select
             v-model="editForm.keyCodes"
             multiple
             placeholder="请选择"
             size="small"
+            style="width: 200px"
           >
             <el-option
               v-for="item in keyOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="option"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -50,37 +49,35 @@
             v-model="editForm.classiCode"
             placeholder="请选择"
             size="small"
+            style="width: 200px"
           >
             <el-option
               v-for="item in cropsOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="option"
             ></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="病虫害种类" prop="classiDipCode" class="second">
+        <el-form-item label="病虫害种类" prop="classiDipCode">
           <el-select
             v-model="editForm.classiDipCode"
             placeholder="请选择"
             size="small"
+            style="width: 200px"
           >
             <el-option
               v-for="item in dipOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="option"
             ></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="图片">
-          <el-link type="danger" class="required" :underline="false">*</el-link>
+        <el-form-item label="图片" prop="describetion">
           <el-upload
-            style="width: 398px; margin-top: -38px"
             v-model="editForm.imgUrl"
             class="upload-demo"
             :action="upload"
@@ -104,10 +101,9 @@
           </el-upload>
         </el-form-item>
 
-        <el-form-item label="概述" prop="describetion"></el-form-item>
-        <el-form-item style="margin-left: -85px">
+        <el-form-item label="概述" prop="describetion">
           <div class="edit_container">
-            <el-card style="height: 450px; width: 560px">
+            <el-card style="height: 250px; width: 560px">
               <!-- 富文本上传图片 -->
               <el-upload
                 class="avatar-uploader quill-img"
@@ -120,7 +116,7 @@
               <quill-editor
                 v-model="editForm.describetion"
                 ref="myQuillEditor"
-                style="height: 345px; margin-top: -40px"
+                style="height: 145px; margin-top: -40px"
                 :options="editorOption"
               >
                 <!-- 自定义toolar -->
@@ -183,6 +179,243 @@
             </el-card>
           </div>
         </el-form-item>
+        <el-form-item label="危害" prop="harm">
+          <div class="edit_containerA">
+            <el-card style="height: 250px; width: 560px">
+              <!-- 富文本上传图片 -->
+              <el-upload
+                class="avatar-uploader quill-img"
+                :action="upload"
+                :show-file-list="false"
+                :on-success="quillUploadSuccessA"
+                :beforeUpload="beforeAvatarUploadGif"
+              >
+              </el-upload>
+              <quill-editor
+                v-model="editForm.harm"
+                ref="myQuillEditorA"
+                style="height: 145px; margin-top: -40px"
+                :options="editorOptionA"
+              >
+                <!-- 自定义toolar -->
+                <div id="toolbarA" slot="toolbar">
+                  <!-- Add a bold button -->
+                  <button class="ql-bold" title="加粗">Bold</button>
+                  <button class="ql-italic" title="斜体">Italic</button>
+                  <button class="ql-underline" title="下划线">underline</button>
+                  <button class="ql-strike" title="删除线">strike</button>
+                  <button class="ql-blockquote" title="引用"></button>
+                  <button class="ql-code-block" title="代码"></button>
+                  <button class="ql-header" value="1" title="标题1"></button>
+                  <button class="ql-header" value="2" title="标题2"></button>
+                  <!--Add list -->
+                  <button
+                    class="ql-list"
+                    value="ordered"
+                    title="有序列表"
+                  ></button>
+                  <button
+                    class="ql-list"
+                    value="bullet"
+                    title="无序列表"
+                  ></button>
+                  <!-- Add font size dropdown -->
+                  <select class="ql-header" title="段落格式">
+                    <option selected>段落</option>
+                    <option value="1">标题1</option>
+                    <option value="2">标题2</option>
+                    <option value="3">标题3</option>
+                    <option value="4">标题4</option>
+                    <option value="5">标题5</option>
+                    <option value="6">标题6</option>
+                  </select>
+                  <select class="ql-size" title="字体大小">
+                    <option value="14px">14px</option>
+                    <option value="16px">16px</option>
+                    <option value="18px">18px</option>
+                    <option value="20px">20px</option>
+                    <option value="22px">22px</option>
+                    <option value="24px">24px</option>
+                    <option value="26px">26px</option>
+                  </select>
+                  <select
+                    class="ql-color"
+                    value="color"
+                    title="字体颜色"
+                  ></select>
+                  <select
+                    class="ql-background"
+                    value="background"
+                    title="背景颜色"
+                  ></select>
+                  <select class="ql-align" value="align" title="对齐"></select>
+                  <button class="ql-clean" title="还原"></button>
+                  <button class="ql-link" title="超链接"></button>
+                  <button class="ql-image" title="照片"></button>
+                </div>
+              </quill-editor>
+            </el-card>
+          </div>
+        </el-form-item>
+        <el-form-item label="传播途径/发病条件" prop="channel">
+          <div class="edit_containerB">
+            <el-card style="height: 250px; width: 560px">
+              <!-- 富文本上传图片 -->
+              <el-upload
+                class="avatar-uploader quill-img"
+                :action="upload"
+                :show-file-list="false"
+                :on-success="quillUploadSuccessB"
+                :beforeUpload="beforeAvatarUploadGif"
+              >
+              </el-upload>
+              <quill-editor
+                v-model="editForm.channel"
+                ref="myQuillEditorB"
+                style="height: 145px; margin-top: -40px"
+                :options="editorOptionB"
+              >
+                <!-- 自定义toolar -->
+                <div id="toolbarB" slot="toolbar">
+                  <!-- Add a bold button -->
+                  <button class="ql-bold" title="加粗">Bold</button>
+                  <button class="ql-italic" title="斜体">Italic</button>
+                  <button class="ql-underline" title="下划线">underline</button>
+                  <button class="ql-strike" title="删除线">strike</button>
+                  <button class="ql-blockquote" title="引用"></button>
+                  <button class="ql-code-block" title="代码"></button>
+                  <button class="ql-header" value="1" title="标题1"></button>
+                  <button class="ql-header" value="2" title="标题2"></button>
+                  <!--Add list -->
+                  <button
+                    class="ql-list"
+                    value="ordered"
+                    title="有序列表"
+                  ></button>
+                  <button
+                    class="ql-list"
+                    value="bullet"
+                    title="无序列表"
+                  ></button>
+                  <!-- Add font size dropdown -->
+                  <select class="ql-header" title="段落格式">
+                    <option selected>段落</option>
+                    <option value="1">标题1</option>
+                    <option value="2">标题2</option>
+                    <option value="3">标题3</option>
+                    <option value="4">标题4</option>
+                    <option value="5">标题5</option>
+                    <option value="6">标题6</option>
+                  </select>
+                  <select class="ql-size" title="字体大小">
+                    <option value="14px">14px</option>
+                    <option value="16px">16px</option>
+                    <option value="18px">18px</option>
+                    <option value="20px">20px</option>
+                    <option value="22px">22px</option>
+                    <option value="24px">24px</option>
+                    <option value="26px">26px</option>
+                  </select>
+                  <select
+                    class="ql-color"
+                    value="color"
+                    title="字体颜色"
+                  ></select>
+                  <select
+                    class="ql-background"
+                    value="background"
+                    title="背景颜色"
+                  ></select>
+                  <select class="ql-align" value="align" title="对齐"></select>
+                  <button class="ql-clean" title="还原"></button>
+                  <button class="ql-link" title="超链接"></button>
+                  <button class="ql-image" title="照片"></button>
+                </div>
+              </quill-editor>
+            </el-card>
+          </div>
+        </el-form-item>
+        <el-form-item label="防治技术" prop="controlTechnology">
+          <div class="edit_containerC">
+            <el-card style="height: 250px; width: 560px">
+              <!-- 富文本上传图片 -->
+              <el-upload
+                class="avatar-uploader quill-img"
+                :action="upload"
+                :show-file-list="false"
+                :on-success="quillUploadSuccessC"
+                :beforeUpload="beforeAvatarUploadGif"
+              >
+              </el-upload>
+              <quill-editor
+                v-model="editForm.controlTechnology"
+                ref="myQuillEditorC"
+                style="height: 145px; margin-top: -40px"
+                :options="editorOptionC"
+              >
+                <!-- 自定义toolar -->
+                <div id="toolbarC" slot="toolbar">
+                  <!-- Add a bold button -->
+                  <button class="ql-bold" title="加粗">Bold</button>
+                  <button class="ql-italic" title="斜体">Italic</button>
+                  <button class="ql-underline" title="下划线">underline</button>
+                  <button class="ql-strike" title="删除线">strike</button>
+                  <button class="ql-blockquote" title="引用"></button>
+                  <button class="ql-code-block" title="代码"></button>
+                  <button class="ql-header" value="1" title="标题1"></button>
+                  <button class="ql-header" value="2" title="标题2"></button>
+                  <!--Add list -->
+                  <button
+                    class="ql-list"
+                    value="ordered"
+                    title="有序列表"
+                  ></button>
+                  <button
+                    class="ql-list"
+                    value="bullet"
+                    title="无序列表"
+                  ></button>
+                  <!-- Add font size dropdown -->
+                  <select class="ql-header" title="段落格式">
+                    <option selected>段落</option>
+                    <option value="1">标题1</option>
+                    <option value="2">标题2</option>
+                    <option value="3">标题3</option>
+                    <option value="4">标题4</option>
+                    <option value="5">标题5</option>
+                    <option value="6">标题6</option>
+                  </select>
+                  <select class="ql-size" title="字体大小">
+                    <option value="14px">14px</option>
+                    <option value="16px">16px</option>
+                    <option value="18px">18px</option>
+                    <option value="20px">20px</option>
+                    <option value="22px">22px</option>
+                    <option value="24px">24px</option>
+                    <option value="26px">26px</option>
+                  </select>
+                  <select
+                    class="ql-color"
+                    value="color"
+                    title="字体颜色"
+                  ></select>
+                  <select
+                    class="ql-background"
+                    value="background"
+                    title="背景颜色"
+                  ></select>
+                  <select class="ql-align" value="align" title="对齐"></select>
+                  <button class="ql-clean" title="还原"></button>
+                  <button class="ql-link" title="超链接"></button>
+                  <button class="ql-image" title="照片"></button>
+                </div>
+              </quill-editor>
+            </el-card>
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <el-checkbox v-model="isSelected">是否精选</el-checkbox>
+        </el-form-item>
       </el-form>
     </slot>
     <!-- 按钮区 -->
@@ -239,8 +472,13 @@ export default {
         classiDipCode: "",
         keyCodes: [],
         auditStatus: "",
+        isSelected: 0,
+        harm: "",
+        channel: "",
+        controlTechnology: "",
         createUser: localStorage.getItem("userInfo"),
       },
+      isSelected: false,
       cropsOptions: [],
       dipOptions: [],
       keyOptions: [],
@@ -277,6 +515,20 @@ export default {
           },
         ],
         imgUrl: [{ required: true, message: "请上传图片", trigger: "change" }],
+        describetion: [
+          { required: true, message: "请输入概述", trigger: "blur" },
+        ],
+        harm: [{ required: true, message: "请输入危害", trigger: "blur" }],
+        channel: [
+          {
+            required: true,
+            message: "请输入传播途径/发病条件",
+            trigger: "blur",
+          },
+        ],
+        controlTechnology: [
+          { required: true, message: "请输入防治技术", trigger: "blur" },
+        ],
       },
       editorOption: {
         // 富文本框配置
@@ -285,6 +537,62 @@ export default {
         modules: {
           toolbar: {
             container: "#toolbar",
+            handlers: {
+              image: function (value) {
+                if (value) {
+                  document.querySelector(".quill-img input").click();
+                } else {
+                  this.quill.format("image", false);
+                }
+              },
+            },
+          },
+        },
+      },
+      editorOptionA: {
+        // 富文本框配置
+        placeholder: "请输入...",
+        modules: {
+          toolbar: {
+            container: "#toolbarA",
+            handlers: {
+              image: function (value) {
+                if (value) {
+                  document.querySelector(".quill-img input").click();
+                } else {
+                  this.quill.format("image", false);
+                }
+              },
+            },
+          },
+        },
+      },
+      editorOptionB: {
+        // 富文本框配置
+        placeholder: "请输入...",
+        theme: "snow",
+        modules: {
+          toolbar: {
+            container: "#toolbarB",
+            handlers: {
+              image: function (value) {
+                if (value) {
+                  document.querySelector(".quill-img input").click();
+                } else {
+                  this.quill.format("image", false);
+                }
+              },
+            },
+          },
+        },
+      },
+      editorOptionC: {
+        // 富文本框配置
+        placeholder: "请输入...",
+        theme: "snow",
+        modules: {
+          toolbar: {
+            container: "#toolbarC",
             handlers: {
               image: function (value) {
                 if (value) {
@@ -368,6 +676,21 @@ export default {
       quill.focus();
       quill.insertEmbed(quill.getSelection().index, "image", res.url);
     },
+    quillUploadSuccessA(res) {
+      let quill = this.$refs.myQuillEditorA.quill;
+      quill.focus();
+      quill.insertEmbed(quill.getSelection().index, "image", res.url);
+    },
+    quillUploadSuccessB(res) {
+      let quill = this.$refs.myQuillEditorB.quill;
+      quill.focus();
+      quill.insertEmbed(quill.getSelection().index, "image", res.url);
+    },
+    quillUploadSuccessC(res) {
+      let quill = this.$refs.myQuillEditorC.quill;
+      quill.focus();
+      quill.insertEmbed(quill.getSelection().index, "image", res.url);
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -434,10 +757,24 @@ export default {
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
           if (this.imgUrl == "") {
-            this.$alert("图片不能为空", "提示", {
-              confirmButtonText: "确定",
-            });
-            return false;
+            this.$message.error("请上传图片");
+            return;
+          }
+          if (this.editForm.content == "") {
+            this.$message.error("内容不能为空！");
+            return;
+          }
+          if (this.editForm.harm == "") {
+            this.$message.error("危害信息不能为空！");
+            return;
+          }
+          if (this.editForm.channel == "") {
+            this.$message.error("传播途径/发病条件信息不能为空！");
+            return;
+          }
+          if (this.editForm.controlTechnology == "") {
+            this.$message.error("防治技术信息不能为空！");
+            return;
           }
           this.editForm.url = this.imgUrl;
           let keyArr = [];
@@ -446,6 +783,11 @@ export default {
           }
           this.editForm.keyCodes = null;
           this.editForm.keys = keyArr.join();
+          if (this.isSelected) {
+            this.editForm.isSelected = 1;
+          } else {
+            this.editForm.isSelected = 0;
+          }
           let params = {
             caseInfoEntity: JSON.stringify(this.editForm),
           };
@@ -472,31 +814,6 @@ export default {
         } else {
         }
       });
-
-      // if (this.editForm.name == "") {
-      //   this.$alert("名称不能为空", "提示", {
-      //     confirmButtonText: "确定",
-      //   });
-      //   return false;
-      // }
-      // if (this.imgUrl == "") {
-      //   this.$alert("图片不能为空", "提示", {
-      //     confirmButtonText: "确定",
-      //   });
-      //   return false;
-      // }
-      // if (this.editForm.classiCode == "") {
-      //   this.$alert("农作物种类编码不能为空", "提示", {
-      //     confirmButtonText: "确定",
-      //   });
-      //   return false;
-      // }
-      // if (this.editForm.classiDipCode == "") {
-      //   this.$alert("病虫害种类编码不能为空", "提示", {
-      //     confirmButtonText: "确定",
-      //   });
-      //   return false;
-      // }
     },
     close: function () {
       this.reload();
@@ -567,8 +884,5 @@ export default {
   margin-top: -41px;
   margin-left: 166px;
   font-size: 12px;
-}
-.article {
-  margin: -16px 0px -16px 216px;
 }
 </style>

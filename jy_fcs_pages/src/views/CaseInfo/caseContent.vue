@@ -36,8 +36,25 @@
         <el-image class="image" :src="caseInfoForm.url"></el-image>
       </li>
       <li>
-        <span class="title">描述：</span>
+        <span class="title">概述：</span>
         <div class="contentText" v-html="caseInfoForm.describetion"></div>
+      </li>
+      <li>
+        <span class="title">危害：</span>
+        <div class="contentText" v-html="caseInfoForm.harm"></div>
+      </li>
+      <li>
+        <span class="title">传播途径/发病条件：</span>
+        <div class="contentText" v-html="caseInfoForm.channel"></div>
+      </li>
+      <li>
+        <span class="title">防治技术：</span>
+        <div class="contentText" v-html="caseInfoForm.controlTechnology"></div>
+      </li>
+      <li>
+        <span class="title">是否精选：</span>
+        <span v-if="caseInfoForm.isSelected==0" class="content">否</span>
+        <span v-else class="content">是</span>
       </li>
     </ul>
     <span slot="footer">
