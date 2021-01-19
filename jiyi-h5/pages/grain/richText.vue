@@ -50,7 +50,10 @@
 			<view class="comment-box-c">
 				<view class="top-box-c">
 					<text>评论({{ detailsObj.comment_num }})</text>
-					<text class="right" @tap="goCommentList">{{ detailsObj.comment_num ? '全部评论' : '去评论' }} ></text>
+					<view class="right">
+						<text @tap="goCommentList">{{ detailsObj.comment_num ? '全部评论' : '去评论' }}</text>
+						<u-icon name="arrow-right" style="margin-left: 5rpx" color="#5eb14e" size="24"></u-icon>
+					</view>
 				</view>
 				<u-line v-if="detailsObj.comment_num && dataComment" color="rgba(0, 0, 0, 0.1)" />
 				<view v-if="detailsObj.comment_num && dataComment" class="content">

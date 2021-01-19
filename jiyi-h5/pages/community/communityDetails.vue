@@ -320,7 +320,7 @@ export default {
 			};
 			this.$ajax(url, 'GET', params)
 				.then(res => {
-					if (res.state == 0) {
+					if (res.state == 0 || res.code == 200) {
 						this.tipModalShow = true;
 						setTimeout(() => {
 							this.tipModalShow = false;
@@ -339,17 +339,29 @@ export default {
 				id: item.id
 			};
 
-			this.$ajax(url, 'GET', params)
-				.then(res => {
-					if (res.state == 0) {
-						this.delModalShow = true;
-						setTimeout(() => {
-							this.delModalShow = false;
-						}, 1000);
-						self.getCommentList(true);
+			uni.showModal({
+				title: '您确定删除？',
+				content: '删除后将无法恢复，请慎重考虑',
+				cancelText: '确定',
+				confirmText: '取消',
+				cancelColor: '#000000',
+				confirmColor: '#000000',
+				success: function(res) {
+					if (res.cancel) {
+						self.$ajax(url, 'GET', params)
+							.then(res => {
+								if (res.state == 0 || res.code == 200) {
+									self.delModalShow = true;
+									setTimeout(() => {
+										self.delModalShow = false;
+									}, 1000);
+									self.getCommentList(true);
+								}
+							})
+							.catch(err => {});
 					}
-				})
-				.catch(err => {});
+				}
+			});
 		}
 	}
 };

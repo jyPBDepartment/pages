@@ -68,12 +68,14 @@
 				<view class="comment-box-c">
 					<view class="top-box-c">
 						<text>评论({{ commentNum }})</text>
-						<text class="right" @tap="goCommentList">{{ commentNum ? '全部评论' : '去评论' }} ></text>
+						<view class="right">
+							<text @tap="goCommentList">{{ commentNum ? '全部评论' : '去评论' }}</text>
+							<u-icon name="arrow-right" style="margin-left: 5rpx" color="#5eb14e" size="24"></u-icon>
+						</view>
 					</view>
 					<u-line v-if="commentNum" color="rgba(0, 0, 0, 0.1)" />
 					<view v-if="commentNum" class="content">
 						<view class="header">
-							<!-- commentObj.commentPic || -->
 							<image class="image" :src="commentObj.commentPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
 							<text class="users">{{ commentObj.isAnonymous ? '匿名' : commentObj.commentUserName ? commentObj.commentUserName : '匿名' }}</text>
 						</view>

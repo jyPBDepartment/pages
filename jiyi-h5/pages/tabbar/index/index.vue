@@ -150,7 +150,7 @@ export default {
 
 			let us = localStorage.getItem('userId');
 			let ss = localStorage.getItem('sessionId');
-	// alert("昵称："+Interface.common.nc)
+			// alert("昵称："+Interface.common.nc)
 			localStorage.setItem('nickName', '小米1');
 			localStorage.setItem('pic', 'http://60.205.246.126/images/2021/01/15/1610696168592617.png');
 			uni.setStorageSync('nickName', '小米1');
@@ -495,7 +495,6 @@ export default {
 		}
 		.more {
 			font-size: 28rpx;
-			text-indent: 6px;
 			color: #5EB14E;
 		}
 	}

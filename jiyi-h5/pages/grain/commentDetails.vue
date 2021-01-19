@@ -38,7 +38,10 @@
 		<view class="comment-box-c">
 			<view class="top-box-c">
 				<text>评论({{ totalElements }})</text>
-				<text class="right" @tap="goCommentList(commentData.id)">{{ totalElements ? '全部评论' : '去评论' }} ></text>
+				<view class="right">
+					<text @tap="goCommentList(commentData.id)">{{ totalElements ? '全部评论' : '去评论' }}</text>
+					<u-icon name="arrow-right" style="margin-left: 5rpx" color="#5eb14e" size="24"></u-icon>
+				</view>
 			</view>
 			<u-line v-if="totalElements" color="rgba(0, 0, 0, 0.1)" />
 			<view v-if="totalElements" class="content" v-for="(item, i) in commentList" :key="i">
@@ -178,7 +181,6 @@ export default {
 					if (res.code == 200) {
 						self.commentData = res.data;
 						self.getOneCommentData(self.commentData.id);
-						
 					}
 				})
 				.catch(err => {});

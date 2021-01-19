@@ -248,13 +248,14 @@ const url = {
 	
 	// 帖子详情
 	postInfoFindByPostId: URLHost + '/postInfo/findByPostId',
-	// 删除圈子评论
-	commentInfoDelCommentInfo: URLHost + '/commentInfo/delCommentInfo',
-	// 添加圈子回复
-	replyInfoAddReplyInfo: URLHost + '/replyInfo/addReplyInfo',
 	// 新增圈子评论
 	addCommentInfo: URLHost + '/commentInfo/addCommentInfo',
-	
+	// 删除圈子评论
+	commentInfoDelCommentInfo: URLHost + '/commentInfo/delCommentInfo',
+	// 新增圈子回复
+	replyInfoAddReplyInfo: URLHost + '/replyInfo/addReplyInfo',
+	// 删除圈子回复
+	replyInfoDelReplyInfo: URLHost + '/replyInfo/delReplyInfo',
 	// 增加独家点评评论信息
 	exclusiveAddComment: URLHost + '/exclusive/addComment',
 	// 独家点评增加回复信息
@@ -262,7 +263,11 @@ const url = {
 	// 独家点评回复列表信息
 	exclusiveFindReplyByUserId: URLHost + '/exclusive/findReplyByUserId',
 	
-	
+	// 独家点评删除评论
+	exclusiveDeleteComment: URLHost + '/exclusive/deleteComment',
+	// 根据id删除文章点评回复信息
+	exclusiveDeleteReply: URLHost + '/exclusive/deleteReply',
+
 	/**
 	 * 慧农V_1.0 优化 接口 end
 	 */

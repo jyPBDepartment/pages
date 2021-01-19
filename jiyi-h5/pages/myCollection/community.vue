@@ -10,7 +10,7 @@
 			</view>
 			<view class="content">
 				<view class="header">
-					<image class="image" src="../../static/img/tabbar/guanzhuactive.png"></image>
+					<image class="image" :src="item.header || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 					<text class="users">{{ item.isAnonymous ? '匿名' : item.createUser ? item.createUser : '匿名' }}</text>
 					<text class="times">{{ item.createDate ? formatTime(item.createDate) : '' }}</text>
 				</view>

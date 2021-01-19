@@ -4,12 +4,12 @@
 		<view class="title">全部评论({{ totalElements }})</view>
 		<view class="content" v-for="(item, i) in dataList" :key="i">
 			<view class="header">
-				<image class="image" :src="item.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png' "></image>
+				<image class="image" :src="item.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 				<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName ? item.nickName : '匿名' }}</text>
 				<text class="times">{{ item.commentTime }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+				<u-read-more :ref="`uReadMore${i}`" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 					<rich-text :nodes="item.content"></rich-text>
 				</u-read-more>
 			</view>
@@ -85,6 +85,7 @@ export default {
 		this.id = data.id;
 	},
 	onShow() {
+		this.status = 'loading';
 		this.initPage(true);
 	},
 	methods: {
@@ -100,7 +101,7 @@ export default {
 				this.page = 1;
 				this.dataList = [];
 			}
-			let url = ApiPath.url.articleFindCommentByUserId;
+			let url = '';
 			let params = {};
 			if (this.type == 1) {
 				// 粮食买卖
@@ -116,10 +117,10 @@ export default {
 				// 文章点评
 				url = ApiPath.url.articleFindCommentByUserId;
 				params = {
-					userId: '22',
+					userId: getApp().globalData.userId,
 					artId: this.id,
-					page:this.page,
-					size:10
+					page: this.page,
+					size: 10
 				};
 			}
 			if (this.type == 3) {
@@ -141,8 +142,8 @@ export default {
 					page: this.page,
 					size: 10
 				};
-				
 			}
+
 			this.getCommentList(url, params);
 		},
 		// 获取评论列表
@@ -216,7 +217,7 @@ export default {
 						commentPic: pic,
 						commentUserId: userId,
 						isAnonymous: isAnonymous ? 1 : 0,
-						status:0
+						status: 0
 					};
 				}
 				if (this.type == 3) {
@@ -230,10 +231,6 @@ export default {
 						commentUserId: userId,
 						isAnonymous: isAnonymous ? 1 : 0
 					};
-				}
-				if (this.type == 4) {
-					// 圈子
-					url = ApiPath.url.articleFindCommentByUserId;
 				}
 				this.saveComment(url, params);
 			} else {
@@ -270,7 +267,7 @@ export default {
 			}
 			if (this.type == 2) {
 				// 文章点评
-				url = ApiPath.url.articleFindCommentByUserId;
+				url = ApiPath.url.exclusiveDeleteComment;
 				params = {
 					commentId: item.id
 				};
@@ -282,24 +279,30 @@ export default {
 					id: item.id
 				};
 			}
-			if (this.type == 4) {
-				// 圈子
-				url = ApiPath.url.articleFindCommentByUserId;
-				params = {
-					commentId: item.id
-				};
-			}
-			this.$ajax(url, 'GET', params)
-				.then(res => {
-					if (res.code == 200) {
-						this.delModalShow = true;
-						setTimeout(() => {
-							this.delModalShow = false;
-						}, 1000);
-						self.initPage(true);
+			uni.showModal({
+				title: '您确定删除？',
+				content: '删除后将无法恢复，请慎重考虑',
+				cancelText: '确定',
+				confirmText: '取消',
+				cancelColor: '#000000',
+				confirmColor: '#000000',
+				success: function(res) {
+					console.log(res);
+					if (res.cancel) {
+						self.$ajax(url, 'GET', params)
+							.then(res => {
+								if (res.code == 200) {
+									self.delModalShow = true;
+									setTimeout(() => {
+										self.delModalShow = false;
+									}, 1000);
+									self.initPage(true);
+								}
+							})
+							.catch(err => {});
 					}
-				})
-				.catch(err => {});
+				}
+			});
 		}
 	}
 };

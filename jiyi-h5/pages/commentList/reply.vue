@@ -4,12 +4,12 @@
 
 		<view class="content">
 			<view class="header">
-				<image class="image" :src="commentData.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png' "></image>
+				<image class="image" :src="commentData.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 				<text class="users">{{ commentData.isAnonymous ? '匿名' : commentData.nickName }}</text>
 				<text class="times">{{ commentData.date || commentData.commentTime }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+				<u-read-more ref="uReadMore1" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 					<rich-text :nodes="commentData.content"></rich-text>
 				</u-read-more>
 			</view>
@@ -20,7 +20,7 @@
 
 		<view class="reply-content" v-for="(item, i) in dataList" :key="i">
 			<view class="header">
-				<image class="image" :src="item.replyPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png' "></image>
+				<image class="image" :src="item.replyPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 				<text class="users">{{ item.isAnonymous ? '匿名' : item.replyUserName }}</text>
 				<text class="times">{{ item.replyDate }}</text>
 			</view>
@@ -33,7 +33,7 @@
 					</view>
 				</u-read-more>
 			</view>
-			<view class="reply-b" v-if="item.isMyReply == 1">
+			<view class="reply-b" v-if="item.isMyReply">
 				<view class="left"></view>
 				<text class="right" @click="delItem(item)">删除</text>
 			</view>
@@ -73,7 +73,7 @@ export default {
 				marginTop: '20rpx'
 			},
 			dataList: [],
-		
+
 			tipModalShow: false,
 			delModalShow: false,
 			commentID: '',
@@ -87,8 +87,7 @@ export default {
 				nomore: '我是有底线的~~~'
 			},
 			totalElements: 0,
-			userId:localStorage.getItem('userId'),
-			
+			userId: localStorage.getItem('userId')
 		};
 	},
 	onLoad(data) {
@@ -188,7 +187,6 @@ export default {
 		},
 		// 发布回复
 		replyPublish(val, isAnonymous) {
-		
 			if (val) {
 				let url = '';
 				let params = {};
@@ -217,7 +215,7 @@ export default {
 						replyPic: pic,
 						replyUserId: this.userId,
 						isAnonymous: isAnonymous ? 1 : 0,
-						status:0
+						status: 0
 					};
 				}
 				if (this.type == 3) {
@@ -241,7 +239,7 @@ export default {
 						replyUserName: nickName,
 						replyPic: pic,
 						replyUserId: this.userId,
-						isAnonymous: isAnonymous ? 1 : 0,
+						isAnonymous: isAnonymous ? 1 : 0
 					};
 				}
 				this.saveReply(url, params);
@@ -254,7 +252,6 @@ export default {
 		// 发布回复
 		saveReply(url, params) {
 			let self = this;
-
 			this.$ajax(url, 'GET', params)
 				.then(res => {
 					if (res.code == 200 || res.state == 0) {
@@ -264,15 +261,14 @@ export default {
 						}, 1000);
 						self.initPageList(true);
 					}
-					
 				})
 				.catch(err => {});
 		},
 		// 删除回复
 		delItem(item) {
 			let self = this;
-			let url = ''
-			let params = {}
+			let url = '';
+			let params = {};
 			if (this.type == 1) {
 				// 粮食买卖
 				url = ApiPath.url.grainTradingDeleteReply;
@@ -282,9 +278,9 @@ export default {
 			}
 			if (this.type == 2) {
 				// 文章点评
-				url = ApiPath.url.articleFindCommentByUserId;
+				url = ApiPath.url.exclusiveDeleteReply;
 				params = {
-					id: item.id
+					replyId: item.id
 				};
 			}
 			if (this.type == 3) {
@@ -296,22 +292,35 @@ export default {
 			}
 			if (this.type == 4) {
 				// 圈子
-				url = ApiPath.url.articleFindCommentByUserId;
+				url = ApiPath.url.replyInfoDelReplyInfo;
 				params = {
 					id: item.id
 				};
 			}
-			this.$ajax(url, 'GET', params)
-				.then(res => {
-					if (res.code == 200) {
-						this.delModalShow = true;
-						setTimeout(() => {
-							this.delModalShow = false;
-						}, 1000);
-						self.initPageList(true);
+
+			uni.showModal({
+				title: '您确定删除？',
+				content: '删除后将无法恢复，请慎重考虑',
+				cancelText: '确定',
+				confirmText: '取消',
+				cancelColor: '#000000',
+				confirmColor: '#000000',
+				success: function(res) {
+					if (res.cancel) {
+						self.$ajax(url, 'GET', params)
+							.then(res => {
+								if (res.code == 200 || res.state == 0) {
+									self.delModalShow = true;
+									setTimeout(() => {
+										self.delModalShow = false;
+									}, 1000);
+									self.initPageList(true);
+								}
+							})
+							.catch(err => {});
 					}
-				})
-				.catch(err => {});
+				}
+			});
 		}
 	}
 };

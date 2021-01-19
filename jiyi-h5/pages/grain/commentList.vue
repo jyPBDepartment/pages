@@ -16,7 +16,7 @@
 							<!-- <image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
 							<view class="word">zhou</view> -->
 						</view>
-						<view style="color: rgba(128, 128, 128, 1); font-size: 12px">{{ item.updateDate }}</view>
+						<view style="color: rgba(128, 128, 128, 1); font-size: 12px">{{ item.date }}</view>
 					</view>
 					<view class="fun-btn">
 						<view class="item">
@@ -76,7 +76,8 @@ export default {
 			selectTab: null,
 			commentListData: [],
 			nomore: false,
-			noData: false
+			noData: false,
+			sortIndex:1
 		};
 	},
 	onShow() {
@@ -91,13 +92,9 @@ export default {
 		this.getCommentList(this.listTab[this.current].id);
 	},
 	methods: {
-		loadmore() {
-			this.status = 'loading';
-			this.page = ++this.page;
-			this.getCommentList(this.listTab[this.current].id);
-		},
 		selectTabPage(val) {
-			console.log(val);
+			this.sortIndex = val
+			this.getCommentList(this.listTab[this.current].id);
 		},
 		clickIcon(m, n) {
 			// 执行收藏方法
@@ -167,7 +164,7 @@ export default {
 			let params = {
 				userId: getApp().globalData.userId,
 				sectionId: id,
-				orderType: this.tabIndex,
+				orderType: this.sortIndex,
 				page: self.page,
 				size: 10
 			};
