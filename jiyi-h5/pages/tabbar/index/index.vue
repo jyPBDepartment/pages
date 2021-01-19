@@ -11,7 +11,7 @@
 					<p>{{ item.name }}</p>
 				</view>
 			</view>
-		<!-- 	<view class="appointment comm-border">
+			<!-- 	<view class="appointment comm-border">
 				<view class="title">
 					<view class="name">农服预约</view>
 					<view class="more" @click="moreNf">更多</view>
@@ -38,9 +38,7 @@
 				<view class="preview">
 					<view v-if="!mmList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsMm(item.id)" v-for="(item, index) in mmList" :key="index">
-						<view class="img">
-							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
-						</view>
+						<view class="img"><easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage></view>
 						<p class="text f-12 o-e" style="line-height: 32rpx; margin-top: 20rpx">{{ item.name }}</p>
 					</view>
 				</view>
@@ -73,9 +71,7 @@
 				<view class="preview">
 					<view v-if="!ChList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsCh(item.id)" v-for="(item, index) in ChList" :key="index">
-						<view class="img">
-							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
-						</view>
+						<view class="img"><easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage></view>
 						<p class="text f-14">{{ item.name }}</p>
 					</view>
 				</view>
@@ -142,19 +138,20 @@ export default {
 		initCustomerInfo(e) {
 			// Interface.common.userId = e.U; //缓存用户id
 			// Interface.common.sessionId = e.SI; //缓存sessionId
+
 			// localStorage.setItem('userId', e.U);
-			// localStorage.setItem('userId', 'F0001241');
+			// localStorage.setItem('sessionId', e.SI);
+
+			// 测试
 			localStorage.setItem('userId', '20200909');
-			localStorage.setItem('sessionId', e.SI);
-			// localStorage.setItem('sessionId', "8900212315182333952");
+			localStorage.setItem('sessionId', '8900212315182333952');
+			localStorage.setItem('nickName', '小米1');
+			localStorage.setItem('pic', 'http://60.205.246.126/images/2021/01/15/1610696168592617.png');
 
 			let us = localStorage.getItem('userId');
 			let ss = localStorage.getItem('sessionId');
 			// alert("昵称："+Interface.common.nc)
-			localStorage.setItem('nickName', '小米1');
-			localStorage.setItem('pic', 'http://60.205.246.126/images/2021/01/15/1610696168592617.png');
-			uni.setStorageSync('nickName', '小米1');
-			uni.setStorageSync('pic', 'http://60.205.246.126/images/2021/01/15/1610696168592617.png');
+
 			// localStorage.setItem('accId', '73jl000006');
 			// initImSDK('73jl000006', '73jl000006');
 
@@ -187,10 +184,8 @@ export default {
 						// alert("昵称："+Interface.common.nc)
 						localStorage.setItem('nickName', res.data.RETURNRESULT.NN);
 						localStorage.setItem('pic', res.data.RETURNRESULT.UPU);
-						uni.setStorageSync('nickName', res.data.RETURNRESULT.NN);
-						uni.setStorageSync('pic', res.data.RETURNRESULT.UPU);
-						
 						localStorage.setItem('accId', res.data.RETURNRESULT.YXAID);
+						// 初始化IM 获取未读消息数量
 						initImSDK(res.data.RETURNRESULT.YXAID, res.data.RETURNRESULT.YXTOK);
 					}
 					if (code == '-1') {
@@ -495,7 +490,7 @@ export default {
 		}
 		.more {
 			font-size: 28rpx;
-			color: #5EB14E;
+			color: #5eb14e;
 		}
 	}
 }
@@ -521,7 +516,6 @@ export default {
 			line-height: 15px;
 			color: #000000;
 			opacity: 1;
-
 		}
 
 		.text:hover {
