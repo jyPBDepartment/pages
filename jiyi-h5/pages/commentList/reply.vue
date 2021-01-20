@@ -9,8 +9,8 @@
 				<text class="times">{{ commentData.date || commentData.commentTime }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more ref="uReadMore1" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="commentData.content"></rich-text>
+				<u-read-more ref="uReadMoreM" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+					<p class="paragraph-p">{{commentData.content}}</p>
 				</u-read-more>
 			</view>
 		</view>
@@ -25,7 +25,7 @@
 				<text class="times">{{ item.replyDate }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more text-indent="0" :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+				<u-read-more text-indent="0" :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="80">
 					<view class="reply-content-c">
 						<text>回复</text>
 						<text class="nick-name">{{ commentData.isAnonymous ? '匿名' : commentData.nickName }}：</text>
@@ -381,7 +381,7 @@ export default {
 			font-weight: 400;
 			color: #000000;
 			opacity: 1;
-			padding: 0rpx 40rpx 20rpx 40rpx;
+			padding: 0rpx 40rpx;
 		}
 		.reply-b {
 			display: flex;
@@ -391,6 +391,7 @@ export default {
 			font-weight: 400;
 			color: #9fa3a8;
 			padding: 0 40rpx;
+			padding: 0 40rpx 20rpx 40rpx;
 			.left {
 				display: flex;
 				align-items: center;
@@ -449,7 +450,7 @@ export default {
 			font-weight: 400;
 			color: #9fa3a8;
 			opacity: 1;
-			padding: 0 40rpx;
+			padding: 0 40rpx 20rpx 40rpx;
 			.left {
 				display: flex;
 				align-items: center;
@@ -457,6 +458,7 @@ export default {
 			}
 			.right {
 				color: #5eb14e;
+				
 			}
 		}
 	}
@@ -482,5 +484,10 @@ export default {
 }
 .reply-content-c {
 	font-size: 24rpx;
+	>text{
+		word-wrap: break-word;
+		word-break: break-all;
+		overflow: hidden;
+	}
 }
 </style>

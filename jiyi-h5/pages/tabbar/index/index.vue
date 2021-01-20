@@ -1,41 +1,39 @@
 <template>
-	<view style="background-color: #f4f4f4">
+	<view style="background-color: #f4f4f4" class="u-skeleton">
 		<!-- <view><u-button @click="sums">sum</u-button></view> -->
-		<HeaderSearch :disabled="true" @searchCallback="search" :goBackHome="true"></HeaderSearch>
+		<HeaderSearch class="header-t u-skeleton-rect" :disabled="true" @searchCallback="search" :goBackHome="true"></HeaderSearch>
 		<!-- <HeaderSearch :disabled="true" @searchCallback="search" :showMsg="true"></HeaderSearch> -->
-		<FoodstuffPrice v-if="showCharts" class="charts-box"></FoodstuffPrice>
-		<view class="content">
-			<view class="btn comm-border">
-				<view class="box" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">
+		<FoodstuffPrice v-if="showCharts" class="charts-box u-skeleton-fillet"></FoodstuffPrice>
+		<view class="content u-skeleton">
+			<view class="btn comm-border u-skeleton-fillet">
+				<view class="box u-skeleton-rect" @click="jump(item, index)" v-for="(item, index) in btnList" :key="index">
 					<view class="modular" :style="{ 'background-color': item.backgroundColor }"><image :lazy-load="true" :src="item.url" mode=""></image></view>
 					<p>{{ item.name }}</p>
 				</view>
 			</view>
-			<!-- 	<view class="appointment comm-border">
-				<view class="title">
+			<!-- <view class="appointment comm-border u-skeleton-fillet">
+				<view class="title u-skeleton-rect">
 					<view class="name">农服预约</view>
 					<view class="more" @click="moreNf">更多</view>
 					<u-icon class="more" @click="moreNf" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview">
+				<view class="preview u-skeleton-rect">
 					<view v-if="!nfList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsNf(item.id)" v-for="(item, index) in nfList" :key="index">
-						<view class="img">
-							<easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage>
-						</view>
+						<view class="img"><easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage></view>
 						<p class="text f-14">{{ item.name }}</p>
 						<p class="text f-12 address">{{ item.address }}</p>
 					</view>
 				</view>
 			</view> -->
-			<view class="appointment comm-border">
-				<view class="title">
+			<view class="appointment comm-border u-skeleton-fillet">
+				<view class="title u-skeleton-rect">
 					<u-icon size="32" name="http://60.205.246.126/images/2021/01/07/1610010262142198.png"></u-icon>
 					<view class="name">粮食买卖</view>
 					<view class="more" @click="moreMm">更多</view>
 					<u-icon class="more" @click="moreMm" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview">
+				<view class="preview u-skeleton-rect">
 					<view v-if="!mmList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsMm(item.id)" v-for="(item, index) in mmList" :key="index">
 						<view class="img"><easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage></view>
@@ -43,14 +41,14 @@
 					</view>
 				</view>
 			</view>
-			<view class="appointment comm-border">
-				<view class="title">
+			<view class="appointment comm-border u-skeleton-fillet">
+				<view class="title u-skeleton-rect">
 					<u-icon size="32" name="http://60.205.246.126/images/2021/01/07/1610010402851693.png"></u-icon>
 					<view class="name">农机</view>
 					<view class="more" @click="moreNj">更多</view>
 					<u-icon class="more" @click="moreNj" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview">
+				<view class="preview u-skeleton-rect">
 					<view v-if="!NjList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
 					<view class="buju" @click="detailsNj(item.id)" v-for="(item, index) in NjList" :key="index">
 						<view class="img">
@@ -61,16 +59,16 @@
 					</view>
 				</view>
 			</view>
-			<view class="appointment comm-border">
-				<view class="title">
+			<view class="appointment comm-border u-skeleton-fillet">
+				<view class="title u-skeleton-rect">
 					<u-icon size="32" name="http://60.205.246.126/images/2021/01/07/1610010449566342.png"></u-icon>
 					<view class="name">病虫害</view>
 					<view class="more" @click="moreCh">更多</view>
 					<u-icon class="more" @click="moreCh" name="arrow-right"></u-icon>
 				</view>
-				<view class="preview">
+				<view class="preview u-skeleton-rect">
 					<view v-if="!ChList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
-					<view class="buju" @click="detailsCh(item.id)" v-for="(item, index) in ChList" :key="index">
+					<view class="buju u-skeleton-rect" @click="detailsCh(item.id)" v-for="(item, index) in ChList" :key="index">
 						<view class="img"><easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage></view>
 						<p class="text f-14">{{ item.name }}</p>
 					</view>
@@ -78,6 +76,10 @@
 			</view>
 		</view>
 		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
+		<!-- <view class="comm-skeleton u-skeleton" v-if="loading">
+			<view class="out-view u-skeleton-fillet" v-for="i in 5" :key="i"><view class="item u-skeleton-fillet"></view></view>
+		</view> -->
+		<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
 	</view>
 </template>
 
@@ -97,6 +99,7 @@ export default {
 	},
 	data() {
 		return {
+			loading: true,
 			btnList: [],
 			nfList: [],
 			mmList: [],
@@ -116,7 +119,12 @@ export default {
 		// 从外部接口获取客户信息
 		this.initCustomerInfo(e);
 	},
-	onShow: function() {
+	onReady() {
+		setTimeout(() => {
+			this.loading = false;
+		}, 1000);
+	},
+	onShow() {
 		// 初始化加载模块信息
 		this.initModuleInfo();
 		// 初始化加载农服预约信息
@@ -127,15 +135,14 @@ export default {
 		this.initAgriMachineInfo();
 		// 初始化加载病虫害信息
 		this.initCaseInfo();
-
-		this.showCharts = false;
-		setTimeout(() => {
-			this.showCharts = true;
-		});
+		// this.showCharts = false;
+		// // setTimeout(() => {
+		// 	this.showCharts = true;
+		// });
 	},
 	methods: {
 		// 从外部接口获取客户信息
-		initCustomerInfo(e) {
+		async initCustomerInfo(e) {
 			// Interface.common.userId = e.U; //缓存用户id
 			// Interface.common.sessionId = e.SI; //缓存sessionId
 
@@ -165,7 +172,7 @@ export default {
 			};
 
 			// console.log(JSON.stringify(param));
-			uni.request({
+			await uni.request({
 				method: 'POST',
 				url: Interface.extendUrl.findCustmerInfo,
 				data: param,
@@ -201,8 +208,8 @@ export default {
 			});
 		},
 		// 初始化加载模块信息
-		initModuleInfo() {
-			uni.request({
+		async initModuleInfo() {
+			await uni.request({
 				url: Interface.url.findModuleOn,
 				method: 'GET',
 				data: {},
@@ -226,8 +233,8 @@ export default {
 			});
 		},
 		// 初始化农服预约信息
-		initAgriInfo() {
-			uni.request({
+		async initAgriInfo() {
+			await uni.request({
 				url: Interface.url.findNewInfo,
 				method: 'GET',
 				data: {
@@ -259,8 +266,8 @@ export default {
 			});
 		},
 		// 初始化加载粮食买卖信息
-		initGrainInfo() {
-			uni.request({
+		async initGrainInfo() {
+			await uni.request({
 				url: Interface.url.findNewInfo,
 				method: 'GET',
 				data: {
@@ -286,8 +293,8 @@ export default {
 			});
 		},
 		// 初始化加载农机信息
-		initAgriMachineInfo() {
-			uni.request({
+		async initAgriMachineInfo() {
+			await uni.request({
 				url: Interface.url.findNewInfo,
 				method: 'GET',
 				data: {
@@ -331,8 +338,8 @@ export default {
 			});
 		},
 		// 初始化加载病虫害信息
-		initCaseInfo() {
-			uni.request({
+		async initCaseInfo() {
+			await uni.request({
 				url: Interface.url.findLatestCaseInfo,
 				method: 'GET',
 				data: {},
@@ -423,20 +430,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.header-t {
+	min-height: 80rpx;
+}
 .charts-box {
 	margin: 20rpx;
 	border-radius: 10rpx;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 	background: #ffffff;
+	min-height: 600rpx;
 }
 .content {
 	padding: 0 20rpx 20rpx 20rpx;
+	min-height: 1000rpx;
 }
 .btn {
 	display: flex;
 	flex-wrap: wrap;
 	background: #fff;
 	padding: 20rpx;
+	min-height: 200rpx;
 	.box {
 		flex: 1;
 		min-width: 20%;
@@ -476,7 +489,7 @@ export default {
 	padding: 20rpx;
 	background: #fff;
 	box-sizing: border-box;
-
+	min-height: 400rpx;
 	.title {
 		display: flex;
 		line-height: 58rpx;

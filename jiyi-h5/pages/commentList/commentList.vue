@@ -8,15 +8,15 @@
 				<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName ? item.nickName : '匿名' }}</text>
 				<text class="times">{{ item.commentTime }}</text>
 			</view>
-			<view class="paragraph">
+			<view class="paragraph" >
 				<u-read-more :ref="`uReadMore${i}`" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="item.content"></rich-text>
+					<p class="paragraph-p" @click.stop="goReplay(item)">{{item.content}}</p>
 				</u-read-more>
 			</view>
 			<view class="reply-b">
-				<view class="left">
+				<view class="left" @tap="goReplay(item)">
 					<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610355717998322.png" color="#9FA3A8" size="24"></u-icon>
-					<text @tap="goReplay(item)">回复({{ item.replyNum }})</text>
+					<text>回复({{ item.replyNum }})</text>
 				</view>
 				<text class="right" v-if="item.isMyComment" @click="delItem(item)">删除</text>
 			</view>

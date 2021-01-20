@@ -80,7 +80,12 @@
 							<text class="users">{{ commentObj.isAnonymous ? '匿名' : commentObj.commentUserName ? commentObj.commentUserName : '匿名' }}</text>
 						</view>
 
-						<p class="words">{{ commentObj.commentContent }}</p>
+						<view class="paragraph">
+							<u-read-more ref="uReadMorea" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+								<p class="paragraph-p">{{ commentObj.commentContent }}</p>
+							</u-read-more>
+						</view>
+						<p class="words">{{  }}</p>
 					</view>
 				</view>
 
@@ -152,16 +157,20 @@ export default {
 			collection: false,
 			thumbs: false,
 			commentObj: {
-				id: '402881e976e0bdd20176e0be284d0001',
-				aid: '402881ec747b392e01747b4236320000',
-				commentContent: '娃哈哈有很多新产品',
-				commentUserName: '张三',
-				commentPic: '头像',
-				commentUserId: '张三的id',
+				id: '',
+				aid: '',
+				commentContent: '',
+				commentUserName: '',
+				commentPic: '',
+				commentUserId: '',
 				isAnonymous: 0,
-				status: 1,
-				commentDate: '2021-01-08 14:45:27'
-			}
+				commentDate: ''
+			},
+			shadowStyle: {
+				backgroundImage: 'none',
+				paddingTop: '0',
+				marginTop: '20rpx'
+			},
 		};
 	},
 	//页面初始化
@@ -187,6 +196,7 @@ export default {
 	},
 	onShow() {
 		this.$u.debounce(this.findMineId(this.id), 1000);
+		this.$refs.uReadMorea.init();
 	},
 	methods: {
 		addGrainTradingAddPV(id) {

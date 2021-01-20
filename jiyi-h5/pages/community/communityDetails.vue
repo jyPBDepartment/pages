@@ -10,8 +10,9 @@
 				<text class="times">{{ detailsData.update_date ? formatTime(detailsData.update_date) : '' }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more ref="uReadMore" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+				<u-read-more ref="uReadMorex" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 					<rich-text :nodes="detailsData.code"></rich-text>
+					<!-- <p class="paragraph-p" @click.stop="goReplay(item)">{{details.code}}</p> -->
 				</u-read-more>
 			</view>
 			<view v-if="detailsData.picture"><communituPicList :picList="detailsData.picture"></communituPicList></view>
@@ -54,7 +55,8 @@
 			</view>
 			<view class="paragraph">
 				<u-read-more text-indent="0"  :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="item.content"></rich-text>
+					<!-- <rich-text :nodes="item.content"></rich-text> -->
+					<p class="paragraph-p" @click.stop="goReplay(item)">{{item.content}}</p>
 				</u-read-more>
 			</view>
 			<view class="reply-b">

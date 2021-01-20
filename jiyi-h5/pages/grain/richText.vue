@@ -61,7 +61,12 @@
 						<image class="image" :src="dataComment.commentUserPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
 						<text class="users">{{ dataComment.commentUserName }}</text>
 					</view>
-					<p class="words">{{ dataComment.commentContent }}</p>
+					<!-- <p class="words">{{ dataComment.commentContent }}</p> -->
+					<view class="paragraph">
+						<u-read-more :ref="`uReadMorea`" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+							<p class="paragraph-p">{{ dataComment.commentContent }}</p>
+						</u-read-more>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -86,7 +91,12 @@ export default {
 			id: '',
 			detailsObj: {},
 			dataComment: {},
-			userId: localStorage.getItem('userId')
+			userId: localStorage.getItem('userId'),
+			shadowStyle: {
+				backgroundImage: 'none',
+				paddingTop: '0',
+				marginTop: '20rpx'
+			},
 		};
 	},
 	onLoad(e) {
@@ -95,6 +105,7 @@ export default {
 	},
 	onShow() {
 		this.$u.debounce(this.getInfoById(this.id), 1000);
+		this.$refs.uReadMorea.init();
 	},
 	methods: {
 		addCaseInfoViewNum(id) {
@@ -348,6 +359,13 @@ export default {
 						color: #9fa3a8;
 						opacity: 1;
 					}
+				}
+				.paragraph {
+					font-size: 24rpx;
+					font-weight: 400;
+					color: #000000;
+					opacity: 1;
+					padding: 0rpx 40rpx 20rpx 40rpx;
 				}
 				.words {
 					padding: 0 40rpx 20rpx 40rpx;

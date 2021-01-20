@@ -522,4 +522,39 @@ export default {
 		margin-top: 40rpx;
 	}
 }
+.paragraph-p {
+	word-wrap: break-word;
+	word-break: break-all;
+	overflow: hidden;
+}
+
+.u-content__showmore-wrap {
+	justify-content: start !important;
+	color: #5eb14e !important;
+}
+.paragraph {
+	font-size: 24rpx;
+	font-weight: 400;
+	color: #000000;
+	opacity: 1;
+	padding: 0rpx 40rpx 20rpx 40rpx;
+}
+
+.comm-skeleton {
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	right: 0;
+	left: 0;
+	.out-view {
+		width: auto;
+		margin: 20rpx;
+		box-sizing: border-box;
+		height: 380rpx;
+		padding: 40rpx;
+		.item {
+			height: 300rpx;
+		}
+	}
+}
 </style>
