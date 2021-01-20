@@ -51,20 +51,20 @@
 				<view class="top-box-c">
 					<text>评论({{ detailsObj.comment_num }})</text>
 					<view class="right">
-						<text @tap="goCommentList">{{ detailsObj.comment_num ? '全部评论' : '去评论' }}</text>
+						<text  @click.stop="goCommentList">{{ detailsObj.comment_num ? '全部评论' : '去评论' }}</text>
 						<u-icon name="arrow-right" style="margin-left: 5rpx" color="#5eb14e" size="24"></u-icon>
 					</view>
 				</view>
 				<u-line v-if="detailsObj.comment_num && dataComment" color="rgba(0, 0, 0, 0.1)" />
-				<view v-if="detailsObj.comment_num && dataComment" class="content">
-					<view class="header">
+				<view v-if="detailsObj.comment_num && dataComment" class="content" >
+					<view class="header"  @click.stop="goCommentList">
 						<image class="image" :src="dataComment.commentUserPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
 						<text class="users">{{ dataComment.commentUserName }}</text>
 					</view>
 					<!-- <p class="words">{{ dataComment.commentContent }}</p> -->
 					<view class="paragraph">
 						<u-read-more :ref="`uReadMorea`" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-							<p class="paragraph-p">{{ dataComment.commentContent }}</p>
+							<p class="paragraph-p"  @click.stop="goCommentList">{{ dataComment.commentContent }}</p>
 						</u-read-more>
 					</view>
 				</view>
@@ -105,7 +105,11 @@ export default {
 	},
 	onShow() {
 		this.$u.debounce(this.getInfoById(this.id), 1000);
-		this.$refs.uReadMorea.init();
+		
+		if(this.detailsObj.comment_num){
+			this.$refs.uReadMorea.init();
+		}
+		
 	},
 	methods: {
 		addCaseInfoViewNum(id) {

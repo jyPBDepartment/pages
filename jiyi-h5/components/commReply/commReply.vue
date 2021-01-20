@@ -18,6 +18,7 @@
 				:height="100"
 				:maxlength="500"
 				:auto-height="true"
+				:placeholder="placeholder"
 			/>
 			<u-icon class="btn-reply" @click="reply" name="http://60.205.246.126/images/2021/01/12/1610432408185176.png" size="40"></u-icon>
 		</view>
@@ -26,6 +27,12 @@
 
 <script>
 export default {
+	props: {
+		placeholder: {
+			type: String,
+			default: '请输入评论内容'
+		}
+	},
 	data() {
 		return {
 			checked: false,
@@ -71,11 +78,11 @@ export default {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: #FFFFFF;
-	border-top:1rpx solid #f2f2f2;
+	background: #ffffff;
+	border-top: 1rpx solid #f2f2f2;
 	.publish {
 		line-height: 60rpx;
-		padding: 20rpx;
+		padding: 10rpx 20rpx;
 	}
 	.input-box {
 		width: 100%;

@@ -1,5 +1,10 @@
 <template>
-	<view class="pictues-group"><image :lazy-load="true" v-for="(item, i) in list" class="preview-img" :src="item" :key="i"></image></view>
+	<view class="pictues-group">
+		<image :lazy-load="true" v-for="(item, i) in list" class="preview-img" :src="item" :key="i" @click="showBigImg(item)"></image>
+		<u-mask :show="show" :custom-style="{ background: 'rgba(0, 0, 0, 0.7)' }" @click="show = false">
+			<view class="preview-img-big" v-show="show"><image :src="imgUrl" mode="widthFix"></image></view>
+		</u-mask>
+	</view>
 </template>
 
 <script>
@@ -11,10 +16,9 @@ export default {
 		}
 	},
 	created() {
-		if(this.picList){
+		if (this.picList) {
 			this.list = this.picList.split(',');
 		}
-		
 	},
 	watch: {
 		picList(newValue) {
@@ -23,14 +27,27 @@ export default {
 			} else {
 				this.list = [];
 			}
+		},
+		show(newValue) {
+			if (!newValue) {
+				this.imgUrl = '';
+			}
 		}
 	},
 	data() {
 		return {
-			list: []
+			list: [],
+			show: false,
+			imgUrl: ''
 		};
 	},
-	methods: {}
+	methods: {
+		showBigImg(url) {
+			console.log(111111111111);
+			this.imgUrl = url;
+			this.show = true;
+		}
+	}
 };
 </script>
 
@@ -46,6 +63,21 @@ export default {
 		width: 220rpx;
 		margin: 0rpx 0 15rpx 15rpx;
 		border-radius: 10rpx;
+	}
+}
+.preview-img-big {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999;
+	background: rgba(0, 0, 0, 0.8);
+	> image {
+		width: 750rpx;
 	}
 }
 </style>

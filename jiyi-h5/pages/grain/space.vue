@@ -69,23 +69,21 @@
 					<view class="top-box-c">
 						<text>评论({{ commentNum }})</text>
 						<view class="right">
-							<text @tap="goCommentList">{{ commentNum ? '全部评论' : '去评论' }}</text>
+							<text @click.stop="goCommentList">{{ commentNum ? '全部评论' : '去评论' }}</text>
 							<u-icon name="arrow-right" style="margin-left: 5rpx" color="#5eb14e" size="24"></u-icon>
 						</view>
 					</view>
 					<u-line v-if="commentNum" color="rgba(0, 0, 0, 0.1)" />
 					<view v-if="commentNum" class="content">
-						<view class="header">
+						<view class="header" @click.stop="goCommentList">
 							<image class="image" :src="commentObj.commentPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
 							<text class="users">{{ commentObj.isAnonymous ? '匿名' : commentObj.commentUserName ? commentObj.commentUserName : '匿名' }}</text>
 						</view>
-
 						<view class="paragraph">
 							<u-read-more ref="uReadMorea" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-								<p class="paragraph-p">{{ commentObj.commentContent }}</p>
+								<p class="paragraph-p" @click.stop="goCommentList">{{ commentObj.commentContent }}</p>
 							</u-read-more>
 						</view>
-						<p class="words">{{  }}</p>
 					</view>
 				</view>
 
@@ -170,7 +168,7 @@ export default {
 				backgroundImage: 'none',
 				paddingTop: '0',
 				marginTop: '20rpx'
-			},
+			}
 		};
 	},
 	//页面初始化
@@ -196,7 +194,9 @@ export default {
 	},
 	onShow() {
 		this.$u.debounce(this.findMineId(this.id), 1000);
-		this.$refs.uReadMorea.init();
+		if (this.commentNum) {
+			this.$refs.uReadMorea.init();
+		}
 	},
 	methods: {
 		addGrainTradingAddPV(id) {

@@ -11,8 +11,8 @@
 			</view>
 			<view class="paragraph">
 				<u-read-more ref="uReadMorex" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<rich-text :nodes="detailsData.code"></rich-text>
-					<!-- <p class="paragraph-p" @click.stop="goReplay(item)">{{details.code}}</p> -->
+					<!-- <rich-text :nodes="detailsData.code"></rich-text> -->
+					<p class="paragraph-p">{{detailsData.code}}</p>
 				</u-read-more>
 			</view>
 			<view v-if="detailsData.picture"><communituPicList :picList="detailsData.picture"></communituPicList></view>
@@ -48,7 +48,7 @@
 
 		<view class="title">全部评论({{ totalElements }})</view>
 		<view class="content" v-for="(item, i) in dataList" :key="i">
-			<view class="header">
+			<view class="header"  @click.stop="goReplay(item)">
 				<image class="image" :src="item.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 				<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName ? item.nickName : '匿名' }}</text>
 				<text class="times">{{ item.commentTime }}</text>

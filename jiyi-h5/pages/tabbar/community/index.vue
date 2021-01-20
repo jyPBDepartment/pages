@@ -6,17 +6,19 @@
 		</view>
 		<FilterCom @selectTab="selectTabCom"></FilterCom>
 
-		<view class="list-container-s" @click="jump(item.id)" v-for="(item, index) in dataList" :key="index">
+		<view class="list-container-s" v-for="(item, index) in dataList" :key="index">
 			<view class="dividing-line" v-if="index != 0"></view>
-			<view class="title">{{ item.name }}</view>
+			<view class="title"  @click="jump(item.id)">{{ item.name }}</view>
 			<view class="content">
-				<view class="header">
+				<view class="header"  @click="jump(item.id)">
 					<image class="image" :src="item.header || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 					<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName ? item.nickName : '匿名' }}</text>
 					<text class="times">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</text>
 				</view>
 				<view class="paragraph">
-					<p>{{ item.code }}</p>
+					<u-read-more text-indent="0"  :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+						<p class="paragraph-p"  @click="jump(item.id)">{{item.code}}</p>
+					</u-read-more>
 				</view>
 				<view v-if="item.picture"><communituPicList :picList="item.picture"></communituPicList></view>
 				<view class="fun-btn">

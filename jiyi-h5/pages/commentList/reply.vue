@@ -9,9 +9,9 @@
 				<text class="times">{{ commentData.date || commentData.commentTime }}</text>
 			</view>
 			<view class="paragraph">
-				<u-read-more ref="uReadMoreM" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<p class="paragraph-p">{{commentData.content}}</p>
-				</u-read-more>
+				<!-- <u-read-more ref="uReadMoreM" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100"> -->
+				<p class="paragraph-p">{{ commentData.content }}</p>
+				<!-- </u-read-more> -->
 			</view>
 		</view>
 		<view class="space"></view>
@@ -57,7 +57,7 @@
 				<text>删除成功</text>
 			</view>
 		</u-modal>
-		<commReply @reply="replyPublish"></commReply>
+		<commReply @reply="replyPublish" :placeholder="placeholder"></commReply>
 	</view>
 </template>
 
@@ -89,6 +89,11 @@ export default {
 			totalElements: 0,
 			userId: localStorage.getItem('userId')
 		};
+	},
+	computed: {
+		placeholder: function() {
+			return '回复' + (this.commentData.isAnonymous ? '匿名' : this.commentData.nickName)+':';
+		}
 	},
 	onLoad(data) {
 		this.commentID = data.id;
@@ -458,7 +463,6 @@ export default {
 			}
 			.right {
 				color: #5eb14e;
-				
 			}
 		}
 	}
@@ -484,7 +488,7 @@ export default {
 }
 .reply-content-c {
 	font-size: 24rpx;
-	>text{
+	> text {
 		word-wrap: break-word;
 		word-break: break-all;
 		overflow: hidden;

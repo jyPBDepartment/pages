@@ -44,14 +44,14 @@
 				</view>
 			</view>
 			<u-line v-if="totalElements" color="rgba(0, 0, 0, 0.1)" />
-			<view v-if="totalElements" class="content" v-for="(item, i) in commentList" :key="i">
-				<view class="header">
+			<view v-if="totalElements"  class="content" v-for="(item, i) in commentList" :key="i">
+				<view class="header" @tap="goCommentList(commentData.id)">
 					<image class="image" :src="item.commentPic || ''"></image>
 					<text class="users">{{ item.isAnonymous ? '匿名' : item.nickName ? item.nickName : '匿名' }}</text>
 				</view>
 				<view class="paragraph">
-					<u-read-more :ref="`uReadMorea`" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-						<p class="paragraph-p">{{ item.content }}</p>
+					<u-read-more ref="uReadMorea" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+						<p class="paragraph-p" @tap="goCommentList(commentData.id)">{{ item.content }}</p>
 					</u-read-more>
 				</view>
 			</view>
@@ -90,7 +90,10 @@ export default {
 	onShow() {
 		this.getCommentDetails();
 		this.addArticleAddPV();
-		this.$refs.uReadMorea.init();
+		if(this.totalElements){
+			this.$refs.uReadMorea.init();
+		}
+		
 	},
 	methods: {
 		addArticleAddPV() {

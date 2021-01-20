@@ -3,7 +3,7 @@
 		<!-- 搜索栏 -->
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
 
-		<view class="b-f">
+		<view style="background: #FBFBFB;">
 			<u-dropdown ref="uDropdown" @open="open" @close="uDropdownClose" :close-on-click-mask="false">
 				<u-dropdown-item title="区域">
 					<view class="slot-content-g">

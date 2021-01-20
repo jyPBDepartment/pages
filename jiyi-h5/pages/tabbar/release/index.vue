@@ -40,16 +40,19 @@ export default {
 				{
 					name: '农服',
 					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346336119875.png',
+					// imgUrl: '../../../static/release/3.png',
 					url: '../../grain/agriculturalServices'
 				},
 				{
 					name: '粮食买卖',
 					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346150825084.png',
+					// imgUrl: '../../../static/release/1.png',
 					url: '../../grain/grainTrade'
 				},
 				{
 					name: '农机',
 					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png',
+					// imgUrl: '../../../static/release/2.png',
 					url: '../../grain/leaseMachine'
 				}
 			],
@@ -133,7 +136,7 @@ export default {
 .btn-group-container {
 	.image {
 		width: 700rpx;
-		height: 222rpx;
+		height: 220rpx;
 		margin-bottom: 20rpx;
 	}
 }

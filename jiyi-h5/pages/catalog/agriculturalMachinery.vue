@@ -97,6 +97,10 @@ export default {
 			index1: '',
 			condition: [
 				{
+					code: '',
+					name: '全部'
+				},
+				{
 					code: 0,
 					name: '待审核'
 				},
@@ -111,11 +115,8 @@ export default {
 				{
 					code: 3,
 					name: '已取消'
-				},
-				{
-					code: '',
-					name: '全部'
 				}
+				
 			],
 			formInline: {
 				page: 1,
@@ -136,7 +137,7 @@ export default {
 				}
 			},
 			list: [],
-			listIndex: 4,
+			listIndex: 0,
 			show: false,
 			maskAble: false
 		};

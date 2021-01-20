@@ -530,10 +530,14 @@ export default {
 
 .u-content__showmore-wrap {
 	justify-content: start !important;
-	color: #5eb14e !important;
+}
+.u-content__showmore-wrap__readmore-btn{
+	>span{
+		font-size: 20rpx!important;
+	}
 }
 .paragraph {
-	font-size: 24rpx;
+	font-size: 24rpx!important;
 	font-weight: 400;
 	color: #000000;
 	opacity: 1;
