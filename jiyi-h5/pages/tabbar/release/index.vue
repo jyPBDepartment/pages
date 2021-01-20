@@ -7,7 +7,9 @@
 				<view class="name">{{ item.name }}</view>
 			</view> -->
 
-			<view class="btn-group-container" v-for="(item, index) in list" @click="jump(item, index)" :key="index"><image class="image" :src="item.imgUrl" mode=""></image></view>
+			<view class="btn-group-container" v-for="(item, index) in list" @click="jump(item, index)" :key="index">
+				<image :lazy-load="true" class="image" :src="item.imgUrl" mode="aspectFit"></image>
+			</view>
 		</view>
 
 		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
@@ -39,20 +41,17 @@ export default {
 			list: [
 				{
 					name: '农服',
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346336119875.png',
-					// imgUrl: '../../../static/release/3.png',
+					imgUrl: 'http://60.205.246.126/images/2021/01/20/1611133682449811.jpg',
 					url: '../../grain/agriculturalServices'
 				},
 				{
 					name: '粮食买卖',
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346150825084.png',
-					// imgUrl: '../../../static/release/1.png',
+					imgUrl: 'http://60.205.246.126/images/2021/01/20/1611133625804007.jpg',
 					url: '../../grain/grainTrade'
 				},
 				{
 					name: '农机',
-					imgUrl: 'http://60.205.246.126/images/2021/01/11/1610346862930577.png',
-					// imgUrl: '../../../static/release/2.png',
+					imgUrl: 'http://60.205.246.126/images/2021/01/20/1611133707032126.jpg',
 					url: '../../grain/leaseMachine'
 				}
 			],
@@ -135,8 +134,8 @@ export default {
 <style lang="scss" scoped>
 .btn-group-container {
 	.image {
-		width: 700rpx;
-		height: 220rpx;
+		width: 702rpx;
+		height: 222rpx;
 		margin-bottom: 20rpx;
 	}
 }
