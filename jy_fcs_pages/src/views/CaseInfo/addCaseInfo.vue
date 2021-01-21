@@ -184,7 +184,7 @@
             <el-card style="height: 250px; width: 560px">
               <!-- 富文本上传图片 -->
               <el-upload
-                class="avatar-uploader quill-img"
+                class="avatar-uploader quill-imgA"
                 :action="upload"
                 :show-file-list="false"
                 :on-success="quillUploadSuccessA"
@@ -262,7 +262,7 @@
             <el-card style="height: 250px; width: 560px">
               <!-- 富文本上传图片 -->
               <el-upload
-                class="avatar-uploader quill-img"
+                class="avatar-uploader quill-imgB"
                 :action="upload"
                 :show-file-list="false"
                 :on-success="quillUploadSuccessB"
@@ -340,7 +340,7 @@
             <el-card style="height: 250px; width: 560px">
               <!-- 富文本上传图片 -->
               <el-upload
-                class="avatar-uploader quill-img"
+                class="avatar-uploader quill-imgC"
                 :action="upload"
                 :show-file-list="false"
                 :on-success="quillUploadSuccessC"
@@ -558,7 +558,7 @@ export default {
             handlers: {
               image: function (value) {
                 if (value) {
-                  document.querySelector(".quill-img input").click();
+                  document.querySelector(".quill-imgA input").click();
                 } else {
                   this.quill.format("image", false);
                 }
@@ -577,7 +577,7 @@ export default {
             handlers: {
               image: function (value) {
                 if (value) {
-                  document.querySelector(".quill-img input").click();
+                  document.querySelector(".quill-imgB input").click();
                 } else {
                   this.quill.format("image", false);
                 }
@@ -596,7 +596,7 @@ export default {
             handlers: {
               image: function (value) {
                 if (value) {
-                  document.querySelector(".quill-img input").click();
+                  document.querySelector(".quill-imgC input").click();
                 } else {
                   this.quill.format("image", false);
                 }
