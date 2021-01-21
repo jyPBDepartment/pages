@@ -10,7 +10,7 @@
 						<u-row align="top" class="b-t">
 							<u-col span="4" style="background-color: #FFFFFF;">
 								<scroll-view scroll-y="true" class="my-scroll-view">
-									<u-tag text="全区域" :type="allIndex == '1' ? 'error' : 'info'" @click="allProvince" class="my-tags" />
+									<u-tag text="全区域" :type="allIndex == '1' ? 'success' : 'info'" @click="allProvince" class="my-tags" />
 									<u-tag
 										:text="item.label"
 										:type="clickProvinceIndex == key ? 'success' : 'info'"
@@ -115,7 +115,7 @@
 			</view>
 			<view class="drawer-bottom-btn">
 				<u-button class="btn" size="medium" shape="circle" @click="recharge" plain>重置</u-button>
-				<u-button class="btn" size="medium" shape="circle" @click="confirm(true)" type="error">确认</u-button>
+				<u-button class="btn" size="medium" shape="circle" @click="confirm(true)" type="success">确认</u-button>
 			</view>
 		</uni-drawer>
 	</view>
@@ -659,12 +659,12 @@ export default {
 
 .screened {
 	// width: 30rpx;
-	background-color: #e51c2e !important;
+	background-color: #5eb14e !important;
 	color: #fff !important;
 }
 
 .screen-select {
-	color: #e51c2e;
+	color: #5eb14e;
 	font-weight: bold;
 }
 
