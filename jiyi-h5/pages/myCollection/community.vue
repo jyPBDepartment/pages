@@ -1,20 +1,24 @@
 <template>
 	<view>
-		<view class="list-container-s" @click.stop="jump(item)" v-for="(item, index) in dataList" :key="index">
+		<view class="list-container-s" v-for="(item, index) in dataList" :key="index">
 			<!-- 圈子 -->
-			<view class="title">
+			<view class="title" @click.stop="jump(item)">
 				<text>{{ item.name }}</text>
 				<view @click.stop="cancelCollection(item)">
 					<u-icon style="margin-right: 5rpx;z-index: 999;" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="32"></u-icon>
 				</view>
 			</view>
 			<view class="content">
-				<view class="header">
+				<view class="header" @click.stop="jump(item)">
 					<image class="image" :src="item.header || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 					<text class="users">{{ item.isAnonymous ? '匿名' : item.createUser ? item.createUser : '匿名' }}</text>
 					<text class="times">{{ item.createDate ? formatTime(item.createDate) : '' }}</text>
 				</view>
-				<view class="paragraph"><rich-text :nodes="item.code"></rich-text></view>
+				<view class="paragraph">
+					<u-read-more text-indent="0"  :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+						<p class="paragraph-p"  @click="jump(item)">{{item.code}}</p>
+					</u-read-more>
+				</view>
 				<view v-if="item.picture"><communituPicList :picList="item.picture"></communituPicList></view>
 			</view>
 		</view>
@@ -40,6 +44,11 @@ export default {
 			dataList: [],
 			status: 'loadmore',
 			iconType: 'flower',
+			shadowStyle: {
+				backgroundImage: 'none',
+				paddingTop: '0',
+				marginTop: '20rpx'
+			},
 			loadText: {
 				loadmore: '点我加载更多',
 				loading: '客官别急马上就来~',
@@ -141,7 +150,7 @@ export default {
 				title: '提示',
 				content: '是否取消收藏',
 				cancelText: '否',
-				confirmText:'是',
+				confirmText: '是',
 				success: function(res) {
 					if (res.confirm) {
 						let params = {
