@@ -59,7 +59,7 @@
 				<view v-if="detailsObj.comment_num && dataComment" class="content" >
 					<view class="header"  @click.stop="goCommentList">
 						<image class="image" :src="dataComment.commentUserPic || '../../static/img/tabbar/guanzhuactive.png'"></image>
-						<text class="users">{{ dataComment.commentUserName }}</text>
+						<text class="users">{{ dataComment.isAnonymous?'匿名': dataComment.commentUserName }}</text>
 					</view>
 					<!-- <p class="words">{{ dataComment.commentContent }}</p> -->
 					<view class="paragraph">
