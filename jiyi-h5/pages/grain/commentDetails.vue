@@ -3,7 +3,7 @@
 		<HeaderSearch title="详情"></HeaderSearch>
 		<view class="comment-content">
 			<view class="title">{{ commentData.title }}</view>
-			<view class="date">{{ commentData.updateDate }}</view>
+			<view class="date">{{ commentData.create_date?formatTime(commentData.create_date):'' }}</view>
 			<view class="content"><u-parse :html="commentData.content" :tag-style="style"></u-parse></view>
 		</view>
 		<view class="fun-btn">
@@ -96,6 +96,19 @@ export default {
 		
 	},
 	methods: {
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
+		},
 		addArticleAddPV() {
 			//点击详情增加浏览量
 			let params = {
@@ -217,7 +230,7 @@ export default {
 		.date {
 			width: 100%;
 			line-height: 30rpx;
-			font-size: 20rpx;
+			font-size: 24rpx;
 			font-weight: 400;
 			text-align: right;
 			color: #9fa3a8;

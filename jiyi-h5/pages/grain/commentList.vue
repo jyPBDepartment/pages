@@ -12,15 +12,12 @@
 				<view class="item-info">
 					<view class="title">{{ item.title }}</view>
 					<view class="contactsUser">
-						<view class="g-flex g-a-c">
-							<!-- <image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
-							<view class="word">zhou</view> -->
-						</view>
-						<view style="color: rgba(128, 128, 128, 1); font-size: 12px">{{ item.date }}</view>
+						<view class="g-flex g-a-c"></view>
+						<view style="color: rgba(128, 128, 128, 1); font-size: 12px">{{ item.date ? formatTime(item.date) : '' }}</view>
 					</view>
 					<view class="fun-btn">
 						<view class="item">
-							<u-icon style="margin-right: 5rpx" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" color="#9FA3A8" size="24"></u-icon>
+							<u-icon style="margin-right: 5rpx" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
 							<text>{{ item.view_num }}</text>
 						</view>
 						<view class="item" @tap.stop="clickIcon('2', item)">
@@ -28,21 +25,14 @@
 								v-if="item.is_collection == null"
 								style="margin-right: 5rpx"
 								name="http://60.205.246.126/images/2021/01/11/1610334200305905.png"
-								color="#9FA3A8"
 								size="24"
 							></u-icon>
-							<u-icon v-else style="margin-right: 5rpx" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" color="#9FA3A8" size="24"></u-icon>
+							<u-icon v-else style="margin-right: 5rpx" name="http://60.205.246.126/images/2021/01/11/1610334414334544.png" size="24"></u-icon>
 							<text>{{ item.collection_num }}</text>
 						</view>
 						<view class="item" @tap.stop="clickIcon('1', item)">
-							<u-icon
-								v-if="item.is_praise == null"
-								style="margin-right: 5rpx"
-								name="http://60.205.246.126/images/2021/01/11/1610333920310281.png"
-								color="#9FA3A8"
-								size="24"
-							></u-icon>
-							<u-icon v-else style="margin-right: 5rpx" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" color="#9FA3A8" size="24"></u-icon>
+							<u-icon v-if="item.is_praise == null" style="margin-right: 5rpx" name="http://60.205.246.126/images/2021/01/11/1610333920310281.png" size="24"></u-icon>
+							<u-icon v-else style="margin-right: 5rpx" name="http://60.205.246.126/images/2021/01/11/1610335031904388.png" size="24"></u-icon>
 							<text>{{ item.praise_num }}</text>
 						</view>
 					</view>
@@ -81,8 +71,8 @@ export default {
 		};
 	},
 	onShow() {
-		console.log(this.current,this.sortIndex)
-		
+		console.log(this.current, this.sortIndex);
+
 		this.getSectionTab();
 	},
 	onReachBottom() {
@@ -94,6 +84,19 @@ export default {
 		this.getCommentList(this.listTab[this.current].id);
 	},
 	methods: {
+		formatTime(datetime) {
+			var date = new Date(datetime); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var year = date.getFullYear(),
+				month = ('0' + (date.getMonth() + 1)).slice(-2),
+				sdate = ('0' + date.getDate()).slice(-2),
+				hour = ('0' + date.getHours()).slice(-2),
+				minute = ('0' + date.getMinutes()).slice(-2),
+				second = ('0' + date.getSeconds()).slice(-2);
+			// 拼接
+			var result = year + '-' + month + '-' + sdate + ' ' + hour + ':' + minute;
+			// 返回
+			return result;
+		},
 		selectTabPage(val) {
 			this.sortIndex = val;
 			this.getCommentList(this.listTab[this.current].id);

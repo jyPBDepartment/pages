@@ -7,11 +7,10 @@
 			<view class="header">
 				<image class="image" :src="detailsData.header || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 				<text class="users">{{ detailsData.is_anonymous ? '匿名' : detailsData.create_user ? detailsData.create_user : '匿名' }}</text>
-				<text class="times">{{ detailsData.update_date ? formatTime(detailsData.update_date) : '' }}</text>
+				<text class="times">{{ detailsData.create_date ? formatTime(detailsData.create_date) : '' }}</text>
 			</view>
 			<view class="paragraph">
 				<u-read-more ref="uReadMorex" text-indent="0" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
-					<!-- <rich-text :nodes="detailsData.code"></rich-text> -->
 					<p class="paragraph-p">{{detailsData.code}}</p>
 				</u-read-more>
 			</view>

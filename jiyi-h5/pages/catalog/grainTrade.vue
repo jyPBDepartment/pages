@@ -75,7 +75,7 @@
 						<image src="../../static/img/tabbar/guanzhuactive.png" mode="" style="width: 28rpx;height:28rpx;margin-right: 20rpx;"></image>
 						<view class="word">{{ item.contactsUser }}</view>
 					</view>
-					<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</view>
+					<view style="color: rgba(128, 128, 128, 1);font-size: 12px;">{{ item.createDate ? formatTime(item.createDate) : '' }}</view>
 				</view>
 				<view class="fun-btn">
 					<view class="item">

@@ -46,7 +46,7 @@
 						<u-icon name="http://60.205.246.126/images/2021/01/11/1610337099768047.png" style="margin-right: 10rpx;" color="#5EB14E" size="24"></u-icon>
 						<text>联系电话：{{ contactsPhone }}</text>
 					</view>
-					<text>2020-12-15 15：03</text>
+					<text>{{createDate}}</text>
 				</view>
 				<view class="fun-btn">
 					<view class="item">
@@ -130,6 +130,7 @@ export default {
 			labelCode: '',
 			model: '',
 			articleNumber: '',
+			createDate:'',
 			address: '',
 			contactsUser: '',
 			contactsPhone: '',
@@ -302,6 +303,7 @@ export default {
 						this.contactsPhone = res.data.agr.contactsPhone;
 						this.accId = res.data.agr.accId;
 						this.createUserId = res.data.agr.createUserId;
+						this.createDate = res.data.agr.createDate
 
 						this.commentNum = res.data.agr.commentNum;
 						this.praiseNum = res.data.agr.praiseNum;

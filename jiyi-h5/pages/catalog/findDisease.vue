@@ -8,7 +8,7 @@
 			<image class="item-img" :src="item.url" mode=""></image>
 			<view class="item-info">
 				<p class="title">{{ item.name }}</p>
-				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.updateDate ? formatTime(item.updateDate) : '' }}</view>
+				<view style="color: #9FA3A8;font-size: 24rpx;">{{ item.createDate ? formatTime(item.createDate) : '' }}</view>
 				<view class="fun-btn">
 					<view class="item">
 						<u-icon style="margin-right: 10rpx;" name="http://60.205.246.126/images/2021/01/11/1610334104458166.png" size="24"></u-icon>
