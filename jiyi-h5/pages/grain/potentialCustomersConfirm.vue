@@ -1,6 +1,6 @@
 <template>
 	<view class="g-flex g-f-column">
-		<HeaderSearch background="#e51c2e" color="#fff" title="详情"></HeaderSearch>
+		<HeaderSearch title="详情"></HeaderSearch>
 
 		<swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
 			<block v-for="(item, index) in banner" :key="index">
@@ -35,7 +35,7 @@
 				<view class="info g-f-1 f-14" style="position: relative;">{{ farmwork.contactPhone }}</view>
 			</view>
 			<view class="g-flex p-y-10 g-a-c">
-				<view class="g-f-1"><u-button type="error" shape="circle" @click="confirmBtn">确认</u-button></view>
+				<view class="g-f-1"><u-button type="success" shape="circle" @click="confirmBtn">确认</u-button></view>
 			</view>
 		</view>
 	</view>

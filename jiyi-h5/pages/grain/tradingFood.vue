@@ -67,7 +67,7 @@
 					<u-action-sheet :list="actionSheetList" v-model="sexShow" @click="actionSheetCallback"></u-action-sheet>
 				</view>
 			</view>
-			<u-button style="margin: 40rpx;" shape="circle" type="error">发布预约</u-button>
+			<u-button style="margin: 40rpx;" shape="circle" type="success">发布预约</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
 	</view>

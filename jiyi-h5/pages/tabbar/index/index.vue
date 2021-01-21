@@ -1,8 +1,6 @@
 <template>
 	<view style="background-color: #f4f4f4" class="u-skeleton">
-		<!-- <view><u-button @click="sums">sum</u-button></view> -->
 		<HeaderSearch class="header-t u-skeleton-rect" :disabled="true" @searchCallback="search" :goBackHome="true"></HeaderSearch>
-		<!-- <HeaderSearch :disabled="true" @searchCallback="search" :showMsg="true"></HeaderSearch> -->
 		<FoodstuffPrice v-if="showCharts" class="charts-box u-skeleton-fillet"></FoodstuffPrice>
 		<view class="content u-skeleton">
 			<view class="btn comm-border u-skeleton-fillet">
@@ -11,21 +9,6 @@
 					<p>{{ item.name }}</p>
 				</view>
 			</view>
-			<!-- <view class="appointment comm-border u-skeleton-fillet">
-				<view class="title u-skeleton-rect">
-					<view class="name">农服预约</view>
-					<view class="more" @click="moreNf">更多</view>
-					<u-icon class="more" @click="moreNf" name="arrow-right"></u-icon>
-				</view>
-				<view class="preview u-skeleton-rect">
-					<view v-if="!nfList.length" style="width: 100%; line-height: 140rpx" class="f-16 t-c">暂无数据</view>
-					<view class="buju" @click="detailsNf(item.id)" v-for="(item, index) in nfList" :key="index">
-						<view class="img"><easy-loadimage class="preview-img" :scroll-top="scrollTop" :image-src="item.url"></easy-loadimage></view>
-						<p class="text f-14">{{ item.name }}</p>
-						<p class="text f-12 address">{{ item.address }}</p>
-					</view>
-				</view>
-			</view> -->
 			<view class="appointment comm-border u-skeleton-fillet">
 				<view class="title u-skeleton-rect">
 					<u-icon size="32" name="http://60.205.246.126/images/2021/01/07/1610010262142198.png"></u-icon>

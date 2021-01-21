@@ -3,7 +3,7 @@
 		<!-- 搜索栏 -->
 		<HeaderSearch @searchCallback="search"></HeaderSearch>
 
-		<view style="background: #FBFBFB;">
+		<view class="screen-bg">
 			<u-dropdown ref="uDropdown" @open="open" @close="uDropdownClose" :close-on-click-mask="false">
 				<u-dropdown-item title="区域">
 					<view class="slot-content-g">
@@ -13,7 +13,7 @@
 									<u-tag text="全区域" :type="allIndex == '1' ? 'error' : 'info'" @click="allProvince" class="my-tags" />
 									<u-tag
 										:text="item.label"
-										:type="clickProvinceIndex == key ? 'error' : 'info'"
+										:type="clickProvinceIndex == key ? 'success' : 'info'"
 										v-for="(item, key) in provinceData"
 										@click="getMap(item.label, 'pro', key)"
 										:key="key"
@@ -25,7 +25,7 @@
 								<scroll-view scroll-y="true" class="my-scroll-view">
 									<u-tag
 										:text="item.label"
-										:type="clickCityIndex == key ? 'error' : 'info'"
+										:type="clickCityIndex == key ? 'success' : 'info'"
 										v-for="(item, key) in cityData"
 										@click="getMap(item.label, 'city', key)"
 										:key="key"
@@ -37,7 +37,7 @@
 								<scroll-view scroll-y="true" class="my-scroll-view">
 									<u-tag
 										:text="item.label"
-										:type="clickAreaIndex == key ? 'error' : 'info'"
+										:type="clickAreaIndex == key ? 'success' : 'info'"
 										v-for="(item, key) in areaData"
 										@click="getMap(item.label, 'area', key)"
 										:key="key"

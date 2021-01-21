@@ -50,7 +50,7 @@
 					></u-upload>
 				</view>
 			</view>
-			<u-button class="footer-btn-box" @tap="appointment" style="margin: 24rpx 0;" shape="circle" type="error">预约</u-button>
+			<u-button class="footer-btn-box" @tap="appointment" style="margin: 24rpx 0;" shape="circle" type="success">预约</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
 		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change" active-bg-color="#42b983" btn-type="success">

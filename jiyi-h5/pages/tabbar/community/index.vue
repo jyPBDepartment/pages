@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<HeaderSearch title="圈子" @searchCallback="search"></HeaderSearch>
-		<view class="tabs g-flex g-j-s-a g-a-c f-14">
+		<view class="tabs g-flex g-j-s-a g-a-c f-14 screen-bg">
 			<view @click="selectTab(item, index)" :class="index == tabIndex && 'tab-hover'" v-for="(item, index) in tabsList" :key="index">{{ item.name }}</view>
 		</view>
 		<FilterCom @selectTab="selectTabCom"></FilterCom>
@@ -67,7 +67,7 @@
 			</view>
 			<view class="drawer-bottom-btn">
 				<u-button class="btn" shape="circle" size="medium" @click="recharge" plain>重置</u-button>
-				<u-button class="btn" shape="circle" size="medium" @tap="searchData" type="error">确认</u-button>
+				<u-button class="btn" shape="circle" size="medium" @tap="searchData" type="success">确认</u-button>
 			</view>
 		</uni-drawer>
 		<u-mask :show="show" :mask-click-able="maskAble"></u-mask>
@@ -347,15 +347,16 @@ export default {
 	width: 100%;
 	height: 88rpx;
 	// background-color: #e51c2e;
+	border-bottom: 1rpx solid #f4f4f4;
 	color: #000;
 }
 
 .tab-hover {
-	color: #e51c2e;
+	color: #5eb14e;
 }
 
 .screened {
-	background-color: #e51c2e !important;
+	background-color: #5eb14e !important;
 	color: #fff !important;
 }
 

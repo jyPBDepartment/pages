@@ -30,7 +30,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="p-x-10"><u-button type="error" shape="circle" @click.stop :throttle-time="1000" ripple @click="preview(id)" style="margin: 24rpx 0;">立即预约</u-button></view>
+		<view class="p-x-10"><u-button type="success" shape="circle" @click.stop :throttle-time="1000" ripple @click="preview(id)" style="margin: 24rpx 0;">立即预约</u-button></view>
 		<CancelReason @confirm="confirm" :isShow="cencalIsShow" @isShow="cencal"></CancelReason>
 	</view>
 </template>

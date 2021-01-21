@@ -94,7 +94,7 @@
 				</view>
 				<view v-if="isDisplay !== 0" class="btn g-flex">
 					<view class="g-f-1"><u-button @click="cencal(true)" shape="circle">取消发布</u-button></view>
-					<view class="g-f-1"><u-button @click="updateInfo(id)" type="error" shape="circle">修改信息</u-button></view>
+					<view class="g-f-1"><u-button @click="updateInfo(id)" type="success" shape="circle">修改信息</u-button></view>
 				</view>
 			</view>
 		</view>

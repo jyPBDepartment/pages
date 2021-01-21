@@ -519,25 +519,36 @@ export default {
 		font-weight: 600;
 		line-height: 48rpx;
 		color: #000000;
-		margin-top: 40rpx;
+		margin-top: 80rpx;
 	}
 }
 .paragraph-p {
 	word-wrap: break-word;
 	word-break: break-all;
 	overflow: hidden;
+	font-size: 28rpx;
+	font-weight: 400;
+	color: #000000;
 }
 
 .u-content__showmore-wrap {
 	justify-content: start !important;
 }
-.u-content__showmore-wrap__readmore-btn{
-	>span{
-		font-size: 20rpx!important;
+
+.u-content__showmore-wrap__readmore-btn {
+	> span {
+		font-size: 20rpx !important;
+		color: #5eb14e !important;
 	}
 }
+.uicon-arrow-down,
+.uicon-arrow-up {
+	color: #5eb14e !important;
+	font-size: 20rpx !important;
+}
+
 .paragraph {
-	font-size: 24rpx!important;
+	// font-size: 28rpx !important;
 	font-weight: 400;
 	color: #000000;
 	opacity: 1;
@@ -560,5 +571,8 @@ export default {
 			height: 300rpx;
 		}
 	}
+}
+.screen-bg {
+	background: #fbfbfb;
 }
 </style>

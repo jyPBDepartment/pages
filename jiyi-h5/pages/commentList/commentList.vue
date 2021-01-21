@@ -51,8 +51,8 @@ export default {
 			content: `1111111111`,
 			shadowStyle: {
 				backgroundImage: 'none',
-				paddingTop: '0',
-				marginTop: '20rpx'
+				paddingTop: '0rpx',
+				marginTop: '10rpx'
 			},
 			page: 1,
 			dataList: [],
@@ -380,16 +380,15 @@ export default {
 		}
 	}
 	.no-comment {
-		padding-top: 200rpx;
+		padding-top: 120rpx;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		> text {
 			font-size: 28rpx;
-			font-family: Proxima Nova;
-			font-weight: 400;
-			margin-top: 40rpx;
+			font-weight: 500;
+			margin-top: 20rpx;
 			color: #000000;
 		}
 	}

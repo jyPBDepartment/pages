@@ -17,9 +17,9 @@
 						<view class="reason" v-if="item.status == 3">取消理由：{{ item.reason }}</view>
 					</view>
 					<view class="reason1" v-if="item.status == 1 || item.status == 2">
-						<u-button class="btn" style="margin-left: -200rpx;" type="error" shape="circle" @click="call(item.contactPhone)" size="mini">联系客户</u-button>
+						<u-button class="btn" style="margin-left: -200rpx;" type="success" shape="circle" @click="call(item.contactPhone)" size="mini">联系客户</u-button>
 					</view>
-					<view class="reason1" v-if="item.status == 0"><u-button class="btn" type="error" shape="circle" size="mini" @click="confirmBtn(item.id)">确认</u-button></view>
+					<view class="reason1" v-if="item.status == 0"><u-button class="btn" type="success" shape="circle" size="mini" @click="confirmBtn(item.id)">确认</u-button></view>
 				</view>
 			</view>
 			<u-modal v-model="show" :show-title="false" show-cancel-button :content="content"></u-modal>

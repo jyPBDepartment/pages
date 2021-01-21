@@ -18,7 +18,7 @@
 						<view class="other g-a-c g-flex g-j-s-b">{{ item.workArea }}</view>
 						<view class="reason" v-if="item.status == 3">商家取消理由：{{ item.reason }}</view>
 						<view class="reason" v-if="item.status == 2">
-							<u-button class="btn" type="error" shape="circle" @click="call(item.contactPhone)" size="mini">联系商家</u-button>
+							<u-button class="btn" type="success" shape="circle" @click="call(item.contactPhone)" size="mini">联系商家</u-button>
 						</view>
 						<view class="reason" v-if="item.status == 1"><u-button class="btn" type="error" shape="circle" @click="finish(item.id)" size="mini">已完成</u-button></view>
 					</view>

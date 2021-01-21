@@ -467,16 +467,14 @@ export default {
 		}
 	}
 	.no-comment {
-		padding-top: 100rpx;
+		padding-top: 60rpx;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		> text {
 			font-size: 28rpx;
-			font-family: Proxima Nova;
-			font-weight: 400;
-			margin-top: 40rpx;
+			font-weight: 500;
 			color: #000000;
 		}
 	}

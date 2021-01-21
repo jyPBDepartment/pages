@@ -1,7 +1,7 @@
 <template>
 	<view class="service">
 		<HeaderSearch hideBack @searchCallback="search"></HeaderSearch>
-		<Screen @screened="screened" :screenList="screenList" @select="select" :condition="condition"></Screen>
+		<Screen class="screen-bg" @screened="screened" :screenList="screenList" @select="select" :condition="condition"></Screen>
 		<mescroll-body style="margin-top: 20rpx;" ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
 			
 				<view class="comm-list-item" v-for="(item, index) in btnList" :key="index" @click="jumpInfo(item.id)">
@@ -13,7 +13,7 @@
 							<p>{{ item.address }}</p>
 						</view>
 						<view class="btn-group">
-							<u-button size="mini" type="error" @click.stop="jump(item.id)">立即预约</u-button>
+							<u-button size="mini" type="success" @click.stop="jump(item.id)">立即预约</u-button>
 						</view>
 					</view>
 				</view>

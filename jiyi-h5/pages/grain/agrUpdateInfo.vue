@@ -100,7 +100,7 @@
 				<view class="title">区域</view>
 				<view class="info"><u-input placeholder="请选择" v-model="agr.address" type="select" @click="regionaStatus = true" /></view>
 			</view>
-			<u-button style="margin:20rpx 0;" shape="circle" type="error" @click="updateMachine">发布</u-button>
+			<u-button style="margin:20rpx 0;" shape="circle" type="success" @click="updateMachine">发布</u-button>
 		</view>
 		<regionalComponents v-show="regionaStatus" ref="region" @cancel="cancel" @sure="sure" />
 		<u-calendar v-model="dateShow" mode="range" :min-date="currentDate" max-date="2050-01-01" @change="change" active-bg-color="#42b983" btn-type="success">

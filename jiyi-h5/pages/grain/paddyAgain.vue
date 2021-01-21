@@ -52,7 +52,7 @@
 
 			</view>
 			<view class="g-f-1">
-				<u-button type="error" @click="again" shape="circle">重新预约</u-button>
+				<u-button type="success" @click="again" shape="circle">重新预约</u-button>
 			</view>
 		</view>
 	</view>

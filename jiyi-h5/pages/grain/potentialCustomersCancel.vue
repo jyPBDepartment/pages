@@ -1,6 +1,6 @@
 <template>
 	<view class="g-flex g-f-column">
-		<HeaderSearch background="#e51c2e" color="#fff" title="详情"></HeaderSearch>
+		<HeaderSearch title="详情"></HeaderSearch>
 
 		<swiper class="circul" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
 			<block v-for="(item, index) in banner" :key="index">

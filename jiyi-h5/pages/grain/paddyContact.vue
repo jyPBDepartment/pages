@@ -37,7 +37,7 @@
 		</view>
 		<view class="btn g-flex">
 			<view class="g-f-1"></view>
-			<view class="g-f-1"><u-button class="btn" type="error" shape="circle" @click="call(contactPhone)" size="mini">联系商家</u-button></view>
+			<view class="g-f-1"><u-button class="btn" type="success" shape="circle" @click="call(contactPhone)" size="mini">联系商家</u-button></view>
 		</view>
 	</view>
 </template>

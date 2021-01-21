@@ -1,6 +1,6 @@
 <template>
 	<view class="b-f">
-		<view class="screen g-flex g-a-c f-14">
+		<view class="screen g-flex g-a-c f-14 screen-bg">
 			<view
 				class="sort g-f-1 g-flex g-a-c g-j-c"
 				:style="item.name == '筛选' && 'border-left: 1rpx solid #e5e5e5;'"
@@ -49,7 +49,7 @@
 			</view>
 			<view class="drawer-bottom-btn">
 				<u-button class="btn" size="medium" shape="circle" @click="recharge" plain>重置</u-button>
-				<u-button class="btn" size="medium" shape="circle" @click="confirm(true)" type="error">确认</u-button>
+				<u-button class="btn" size="medium" shape="circle" @click="confirm(true)" type="success">确认</u-button>
 			</view>
 		</uni-drawer>
 	</view>
@@ -169,12 +169,12 @@ export default {
 }
 
 .screened {
-	background-color: #e51c2e !important;
+	background-color: #5eb14e !important;
 	color: #fff !important;
 }
 
 .screen-select {
-	color: #e51c2e;
+	color: #5eb14e;
 	font-weight: bold;
 }
 
