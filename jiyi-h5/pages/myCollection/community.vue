@@ -15,7 +15,7 @@
 					<text class="times">{{ item.createDate ? formatTime(item.createDate) : '' }}</text>
 				</view>
 				<view class="paragraph">
-					<u-read-more text-indent="0"  :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
+					<u-read-more text-indent="0"  :ref="`uReadMore${index}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="100">
 						<p class="paragraph-p"  @click="jump(item)">{{item.code}}</p>
 					</u-read-more>
 				</view>
