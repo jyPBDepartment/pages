@@ -8,7 +8,7 @@
 		<view class="input-box">
 			<u-input
 				class="input"
-				focus
+				:focus="focus"
 				:customStyle="customStyle"
 				:fixed="true"
 				v-model="value"
@@ -31,6 +31,10 @@ export default {
 		placeholder: {
 			type: String,
 			default: '请输入评论内容'
+		},
+		focus: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data() {

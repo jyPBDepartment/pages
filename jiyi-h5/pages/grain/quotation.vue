@@ -3,8 +3,7 @@
 		<!-- 粮价行情 -->
 		<HeaderSearch title="粮价行情"></HeaderSearch>
 		<FoodstuffPrice typeFrom="1" ref="price" @cityChang="cityChang"></FoodstuffPrice>
-		<u-line></u-line>
-		<view class=""></view>
+		<view class="dividing-line"></view>
 		<view class="price-calculation">
 			<view class="header">{{ rangStr }}潮粮价格计算：</view>
 			<view class="content">
@@ -48,12 +47,12 @@
 				<view class="right"><u-button class="btn" :ripple="true" type="success" @click="calculationPrice">计算</u-button></view>
 			</view>
 		</view>
+		<view class="dividing-line"></view>
 		<view class="only-comment">
 			<view class="header">
 				<view class="name">独家点评</view>
 				<view class="more" @click="goMore">
-					更多
-					<u-icon name="arrow-right" color="#5EB14E" size="30"></u-icon>
+					更多<u-icon name="arrow-right" color="#5EB14E" size="30"></u-icon>
 				</view>
 			</view>
 			<view class="content">
@@ -245,7 +244,7 @@ export default {
 			}
 			.more {
 				font-size: 28rpx;
-				color: #5EB14E;
+				color: #5eb14e;
 				font-weight: 500;
 			}
 		}

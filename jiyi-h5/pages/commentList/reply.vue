@@ -2,7 +2,7 @@
 	<view class="list-container">
 		<HeaderSearch title="回复"></HeaderSearch>
 
-		<view class="content">
+		<view class="content"  @click="commentAddReply">
 			<view class="header">
 				<image class="image" :src="commentData.commentPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 				<text class="users">{{ commentData.isAnonymous ? '匿名' : commentData.nickName }}</text>
@@ -19,23 +19,23 @@
 		<view class="title">全部回复({{ totalElements }})</view>
 
 		<view class="reply-content" v-for="(item, i) in dataList" :key="i">
-			<view class="header">
+			<view class="header" @click="replyAddReply(item)">
 				<image class="image" :src="item.replyPic || 'http://60.205.246.126/images/2021/01/15/1610696168592617.png'"></image>
 				<text class="users">{{ item.isAnonymous ? '匿名' : item.replyUserName }}</text>
 				<text class="times">{{ item.replyDate }}</text>
 			</view>
 			<view class="paragraph">
 				<u-read-more text-indent="0" :ref="`uReadMore${i}`" :toggle="true" close-text="展开" open-text="收起" :shadow-style="shadowStyle" :show-height="80">
-					<view class="reply-content-c">
+					<view class="reply-content-c" @click="replyAddReply(item)">
 						<text>回复</text>
-						<text class="nick-name">{{ commentData.isAnonymous ? '匿名' : commentData.nickName }}：</text>
+						<text class="nick-name">{{ item.receiveUserName || '匿名' }}：</text>
 						<text>{{ item.replyContent }}</text>
 					</view>
 				</u-read-more>
 			</view>
-			<view class="reply-b" v-if="item.isMyReply">
+			<view class="reply-b">
 				<view class="left"></view>
-				<text class="right" @click="delItem(item)">删除</text>
+				<text class="right" v-if="item.isMyReply" @click="delItem(item)">删除</text>
 			</view>
 		</view>
 		<view class="no-comment" v-if="dataList.length == 0">
@@ -57,7 +57,7 @@
 				<text>删除成功</text>
 			</view>
 		</u-modal>
-		<commReply @reply="replyPublish" :placeholder="placeholder"></commReply>
+		<commReply @reply="replyPublish" :focus="focus" :placeholder="placeholder"></commReply>
 	</view>
 </template>
 
@@ -87,18 +87,26 @@ export default {
 				nomore: '我是有底线的~~~'
 			},
 			totalElements: 0,
-			userId: localStorage.getItem('userId')
+			userId: localStorage.getItem('userId'),
+			focus: true,
+			receiveUserName: '',
+			receiveUserId: ''
 		};
 	},
 	computed: {
 		placeholder: function() {
-			return '回复' + (this.commentData.isAnonymous ? '匿名' : this.commentData.nickName)+':';
+			let str = '回复' + (this.commentData.isAnonymous ? '匿名' : this.commentData.nickName) + ':';
+			if (this.receiveUserName) {
+				str = '回复' + this.receiveUserName + ':';
+			}
+			return str;
 		}
 	},
 	onLoad(data) {
 		this.commentID = data.id;
 		this.type = data.type;
 		this.commentData = JSON.parse(uni.getStorageSync('commentData'));
+		this.receiveUserName = this.commentData.isAnonymous ? '匿名' : this.commentData.nickName;
 		this.initPageList();
 	},
 	methods: {
@@ -190,6 +198,16 @@ export default {
 				})
 				.catch(err => {});
 		},
+		commentAddReply(){
+			this.receiveUserName = this.commentData.isAnonymous ? '匿名' : this.commentData.nickName;
+			this.receiveUserId = '';
+			this.focus = true;
+		},
+		replyAddReply(item) {
+			this.receiveUserName = item.isAnonymous ? '匿名' : item.replyUserName;
+			this.receiveUserId = item.replyUserId;
+			this.focus = true;
+		},
 		// 发布回复
 		replyPublish(val, isAnonymous) {
 			if (val) {
@@ -207,6 +225,8 @@ export default {
 						replyUserName: nickName,
 						replyPic: pic,
 						replyUserId: this.userId,
+						receiveUserName: this.receiveUserName,
+						receiveUserId: this.receiveUserId,
 						isAnonymous: isAnonymous ? 1 : 0
 					};
 				}
@@ -220,7 +240,9 @@ export default {
 						replyPic: pic,
 						replyUserId: this.userId,
 						isAnonymous: isAnonymous ? 1 : 0,
-						status: 0
+						status: 0,
+						receiveUserName: this.receiveUserName,
+						receiveUserId: this.receiveUserId
 					};
 				}
 				if (this.type == 3) {
@@ -232,7 +254,9 @@ export default {
 						replyUserName: nickName,
 						replyPic: pic,
 						replyUserId: this.userId,
-						isAnonymous: isAnonymous ? 1 : 0
+						isAnonymous: isAnonymous ? 1 : 0,
+						receiveUserName: this.receiveUserName,
+						receiveUserId: this.receiveUserId
 					};
 				}
 				if (this.type == 4) {
@@ -244,7 +268,9 @@ export default {
 						replyUserName: nickName,
 						replyPic: pic,
 						replyUserId: this.userId,
-						isAnonymous: isAnonymous ? 1 : 0
+						isAnonymous: isAnonymous ? 1 : 0,
+						receiveUserName: this.receiveUserName,
+						receiveUserId: this.receiveUserId
 					};
 				}
 				this.saveReply(url, params);
@@ -265,6 +291,8 @@ export default {
 							this.tipModalShow = false;
 						}, 1000);
 						self.initPageList(true);
+						self.receiveUserName = self.commentData.isAnonymous ? '匿名' : self.commentData.nickName;
+						self.receiveUserId = '';
 					}
 				})
 				.catch(err => {});
@@ -397,6 +425,7 @@ export default {
 			color: #9fa3a8;
 			padding: 0 40rpx;
 			padding: 0 40rpx 20rpx 40rpx;
+			min-height: 40rpx;
 			.left {
 				display: flex;
 				align-items: center;

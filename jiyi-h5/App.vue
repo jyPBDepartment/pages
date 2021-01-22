@@ -484,8 +484,8 @@ export default {
 
 .dividing-line {
 	width: 100%;
-	height: 20rpx;
-	background-color: rgba(229, 229, 229, 1);
+	height: 18rpx;
+	background-color: rgba(0, 0, 0, 0.05);
 }
 
 .fun-btn {

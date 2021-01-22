@@ -1,7 +1,6 @@
 <template>
-	<view class="service">
+	<view>
 		<!-- 列表数据显示 -->
-		<!-- <mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption"> -->
 		<view class="comm-list-item" @tap.stop="jump(item.id)" v-for="(item, index) in dataList" :key="index">
 			<image class="item-img" :src="item.url" mode=""></image>
 			<view class="item-info">
@@ -25,8 +24,6 @@
 				<view class="fun-btn"></view>
 			</view>
 		</view>
-		<!-- </mescroll-body> -->
-
 		<view class="no-data" v-if="noData">
 			<image src="http://www.mescroll.com/img/mescroll-empty.png?v=1"></image>
 			<text>暂无数据</text>
