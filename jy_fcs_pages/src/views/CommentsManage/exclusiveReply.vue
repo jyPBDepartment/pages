@@ -70,26 +70,33 @@
           ></el-table-column>
           <el-table-column
             show-overflow-tooltip
-            prop="reply_content"
+            prop="commentContent"
+            label="评论内容"
+            align="center"
+            min-width="15"
+          ></el-table-column>
+          <el-table-column
+            show-overflow-tooltip
+            prop="replyContent"
             label="回复内容"
             align="center"
             min-width="15"
           ></el-table-column>
           <el-table-column
-            prop="reply_user_name"
+            prop="replyUserName"
             label="回复人"
             align="center"
             min-width="10"
           ></el-table-column>
           <el-table-column
             sortable
-            prop="reply_date"
+            prop="replyDate"
             label="回复时间"
             width="200px"
             align="center"
             min-width="10"
           ></el-table-column>
-          <!-- <el-table-column
+          <el-table-column
             align="center"
             label="状态"
             prop="status"
@@ -105,11 +112,18 @@
                 @change="commentEnable(scope)"
               ></el-switch>
             </template>
-          </el-table-column> -->
+          </el-table-column>
           <el-table-column align="center" label="操作" min-width="15">
             <template slot-scope="scope">
               <el-button
-                size="small"
+                size="mini"
+                type="success"
+                @click="showDetail(scope)"
+                align="left"
+                >详情</el-button
+              >
+              <el-button
+                size="mini"
                 type="danger"
                 @click="deleteUser(scope)"
                 align="left"
@@ -125,6 +139,12 @@
           v-bind:child-msg="formInline"
           @callFather="callFather"
         ></Pagination>
+        <exclusive-reply-detail
+          :show="exclusiveReplyDetailFlag"
+          :transReplyInfo="transReplyInfo"
+          title="回复详情"
+          @close="closeReplyDetail"
+        ></exclusive-reply-detail>
       </div>
     </slot>
     <!-- 按钮区 -->
@@ -142,6 +162,7 @@ import Pagination from "@/components/Pagination";
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
+import ExclusiveReplyDetail from "./exclusiveReplyDetail";
 export default {
   inject: ["reload"],
   props: {
@@ -177,10 +198,13 @@ export default {
       userparm: [], //搜索权限
       listData: [], //用户数据
       commentId: "",
+      exclusiveReplyDetailFlag: false,
+      transReplyInfo: [],
     };
   },
   components: {
     Pagination,
+    ExclusiveReplyDetail,
   },
   watch: {
     show(val) {
@@ -193,6 +217,13 @@ export default {
   },
   mounted() {},
   methods: {
+    closeReplyDetail() {
+      this.exclusiveReplyDetailFlag = false;
+    },
+    showDetail(scope) {
+      this.transReplyInfo.push(scope);
+      this.exclusiveReplyDetailFlag = true;
+    },
     close() {
       this.$emit("close");
     },
@@ -270,16 +301,18 @@ export default {
         let params = {
           replyId: scope.row.id,
         };
-        api.testAxiosGet(ApiPath.url.exclusiveDelReplyPC, params).then((res) => {
-          let code = res.code;
-          if (code == "200") {
-            this.$message.success(res.message);
-            //this.reload();
-            this.listData.splice(scope.$index, 1);
-          } else {
-            this.$message.console.error();
-          }
-        });
+        api
+          .testAxiosGet(ApiPath.url.exclusiveDelReplyPC, params)
+          .then((res) => {
+            let code = res.code;
+            if (code == "200") {
+              this.$message.success(res.message);
+              //this.reload();
+              this.listData.splice(scope.$index, 1);
+            } else {
+              this.$message.console.error();
+            }
+          });
       });
     },
   },

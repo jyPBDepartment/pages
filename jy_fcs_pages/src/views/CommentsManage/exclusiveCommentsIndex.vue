@@ -93,26 +93,32 @@
         align="center"
         min-width="10"
       ></el-table-column>
-      <!-- <el-table-column align="center" label="状态" prop="status" min-width="5">
+      <el-table-column align="center" label="状态" prop="status" min-width="5">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            active-value="0"
-            inactive-value="1"
+            active-value="1"
+            inactive-value="0"
             active-color="#13ce66"
             inactive-color="#ff4949"
             @change="commentEnable(scope)"
           ></el-switch>
         </template>
-      </el-table-column> -->
-      <el-table-column align="center" label="操作" min-width="15">
+      </el-table-column>
+      <el-table-column align="center" label="操作" min-width="25">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="success"
+            @click="showDetail(scope)"
+            align="left"
+            >详情</el-button
+          >
           <el-button
             size="mini"
             type="primary"
             @click="openReply(scope)"
             align="left"
-            icon="el-icon-circle-plus-outline"
             >查看回复</el-button
           >
           <el-button
@@ -120,7 +126,6 @@
             type="danger"
             @click="deleteUser(scope)"
             align="left"
-            icon="el-icon-delete"
             >删除</el-button
           >
         </template>
@@ -139,6 +144,13 @@
       :title="transTitle"
       @close="closeExclusiveReplyDialog"
     ></exclusive-reply>
+
+    <exclusive-comments-detail
+      :show="exclusiveCommentsDetailFlag"
+      :transCommentInfo="transCommentInfo"
+      title="详情"
+      @close="closeExclusiveCommentsDetail"
+    ></exclusive-comments-detail>
   </div>
 </template>
 
@@ -152,6 +164,7 @@ import api from "@/axios/api.js";
 //import UpdateArticle from "./updateArticle";
 //import ContentShow from "./content"
 import ExclusiveReply from "./exclusiveReply";
+import ExclusiveCommentsDetail from "./exclusiveCommentsDetail";
 export default {
   inject: ["reload"],
   data() {
@@ -175,6 +188,8 @@ export default {
       exclusiveReplyFlag: false,
       transCommentId: "",
       transTitle: "",
+      exclusiveCommentsDetailFlag:false,
+      transCommentInfo:[]
     };
   },
   // 注册组件
@@ -182,6 +197,7 @@ export default {
     // AddArticle,
     // UpdateArticle,
     ExclusiveReply,
+    ExclusiveCommentsDetail,
     Pagination,
   },
 
@@ -191,6 +207,13 @@ export default {
   },
 
   methods: {
+    closeExclusiveCommentsDetail(){
+      this.exclusiveCommentsDetailFlag=false;
+    },
+    showDetail(scope){
+      this.transCommentInfo.push(scope);
+      this.exclusiveCommentsDetailFlag = true;
+    },
     closeExclusiveReplyDialog() {
       this.exclusiveReplyFlag = false;
     },
@@ -242,7 +265,7 @@ export default {
         status: scope.row.status,
       };
       api
-        .testAxiosGet(ApiPath.url.commentEnable, params)
+        .testAxiosGet(ApiPath.url.exclusiveEnableComment, params)
         .then((res) => {
           let code = res.state;
           this.$message.success(res.message);

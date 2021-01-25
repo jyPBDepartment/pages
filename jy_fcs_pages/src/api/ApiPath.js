@@ -1,9 +1,9 @@
 // 本地环境地址
-// const URLHost = 'http://localhost:8080';
-// const EDUHost = 'http://localhost:8083';
+const URLHost = 'http://localhost:8080';
+const EDUHost = 'http://localhost:8083';
 // 开发环境基础路径地址
-const URLHost = 'http://192.168.1.106:8080/jy_fcs';
-const EDUHost = 'http://192.168.1.106:8080/jy_edu';
+// const URLHost = 'http://192.168.1.106:8080/jy_fcs';
+// const EDUHost = 'http://192.168.1.106:8080/jy_edu';
 // 生产环境基础路径地址
 // const URLHost = 'http://hnser.jiyinongye.com:8080/jy_fcs';
 // const EDUHost = 'http://hnser.jiyinongye.com/jy_edu';
@@ -283,6 +283,8 @@ const url = {
   grainTradingFindReplyPageByParam: URLHost + '/grainTrading/findReplyPageByParam',
   // 删除粮食买卖回复信息
   grainTradingDelReplyPC: URLHost + '/grainTrading/delReplyPC',
+  // 粮食买卖回复生效
+  grainTradingEnableReply: URLHost + '/grainTrading/enableReply',
 
   //分页查询文章点评评论列表
   exclusiveFindCommentPageByParam: URLHost + '/exclusive/findCommentPageByParam',
@@ -297,6 +299,8 @@ const url = {
   exclusiveDelReplyPC: URLHost + '/exclusive/delReplyPC',
   // 根据文章点评评论Id查询回复信息列表
   exclusiveFindReplyPageByParam: URLHost + '/exclusive/findReplyPageByParam',
+  // 根据文章点评评论id查询评论信息
+  exclusiveFindCommentInfoById: URLHost + '/exclusive/findCommentInfoById',
   // 分页查询看图识病评论列表
   caseInfoCommentFindCaseList: URLHost + '/caseInfoComment/findCaseList',
   // 删除看图识病评论信息
@@ -305,6 +309,11 @@ const url = {
   caseInfoReplyFindReplyList: URLHost + '/caseInfoReply/findReplyList',
   // 删除看图识病回复信息
   caseInfoReplyDelete: URLHost + '/caseInfoReply/delete',
+  // 设置看图识病评论状态
+  caseInfoCommentEnable: URLHost + '/caseInfoComment/enable',
+  // 设置看图识病回复状态
+  caseInfoReplyEnable: URLHost + '/caseInfoReply/enable',
+
 
   //查询课程信息分页列表
   findLessonPage: EDUHost + '/lesson/findPage',

@@ -68,6 +68,13 @@
           ></el-table-column>
           <el-table-column
             show-overflow-tooltip
+            prop="commentContent"
+            label="评论内容"
+            align="center"
+            min-width="15"
+          ></el-table-column>
+          <el-table-column
+            show-overflow-tooltip
             prop="replyContent"
             label="回复内容"
             align="center"
@@ -87,7 +94,7 @@
             align="center"
             min-width="10"
           ></el-table-column>
-          <!-- <el-table-column
+          <el-table-column
             align="center"
             label="状态"
             prop="status"
@@ -96,18 +103,25 @@
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.status"
-                active-value="0"
-                inactive-value="1"
+                active-value="1"
+                inactive-value="0"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
                 @change="commentEnable(scope)"
               ></el-switch>
             </template>
-          </el-table-column> -->
+          </el-table-column>
           <el-table-column align="center" label="操作" min-width="15">
             <template slot-scope="scope">
               <el-button
-                size="small"
+                size="mini"
+                type="success"
+                @click="showDetail(scope)"
+                align="left"
+                >详情</el-button
+              >
+              <el-button
+                size="mini"
                 type="danger"
                 @click="deleteUser(scope)"
                 align="left"
@@ -123,6 +137,12 @@
           v-bind:child-msg="formInline"
           @callFather="callFather"
         ></Pagination>
+        <post-reply-detail
+          :show="postReplyDetailFlag"
+          :transReplyInfo="transReplyInfo"
+          title="回复详情"
+          @close="closeReplyDetail"
+        ></post-reply-detail>
       </div>
     </slot>
     <!-- 按钮区 -->
@@ -140,6 +160,7 @@ import Pagination from "@/components/Pagination";
 import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
+import PostReplyDetail from "./postReplyDetail";
 export default {
   inject: ["reload"],
   props: {
@@ -175,10 +196,13 @@ export default {
       userparm: [], //搜索权限
       listData: [], //用户数据
       commentId: "",
+      postReplyDetailFlag: false,
+      transReplyInfo: [],
     };
   },
   components: {
     Pagination,
+    PostReplyDetail,
   },
   watch: {
     show(val) {
@@ -191,6 +215,13 @@ export default {
   },
   mounted() {},
   methods: {
+    closeReplyDetail() {
+      this.postReplyDetailFlag = false;
+    },
+    showDetail(scope) {
+      this.transReplyInfo.push(scope);
+      this.postReplyDetailFlag = true;
+    },
     close() {
       this.$emit("close");
     },
@@ -212,7 +243,7 @@ export default {
       }
       //alert(JSON.stringify(parameter));
       let params = {
-        commentId:this.commentId,
+        commentId: this.commentId,
         content: this.replyContent,
         user: this.replyUserName,
         page: this.formInline.page,
@@ -239,10 +270,12 @@ export default {
         status: scope.row.status,
       };
       api
-        .testAxiosGet(ApiPath.url.commentEnable, params)
+        .testAxiosGet(ApiPath.url.replyEnable, params)
         .then((res) => {
-          let code = res.state;
-          this.$message.success(res.message);
+          let code = res.code;
+          if ((code = "200")) {
+            this.$message.success(res.message);
+          }
         })
         .catch(function (error) {});
     },

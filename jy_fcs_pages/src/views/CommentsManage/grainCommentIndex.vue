@@ -90,20 +90,27 @@
         align="center"
         min-width="10"
       ></el-table-column>
-      <!-- <el-table-column align="center" label="状态" prop="status" min-width="5">
+      <el-table-column align="center" label="状态" prop="status" min-width="5">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            active-value="0"
-            inactive-value="1"
+            active-value="1"
+            inactive-value="0"
             active-color="#13ce66"
             inactive-color="#ff4949"
             @change="commentEnable(scope)"
           ></el-switch>
         </template>
-      </el-table-column> -->
-      <el-table-column align="center" label="操作" min-width="15">
+      </el-table-column>
+      <el-table-column align="center" label="操作" min-width="25">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="success"
+            @click="showDetail(scope)"
+            align="left"
+            >详情</el-button
+          >
           <el-button
             size="mini"
             type="primary"
@@ -136,6 +143,12 @@
       title="回复列表"
       @close="closeGrainReplyDialog"
     ></grain-reply>
+    <grain-comment-detail
+      :show="grainCommentsDetailFlag"
+      :transCommentInfo="transCommentInfo"
+      title="详情"
+      @close="closeGrainCommentsDetail"
+    ></grain-comment-detail>
   </div>
 </template>
 
@@ -146,6 +159,7 @@ import ApiPath from "@/api/ApiPath.js";
 //数据请求交互引用
 import api from "@/axios/api.js";
 import GrainReply from "./grainReply";
+import GrainCommentDetail from "./GrainCommentDetail";
 //import AddArticle from "./addArticle";
 //import UpdateArticle from "./updateArticle";
 //import ContentShow from "./content"
@@ -171,6 +185,8 @@ export default {
       listData: [], //用户数据
       grainReplyFlag: false,
       transCommentId: "",
+      grainCommentsDetailFlag:false,
+      transCommentInfo:[]
     };
   },
   // 注册组件
@@ -178,6 +194,7 @@ export default {
     // AddArticle,
     // UpdateArticle,
     GrainReply,
+    GrainCommentDetail,
     Pagination,
   },
 
@@ -187,6 +204,13 @@ export default {
   },
 
   methods: {
+    closeGrainCommentsDetail(){
+      this.grainCommentsDetailFlag = false;
+    },
+    showDetail(scope){
+      this.transCommentInfo.push(scope);
+      this.grainCommentsDetailFlag = true;
+    },
     closeGrainReplyDialog() {
       this.grainReplyFlag = false;
     },

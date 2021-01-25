@@ -86,20 +86,27 @@
         align="center"
         min-width="10"
       ></el-table-column>
-      <!-- <el-table-column align="center" label="状态" prop="status" min-width="5">
+      <el-table-column align="center" label="状态" prop="status" min-width="5">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            active-value="0"
-            inactive-value="1"
+            active-value = "1"
+            inactive-value = "0"
             active-color="#13ce66"
             inactive-color="#ff4949"
             @change="commentEnable(scope)"
           ></el-switch>
         </template>
-      </el-table-column> -->
-      <el-table-column align="center" label="操作" min-width="15">
+      </el-table-column>
+      <el-table-column align="center" label="操作" min-width="25">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="success"
+            @click="showDetail(scope)"
+            align="left"
+            >详情</el-button
+          >
           <el-button
             size="mini"
             type="primary"
@@ -132,6 +139,12 @@
       title="回复列表"
       @close="closeReplyDialog"
     ></case-reply>
+    <case-comment-detail
+      :show="caseCommentDetailFlag"
+      :transCommentInfo="transCommentInfo"
+      title="评论详情"
+      @close="closeCaseCommentDetail"
+    ></case-comment-detail>
   </div>
 </template>
 
@@ -145,6 +158,7 @@ import api from "@/axios/api.js";
 //import UpdateArticle from "./updateArticle";
 //import ContentShow from "./content"
 import CaseReply from "./caseReply";
+import CaseCommentDetail from "./caseCommentDetail";
 export default {
   inject: ["reload"],
   data() {
@@ -152,6 +166,7 @@ export default {
       content: "",
       user: "",
       loading: true, //是显示加载
+      status: "",
       formInline: {
         page: 1,
         limit: 10,
@@ -165,7 +180,9 @@ export default {
       userparm: [], //搜索权限
       listData: [], //用户数据
       caseReplyFlag: false,
-      transCommentId:''
+      transCommentId:'',
+      caseCommentDetailFlag:false,
+      transCommentInfo:[]
     };
   },
   // 注册组件
@@ -173,6 +190,7 @@ export default {
     // AddArticle,
     // UpdateArticle,
     CaseReply,
+    CaseCommentDetail,
     Pagination,
   },
 
@@ -182,6 +200,13 @@ export default {
   },
 
   methods: {
+    closeCaseCommentDetail(){
+      this.caseCommentDetailFlag = false;
+    },
+    showDetail(scope){
+      this.transCommentInfo.push(scope);
+      this.caseCommentDetailFlag = true;
+    },
     closeReplyDialog() {
       this.caseReplyFlag = false;
     },
@@ -230,7 +255,7 @@ export default {
         status: scope.row.status,
       };
       api
-        .testAxiosGet(ApiPath.url.commentEnable, params)
+        .testAxiosGet(ApiPath.url.caseInfoCommentEnable, params)
         .then((res) => {
           let code = res.state;
           this.$message.success(res.message);
